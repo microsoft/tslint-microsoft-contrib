@@ -14,7 +14,8 @@ module.exports = function(grunt) {
         ts: {
             default: {
                 src: [
-                    './src/**/*.ts'
+                    './src/**/*.ts',
+                    './tests/**/*.ts'
                 ],
                 outDir: 'dist',
                 options: {

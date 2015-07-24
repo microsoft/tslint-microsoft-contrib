@@ -1,0 +1,11 @@
+{
+  "name": "tslint-microsoft-contrib",
+  "version": "0.0.1",
+  "description": "TSLint Rules for Microsoft",
+  "repository": {
+    "type": "git",
+    "url": "git@dse1-git1:prototypes/tslint-microsoft-contrib"
+  },
+  "author": "Hamlet D'Arcy",
+  "license": "MIT"
+}

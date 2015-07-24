@@ -3,7 +3,6 @@
 describe('FirstRuleTests', () : void => {
 
     it('should run a test', () : void => {
-        console.log('test run successful');
     });
 
 });

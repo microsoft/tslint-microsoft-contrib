@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                 outDir: 'dist',
                 options: {
                     module: 'commonjs',
-                    //target: 'es5',
+                    target: 'es5',
                 }
             },
         }

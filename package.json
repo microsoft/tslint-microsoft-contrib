@@ -7,5 +7,13 @@
     "url": "git@dse1-git1:prototypes/tslint-microsoft-contrib"
   },
   "author": "Hamlet D'Arcy",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-ts": "4.2.0",
+    "grunt-tslint": "2.4.0",
+    "load-grunt-tasks": "3.2.0",
+    "tslint": "2.4.2"
+  }
 }

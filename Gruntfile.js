@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         clean: {
-            src: ['./dist'],
+            src: ['dist'],
             options: {
                 force: true
             },
@@ -13,8 +13,14 @@ module.exports = function(grunt) {
 
         ts: {
             default: {
-                src: ['./src/**/*.ts'],
-                outDir: './dist'
+                src: [
+                    './src/**/*.ts'
+                ],
+                outDir: 'dist',
+                options: {
+                    module: 'commonjs',
+                    //target: 'es5',
+                }
             },
         }
     });

@@ -1,5 +1,6 @@
 {
   "rules": {
-    "no-unused-imports": true
+    "no-unused-imports": true,
+    "no-duplicate-parameter-names": true
   }
 }

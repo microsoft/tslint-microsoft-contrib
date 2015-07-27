@@ -2,9 +2,8 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import chai = require('chai');
-import FirstRule = require('../src/noUnusedImportsRule');
 
-describe('FirstRuleTests', () : void => {
+describe('noUnusedImportsRule', () : void => {
 
     it('should run a test', () : void => {
         chai.expect(1).to.equal(1);

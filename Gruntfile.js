@@ -33,16 +33,25 @@ module.exports = function(grunt) {
         },
 
         tslint: {
+            prod: {
+                files: {
+                    src: [
+                        'src/**/*.ts',
+                        'tests/**/*.ts',
+                        '!src/references.ts'
+                    ]
+                }
+            },
+            "self-test": {
+                files: {
+                    src: [
+                        'test-data/**/*.ts',
+                    ]
+                }
+            },
             options: {
                 configuration: grunt.file.readJSON("tslint.json"),
                 rulesDirectory: 'dist/src'
-            },
-            files: {
-                src: [
-                    'src/**/*.ts',
-                    'tests/**/*.ts',
-                    '!src/references.ts'
-                ]
             }
         }
 
@@ -54,7 +63,8 @@ module.exports = function(grunt) {
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',
         'ts',
-        'mochaTest'
+        'mochaTest',
+        'tslint:prod'
     ]);
 
     grunt.registerTask('default', ['all']);

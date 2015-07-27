@@ -1,6 +1,7 @@
 {
   "rules": {
-    "no-unused-imports": true,
-    "no-duplicate-parameter-names": true
+    "no-duplicate-parameter-names": true,
+    "no-eval-script": true,
+    "no-unused-imports": true
   }
 }

@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             "self-test": {
                 files: {
                     src: [
-                        'test-data/**/*.ts',
+                        'test-data/**/*.ts'
                     ]
                 }
             },

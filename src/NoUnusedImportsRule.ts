@@ -17,42 +17,22 @@ class NoUnusedImportsWalker extends Lint.RuleWalker {
 
     public constructor(sourceFile : ts.SourceFile, options, languageServices) {
         super(sourceFile, options);
-        console.log('got here2');
         this.fileName = sourceFile.fileName;
+        console.log('analyzing: ' + sourceFile.fileName);
         this.languageServices = languageServices;
     }
 
-    public visitClassDeclaration(node: ts.ClassDeclaration): void {
-        console.log('visiting class');
-        super.visitClassDeclaration(node);
-    }
-
-    public visitImportDeclaration(node: ts.ImportDeclaration): void {
-        console.log('got here');
-        if (!this.hasModifier(node.modifiers, 47 /* ExportKeyword */)) {
-            //var position = (<any>this).positionAfter(node.importKeyword);
-            //this.validateReferencesForVariable(node.identifier.text(), position);
+    protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
+        if (!Lint.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
+            this.validateReferencesForVariable(node.name.text, node.name.getStart());
         }
-        super.visitImportDeclaration(node);
-    }
-
-    private hasModifier(modifiers : ts.ModifiersArray, modifierKind) {
-        console.log(modifiers);
-        //for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-        //    var modifier = modifiers.childAt(i);
-        //    if (modifier.kind() === modifierKind) {
-        //        return true;
-        //    }
-        //}
-        return false;
+        super.visitImportEqualsDeclaration(node);
     }
 
     private validateReferencesForVariable(name, position) {
-        var references = this.languageServices.getReferencesAtPosition(this.fileName, position);
-        if (references.length <= 1) {
-            var failureString = Rule.FAILURE_STRING + "'" + name + "'";
-            var failure = this.createFailure(position, name.length, failureString);
-            this.addFailure(failure);
+        var highlights = this.languageServices.getDocumentHighlights("file.ts", position, ["file.ts"]);
+        if (highlights[0].highlightSpans.length <= 1) {
+            this.addFailure(this.createFailure(position, name.length, Rule.FAILURE_STRING + "'" + name + "'"));
         }
     }
 }

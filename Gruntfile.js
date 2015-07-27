@@ -40,7 +40,8 @@ module.exports = function(grunt) {
             files: {
                 src: [
                     'src/**/*.ts',
-                    'tests/**/*.ts'
+                    'tests/**/*.ts',
+                    '!src/references.ts'
                 ]
             }
         }

@@ -3,7 +3,6 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "forbidden evalScript: ";
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        console.log('\nAnalyzing : ' + sourceFile.fileName);
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));
     }
 }

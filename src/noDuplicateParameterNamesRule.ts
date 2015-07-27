@@ -41,8 +41,8 @@ class NoDuplicateParameterNamesWalker extends Lint.RuleWalker {
     private validateParameterNames(node : ts.SignatureDeclaration) {
         var seenNames : {[index: number]: boolean} = {};
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
-            var parameterName : string = (<any>parameter.name).text;
-            if (parameterName != null) { // how does one check if the union type is Identifier?
+            var parameterName : string = (<any>parameter.name).text;  // how does one check if the union type is Identifier?
+            if (parameterName != null) {
                 if (seenNames[parameterName]) {
                     this.addFailure(this.createFailure(
                         parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + "'" + parameterName + "'"));

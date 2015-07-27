@@ -1,3 +1,5 @@
 {
-
+  "rules": {
+    "no-unused-import": true
+  }
 }

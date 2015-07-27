@@ -29,6 +29,18 @@ module.exports = function(grunt) {
             test: {
                 src: ['dist/tests/**/*.js']
             }
+        },
+
+        tslint: {
+            options: {
+                configuration: grunt.file.readJSON("tslint.json")
+            },
+            files: {
+                src: [
+                    'src/**/*.ts',
+                    'tests/**/*.ts'
+                ]
+            }
         }
 
     });

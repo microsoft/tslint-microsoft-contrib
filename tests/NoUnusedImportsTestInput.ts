@@ -1,6 +1,6 @@
 
 import chai = require('chai')
-import NoUnusedImportsRule = require('../src/NoUnusedImportsRule');
+import NoUnusedImportsRule = require('../src/noUnusedImportsRule');
 
 class NoUnusedImportsTestInput {
 

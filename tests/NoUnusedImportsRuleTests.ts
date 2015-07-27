@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import chai = require('chai');
-import FirstRule = require('../src/NoUnusedImportsRule');
+import FirstRule = require('../src/noUnusedImportsRule');
 
 describe('FirstRuleTests', () : void => {
 

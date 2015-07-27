@@ -1,3 +1,4 @@
+"use strict";
 
 module.exports = function(grunt) {
 
@@ -20,11 +21,11 @@ module.exports = function(grunt) {
                 outDir: 'dist',
                 options: {
                     module: 'commonjs',
-                    target: 'es5',
+                    target: 'es5'
                 }
             },
         },
-        
+
         mochaTest: {
             test: {
                 src: ['dist/tests/**/*.js']
@@ -53,5 +54,7 @@ module.exports = function(grunt) {
         'ts',
         'mochaTest'
     ]);
+
+    grunt.registerTask('default', ['all']);
 
 };

@@ -1,5 +1,5 @@
 {
   "rules": {
-    "no-unused-import": true
+    "no-unused-imports": true
   }
 }

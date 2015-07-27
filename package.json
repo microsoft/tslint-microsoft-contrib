@@ -17,6 +17,7 @@
     "grunt-tslint": "2.4.0",
     "load-grunt-tasks": "3.2.0",
     "mocha": "2.2.5",
-    "tslint": "2.4.2"
+    "tslint": "2.4.2",
+    "time-grunt": "1.2.1"
   }
 }

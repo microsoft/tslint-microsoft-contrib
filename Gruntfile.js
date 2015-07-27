@@ -48,6 +48,7 @@ module.exports = function(grunt) {
     });
 
     require('load-grunt-tasks')(grunt); // loads all grunt-* npm tasks
+    require('time-grunt')(grunt);
 
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',

@@ -2,3 +2,5 @@ node_modules
 .tscache
 dist
 .baseDir.ts
+.idea
+tslint-microsoft-contrib.iml

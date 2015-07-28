@@ -9,7 +9,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
 
         var walker : Lint.RuleWalker= new NoStringParameterToFunctionCallWalker(
-            sourceFile , 'setTimeout', this.getOptions(), languageService
+            sourceFile , 'setImmediate', this.getOptions(), languageService
         );
         return this.applyWithWalker(walker);
     }

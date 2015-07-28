@@ -5,6 +5,7 @@
     "no-string-based-set-immediate": true,
     "no-string-based-set-interval": true,
     "no-string-based-set-timeout": true,
-    "no-unused-imports": true
+    "no-unused-imports": true,
+    "no-with-statement": true
   }
 }

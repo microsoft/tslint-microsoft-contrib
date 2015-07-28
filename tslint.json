@@ -2,6 +2,7 @@
   "rules": {
     "no-duplicate-parameter-names": true,
     "no-eval-script": true,
+    "no-string-based-set-timeout": true,
     "no-unused-imports": true
   }
 }

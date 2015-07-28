@@ -1,4 +1,6 @@
 
+import AstUtils = require('./AstUtils');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "forbidden evalScript: ";
 
@@ -16,10 +18,7 @@ class NoEvalScriptWalker extends Lint.RuleWalker {
 
     private validateExpression(node : ts.CallExpression) : void {
         var expression: ts.Expression = node.expression;
-        var functionName : string = (<any>expression).text;
-        if (functionName === undefined && (<any>expression).name) {
-            functionName = (<any>expression).name.text;
-        }
+        var functionName : string = AstUtils.getFunctionName(node);
         if (functionName === 'evalScript') {
             var msg : string = Rule.FAILURE_STRING + expression.getFullText().trim();
             this.addFailure(this.createFailure(expression.getStart(), expression.getWidth(), msg));

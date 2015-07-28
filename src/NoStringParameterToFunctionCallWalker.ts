@@ -27,7 +27,7 @@ class NoStringParameterToFunctionCallWalker extends Lint.RuleWalker {
     private validateExpression(node : ts.CallExpression) : void {
         var functionName : string = AstUtils.getFunctionName(node);
         var firstArg : ts.Expression = node.arguments[0];
-        if (functionName === 'setTimeout' && firstArg != null) {
+        if (functionName === this.targetFunctionName && firstArg != null) {
             if (!AstUtils.isExpressionEvaluatingToFunction(firstArg, this.languageServices, this.typeChecker)) {
                 var msg : string = this.failureString + firstArg.getFullText().trim().substring(0, 40);
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));

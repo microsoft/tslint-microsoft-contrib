@@ -2,7 +2,7 @@
  * The following code should have no errors:
  */
 var x = {
-    myProperty: 'sometext';
+    myProperty: 'sometext'
 };
 delete x.myProperty;
 

@@ -1,5 +1,5 @@
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "octal literals should not be used: ";
+    public static FAILURE_STRING = "Octal literals should not be used: ";
 
     public apply(sourceFile): Lint.RuleFailure[] {
         const noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
@@ -15,7 +15,6 @@ class NoOctalLiteral extends Lint.RuleWalker {
     }
 
     private handleNode(node: ts.Node) {
-
         if (node.kind === ts.SyntaxKind.SourceFile) {
             const text: string = node.getText();
 
@@ -26,7 +25,6 @@ class NoOctalLiteral extends Lint.RuleWalker {
             // same match for single quotes
             this.matchRegexAndFail(text, /('.*(\\-?[0-7]{1,3}(?![0-9])).*')/g);
         }
-
     }
 
     private matchRegexAndFail(text: string, regex: RegExp) {

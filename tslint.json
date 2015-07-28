@@ -1,5 +1,6 @@
 {
   "rules": {
+    "no-delete-expression": true,
     "no-duplicate-parameter-names": true,
     "no-eval-script": true,
     "no-octal-literal": true,

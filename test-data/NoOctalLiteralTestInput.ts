@@ -1,8 +1,14 @@
+/**
+ * The following code should have no errors:
+ */
 function demoScriptPass1() {
     return "Sample text \xB2";
     return "Sample text \0111"; // longer than octal
 }
 
+/**
+ * The following code should have errors:
+ */
 function demoScriptFail1() {
     return "Sample text \251";
     return "Sample text \254 more text";

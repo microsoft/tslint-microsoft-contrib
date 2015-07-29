@@ -4,16 +4,11 @@ function documentFunction() : Document {
 }
 
 
-document.write('...');
-document.writeln('...');
-this.document.write('...');
-this.document.writeln('...');
-window.document.write('...');
-window.document.writeln('...');
+document.cookie = '...';
+this.document.cookie = '...';
+window.document.cookie = '...';
 
-documentFunction().write('...');
-documentFunction().writeln('...');
+documentFunction().cookie = '...';
 
 var doc = document;
-doc.write('...');
-doc.writeln('...');
+doc.cookie = '...';

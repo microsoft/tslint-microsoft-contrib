@@ -1,7 +1,7 @@
 
 module AstUtils {
 
-    
+
     export function getFunctionName(node : ts.CallExpression) : string {
         var expression: ts.Expression = node.expression;
         var functionName : string = (<any>expression).text;

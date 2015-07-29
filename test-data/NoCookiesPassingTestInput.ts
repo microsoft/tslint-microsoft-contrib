@@ -1,19 +1,14 @@
 
 interface DocumentLikeAPI {
-    write: ((arg : string) => void);
-    writeln: ((arg : string) => void);
+    cookie: string;
 }
 
 function documentLikeAPIFunction() : DocumentLikeAPI {
-    return {
-        write: () => {},
-        writeln: () => {},
-    };
+    return null;
 }
 
 // These usages are OK because they are not on the DOM document
 var document : DocumentLikeAPI = documentLikeAPIFunction();
-document.write('...');
-document.writeln('...');
-documentLikeAPIFunction().write('...');
-documentLikeAPIFunction().writeln('...');
+document.cookie = '...';
+document.cookie = '...';
+documentLikeAPIFunction().cookie = '...';

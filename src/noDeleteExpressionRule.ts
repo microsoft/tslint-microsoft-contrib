@@ -16,7 +16,7 @@ class NoDeleteExpression extends Lint.RuleWalker {
             let deletedObject: ts.Node = node.expression.getChildren()[1];
             if (deletedObject.kind !== ts.SyntaxKind.PropertyAccessExpression) {
                 let msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+                this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
             }
         }
     }

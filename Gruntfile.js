@@ -1,5 +1,7 @@
 "use strict";
 
+var _ = require('underscore');
+
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -79,12 +81,38 @@ module.exports = function(grunt) {
         grunt.file.write('dist/build/package.json', JSON.stringify(basePackageJson, null, 2), { encoding: 'UTF-8' });
     });
 
+    grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md', function () {
+
+        function getAllRuleNames() {
+            var ruleFiles = grunt.file.expand('src/*Rule.ts');
+            return _(ruleFiles).map(function(filename) {
+                filename = filename.substring(4, filename.length - 7);
+                return _(filename).reduce(function(memo, element) {
+                    if (element.toLowerCase() === element) {
+                        memo = memo + element;
+                    } else {
+                        memo = memo + '-' + element.toLowerCase();
+                    }
+                    return memo;
+                }, '');
+            });
+        }
+
+        var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
+        getAllRuleNames().forEach(function(ruleName) {
+            if (readmeText.indexOf(ruleName) === -1) {
+                grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
+            }
+        });
+    });
+
 
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',
         'ts',
         'mochaTest',
         'tslint:prod',
+        'validate-documentation',
         'copy:package',
         'create-package-json-for-npm'
     ]);

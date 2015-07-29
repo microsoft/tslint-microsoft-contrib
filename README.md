@@ -44,7 +44,8 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-delete-expression` Do not delete expressions. Only properties should be deleted
 * `no-document-write` Do not use document.write
 * `no-duplicate-parameter-names` Do not write functions or methods with duplicate parameter names
-* `no-exec-script` Do not use the execScript functions 
+* `no-exec-script` Do not use the execScript functions
+* `no-function-constructor-with-string-args` Do not use the version of the Function constructor that accepts a string argument to define the body of the function
 * `no-increment-decrement` Avoid use of increment and decrement operators particularly as part of complicated expressions
 * `no-multiline-string` Do not declare multiline strings
 * `no-unnecessary-semicolons` Remove unnecessary semicolons

@@ -37,6 +37,9 @@ class MissingOptionalAnnotationWalker extends Lint.RuleWalker {
 
     private validateParameters(node : ts.SignatureDeclaration) {
         var optionalParameterFound = false;
+        if (node.parameters == null) {
+            return;
+        }
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
             if (parameter.questionToken != null) {
                 optionalParameterFound = true;

@@ -49,18 +49,22 @@ module AstUtils {
 
         if (expression.kind === ts.SyntaxKind.Identifier) {
             var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
-            definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
-                console.log('\tdefinitionInfo-' + index);
-                console.log('\t\tkind: ' + definitionInfo.kind);
-                console.log('\t\tname: ' + definitionInfo.name);
-            });
+            if (definitionInfo) {
+                definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
+                    console.log('\tdefinitionInfo-' + index);
+                    console.log('\t\tkind: ' + definitionInfo.kind);
+                    console.log('\t\tname: ' + definitionInfo.name);
+                });
+            }
 
             var typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
-            typeInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
-                console.log('\ttypeDefinitionInfo-' + index);
-                console.log('\t\tkind: ' + definitionInfo.kind);
-                console.log('\t\tname: ' + definitionInfo.name);
-            });
+            if (typeInfo) {
+                typeInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
+                    console.log('\ttypeDefinitionInfo-' + index);
+                    console.log('\t\tkind: ' + definitionInfo.kind);
+                    console.log('\t\tname: ' + definitionInfo.name);
+                });
+            }
 
             var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition("file.ts", expression.getStart());
             console.log('\tquickInfo.kind         = ' + quickInfo.kind);
@@ -84,8 +88,12 @@ module AstUtils {
             }
 
             var contextualType : ts.Type = typeChecker.getContextualType(expression);
-            console.log('\tcontextualType.flags: ' + contextualType.flags);
-            console.log('\tcontextualType.symbol: ' + contextualType.symbol);
+            if (contextualType == null) {
+                console.log('\tcontextualType: ' + contextualType);
+            } else {
+                console.log('\tcontextualType.flags: ' + contextualType.flags);
+                console.log('\tcontextualType.symbol: ' + contextualType.symbol);
+            }
         }
     }
 }

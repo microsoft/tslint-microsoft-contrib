@@ -13,10 +13,9 @@ class NoDeleteExpression extends Lint.RuleWalker {
         super.visitExpressionStatement(node);
         if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
-            let deletedObject: string = node.expression.getChildren()[1].getFullText();
-            if (deletedObject.indexOf('.') === -1) {
-                //if the deleted object does not contain a dot, that means that we are deleting entire variable.
-                let msg: string = Rule.FAILURE_STRING + deletedObject.trim();
+            let deletedObject: ts.Node = node.expression.getChildren()[1];
+            if (deletedObject.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+                let msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
             }
         }

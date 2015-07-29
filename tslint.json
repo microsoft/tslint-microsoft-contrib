@@ -5,7 +5,7 @@
     "no-delete-expression": true,
     "no-document-write": true,
     "no-duplicate-parameter-names": true,
-    "no-eval-script": true,
+    "no-exec-script": true,
     "no-increment-decrement": true,
     "no-multiline-string": true,
     "no-unnecessary-semicolons": true,

@@ -6,6 +6,7 @@
     "no-document-write": true,
     "no-duplicate-parameter-names": true,
     "no-exec-script": true,
+    "no-function-constructor-with-string-args": true,
     "no-increment-decrement": true,
     "no-multiline-string": true,
     "no-unnecessary-semicolons": true,

@@ -1,5 +1,6 @@
 {
   "rules": {
+    "missing-optional-annotation": true,
     "no-delete-expression": true,
     "no-document-write": true,
     "no-duplicate-parameter-names": true,

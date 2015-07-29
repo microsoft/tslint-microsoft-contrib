@@ -8,6 +8,7 @@
     "no-eval-script": true,
     "no-increment-decrement": true,
     "no-multiline-string": true,
+    "no-unnecessary-semicolons": true,
     "no-octal-literal": true,
     "no-string-based-set-immediate": true,
     "no-string-based-set-interval": true,

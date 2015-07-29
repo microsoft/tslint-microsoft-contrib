@@ -4,6 +4,7 @@
     "no-document-write": true,
     "no-duplicate-parameter-names": true,
     "no-eval-script": true,
+    "no-multiline-string": true,
     "no-octal-literal": true,
     "no-string-based-set-immediate": true,
     "no-string-based-set-interval": true,

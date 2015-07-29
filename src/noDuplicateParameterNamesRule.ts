@@ -9,10 +9,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoDuplicateParameterNamesWalker extends Lint.RuleWalker {
 
-    public constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
-        super(sourceFile, options);
-    }
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.validateParameterNames(node);
         super.visitMethodDeclaration(node);

@@ -1,4 +1,6 @@
 
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Argument following optional argument missing optional annotation: ";
 
@@ -7,7 +9,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MissingOptionalAnnotationWalker extends Lint.RuleWalker {
+class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
 
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {

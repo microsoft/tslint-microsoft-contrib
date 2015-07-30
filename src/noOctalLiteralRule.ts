@@ -1,3 +1,5 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Octal literals should not be used: ";
 
@@ -7,7 +9,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoOctalLiteral extends Lint.RuleWalker {
+class NoOctalLiteral extends ErrorTolerantWalker {
 
     public visitNode(node: ts.Node) {
         this.handleNode(node);

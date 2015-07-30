@@ -1,3 +1,4 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "unused import: ";
@@ -10,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoUnusedImportsWalker extends Lint.RuleWalker {
+class NoUnusedImportsWalker extends ErrorTolerantWalker {
 
     private languageServices: ts.LanguageService;
 

@@ -1,3 +1,5 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Forbidden Multiline string: ";
 
@@ -6,7 +8,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoMultilineStringWalker extends Lint.RuleWalker {
+class NoMultilineStringWalker extends ErrorTolerantWalker {
 
 
     protected visitNode(node: ts.Node): void {

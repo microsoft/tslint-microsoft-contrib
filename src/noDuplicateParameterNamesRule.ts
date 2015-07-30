@@ -1,3 +1,4 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Duplicate parameter name: ";
@@ -7,7 +8,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDuplicateParameterNamesWalker extends Lint.RuleWalker {
+class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.validateParameterNames(node);

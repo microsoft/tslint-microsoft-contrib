@@ -1,3 +1,4 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
@@ -13,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoFunctionConstructorWithStringArgsWalker extends Lint.RuleWalker {
+class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
 
     private languageService: ts.LanguageService;
     private typeChecker : ts.TypeChecker;

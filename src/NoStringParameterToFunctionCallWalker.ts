@@ -1,7 +1,8 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
-class NoStringParameterToFunctionCallWalker extends Lint.RuleWalker {
+class NoStringParameterToFunctionCallWalker extends ErrorTolerantWalker {
 
     private failureString : string;
     private languageServices: ts.LanguageService;
@@ -28,6 +29,7 @@ class NoStringParameterToFunctionCallWalker extends Lint.RuleWalker {
         var functionName : string = AstUtils.getFunctionName(node);
         var firstArg : ts.Expression = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
+
             if (!AstUtils.isExpressionEvaluatingToFunction(firstArg, this.languageServices, this.typeChecker)) {
                 var msg : string = this.failureString + firstArg.getFullText().trim().substring(0, 40);
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));

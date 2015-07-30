@@ -1,3 +1,4 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
@@ -9,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoEvalScriptWalker extends Lint.RuleWalker {
+class NoEvalScriptWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression) {
         this.validateExpression(node);

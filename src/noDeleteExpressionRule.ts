@@ -1,3 +1,5 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Variables should not be deleted: ";
 
@@ -7,7 +9,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDeleteExpression extends Lint.RuleWalker {
+class NoDeleteExpression extends ErrorTolerantWalker {
 
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);

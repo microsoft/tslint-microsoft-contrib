@@ -1,3 +1,4 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -6,7 +7,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoIncrementDecrementWalker extends Lint.RuleWalker {
+class NoIncrementDecrementWalker extends ErrorTolerantWalker {
 
     protected visitPostfixUnaryExpression(node: ts.PostfixUnaryExpression): void {
         this.validateUnaryExpression(node);

@@ -1,4 +1,6 @@
 
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "Forbidden call to document.cookie";
 
@@ -10,7 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoCookiesWalker extends Lint.RuleWalker {
+class NoCookiesWalker extends ErrorTolerantWalker {
 
     private languageService : ts.LanguageService;
     private typeChecker : ts.TypeChecker;

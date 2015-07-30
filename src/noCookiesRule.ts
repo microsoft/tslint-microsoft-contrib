@@ -29,10 +29,18 @@ class NoCookiesWalker extends ErrorTolerantWalker {
         if (propertyName === 'cookie') {
 
             var leftSide : ts.Expression = node.expression;
-            var type : ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
-            var typeAsString : string = this.typeChecker.typeToString(type);
-            if (type.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
-                this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+            try {
+                var type: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
+                var typeAsString: string = this.typeChecker.typeToString(type);
+                if (type.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
+                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                }
+            } catch (e) {
+                // TODO: this error seems like a tslint error
+                console.log(leftSide.getFullText());
+                if (leftSide.getFullText().trim() === 'document') {
+                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                }
             }
         }
 

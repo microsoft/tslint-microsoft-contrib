@@ -27,6 +27,27 @@ module AstUtils {
             }
         }
 
+        if (expression.kind === ts.SyntaxKind.CallExpression) {
+            // seems like another tslint error of some sort
+            // calling Function.bind is a special case that makes tslint throw an exception
+            if ((<any>expression).expression.name && (<any>expression).expression.name.text === 'bind') {
+                if (isExpressionEvaluatingToFunction((<any>expression).expression.expression, languageServices, typeChecker)) {
+                    return true;
+                }
+            }
+        }
+
+        if (expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            // seems like another tslint error of some sort
+            var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
+            if (definitionInfo != null && definitionInfo.length === 1) {
+                if (definitionInfo[0].kind === 'class') {
+                    // looks like we have a class member, just suppress the warning
+                    return true;
+                }
+            }
+        }
+
         var type : ts.Type = typeChecker.getTypeAtLocation(expression);
         var signatures : ts.Signature[] = typeChecker.getSignaturesOfType(type, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
@@ -47,7 +68,8 @@ module AstUtils {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
-        if (expression.kind === ts.SyntaxKind.Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier
+            || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {

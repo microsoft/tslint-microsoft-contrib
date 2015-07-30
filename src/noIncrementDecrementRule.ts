@@ -2,7 +2,7 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
 
-    public apply(sourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
     }
 }

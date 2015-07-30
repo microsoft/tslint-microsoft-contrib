@@ -2,22 +2,22 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-import fs = require("fs");
+import fs = require('fs');
 import chai = require('chai');
 
 module TestHelper {
 
     export interface FailurePosition {
-        character: number,
-        line: number,
-        position: number
+        character: number;
+        line: number;
+        position: number;
     }
     export interface ExpectedFailure {
-        ruleName: string,
-        name: string,
-        failure: string,
-        endPosition: FailurePosition,
-        startPosition: FailurePosition
+        ruleName: string;
+        name: string;
+        failure: string;
+        endPosition: FailurePosition;
+        startPosition: FailurePosition;
     }
 
     export function assertViolations(ruleName : string, inputFile : string, expectedFailures : ExpectedFailure[]) {
@@ -41,7 +41,8 @@ module TestHelper {
 
         var actualFailures : ExpectedFailure[] = JSON.parse(result.output);
 
-        chai.assert.equal(expectedFailures.length, actualFailures.length, 'Wrong # of failures: \n' + JSON.stringify(actualFailures, null, 2));
+        var errorMessage = 'Wrong # of failures: \n' + JSON.stringify(actualFailures, null, 2);
+        chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
         expectedFailures.forEach((expected : ExpectedFailure, index: number) : void => {
             var actual = actualFailures[index];

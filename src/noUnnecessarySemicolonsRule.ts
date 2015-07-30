@@ -1,9 +1,9 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "unnecessary semi-colon";
+    public static FAILURE_STRING = 'unnecessary semi-colon';
 
-    public apply(sourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
     }
 }

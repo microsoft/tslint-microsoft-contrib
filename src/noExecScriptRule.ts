@@ -3,7 +3,7 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "forbidden execScript: ";
+    public static FAILURE_STRING = 'forbidden execScript: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));

@@ -2,9 +2,9 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "Argument following optional argument missing optional annotation: ";
+    public static FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
 
-    public apply(sourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MissingOptionalAnnotationWalker(sourceFile, this.getOptions()));
     }
 }
@@ -47,7 +47,8 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
                 optionalParameterFound = true;
             } else if (optionalParameterFound) {
                 // we found a non-optional parameter that comes *after* an optional parameter
-                this.addFailure(this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), Rule.FAILURE_STRING + parameter.getFullText()));
+                var msg = Rule.FAILURE_STRING + parameter.getFullText();
+                this.addFailure(this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), msg));
             }
         });
     }

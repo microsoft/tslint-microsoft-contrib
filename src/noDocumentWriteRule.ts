@@ -3,12 +3,12 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static WRITE_FAILURE = "Forbidden call to document.write";
-    public static WRITELN_FAILURE = "Forbidden call to document.writeln";
+    public static WRITE_FAILURE = 'Forbidden call to document.write';
+    public static WRITELN_FAILURE = 'Forbidden call to document.writeln';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost("file.ts", sourceFile.getFullText());
+        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService : ts.LanguageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions(), languageService));
     }

@@ -4,11 +4,11 @@ import AstUtils = require('./AstUtils');
 
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "forbidden: Function constructor with string arguments ";
+    public static FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost("file.ts", sourceFile.getFullText());
+        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions(), languageService));
     }
@@ -28,8 +28,8 @@ class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
 
     protected visitNewExpression(node: ts.NewExpression): void {
         var functionName  = AstUtils.getFunctionName(node);
-        if (functionName === "Function") {
-            if(node.arguments.length > 0){
+        if (functionName === 'Function') {
+            if (node.arguments.length > 0) {
               this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
             }
         }

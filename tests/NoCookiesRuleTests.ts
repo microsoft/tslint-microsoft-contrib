@@ -1,6 +1,7 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
+/* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
 describe('noCookiesRule', () : void => {
@@ -80,3 +81,4 @@ describe('noCookiesRule', () : void => {
     });
 
 });
+/* tslint:enable:quotemark */

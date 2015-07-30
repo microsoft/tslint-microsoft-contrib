@@ -1,6 +1,7 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
+/* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
 describe('noStringBasedSetTimeoutRule', () : void => {
@@ -192,3 +193,4 @@ describe('noStringBasedSetTimeoutRule', () : void => {
     });
 
 });
+/* tslint:enable:quotemark */

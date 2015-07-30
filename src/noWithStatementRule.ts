@@ -1,7 +1,7 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "Forbidden with statement";
+    public static FAILURE_STRING = 'Forbidden with statement';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));

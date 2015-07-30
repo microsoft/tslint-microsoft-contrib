@@ -2,7 +2,7 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "Forbidden call to document.cookie";
+    public static FAILURE_STRING = 'Forbidden call to document.cookie';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
@@ -37,7 +37,6 @@ class NoCookiesWalker extends ErrorTolerantWalker {
                 }
             } catch (e) {
                 // TODO: this error seems like a tslint error
-                console.log(leftSide.getFullText());
                 if (leftSide.getFullText().trim() === 'document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }

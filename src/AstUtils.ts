@@ -65,6 +65,7 @@ module AstUtils {
     }
 
     export function dumpTypeInfo(expression : ts.Expression, languageServices: ts.LanguageService, typeChecker : ts.TypeChecker) : void {
+        /* tslint:disable:no-console */
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
@@ -88,7 +89,7 @@ module AstUtils {
                 });
             }
 
-            var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition("file.ts", expression.getStart());
+            var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
             console.log('\tquickInfo.kind         = ' + quickInfo.kind);
             console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
             console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
@@ -117,6 +118,7 @@ module AstUtils {
                 console.log('\tcontextualType.symbol: ' + contextualType.symbol);
             }
         }
+        /* tslint:enable:no-console */
     }
 }
 

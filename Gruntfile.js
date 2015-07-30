@@ -49,6 +49,9 @@ module.exports = function(grunt) {
 
         tslint: {
             prod: {
+                options: {
+                    configuration: grunt.file.readJSON("tslint.json"),
+                },
                 files: {
                     src: [
                         'src/**/*.ts',
@@ -58,6 +61,9 @@ module.exports = function(grunt) {
                 }
             },
             "self-test": {
+                options: {
+                    configuration: grunt.file.readJSON("tslint-self-test.json"),
+                },
                 files: {
                     src: [
                         'test-data/**/*.ts'
@@ -65,7 +71,6 @@ module.exports = function(grunt) {
                 }
             },
             options: {
-                configuration: grunt.file.readJSON("tslint.json"),
                 rulesDirectory: 'dist/src'
             }
         }

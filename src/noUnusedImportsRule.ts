@@ -1,11 +1,11 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "unused import: ";
+    public static FAILURE_STRING = 'unused import: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost("file.ts", sourceFile.getFullText());
+        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     }
@@ -28,9 +28,9 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
     }
 
     private validateReferencesForVariable(name : string, position : number) {
-        var highlights = this.languageServices.getDocumentHighlights("file.ts", position, ["file.ts"]);
+        var highlights = this.languageServices.getDocumentHighlights('file.ts', position, ['file.ts']);
         if (highlights[0].highlightSpans.length <= 1) {
-            this.addFailure(this.createFailure(position, name.length, Rule.FAILURE_STRING + "'" + name + "'"));
+            this.addFailure(this.createFailure(position, name.length, Rule.FAILURE_STRING + '\'' + name + '\''));
         }
     }
 }

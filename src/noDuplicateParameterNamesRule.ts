@@ -1,7 +1,7 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "Duplicate parameter name: ";
+    public static FAILURE_STRING = 'Duplicate parameter name: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDuplicateParameterNamesWalker(sourceFile, this.getOptions()));
@@ -42,7 +42,7 @@ class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
             if (parameterName != null) {
                 if (seenNames[parameterName]) {
                     this.addFailure(this.createFailure(
-                        parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + "'" + parameterName + "'"));
+                        parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\''));
                 } else {
                     seenNames[parameterName] = true;
                 }

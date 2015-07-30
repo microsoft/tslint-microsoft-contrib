@@ -28,7 +28,7 @@ module AstUtils {
         }
 
         if (expression.kind === ts.SyntaxKind.CallExpression) {
-            // seems like another tslint error of some sort
+            // seems like another tslint error of some sort TODO: follow up with tslint about this
             // calling Function.bind is a special case that makes tslint throw an exception
             if ((<any>expression).expression.name && (<any>expression).expression.name.text === 'bind') {
                 if (isExpressionEvaluatingToFunction((<any>expression).expression.expression, languageServices, typeChecker)) {
@@ -38,7 +38,7 @@ module AstUtils {
         }
 
         if (expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            // seems like another tslint error of some sort
+            // seems like another tslint error of some sort TODO: follow up with tslint about this
             var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo != null && definitionInfo.length === 1) {
                 if (definitionInfo[0].kind === 'class') {

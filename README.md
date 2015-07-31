@@ -42,6 +42,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `missing-optional-annotation` A parameter that follows one or more parameters marked as optional is not itself marked optional
 * `no-cookies` Do not use cookies
 * `no-delete-expression` Do not delete expressions. Only properties should be deleted
+* `no-disable-auto-sanitization` Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions.
 * `no-document-write` Do not use document.write
 * `no-duplicate-parameter-names` Do not write functions or methods with duplicate parameter names
 * `no-exec-script` Do not use the execScript functions

@@ -4,6 +4,7 @@
     "no-cookies": true,
     "no-delete-expression": true,
     "no-document-write": true,
+    "no-disable-auto-sanitization": true,
     "no-duplicate-parameter-names": true,
     "no-exec-script": true,
     "no-function-constructor-with-string-args": true,

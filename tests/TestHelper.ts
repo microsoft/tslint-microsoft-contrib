@@ -20,7 +20,7 @@ module TestHelper {
         startPosition: FailurePosition;
     }
 
-    export function assertViolations(ruleName : string, inputFile : string, expectedFailures : ExpectedFailure[]) {
+    export function assertViolations(ruleName : string, inputFileOrScript : string, expectedFailures : ExpectedFailure[]) {
 
         var configuration = {
             rules: {}
@@ -34,10 +34,15 @@ module TestHelper {
             formattersDirectory: 'customFormatters/'
         };
 
-        var contents = fs.readFileSync(inputFile, 'utf8');
+        var linter : Lint.Linter;
+        if (inputFileOrScript.match(/.*\.ts/)) {
+            var contents = fs.readFileSync(inputFileOrScript, 'utf8');
+            linter = new Lint.Linter(inputFileOrScript, contents, options);
+        } else {
+            linter = new Lint.Linter('file.ts', inputFileOrScript, options);
+        }
 
-        var ll = new Lint.Linter(inputFile, contents, options);
-        var result : Lint.LintResult = ll.lint();
+        var result : Lint.LintResult = linter.lint();
 
         var actualFailures : ExpectedFailure[] = JSON.parse(result.output);
 

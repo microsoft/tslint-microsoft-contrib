@@ -1,0 +1,22 @@
+
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import AstUtils = require('./AstUtils');
+
+export class Rule extends Lint.Rules.AbstractRule {
+    public static FAILURE_STRING = 'Forbidden call to ';
+
+    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new NoDisableAutoSanitizationWalker(sourceFile, this.getOptions()));
+    }
+}
+
+class NoDisableAutoSanitizationWalker extends ErrorTolerantWalker {
+
+    protected visitCallExpression(node: ts.CallExpression): void {
+        var functionName : string = AstUtils.getFunctionName(node);
+        if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
+        }
+        super.visitCallExpression(node);
+    }
+}

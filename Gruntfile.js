@@ -14,6 +14,25 @@ module.exports = function(grunt) {
             },
         },
 
+        copy: {
+            package: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist/src',
+                        src: ['*.js', '!references.js'],
+                        dest: 'dist/build'
+                    }
+                ]
+            }
+        },
+
+        mochaTest: {
+            test: {
+                src: ['dist/tests/**/*.js']
+            }
+        },
+
         ts: {
             default: {
                 src: [
@@ -26,25 +45,6 @@ module.exports = function(grunt) {
                     target: 'es5'
                 }
             },
-        },
-
-        mochaTest: {
-            test: {
-                src: ['dist/tests/**/*.js']
-            }
-        },
-
-        copy: {
-            package: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'dist/src',
-                        src: ['*.js', '!references.js'],
-                        dest: 'dist/build'
-                    }
-                ]
-            }
         },
 
         tslint: {

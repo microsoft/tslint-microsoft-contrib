@@ -73,6 +73,20 @@ module.exports = function(grunt) {
             options: {
                 rulesDirectory: 'dist/src'
             }
+        },
+
+        watch: {
+            scripts: {
+                files: [
+                    './src/**/*.ts',
+                    './tests/**/*.ts'
+                ],
+                tasks: [
+                    'ts',
+                    'mochaTest',
+                    'tslint:prod'
+                ]
+            }
         }
 
     });

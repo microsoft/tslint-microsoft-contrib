@@ -11,7 +11,7 @@ module.exports = function(grunt) {
             src: ['dist'],
             options: {
                 force: true
-            },
+            }
         },
 
         copy: {
@@ -48,30 +48,16 @@ module.exports = function(grunt) {
         },
 
         tslint: {
-            prod: {
-                options: {
-                    configuration: grunt.file.readJSON("tslint.json"),
-                },
-                files: {
-                    src: [
-                        'src/**/*.ts',
-                        'tests/**/*.ts',
-                        '!src/references.ts'
-                    ]
-                }
-            },
-            "self-test": {
-                options: {
-                    configuration: grunt.file.readJSON("tslint-self-test.json"),
-                },
-                files: {
-                    src: [
-                        'self-test/**/*.ts'
-                    ]
-                }
-            },
             options: {
+                configuration: grunt.file.readJSON("tslint.json"),
                 rulesDirectory: 'dist/src'
+            },
+            files: {
+                src: [
+                    'src/**/*.ts',
+                    'tests/**/*.ts',
+                    '!src/references.ts'
+                ]
             }
         },
 
@@ -130,7 +116,7 @@ module.exports = function(grunt) {
         'clean',
         'ts',
         'mochaTest',
-        'tslint:prod',
+        'tslint',
         'validate-documentation',
         'copy:package',
         'create-package-json-for-npm'

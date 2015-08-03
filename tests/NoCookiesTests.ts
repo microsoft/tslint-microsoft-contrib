@@ -24,39 +24,34 @@ describe('noCookiesRule', () : void => {
             inputFile,
             [
                 {
-                    "endPosition": { "character": 8, "line": 6, "position": 88 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesFailingTestInput.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 0, "line": 6, "position": 80 }
+                    "startPosition": { "line": 7, "character": 1 }
                 },
                 {
-                    "endPosition": { "character": 13, "line": 7, "position": 119 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesFailingTestInput.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 0, "line": 7, "position": 106 }
+                    "startPosition": { "line": 8, "character": 1 }
                 },
                 {
-                    "endPosition": { "character": 15, "line": 8, "position": 152 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesFailingTestInput.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 0, "line": 8, "position": 137 }
+                    "startPosition": { "line": 9, "character": 1 }
                 },
                 {
-                    "endPosition": { "character": 18, "line": 10, "position": 190 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesFailingTestInput.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 0, "line": 10, "position": 172 }
+                    "startPosition": { "line": 11, "character": 1 }
                 },
                 {
-                    "endPosition": { "character": 3, "line": 13, "position": 234 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesFailingTestInput.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 0, "line": 13, "position": 231 }
+                    "startPosition": { "line": 14, "character": 1 }
                 }
             ]
         );
@@ -70,11 +65,10 @@ describe('noCookiesRule', () : void => {
             inputFile,
             [
                 {
-                    "endPosition": { "character": 23, "line": 4, "position": 69 },
                     "failure": "Forbidden call to document.cookie",
                     "name": "test-data/NoCookiesTestInput-error.ts",
                     "ruleName": "no-cookies",
-                    "startPosition": { "character": 15, "line": 4, "position": 61 }
+                    "startPosition": { "line": 5, "character": 16 }
                 }
             ]
         );

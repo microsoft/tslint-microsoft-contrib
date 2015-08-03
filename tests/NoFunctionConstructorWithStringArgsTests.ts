@@ -12,18 +12,12 @@ describe('noFunctionConstructorWithStringArgsRule', () : void => {
         var inputFile : string = 'test-data/NoFunctionConstructorWithStringArgsTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "endPosition": {
-                    "character": 37,
-                    "line": 0,
-                    "position": 37
-                },
                 "failure": "forbidden: Function constructor with string arguments ",
                 "name": "test-data/NoFunctionConstructorWithStringArgsTestInput.ts",
                 "ruleName": "no-function-constructor-with-string-args",
                 "startPosition": {
-                    "character": 8,
-                    "line": 0,
-                    "position": 8
+                    "line": 1,
+                    "character": 9
                 }
             }
         ]);

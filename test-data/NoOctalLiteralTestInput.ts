@@ -33,4 +33,3 @@ function demoScriptFail1() {
     return 'Sample text \-235';
 }
 
-

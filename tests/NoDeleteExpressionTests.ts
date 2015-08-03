@@ -12,18 +12,12 @@ describe('noDeleteExpressionRule', () : void => {
         var inputFile : string = 'test-data/NoDeleteExpressionTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "endPosition": {
-                    "character": 26,
-                    "line": 12,
-                    "position": 233
-                },
                 "failure": "Variables should not be deleted: variableForDeletion",
                 "name": "test-data/NoDeleteExpressionTestInput.ts",
                 "ruleName": "no-delete-expression",
                 "startPosition": {
-                    "character": 7,
-                    "line": 12,
-                    "position": 214
+                    "line": 13,
+                    "character": 8
                 }
             }
         ]);

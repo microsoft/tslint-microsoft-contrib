@@ -14,25 +14,22 @@ describe('noUnnecessarySemiColons', () : void => {
             inputFile,
             [
                 {
-                    "endPosition": { "character": 1, "line": 1, "position": 34 },
                     "failure": "unnecessary semi-colon",
                     "name": "test-data/NoUnnecessarySemicolonsTestInput.ts",
                     "ruleName": "no-unnecessary-semicolons",
-                    "startPosition": { "character": 0, "line": 1, "position": 33 }
+                    "startPosition": { "line": 2, "character": 1 }
                 },
                 {
-                    "endPosition": { "character": 1, "line": 2, "position": 37 },
                     "failure": "unnecessary semi-colon",
                     "name": "test-data/NoUnnecessarySemicolonsTestInput.ts",
                     "ruleName": "no-unnecessary-semicolons",
-                    "startPosition": { "character": 0, "line": 2, "position": 36 }
+                    "startPosition": { "line": 3, "character": 1 }
                 },
                 {
-                    "endPosition": {"character": 2, "line": 2, "position": 38},
                     "failure": "unnecessary semi-colon",
                     "name": "test-data/NoUnnecessarySemicolonsTestInput.ts",
                     "ruleName": "no-unnecessary-semicolons",
-                    "startPosition": {"character": 1, "line": 2, "position": 37}
+                    "startPosition": {"line": 3, "character": 2}
                 }
             ]
         );

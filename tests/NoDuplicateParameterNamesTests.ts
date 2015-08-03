@@ -12,78 +12,48 @@ describe('noDuplicateParameterNames', () : void => {
         var inputFile : string = 'test-data/NoDuplicateParameterNamesTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "endPosition": {
-                    "character": 82,
-                    "line": 27,
-                    "position": 693
-                },
                 "failure": "Duplicate parameter name: 'duplicateConstructorParameter'",
                 "name": "test-data/NoDuplicateParameterNamesTestInput.ts",
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
-                    "character": 53,
-                    "line": 27,
-                    "position": 664
+                    "line": 28,
+                    "character": 54
                 }
             },
             {
-                "endPosition": {
-                    "character": 68,
-                    "line": 28,
-                    "position": 824
-                },
                 "failure": "Duplicate parameter name: 'duplicateMethodParameter'",
                 "name": "test-data/NoDuplicateParameterNamesTestInput.ts",
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
-                    "character": 44,
-                    "line": 28,
-                    "position": 800
+                    "line": 29,
+                    "character": 45
                 }
             },
             {
-                "endPosition": {
-                    "character": 94,
-                    "line": 29,
-                    "position": 990
-                },
                 "failure": "Duplicate parameter name: 'duplicateArrowFunctionParameter'",
                 "name": "test-data/NoDuplicateParameterNamesTestInput.ts",
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
-                    "character": 63,
-                    "line": 29,
-                    "position": 959
+                    "line": 30,
+                    "character": 64
                 }
             },
             {
-                "endPosition": {
-                    "character": 93,
-                    "line": 30,
-                    "position": 1125
-                },
                 "failure": "Duplicate parameter name: 'duplicateFunctionExpParameter'",
                 "name": "test-data/NoDuplicateParameterNamesTestInput.ts",
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
-                    "character": 64,
-                    "line": 30,
-                    "position": 1096
+                    "line": 31,
+                    "character": 65
                 }
             },
             {
-                "endPosition": {
-                    "character": 73,
-                    "line": 37,
-                    "position": 1397
-                },
                 "failure": "Duplicate parameter name: 'duplicateFunctionParameter'",
                 "name": "test-data/NoDuplicateParameterNamesTestInput.ts",
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
-                    "character": 47,
-                    "line": 37,
-                    "position": 1371
+                    "line": 38,
+                    "character": 48
                 }
             }
         ]);

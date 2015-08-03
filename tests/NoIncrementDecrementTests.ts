@@ -12,63 +12,39 @@ describe('noIncrementDecrementRule', () : void => {
         var inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "endPosition": {
-                    "character": 3,
-                    "line": 3,
-                    "position": 15
-                },
                 "failure": "Forbidden ++ operator",
                 "name": "test-data/NoIncrementDecrementTestInput.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
-                    "character": 0,
-                    "line": 3,
-                    "position": 12
+                    "line": 4,
+                    "character": 1
                 }
             },
             {
-                "endPosition": {
-                    "character": 3,
-                    "line": 4,
-                    "position": 21
-                },
                 "failure": "Forbidden -- operator",
                 "name": "test-data/NoIncrementDecrementTestInput.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
-                    "character": 0,
-                    "line": 4,
-                    "position": 18
+                    "line": 5,
+                    "character": 1
                 }
             },
             {
-                "endPosition": {
-                    "character": 3,
-                    "line": 5,
-                    "position": 27
-                },
                 "failure": "Forbidden ++ operator",
                 "name": "test-data/NoIncrementDecrementTestInput.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
-                    "character": 0,
-                    "line": 5,
-                    "position": 24
+                    "line": 6,
+                    "character": 1
                 }
             },
             {
-                "endPosition": {
-                    "character": 3,
-                    "line": 6,
-                    "position": 33
-                },
                 "failure": "Forbidden -- operator",
                 "name": "test-data/NoIncrementDecrementTestInput.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
-                    "character": 0,
-                    "line": 6,
-                    "position": 30
+                    "line": 7,
+                    "character": 1
                 }
             }
         ]);

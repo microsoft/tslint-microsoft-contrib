@@ -12,130 +12,112 @@ describe('noStringBasedSetImmediateRule', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetImmediateTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "endPosition": { "character": 29, "line": 31, "position": 1235 },
                 "failure": "Forbidden setImmediate string parameter: functionArg",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 4, "line": 31, "position": 1210 }
+                "startPosition": { "line": 32, "character": 5 }
             },
             {
-                "endPosition": { "character": 37, "line": 36, "position": 1316 },
                 "failure": "Forbidden setImmediate string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 36, "position": 1279 }
+                "startPosition": { "line": 37, "character": 1 }
             },
             {
-                "endPosition": { "character": 33, "line": 37, "position": 1371 },
                 "failure": "Forbidden setImmediate string parameter: typedStringVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 37, "position": 1338 }
+                "startPosition": { "line": 38, "character": 1 }
             },
             {
-                "endPosition": { "character": 25, "line": 38, "position": 1422 },
                 "failure": "Forbidden setImmediate string parameter: anyVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 38, "position": 1397 }
+                "startPosition": { "line": 39, "character": 1 }
             },
             {
-                "endPosition": { "character": 37, "line": 39, "position": 1493 },
                 "failure": "Forbidden setImmediate string parameter: untypedCreateFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 39, "position": 1456 }
+                "startPosition": { "line": 40, "character": 1 }
             },
             {
-                "endPosition": { "character": 30, "line": 40, "position": 1545 },
                 "failure": "Forbidden setImmediate string parameter: stringFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 40, "position": 1515 }
+                "startPosition": { "line": 41, "character": 1 }
             },
             {
-                "endPosition": { "character": 42, "line": 41, "position": 1616 },
                 "failure": "Forbidden setImmediate string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 41, "position": 1574 }
+                "startPosition": { "line": 42, "character": 1 }
             },
             {
-                "endPosition": { "character": 38, "line": 42, "position": 1671 },
                 "failure": "Forbidden setImmediate string parameter: typedStringVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 42, "position": 1633 }
+                "startPosition": { "line": 43, "character": 1 }
             },
             {
-                "endPosition": { "character": 30, "line": 43, "position": 1722 },
                 "failure": "Forbidden setImmediate string parameter: anyVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 43, "position": 1692 }
+                "startPosition": { "line": 44, "character": 1 }
             },
             {
-                "endPosition": { "character": 42, "line": 44, "position": 1793 },
                 "failure": "Forbidden setImmediate string parameter: untypedCreateFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 44, "position": 1751 }
+                "startPosition": { "line": 45, "character": 1 }
             },
             {
-                "endPosition": { "character": 35, "line": 45, "position": 1845 },
                 "failure": "Forbidden setImmediate string parameter: stringFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 45, "position": 1810 }
+                "startPosition": { "line": 46, "character": 1 }
             },
             {
-                "endPosition": { "character": 44, "line": 46, "position": 1914 },
                 "failure": "Forbidden setImmediate string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 46, "position": 1870 }
+                "startPosition": { "line": 47, "character": 1 }
             },
             {
-                "endPosition": { "character": 40, "line": 47, "position": 1970 },
                 "failure": "Forbidden setImmediate string parameter: typedStringVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 47, "position": 1930 }
+                "startPosition": { "line": 48, "character": 1 }
             },
             {
-                "endPosition": { "character": 32, "line": 48, "position": 2022 },
                 "failure": "Forbidden setImmediate string parameter: anyVariable",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 48, "position": 1990 }
+                "startPosition": { "line": 49, "character": 1 }
             },
             {
-                "endPosition": { "character": 44, "line": 49, "position": 2094 },
                 "failure": "Forbidden setImmediate string parameter: untypedCreateFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 49, "position": 2050 }
+                "startPosition": { "line": 50, "character": 1 }
             },
             {
-                "endPosition": { "character": 37, "line": 50, "position": 2147 },
                 "failure": "Forbidden setImmediate string parameter: stringFunction()",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 0, "line": 50, "position": 2110 }
+                "startPosition": { "line": 51, "character": 1 }
             },
             {
-                "endPosition": { "character": 27, "line": 52, "position": 2236 },
                 "failure": "Forbidden setImmediate string parameter: stringArg",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 4, "line": 52, "position": 2213 }
+                "startPosition": { "line": 53, "character": 5 }
             },
             {
-                "endPosition": { "character": 24, "line": 55, "position": 2328 },
                 "failure": "Forbidden setImmediate string parameter: anyArg",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "character": 4, "line": 55, "position": 2308 }
+                "startPosition": { "line": 56, "character": 5 }
             }
         ]);
     });

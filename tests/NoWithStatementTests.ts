@@ -17,8 +17,7 @@ describe('noWithStatementsRule', () : void => {
                     "failure": "Forbidden with statement",
                     "name": "test-data/NoWithStatementTestInput.ts",
                     "ruleName": "no-with-statement",
-                    "endPosition": { "character": 1, "line": 5, "position": 37 },
-                    "startPosition": { "character": 0, "line": 2, "position": 2 }
+                    "startPosition": { "line": 3, "character": 1 }
                 }
             ]
         );

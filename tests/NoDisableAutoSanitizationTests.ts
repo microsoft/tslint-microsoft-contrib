@@ -17,9 +17,7 @@ describe('noDisableAutoSanitizationRule', () : void => {
                     "failure": "Forbidden call to execUnsafeLocalFunction",
                     "ruleName": "no-disable-auto-sanitization",
                     "name": "file.ts",
-                    "endPosition": { "character": 52, "line": 0, "position": 52 },
-                    "startPosition": { "character": 13, "line": 0, "position": 13
-                    }
+                    "startPosition": { "line": 1, "character": 14 }
                 }
             ]
         );
@@ -36,8 +34,7 @@ describe('noDisableAutoSanitizationRule', () : void => {
                     "failure": "Forbidden call to setInnerHTMLUnsafe",
                     "ruleName": "no-disable-auto-sanitization",
                     "name": "file.ts",
-                    "endPosition": { "character": 49, "line": 0, "position": 49 },
-                    "startPosition": { "character": 0, "line": 0, "position": 0 }
+                    "startPosition": { "line": 1, "character": 1 }
                 }
             ]
         );

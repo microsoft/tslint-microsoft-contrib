@@ -1,6 +1,7 @@
 {
   "rules": {
     "missing-optional-annotation": true,
+    "no-banned-terms": true,
     "no-cookies": true,
     "no-delete-expression": true,
     "no-document-write": true,

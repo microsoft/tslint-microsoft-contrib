@@ -40,6 +40,7 @@ Supported Rules
 A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
 
 * `missing-optional-annotation` A parameter that follows one or more parameters marked as optional is not itself marked optional
+* `no-banned-terms` Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them.
 * `no-cookies` Do not use cookies
 * `no-delete-expression` Do not delete expressions. Only properties should be deleted
 * `no-disable-auto-sanitization` Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions.

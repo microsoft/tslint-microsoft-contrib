@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                 tasks: [
                     'ts',
                     'mochaTest',
-                    'tslint:prod'
+                    'tslint'
                 ]
             }
         }

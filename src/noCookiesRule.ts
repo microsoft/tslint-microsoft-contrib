@@ -30,9 +30,9 @@ class NoCookiesWalker extends ErrorTolerantWalker {
 
             var leftSide : ts.Expression = node.expression;
             try {
-                var type: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
-                var typeAsString: string = this.typeChecker.typeToString(type);
-                if (type.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
+                var leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
+                var typeAsString: string = this.typeChecker.typeToString(leftSideType);
+                if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }
             } catch (e) {

@@ -13,6 +13,7 @@
     "no-multiline-string": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,
+    "no-reserved-keywords": true,
     "no-string-based-set-immediate": true,
     "no-string-based-set-interval": true,
     "no-string-based-set-timeout": true,

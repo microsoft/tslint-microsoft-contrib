@@ -31,9 +31,9 @@ class NoDocumentWriteWalker extends ErrorTolerantWalker {
 
             var leftSide : ts.Expression = (<any>node.expression).expression;
             if (leftSide) {
-                var type : ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
-                var typeAsString : string = this.typeChecker.typeToString(type);
-                if (type.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
+                var leftSideType : ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
+                var typeAsString : string = this.typeChecker.typeToString(leftSideType);
+                if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
                     if (functionName === 'write') {
                         this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.WRITE_FAILURE));
                     } else {

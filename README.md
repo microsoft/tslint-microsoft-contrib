@@ -52,6 +52,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-multiline-string` Do not declare multiline strings
 * `no-unnecessary-semicolons` Remove unnecessary semicolons
 * `no-octal-literal` Do not use octal literals or escaped octal sequences
+* `no-reserved-keywords` Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.
 * `no-string-based-set-immediate` Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument
 * `no-string-based-set-interval` Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument
 * `no-string-based-set-timeout` Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument

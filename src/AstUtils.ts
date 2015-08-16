@@ -48,8 +48,8 @@ module AstUtils {
             }
         }
 
-        var type : ts.Type = typeChecker.getTypeAtLocation(expression);
-        var signatures : ts.Signature[] = typeChecker.getSignaturesOfType(type, ts.SignatureKind.Call);
+        var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
+        var signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             var signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
             if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
@@ -96,18 +96,18 @@ module AstUtils {
             console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
             console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
 
-            var type : ts.Type = typeChecker.getTypeAtLocation(expression);
-            console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(type));
-            console.log('\ttype.flags: ' + type.flags);
-            console.log('\ttype.symbol: ' + type.symbol);
+            var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
+            console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
+            console.log('\ttype.flags: ' + expressionType.flags);
+            console.log('\ttype.symbol: ' + expressionType.symbol);
 
-            var symbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
-            if (symbol == null) {
-                console.log('\tsymbol: ' + symbol);
+            var expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
+            if (expressionSymbol == null) {
+                console.log('\tsymbol: ' + expressionSymbol);
             } else {
-                console.log('\tsymbol.flags: ' + symbol.flags);
-                console.log('\tsymbol.name: ' + symbol.name);
-                console.log('\tsymbol.declarations: ' + symbol.declarations);
+                console.log('\tsymbol.flags: ' + expressionSymbol.flags);
+                console.log('\tsymbol.name: ' + expressionSymbol.name);
+                console.log('\tsymbol.declarations: ' + expressionSymbol.declarations);
             }
 
             var contextualType : ts.Type = typeChecker.getContextualType(expression);

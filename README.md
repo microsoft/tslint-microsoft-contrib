@@ -65,7 +65,7 @@ Development
 
 To develop TSLint simply clone the repository, install dependencies and run grunt:
 
-    git clone git@dse1-git1:prototypes/tslint-microsoft-contrib
+    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
     cd tslint-microsoft-contrib
     npm install
     grunt all

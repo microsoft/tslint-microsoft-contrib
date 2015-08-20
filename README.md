@@ -4,6 +4,11 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
+Version 0.0.1
+-------------
+This software is not yet released with a 1.0 version. 
+All [release blockers](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aopen+is%3Aissue+milestone%3A1.0) are listed in the issues page.
+
 Installation
 ------------
 
@@ -63,7 +68,7 @@ A sample configuration file with all options is available under tslint-microsoft
 Development
 -----------
 
-To develop TSLint simply clone the repository, install dependencies and run grunt:
+To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
 
     git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
     cd tslint-microsoft-contrib

@@ -7,7 +7,7 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 Installation
 ------------
 
-    git clone git@dse1-git1:prototypes/tslint-microsoft-contrib
+    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
     tslint-microsoft-contrib
     grunt all
     cd $PROJECT_DIR

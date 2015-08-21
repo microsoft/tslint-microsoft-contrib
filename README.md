@@ -12,11 +12,7 @@ All [release blockers](https://github.com/Microsoft/tslint-microsoft-contrib/iss
 Installation
 ------------
 
-    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
-    tslint-microsoft-contrib
-    grunt all
-    cd $PROJECT_DIR
-    npm install ../tslint-microsoft-contrib/dist/build/
+    npm install tslint-microsoft-contrib
 
 Configuration
 -------------

@@ -23,5 +23,24 @@ describe('noUnusedImportsRule', () : void => {
         );
     });
 
+    it('FALSE POSITIVE - should not flag imports that are used as other imports', () : void => {
+        var ruleName : string = 'no-unused-imports';
+        var inputScript : string = `
+import DM = require("DM");
+import AB = DM.Dependency;
+console.log(AB);`;
+
+        TestHelper.assertViolations(
+            ruleName,
+            inputScript, [
+                {
+                    "failure": "unused import: 'DM'",
+                    "name": "file.ts",
+                    "ruleName": "no-unused-imports",
+                    "startPosition": { "line": 2, "character": 8 }
+                }
+            ]);
+    });
+
 });
 /* tslint:enable:quotemark */

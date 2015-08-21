@@ -1,3 +1,0 @@
-Bernd Kiefer <bernd.kiefer@microsoft.com>
-Daniel Manesku <daniel.manesku@microsoft.com>
-Hamlet D'Arcy <hamlet.darcy@microsoft.com>

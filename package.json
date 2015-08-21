@@ -7,6 +7,11 @@
     "url": "https://github.com/Microsoft/tslint-microsoft-contrib"
   },
   "author": "Hamlet D'Arcy",
+  "contributors": [
+    { "name": "Bernd Kiefer",   "email": "bernd.kiefer@microsoft.com" },
+    { "name": "Daniel Manesku", "email": "daniel.manesku@microsoft.com" },
+    { "name": "Hamlet D'Arcy",  "email": "hamlet.darcy@microsoft.com" }
+  ],
   "license": "MIT",
   "devDependencies": {
     "chai": "3.2.0",

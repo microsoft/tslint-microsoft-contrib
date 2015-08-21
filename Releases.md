@@ -6,15 +6,17 @@
 
 # Prepare the tslint-microsoft-contrib master branch
 * git pull and do a full build
-
+```
     git pull
     npm install
     grunt 
+```
 
 * tag the master branch with the format [version]
-
+```
     git tag 0.0.1
     git push --tags
+```
 
 * Increase version number in package.json and push
 
@@ -25,9 +27,11 @@
 * Commit and push to remote
 * tag the releases branch with the format npm-[version]
 
-    git tag npm-0.0.1
-    git push --tags
+```
+git tag npm-0.0.1
+git push --tags
+```
 
 # Publish the Package with the Microsoft npmjs Account
-* Follow the steps at https://opensourcehub2.microsoft.com/articles/how-to-publish-npm-package?
+* Follow the steps at https://opensourcehub2.microsoft.com/articles/how-to-publish-npm-package
   * Basically just send the email they want and wait a little while

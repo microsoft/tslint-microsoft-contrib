@@ -15,6 +15,9 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            options: {
+                encoding: 'UTF-8'
+            },
             package: {
                 files: [
                     {

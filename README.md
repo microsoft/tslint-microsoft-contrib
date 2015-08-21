@@ -76,7 +76,4 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
 Creating a new Release
 ----------------------
 
-1. Bump up the version number in package.json 
-2. Run `grunt all` to build the latest sources
-3. Commit
-4. Create a git tag for the new release and push it
+Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases)

@@ -22,6 +22,12 @@ module.exports = function(grunt) {
                         cwd: 'dist/src',
                         src: ['*.js', '!references.js'],
                         dest: 'dist/build'
+                    },
+                    {
+                        expand: true,
+                        cwd: '.',
+                        src: ['README.md'],
+                        dest: 'dist/build'
                     }
                 ]
             }

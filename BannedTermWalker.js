@@ -1,0 +1,63 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var BannedTermWalker = (function (_super) {
+    __extends(BannedTermWalker, _super);
+    function BannedTermWalker(sourceFile, options, failureString, bannedTerms) {
+        _super.call(this, sourceFile, options);
+        this.failureString = failureString;
+        this.bannedTerms = bannedTerms;
+    }
+    BannedTermWalker.prototype.visitVariableDeclaration = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitVariableDeclaration.call(this, node);
+    };
+    BannedTermWalker.prototype.visitFunctionDeclaration = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitFunctionDeclaration.call(this, node);
+    };
+    BannedTermWalker.prototype.visitPropertyDeclaration = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitPropertyDeclaration.call(this, node);
+    };
+    BannedTermWalker.prototype.visitPropertySignature = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitPropertySignature.call(this, node);
+    };
+    BannedTermWalker.prototype.visitSetAccessor = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitSetAccessor.call(this, node);
+    };
+    BannedTermWalker.prototype.visitGetAccessor = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitGetAccessor.call(this, node);
+    };
+    BannedTermWalker.prototype.visitMethodDeclaration = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitMethodDeclaration.call(this, node);
+    };
+    BannedTermWalker.prototype.visitParameterDeclaration = function (node) {
+        this.validateNode(node);
+        _super.prototype.visitParameterDeclaration.call(this, node);
+    };
+    BannedTermWalker.prototype.validateNode = function (node) {
+        if (node.name) {
+            if (node.name.text) {
+                var text = node.name.text;
+                if (this.isBannedTerm(text)) {
+                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), this.failureString + text));
+                }
+            }
+        }
+    };
+    BannedTermWalker.prototype.isBannedTerm = function (text) {
+        return this.bannedTerms.indexOf(text) !== -1;
+    };
+    return BannedTermWalker;
+})(ErrorTolerantWalker);
+module.exports = BannedTermWalker;
+//# sourceMappingURL=BannedTermWalker.js.map

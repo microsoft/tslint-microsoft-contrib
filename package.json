@@ -1,0 +1,34 @@
+{
+  "name": "tslint-microsoft-contrib",
+  "version": "0.0.1",
+  "description": "TSLint Rules for Microsoft",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/tslint-microsoft-contrib"
+  },
+  "author": "Hamlet D'Arcy",
+  "contributors": [
+    {
+      "name": "Bernd Kiefer",
+      "email": "bernd.kiefer@microsoft.com"
+    },
+    {
+      "name": "Daniel Manesku",
+      "email": "daniel.manesku@microsoft.com"
+    },
+    {
+      "name": "Hamlet D'Arcy",
+      "email": "hamlet.darcy@microsoft.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
+  },
+  "keywords": [
+    "tslint",
+    "microsoft",
+    "typescript"
+  ],
+  "license": "MIT",
+  "analyze": true
+}

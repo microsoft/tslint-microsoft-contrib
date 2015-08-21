@@ -1,0 +1,42 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var AstUtils = require('./AstUtils');
+var Rule = (function (_super) {
+    __extends(Rule, _super);
+    function Rule() {
+        _super.apply(this, arguments);
+    }
+    Rule.prototype.apply = function (sourceFile) {
+        var documentRegistry = ts.createDocumentRegistry();
+        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions(), languageService));
+    };
+    Rule.FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
+    return Rule;
+})(Lint.Rules.AbstractRule);
+exports.Rule = Rule;
+var NoFunctionConstructorWithStringArgsWalker = (function (_super) {
+    __extends(NoFunctionConstructorWithStringArgsWalker, _super);
+    function NoFunctionConstructorWithStringArgsWalker(sourceFile, options, languageServices) {
+        _super.call(this, sourceFile, options);
+        this.languageService = languageServices;
+        this.typeChecker = this.languageService.getProgram().getTypeChecker();
+    }
+    NoFunctionConstructorWithStringArgsWalker.prototype.visitNewExpression = function (node) {
+        var functionName = AstUtils.getFunctionName(node);
+        if (functionName === 'Function') {
+            if (node.arguments.length > 0) {
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            }
+        }
+        _super.prototype.visitNewExpression.call(this, node);
+    };
+    return NoFunctionConstructorWithStringArgsWalker;
+})(ErrorTolerantWalker);
+//# sourceMappingURL=noFunctionConstructorWithStringArgsRule.js.map

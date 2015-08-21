@@ -70,6 +70,8 @@ Development
 
 To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
 
+    git config --global core.autocrlf input
+    git config --global core.eol lf
     git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
     cd tslint-microsoft-contrib
     npm install

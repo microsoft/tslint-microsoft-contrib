@@ -15,9 +15,9 @@ Suppressions can be specified in your tslint.json configuration file like this:
 
 Or as a better alternative you can just extract all our suppressions into a separate file: 
 
-`"react-no-dangerous-html": [true].concat(
-    grunt.file.readJSON('../xss_exceptions.json')
-)`
+    "react-no-dangerous-html": [true].concat(
+        grunt.file.readJSON('../xss_exceptions.json')
+    )
 
 ## Audit Trail
 This rule is designed to provide you with an audit trail of all dangerouslySetInnerHTML usages so that they can be reviewed by a security team before a release is made. We suggest you do the following (which is what our team does): 

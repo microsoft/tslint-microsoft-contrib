@@ -1,0 +1,1 @@
+# react-no-dangerous-html Rule

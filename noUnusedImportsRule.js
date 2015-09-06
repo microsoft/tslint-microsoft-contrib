@@ -14,28 +14,75 @@ var Rule = (function (_super) {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
+        var referencedDotImports = this.getReferencedDotImports(sourceFile, this.getOptions());
+        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService, referencedDotImports));
+    };
+    Rule.prototype.getReferencedDotImports = function (sourceFile, options) {
+        var gatherImportHandler = new GatherNoRequireImportsWalker(sourceFile, options);
+        this.applyWithWalker(gatherImportHandler);
+        return gatherImportHandler.noRequireReferences;
     };
     Rule.FAILURE_STRING = 'unused import: ';
     return Rule;
 })(Lint.Rules.AbstractRule);
 exports.Rule = Rule;
+var GatherNoRequireImportsWalker = (function (_super) {
+    __extends(GatherNoRequireImportsWalker, _super);
+    function GatherNoRequireImportsWalker() {
+        _super.apply(this, arguments);
+        this.noRequireReferences = {};
+    }
+    GatherNoRequireImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
+        var moduleReference = node.moduleReference;
+        if (moduleReference.kind === 127) {
+            if (moduleReference.left != null) {
+                this.gatherReferenceFromImport(moduleReference.left.text);
+            }
+        }
+        _super.prototype.visitImportEqualsDeclaration.call(this, node);
+    };
+    GatherNoRequireImportsWalker.prototype.gatherReferenceFromImport = function (qualifiedName) {
+        var _this = this;
+        if (qualifiedName) {
+            qualifiedName.split('.').forEach(function (name) {
+                _this.noRequireReferences[name] = true;
+            });
+        }
+    };
+    return GatherNoRequireImportsWalker;
+})(Lint.RuleWalker);
 var NoUnusedImportsWalker = (function (_super) {
     __extends(NoUnusedImportsWalker, _super);
-    function NoUnusedImportsWalker(sourceFile, options, languageServices) {
+    function NoUnusedImportsWalker(sourceFile, options, languageServices, noRequireReferences) {
         _super.call(this, sourceFile, options);
+        this.noRequireReferences = {};
         this.languageServices = languageServices;
+        this.noRequireReferences = noRequireReferences;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        if (!Lint.hasModifier(node.modifiers, 78)) {
+        if (!this.hasModifier(node.modifiers, 78)) {
             this.validateReferencesForVariable(node.name.text, node.name.getStart());
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);
     };
+    NoUnusedImportsWalker.prototype.hasModifier = function (modifiers, modifierKind) {
+        if (modifiers == null) {
+            return false;
+        }
+        var result = false;
+        modifiers.forEach(function (modifier) {
+            if (modifier.kind === modifierKind) {
+                result = true;
+            }
+        });
+        return result;
+    };
     NoUnusedImportsWalker.prototype.validateReferencesForVariable = function (name, position) {
-        var highlights = this.languageServices.getDocumentHighlights('file.ts', position, ['file.ts']);
-        if (highlights[0].highlightSpans.length <= 1) {
-            this.addFailure(this.createFailure(position, name.length, Rule.FAILURE_STRING + '\'' + name + '\''));
+        var references = this.languageServices.getReferencesAtPosition('file.ts', position);
+        if (references.length <= 1 && !this.noRequireReferences[name]) {
+            var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
+            var failure = this.createFailure(position, name.length, failureString);
+            this.addFailure(failure);
         }
     };
     return NoUnusedImportsWalker;

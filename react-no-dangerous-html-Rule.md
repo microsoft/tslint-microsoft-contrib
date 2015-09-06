@@ -5,13 +5,13 @@ This rule finds usages of React's [dangerouslySetInnerHTML](https://facebook.git
 ## Suppressions
 Suppressions can be specified in your tslint.json configuration file like this: 
 
-`"react-no-dangerous-html": true, [
-    { 
-        file: 'MyFile.ts', 
-        method: 'render', 
-        comment: 'Usage has been approved by our Security Group on 2015-03-12' 
-    }
-]`
+    "react-no-dangerous-html": true, [
+        { 
+            file: 'MyFile.ts', 
+            method: 'render', 
+            comment: 'Usage has been approved by our Security Group on 2015-03-12' 
+        }
+    ]
 
 Or as a better alternative you can just extract all our suppressions into a separate file: 
 

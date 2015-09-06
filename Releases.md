@@ -5,6 +5,7 @@
 * The npm packages are pushed to the "releases" branch and tagged with the format "npm-[version]"
 
 # Prepare the tslint-microsoft-contrib master branch
+* make sure package.json contains the version you which to publish
 * git pull and do a full build
 ```
     git pull

@@ -59,6 +59,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-string-based-set-timeout` Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument
 * `no-unused-imports` Remove unused imports
 * `no-with-statement` Do not use with statements. Assign the item to a new variable instead
+* `react-no-dangerous-html` Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule).
 
 
 Development

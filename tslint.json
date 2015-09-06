@@ -19,6 +19,7 @@
     "no-string-based-set-timeout": true,
     "no-unused-imports": true,
     "no-with-statement": true,
+    "react-no-dangerous-html": true,
 
     "class-name": true,
     "curly": true,

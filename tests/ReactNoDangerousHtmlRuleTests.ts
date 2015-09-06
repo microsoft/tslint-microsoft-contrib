@@ -19,7 +19,7 @@ class MyComponent {
 
 describe('reactNoDangerousHtmlRule', () : void => {
 
-    var ruleName : string = 'react-xss-report';
+    var ruleName : string = 'react-no-dangerous-html';
     var exceptions : {}[] = [];
     var original: any;
 
@@ -33,6 +33,7 @@ describe('reactNoDangerousHtmlRule', () : void => {
     });
 
     it('should produce violation when function called with no suppression', () : void => {
+        exceptions.length = 0;
         TestHelper.assertViolations(
             ruleName,
             dangerousScript,
@@ -44,14 +45,14 @@ describe('reactNoDangerousHtmlRule', () : void => {
                     "security expert/QE representative. If they decide that this is an\n    acceptable usage " +
                     "then add the exception to xss_exceptions.json",
                     "name": "file.ts",
-                    "ruleName": "react-xss-report",
+                    "ruleName": ruleName,
                     "startPosition": { "character": 17, "line": 5 }
                 }
             ]
         );
     });
 
-    it.only('should not produce violation when call exists in exception list', () : void => {
+    it('should not produce violation when call exists in exception list', () : void => {
         exceptions.push({ file: 'file.ts', method: 'render', comment: 'this usage is OK' });
 
         TestHelper.assertViolations(

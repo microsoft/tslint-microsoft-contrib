@@ -20,8 +20,13 @@ export class Rule extends Lint.Rules.AbstractRule {
      * Exposed for testing.
      */
     public static getExceptions(options : Lint.IOptions) : Exception[] {
-        var ruleArguments : any[] = options.ruleArguments || [];
-        return ruleArguments[0];
+        if (options.ruleArguments instanceof Array) {
+            return options.ruleArguments[0];
+        }
+        if (options instanceof Array) {
+            return <Exception[]><any>options; // MSE version of tslint somehow requires this
+        }
+        return null;
     }
 }
 

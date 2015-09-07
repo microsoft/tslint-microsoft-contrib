@@ -4,3 +4,5 @@ var x = {
 delete x.myProperty;
 
 delete this.router.routes[routeName];
+
+delete this.router.routes.moreRoutes[routeName];

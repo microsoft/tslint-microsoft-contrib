@@ -73,6 +73,23 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     cd tslint-microsoft-contrib
     npm install
     grunt all
+    
+Debug code
+-----------
+If command fails because of file access permissions, prefix it with sudo.
+
+    npm install -g node-inspector
+    node-inspector
+
+In another terminal window run:
+
+    node --debug-brk /usr/local/bin/grunt mochaTest
+    
+Open in browser:
+    
+    http://127.0.0.1:8080/?ws=127.0.0.1:8080&port=5858
+    
+Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
 Creating a new Release
 ----------------------

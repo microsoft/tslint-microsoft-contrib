@@ -95,7 +95,8 @@ module.exports = function(grunt) {
         grunt.file.write('dist/build/package.json', JSON.stringify(basePackageJson, null, 2), { encoding: 'UTF-8' });
     });
 
-    grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md', function () {
+    grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md\n' +
+        'and validates that the package.json version is the same version defined in README.md', function () {
 
         function getAllRuleNames() {
             var ruleFiles = grunt.file.expand('src/*Rule.ts');
@@ -113,11 +114,18 @@ module.exports = function(grunt) {
         }
 
         var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
+        var packageJson = grunt.file.readJSON('package.json', { encoding: 'UTF-8' });
         getAllRuleNames().forEach(function(ruleName) {
             if (readmeText.indexOf(ruleName) === -1) {
                 grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
             }
         });
+
+        if (readmeText.indexOf('\nVersion ' + packageJson.version + '\n') === -1) {
+            grunt.fail.warn('Version not documented in README.md correctly.\n' +
+                'package.json declares: ' + packageJson.version + '\n' +
+                'README.md declares something different.');
+        }
     });
 
 

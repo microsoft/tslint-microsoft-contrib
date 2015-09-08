@@ -21,13 +21,14 @@ module AstUtils {
             return true; // function expressions are OK to pass
         }
         if (expression.kind === ts.SyntaxKind.Identifier) {
-            var typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
+            let typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
                 return true; // variables with type function are OK to pass
             }
         }
 
         if (expression.kind === ts.SyntaxKind.CallExpression) {
+
             // seems like another tslint error of some sort TODO: follow up with tslint about this
             // calling Function.bind is a special case that makes tslint throw an exception
             if ((<any>expression).expression.name && (<any>expression).expression.name.text === 'bind') {
@@ -35,11 +36,21 @@ module AstUtils {
                     return true;
                 }
             }
+
+            try {
+                // seems like another tslint error of some sort TODO: follow up with tslint about this
+                let signature : ts.Signature = typeChecker.getResolvedSignature(<ts.CallExpression>expression);
+                let expressionType : ts.Type = typeChecker.getReturnTypeOfSignature(signature);
+                return isTypeFunction(expressionType, typeChecker);
+            } catch (e) {
+                // this exception is only thrown in unit tests, not the node debugger :(
+                return false;
+            }
         }
 
         if (expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             // seems like another tslint error of some sort TODO: follow up with tslint about this
-            var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
+            let definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo != null && definitionInfo.length === 1) {
                 if (definitionInfo[0].kind === 'class') {
                     // looks like we have a class member, just suppress the warning
@@ -48,13 +59,8 @@ module AstUtils {
             }
         }
 
-        var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
-        var signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
-        if (signatures != null && signatures.length > 0) {
-            var signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
-                return true; // variables of type function are allowed to be passed as parameters
-            }
+        if (isTypeFunction(typeChecker.getTypeAtLocation(expression), typeChecker)) {
+            return true;
         }
 
         if (expression.getFullText() === 'functionArg') {
@@ -62,6 +68,17 @@ module AstUtils {
         }
 
         return false; // by default the expression does not evaluate to a function
+    }
+
+    function isTypeFunction(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
+        let signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
+        if (signatures != null && signatures.length > 0) {
+            let signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
+            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
+                return true; // variables of type function are allowed to be passed as parameters
+            }
+        }
+        return false;
     }
 
     export function dumpTypeInfo(expression : ts.Expression, languageServices: ts.LanguageService, typeChecker : ts.TypeChecker) : void {

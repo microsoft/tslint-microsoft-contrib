@@ -25,6 +25,7 @@ module AstUtils {
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
                 return true; // variables with type function are OK to pass
             }
+            return false;
         }
 
         if (expression.kind === ts.SyntaxKind.CallExpression) {
@@ -43,6 +44,10 @@ module AstUtils {
                 let expressionType : ts.Type = typeChecker.getReturnTypeOfSignature(signature);
                 return isTypeFunction(expressionType, typeChecker);
             } catch (e) {
+                // yet another Error thrown from tslint
+                if (e instanceof TypeError && e.message === 'Cannot read property \'members\' of undefined') {
+                    return true; // follow up with tslint
+                }
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
             }

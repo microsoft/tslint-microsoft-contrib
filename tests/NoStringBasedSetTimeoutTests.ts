@@ -18,21 +18,26 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         TestHelper.assertViolations(RULE_NAME, inputFile, []);
     });
 
-    it('should not produce violations', () : void => {
-        var inputFile : string = 'test-data/NoStringBasedSetTimeoutPassingTestInput.ts';
+    it('should not throw error - case 3', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error3.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, []);
     });
 
-    it('should produce violations when passed the result of a void function', () : void => {
-        var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-walker-error.ts';
+    it('should not throw error - case 4', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error4.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: this.onAnimationEnd()",
-                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-walker-error.ts",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-error4.ts",
                 "ruleName": "no-string-based-set-timeout",
                 "startPosition": { "line": 11, "character": 13 }
             }
         ]);
+    });
+
+    it('should not produce violations', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutPassingTestInput.ts';
+        TestHelper.assertViolations(RULE_NAME, inputFile, []);
     });
 
     it('should produce violations for string literals', () : void => {

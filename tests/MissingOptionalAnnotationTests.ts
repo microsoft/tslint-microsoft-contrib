@@ -6,19 +6,34 @@ import TestHelper = require('./TestHelper');
 
 describe('missingOptionalAnnotationRule', () : void => {
 
+    var ruleName : string = 'missing-optional-annotation';
+
     it('should not produce violations', () : void => {
-        var ruleName : string = 'missing-optional-annotation';
         var inputFile : string = 'test-data/MissingOptionalAnnotationPassingTestInput.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
-            [
-            ]
-        );
+        TestHelper.assertViolations(ruleName, inputFile, []);
+    });
+
+    it('should not produce violations for 2nd parameter that has a default initializer', () : void => {
+        var script : string = 'function something(data? : any, others: Object = {}) { }';
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
+    it('should produce a violation when 1st parameter has a default initializer', () : void => {
+        var script : string = 'function something(data : Object = {}, others: any) { }';
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Argument following optional argument missing optional annotation:  others: any",
+                "name": "file.ts",
+                "ruleName": "missing-optional-annotation",
+                "startPosition": {
+                    "character": 40,
+                    "line": 1
+                }
+            }
+        ]);
     });
 
     it('should produce violations', () : void => {
-        var ruleName : string = 'missing-optional-annotation';
         var inputFile : string = 'test-data/MissingOptionalAnnotationFailingTestInput.ts';
         TestHelper.assertViolations(
             ruleName,

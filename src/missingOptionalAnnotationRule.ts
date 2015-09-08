@@ -43,9 +43,9 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
             return;
         }
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
-            if (parameter.questionToken != null) {
+            if (parameter.questionToken != null || parameter.initializer != null) {
                 optionalParameterFound = true;
-            } else if (optionalParameterFound) {
+            } else if (optionalParameterFound && parameter.initializer == null) {
                 // we found a non-optional parameter that comes *after* an optional parameter
                 var msg = Rule.FAILURE_STRING + parameter.getFullText();
                 this.addFailure(this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), msg));

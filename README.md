@@ -83,7 +83,10 @@ If command fails because of file access permissions, prefix it with sudo.
 
 In another terminal window run:
 
+    # on *nix machines: 
     node --debug-brk /usr/local/bin/grunt mochaTest
+    # on Windows machines: 
+    node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
     
 Open in browser:
     

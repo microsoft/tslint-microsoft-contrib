@@ -33,9 +33,7 @@ module AstUtils {
             // seems like another tslint error of some sort TODO: follow up with tslint about this
             // calling Function.bind is a special case that makes tslint throw an exception
             if ((<any>expression).expression.name && (<any>expression).expression.name.text === 'bind') {
-                if (isExpressionEvaluatingToFunction((<any>expression).expression.expression, languageServices, typeChecker)) {
-                    return true;
-                }
+                return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
             }
 
             try {
@@ -44,10 +42,6 @@ module AstUtils {
                 let expressionType : ts.Type = typeChecker.getReturnTypeOfSignature(signature);
                 return isTypeFunction(expressionType, typeChecker);
             } catch (e) {
-                // yet another Error thrown from tslint
-                if (e instanceof TypeError && e.message === 'Cannot read property \'members\' of undefined') {
-                    return true; // follow up with tslint
-                }
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
             }

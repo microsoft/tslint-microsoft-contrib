@@ -35,6 +35,11 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         ]);
     });
 
+    it('should not throw error - case 5', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error5.ts';
+        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+    });
+
     it('should not produce violations', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutPassingTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, []);

@@ -49,10 +49,10 @@ var MissingOptionalAnnotationWalker = (function (_super) {
             return;
         }
         node.parameters.forEach(function (parameter) {
-            if (parameter.questionToken != null) {
+            if (parameter.questionToken != null || parameter.initializer != null) {
                 optionalParameterFound = true;
             }
-            else if (optionalParameterFound) {
+            else if (optionalParameterFound && parameter.initializer == null) {
                 var msg = Rule.FAILURE_STRING + parameter.getFullText();
                 _this.addFailure(_this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), msg));
             }

@@ -4,7 +4,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 0.0.1
+Version 0.0.4
 -------------
 This software is not yet released with a 1.0 version. 
 All [release blockers](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aopen+is%3Aissue+milestone%3A1.0) are listed in the issues page.
@@ -73,6 +73,26 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     cd tslint-microsoft-contrib
     npm install
     grunt all
+    
+Debug code
+-----------
+If command fails because of file access permissions, prefix it with sudo.
+
+    npm install -g node-inspector
+    node-inspector
+
+In another terminal window run:
+
+    # on *nix machines: 
+    node --debug-brk /usr/local/bin/grunt mochaTest
+    # on Windows machines: 
+    node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
+    
+Open in browser:
+    
+    http://127.0.0.1:8080/?ws=127.0.0.1:8080&port=5858
+    
+Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
 Creating a new Release
 ----------------------

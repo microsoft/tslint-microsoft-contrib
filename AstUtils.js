@@ -21,12 +21,19 @@ var AstUtils;
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
                 return true;
             }
+            return false;
         }
         if (expression.kind === 158) {
             if (expression.expression.name && expression.expression.name.text === 'bind') {
-                if (isExpressionEvaluatingToFunction(expression.expression.expression, languageServices, typeChecker)) {
-                    return true;
-                }
+                return true;
+            }
+            try {
+                var signature = typeChecker.getResolvedSignature(expression);
+                var expressionType = typeChecker.getReturnTypeOfSignature(signature);
+                return isTypeFunction(expressionType, typeChecker);
+            }
+            catch (e) {
+                return false;
             }
         }
         if (expression.kind === 156) {
@@ -37,7 +44,15 @@ var AstUtils;
                 }
             }
         }
-        var expressionType = typeChecker.getTypeAtLocation(expression);
+        if (isTypeFunction(typeChecker.getTypeAtLocation(expression), typeChecker)) {
+            return true;
+        }
+        if (expression.getFullText() === 'functionArg') {
+        }
+        return false;
+    }
+    AstUtils.isExpressionEvaluatingToFunction = isExpressionEvaluatingToFunction;
+    function isTypeFunction(expressionType, typeChecker) {
         var signatures = typeChecker.getSignaturesOfType(expressionType, 0);
         if (signatures != null && signatures.length > 0) {
             var signatureDeclaration = signatures[0].declaration;
@@ -45,11 +60,8 @@ var AstUtils;
                 return true;
             }
         }
-        if (expression.getFullText() === 'functionArg') {
-        }
         return false;
     }
-    AstUtils.isExpressionEvaluatingToFunction = isExpressionEvaluatingToFunction;
     function dumpTypeInfo(expression, languageServices, typeChecker) {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);

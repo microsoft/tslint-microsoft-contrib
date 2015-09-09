@@ -19,7 +19,7 @@
     git push --tags
 ```
 
-* Increase version number in package.json and push
+* Increase version number in package.json and README.md and push
 
 # Prepare the tslint-microsoft-contrib releases branch
 * git clone git@github.com:Microsoft/tslint-microsoft-contrib.git tslint-microsoft-contrib-releases

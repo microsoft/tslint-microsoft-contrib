@@ -4,20 +4,25 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
-describe('noDeleteExpressionRule', () : void => {
+describe('noDeleteExpressionRule', (): void => {
 
-    var RULE_NAME : string = 'no-delete-expression';
+    var RULE_NAME: string = 'no-delete-expression';
 
-    it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoDeleteExpressionTestInput.ts';
+    it('should not produce violations', (): void => {
+        const inputFile: string = 'test-data/NoDeleteExpressionPassingTestInput.ts';
+        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+    });
+
+    it('should produce violations ', (): void => {
+        const inputFile: string = 'test-data/NoDeleteExpressionFailingTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Variables should not be deleted: variableForDeletion",
-                "name": "test-data/NoDeleteExpressionTestInput.ts",
+                "name": "test-data/NoDeleteExpressionFailingTestInput.ts",
                 "ruleName": "no-delete-expression",
                 "startPosition": {
-                    "line": 13,
-                    "character": 8
+                    "line": 5,
+                    "character": 12
                 }
             }
         ]);

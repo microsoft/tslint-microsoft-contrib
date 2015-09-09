@@ -16,11 +16,21 @@ class NoDeleteExpression extends ErrorTolerantWalker {
         if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             let deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject.kind !== ts.SyntaxKind.PropertyAccessExpression) {
-                let msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-                this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
+
+            if (deletedObject.kind === ts.SyntaxKind.ElementAccessExpression) {
+                const deletedExpression: ts.Expression = (<any>deletedObject).expression;
+                if (deletedExpression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+                    this.addNoDeleteFailure(deletedObject);
+                }
+            } else if (deletedObject.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+                this.addNoDeleteFailure(deletedObject);
             }
         }
+    }
+
+    public addNoDeleteFailure(deletedObject: ts.Node): void {
+        let msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
+        this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
     }
 
 }

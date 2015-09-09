@@ -19,8 +19,6 @@
     git push --tags
 ```
 
-* Increase version number in package.json and README.md and push
-
 # Prepare the tslint-microsoft-contrib releases branch
 * git clone git@github.com:Microsoft/tslint-microsoft-contrib.git tslint-microsoft-contrib-releases
 * Checkout branch releases
@@ -32,6 +30,8 @@
 git tag npm-0.0.1
 git push --tags
 ```
+* Go back to the master branch, increase the version number in package.json and README.md, and push
+
 
 # Publish the Package with the Microsoft npmjs Account
 * Follow the steps at https://opensourcehub2.microsoft.com/articles/how-to-publish-npm-package

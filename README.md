@@ -49,6 +49,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-duplicate-parameter-names` Do not write functions or methods with duplicate parameter names
 * `no-exec-script` Do not use the execScript functions
 * `no-function-constructor-with-string-args` Do not use the version of the Function constructor that accepts a string argument to define the body of the function
+* `no-http-string` Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks.
 * `no-increment-decrement` Avoid use of increment and decrement operators particularly as part of complicated expressions
 * `no-multiline-string` Do not declare multiline strings
 * `no-unnecessary-semicolons` Remove unnecessary semicolons

@@ -60,6 +60,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-unused-imports` Remove unused imports
 * `no-with-statement` Do not use with statements. Assign the item to a new variable instead
 * `react-no-dangerous-html` Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule).
+* `use-named-parameter` Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule.
 
 
 Development

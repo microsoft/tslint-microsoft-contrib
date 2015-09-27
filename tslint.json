@@ -20,6 +20,7 @@
     "no-unused-imports": true,
     "no-with-statement": true,
     "react-no-dangerous-html": true,
+    "use-named-parameter": true,
 
     "class-name": true,
     "curly": true,

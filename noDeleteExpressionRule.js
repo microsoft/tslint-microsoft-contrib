@@ -27,11 +27,20 @@ var NoDeleteExpression = (function (_super) {
         _super.prototype.visitExpressionStatement.call(this, node);
         if (node.expression.kind === 165) {
             var deletedObject = node.expression.getChildren()[1];
-            if (deletedObject.kind !== 156) {
-                var msg = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-                this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
+            if (deletedObject.kind === 157) {
+                var deletedExpression = deletedObject.expression;
+                if (deletedExpression.kind !== 156) {
+                    this.addNoDeleteFailure(deletedObject);
+                }
+            }
+            else if (deletedObject.kind !== 156) {
+                this.addNoDeleteFailure(deletedObject);
             }
         }
+    };
+    NoDeleteExpression.prototype.addNoDeleteFailure = function (deletedObject) {
+        var msg = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
+        this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
     };
     return NoDeleteExpression;
 })(ErrorTolerantWalker);

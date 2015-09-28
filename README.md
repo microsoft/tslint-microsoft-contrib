@@ -40,6 +40,7 @@ Supported Rules
 
 A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
 
+* `export-name` The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension.
 * `missing-optional-annotation` A parameter that follows one or more parameters marked as optional is not itself marked optional
 * `no-banned-terms` Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them.
 * `no-cookies` Do not use cookies
@@ -49,6 +50,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-duplicate-parameter-names` Do not write functions or methods with duplicate parameter names
 * `no-exec-script` Do not use the execScript functions
 * `no-function-constructor-with-string-args` Do not use the version of the Function constructor that accepts a string argument to define the body of the function
+* `no-http-string` Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks.
 * `no-increment-decrement` Avoid use of increment and decrement operators particularly as part of complicated expressions
 * `no-multiline-string` Do not declare multiline strings
 * `no-unnecessary-semicolons` Remove unnecessary semicolons
@@ -60,6 +62,7 @@ A sample configuration file with all options is available under tslint-microsoft
 * `no-unused-imports` Remove unused imports
 * `no-with-statement` Do not use with statements. Assign the item to a new variable instead
 * `react-no-dangerous-html` Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule).
+* `use-named-parameter` Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule.
 
 
 Development

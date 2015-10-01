@@ -41,31 +41,31 @@ Supported Rules
 A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
 
 
-Rule Name   | Description   
-:---------- | :------------
-`export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension.
-`missing-optional-annotation`   | A parameter that follows one or more parameters marked as optional is not itself marked optional
-`no-banned-terms`               | Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them.
-`no-cookies`                    | Do not use cookies
-`no-delete-expression`          | Do not delete expressions. Only properties should be deleted
-`no-disable-auto-sanitization`  | Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions.
-`no-document-write`             | Do not use document.write
-`no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names
-`no-exec-script`                | Do not use the execScript functions
-`no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function
-`no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks.
-`no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions
-`no-multiline-string`           | Do not declare multiline strings
-`no-unnecessary-semicolons`     | Remove unnecessary semicolons
-`no-octal-literal`              | Do not use octal literals or escaped octal sequences
-`no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.
-`no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument
-`no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument
-`no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument
-`no-unused-imports`             | Remove unused imports
-`no-with-statement`             | Do not use with statements. Assign the item to a new variable instead
-`react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule).
-`use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule.
+Rule Name   | Description | Since  
+:---------- | :------------ | -------------
+`export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. | 0.0.3
+`missing-optional-annotation`   | A parameter that follows one or more parameters marked as optional is not itself marked optional | 0.0.1
+`no-banned-terms`               | Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them. | 0.0.1
+`no-cookies`                    | Do not use cookies | 0.0.1
+`no-delete-expression`          | Do not delete expressions. Only properties should be deleted | 0.0.2
+`no-disable-auto-sanitization`  | Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions. | 0.0.1
+`no-document-write`             | Do not use document.write | 0.0.1
+`no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names | 0.0.1
+`no-exec-script`                | Do not use the execScript functions | 0.0.1
+`no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
+`no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. | 0.0.3
+`no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
+`no-multiline-string`           | Do not declare multiline strings | 0.0.1
+`no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
+`no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. | 0.0.1
+`no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
+`no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
+`no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument | 0.0.1
+`no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
+`no-unused-imports`             | Remove unused imports | 0.0.1
+`no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
+`react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
+`use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 
 
 Development

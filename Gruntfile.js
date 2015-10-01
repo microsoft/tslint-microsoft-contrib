@@ -4,6 +4,21 @@ var _ = require('underscore');
 
 module.exports = function(grunt) {
 
+    function getAllRuleNames() {
+        var ruleFiles = grunt.file.expand('src/*Rule.ts');
+        return _(ruleFiles).map(function(filename) {
+            filename = filename.substring(4, filename.length - 7);
+            return _(filename).reduce(function(memo, element) {
+                if (element.toLowerCase() === element) {
+                    memo = memo + element;
+                } else {
+                    memo = memo + '-' + element.toLowerCase();
+                }
+                return memo;
+            }, '');
+        });
+    }
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -98,21 +113,6 @@ module.exports = function(grunt) {
     grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md\n' +
         'and validates that the package.json version is the same version defined in README.md', function () {
 
-        function getAllRuleNames() {
-            var ruleFiles = grunt.file.expand('src/*Rule.ts');
-            return _(ruleFiles).map(function(filename) {
-                filename = filename.substring(4, filename.length - 7);
-                return _(filename).reduce(function(memo, element) {
-                    if (element.toLowerCase() === element) {
-                        memo = memo + element;
-                    } else {
-                        memo = memo + '-' + element.toLowerCase();
-                    }
-                    return memo;
-                }, '');
-            });
-        }
-
         var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
         var packageJson = grunt.file.readJSON('package.json', { encoding: 'UTF-8' });
         getAllRuleNames().forEach(function(ruleName) {
@@ -128,6 +128,16 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.registerTask('validate-config', 'A task that makes sure all the rules in the project are defined in to run' +
+        ' during the build.', function () {
+
+        var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
+        getAllRuleNames().forEach(function(ruleName) {
+            if (tslintConfig.rules[ruleName] !== true) {
+                grunt.fail.warn('A rule was found that is not enabled on the project: ' + ruleName);
+            }
+        });
+    });
 
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',
@@ -135,6 +145,7 @@ module.exports = function(grunt) {
         'mochaTest',
         'tslint',
         'validate-documentation',
+        'validate-config',
         'copy:package',
         'create-package-json-for-npm'
     ]);

@@ -136,6 +136,24 @@ module AstUtils {
         }
         /* tslint:enable:no-console */
     }
+
+    export function isPrivate(node: ts.Node) : boolean {
+        /* tslint:disable:no-bitwise */
+        return !!(node.flags & ts.NodeFlags.Private);
+        /* tslint:enable:no-bitwise */
+    }
+
+    export function isProtected(node: ts.Node) : boolean {
+        /* tslint:disable:no-bitwise */
+        return !!(node.flags & ts.NodeFlags.Protected);
+        /* tslint:enable:no-bitwise */
+    }
+
+    export function isPublic(node: ts.Node) : boolean {
+        /* tslint:disable:no-bitwise */
+        return !!(node.flags & ts.NodeFlags.Public);
+        /* tslint:enable:no-bitwise */
+    }
 }
 
 export = AstUtils;

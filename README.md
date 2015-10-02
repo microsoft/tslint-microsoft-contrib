@@ -55,6 +55,7 @@ Rule Name   | Description | Since
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. | 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
+`no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 0.0.5
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
 `no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. | 0.0.1

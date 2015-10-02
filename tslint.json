@@ -12,6 +12,7 @@
     "no-function-constructor-with-string-args": true,
     "no-http-string": true,
     "no-increment-decrement": true,
+    "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,

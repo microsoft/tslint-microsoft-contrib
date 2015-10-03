@@ -15,3 +15,5 @@ tslint-microsoft-contrib.iml
 *.sw*
 
 **/tags
+
+out.html

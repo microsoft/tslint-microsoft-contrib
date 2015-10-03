@@ -43,7 +43,7 @@ A sample configuration file with all options is available under tslint-microsoft
 
 Rule Name   | Description | Since  
 :---------- | :------------ | -------------
-`export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. | 0.0.3
+`export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
 `missing-optional-annotation`   | A parameter that follows one or more parameters marked as optional is not itself marked optional | 0.0.1
 `no-banned-terms`               | Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them. | 0.0.1
 `no-cookies`                    | Do not use cookies | 0.0.1
@@ -53,7 +53,7 @@ Rule Name   | Description | Since
 `no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names | 0.0.1
 `no-exec-script`                | Do not use the execScript functions | 0.0.1
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
-`no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.4, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
+`no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 0.0.5
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1

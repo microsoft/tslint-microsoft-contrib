@@ -7,6 +7,16 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
     }
+
+    public static getExceptions(options : Lint.IOptions) : string[] {
+        if (options.ruleArguments instanceof Array) {
+            return options.ruleArguments[0];
+        }
+        if (options instanceof Array) {
+            return <string[]><any>options; // MSE version of tslint somehow requires this
+        }
+        return null;
+    }
 }
 
 class ExportNameWalker extends ErrorTolerantWalker {
@@ -15,10 +25,11 @@ class ExportNameWalker extends ErrorTolerantWalker {
         var exportedName = node.expression.getText();
         var regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
-            var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-            var failure = this.createFailure(node.expression.getStart(), node.expression.getWidth(), failureString);
-            this.addFailure(failure);
-
+            if (!this.isSuppressed(exportedName)) {
+                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                var failure = this.createFailure(node.expression.getStart(), node.expression.getWidth(), failureString);
+                this.addFailure(failure);
+            }
         }
         super.visitExportAssignment(node);
     }
@@ -31,4 +42,18 @@ class ExportNameWalker extends ErrorTolerantWalker {
         }
         return filename;
     }
+
+    private isSuppressed(exportedName: string) : boolean {
+        var allExceptions : string[] = Rule.getExceptions(this.getOptions());
+        /* tslint:disable:no-increment-decrement */
+        for (var i = 0; i < allExceptions.length; i++) {
+            var exception = allExceptions[i];
+            if (new RegExp(exception).test(exportedName)) {
+                return true;
+            }
+        }
+        /* tslint:enable:no-increment-decrement */
+        return false;
+    }
+
 }

@@ -1,5 +1,8 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the banned-term rulesets.
+ */
 class BannedTermWalker extends ErrorTolerantWalker {
 
     private failureString : string;

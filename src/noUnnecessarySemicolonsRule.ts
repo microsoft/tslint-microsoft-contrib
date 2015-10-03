@@ -1,5 +1,8 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the no-unnecessary-semicolons rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'unnecessary semi-colon';
 

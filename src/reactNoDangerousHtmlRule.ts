@@ -6,6 +6,9 @@ interface Exception {
     comment: string;
 }
 
+/**
+ * Implementation of the react-no-dangerous-html rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

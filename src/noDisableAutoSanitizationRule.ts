@@ -2,6 +2,9 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
 
+/**
+ * Implementation of the no-disable-auto-sanitization rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Forbidden call to ';
 

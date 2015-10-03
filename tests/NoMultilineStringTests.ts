@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noMultilineStringRule', () : void => {
 
     var RULE_NAME : string = 'no-multiline-string';

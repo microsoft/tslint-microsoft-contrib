@@ -1,5 +1,8 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the no-duplicate-parameter-names rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Duplicate parameter name: ';
 

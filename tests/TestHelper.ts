@@ -5,6 +5,9 @@
 import fs = require('fs');
 import chai = require('chai');
 
+/**
+ * Test Utilities.
+ */
 module TestHelper {
 
     export interface FailurePosition {

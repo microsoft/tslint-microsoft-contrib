@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noHttpStringRule', () : void => {
 
     var ruleName : string = 'no-http-string';

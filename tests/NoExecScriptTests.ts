@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noExecScriptRule', () : void => {
 
     var RULE_NAME : string = 'no-exec-script';

@@ -2,7 +2,9 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
-
+/**
+ * Implementation of the no-function-constructor-with-string-args rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
 

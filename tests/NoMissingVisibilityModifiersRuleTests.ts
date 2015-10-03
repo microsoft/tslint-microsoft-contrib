@@ -5,6 +5,9 @@
 /* tslint:disable:no-multiline-string */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noMissingVisibilityModifiers', () : void => {
 
     var ruleName : string = 'no-missing-visibility-modifiers';

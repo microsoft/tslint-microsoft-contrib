@@ -1,5 +1,8 @@
 import BannedTermWalker = require('./BannedTermWalker');
 
+/**
+ * Implementation of the no-reserved-keywords rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     private static FAILURE_STRING = 'Forbidden reference to reserved keyword: ';
     // taken from https://github.com/Microsoft/TypeScript/issues/2536

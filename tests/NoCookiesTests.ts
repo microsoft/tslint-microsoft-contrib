@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noCookiesRule', () : void => {
 
     it('should not produce violations', () : void => {

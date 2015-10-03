@@ -1,5 +1,8 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the no-multiline-string rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Forbidden Multiline string: ';
 

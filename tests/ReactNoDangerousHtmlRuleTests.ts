@@ -17,6 +17,9 @@ class MyComponent {
 }`;
 
 
+/**
+ * Unit tests.
+ */
 describe('reactNoDangerousHtmlRule', () : void => {
 
     var ruleName : string = 'react-no-dangerous-html';

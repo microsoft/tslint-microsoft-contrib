@@ -1,5 +1,8 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the use-named-parameter rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Use a named parameter instead: ';
 

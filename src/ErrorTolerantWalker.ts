@@ -1,4 +1,8 @@
 
+/**
+ * A base walker class that gracefully handles unexpected errors.
+ * Errors are often thrown when the TypeChecker is invoked.
+ */
 class ErrorTolerantWalker extends Lint.RuleWalker {
 
 

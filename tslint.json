@@ -1,6 +1,7 @@
 {
   "rules": {
     "export-name": true,
+    "missing-jsdoc": true,
     "missing-optional-annotation": true,
     "no-banned-terms": true,
     "no-cookies": true,

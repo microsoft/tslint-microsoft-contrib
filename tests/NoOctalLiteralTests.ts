@@ -3,10 +3,13 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
- import TestHelper = require('./TestHelper');
+import TestHelper = require('./TestHelper');
 
- /* tslint:disable:no-octal-literal */
- describe('noOctalLiteralRule', () : void => {
+/* tslint:disable:no-octal-literal */
+/**
+ * Unit tests.
+ */
+describe('noOctalLiteralRule', () : void => {
 
      var ruleName : string = 'no-octal-literal';
 

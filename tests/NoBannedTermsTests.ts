@@ -6,6 +6,9 @@
 
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noBannedTermsRule', () : void => {
 
     var RULE_NAME : string = 'no-banned-terms';

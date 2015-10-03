@@ -5,6 +5,9 @@
 /* tslint:disable:no-multiline-string */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('useNamedParameterRule', () : void => {
 
     var ruleName : string = 'use-named-parameter';

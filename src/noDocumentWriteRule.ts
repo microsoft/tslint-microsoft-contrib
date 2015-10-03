@@ -2,6 +2,9 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
+/**
+ * Implementation of the no-document-write rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static WRITE_FAILURE = 'Forbidden call to document.write';
     public static WRITELN_FAILURE = 'Forbidden call to document.writeln';

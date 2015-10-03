@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noDocumentWriteRule', () : void => {
 
     var RULE_NAME : string = 'no-document-write';

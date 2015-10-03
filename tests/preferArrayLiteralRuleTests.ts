@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('preferArrayLiteralRule', () : void => {
 
     var ruleName : string = 'prefer-array-literal';

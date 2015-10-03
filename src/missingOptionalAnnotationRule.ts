@@ -1,6 +1,9 @@
 
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the missing-optional-annotation rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
 

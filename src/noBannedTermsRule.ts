@@ -1,6 +1,9 @@
 
 import BannedTermWalker = require('./BannedTermWalker');
 
+/**
+ * Implementation of the no-banned-terms rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     private static FAILURE_STRING = 'Forbidden reference to banned term: ';
     private static BANNED_TERMS : string[] = [ 'caller', 'callee', 'arguments', 'eval' ];

@@ -2,6 +2,9 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
+/**
+ * Implementation of the no-exec-script rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'forbidden execScript: ';
 

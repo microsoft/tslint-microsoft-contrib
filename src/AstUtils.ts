@@ -1,4 +1,7 @@
 
+/**
+ * General utility class.
+ */
 module AstUtils {
 
 

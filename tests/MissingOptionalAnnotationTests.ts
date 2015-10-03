@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('missingOptionalAnnotationRule', () : void => {
 
     var ruleName : string = 'missing-optional-annotation';

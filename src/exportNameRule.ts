@@ -1,6 +1,9 @@
 
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
+/**
+ * Implementation of the export-name rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'The exported module name must match the file name. Found: ';
 

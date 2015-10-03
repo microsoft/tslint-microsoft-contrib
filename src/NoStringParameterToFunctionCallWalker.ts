@@ -2,6 +2,9 @@ import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 import AstUtils = require('./AstUtils');
 
+/**
+ * A walker that creates failures whenever it detects a string parameter is being passed to a certain constructor. .
+ */
 class NoStringParameterToFunctionCallWalker extends ErrorTolerantWalker {
 
     private failureString : string;

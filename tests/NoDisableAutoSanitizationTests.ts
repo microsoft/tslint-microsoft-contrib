@@ -4,6 +4,9 @@
 /* tslint:disable:quotemark */
 import TestHelper = require('./TestHelper');
 
+/**
+ * Unit tests.
+ */
 describe('noDisableAutoSanitizationRule', () : void => {
 
     it('should produce violation for execUnsafeLocalFunction', () : void => {

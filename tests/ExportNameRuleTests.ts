@@ -5,6 +5,9 @@
 import TestHelper = require('./TestHelper');
 import exportNameRule = require('../src/exportNameRule');
 
+/**
+ * Unit tests.
+ */
 describe('exportNameRule', () : void => {
 
     var RULE_NAME : string = 'export-name';

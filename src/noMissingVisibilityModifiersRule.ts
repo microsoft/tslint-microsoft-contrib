@@ -1,6 +1,9 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
 
+/**
+ * Implementation of the mo-missing-visibility-modifiers rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MissingVisibilityModifierWalker(sourceFile, this.getOptions()));

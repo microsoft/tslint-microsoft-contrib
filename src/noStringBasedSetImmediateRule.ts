@@ -1,6 +1,9 @@
 
 import NoStringParameterToFunctionCallWalker = require('./NoStringParameterToFunctionCallWalker');
 
+/**
+ * Implementation of the no-string-parameter-to-function-call rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

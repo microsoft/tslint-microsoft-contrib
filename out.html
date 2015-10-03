@@ -1,0 +1,213 @@
+
+<h1 id="tslint-microsoft-contrib">tslint-microsoft-contrib</h1>
+
+<p>A set of <a href="https://github.com/palantir/tslint">TSLint</a> rules used on some Microsoft projects.</p>
+
+<h2 id="version-005">Version 0.0.5</h2>
+<p>This software is not yet released with a 1.0 version. 
+All <a href="https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aopen+is%3Aissue+milestone%3A1.0">release blockers</a> are listed in the issues page.</p>
+
+<h2 id="installation">Installation</h2>
+
+<pre><code>npm install tslint-microsoft-contrib
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+
+<h5 id="configure-your-grunt-build-task">Configure your Grunt build task</h5>
+
+<p>Add the new rulesDirectory to your tslint task:</p>
+
+<pre><code>grunt.initConfig({
+  tslint: {
+    options: {
+      rulesDirectory: 'node_modules/tslint-microsoft-contrib',
+      configuration: grunt.file.readJSON("tslint-contrib.json")
+    },
+    files: {
+      src: ['src/file1.ts', 'src/file2.ts']
+    }
+  }
+})
+</code></pre>
+
+<p>The tslint-contrib.json file follows the same conventions as other tslint rules.</p>
+
+<h2 id="supported-rules">Supported Rules</h2>
+
+<p>A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rule Name</th>
+      <th style="text-align: left">Description</th>
+      <th>Since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>export-name</code></td>
+      <td style="text-align: left">The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension.</td>
+      <td>0.0.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>missing-optional-annotation</code></td>
+      <td style="text-align: left">A parameter that follows one or more parameters marked as optional is not itself marked optional</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-banned-terms</code></td>
+      <td style="text-align: left">Do not use banned terms: <a href="https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx">caller</a>, <a href="https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx">callee</a>, <a href="https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx">eval</a>, <a href="https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx">arguments</a>. These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them.</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-cookies</code></td>
+      <td style="text-align: left">Do not use cookies</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-delete-expression</code></td>
+      <td style="text-align: left">Do not delete expressions. Only properties should be deleted</td>
+      <td>0.0.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-disable-auto-sanitization</code></td>
+      <td style="text-align: left">Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx">execUnsafeLocalFunction</a> or <a href="https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx">setInnerHTMLUnsafe</a> functions.</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-document-write</code></td>
+      <td style="text-align: left">Do not use document.write</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-duplicate-parameter-names</code></td>
+      <td style="text-align: left">Do not write functions or methods with duplicate parameter names</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-exec-script</code></td>
+      <td style="text-align: left">Do not use the execScript functions</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-function-constructor-with-string-args</code></td>
+      <td style="text-align: left">Do not use the version of the Function constructor that accepts a string argument to define the body of the function</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-http-string</code></td>
+      <td style="text-align: left">Do not use strings that start with &#8216;http:&#8217;. URL strings should start with &#8216;https:&#8217;. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.4, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: &#8220;no-http-string&#8221;: [true, &#8220;http://www.example.com/\?.<em>&#8221;, &#8220;http://www.examples.com/?.</em>&#8221;]</td>
+      <td>0.0.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-increment-decrement</code></td>
+      <td style="text-align: left">Avoid use of increment and decrement operators particularly as part of complicated expressions</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-missing-visibility-modifiers</code></td>
+      <td style="text-align: left">Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice.</td>
+      <td>0.0.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-multiline-string</code></td>
+      <td style="text-align: left">Do not declare multiline strings</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-octal-literal</code></td>
+      <td style="text-align: left">Do not use octal literals or escaped octal sequences</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-reserved-keywords</code></td>
+      <td style="text-align: left">Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-string-based-set-immediate</code></td>
+      <td style="text-align: left">Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-string-based-set-interval</code></td>
+      <td style="text-align: left">Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-string-based-set-timeout</code></td>
+      <td style="text-align: left">Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-unnecessary-semicolons</code></td>
+      <td style="text-align: left">Remove unnecessary semicolons</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-unused-imports</code></td>
+      <td style="text-align: left">Remove unused imports</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>no-with-statement</code></td>
+      <td style="text-align: left">Do not use with statements. Assign the item to a new variable instead</td>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>prefer-array-literal</code></td>
+      <td style="text-align: left">Use array literal syntax when declaring arry types instead of the Array object with a generic parameter type. For example, prefer the Javascript from of string[] to the TypeScript form Array<string></string></td>
+      <td>0.0.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>react-no-dangerous-html</code></td>
+      <td style="text-align: left">Do not use React&#8217;s dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the <a href="https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule">react-no-dangerous-html Rule wiki page</a>.</td>
+      <td>0.0.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>use-named-parameter</code></td>
+      <td style="text-align: left">Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint&#8217;s <a href="https://jslinterrors.com/use-a-named-parameter">Use a named parameter</a> rule.</td>
+      <td>0.0.3</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="development">Development</h2>
+
+<p>To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:</p>
+
+<pre><code>git config --global core.autocrlf input
+git config --global core.eol lf
+git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
+cd tslint-microsoft-contrib
+npm install
+grunt all
+</code></pre>
+
+<h2 id="debug-code">Debug code</h2>
+<p>If command fails because of file access permissions, prefix it with sudo.</p>
+
+<pre><code>npm install -g node-inspector
+node-inspector
+</code></pre>
+
+<p>In another terminal window run:</p>
+
+<pre><code># on *nix machines: 
+node --debug-brk /usr/local/bin/grunt mochaTest
+# on Windows machines: 
+node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
+</code></pre>
+
+<p>Open in browser:</p>
+
+<pre><code>http://127.0.0.1:8080/?ws=127.0.0.1:8080&amp;port=5858
+</code></pre>
+
+<p>Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.</p>
+
+<h2 id="creating-a-new-release">Creating a new Release</h2>
+
+<p>Refer to the <a href="https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases">Releases Wiki Page</a></p>

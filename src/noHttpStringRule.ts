@@ -6,6 +6,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
     }
+
 }
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
@@ -14,11 +15,36 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
         if (node.kind === ts.SyntaxKind.StringLiteral) {
             var stringText : string = (<ts.LiteralExpression>node).text;
             if (/.*http:.*/.test(stringText)) {
-                var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                if (!this.isSuppressed(stringText)) {
+                    var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                    var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                    this.addFailure(failure);
+                }
             }
         }
         super.visitNode(node);
+    }
+
+    private isSuppressed(stringText: string) : boolean {
+        var allExceptions : string[] = NoHttpStringWalker.getExceptions(this.getOptions());
+        /* tslint:disable:no-increment-decrement */
+        for (var i = 0; i < allExceptions.length; i++) {
+            var exception = allExceptions[i];
+            if (new RegExp(exception).test(stringText)) {
+                return true;
+            }
+        }
+        /* tslint:enable:no-increment-decrement */
+        return false;
+    }
+
+    private static getExceptions(options : Lint.IOptions) : string[] {
+        if (options.ruleArguments instanceof Array) {
+            return options.ruleArguments[0];
+        }
+        if (options instanceof Array) {
+            return <string[]><any>options; // MSE version of tslint somehow requires this
+        }
+        return null;
     }
 }

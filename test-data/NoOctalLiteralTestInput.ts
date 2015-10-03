@@ -1,10 +1,3 @@
-/**
- * The following code should have no errors:
- */
-function demoScriptPass1() {
-    return "Sample text \xB2";
-    return "Sample text \0111"; // longer than octal
-}
 
 /**
  * The following code should have errors:

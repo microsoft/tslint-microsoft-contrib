@@ -14,6 +14,14 @@ module AstUtils {
         return functionName;
     }
 
+    export function getFunctionTarget(expression: ts.CallExpression) : string {
+        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            let propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
+            return propExp.expression.getText();
+        }
+        return null;
+    }
+
     export function isExpressionEvaluatingToFunction(expression : ts.Expression,
                                                      languageServices: ts.LanguageService,
                                                      typeChecker : ts.TypeChecker) : boolean {
@@ -156,6 +164,27 @@ module AstUtils {
         /* tslint:disable:no-bitwise */
         return !!(node.flags & ts.NodeFlags.Public);
         /* tslint:enable:no-bitwise */
+    }
+
+    export function findParentBlock(child: ts.Node) : ts.Node {
+        var parent : ts.Node = child.parent;
+        while (parent != null) {
+            if (parent.kind === ts.SyntaxKind.Block) {
+                return parent;
+            }
+            parent = parent.parent;
+        }
+        throw new Error('Could not determine parent block of node: ' + child);
+    }
+
+    export function isSameIdentifer(source : ts.Node, target: ts.Node) : boolean {
+        if (source == null || target == null) {
+            return false;
+        }
+        if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
+            return source.getText() === target.getText();
+        }
+        return false;
     }
 }
 

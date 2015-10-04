@@ -1,6 +1,7 @@
 {
   "rules": {
     "export-name": true,
+    "jquery-deferred-must-complete": true,
     "missing-jsdoc": true,
     "missing-optional-annotation": true,
     "no-banned-terms": true,

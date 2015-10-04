@@ -1,5 +1,6 @@
 
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import Control = require('./Control');
 
 /**
  * Implementation of the export-name rule.
@@ -48,15 +49,9 @@ class ExportNameWalker extends ErrorTolerantWalker {
 
     private isSuppressed(exportedName: string) : boolean {
         var allExceptions : string[] = Rule.getExceptions(this.getOptions());
-        /* tslint:disable:no-increment-decrement */
-        for (var i = 0; i < allExceptions.length; i++) {
-            var exception = allExceptions[i];
-            if (new RegExp(exception).test(exportedName)) {
-                return true;
-            }
-        }
-        /* tslint:enable:no-increment-decrement */
-        return false;
-    }
 
+        return Control.exists(allExceptions, (exception: string) : boolean => {
+            return new RegExp(exception).test(exportedName);
+        });
+    }
 }

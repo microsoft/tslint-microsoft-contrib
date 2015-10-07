@@ -83,6 +83,7 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     cd tslint-microsoft-contrib
     npm install
     grunt all
+    grunt create-rule --rule-name=no-something-or-other
     
 Debug code
 -----------

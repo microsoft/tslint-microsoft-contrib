@@ -1,0 +1,34 @@
+/// <reference path="../typings/mocha.d.ts" />
+/// <reference path="../typings/chai.d.ts" />
+
+/* tslint:disable:quotemark */
+/* tslint:disable:no-multiline-string */
+
+import TestHelper = require('./TestHelper');
+
+/**
+ * Unit tests.
+ */
+describe('%RULE_FILE_NAME%', () : void => {
+
+    var ruleName : string = '%RULE_NAME%';
+
+    it('should pass on xxx', () : void => {
+        var script : string = `
+            // todo: add passing example
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should fail on xxx', () : void => {
+        var script : string = `
+            // todo: add failing example and update assertions
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+});
+/* tslint:enable:quotemark */
+/* tslint:enable:no-multiline-string */

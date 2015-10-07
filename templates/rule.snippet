@@ -1,0 +1,21 @@
+import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+
+/**
+ * Implementation of the %RULE_NAME% rule.
+ */
+export class Rule extends Lint.Rules.AbstractRule {
+    public static FAILURE_STRING = 'Some error message: '; // TODO: Define an error message
+
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new %WALKER_NAME%(sourceFile, this.getOptions()));
+    }
+
+}
+
+class %WALKER_NAME% extends ErrorTolerantWalker {
+
+    protected visitNode(node: ts.Node): void {
+        console.log(node.kind + ' ' + node.getText());
+        super.visitNode(node);
+    }
+}

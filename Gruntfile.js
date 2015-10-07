@@ -19,6 +19,12 @@ module.exports = function(grunt) {
         });
     }
 
+    function camelCase(input) {
+        return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
+            return group1.toUpperCase();
+        });
+    }
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -139,6 +145,32 @@ module.exports = function(grunt) {
                 }
             }
         });
+    });
+
+    grunt.registerTask('create-rule', 'A task that creates a new rule from the rule templates. --rule-name parameter required', function () {
+
+        function applyTemplates(source) {
+            return source.replace(/%RULE_NAME%/gm, ruleName)
+                .replace(/%RULE_FILE_NAME%/gm, ruleFile)
+                .replace(/%WALKER_NAME%/gm, walkerName);
+        }
+
+        var ruleName = grunt.option('rule-name');
+        if (!ruleName) {
+            grunt.fail.warn('--rule-name parameter is required');
+        } else {
+
+            var ruleFile = camelCase(ruleName) + 'Rule';
+            var sourceFileName = './src/' + ruleFile + '.ts';
+            var testFileName = './tests/' + ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Tests.ts';
+            var walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
+
+            var ruleTemplateText = grunt.file.read('./templates/rule.snippet', {encoding: 'UTF-8'});
+            var testTemplateText = grunt.file.read('./templates/rule-tests.snippet', {encoding: 'UTF-8'});
+
+            grunt.file.write(sourceFileName, applyTemplates(ruleTemplateText), {encoding: 'UTF-8'});
+            grunt.file.write(testFileName, applyTemplates(testTemplateText), {encoding: 'UTF-8'});
+        }
     });
 
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [

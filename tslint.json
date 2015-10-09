@@ -15,6 +15,7 @@
     "no-function-constructor-with-string-args": true,
     "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],
     "no-increment-decrement": true,
+    "no-for-in": true,
     "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
     "no-unnecessary-semicolons": true,

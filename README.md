@@ -6,7 +6,7 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 
 Version 0.0.5
 -------------
-This software is not yet released with a 1.0 version. 
+This software is not yet released with a 1.0 version.
 All [release blockers](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aopen+is%3Aissue+milestone%3A1.0) are listed in the issues page.
 
 Installation
@@ -19,7 +19,7 @@ Configuration
 
 ##### Configure your Grunt build task
 
-Add the new rulesDirectory to your tslint task: 
+Add the new rulesDirectory to your tslint task:
 
     grunt.initConfig({
       tslint: {
@@ -33,7 +33,7 @@ Add the new rulesDirectory to your tslint task:
       }
     })
 
-The tslint-contrib.json file follows the same conventions as other tslint rules. 
+The tslint-contrib.json file follows the same conventions as other tslint rules.
 
 Supported Rules
 -----
@@ -41,7 +41,7 @@ Supported Rules
 A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
 
 
-Rule Name   | Description | Since  
+Rule Name   | Description | Since
 :---------- | :------------ | -------------
 `export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
 `jquery-deferred-must-complete` | When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/26). | 0.0.5
@@ -58,6 +58,7 @@ Rule Name   | Description | Since
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
+`no-for-in`                     | Avoid use of for-in statements. They can be replaced by Object.keys | 0.0.5
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 0.0.5
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
@@ -85,7 +86,7 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     npm install
     grunt all
     grunt create-rule --rule-name=no-something-or-other
-    
+
 Debug code
 -----------
 If command fails because of file access permissions, prefix it with sudo.
@@ -95,15 +96,15 @@ If command fails because of file access permissions, prefix it with sudo.
 
 In another terminal window run:
 
-    # on *nix machines: 
+    # on *nix machines:
     node --debug-brk /usr/local/bin/grunt mochaTest
-    # on Windows machines: 
+    # on Windows machines:
     node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
-    
+
 Open in browser:
-    
+
     http://127.0.0.1:8080/?ws=127.0.0.1:8080&port=5858
-    
+
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
 Creating a new Release

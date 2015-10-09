@@ -140,7 +140,7 @@ module.exports = function(grunt) {
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         getAllRuleNames().forEach(function(ruleName) {
             if (tslintConfig.rules[ruleName] !== true) {
-                if (tslintConfig.rules[ruleName][0] !== true) {
+                if (tslintConfig.rules[ruleName] == null || tslintConfig.rules[ruleName][0] !== true) {
                     grunt.fail.warn('A rule was found that is not enabled on the project: ' + ruleName);
                 }
             }

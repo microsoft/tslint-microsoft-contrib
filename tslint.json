@@ -12,6 +12,7 @@
     "no-duplicate-parameter-names": true,
     "no-exec-script": true,
     "no-function-constructor-with-string-args": true,
+    "no-function-expression": true,
     "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],
     "no-increment-decrement": true,
     "no-missing-visibility-modifiers": true,

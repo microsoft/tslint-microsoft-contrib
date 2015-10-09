@@ -53,6 +53,7 @@ Rule Name   | Description | Since
 `no-disable-auto-sanitization`  | Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions. | 0.0.1
 `no-document-write`             | Do not use document.write | 0.0.1
 `no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names | 0.0.1
+`no-empty-interfaces`           | Do not use empty interfaces. They are compile-time only artifacts and they serve no useful purpose | 0.0.5
 `no-exec-script`                | Do not use the execScript functions | 0.0.1
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3

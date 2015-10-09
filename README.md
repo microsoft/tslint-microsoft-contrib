@@ -56,6 +56,7 @@ Rule Name   | Description | Since
 `no-empty-interfaces`           | Do not use empty interfaces. They are compile-time only artifacts and they serve no useful purpose | 0.0.5
 `no-exec-script`                | Do not use the execScript functions | 0.0.1
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
+`no-function-expression`        | Do not use function expressions; use arrow functions (lambdas) instead. In general, lambdas are simpler to use and avoid the confusion about what the 'this' references points to. Function expressions that contain a 'this' reference are allowed and will not create a failure. | 0.0.5
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-for-in`                     | Avoid use of for-in statements. They can be replaced by Object.keys | 0.0.5

@@ -4,6 +4,7 @@
     "jquery-deferred-must-complete": true,
     "missing-jsdoc": true,
     "missing-optional-annotation": true,
+    "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
     "no-cookies": true,
     "no-delete-expression": true,

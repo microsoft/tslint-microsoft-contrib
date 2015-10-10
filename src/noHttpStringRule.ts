@@ -1,5 +1,5 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import Control = require('./Control');
+import Utils = require('./Utils');
 
 /**
  * Implementation of the no-http-string rule.
@@ -31,7 +31,7 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
 
     private isSuppressed(stringText: string) : boolean {
         var allExceptions : string[] = NoHttpStringWalker.getExceptions(this.getOptions());
-        return Control.exists(allExceptions, (exception: string) : boolean => {
+        return Utils.exists(allExceptions, (exception: string) : boolean => {
             return new RegExp(exception).test(stringText);
         });
     }

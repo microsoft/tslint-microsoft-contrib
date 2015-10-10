@@ -1,6 +1,6 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
-import Control = require('./Control');
+import Utils = require('./Utils');
 
 /**
  * Implementation of the jquery-deferred-must-complete rule.
@@ -132,7 +132,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
             }
         }
 
-        let referenceEscaped : boolean = Control.exists(node.arguments, (argument: ts.Expression) : boolean => {
+        let referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, argument);
         });
         if (referenceEscaped) {
@@ -144,7 +144,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
 
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
-        var isDeferredShadowed : boolean = Control.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
+        var isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {
@@ -156,7 +156,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        var isDeferredShadowed : boolean = Control.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
+        var isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {

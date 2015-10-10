@@ -1,6 +1,6 @@
 
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import Control = require('./Control');
+import Utils = require('./Utils');
 
 /**
  * Implementation of the export-name rule.
@@ -50,7 +50,7 @@ class ExportNameWalker extends ErrorTolerantWalker {
     private isSuppressed(exportedName: string) : boolean {
         var allExceptions : string[] = Rule.getExceptions(this.getOptions());
 
-        return Control.exists(allExceptions, (exception: string) : boolean => {
+        return Utils.exists(allExceptions, (exception: string) : boolean => {
             return new RegExp(exception).test(exportedName);
         });
     }

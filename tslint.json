@@ -27,6 +27,7 @@
     "no-unused-imports": true,
     "no-with-statement": true,
     "prefer-array-literal": true,
+    "promise-must-complete": true,
     "react-no-dangerous-html": true,
     "use-named-parameter": true,
 

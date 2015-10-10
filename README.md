@@ -70,6 +70,7 @@ Rule Name   | Description | Since
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `prefer-array-literal`          | Use array literal syntax when declaring arry types instead of the Array object with a generic parameter type. For example, prefer the Javascript from of string[] to the TypeScript form Array<string> | 0.0.5
+`promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 0.0.5
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 

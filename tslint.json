@@ -18,6 +18,7 @@
     "no-for-in": true,
     "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
+    "no-unnecessary-bind": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,
     "no-reserved-keywords": true,

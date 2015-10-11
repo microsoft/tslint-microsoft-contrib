@@ -66,13 +66,14 @@ class {
     it('should not allow missing method modifiers', () : void => {
         var inputScript : string = `
 class {
-    myMethod1() {};
+    myMethod1() {
+    };
     static myMethod2() {};
 }`;
 
         TestHelper.assertViolations(ruleName, inputScript, [
             {
-                "failure": "Method missing visibility modifier: myMethod1() {}",
+                "failure": "Method missing visibility modifier: myMethod1() {",
                 "name": "file.ts",
                 "ruleName": "no-missing-visibility-modifiers",
                 "startPosition": { "character": 5, "line": 3 }
@@ -81,10 +82,11 @@ class {
                 "failure": "Method missing visibility modifier: static myMethod2() {}",
                 "name": "file.ts",
                 "ruleName": "no-missing-visibility-modifiers",
-                "startPosition": { "character": 5, "line": 4 }
+                "startPosition": { "character": 5, "line": 5 }
             }
         ]);
     });
+
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

@@ -76,9 +76,9 @@ module AstUtils {
             return true;
         }
 
-        if (expression.getFullText() === 'functionArg') {
-            //AstUtils.dumpTypeInfo(expression, this.languageServices, this.typeChecker);
-        }
+        //if (expression.getFullText() === 'functionArg') {
+        //    AstUtils.dumpTypeInfo(expression, this.languageServices, this.typeChecker);
+        //}
 
         return false; // by default the expression does not evaluate to a function
     }

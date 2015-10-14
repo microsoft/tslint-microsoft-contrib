@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -14,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.EmptyStatement) {
+        if (node.kind === SyntaxKind.current().EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);

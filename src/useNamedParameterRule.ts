@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -15,7 +16,7 @@ class UseNamedParameterWalker extends ErrorTolerantWalker {
 
     protected visitElementAccessExpression(node: ts.ElementAccessExpression): void {
         if (node.argumentExpression != null) {
-            if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
+            if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
                     var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);

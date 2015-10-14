@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import Utils = require('./Utils');
 
@@ -16,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoHttpStringWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+        if (node.kind === SyntaxKind.current().StringLiteral) {
             var stringText : string = (<ts.LiteralExpression>node).text;
             if (/.*http:.*/.test(stringText)) {
                 if (!this.isSuppressed(stringText)) {

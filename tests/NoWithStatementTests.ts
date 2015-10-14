@@ -2,28 +2,32 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
+/* tslint:disable:no-multiline-string */
 import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
  */
+
 describe('noWithStatementsRule', () : void => {
 
     it('should produce violations', () : void => {
         var ruleName : string = 'no-with-statement';
-        var inputFile : string = 'test-data/NoWithStatementTestInput.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
-            [
+        var script : string = `
+            with ({}) {
+                a = 1;
+                b = 2;
+            }
+        `;
+        TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Forbidden with statement",
-                    "name": "test-data/NoWithStatementTestInput.ts",
+                    "name": "file.ts",
                     "ruleName": "no-with-statement",
-                    "startPosition": { "line": 3, "character": 1 }
+                    "startPosition": { "character": 13, "line": 2 }
                 }
-            ]
-        );
+            ]);
     });
 });
 /* tslint:enable:quotemark */
+/* tslint:enable:no-multiline-string */

@@ -1,6 +1,7 @@
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import AstUtils = require('./AstUtils');
 import Utils = require('./Utils');
+import SyntaxKind = require('./SyntaxKind');
 
 /**
  * Implementation of the jquery-deferred-must-complete rule.
@@ -13,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     public static isPromiseInstantiation(expression: ts.Expression) : boolean {
-        if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
+        if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
             let functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
             let functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
@@ -35,7 +36,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
 
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && Rule.isPromiseInstantiation(node.right)) {
-            if (node.left.kind === ts.SyntaxKind.Identifier) {
+            if (node.left.kind === SyntaxKind.current().Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
                     let name : ts.Identifier = <ts.Identifier>node.left;
                     this.validateDeferredUsage(node, name);
@@ -119,7 +120,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
 
             let prop : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
 

@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -28,7 +29,7 @@ class GatherNoRequireImportsWalker extends Lint.RuleWalker {
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
         var moduleReference = node.moduleReference;
-        if (moduleReference.kind === ts.SyntaxKind.QualifiedName) {
+        if (moduleReference.kind === SyntaxKind.current().QualifiedName) {
             if ((<any>moduleReference).left != null) {
                 this.gatherReferenceFromImport((<any>moduleReference).left.text);
             }
@@ -62,13 +63,13 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
 
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
-        if (!this.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
+        if (!this.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable((<any>node).name.text, (<any>node).name.getStart());
         }
         super.visitImportEqualsDeclaration(node);
     }
 
-    private hasModifier(modifiers : ts.ModifiersArray, modifierKind : ts.SyntaxKind) : boolean {
+    private hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
         if (modifiers == null) {
             return false;
         }

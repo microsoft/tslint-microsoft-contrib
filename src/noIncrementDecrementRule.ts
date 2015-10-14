@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -23,9 +24,9 @@ class NoIncrementDecrementWalker extends ErrorTolerantWalker {
     }
 
     private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PrefixUnaryExpression) {
-        if (node.operator === ts.SyntaxKind.PlusPlusToken) {
+        if (node.operator === SyntaxKind.current().PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
-        } else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
+        } else if (node.operator === SyntaxKind.current().MinusMinusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden -- operator'));
         }
     }

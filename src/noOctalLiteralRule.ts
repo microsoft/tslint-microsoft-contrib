@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -15,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoOctalLiteral extends ErrorTolerantWalker {
 
     public visitNode(node: ts.Node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+        if (node.kind === SyntaxKind.current().StringLiteral) {
             this.failOnOctalString(<ts.LiteralExpression>node);
         }
         super.visitNode(node);

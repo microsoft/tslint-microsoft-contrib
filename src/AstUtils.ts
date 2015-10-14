@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 
 /**
  * General utility class.
@@ -15,7 +16,7 @@ module AstUtils {
     }
 
     export function getFunctionTarget(expression: ts.CallExpression) : string {
-        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (expression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             let propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
@@ -25,13 +26,13 @@ module AstUtils {
     export function isExpressionEvaluatingToFunction(expression : ts.Expression,
                                                      languageServices: ts.LanguageService,
                                                      typeChecker : ts.TypeChecker) : boolean {
-        if (expression.kind === ts.SyntaxKind.ArrowFunction) {
+        if (expression.kind === SyntaxKind.current().ArrowFunction) {
             return true; // arrow function literals are acceptable to pass to setTimeout
         }
-        if (expression.kind === ts.SyntaxKind.FunctionExpression) {
+        if (expression.kind === SyntaxKind.current().FunctionExpression) {
             return true; // function expressions are OK to pass
         }
-        if (expression.kind === ts.SyntaxKind.Identifier) {
+        if (expression.kind === SyntaxKind.current().Identifier) {
             let typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
                 return true; // variables with type function are OK to pass
@@ -39,7 +40,7 @@ module AstUtils {
             return false;
         }
 
-        if (expression.kind === ts.SyntaxKind.CallExpression) {
+        if (expression.kind === SyntaxKind.current().CallExpression) {
 
             // seems like another tslint error of some sort TODO: follow up with tslint about this
             // calling Function.bind is a special case that makes tslint throw an exception
@@ -58,7 +59,7 @@ module AstUtils {
             }
         }
 
-        if (expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             // seems like another tslint error of some sort TODO: follow up with tslint about this
             let definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo != null && definitionInfo.length === 1) {
@@ -84,7 +85,7 @@ module AstUtils {
         let signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             let signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
+            if (signatureDeclaration.kind === SyntaxKind.current().FunctionType) {
                 return true; // variables of type function are allowed to be passed as parameters
             }
         }
@@ -96,8 +97,8 @@ module AstUtils {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
-        if (expression.kind === ts.SyntaxKind.Identifier
-            || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (expression.kind === SyntaxKind.current().Identifier
+            || expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
@@ -169,7 +170,7 @@ module AstUtils {
     export function findParentBlock(child: ts.Node) : ts.Node {
         var parent : ts.Node = child.parent;
         while (parent != null) {
-            if (parent.kind === ts.SyntaxKind.Block) {
+            if (parent.kind === SyntaxKind.current().Block) {
                 return parent;
             }
             parent = parent.parent;
@@ -181,7 +182,7 @@ module AstUtils {
         if (source == null || target == null) {
             return false;
         }
-        if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
+        if (source.kind === SyntaxKind.current().Identifier && target.kind === SyntaxKind.current().Identifier) {
             return source.getText() === target.getText();
         }
         return false;

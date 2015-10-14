@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -16,16 +17,16 @@ class NoDeleteExpression extends ErrorTolerantWalker {
 
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);
-        if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
+        if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             let deletedObject: ts.Node = node.expression.getChildren()[1];
 
-            if (deletedObject.kind === ts.SyntaxKind.ElementAccessExpression) {
+            if (deletedObject.kind === SyntaxKind.current().ElementAccessExpression) {
                 const deletedExpression: ts.Expression = (<any>deletedObject).expression;
-                if (deletedExpression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+                if (deletedExpression.kind !== SyntaxKind.current().PropertyAccessExpression) {
                     this.addNoDeleteFailure(deletedObject);
                 }
-            } else if (deletedObject.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+            } else if (deletedObject.kind !== SyntaxKind.current().PropertyAccessExpression) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

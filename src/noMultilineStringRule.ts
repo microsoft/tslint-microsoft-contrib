@@ -1,3 +1,4 @@
+import SyntaxKind = require('./SyntaxKind');
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 
 /**
@@ -15,7 +16,7 @@ class NoMultilineStringWalker extends ErrorTolerantWalker {
 
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
+        if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
             let fullText : string = node.getFullText();
             let firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
             let trimmed : string = firstLine.substring(0, 40);

@@ -31,6 +31,9 @@ module AstUtils {
         if (expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true; // function expressions are OK to pass
         }
+        if (expression.kind === ts.SyntaxKind.TemplateExpression) {
+            return true; // template expressions are OK to pass
+        }
         if (expression.kind === ts.SyntaxKind.Identifier) {
             let typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
@@ -73,9 +76,9 @@ module AstUtils {
             return true;
         }
 
-        if (expression.getFullText() === 'functionArg') {
-            //AstUtils.dumpTypeInfo(expression, this.languageServices, this.typeChecker);
-        }
+        //if (expression.getFullText() === 'functionArg') {
+        //    AstUtils.dumpTypeInfo(expression, this.languageServices, this.typeChecker);
+        //}
 
         return false; // by default the expression does not evaluate to a function
     }

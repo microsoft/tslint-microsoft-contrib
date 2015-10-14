@@ -29,6 +29,9 @@ module SyntaxKind {
         SourceFile: number;
         StringLiteral: number;
         TypeReference: number;
+        TaggedTemplateExpression: number;
+        TemplateExpression: number;
+        BinaryExpression: number;
     }
 
     var cachedKinds: SyntaxKind.SyntaxKind;

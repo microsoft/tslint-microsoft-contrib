@@ -212,5 +212,36 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         ]);
     });
 
+    it('should pass all Issue #46 usages', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts';
+
+        TestHelper.assertViolations(RULE_NAME, inputFile, [
+            {
+                "failure": "Forbidden setTimeout string parameter: \"alert(\" + alertNum + \")\"",
+                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 15 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: \"alert(\" + alertNum + \")\"",
+                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 16 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: `alert(${alertNum})`",
+                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 19 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: `alert(${alertNum})`",
+                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 20 }
+            }
+        ]);
+    });
+
 });
 /* tslint:enable:quotemark */

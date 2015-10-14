@@ -26,12 +26,17 @@ module AstUtils {
     export function isExpressionEvaluatingToFunction(expression : ts.Expression,
                                                      languageServices: ts.LanguageService,
                                                      typeChecker : ts.TypeChecker) : boolean {
-        if (expression.kind === SyntaxKind.current().ArrowFunction) {
-            return true; // arrow function literals are acceptable to pass to setTimeout
+        if (expression.kind === SyntaxKind.current().ArrowFunction || expression.kind === SyntaxKind.current().FunctionExpression) {
+            return true; // arrow function literals and arrow functions are definitely functions
         }
-        if (expression.kind === SyntaxKind.current().FunctionExpression) {
-            return true; // function expressions are OK to pass
+        if (expression.kind === SyntaxKind.current().StringLiteral
+            || expression.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral
+            || expression.kind === SyntaxKind.current().TemplateExpression
+            || expression.kind === SyntaxKind.current().TaggedTemplateExpression
+            || expression.kind === SyntaxKind.current().BinaryExpression) {
+            return false; // strings and binary expressions are definitely not functions
         }
+
         if (expression.kind === SyntaxKind.current().Identifier) {
             let typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {

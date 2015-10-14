@@ -199,5 +199,18 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         ]);
     });
 
+    it('should create violations on template strings', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-template-string.ts';
+
+        TestHelper.assertViolations(RULE_NAME, inputFile, [
+            {
+                "failure": "Forbidden setTimeout string parameter: `${data}`",
+                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-template-string.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 1, "line": 2 }
+            }
+        ]);
+    });
+
 });
 /* tslint:enable:quotemark */

@@ -1,5 +1,5 @@
 
-import NoStringParameterToFunctionCallWalker = require('./NoStringParameterToFunctionCallWalker');
+import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParameterToFunctionCallWalker');
 
 /**
  * Implementation of the no-string-parameter-to-function-call rule.

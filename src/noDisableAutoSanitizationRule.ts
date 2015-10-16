@@ -1,6 +1,6 @@
 
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import AstUtils = require('./AstUtils');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import AstUtils = require('./utils/AstUtils');
 
 /**
  * Implementation of the no-disable-auto-sanitization rule.

@@ -1,7 +1,7 @@
-import SyntaxKind = require('./SyntaxKind');
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import AstUtils = require('./AstUtils');
-import Utils = require('./Utils');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import AstUtils = require('./utils/AstUtils');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the promise-must-complete rule.

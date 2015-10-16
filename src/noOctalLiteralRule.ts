@@ -1,5 +1,5 @@
-import SyntaxKind = require('./SyntaxKind');
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the no-octal-literal rule.

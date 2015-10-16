@@ -1,4 +1,4 @@
-import BannedTermWalker = require('./BannedTermWalker');
+import BannedTermWalker = require('./utils/BannedTermWalker');
 
 /**
  * Implementation of the no-reserved-keywords rule.

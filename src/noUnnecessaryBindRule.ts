@@ -1,6 +1,6 @@
-import SyntaxKind = require('./SyntaxKind');
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import AstUtils = require('./AstUtils');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import AstUtils = require('./utils/AstUtils');
 
 /**
  * Implementation of the no-unnecessary-bin rule.

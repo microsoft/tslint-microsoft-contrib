@@ -1,6 +1,6 @@
-import SyntaxKind = require('./SyntaxKind');
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import Utils = require('./Utils');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the no-http-string rule.

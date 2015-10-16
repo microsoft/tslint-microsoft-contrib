@@ -6,12 +6,18 @@
 
 # Prepare the tslint-microsoft-contrib master branch
 * make sure package.json contains the version you which to publish
-* git pull and do a full build
+* git pull
 ```
     git pull
+```
+* change the tslint dependency to version 2.5.1 in package.json
+* do full build
+```
     npm install
     grunt 
 ```
+* change the tslint dependency back to version 2.4.2 in package.json
+* do a full build again
 
 * tag the master branch with the format [version]
 ```

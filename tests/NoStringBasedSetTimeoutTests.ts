@@ -2,6 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
+/* tslint:disable:no-multiline-string */
 import TestHelper = require('./TestHelper');
 
 /**
@@ -19,6 +20,78 @@ describe('noStringBasedSetTimeoutRule', () : void => {
     it('should not throw error - case 2', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error2.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, []);
+    });
+
+    it('should support type inference on shadowed variables', () : void => {
+        var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts';
+        TestHelper.assertViolations(RULE_NAME, inputFile, [
+            {
+                "failure": "Forbidden setTimeout string parameter: moduleProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 18 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalFunction1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 20 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalProp2",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 9, "line": 21 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 13, "line": 27 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: moduleProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 13, "line": 28 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 21, "line": 35 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalProp3",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 21, "line": 37 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: globalFunction1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 21, "line": 38 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: moduleProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 21, "line": 40 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: moduleProp2",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 21, "line": 41 }
+            },
+            {
+                "failure": "Forbidden setTimeout string parameter: moduleProp1",
+                "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
+                "ruleName": "no-string-based-set-timeout",
+                "startPosition": { "character": 13, "line": 48 }
+            }
+        ]);
     });
 
     it('should not throw error - case 3', () : void => {
@@ -187,14 +260,30 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         ]);
     });
 
-    it('should produce violations for our false positive case', () : void => {
-        var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-false-positive.ts';
+    it('should not produce violations what used to be a false positive case', () : void => {
+        var inputFile : string = `
+        function invoke(functionArg1 : () => void, functionArg2 = () => {}) {
+            setTimeout(functionArg1);
+            setTimeout(functionArg2);
+        }`;
+
+        TestHelper.assertViolations(RULE_NAME, inputFile, [ ]);
+    });
+
+    it('should not fail within a constructor', () : void => {
+        var inputFile : string = `
+        class MyClass {
+            constructor(arg1) {
+                setTimeout(arg1, 5);
+            }
+        }`;
+
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Forbidden setTimeout string parameter: functionArg",
-                "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-false-positive.ts",
+                "failure": "Forbidden setTimeout string parameter: arg1",
+                "name": "file.ts",
                 "ruleName": "no-string-based-set-timeout",
-                "startPosition": { "line": 5, "character": 5 }
+                "startPosition": { "character": 17, "line": 4 }
             }
         ]);
     });
@@ -245,3 +334,4 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
 });
 /* tslint:enable:quotemark */
+/* tslint:enable:no-multiline-string */

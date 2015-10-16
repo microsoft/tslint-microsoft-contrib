@@ -26,8 +26,8 @@ this.setImmediate(createFunction());
 window.setImmediate(createFunction());
 
 
-// currently a false positive.
-// see https://stackoverflow.com/questions/31673007/how-do-i-determine-the-compile-time-type-of-a-typescript-expression-that-is-a-fu
+
+// this is no longer a false positive
 function invoke(functionArg : () => void) {
     setImmediate(functionArg);
 }

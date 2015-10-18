@@ -1,5 +1,6 @@
 {
   "rules": {
+    "chai-vague-errors": true,
     "export-name": true,
     "jquery-deferred-must-complete": true,
     "missing-jsdoc": true,

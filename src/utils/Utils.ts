@@ -19,6 +19,19 @@ module Utils {
         return false;
     }
 
+    /**
+     * A reduce function.
+     */
+    export function reduce<T, R>(list : T[], predicate: (memo: R, element: T) => R, initialValue: R) : R {
+        var result = initialValue;
+        if (list != null ) {
+            for (var i = 0; i < list.length; i++) {
+                result = predicate(result, list[i]);
+            }
+        }
+        return result;
+    }
+
 }
 /* tslint:enable:no-increment-decrement */
 

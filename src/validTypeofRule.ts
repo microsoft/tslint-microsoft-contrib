@@ -1,5 +1,6 @@
 import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 import SyntaxKind = require('./utils/SyntaxKind');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the valid-typeof rule.
@@ -35,16 +36,15 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
     }
 
     private getClosestTerm(term: string): string {
-        var result: string = '';
         var closestMatch: number = 99999999;
-        Rule.VALID_TERMS.forEach((knownTerm: string): void => {
-            var distance = this.hammingDistance(term, knownTerm);
+        return Utils.reduce(Rule.VALID_TERMS, (closestTerm: string, thisTerm: string) : string => {
+            var distance = this.hammingDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
-                result = knownTerm;
+                closestTerm = thisTerm;
             }
-        });
-        return result;
+            return closestTerm;
+        }, '');
     }
 
     /**

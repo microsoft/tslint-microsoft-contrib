@@ -14,6 +14,7 @@ module SyntaxKind {
         MultiLineCommentTrivia: number;
         NewLineTrivia: number;
         WhitespaceTrivia: number;
+        ShebangTrivia?: number; //1.6 only
         ConflictMarkerTrivia: number;
         NumericLiteral: number;
         StringLiteral: number;
@@ -33,6 +34,7 @@ module SyntaxKind {
         SemicolonToken: number;
         CommaToken: number;
         LessThanToken: number;
+        LessThanSlashToken?: number; //1.6 only
         GreaterThanToken: number;
         LessThanEqualsToken: number;
         GreaterThanEqualsToken: number;
@@ -119,12 +121,16 @@ module SyntaxKind {
         PublicKeyword: number;
         StaticKeyword: number;
         YieldKeyword: number;
+        AbstractKeyword?: number; //1.6 only
         AsKeyword: number;
         AnyKeyword: number;
+        AsyncKeyword?: number; //1.6 only
+        AwaitKeyword?: number; //1.6 only
         BooleanKeyword: number;
         ConstructorKeyword: number;
         DeclareKeyword: number;
         GetKeyword: number;
+        IsKeyword?: number; //1.6 only
         ModuleKeyword: number;
         NamespaceKeyword: number;
         RequireKeyword: number;
@@ -150,6 +156,7 @@ module SyntaxKind {
         CallSignature: number;
         ConstructSignature: number;
         IndexSignature: number;
+        TypePredicate?: number; //1.6 only
         TypeReference: number;
         FunctionType: number;
         ConstructorType: number;
@@ -158,6 +165,7 @@ module SyntaxKind {
         ArrayType: number;
         TupleType: number;
         UnionType: number;
+        IntersectionType?: number; //1.6 only
         ParenthesizedType: number;
         ObjectBindingPattern: number;
         ArrayBindingPattern: number;
@@ -176,6 +184,7 @@ module SyntaxKind {
         DeleteExpression: number;
         TypeOfExpression: number;
         VoidExpression: number;
+        AwaitExpression?: number; //1.6 only
         PrefixUnaryExpression: number;
         PostfixUnaryExpression: number;
         BinaryExpression: number;
@@ -186,6 +195,7 @@ module SyntaxKind {
         ClassExpression: number;
         OmittedExpression: number;
         ExpressionWithTypeArguments: number;
+        AsExpression?: number; //1.6 only
         TemplateSpan: number;
         SemicolonClassElement: number;
         Block: number;
@@ -229,6 +239,14 @@ module SyntaxKind {
         ExportSpecifier: number;
         MissingDeclaration: number;
         ExternalModuleReference: number;
+        JsxElement?: number; //1.6 only
+        JsxSelfClosingElement?: number; //1.6 only
+        JsxOpeningElement?: number; //1.6 only
+        JsxText?: number; //1.6 only
+        JsxClosingElement?: number; //1.6 only
+        JsxAttribute?: number; //1.6 only
+        JsxSpreadAttribute?: number; //1.6 only
+        JsxExpression?: number; //1.6 only
         CaseClause: number;
         DefaultClause: number;
         HeritageClause: number;
@@ -237,6 +255,28 @@ module SyntaxKind {
         ShorthandPropertyAssignment: number;
         EnumMember: number;
         SourceFile: number;
+        JSDocTypeExpression?: number; //1.6 only
+        JSDocAllType?: number; //1.6 only
+        JSDocUnknownType?: number; //1.6 only
+        JSDocArrayType?: number; //1.6 only
+        JSDocUnionType?: number; //1.6 only
+        JSDocTupleType?: number; //1.6 only
+        JSDocNullableType?: number; //1.6 only
+        JSDocNonNullableType?: number; //1.6 only
+        JSDocRecordType?: number; //1.6 only
+        JSDocRecordMember?: number; //1.6 only
+        JSDocTypeReference?: number; //1.6 only
+        JSDocOptionalType?: number; //1.6 only
+        JSDocFunctionType?: number; //1.6 only
+        JSDocVariadicType?: number; //1.6 only
+        JSDocConstructorType?: number; //1.6 only
+        JSDocThisType?: number; //1.6 only
+        JSDocComment?: number; //1.6 only
+        JSDocTag?: number; //1.6 only
+        JSDocParameterTag?: number; //1.6 only
+        JSDocReturnTag?: number; //1.6 only
+        JSDocTypeTag?: number; //1.6 only
+        JSDocTemplateTag?: number; //1.6 only
         SyntaxList: number;
         Count: number;
         FirstAssignment: number;
@@ -268,7 +308,7 @@ module SyntaxKind {
 
     /* tslint:disable:variable-name */
     var SyntaxKind_1_5: SyntaxKind = {
-    /* tslint:enable:variable-name */
+        /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
         SingleLineCommentTrivia: 2,
@@ -523,11 +563,11 @@ module SyntaxKind {
         FirstBinaryOperator: 24,
         LastBinaryOperator: 64,
         FirstNode: 127
-        };
+    };
 
     /* tslint:disable:variable-name */
     var SyntaxKind_1_6: SyntaxKind = {
-    /* tslint:enable:variable-name */
+        /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
         SingleLineCommentTrivia: 2,

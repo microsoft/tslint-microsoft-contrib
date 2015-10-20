@@ -9,6 +9,7 @@
     "mocha-avoid-only": true,
     "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
+    "no-constant-condition": true,
     "no-cookies": true,
     "no-delete-expression": true,
     "no-document-write": true,

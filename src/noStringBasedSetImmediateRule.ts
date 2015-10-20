@@ -7,9 +7,8 @@ import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParamete
 export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        var languageServiceHost;
         var documentRegistry = ts.createDocumentRegistry();
-        languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
 
         var walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(

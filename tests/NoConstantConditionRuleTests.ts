@@ -148,13 +148,13 @@ describe('noConstantConditionRule', () : void => {
 
     it('should fail on while-numbers', () : void => {
         var script : string = `
-            if (0) {}
-            if (1) {}
+            while (0) {}
+            while (1) {}
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Found constant conditional: if (0)",
+                "failure": "Found constant conditional: while (0)",
                 "name": "file.ts",
                 "ruleName": "no-constant-condition",
                 "startPosition": {
@@ -163,7 +163,7 @@ describe('noConstantConditionRule', () : void => {
                 }
             },
             {
-                "failure": "Found constant conditional: if (1)",
+                "failure": "Found constant conditional: while (1)",
                 "name": "file.ts",
                 "ruleName": "no-constant-condition",
                 "startPosition": {

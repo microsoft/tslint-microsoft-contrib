@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,7 +24,7 @@ var NoUnnecessarySemicolonsWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoUnnecessarySemicolonsWalker.prototype.visitNode = function (node) {
-        if (node.kind === 182) {
+        if (node.kind === SyntaxKind.current().EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         _super.prototype.visitNode.call(this, node);

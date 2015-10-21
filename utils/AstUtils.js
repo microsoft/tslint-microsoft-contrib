@@ -1,3 +1,4 @@
+var SyntaxKind = require('./SyntaxKind');
 var AstUtils;
 (function (AstUtils) {
     function getFunctionName(node) {
@@ -9,64 +10,19 @@ var AstUtils;
         return functionName;
     }
     AstUtils.getFunctionName = getFunctionName;
-    function isExpressionEvaluatingToFunction(expression, languageServices, typeChecker) {
-        if (expression.kind === 164) {
-            return true;
+    function getFunctionTarget(expression) {
+        if (expression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+            var propExp = expression.expression;
+            return propExp.expression.getText();
         }
-        if (expression.kind === 163) {
-            return true;
-        }
-        if (expression.kind === 65) {
-            var typeInfo = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
-            if (typeInfo != null && typeInfo[0] != null && typeInfo[0].kind === 'function') {
-                return true;
-            }
-            return false;
-        }
-        if (expression.kind === 158) {
-            if (expression.expression.name && expression.expression.name.text === 'bind') {
-                return true;
-            }
-            try {
-                var signature = typeChecker.getResolvedSignature(expression);
-                var expressionType = typeChecker.getReturnTypeOfSignature(signature);
-                return isTypeFunction(expressionType, typeChecker);
-            }
-            catch (e) {
-                return false;
-            }
-        }
-        if (expression.kind === 156) {
-            var definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
-            if (definitionInfo != null && definitionInfo.length === 1) {
-                if (definitionInfo[0].kind === 'class') {
-                    return true;
-                }
-            }
-        }
-        if (isTypeFunction(typeChecker.getTypeAtLocation(expression), typeChecker)) {
-            return true;
-        }
-        if (expression.getFullText() === 'functionArg') {
-        }
-        return false;
+        return null;
     }
-    AstUtils.isExpressionEvaluatingToFunction = isExpressionEvaluatingToFunction;
-    function isTypeFunction(expressionType, typeChecker) {
-        var signatures = typeChecker.getSignaturesOfType(expressionType, 0);
-        if (signatures != null && signatures.length > 0) {
-            var signatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === 143) {
-                return true;
-            }
-        }
-        return false;
-    }
+    AstUtils.getFunctionTarget = getFunctionTarget;
     function dumpTypeInfo(expression, languageServices, typeChecker) {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
-        if (expression.kind === 65
-            || expression.kind === 156) {
+        if (expression.kind === SyntaxKind.current().Identifier
+            || expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             var definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach(function (definitionInfo, index) {
@@ -113,6 +69,43 @@ var AstUtils;
         }
     }
     AstUtils.dumpTypeInfo = dumpTypeInfo;
+    function isPrivate(node) {
+        return !!(node.flags & 32);
+    }
+    AstUtils.isPrivate = isPrivate;
+    function isProtected(node) {
+        return !!(node.flags & 64);
+    }
+    AstUtils.isProtected = isProtected;
+    function isPublic(node) {
+        return !!(node.flags & 16);
+    }
+    AstUtils.isPublic = isPublic;
+    function isStatic(node) {
+        return !!(node.flags & 128);
+    }
+    AstUtils.isStatic = isStatic;
+    function findParentBlock(child) {
+        var parent = child.parent;
+        while (parent != null) {
+            if (parent.kind === SyntaxKind.current().Block) {
+                return parent;
+            }
+            parent = parent.parent;
+        }
+        throw new Error('Could not determine parent block of node: ' + child);
+    }
+    AstUtils.findParentBlock = findParentBlock;
+    function isSameIdentifer(source, target) {
+        if (source == null || target == null) {
+            return false;
+        }
+        if (source.kind === SyntaxKind.current().Identifier && target.kind === SyntaxKind.current().Identifier) {
+            return source.getText() === target.getText();
+        }
+        return false;
+    }
+    AstUtils.isSameIdentifer = isSameIdentifer;
 })(AstUtils || (AstUtils = {}));
 module.exports = AstUtils;
 //# sourceMappingURL=AstUtils.js.map

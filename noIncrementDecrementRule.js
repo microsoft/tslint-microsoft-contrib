@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -30,10 +31,10 @@ var NoIncrementDecrementWalker = (function (_super) {
         _super.prototype.visitPrefixUnaryExpression.call(this, node);
     };
     NoIncrementDecrementWalker.prototype.validateUnaryExpression = function (node) {
-        if (node.operator === 38) {
+        if (node.operator === SyntaxKind.current().PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
         }
-        else if (node.operator === 39) {
+        else if (node.operator === SyntaxKind.current().MinusMinusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden -- operator'));
         }
     };

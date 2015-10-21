@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -43,7 +44,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.visitPropertyAssignment = function (node) {
         _super.prototype.visitPropertyAssignment.call(this, node);
         var keyNode = node.name;
-        if (keyNode.kind === 65) {
+        if (keyNode.kind === SyntaxKind.current().Identifier) {
             if (keyNode.text === 'dangerouslySetInnerHTML') {
                 if (!this.isSuppressed(this.currentMethodName)) {
                     var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +

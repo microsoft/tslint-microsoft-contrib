@@ -4,7 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var Utils = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,15 +25,32 @@ var NoHttpStringWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoHttpStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === 8) {
+        if (node.kind === SyntaxKind.current().StringLiteral) {
             var stringText = node.text;
             if (/.*http:.*/.test(stringText)) {
-                var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                if (!this.isSuppressed(stringText)) {
+                    var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                    var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                    this.addFailure(failure);
+                }
             }
         }
         _super.prototype.visitNode.call(this, node);
+    };
+    NoHttpStringWalker.prototype.isSuppressed = function (stringText) {
+        var allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
+        return Utils.exists(allExceptions, function (exception) {
+            return new RegExp(exception).test(stringText);
+        });
+    };
+    NoHttpStringWalker.getExceptions = function (options) {
+        if (options.ruleArguments instanceof Array) {
+            return options.ruleArguments[0];
+        }
+        if (options instanceof Array) {
+            return options;
+        }
+        return null;
     };
     return NoHttpStringWalker;
 })(ErrorTolerantWalker);

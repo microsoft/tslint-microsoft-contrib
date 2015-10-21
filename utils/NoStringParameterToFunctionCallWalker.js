@@ -4,14 +4,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var ScopedSymbolTrackingWalker = require('./ScopedSymbolTrackingWalker');
 var AstUtils = require('./AstUtils');
 var NoStringParameterToFunctionCallWalker = (function (_super) {
     __extends(NoStringParameterToFunctionCallWalker, _super);
     function NoStringParameterToFunctionCallWalker(sourceFile, targetFunctionName, options, languageServices) {
-        _super.call(this, sourceFile, options);
-        this.languageServices = languageServices;
-        this.typeChecker = this.languageServices.getProgram().getTypeChecker();
+        _super.call(this, sourceFile, options, languageServices);
         this.targetFunctionName = targetFunctionName;
         this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
     }
@@ -23,13 +21,13 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
         var functionName = AstUtils.getFunctionName(node);
         var firstArg = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
-            if (!AstUtils.isExpressionEvaluatingToFunction(firstArg, this.languageServices, this.typeChecker)) {
+            if (!this.isExpressionEvaluatingToFunction(firstArg)) {
                 var msg = this.failureString + firstArg.getFullText().trim().substring(0, 40);
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
             }
         }
     };
     return NoStringParameterToFunctionCallWalker;
-})(ErrorTolerantWalker);
+})(ScopedSymbolTrackingWalker);
 module.exports = NoStringParameterToFunctionCallWalker;
 //# sourceMappingURL=NoStringParameterToFunctionCallWalker.js.map

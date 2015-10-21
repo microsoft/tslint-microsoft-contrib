@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -24,25 +25,18 @@ var NoOctalLiteral = (function (_super) {
         _super.apply(this, arguments);
     }
     NoOctalLiteral.prototype.visitNode = function (node) {
-        this.handleNode(node);
+        if (node.kind === SyntaxKind.current().StringLiteral) {
+            this.failOnOctalString(node);
+        }
         _super.prototype.visitNode.call(this, node);
     };
-    NoOctalLiteral.prototype.handleNode = function (node) {
-        if (node.kind === 228) {
-            var text = node.getText();
-            this.matchRegexAndFail(text, /(".*(\\-?[0-7]{1,3}(?![0-9])).*")/g);
-            this.matchRegexAndFail(text, /('.*(\\-?[0-7]{1,3}(?![0-9])).*')/g);
-        }
-    };
-    NoOctalLiteral.prototype.matchRegexAndFail = function (text, regex) {
-        var match;
-        while (match = regex.exec(text)) {
-            var startOfMatch = text.indexOf(match[1]);
-            var failure = void 0;
-            failure = this.createFailure(startOfMatch, match[2].length, Rule.FAILURE_STRING + match[2]);
-            if (failure != null) {
-                this.addFailure(failure);
-            }
+    NoOctalLiteral.prototype.failOnOctalString = function (node) {
+        var match = /("|')(.*(\\-?[0-7]{1,3}(?![0-9])).*("|'))/g.exec(node.getText());
+        if (match) {
+            var octalValue = match[3];
+            var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
+            var width = octalValue.length;
+            this.addFailure(this.createFailure(startOfMatch, width, Rule.FAILURE_STRING + octalValue));
         }
     };
     return NoOctalLiteral;

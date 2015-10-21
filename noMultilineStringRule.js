@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,7 +24,7 @@ var NoMultilineStringWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoMultilineStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === 10) {
+        if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
             var fullText = node.getFullText();
             var firstLine = fullText.substring(0, fullText.indexOf('\n'));
             var trimmed = firstLine.substring(0, 40);

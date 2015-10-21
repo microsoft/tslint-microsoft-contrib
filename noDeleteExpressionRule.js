@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,15 +26,15 @@ var NoDeleteExpression = (function (_super) {
     }
     NoDeleteExpression.prototype.visitExpressionStatement = function (node) {
         _super.prototype.visitExpressionStatement.call(this, node);
-        if (node.expression.kind === 165) {
+        if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
             var deletedObject = node.expression.getChildren()[1];
-            if (deletedObject.kind === 157) {
+            if (deletedObject.kind === SyntaxKind.current().ElementAccessExpression) {
                 var deletedExpression = deletedObject.expression;
-                if (deletedExpression.kind !== 156) {
+                if (deletedExpression.kind !== SyntaxKind.current().PropertyAccessExpression) {
                     this.addNoDeleteFailure(deletedObject);
                 }
             }
-            else if (deletedObject.kind !== 156) {
+            else if (deletedObject.kind !== SyntaxKind.current().PropertyAccessExpression) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

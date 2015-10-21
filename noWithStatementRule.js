@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -19,11 +20,11 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var NoWithStatementWalker = (function (_super) {
     __extends(NoWithStatementWalker, _super);
-    function NoWithStatementWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
+    function NoWithStatementWalker() {
+        _super.apply(this, arguments);
     }
     NoWithStatementWalker.prototype.visitNode = function (node) {
-        if (node.kind === 193) {
+        if (node.kind === SyntaxKind.current().WithStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         _super.prototype.visitNode.call(this, node);

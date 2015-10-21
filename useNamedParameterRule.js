@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -24,7 +25,7 @@ var UseNamedParameterWalker = (function (_super) {
     }
     UseNamedParameterWalker.prototype.visitElementAccessExpression = function (node) {
         if (node.argumentExpression != null) {
-            if (node.argumentExpression.kind === 7) {
+            if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
                     var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);

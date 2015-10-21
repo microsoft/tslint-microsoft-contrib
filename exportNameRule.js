@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var Utils = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -12,6 +13,15 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
+    };
+    Rule.getExceptions = function (options) {
+        if (options.ruleArguments instanceof Array) {
+            return options.ruleArguments[0];
+        }
+        if (options instanceof Array) {
+            return options;
+        }
+        return null;
     };
     Rule.FAILURE_STRING = 'The exported module name must match the file name. Found: ';
     return Rule;
@@ -26,9 +36,11 @@ var ExportNameWalker = (function (_super) {
         var exportedName = node.expression.getText();
         var regex = new RegExp(exportedName + '\..*');
         if (!regex.test(this.getFilename())) {
-            var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-            var failure = this.createFailure(node.expression.getStart(), node.expression.getWidth(), failureString);
-            this.addFailure(failure);
+            if (!this.isSuppressed(exportedName)) {
+                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                var failure = this.createFailure(node.expression.getStart(), node.expression.getWidth(), failureString);
+                this.addFailure(failure);
+            }
         }
         _super.prototype.visitExportAssignment.call(this, node);
     };
@@ -39,6 +51,12 @@ var ExportNameWalker = (function (_super) {
             return filename.substring(lastSlash + 1);
         }
         return filename;
+    };
+    ExportNameWalker.prototype.isSuppressed = function (exportedName) {
+        var allExceptions = Rule.getExceptions(this.getOptions());
+        return Utils.exists(allExceptions, function (exception) {
+            return new RegExp(exception).test(exportedName);
+        });
     };
     return ExportNameWalker;
 })(ErrorTolerantWalker);

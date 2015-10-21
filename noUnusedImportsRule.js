@@ -4,7 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -34,7 +35,7 @@ var GatherNoRequireImportsWalker = (function (_super) {
     }
     GatherNoRequireImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
         var moduleReference = node.moduleReference;
-        if (moduleReference.kind === 127) {
+        if (moduleReference.kind === SyntaxKind.current().QualifiedName) {
             if (moduleReference.left != null) {
                 this.gatherReferenceFromImport(moduleReference.left.text);
             }
@@ -60,7 +61,7 @@ var NoUnusedImportsWalker = (function (_super) {
         this.noRequireReferences = noRequireReferences;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        if (!this.hasModifier(node.modifiers, 78)) {
+        if (!this.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable(node.name.text, node.name.getStart());
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);

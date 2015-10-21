@@ -38,7 +38,7 @@ The tslint-contrib.json file follows the same conventions as other tslint rules.
 Supported Rules
 -----
 
-A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
+A sample configuration file with all options is available here: [tslint.json](tslint.json)
 
 
 Rule Name   | Description | Since

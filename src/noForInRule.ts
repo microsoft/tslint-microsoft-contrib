@@ -1,6 +1,6 @@
 /// <reference path="references.ts" />
 
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the no-for-in rule.

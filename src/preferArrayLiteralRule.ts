@@ -1,4 +1,5 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the prefer-array-literal rule.
@@ -14,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoGenericArrayWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.TypeReference) {
+        if (node.kind === SyntaxKind.current().TypeReference) {
             let ref : ts.TypeReferenceNode = <ts.TypeReferenceNode>node;
             if ((<ts.Identifier>ref.typeName).text === 'Array') {
                 var failureString = Rule.FAILURE_STRING + node.getText();

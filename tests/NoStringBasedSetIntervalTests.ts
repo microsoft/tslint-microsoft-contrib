@@ -15,12 +15,6 @@ describe('noStringBasedSetIntervalRule', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Forbidden setInterval string parameter: functionArg",
-                "name": "test-data/NoStringBasedSetIntervalTestInput.ts",
-                "ruleName": "no-string-based-set-interval",
-                "startPosition": { "line": 32, "character": 5 }
-            },
-            {
                 "failure": "Forbidden setInterval string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetIntervalTestInput.ts",
                 "ruleName": "no-string-based-set-interval",

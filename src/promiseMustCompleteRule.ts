@@ -1,6 +1,7 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import AstUtils = require('./AstUtils');
-import Utils = require('./Utils');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import AstUtils = require('./utils/AstUtils');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the promise-must-complete rule.
@@ -16,12 +17,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 class PromiseAnalyzer extends ErrorTolerantWalker {
 
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
-        if (node.expression.kind === ts.SyntaxKind.Identifier
+        if (node.expression.kind === SyntaxKind.current().Identifier
             && node.expression.getText() === 'Promise'
             && node.arguments != null && node.arguments.length > 0) {
 
             let firstArg: ts.Expression = node.arguments[0];
-            if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
+            if (firstArg.kind === SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind.current().FunctionExpression) {
                 return true;
             }
         }
@@ -36,10 +37,10 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 
         let arg1: ts.ParameterDeclaration = declaration.parameters[0];
         let arg2: ts.ParameterDeclaration = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg1 != null && arg1.name.kind === SyntaxKind.current().Identifier) {
             result.push(<ts.Identifier>declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg2 != null && arg2.name.kind === SyntaxKind.current().Identifier) {
             result.push(<ts.Identifier>declaration.parameters[1].name);
         }
         return result;
@@ -116,7 +117,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
 
-        if (node.expression.kind === ts.SyntaxKind.Identifier) {
+        if (node.expression.kind === SyntaxKind.current().Identifier) {
             if (this.isCompletionIdentifier(node.expression)) {
                 this.wasCompleted = true;
                 return; // this branch was completed, do not walk any more.

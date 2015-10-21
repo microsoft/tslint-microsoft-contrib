@@ -1,4 +1,5 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the no-multiline-string rule.
@@ -15,7 +16,7 @@ class NoMultilineStringWalker extends ErrorTolerantWalker {
 
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
+        if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
             let fullText : string = node.getFullText();
             let firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
             let trimmed : string = firstLine.substring(0, 40);

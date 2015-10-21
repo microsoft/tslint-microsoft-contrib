@@ -38,17 +38,21 @@ The tslint-contrib.json file follows the same conventions as other tslint rules.
 Supported Rules
 -----
 
-A sample configuration file with all options is available under tslint-microsoft-contrig/tslint.json
+A sample configuration file with all options is available here: [tslint.json](tslint.json)
 
 
 Rule Name   | Description | Since
 :---------- | :------------ | -------------
+`chai-vague-errors`             | Avoid Chai assertions that result in vague errors. For example, asserting `expect(something).to.be.true` will result in the failure message "Expected true received false". This is a vague error message that does not reveal the underlying problem. It is especially vague in TypeScript because stack trace line numbers often do not match the source code. A better pattern to follow is the xUnit Patterns [Assertion Message](http://xunitpatterns.com/Assertion%20Message.html) pattern. The previous code sample could be better written as `expect(something).to.equal(true, 'expected something to have occurred');`| 0.0.5
 `export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 0.0.5, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
+`use-isnan`                     | Ensures that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant. Similar to the [use-isnan ESLint rule](http://eslint.org/docs/rules/use-isnan).| 0.0.5
 `jquery-deferred-must-complete` | When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/26). | 0.0.5
 `missing-jsdoc`                 | All files must have a top level [JSDoc](http://usejsdoc.org/) comment. A JSDoc comment starts with /** (not one more or one less asterisk) and a JSDoc at the 'top-level' appears without leading spaces. Trailing spaces are acceptable but not recommended. | 0.0.5
 `missing-optional-annotation`   | A parameter that follows one or more parameters marked as optional is not itself marked optional | 0.0.1
+`mocha-avoid-only`              | Do not invoke Mocha's describe.only or it.only functions. These functions are useful ways to run a single unit test or a single test case during your build, but please be careful to not push these methods calls to your version control repositiory because it will turn off any of the other tests.| 0.0.5
 `no-backbone-get-set-outside-model` | Avoid using model.get('x') and model.set('x', value) Backbone accessors outside of the owning model. This breaks type safety and you should define getters and setters for your attributes instead.| 0.0.5
 `no-banned-terms`               | Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them. | 0.0.1
+`no-constant-condition`         | Do not use constant expressions in conditions. Similar to the [ESLint no-constant-condition](http://eslint.org/docs/rules/no-constant-condition) rule | 0.0.5
 `no-cookies`                    | Do not use cookies | 0.0.1
 `no-delete-expression`          | Do not delete expressions. Only properties should be deleted | 0.0.2
 `no-disable-auto-sanitization`  | Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions. | 0.0.1
@@ -76,6 +80,7 @@ Rule Name   | Description | Since
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 0.0.5
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
+`valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 0.0.5
 
 
 Development

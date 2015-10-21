@@ -1,4 +1,5 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the no-unnecessary-semicolons rule.
@@ -14,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.EmptyStatement) {
+        if (node.kind === SyntaxKind.current().EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);

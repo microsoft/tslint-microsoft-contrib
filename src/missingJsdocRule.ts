@@ -1,4 +1,4 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the missing-jsdoc rule.
@@ -13,13 +13,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class MissingJSDocWalker extends ErrorTolerantWalker {
 
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.SourceFile) {
-            if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
-            }
+
+    protected visitSourceFile(node: ts.SourceFile): void {
+        if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
+            var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
+            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+            this.addFailure(failure);
         }
         // do not continue walking
     }

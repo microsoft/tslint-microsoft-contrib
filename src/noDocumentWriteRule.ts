@@ -1,6 +1,6 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
-import AstUtils = require('./AstUtils');
+import AstUtils = require('./utils/AstUtils');
 
 /**
  * Implementation of the no-document-write rule.

@@ -1,11 +1,15 @@
 {
   "rules": {
+    "chai-vague-errors": true,
     "export-name": true,
+    "use-isnan": true,
     "jquery-deferred-must-complete": true,
     "missing-jsdoc": true,
     "missing-optional-annotation": true,
+    "mocha-avoid-only": true,
     "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
+    "no-constant-condition": true,
     "no-cookies": true,
     "no-delete-expression": true,
     "no-document-write": true,
@@ -33,6 +37,7 @@
     "promise-must-complete": true,
     "react-no-dangerous-html": true,
     "use-named-parameter": true,
+    "valid-typeof": true,
 
     "class-name": true,
     "curly": true,

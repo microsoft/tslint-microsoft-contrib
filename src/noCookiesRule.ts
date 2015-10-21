@@ -1,5 +1,5 @@
 
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**
  * Implementation of the no-cookies-rule rule.

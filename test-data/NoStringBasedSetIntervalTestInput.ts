@@ -26,8 +26,8 @@ this.setInterval(createFunction());
 window.setInterval(createFunction());
 
 
-// currently a false positive.
-// see https://stackoverflow.com/questions/31673007/how-do-i-determine-the-compile-time-type-of-a-typescript-expression-that-is-a-fu
+
+// this used to be a false positive.
 function invoke(functionArg : () => void) {
     setInterval(functionArg);
 }

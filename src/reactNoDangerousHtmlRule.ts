@@ -1,4 +1,5 @@
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import SyntaxKind = require('./utils/SyntaxKind');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 interface Exception {
     file: string;
@@ -54,7 +55,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         super.visitPropertyAssignment(node);
         var keyNode : ts.DeclarationName = node.name;
 
-        if (keyNode.kind === ts.SyntaxKind.Identifier) {
+        if (keyNode.kind === SyntaxKind.current().Identifier) {
             if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
                 if (!this.isSuppressed(this.currentMethodName)) {
                     var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +

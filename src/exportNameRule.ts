@@ -1,6 +1,6 @@
 
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import Utils = require('./Utils');
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the export-name rule.

@@ -15,12 +15,6 @@ describe('noStringBasedSetImmediateRule', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetImmediateTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Forbidden setImmediate string parameter: functionArg",
-                "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
-                "ruleName": "no-string-based-set-immediate",
-                "startPosition": { "line": 32, "character": 5 }
-            },
-            {
                 "failure": "Forbidden setImmediate string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetImmediateTestInput.ts",
                 "ruleName": "no-string-based-set-immediate",

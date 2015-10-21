@@ -14,6 +14,11 @@ Installation
 
     npm install tslint-microsoft-contrib
 
+Alternately, you can download the files directly from GitHub: 
+
+* [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [0.0.4](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-0.0.4)
+
 Configuration
 -------------
 

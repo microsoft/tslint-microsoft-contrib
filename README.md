@@ -5,6 +5,8 @@
 tslint-microsoft-contrib
 ======
 
+[![Join the chat at https://gitter.im/Microsoft/tslint-microsoft-contrib](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/tslint-microsoft-contrib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
 Version 0.0.5

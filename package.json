@@ -22,6 +22,9 @@
   ],
   "license": "MIT",
   "analyze": true,
+  "scripts": {
+    "test": "grunt all"
+  },
   "devDependencies": {
     "chai": "3.2.0",
     "grunt": "0.4.5",

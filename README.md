@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/tslint-microsoft-contrib.svg)](https://badge.fury.io/js/tslint-microsoft-contrib)
 
 tslint-microsoft-contrib
 ======

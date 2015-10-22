@@ -1,5 +1,6 @@
 [![npm version](https://badge.fury.io/js/tslint-microsoft-contrib.svg)](https://badge.fury.io/js/tslint-microsoft-contrib)
 [![Downloads](http://img.shields.io/npm/dm/tslint-microsoft-contrib.svg)](https://npmjs.org/package/tslint-microsoft-contrib)
+[![Build Status](https://travis-ci.org/Microsoft/tslint-microsoft-contrib.svg?branch=master)](https://travis-ci.org/Microsoft/tslint-microsoft-contrib)
 
 tslint-microsoft-contrib
 ======

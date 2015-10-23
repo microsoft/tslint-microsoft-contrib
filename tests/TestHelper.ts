@@ -22,7 +22,9 @@ module TestHelper {
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-
+    export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
+        TestHelper.assertViolations(ruleName, inputFileOrScript, []);
+    }
     export function assertViolations(ruleName : string, inputFileOrScript : string, expectedFailures : ExpectedFailure[]) {
 
         var configuration = {

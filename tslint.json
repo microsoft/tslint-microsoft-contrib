@@ -27,6 +27,7 @@
     "no-for-in": true,
     "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
+    "no-multiple-var-decl": true,
     "no-unnecessary-bind": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,

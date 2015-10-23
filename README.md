@@ -79,6 +79,7 @@ Rule Name   | Description | Since
 `no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 0.0.5
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 0.0.5
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
+`no-multiple-var-decl`          | Do not use comma separated variable declarations | 0.0.5
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
 `no-regex-spaces`               | Do not use multiple spaces in a regular expression literal. Similar to the [ESLint no-regex-spaces](http://eslint.org/docs/rules/no-regex-spaces.html) rule | 0.0.5
 `no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. | 0.0.1

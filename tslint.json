@@ -14,6 +14,7 @@
     "no-delete-expression": true,
     "no-document-write": true,
     "no-disable-auto-sanitization": true,
+    "no-duplicate-case": true,
     "no-duplicate-parameter-names": true,
     "no-empty-interfaces": true,
     "no-exec-script": true,

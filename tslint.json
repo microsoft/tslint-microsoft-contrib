@@ -28,6 +28,7 @@
     "no-unnecessary-bind": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,
+    "no-regex-spaces": true,
     "no-reserved-keywords": true,
     "no-sparse-arrays": true,
     "no-string-based-set-immediate": true,

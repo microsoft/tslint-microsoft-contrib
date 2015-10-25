@@ -10,6 +10,7 @@
     "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
     "no-constant-condition": true,
+    "no-control-regex": true,
     "no-cookies": true,
     "no-delete-expression": true,
     "no-document-write": true,

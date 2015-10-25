@@ -16,7 +16,8 @@ class NoMultipleVarDeclRuleWalker extends ErrorTolerantWalker {
 
     protected visitVariableStatement(node: ts.VariableStatement): void {
         if (node.declarationList.declarations.length > 1) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.getText()));
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(),
+                Rule.FAILURE_STRING + node.declarationList.declarations[0].getText() + ','));
         }
         super.visitVariableStatement(node);
     }

@@ -8,8 +8,8 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 1.0
------------
+Version 1.0.0
+-------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
 
 Installation
@@ -20,6 +20,7 @@ Installation
 Alternately, you can download the files directly from GitHub: 
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [1.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-1.0)
 * [0.0.4](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-0.0.4)
 
 Configuration

@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "0.0.5",
+  "version": "1.0",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
     "typescript"
   ],
   "license": "MIT",
-  "analyze": true
+  "analyze": true,
+  "scripts": {
+    "test": "grunt all"
+  }
 }

@@ -8,8 +8,8 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 1.1
------------
+Version 1.0.0
+-------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
 
 Installation
@@ -34,7 +34,7 @@ Add the new rulesDirectory to your tslint task:
       tslint: {
         options: {
           rulesDirectory: 'node_modules/tslint-microsoft-contrib',
-          configuration: grunt.file.readJSON("tslint-contrib.json")
+          configuration: grunt.file.readJSON("tslint.json")
         },
         files: {
           src: ['src/file1.ts', 'src/file2.ts']
@@ -42,13 +42,12 @@ Add the new rulesDirectory to your tslint task:
       }
     })
 
-The tslint-contrib.json file follows the same conventions as other tslint rules.
-
-Supported Rules
------
+The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
 
 A sample configuration file with all options is available here: [tslint.json](tslint.json)
 
+Supported Rules
+-----
 
 Rule Name   | Description | Since
 :---------- | :------------ | -------------

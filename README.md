@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 1.0.0
+Version 1.1.0
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
 

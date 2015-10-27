@@ -8,7 +8,7 @@ import Utils = require('./utils/Utils');
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
 
-    public static VALID_TERMS = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function' ];
+    public static VALID_TERMS = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));

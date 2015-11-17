@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -16,7 +16,7 @@ describe('noBannedTermsRule', () : void => {
     describe('module variables', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var caller;
                 }`,
@@ -29,7 +29,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var callee;
                 }`,
@@ -42,7 +42,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var arguments;
                 }`,
@@ -55,7 +55,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var eval;
                 }`,
@@ -71,7 +71,7 @@ describe('noBannedTermsRule', () : void => {
     describe('module functions', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function caller() {}
                 }`,
@@ -84,7 +84,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function callee() {}
                 }`,
@@ -97,7 +97,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function arguments() {}
                 }`,
@@ -110,7 +110,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function eval() {}
                 }`,
@@ -126,7 +126,7 @@ describe('noBannedTermsRule', () : void => {
     describe('class variables', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private caller;
                 }`,
@@ -139,7 +139,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private callee;
                 }`,
@@ -152,7 +152,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private arguments;
                 }`,
@@ -165,7 +165,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private eval;
                 }`,
@@ -181,7 +181,7 @@ describe('noBannedTermsRule', () : void => {
     describe('class properties', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private var;
                     set caller(value) {}
@@ -202,7 +202,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private var;
                     set callee(value) {}
@@ -223,7 +223,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private var;
                     set arguments(value) {}
@@ -244,7 +244,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     private var;
                     set eval(value) {}
@@ -268,7 +268,7 @@ describe('noBannedTermsRule', () : void => {
     describe('class methods', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     caller() {}
                 }`,
@@ -281,7 +281,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     callee() {}
                 }`,
@@ -294,7 +294,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     arguments() {}
                 }`,
@@ -307,7 +307,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     eval() {}
                 }`,
@@ -323,7 +323,7 @@ describe('noBannedTermsRule', () : void => {
     describe('methods parameters', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     method(caller) {}
                 }`,
@@ -336,7 +336,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     method(callee) {}
                 }`,
@@ -349,7 +349,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     method(arguments) {}
                 }`,
@@ -362,7 +362,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `class Sample {
                     method(eval) {}
                 }`,
@@ -378,7 +378,7 @@ describe('noBannedTermsRule', () : void => {
     describe('function parameters', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function method(caller) {}
                 }`,
@@ -391,7 +391,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function method(callee) {}
                 }`,
@@ -404,7 +404,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function method(arguments) {}
                 }`,
@@ -417,7 +417,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     function method(eval) {}
                 }`,
@@ -433,7 +433,7 @@ describe('noBannedTermsRule', () : void => {
     describe('arrow function parameters', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var func = (caller) => {};
                 }`,
@@ -446,7 +446,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var func = (callee) => {};
                 }`,
@@ -459,7 +459,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var func = (arguments) => {};
                 }`,
@@ -472,7 +472,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `module Sample {
                     var func = (eval) => {};
                 }`,
@@ -488,7 +488,7 @@ describe('noBannedTermsRule', () : void => {
     describe('local variables', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `var caller;`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
@@ -499,7 +499,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `var callee;`,
                 [{
                     "failure": "Forbidden reference to banned term: callee",
@@ -510,7 +510,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `var arguments`,
                 [ {
                     "failure": "Forbidden reference to banned term: arguments",
@@ -521,7 +521,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `var eval;`,
                 [  {
                     "failure": "Forbidden reference to banned term: eval",
@@ -535,7 +535,7 @@ describe('noBannedTermsRule', () : void => {
     describe('interface declarations', () => {
 
         it('should not refer to caller', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `interface Sample {
                     caller: any;
                 }`,
@@ -548,7 +548,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to callee', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `interface Sample {
                     callee: any;
                 }`,
@@ -561,7 +561,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to arguments', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `interface Sample {
                     arguments: any;
                 }`,
@@ -574,7 +574,7 @@ describe('noBannedTermsRule', () : void => {
         });
 
         it('should not refer to eval', () : void => {
-            TestHelper.assertViolations(RULE_NAME,
+            TestHelper.assertViolations(RULE_NAME,  null,
                 `interface Sample {
                     eval: any;
                 }`,

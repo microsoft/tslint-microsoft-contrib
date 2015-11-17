@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -14,8 +14,7 @@ describe('noUnusedImportsRule', () : void => {
         var ruleName : string = 'no-unused-imports';
         var inputFile : string = 'test-data/NoUnusedImportsTestInput.ts';
         TestHelper.assertViolations(
-            ruleName,
-            inputFile,
+            ruleName, null, inputFile,
             [
                 {
                     "failure": "unused import: 'NoUnusedImportsRule'",
@@ -34,7 +33,7 @@ import DM = require("DM");
 import AB = DM.Dependency;
 console.log(DM);`; // AB import is not used!
 
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "unused import: 'AB'",
                 "name": "file.ts",
@@ -51,7 +50,7 @@ import DM = require("DM");
 import AB = DM.Dependency;
 console.log(AB);`;
 
-        TestHelper.assertViolations(ruleName, inputScript, []);
+        TestHelper.assertViolations(ruleName, null, inputScript, []);
     });
 
 });

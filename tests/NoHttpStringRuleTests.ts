@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -13,7 +13,7 @@ describe('noHttpStringRule', () : void => {
 
     it('should ban http strings in variables', () : void => {
         var inputScript : string = 'var x = \'http://www.examples.com\'';
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
                 "name": "file.ts",
@@ -25,7 +25,7 @@ describe('noHttpStringRule', () : void => {
 
     it('should ban http strings in default values', () : void => {
         var inputScript : string = 'function f(x : string = \'http://www.example.com/whatever\') {}';
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.example.com/whatever'",
                 "name": "file.ts",
@@ -38,12 +38,12 @@ describe('noHttpStringRule', () : void => {
 
     it('should allow https strings in variables', () : void => {
         var inputScript : string = 'var x = \'https://www.microsoft.com\'';
-        TestHelper.assertViolations(ruleName, inputScript, []);
+        TestHelper.assertViolations(ruleName, null, inputScript, []);
     });
 
     it('should allow https strings in default values', () : void => {
         var inputScript : string = 'function f(x : string = \'https://www.microsoft.com\') {}';
-        TestHelper.assertViolations(ruleName, inputScript, []);
+        TestHelper.assertViolations(ruleName, null, inputScript, []);
     });
 
 });

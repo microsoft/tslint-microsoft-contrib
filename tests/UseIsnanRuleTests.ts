@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -19,7 +19,7 @@ describe('useIsnanRule', () : void => {
         if (isNaN(something)) { }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on equality NaN', () : void => {
@@ -30,7 +30,7 @@ describe('useIsnanRule', () : void => {
         if (NaN !== foo) {  }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found an invalid comparison for NaN: foo == NaN",
                 "name": "file.ts",
@@ -66,7 +66,7 @@ describe('useIsnanRule', () : void => {
         if (NaN <= foo) { }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found an invalid comparison for NaN: foo > NaN",
                 "name": "file.ts",

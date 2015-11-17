@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 import reactNoDangerousHtmlRule = require('../src/reactNoDangerousHtmlRule');
 
 var dangerousScript : string = `
@@ -38,8 +38,7 @@ describe('reactNoDangerousHtmlRule', () : void => {
     it('should produce violation when function called with no suppression', () : void => {
         exceptions.length = 0;
         TestHelper.assertViolations(
-            ruleName,
-            dangerousScript,
+            ruleName,null, dangerousScript,
             [
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"render\"\n" +
@@ -57,12 +56,7 @@ describe('reactNoDangerousHtmlRule', () : void => {
 
     it('should not produce violation when call exists in exception list', () : void => {
         exceptions.push({ file: 'file.ts', method: 'render', comment: 'this usage is OK' });
-
-        TestHelper.assertViolations(
-            ruleName,
-            dangerousScript,
-            []
-        );
+        TestHelper.assertViolations(ruleName,null,dangerousScript,[]);
     });
 });
 /* tslint:enable:quotemark */

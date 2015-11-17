@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -18,7 +18,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = /foo {3}bar/;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should pass on RegExp object', () : void => {
@@ -26,7 +26,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = new RegExp("foo   bar");
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should pass on no spaces', () : void => {
@@ -34,7 +34,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = /foobar/;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on spaces in middle', () : void => {
@@ -42,7 +42,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = /foo   bar/;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {3}",
                 "name": "file.ts",
@@ -57,7 +57,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = /  bar/;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {2}",
                 "name": "file.ts",
@@ -72,7 +72,7 @@ describe('noRegexSpacesRule', () : void => {
             var re = /bar    /;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {4}",
                 "name": "file.ts",

@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -29,7 +29,7 @@ describe('promiseMustCompleteRule', () : void => {
                     }
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('on resolve - lambda', () : void => {
@@ -38,7 +38,7 @@ describe('promiseMustCompleteRule', () : void => {
                     resolve('value');
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('on resolve - function', () : void => {
@@ -47,7 +47,7 @@ describe('promiseMustCompleteRule', () : void => {
                     resolve('value');
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('on resolve - alternative name', () : void => {
@@ -56,7 +56,7 @@ describe('promiseMustCompleteRule', () : void => {
                     someOtherName('value');
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('on reject', () : void => {
@@ -65,7 +65,7 @@ describe('promiseMustCompleteRule', () : void => {
                     reject('value);
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('on reject - function', () : void => {
@@ -74,7 +74,7 @@ describe('promiseMustCompleteRule', () : void => {
                     reject('value);
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('on reject - alternative name', () : void => {
@@ -83,7 +83,7 @@ describe('promiseMustCompleteRule', () : void => {
                     someOtherName('value);
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, []);
+            TestHelper.assertViolations(ruleName, null, script, []);
         });
 
         it('when single branch is completed - with if-statement', () : void => {
@@ -94,7 +94,7 @@ describe('promiseMustCompleteRule', () : void => {
                     }
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
@@ -107,7 +107,7 @@ describe('promiseMustCompleteRule', () : void => {
                     }
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
@@ -127,7 +127,7 @@ describe('promiseMustCompleteRule', () : void => {
                         }
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('with nested if-else statement', () : void => {
@@ -148,7 +148,7 @@ describe('promiseMustCompleteRule', () : void => {
                         reject(); // branches are not even analyzed when main thread resolves
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a function', () : void => {
@@ -158,7 +158,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a lambda', () : void => {
@@ -168,7 +168,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a lambda - with extra parameter', () : void => {
@@ -178,7 +178,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a for loop', () : void => {
@@ -188,7 +188,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a for in loop', () : void => {
@@ -198,7 +198,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolved within a while loop', () : void => {
@@ -208,7 +208,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve();
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when resolve reference escaped into a function call', () : void => {
@@ -216,7 +216,7 @@ describe('promiseMustCompleteRule', () : void => {
                 new Promise<string>((resolve, reject) => {
                     doSomething(resolve); // reference escapes and we assume it resolves
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when reject reference escaped into a function call', () : void => {
@@ -224,7 +224,7 @@ describe('promiseMustCompleteRule', () : void => {
                 new Promise<string>((resolve, reject) => {
                     doSomething(reject); // reference escapes and we assume it resolves
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when non-shadowed parameter resolves within a function', () : void => {
@@ -234,7 +234,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when non-shadowed parameter rejects within a function', () : void => {
@@ -244,7 +244,7 @@ describe('promiseMustCompleteRule', () : void => {
                         reject();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when non-shadowed parameter resolves within a lambda', () : void => {
@@ -254,7 +254,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
         it('when non-shadowed parameter rejects within a lambda', () : void => {
@@ -264,7 +264,7 @@ describe('promiseMustCompleteRule', () : void => {
                         reject();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, null, script, [ ]);
         });
 
     });
@@ -276,7 +276,7 @@ describe('promiseMustCompleteRule', () : void => {
                 new Promise<string>(() => {
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -291,7 +291,7 @@ describe('promiseMustCompleteRule', () : void => {
                 new Promise<string>(function {
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -306,7 +306,7 @@ describe('promiseMustCompleteRule', () : void => {
                 new Promise<string>((resolve, reject) => {
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -324,7 +324,7 @@ describe('promiseMustCompleteRule', () : void => {
                     }
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -344,7 +344,7 @@ describe('promiseMustCompleteRule', () : void => {
                     }
                 })`;
 
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -371,7 +371,7 @@ describe('promiseMustCompleteRule', () : void => {
                         }
                     }
                 })`;
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -388,7 +388,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -405,7 +405,7 @@ describe('promiseMustCompleteRule', () : void => {
                         reject();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -422,7 +422,7 @@ describe('promiseMustCompleteRule', () : void => {
                         resolve('value');
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",
@@ -439,7 +439,7 @@ describe('promiseMustCompleteRule', () : void => {
                         reject();
                     });
                 })`;
-            TestHelper.assertViolations(ruleName, script, [
+            TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
                     "name": "file.ts",

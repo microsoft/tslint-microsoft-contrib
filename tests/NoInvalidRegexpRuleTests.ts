@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -21,7 +21,7 @@ describe('noInvalidRegexpRule', () : void => {
             var d = new RegExp(whatever);   // non-string literal parameter
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on invalid string in constuctor', () : void => {
@@ -29,7 +29,7 @@ describe('noInvalidRegexpRule', () : void => {
             new RegExp('\\\\') /*error Invalid regular expression: /\/: \ at end of pattern*/
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid regular expression: /\\/: \\ at end of pattern",
                 "name": "file.ts",
@@ -44,7 +44,7 @@ describe('noInvalidRegexpRule', () : void => {
             RegExp('[')      /*error Invalid regular expression: /[/: Unterminated character class*/
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid regular expression: /[/: Unterminated character class",
                 "name": "file.ts",

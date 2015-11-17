@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -14,17 +14,17 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should not throw error - case 1', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should not throw error - case 2', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error2.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should support type inference on shadowed variables', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: moduleProp1",
                 "name": "test-data/NoStringBasedSetTimeoutTestInput-shadow-vars.ts",
@@ -96,12 +96,12 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should not throw error - case 3', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error3.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should not throw error - case 4', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error4.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: this.onAnimationEnd()",
                 "name": "test-data/NoStringBasedSetTimeoutTestInput-error4.ts",
@@ -113,17 +113,17 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should not throw error - case 5', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutTestInput-error5.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should not produce violations', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutPassingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should produce violations for string literals', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-string-literals.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "ruleName": "no-string-based-set-timeout",
                 "failure": "Forbidden setTimeout string parameter: \"var x = 'should fail'\"",
@@ -147,7 +147,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should produce violations for string variables', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-string-variables.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "ruleName": "no-string-based-set-timeout",
                 "failure": "Forbidden setTimeout string parameter: typedStringVariable",
@@ -172,7 +172,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should produce violations for any variables', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-any-variables.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "ruleName": "no-string-based-set-timeout",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-any-variables.ts",
@@ -196,7 +196,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should produce violations for any functions', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-any-functions.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: untypedCreateFunction()",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-any-functions.ts",
@@ -220,7 +220,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should produce violations for string functions', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: stringFunction()",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts",
@@ -244,7 +244,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
     it('should produce violations for parameters', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-parameters.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: stringArg",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-parameters.ts",
@@ -267,7 +267,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
             setTimeout(functionArg2);
         }`;
 
-        TestHelper.assertViolations(RULE_NAME, inputFile, [ ]);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [ ]);
     });
 
     it('should not fail within a constructor', () : void => {
@@ -278,7 +278,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
             }
         }`;
 
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: arg1",
                 "name": "file.ts",
@@ -291,7 +291,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
     it('should create violations on template strings', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-template-string.ts';
 
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: `${data}`",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-template-string.ts",
@@ -304,7 +304,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
     it('should pass all Issue #46 usages', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts';
 
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden setTimeout string parameter: \"alert(\" + alertNum + \")\"",
                 "name": "test-data/NoStringBasedSetTimeoutFailingTestInput-issue46.ts",

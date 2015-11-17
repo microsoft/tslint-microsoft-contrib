@@ -27,6 +27,9 @@ describe('validTypeofRule', () : void => {
             "function" === typeof foo
             typeof foo == baz
             typeof bar === typeof qux
+            typeof Symbol() === "symbol"
+            typeof Symbol("foo") === "symbol"
+            typeof Symbol.iterator === "symbol"
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);

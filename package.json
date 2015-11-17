@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "0.0.5",
+  "version": "1.1.0",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -22,6 +22,9 @@
   ],
   "license": "MIT",
   "analyze": true,
+  "scripts": {
+    "test": "grunt all"
+  },
   "devDependencies": {
     "chai": "3.2.0",
     "grunt": "0.4.5",

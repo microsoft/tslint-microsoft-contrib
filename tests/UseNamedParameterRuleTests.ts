@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -18,7 +18,7 @@ function add() {
     return arguments[0] + arguments[1];
 }`;
 
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "Use a named parameter instead: 'arguments[0]'",
                 "name": "file.ts",
@@ -39,7 +39,7 @@ function add() {
 function add() {
     return arguments[whatever()] + arguments[n];
 }`;
-        TestHelper.assertViolations(ruleName, inputScript, [ ]);
+        TestHelper.assertViolations(ruleName, null, inputScript, [ ]);
     });
 
 

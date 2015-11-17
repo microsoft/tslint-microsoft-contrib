@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -20,7 +20,7 @@ describe('noEmptyInterfacesRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on empty interface', () : void => {
@@ -30,7 +30,7 @@ describe('noEmptyInterfacesRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Do not declare empty interfaces: 'MyInterface'",
                 "name": "file.ts",

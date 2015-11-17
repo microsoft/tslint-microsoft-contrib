@@ -23,14 +23,31 @@ module TestHelper {
         startPosition: FailurePosition;
     }
     export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
-        TestHelper.assertViolations(ruleName, inputFileOrScript, []);
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
+    }
+    export function assertNoViolationWithOptions(ruleName : string, options: string[], inputFileOrScript : string) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
+    }
+    export function assertViolationsWithOptions(ruleName : string, options: string[], inputFileOrScript : string,
+                                                expectedFailures : ExpectedFailure[]) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
     }
     export function assertViolations(ruleName : string, inputFileOrScript : string, expectedFailures : ExpectedFailure[]) {
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
+    }
+
+    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
+                                         expectedFailures : ExpectedFailure[]) {
 
         var configuration = {
             rules: {}
         };
-        configuration.rules[ruleName] = true;
+        if (userOptions != null && userOptions.length > 0) {
+            //options like `[4, 'something', false]` were passed, so prepend `true` to make the array like `[true, 4, 'something', false]`
+            configuration.rules[ruleName] = (<any[]>[true]).concat(userOptions);
+        } else {
+            configuration.rules[ruleName] = true;
+        }
 
         var options : Lint.ILinterOptions = {
             formatter: 'json',

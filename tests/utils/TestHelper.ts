@@ -49,7 +49,7 @@ module TestHelper {
 
         var linter: Lint.Linter;
         if (inputFileOrScript.match(/.*\.ts/)) {
-            var contents = fs.readFileSync("tslint/" + inputFileOrScript, 'utf8');
+            var contents = fs.readFileSync(inputFileOrScript, 'utf8');
             linter = new Lint.Linter(inputFileOrScript, contents, options);
         } else {
             linter = new Lint.Linter('file.ts', inputFileOrScript, options);

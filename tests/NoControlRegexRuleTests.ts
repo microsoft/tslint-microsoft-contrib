@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -23,7 +23,7 @@ describe('noControlRegexRule', () : void => {
             var pattern6 = new RegExp("\\x20");
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on x1f', () : void => {
@@ -33,7 +33,7 @@ describe('noControlRegexRule', () : void => {
             var pattern3 = RegExp("\\x1f trailing text");
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Unexpected control character in regular expression",
                 "name": "file.ts",
@@ -62,7 +62,7 @@ describe('noControlRegexRule', () : void => {
             var pattern3 = RegExp("\\x00");
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Unexpected control character in regular expression",
                 "name": "file.ts",

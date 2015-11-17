@@ -1,6 +1,6 @@
-/// <reference path="../typings/node.d.ts" />
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
+/// <reference path="../../typings/node.d.ts" />
+/// <reference path="../../typings/mocha.d.ts" />
+/// <reference path="../../typings/chai.d.ts" />
 
 import fs = require('fs');
 import chai = require('chai');
@@ -22,32 +22,40 @@ module TestHelper {
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-    export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
-        TestHelper.assertViolations(ruleName, inputFileOrScript, []);
+    export function assertNoViolation(ruleName: string, ruleOptions: any, inputFileOrScript: string) {
+        TestHelper.assertViolations(ruleName, ruleOptions, inputFileOrScript, []);
     }
-    export function assertViolations(ruleName : string, inputFileOrScript : string, expectedFailures : ExpectedFailure[]) {
+
+    export function assertViolations(ruleName: string, ruleOptions: any[], inputFileOrScript: string, expectedFailures: ExpectedFailure[]) {
 
         var configuration = {
             rules: {}
         };
-        configuration.rules[ruleName] = true;
 
-        var options : Lint.ILinterOptions = {
+		if (ruleOptions) {
+			//options like `[4, 'something', false]` were passed in, so we prepend `true` to make the array like `[true, 4, 'something', false]`
+			ruleOptions.unshift(true);
+			configuration.rules[ruleName] = ruleOptions;
+		} else {
+			configuration.rules[ruleName] = true;
+		}
+
+        var options: Lint.ILinterOptions = {
             formatter: 'json',
             configuration: configuration,
-            rulesDirectory: 'dist/src/',
+            rulesDirectory: 'tslint/src/',
             formattersDirectory: 'customFormatters/'
         };
 
-        var linter : Lint.Linter;
+        var linter: Lint.Linter;
         if (inputFileOrScript.match(/.*\.ts/)) {
-            var contents = fs.readFileSync(inputFileOrScript, 'utf8');
+            var contents = fs.readFileSync("tslint/" + inputFileOrScript, 'utf8');
             linter = new Lint.Linter(inputFileOrScript, contents, options);
         } else {
             linter = new Lint.Linter('file.ts', inputFileOrScript, options);
         }
 
-        var result : Lint.LintResult = linter.lint();
+        var result: Lint.LintResult = linter.lint();
 
         var actualFailures: ExpectedFailure[] = JSON.parse(result.output);
 
@@ -70,7 +78,7 @@ module TestHelper {
         var errorMessage = 'Wrong # of failures: \n' + JSON.stringify(actualFailures, null, 2);
         chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
-        expectedFailures.forEach((expected : ExpectedFailure, index: number) : void => {
+        expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
             var actual = actualFailures[index];
             chai.assert.deepEqual(actual, expected);
         });

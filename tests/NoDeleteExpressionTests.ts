@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -13,12 +13,12 @@ describe('noDeleteExpressionRule', (): void => {
 
     it('should not produce violations', (): void => {
         const inputFile: string = 'test-data/NoDeleteExpressionPassingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should produce violations ', (): void => {
         const inputFile: string = 'test-data/NoDeleteExpressionFailingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Variables should not be deleted: variableForDeletion",
                 "name": "test-data/NoDeleteExpressionFailingTestInput.ts",

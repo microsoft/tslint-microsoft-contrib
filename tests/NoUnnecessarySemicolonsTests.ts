@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -12,9 +12,7 @@ describe('noUnnecessarySemiColons', () : void => {
     it('should produce violations', () : void => {
         var ruleName : string = 'no-unnecessary-semicolons';
         var inputFile : string = 'test-data/NoUnnecessarySemicolonsTestInput.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
+        TestHelper.assertViolations(ruleName, null, inputFile,
             [
                 {
                     "failure": "unnecessary semi-colon",

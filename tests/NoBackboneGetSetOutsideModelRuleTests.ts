@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -19,7 +19,7 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
             this.set('modificationdate', datetime);
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should pass on get and set calls with wrong # parameters and wrong parameter types', () : void => {
@@ -33,7 +33,7 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
             model.set('modificationdate', value1, value2);
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on get and set on an object different than this', () : void => {
@@ -42,7 +42,7 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
             model.set('modificationdate', datetime);
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Backbone get() called outside of owning model: model.get('timestamp')",
                 "name": "file.ts",

@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -23,7 +23,7 @@ class {
     public static myField6;
 }`;
 
-        TestHelper.assertViolations(ruleName, inputScript, []);
+        TestHelper.assertViolations(ruleName, null, inputScript, []);
     });
 
     it('should allow method modifiers', () : void => {
@@ -37,7 +37,7 @@ class {
     public static myMethod6() {};
 }`;
 
-        TestHelper.assertViolations(ruleName, inputScript, []);
+        TestHelper.assertViolations(ruleName, null, inputScript, []);
     });
 
     it('should not allow missing field modifiers', () : void => {
@@ -47,7 +47,7 @@ class {
     static myField2;
 }`;
 
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "Field missing visibility modifier: myField1;",
                 "name": "file.ts",
@@ -71,7 +71,7 @@ class {
     static myMethod2() {};
 }`;
 
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolations(ruleName, null, inputScript, [
             {
                 "failure": "Method missing visibility modifier: myMethod1() {",
                 "name": "file.ts",

@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -38,7 +38,7 @@ describe('mochaAvoidOnlyRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on it.only with lambda', () : void => {
@@ -50,7 +50,7 @@ describe('mochaAvoidOnlyRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Do not commit Mocha it.only function call",
                 "name": "file.ts",
@@ -69,7 +69,7 @@ describe('mochaAvoidOnlyRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Do not commit Mocha it.only function call",
                 "name": "file.ts",
@@ -86,7 +86,7 @@ describe('mochaAvoidOnlyRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Do not commit Mocha describe.only function call",
                 "name": "file.ts",
@@ -103,7 +103,7 @@ describe('mochaAvoidOnlyRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Do not commit Mocha describe.only function call",
                 "name": "file.ts",

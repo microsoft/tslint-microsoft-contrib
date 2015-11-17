@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -22,7 +22,7 @@ describe('noSparseArraysRule', () : void => {
             var e = [1,2,3,]; // dangling comma is not an issue
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on comma with no elements', () : void => {
@@ -30,7 +30,7 @@ describe('noSparseArraysRule', () : void => {
             var x = [,];
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Unexpected comma in middle of array",
                 "name": "file.ts",
@@ -45,7 +45,7 @@ describe('noSparseArraysRule', () : void => {
             var x = [,,,];
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Unexpected comma in middle of array",
                 "name": "file.ts",
@@ -61,7 +61,7 @@ describe('noSparseArraysRule', () : void => {
             var z = [1,,2,3];
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Unexpected comma in middle of array",
                 "name": "file.ts",

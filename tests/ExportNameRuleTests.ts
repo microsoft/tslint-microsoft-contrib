@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 import exportNameRule = require('../src/exportNameRule');
 
 /**
@@ -27,13 +27,13 @@ describe('exportNameRule', () : void => {
     it('should not produce violations for matching name', () : void => {
         exceptions.length = 0;
         var inputFile : string = 'test-data/ExportNameRulePassingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should produce violations for conflicting name', () : void => {
         exceptions.length = 0;
         var inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "The exported module name must match the file name. " +
                     "Found: test-data/ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile",
@@ -47,7 +47,7 @@ describe('exportNameRule', () : void => {
     it('should not produce violations for conflicting name when suppressed', () : void => {
         exceptions.push('ThisIsNot.*NameOfTheFile');
         var inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [ ]);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [ ]);
     });
 
 });

@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -12,19 +12,13 @@ describe('noCookiesRule', () : void => {
     it('should not produce violations', () : void => {
         var ruleName : string = 'no-cookies';
         var inputFile : string = 'test-data/NoCookiesPassingTestInput.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
-            [ ]
-        );
+        TestHelper.assertViolations(ruleName, null, inputFile,[ ]);
     });
 
     it('should produce violations', () : void => {
         var ruleName : string = 'no-cookies';
         var inputFile : string = 'test-data/NoCookiesFailingTestInput.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
+        TestHelper.assertViolations(ruleName, null, inputFile,
             [
                 {
                     "failure": "Forbidden call to document.cookie",
@@ -63,9 +57,7 @@ describe('noCookiesRule', () : void => {
     it('should not throw error ', () : void => {
         var ruleName : string = 'no-cookies';
         var inputFile : string = 'test-data/NoCookiesTestInput-error.ts';
-        TestHelper.assertViolations(
-            ruleName,
-            inputFile,
+        TestHelper.assertViolations(ruleName, null, inputFile,
             [
                 {
                     "failure": "Forbidden call to document.cookie",

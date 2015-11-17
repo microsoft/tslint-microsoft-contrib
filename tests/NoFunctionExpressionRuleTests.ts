@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -19,7 +19,7 @@ describe('noFunctionExpressionRule', () : void => {
 	        }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
     it('should pass on function with this', (): void => {
@@ -29,7 +29,7 @@ describe('noFunctionExpressionRule', () : void => {
 	        }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, []);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
 
@@ -42,7 +42,7 @@ describe('noFunctionExpressionRule', () : void => {
 	        }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [ {
+        TestHelper.assertViolations(ruleName, script, [ {
             "failure": "Use arrow function instead of function expression",
             "name": "file.ts",
             "ruleName": "no-function-expression",
@@ -69,7 +69,7 @@ describe('noFunctionExpressionRule', () : void => {
 	        }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Use arrow function instead of function expression",
                 "name": "file.ts",

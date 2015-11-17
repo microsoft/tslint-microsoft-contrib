@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -21,7 +21,7 @@ describe('noMultipleVarDeclRule', () : void => {
             for (var i = x, j = y; i < j; i++) {}
         `;
 
-        TestHelper.assertNoViolation(ruleName, null, script);
+        TestHelper.assertNoViolation(ruleName, script);
     });
 
     it('should fail on multiple var declaration', () : void => {
@@ -31,7 +31,7 @@ describe('noMultipleVarDeclRule', () : void => {
             var x, y = 2, z;
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [{
+        TestHelper.assertViolations(ruleName, script, [{
             "failure": "Do not use comma separated variable declarations: x = 1,",
             "name": "file.ts",
             "ruleName": "no-multiple-var-decl",

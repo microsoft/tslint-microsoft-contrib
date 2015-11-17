@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -30,7 +30,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 return deferred.promise();
             }`;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when deferred named jquery completes - let declaration', () : void => {
@@ -49,7 +49,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 return deferred.promise();
             }`;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when deferred named $ completes', () : void => {
@@ -69,7 +69,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('on resolve', () : void => {
@@ -81,7 +81,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, []);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
         it('on reject', () : void => {
@@ -93,7 +93,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, []);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
         it('when single branch is completed - with if-statement', () : void => {
@@ -107,7 +107,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
@@ -122,7 +122,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 return deferred.promise();
             }`;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
@@ -144,7 +144,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('with nested if-else statement', () : void => {
@@ -167,7 +167,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a function', () : void => {
@@ -179,7 +179,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a lambda', () : void => {
@@ -191,7 +191,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a function', () : void => {
@@ -203,7 +203,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a lambda', () : void => {
@@ -215,7 +215,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a for loop', () : void => {
@@ -227,7 +227,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a for in loop', () : void => {
@@ -239,7 +239,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when resolved within a while loop', () : void => {
@@ -251,7 +251,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('when deferred reference escaped into a function call', () : void => {
@@ -261,7 +261,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 doSomething(deferred); // reference escapes and we assume it resolves
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
     });
 
@@ -275,7 +275,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = $.Deferred<void>()'",
@@ -295,7 +295,7 @@ describe('jquery-deferred-must-complete', () : void => {
             }
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred = $.Deferred<void>()'",
@@ -316,7 +316,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 return deferred.promise();
             }`;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
@@ -339,7 +339,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 return deferred.promise();
             }`;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
@@ -369,7 +369,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 }
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
@@ -389,7 +389,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
@@ -409,7 +409,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 });
                 return deferred.promise();
             }`;
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",

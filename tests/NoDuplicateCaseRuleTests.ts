@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -26,7 +26,7 @@ describe('noDuplicateCaseRule', () : void => {
                     break;
             } `;
 
-        TestHelper.assertViolations(ruleName, null, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
     it('should fail on string duplicates', () : void => {
@@ -43,7 +43,7 @@ describe('noDuplicateCaseRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: 1",
                 "name": "file.ts",
@@ -67,7 +67,7 @@ describe('noDuplicateCaseRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: \"1\"",
                 "name": "file.ts",
@@ -91,7 +91,7 @@ describe('noDuplicateCaseRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: one",
                 "name": "file.ts",

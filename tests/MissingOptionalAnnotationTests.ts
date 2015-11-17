@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -13,17 +13,17 @@ describe('missingOptionalAnnotationRule', () : void => {
 
     it('should not produce violations', () : void => {
         var inputFile : string = 'test-data/MissingOptionalAnnotationPassingTestInput.ts';
-        TestHelper.assertViolations(ruleName, null, inputFile, []);
+        TestHelper.assertViolations(ruleName, inputFile, []);
     });
 
     it('should not produce violations for 2nd parameter that has a default initializer', () : void => {
         var script : string = 'function something(data? : any, others: Object = {}) { }';
-        TestHelper.assertViolations(ruleName, null, script, []);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
     it('should produce a violation when 1st parameter has a default initializer', () : void => {
         var script : string = 'function something(data : Object = {}, others: any) { }';
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Argument following optional argument missing optional annotation:  others: any",
                 "name": "file.ts",
@@ -38,7 +38,9 @@ describe('missingOptionalAnnotationRule', () : void => {
 
     it('should produce violations', () : void => {
         var inputFile : string = 'test-data/MissingOptionalAnnotationFailingTestInput.ts';
-        TestHelper.assertViolations(ruleName, null, inputFile,
+        TestHelper.assertViolations(
+            ruleName,
+            inputFile,
             [
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",

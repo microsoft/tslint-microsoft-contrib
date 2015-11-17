@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -13,7 +13,7 @@ describe('noStringBasedSetIntervalRule', () : void => {
 
     it('should produce violations ', () : void => {
         var inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden setInterval string parameter: \"var x = 'should fail'\"",
                 "name": "test-data/NoStringBasedSetIntervalTestInput.ts",

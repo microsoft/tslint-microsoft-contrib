@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -22,7 +22,7 @@ describe('noUnnecessaryBindRule', () : void => {
             (someReference).bind(this, someArg);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on function/lambda literals with non-this parameter', () : void => {
@@ -32,7 +32,7 @@ describe('noUnnecessaryBindRule', () : void => {
             (someReference).bind(context);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore static invocation with no context', () : void => {
@@ -42,7 +42,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _.forEach(list, someReference);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore invocation with no context', () : void => {
@@ -52,7 +52,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _(list).collect(someReference);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore static invocation with context', () : void => {
@@ -63,7 +63,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _.map(list, someReference, context);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore invocation with context', () : void => {
@@ -73,7 +73,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _(list).map(someReference, context);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on "this" context with non-literal function', () : void => {
@@ -83,7 +83,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _.reject(list, someReference, this);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on _.sortedIndex', () : void => {
@@ -96,7 +96,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _.sortedIndex(function () {}, value, someReference, this);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore static invocation with unknown method', () : void => {
@@ -105,7 +105,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _.not_an_underscore_function(list, () => {}, this);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
         it('should pass on underscore invocation with unknown method', () : void => {
@@ -113,7 +113,7 @@ describe('noUnnecessaryBindRule', () : void => {
             _(list).not_an_underscore_function(function() {}, context);
             _(list).not_an_underscore_function(() => {}, context);
         `;
-            TestHelper.assertViolations(ruleName, null, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
     });
@@ -125,7 +125,7 @@ describe('noUnnecessaryBindRule', () : void => {
             (function() {}).bind(this);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -140,7 +140,7 @@ describe('noUnnecessaryBindRule', () : void => {
             (() => {}).bind(this);
         `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -155,7 +155,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.map(list, function() {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -170,7 +170,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.map(list, () => {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -184,7 +184,7 @@ describe('noUnnecessaryBindRule', () : void => {
             var script : string = `
                 _(list).forEach(function() {}, this);
             `;
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -198,7 +198,7 @@ describe('noUnnecessaryBindRule', () : void => {
             var script : string = `
                 _(list).every(() => {}, this);
             `;
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -214,7 +214,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.reduce(list, function () {}, memo, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [  {
+            TestHelper.assertViolations(ruleName, script, [  {
                 "failure": "Binding function literal with 'this' context. Use lambdas instead",
                 "name": "file.ts",
                 "ruleName": "no-unnecessary-bind",
@@ -229,7 +229,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.reduce(list, () => {}, memo, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -245,7 +245,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _(list).reduce(function () {}, memo, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -261,7 +261,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _(list).reduce(() => {}, memo, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -277,7 +277,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.sortedIndex(list, value, function () {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -293,7 +293,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.sortedIndex(list, value, () => {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -309,7 +309,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _(list).sortedIndex(value, function () {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -325,7 +325,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _(list).sortedIndex(value, () => {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",
@@ -340,7 +340,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.bind(function () {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
                     "name": "file.ts",
@@ -355,7 +355,7 @@ describe('noUnnecessaryBindRule', () : void => {
                 _.bind(() => {}, this);
             `;
 
-            TestHelper.assertViolations(ruleName, null, script, [
+            TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
                     "name": "file.ts",

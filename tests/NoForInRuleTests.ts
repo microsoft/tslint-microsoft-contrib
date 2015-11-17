@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -20,7 +20,7 @@ describe('noForInRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
     it('should fail on for-in statement', () : void => {
@@ -30,7 +30,7 @@ describe('noForInRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not use for in statements, use Object.keys instead: for (name in object)",
                 "name": "file.ts",

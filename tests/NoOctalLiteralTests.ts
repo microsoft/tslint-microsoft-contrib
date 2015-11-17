@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /* tslint:disable:no-octal-literal */
 /**
@@ -23,7 +23,7 @@ function demoScriptPass1() {
     var y = "Sample text \0111"; // longer than octal
 }`;
 
-         TestHelper.assertViolations(ruleName, null, script, [ ]);
+         TestHelper.assertViolations(ruleName, script, [ ]);
      });
 
      it('should fail on 3 digit octal literals', () : void => {
@@ -38,12 +38,12 @@ function demoScriptFail() {
     var d = 'Sample text \354 more text';
 }`;
 
-         TestHelper.assertViolations(ruleName, null, script, [ ]);
+         TestHelper.assertViolations(ruleName, script, [ ]);
      });
 
      it('should produce violations ', () : void => {
          var inputFile : string = 'test-data/NoOctalLiteralTestInput.ts';
-         TestHelper.assertViolations(ruleName, null, inputFile, [
+         TestHelper.assertViolations(ruleName, inputFile, [
              {
                  "failure": "Octal literals should not be used: \\251",
                  "name": "test-data/NoOctalLiteralTestInput.ts",

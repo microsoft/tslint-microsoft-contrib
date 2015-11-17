@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /**
  * Unit tests.
@@ -13,13 +13,13 @@ describe('preferArrayLiteralRule', () : void => {
 
     it('should allow string[] as variable type', () : void => {
         var inputScript : string = 'var x : string[];';
-        TestHelper.assertViolations(ruleName, null, inputScript, [
+        TestHelper.assertViolations(ruleName, inputScript, [
         ]);
     });
 
     it('should ban Array<string> as variable type', () : void => {
         var inputScript : string = 'var x : Array<string>;';
-        TestHelper.assertViolations(ruleName, null, inputScript, [
+        TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace generic-typed Array with array literal: Array<string>",
                 "name": "file.ts",
@@ -31,7 +31,7 @@ describe('preferArrayLiteralRule', () : void => {
 
     it('should ban Array<string> as parameter type', () : void => {
         var inputScript : string = 'function (parm: Array<number>) {}';
-        TestHelper.assertViolations(ruleName, null, inputScript, [
+        TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace generic-typed Array with array literal: Array<number>",
                 "name": "file.ts",

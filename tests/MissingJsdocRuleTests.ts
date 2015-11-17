@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./utils/TestHelper');
+import TestHelper = require('./TestHelper');
 
 /* tslint:disable:no-octal-literal */
 /**
@@ -20,7 +20,7 @@ describe('missing-jsdoc', () : void => {
  */
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
     it('should not fail on top level comment with trailing spaces', () : void => {
@@ -30,14 +30,14 @@ function whatever() { }`;
  */
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
     it('should fail on missing comment', () : void => {
         var script : string = `
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "File missing JSDoc comment at the top-level: file.ts",
                 "name": "file.ts",
@@ -54,7 +54,7 @@ function whatever() { }`;
  */
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "File missing JSDoc comment at the top-level: file.ts",
                 "name": "file.ts",
@@ -71,7 +71,7 @@ function whatever() { }`;
  */
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "File missing JSDoc comment at the top-level: file.ts",
                 "name": "file.ts",
@@ -88,7 +88,7 @@ function whatever() { }`;
  */
 function whatever() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "File missing JSDoc comment at the top-level: file.ts",
                 "name": "file.ts",
@@ -105,7 +105,7 @@ function whatever() { }`;
      */
     function indentedLikeAModuleFunction() { }`;
 
-        TestHelper.assertViolations(ruleName, null, script, [
+        TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "File missing JSDoc comment at the top-level: file.ts",
                 "name": "file.ts",

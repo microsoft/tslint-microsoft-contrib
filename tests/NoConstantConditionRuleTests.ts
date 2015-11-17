@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -21,7 +21,7 @@ describe('noConstantConditionRule', () : void => {
             if (1 > something) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on if-booleans', () : void => {
@@ -30,7 +30,7 @@ describe('noConstantConditionRule', () : void => {
             if (true) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: if (false)",
                 "name": "file.ts",
@@ -52,7 +52,7 @@ describe('noConstantConditionRule', () : void => {
             if (1) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: if (0)",
                 "name": "file.ts",
@@ -74,7 +74,7 @@ describe('noConstantConditionRule', () : void => {
             var y = false ? 1 : 0;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: true ?",
                 "name": "file.ts",
@@ -96,7 +96,7 @@ describe('noConstantConditionRule', () : void => {
             var y = 0 ? 1 : 0;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: 1 ?",
                 "name": "file.ts",
@@ -124,7 +124,7 @@ describe('noConstantConditionRule', () : void => {
             while (true) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: while (false)",
                 "name": "file.ts",
@@ -152,7 +152,7 @@ describe('noConstantConditionRule', () : void => {
             while (1) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: while (0)",
                 "name": "file.ts",
@@ -180,7 +180,7 @@ describe('noConstantConditionRule', () : void => {
             do {} while (false)
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: while (true)",
                 "name": "file.ts",
@@ -208,7 +208,7 @@ describe('noConstantConditionRule', () : void => {
             do {} while (0)
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: while (1)",
                 "name": "file.ts",
@@ -236,7 +236,7 @@ describe('noConstantConditionRule', () : void => {
             for (;false;) { }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: ;true;",
                 "name": "file.ts",
@@ -264,7 +264,7 @@ describe('noConstantConditionRule', () : void => {
             for (;0;) { }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Found constant conditional: ;1;",
                 "name": "file.ts",

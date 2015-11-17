@@ -1,5 +1,3 @@
-/// <reference path="references.ts" />
-
 import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 
 /**

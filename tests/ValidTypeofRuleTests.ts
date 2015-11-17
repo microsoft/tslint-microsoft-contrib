@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -32,7 +32,7 @@ describe('validTypeofRule', () : void => {
             typeof Symbol.iterator === "symbol"
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, null, script, [ ]);
     });
 
     it('should fail on invalid string with ===', () : void => {
@@ -41,7 +41,7 @@ describe('validTypeofRule', () : void => {
             "strnig" === typeof foo
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid comparison in typeof. Did you mean string?",
                 "name": "file.ts",
@@ -64,7 +64,7 @@ describe('validTypeofRule', () : void => {
             "fction" == typeof foo
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid comparison in typeof. Did you mean function?",
                 "name": "file.ts",
@@ -86,7 +86,7 @@ describe('validTypeofRule', () : void => {
             "ndefined" !== typeof foo
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid comparison in typeof. Did you mean undefined?",
                 "name": "file.ts",
@@ -108,7 +108,7 @@ describe('validTypeofRule', () : void => {
             "bollen" != typeof foo
         `;
 
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
             {
                 "failure": "Invalid comparison in typeof. Did you mean boolean?",
                 "name": "file.ts",

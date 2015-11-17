@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -19,7 +19,7 @@ describe('noWithStatementsRule', () : void => {
                 b = 2;
             }
         `;
-        TestHelper.assertViolations(ruleName, script, [
+        TestHelper.assertViolations(ruleName, null, script, [
                 {
                     "failure": "Forbidden with statement",
                     "name": "file.ts",

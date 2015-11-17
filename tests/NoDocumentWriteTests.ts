@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import TestHelper = require('./utils/TestHelper');
 
 /**
  * Unit tests.
@@ -13,12 +13,12 @@ describe('noDocumentWriteRule', () : void => {
 
     it('should not produce violations ', () : void => {
         var inputFile : string = 'test-data/NoDocumentWritePassingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, []);
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, []);
     });
 
     it('should produce violations ', () : void => {
         var inputFile : string = 'test-data/NoDocumentWriteFailingTestInput.ts';
-        TestHelper.assertViolations(RULE_NAME, inputFile, [
+        TestHelper.assertViolations(RULE_NAME, null, inputFile, [
             {
                 "failure": "Forbidden call to document.write",
                 "name": "test-data/NoDocumentWriteFailingTestInput.ts",

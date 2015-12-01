@@ -25,10 +25,10 @@ module TestHelper {
     export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
     }
-    export function assertNoViolationWithOptions(ruleName : string, options: string[], inputFileOrScript : string) {
+    export function assertNoViolationWithOptions(ruleName : string, options: any[], inputFileOrScript : string) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
     }
-    export function assertViolationsWithOptions(ruleName : string, options: string[], inputFileOrScript : string,
+    export function assertViolationsWithOptions(ruleName : string, options: any[], inputFileOrScript : string,
                                                 expectedFailures : ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
     }

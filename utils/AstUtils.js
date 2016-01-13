@@ -1,3 +1,4 @@
+var ts = require('typescript');
 var SyntaxKind = require('./SyntaxKind');
 var AstUtils;
 (function (AstUtils) {

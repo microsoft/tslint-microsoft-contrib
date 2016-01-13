@@ -1,9 +1,9 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var SyntaxKind = require('./utils/SyntaxKind');
 var Utils = require('./utils/Utils');
@@ -16,7 +16,7 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     };
     Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
-    Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function'];
+    Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
     return Rule;
 })(Lint.Rules.AbstractRule);
 exports.Rule = Rule;

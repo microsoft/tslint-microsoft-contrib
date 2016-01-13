@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 /**
  * This module provides backwards compatibility for TypeScript's ts.SyntaxKind interface.
  * The numbers assigned to the enum elements change with each TypeScript release, so if

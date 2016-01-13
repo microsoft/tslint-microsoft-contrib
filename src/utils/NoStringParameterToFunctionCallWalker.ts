@@ -1,3 +1,5 @@
+import * as ts from 'typescript';
+import * as Lint from 'tslint/lib/lint';
 import ScopedSymbolTrackingWalker = require('./ScopedSymbolTrackingWalker');
 
 import AstUtils = require('./AstUtils');

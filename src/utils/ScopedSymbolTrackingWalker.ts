@@ -1,3 +1,5 @@
+import * as ts from 'typescript';
+import * as Lint from 'tslint/lib/lint';
 import ErrorTolerantWalker = require('./ErrorTolerantWalker');
 import SyntaxKind = require('./SyntaxKind');
 import AstUtils = require('./AstUtils');

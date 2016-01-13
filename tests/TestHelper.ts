@@ -2,6 +2,8 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
+import * as Lint from 'tslint/lib/lint';
+import Linter = require('tslint');
 import fs = require('fs');
 import chai = require('chai');
 
@@ -56,12 +58,12 @@ module TestHelper {
             formattersDirectory: 'customFormatters/'
         };
 
-        var linter : Lint.Linter;
+        var linter : Linter;
         if (inputFileOrScript.match(/.*\.ts/)) {
             var contents = fs.readFileSync(inputFileOrScript, 'utf8');
-            linter = new Lint.Linter(inputFileOrScript, contents, options);
+            linter = new Linter(inputFileOrScript, contents, options);
         } else {
-            linter = new Lint.Linter('file.ts', inputFileOrScript, options);
+            linter = new Linter('file.ts', inputFileOrScript, options);
         }
 
         var result : Lint.LintResult = linter.lint();

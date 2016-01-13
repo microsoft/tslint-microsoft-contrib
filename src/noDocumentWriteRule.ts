@@ -1,5 +1,7 @@
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import * as ts from 'typescript';
+import * as Lint from 'tslint/lib/lint';
 
+import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 import AstUtils = require('./utils/AstUtils');
 
 /**

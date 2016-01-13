@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import SyntaxKind = require('./SyntaxKind');
 
 /**

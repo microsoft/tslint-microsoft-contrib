@@ -12,6 +12,8 @@ Version 1.1.0
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
 
+This project currently requires TSLint 2.x or earlier. **TSLint 3.x is not yet supported**
+
 Installation
 ------------
 

@@ -23,6 +23,31 @@ describe('noEmptyInterfacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on interface with two different parents', () : void => {
+        var script : string = `
+            interface MyInterface extends First, Second {
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should fail on interface with only 1 parent (what is the point?)', () : void => {
+        var script : string = `
+            interface MyInterface extends First {
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Do not declare empty interfaces: 'MyInterface'",
+                "name": "file.ts",
+                "ruleName": "no-empty-interfaces",
+                "startPosition": { "character": 13, "line": 2 }
+            }
+        ]);
+    });
+
     it('should fail on empty interface', () : void => {
         var script : string = `
             interface MyInterface {

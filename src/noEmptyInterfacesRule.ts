@@ -19,7 +19,8 @@ class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
 
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
 
-        if (node.members == null || node.members.length === 0) {
+        // do we have an empty interface?
+        if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
             this.addFailure(
                 this.createFailure(
                     node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\''
@@ -29,4 +30,14 @@ class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
         super.visitInterfaceDeclaration(node);
     }
 
+    private isInterfaceEmpty(node: ts.InterfaceDeclaration): boolean {
+        return node.members == null || node.members.length === 0;
+    }
+
+    private hasMultipleParents(node: ts.InterfaceDeclaration): boolean {
+        if (node.heritageClauses == null || node.heritageClauses.length === 0) {
+            return false;
+        }
+        return node.heritageClauses[0].types.length >= 2;
+    }
 }

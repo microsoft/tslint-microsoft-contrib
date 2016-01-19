@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import SyntaxKind = require('./utils/SyntaxKind');
 import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import AstUtils = require('./utils/AstUtils');
 
 /**
  * Implementation of the no-unused-import rule.
@@ -66,23 +67,10 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
 
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
-        if (!this.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable((<any>node).name.text, (<any>node).name.getStart());
         }
         super.visitImportEqualsDeclaration(node);
-    }
-
-    private hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
-        if (modifiers == null) {
-            return false;
-        }
-        var result : boolean = false;
-        modifiers.forEach((modifier : ts.Node) : void => {
-            if (modifier.kind === modifierKind) {
-                result = true;
-            }
-        });
-        return result;
     }
 
     /**

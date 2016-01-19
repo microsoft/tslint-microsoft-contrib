@@ -24,6 +24,19 @@ module AstUtils {
         return null;
     }
 
+    export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
+        if (modifiers == null) {
+            return false;
+        }
+        var result : boolean = false;
+        modifiers.forEach((modifier : ts.Node) : void => {
+            if (modifier.kind === modifierKind) {
+                result = true;
+            }
+        });
+        return result;
+    }
+
     export function dumpTypeInfo(expression : ts.Expression, languageServices: ts.LanguageService, typeChecker : ts.TypeChecker) : void {
         /* tslint:disable:no-console */
         console.log(expression.getFullText());

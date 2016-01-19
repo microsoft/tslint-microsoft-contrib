@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"target": "es5",
+		"outDir": "dist"
+	},
+	"exclude": [
+		".tscache",
+		"dist",
+		"node_modules",
+		"templates",
+		"test-data"
+	]
+}

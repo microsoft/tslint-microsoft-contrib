@@ -10,7 +10,7 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 
 Version 2.0.1
 -------------
-The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
+The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
 **TSLint version 3.2.x users**: use project tslint-microsoft-contrib version 2.x
 **TSLint version 3.1.x users**: Unsupported
@@ -22,7 +22,7 @@ Installation
 
     npm install tslint-microsoft-contrib
 
-Alternately, you can download the files directly from GitHub: 
+Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
 * [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)
@@ -101,6 +101,7 @@ Rule Name   | Description | Since
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 `valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
+`no-unexternalized-strings`     | Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales. The rule can be configured using an object literal as document in the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/95#issuecomment-173149989)| 2.0.2
 
 
 Development

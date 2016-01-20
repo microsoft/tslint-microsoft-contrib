@@ -1041,6 +1041,7 @@ class MyTsExprEval {
                     this.toSource(this.getObjectValE(node.right, expandValLevel.expandValLevelNoID)), __PickUp:false,  __type:"", __vague:false};
             case ts.SyntaxKind.ArrayType:
                 return <MyTsExprEvalType>{__value:this.getObjectValE((<ts.ArrayTypeNode>node).elementType, expandVal), __PickUp:false,  __type:"", __vague:false};
+            case ts.SyntaxKind.SuperKeyword: return "super";
             /*
             case ts.SyntaxKind.TypeParameter:
                 return this.toSource(this.getObjectValE(node.name, false)) + " " +
@@ -1296,7 +1297,6 @@ class MyTsExprEval {
             case ts.SyntaxKind.InstanceOfKeyword: return "instanceof";
             case ts.SyntaxKind.NewKeyword: return "new";
             case ts.SyntaxKind.ReturnKeyword: return "return";
-            case ts.SyntaxKind.SuperKeyword: return "super";
             case ts.SyntaxKind.SwitchKeyword: return "switch";
             case ts.SyntaxKind.ThrowKeyword: return "throw";
             case ts.SyntaxKind.TryKeyword: return "try";

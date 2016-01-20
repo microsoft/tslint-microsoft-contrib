@@ -17,6 +17,10 @@
             Copyright (c) 2016 reversi.fun. All rights reserved.
         ******************************************************************************/
 
+/* tslint:disable:ng-incomplete-object */
+/* tslint:disable:no-console */
+/* tslint:disable:quotemark */
+/* tslint:disable:max-line-length */
 import * as ts from 'typescript';
 //import * as ts from  "../node_modules/typescript/lib/typescript";
 import * as Lint from 'tslint/lib/lint';
@@ -28,16 +32,12 @@ import AstUtils = require('./utils/AstUtils');
 //var traceLogger = { error: (msg, obj?) => { }, warn: (msg, obj?) => { }, debug: (msg, obj?) => { console.log(msg); }, trace: (msg, obj?) => { console.log(msg); } };// log4js like nop logger
 var traceLogger = { error: (msg, obj?) => { }, warn: (msg, obj?) => { }, debug: (msg, obj?) => { }, trace: (msg, obj?) => { } };// release level logger ,log4js like
 var errorLogger = { error: (msg, obj?) => { console.error(msg); }, warn: (msg, obj?) => { } }; // nop Logger
-/**
- * Implementation of the "ngIncompleteObject" rule.
- */
-/* tslint:disable:no-console */
-interface RuleOption{
+interface RuleOption {
     callNames: string[];
     exceptNames: string[];
     valueExpand: boolean;
     checkVauge: boolean;
-};
+}
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING1 = 'Incomplete property Object at calling '; // for callExpression : object value
     public static FAILURE_STRING2 = 'Vauge property Object at calling '; // for callExpression : object value
@@ -71,8 +71,8 @@ export class Rule extends Lint.Rules.AbstractRule {
                 }
                 if (typeof (ruleArguments[i]['valueExpand']) === "undefine") {
                     if (typeof (ruleArguments[i]['valueExpand']) === "boolean") {
-                        if (ruleArguments[i].valueExpand === true) { ruleOption.valueExpand = true; }
-                        else if (ruleArguments[i].valueExpand === false) { ruleOption.valueExpand = false; }
+                        if (ruleArguments[i].valueExpand === true) { ruleOption.valueExpand = true;
+                        } else if (ruleArguments[i].valueExpand === false) { ruleOption.valueExpand = false; }
                         traceLogger.debug("!!# ruleOption.valueExpand =" + ruleOption.valueExpand);
                     } else {
                         errorLogger.error("invalid valueExpand:", ruleArguments[i]);
@@ -80,8 +80,8 @@ export class Rule extends Lint.Rules.AbstractRule {
                 }
                 if (typeof (ruleArguments[i]['checkVauge']) === "undefine") {
                     if (typeof (ruleArguments[i]['checkVauge']) === "boolean") {
-                        if (ruleArguments[i].checkVauge === true) { ruleOption.checkVauge = true; }
-                        else if (ruleArguments[i].checkVauge === false) { ruleOption.checkVauge = false; }
+                        if (ruleArguments[i].checkVauge === true) { ruleOption.checkVauge = true;
+                        } else if (ruleArguments[i].checkVauge === false) { ruleOption.checkVauge = false; }
                         traceLogger.debug("!!# ruleOption.CheckVauge =" + ruleOption.checkVauge);
                     } else {
                         errorLogger.error("invalid checkVauge:", ruleArguments[i]);
@@ -106,7 +106,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         //return this.applyWithWalker(new AngularJSIncompleteObjectWalker(languageService.getSourceFile(sourceFile.fileName) /*sourceFile*/, this.getOptions(), languageService , curTypeChecker));
         return this.applyWithWalker(new NoIncompleteObjectWalker(curProgram.getSourceFile(sourceFile.fileName), this.getOptions(), languageService, curTypeChecker, ruleOption));
     }
-};
+}
 
 var myContext: myContextClass;
 var myTsExprEval: MyTsExprEval;
@@ -115,11 +115,11 @@ var myTsAst2Xref: MyTsAst2XrefClass;
 class NoIncompleteObjectWalker extends ScopedSymbolTrackingWalker /*Lint.RuleWalker*/ {
     //protected languageServices: ts.LanguageService;
     //protected typeChecker : ts.TypeChecker;
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, languageService: ts.LanguageService , TypeChecker: ts.TypeChecker, ruleOption: RuleOption) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, languageService: ts.LanguageService , typeChecker: ts.TypeChecker, ruleOption: RuleOption) {
         super(sourceFile, options, languageService);
         //this.languageServices = languageService;
-        this.typeChecker = TypeChecker;
-        curTypeChecker = TypeChecker;
+        this.typeChecker = typeChecker;
+        curTypeChecker = typeChecker;
         myContext = new myContextClass(); myContext.clear();
         myTsExprEval = new MyTsExprEval();
         myTsExprEval.exceptNames = ruleOption.exceptNames;
@@ -128,7 +128,7 @@ class NoIncompleteObjectWalker extends ScopedSymbolTrackingWalker /*Lint.RuleWal
         myTsAst2Xref.callNames = ruleOption.callNames;  // set check target
         myTsAst2Xref.valueExpand = ruleOption.valueExpand;  // set output value expression option
         myTsAst2Xref.checkVauge = ruleOption.checkVauge;  // set Check Vauge select option 
-        
+
     }
     /* tslint:disable:no-console */
     protected visitNode(node: ts.Node): void {
@@ -153,7 +153,7 @@ class NoIncompleteObjectWalker extends ScopedSymbolTrackingWalker /*Lint.RuleWal
             AstUtils.dumpTypeInfo(node, this.languageServices, this.typeChecker);
         }
         var curName:string = node.getText();
-        if(["__type","__value","__vague","__PickUp"].indexOf(curName) >=0){
+        if (["__type","__value","__vague","__PickUp"].indexOf(curName) >=0) {
         	throw new Error("Not supports var name as same name of this RuleWorker.");
         }
         var parentNode: ts.Node = node.parent;
@@ -166,15 +166,15 @@ class NoIncompleteObjectWalker extends ScopedSymbolTrackingWalker /*Lint.RuleWal
         } else if (parentNode.kind === ts.SyntaxKind.PropertySignature || parentNode.kind === ts.SyntaxKind.PropertyDeclaration || parentNode.kind === ts.SyntaxKind.PropertyAssignment || parentNode.kind === ts.SyntaxKind.GetAccessor) {
             myTsAst2Xref.rem_TS_PropertyDefined(<ts.Identifier>node,<ts.Declaration>parentNode);
         } else if (parentNode.kind === ts.SyntaxKind.Parameter) {
-            myTsAst2Xref.rem_define_Parameter(<ts.ParameterDeclaration>parentNode,parentNode.parent); 
+            myTsAst2Xref.rem_define_Parameter(<ts.ParameterDeclaration>parentNode,parentNode.parent);
         } else if (parentNode.kind === ts.SyntaxKind.VariableDeclaration) {
             myTsAst2Xref.rem_TS_VariableDeclaration_initValue(<ts.Identifier>node, (<ts.VariableDeclaration>parentNode).initializer);
-        } else {;}
+        } else { ; }
         super.visitIdentifier(node);
     }
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        if(node.name.getText() === "$inject" && !(!node.initializer) && node.initializer.kind === ts.SyntaxKind.ArrayLiteralExpression){
-            myTsAst2Xref.pre_$inject(<ts.Identifier>node.name,<ts.ArrayLiteralExpression>(node.initializer), 0);
+        if (node.name.getText() === "$inject" && !(!node.initializer) && node.initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+            myTsAst2Xref.pre_$inject(<ts.Identifier>node.name, <ts.ArrayLiteralExpression>(node.initializer), 0);
         }
         super.visitPropertyDeclaration(node);
     }
@@ -182,9 +182,9 @@ class NoIncompleteObjectWalker extends ScopedSymbolTrackingWalker /*Lint.RuleWal
         super.visitBinaryExpression(node);
         myTsAst2Xref.rem_BinaryExpression(<ts.BinaryExpression>node);
     }
-    protected visitCallExpression(node: ts.CallExpression): void{
+    protected visitCallExpression(node: ts.CallExpression): void {
         super.visitCallExpression(node);
-        myTsAst2Xref.rem_CallLikeExpression(node.expression, node.arguments); 
+        myTsAst2Xref.rem_CallLikeExpression(node.expression, node.arguments);
     }
     /* tslint:enable:no-console */
 }
@@ -201,7 +201,7 @@ class conTextStackItem {  // SCOPE context
         this.values = [];
         this.seq = seq;
     };
-};
+}
 class myContextClass {
     gFileName:string;
     conTextStack: conTextStackItem[] = []; // TypeScript context stack
@@ -608,7 +608,7 @@ class myContextClass {
             throw (new Error(messagePreFix + errorMessage));
         //});
     }
-};
+}
 interface  MyTsExprEvalElement{
     __PickUp: boolean;
     __value: any|any[];
@@ -620,7 +620,7 @@ enum expandValLevel{
         expandValLevelNoID = 1,
         expandValLevelNoVauge = 2,
         expandValLevelFull = 3
-};
+}
 class MyTsExprEval {
     exceptNames: string[];
     public getObjectVals(nodes: any, dml: string): string {
@@ -694,7 +694,7 @@ class MyTsExprEval {
                     } else if (curNode.kind === ts.SyntaxKind.ThisKeyword) {
                         curSymbols1.unshift("this");
                         return myContext.getValSymbols(curSymbols1);
-                    } else {;} //下の評価式にフォールダウン. 
+                    } else { ; } //下の評価式にフォールダウン. 
                 }
                 //以下の処理は、曖昧な多値の簡約抽出ができるが、pickUpedNameの抽出対象外になる
                 var retValObj: MyTsExprEvalType = <MyTsExprEvalType>{ __value:"", __PickUp: false, __type: "", __vague: false };
@@ -716,7 +716,7 @@ class MyTsExprEval {
                                     retValObj = <MyTsExprEvalType>{ __value: "this" + "." + this.toSource(elementID), __PickUp: true, __type: "", __vague: false };
                                 } else if (typeof (curValObj.__value) !== "object") { //retValObjに非ず
                                     retValObj = <MyTsExprEvalType>{ __value: retValObj, __PickUp: true, __type: "", __vague: false };
-                                } else {;} //retValObjの"object"をスルー 
+                                } else { ; } //retValObjの"object"をスルー 
                             } else {
                                 if ((typeof (retValObj.__value) === "string") && (retValObj.__value.indexOf(" => ") < 0)) {
                                     retValObj = <MyTsExprEvalType>{ __value: retValObj.__value, __PickUp: true, __type: "", __vague: false }; //this直下のオブジェクト参照('Rest')までは式展開
@@ -733,7 +733,7 @@ class MyTsExprEval {
                                     retValObj = <MyTsExprEvalType>{ __value: "this" + "." + this.toSource(elementID), __PickUp: true, __type: "", __vague: false };
                                 } else if (typeof (curValObj.__value) !== "object") { //retValObjに非ず
                                     retValObj = <MyTsExprEvalType>{ __value: retValObj, __PickUp: true, __type: "", __vague: false };
-                                } else {;} //retValObjの"object"をスルー 
+                                } else { ; } //retValObjの"object"をスルー 
                             } else {
                                 if ((typeof (retValObj.__value) === "string") && (retValObj.__value.indexOf(" => ") < 0)) {
                                     retValObj = <MyTsExprEvalType>{ __value: retValObj.__value, __PickUp: true, __type: "", __vague: false }; //this直下のオブジェクト参照('Rest')までは式展開
@@ -1042,6 +1042,7 @@ class MyTsExprEval {
             case ts.SyntaxKind.ArrayType:
                 return <MyTsExprEvalType>{__value:this.getObjectValE((<ts.ArrayTypeNode>node).elementType, expandVal), __PickUp:false,  __type:"", __vague:false};
             case ts.SyntaxKind.SuperKeyword: return "super";
+            case ts.SyntaxKind.NoSubstitutionTemplateLiteral: return node.text;
             /*
             case ts.SyntaxKind.TypeParameter:
                 return this.toSource(this.getObjectValE(node.name, false)) + " " +
@@ -1933,10 +1934,10 @@ class MyTsAst2XrefClass  {
             var targetMethodStr:string = targetNode.getText();
             var beCheck: Boolean = (this.callNames.indexOf(targetMethodStr) >= 0);
             if((! beCheck) && targetNode.kind === ts.SyntaxKind.PropertyAccessExpression){
-                var  targetMethodStr:string = (<ts.PropertyAccessExpression>targetNode).name.getText();
+                var  targetMethodStr:string = myTsExprEval.toSource(myTsExprEval.getObjectValF(targetNode));
                 beCheck = (this.callNames.indexOf(targetMethodStr) >= 0);
                 if (!beCheck) {
-                    var  targetMethodStr:string = myTsExprEval.toSource(myTsExprEval.getObjectValF(targetNode));
+                    var  targetMethodStr:string = (<ts.PropertyAccessExpression>targetNode).name.getText();
                     beCheck = (this.callNames.indexOf(targetMethodStr) >= 0);
                 }
             }
@@ -1953,7 +1954,7 @@ class MyTsAst2XrefClass  {
                     if (this.checkVauge && rValStr.indexOf("|,|") > 0) { //曖昧な多値が含まれている
                         this.curRuleWorker.addFailure(this.curRuleWorker.createFailure(targetArgs[i].getStart(), targetArgs[i].getWidth(), Rule.FAILURE_STRING2 + ":" + targetMethodStr + "(args[" + i + "])" + (valueExpand ? "\n" + rValStr + "\n;" : "")));
                         valueExpand = false;
-                    }                     
+                    }
                 }
             }
         }

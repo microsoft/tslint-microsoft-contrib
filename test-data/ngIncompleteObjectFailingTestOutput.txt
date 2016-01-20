@@ -1,0 +1,44 @@
+test-data/ngIncompleteObjectFailingTestInput.ts[75, 71]: Incomplete property Object at calling :'$http'.post(args[1])
+<Address2St>{townName: (/*Args:*/<Address2St>createinData).townName, 
+  warehouseShelfAddress: /** !! undefined **/, 
+  streetNumber: (/*Args:*/<Address2St>createinData).streetNumber,
+  city: /** !! undefined **/, 
+  State: (/*Args:*/<Address2St>createinData).State,
+  zipCode: (/*Args:*/<Address2St>createinData).zipCode,
+  country: (/*Args:*/<Address2St>createinData).country}
+;
+test-data/ngIncompleteObjectFailingTestInput.ts[78, 71]: Incomplete property Object at calling :'$http'.post(args[1])
+<Address2St>{townName: (/*Args:*/<Address2St>createinData).townName,
+ warehouseShelfAddress: {|(/*Args:*/<Address2St>createinData).warehouseShelfAddress |,| col: 3 |,| row: /** !! undefined **/|} ,
+  streetNumber: (/*Args:*/<Address2St>createinData).streetNumber,
+  city: /** !! undefined **/,
+  State: (/*Args:*/<Address2St>createinData).State,
+  zipCode: (/*Args:*/<Address2St>createinData).zipCode,
+  country: (/*Args:*/<Address2St>createinData).country}
+;
+test-data/ngIncompleteObjectFailingTestInput.ts[78, 71]: Vauge property Object at calling :'$http'.post(args[1])
+
+test-data/ngIncompleteObjectFailingTestInput.ts[80, 50]: Incomplete property Object at calling :'RestResource'.postHttp(args[1])
+<Address2St>{townName: (/*Args:*/<Address2St>createinData).townName,
+ warehouseShelfAddress: {|(/*Args:*/<Address2St>createinData).warehouseShelfAddress |,| col: 3 |,| row: 1|} ,
+  streetNumber: (/*Args:*/<Address2St>createinData).streetNumber,
+   city: /** !! undefined **/,
+   State: (/*Args:*/<Address2St>createinData).State,
+   zipCode: (/*Args:*/<Address2St>createinData).zipCode,
+   country: (/*Args:*/<Address2St>createinData).country}
+;
+test-data/ngIncompleteObjectFailingTestInput.ts[80, 50]: Vauge property Object at calling :'RestResource'.postHttp(args[1])
+test-data/ngIncompleteObjectFailingTestInput.ts[95, 70]: Incomplete property Object at calling :'$http'.get(args[1])
+<Address3JPOut>{streetNumber: (/*Args:*/<Address3JPIn>inData).streetNumber.bannti + (((/*Args:*/<Address3JPIn>inData).streetNumber.bannti > 0 ? "-" + (/*Args:*/<Address3JPIn>inData).streetNumber.bannti + (((/*Args:*/<Address3JPIn>inData).streetNumber.ku > 0 ? "-" + (/*Args:*/<Address3JPIn>inData).streetNumber.ku : "")) : "")), 
+ itFill: "0",
+ townName: /** !! undefined **/,
+ warehouseShelfAddress: /** !! undefined **/,
+ city: /** !! undefined **/,
+ State: /** !! undefined **/,
+ zipCode: /** !! undefined **/,
+ country: /** !! undefined **/}
+;
+test-data/ngIncompleteObjectFailingTestInput.ts[113, 48]: Incomplete property Object at calling :delete(args[1])
+{|((/*Args:*/<any>updateResponce).data) |,| streetNumber: /** !! undefined **/ |,| itFill: /** !! undefined **/ |,| townName: /** !! undefined **/ |,| warehouseShelfAddress: /** !! undefined **/ |,| city: /** !! undefined **/ |,| State: /** !! undefined **/ |,| zipCode: /** !! undefined **/ |,| country: /** !! undefined **/|} 
+;
+test-data/ngIncompleteObjectFailingTestInput.ts[113, 48]: Vauge property Object at calling :delete(args[1])

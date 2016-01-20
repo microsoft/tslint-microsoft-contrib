@@ -23,10 +23,19 @@ var NoEmptyInterfacesRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoEmptyInterfacesRuleWalker.prototype.visitInterfaceDeclaration = function (node) {
-        if (node.members == null || node.members.length === 0) {
+        if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\''));
         }
         _super.prototype.visitInterfaceDeclaration.call(this, node);
+    };
+    NoEmptyInterfacesRuleWalker.prototype.isInterfaceEmpty = function (node) {
+        return node.members == null || node.members.length === 0;
+    };
+    NoEmptyInterfacesRuleWalker.prototype.hasMultipleParents = function (node) {
+        if (node.heritageClauses == null || node.heritageClauses.length === 0) {
+            return false;
+        }
+        return node.heritageClauses[0].types.length >= 2;
     };
     return NoEmptyInterfacesRuleWalker;
 })(ErrorTolerantWalker);

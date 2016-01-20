@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 var Utils = require('./utils/Utils');
+var SyntaxKind = require('./utils/SyntaxKind');
+var AstUtils = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,7 +25,7 @@ var Rule = (function (_super) {
         }
         return null;
     };
-    Rule.FAILURE_STRING = 'The exported module name must match the file name. Found: ';
+    Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
     return Rule;
 })(Lint.Rules.AbstractRule);
 exports.Rule = Rule;
@@ -32,17 +34,45 @@ var ExportNameWalker = (function (_super) {
     function ExportNameWalker() {
         _super.apply(this, arguments);
     }
-    ExportNameWalker.prototype.visitExportAssignment = function (node) {
-        var exportedName = node.expression.getText();
+    ExportNameWalker.prototype.visitSourceFile = function (node) {
+        var _this = this;
+        var exportedTopLevelElements = [];
+        node.statements.forEach(function (element) {
+            if (element.kind === SyntaxKind.current().ExportAssignment) {
+                var exportAssignment = element;
+                _this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+            }
+            else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
+                exportedTopLevelElements.push(element);
+            }
+        });
+        this.validateExportedElements(exportedTopLevelElements);
+    };
+    ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
+        if (exportedElements.length === 1) {
+            if (exportedElements[0].kind === SyntaxKind.current().ModuleDeclaration ||
+                exportedElements[0].kind === SyntaxKind.current().ClassDeclaration ||
+                exportedElements[0].kind === SyntaxKind.current().FunctionDeclaration) {
+                this.validateExport(exportedElements[0].name.text, exportedElements[0]);
+            }
+            else if (exportedElements[0].kind === SyntaxKind.current().VariableStatement) {
+                var variableStatement = exportedElements[0];
+                if (variableStatement.declarationList.declarations.length === 1) {
+                    var variableDeclaration = variableStatement.declarationList.declarations[0];
+                    this.validateExport(variableDeclaration.name.text, variableDeclaration);
+                }
+            }
+        }
+    };
+    ExportNameWalker.prototype.validateExport = function (exportedName, node) {
         var regex = new RegExp(exportedName + '\..*');
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
                 var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-                var failure = this.createFailure(node.expression.getStart(), node.expression.getWidth(), failureString);
+                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
-        _super.prototype.visitExportAssignment.call(this, node);
     };
     ExportNameWalker.prototype.getFilename = function () {
         var filename = this.getSourceFile().fileName;
@@ -60,4 +90,5 @@ var ExportNameWalker = (function (_super) {
     };
     return ExportNameWalker;
 })(ErrorTolerantWalker);
+exports.ExportNameWalker = ExportNameWalker;
 //# sourceMappingURL=exportNameRule.js.map

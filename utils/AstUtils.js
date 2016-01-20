@@ -19,6 +19,19 @@ var AstUtils;
         return null;
     }
     AstUtils.getFunctionTarget = getFunctionTarget;
+    function hasModifier(modifiers, modifierKind) {
+        if (modifiers == null) {
+            return false;
+        }
+        var result = false;
+        modifiers.forEach(function (modifier) {
+            if (modifier.kind === modifierKind) {
+                result = true;
+            }
+        });
+        return result;
+    }
+    AstUtils.hasModifier = hasModifier;
     function dumpTypeInfo(expression, languageServices, typeChecker) {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);

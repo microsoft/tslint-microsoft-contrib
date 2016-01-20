@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Lint = require('tslint/lib/lint');
 var SyntaxKind = require('./utils/SyntaxKind');
 var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var AstUtils = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -14,7 +15,8 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoGenericArrayWalker(sourceFile, this.getOptions()));
     };
-    Rule.FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
+    Rule.GENERICS_FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
+    Rule.CONSTRUCTOR_FAILURE_STRING = 'Replace Array constructor with an array literal: ';
     return Rule;
 })(Lint.Rules.AbstractRule);
 exports.Rule = Rule;
@@ -27,12 +29,20 @@ var NoGenericArrayWalker = (function (_super) {
         if (node.kind === SyntaxKind.current().TypeReference) {
             var ref = node;
             if (ref.typeName.text === 'Array') {
-                var failureString = Rule.FAILURE_STRING + node.getText();
+                var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
                 var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
         _super.prototype.visitNode.call(this, node);
+    };
+    NoGenericArrayWalker.prototype.visitNewExpression = function (node) {
+        var functionName = AstUtils.getFunctionName(node);
+        if (functionName === 'Array') {
+            var failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), failureString));
+        }
+        _super.prototype.visitNewExpression.call(this, node);
     };
     return NoGenericArrayWalker;
 })(ErrorTolerantWalker);

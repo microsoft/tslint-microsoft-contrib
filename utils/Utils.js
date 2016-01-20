@@ -15,9 +15,9 @@ var Utils;
     function reduce(list, predicate, initialValue) {
         var result = initialValue;
         if (list != null) {
-            for (var i = 0; i < list.length; i++) {
-                result = predicate(result, list[i]);
-            }
+            list.forEach(function (element) {
+                result = predicate(result, element);
+            });
         }
         return result;
     }

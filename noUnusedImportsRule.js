@@ -7,6 +7,7 @@ var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var SyntaxKind = require('./utils/SyntaxKind');
 var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var AstUtils = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -62,22 +63,10 @@ var NoUnusedImportsWalker = (function (_super) {
         this.noRequireReferences = noRequireReferences;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        if (!this.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable(node.name.text, node.name.getStart());
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);
-    };
-    NoUnusedImportsWalker.prototype.hasModifier = function (modifiers, modifierKind) {
-        if (modifiers == null) {
-            return false;
-        }
-        var result = false;
-        modifiers.forEach(function (modifier) {
-            if (modifier.kind === modifierKind) {
-                result = true;
-            }
-        });
-        return result;
     };
     NoUnusedImportsWalker.prototype.validateReferencesForVariable = function (name, position) {
         var references = this.languageServices.getReferencesAtPosition('file.ts', position);

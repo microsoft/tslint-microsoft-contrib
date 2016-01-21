@@ -69,7 +69,7 @@ export class Rule extends Lint.Rules.AbstractRule {
                         }
                     }
                 }
-                if (typeof (ruleArguments[i]['valueExpand']) === "undefine") {
+                if (typeof (ruleArguments[i]['valueExpand']) !== "undefined") {
                     if (typeof (ruleArguments[i]['valueExpand']) === "boolean") {
                         if (ruleArguments[i].valueExpand === true) { ruleOption.valueExpand = true;
                         } else if (ruleArguments[i].valueExpand === false) { ruleOption.valueExpand = false; }
@@ -78,8 +78,8 @@ export class Rule extends Lint.Rules.AbstractRule {
                         errorLogger.error("invalid valueExpand:", ruleArguments[i]);
                     }
                 }
-                if (typeof (ruleArguments[i]['checkVauge']) === "undefine") {
-                    if (typeof (ruleArguments[i]['checkVauge']) === "boolean") {
+                if (typeof (ruleArguments[i]['checkVauge']) !== "undefined") {
+                     if (typeof (ruleArguments[i]['checkVauge']) === "boolean") {
                         if (ruleArguments[i].checkVauge === true) { ruleOption.checkVauge = true;
                         } else if (ruleArguments[i].checkVauge === false) { ruleOption.checkVauge = false; }
                         traceLogger.debug("!!# ruleOption.CheckVauge =" + ruleOption.checkVauge);

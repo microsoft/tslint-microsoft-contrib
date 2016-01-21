@@ -24,6 +24,19 @@ module AstUtils {
         return null;
     }
 
+    export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
+        if (modifiers == null) {
+            return false;
+        }
+        var result : boolean = false;
+        modifiers.forEach((modifier : ts.Node) : void => {
+            if (modifier.kind === modifierKind) {
+                result = true;
+            }
+        });
+        return result;
+    }
+
     export function dumpTypeInfo(expression : ts.Expression, languageServices: ts.LanguageService, typeChecker : ts.TypeChecker) : void {
         /* tslint:disable:no-console */
         console.log(expression.getFullText());
@@ -49,17 +62,21 @@ module AstUtils {
                 });
             }
 
-            var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
-            console.log('\tquickInfo.kind         = ' + quickInfo.kind);
-            console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
-            console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+            var quickInfo: ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
+            if (quickInfo) {
+                console.log('\tquickInfo.kind         = ' + quickInfo.kind);
+                console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
+                console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
+                console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
+                console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+            }
 
-            var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
-            console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
-            console.log('\ttype.flags: ' + expressionType.flags);
-            console.log('\ttype.symbol: ' + expressionType.symbol);
+            var expressionType: ts.Type = typeChecker.getTypeAtLocation(expression);
+            if (expressionType) {
+                console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
+                console.log('\ttype.flags: ' + expressionType.flags);
+                console.log('\ttype.symbol: ' + expressionType.symbol);
+            }
 
             var expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
             if (expressionSymbol == null) {

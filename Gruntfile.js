@@ -138,7 +138,11 @@ module.exports = function(grunt) {
         ' during the build.', function () {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
+        var rulesToSkip = { 'no-unexternalized-strings': true };
         getAllRuleNames().forEach(function(ruleName) {
+            if (rulesToSkip[ruleName]) {
+                return;
+            }
             if (tslintConfig.rules[ruleName] !== true) {
                 if (tslintConfig.rules[ruleName] == null || tslintConfig.rules[ruleName][0] !== true) {
                     grunt.fail.warn('A rule was found that is not enabled on the project: ' + ruleName);

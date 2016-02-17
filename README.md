@@ -8,18 +8,25 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 1.1.0
+Version 2.0.2
 -------------
-The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find! 
+The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
+
+**TSLint version 3.2.x users**: use project tslint-microsoft-contrib version 2.x
+**TSLint version 3.1.x users**: Unsupported
+**TSLint version 3.0.x users**: Unsupported
+**TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
 
 Installation
 ------------
 
     npm install tslint-microsoft-contrib
 
-Alternately, you can download the files directly from GitHub: 
+Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.1)
+* [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)
 * [1.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-1.0.0)
 * [0.0.4](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-0.0.4)
 
@@ -86,11 +93,12 @@ Rule Name   | Description | Since
 `no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument | 0.0.1
+`no-unexternalized-strings`     | Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales. The rule can be configured using an object literal as document in the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/95#issuecomment-173149989)| 2.0.1
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unnecessary-bind`           | Do not bind 'this' as the context for a function literal or lambda expression. If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind. If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas. Works for Underscore methods as well.  | 1.0
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
-`prefer-array-literal`          | Use array literal syntax when declaring array types instead of the Array object with a generic parameter type. For example, prefer the Javascript from of string[] to the TypeScript form Array<string> | 1.0
+`prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript from of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4,5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 1.0
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3

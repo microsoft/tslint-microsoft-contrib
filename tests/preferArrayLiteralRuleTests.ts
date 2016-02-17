@@ -40,5 +40,41 @@ describe('preferArrayLiteralRule', () : void => {
             }
         ]);
     });
+
+    it('should ban new Array() constructor', () : void => {
+        var inputScript : string = 'new Array()';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                "failure": "Replace Array constructor with an array literal: new Array()",
+                "name": "file.ts",
+                "ruleName": "prefer-array-literal",
+                "startPosition": { "character": 1, "line": 1 }
+            }
+        ]);
+    });
+
+    it('should ban new Array(4, 5) constructor', () : void => {
+        var inputScript : string = 'new Array(4, 5)';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                "failure": "Replace Array constructor with an array literal: new Array(4, 5)",
+                "name": "file.ts",
+                "ruleName": "prefer-array-literal",
+                "startPosition": { "character": 1, "line": 1 }
+            }
+        ]);
+    });
+
+    it('should ban new Array(4) constructor', () : void => {
+        var inputScript : string = 'new Array(4)';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                "failure": "Replace Array constructor with an array literal: new Array(4)",
+                "name": "file.ts",
+                "ruleName": "prefer-array-literal",
+                "startPosition": { "character": 1, "line": 1 }
+            }
+        ]);
+    });
 });
 /* tslint:enable:quotemark */

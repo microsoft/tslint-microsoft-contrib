@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 /**
  * Control flow functions.
  */
@@ -25,9 +26,9 @@ module Utils {
     export function reduce<T, R>(list : T[], predicate: (memo: R, element: T) => R, initialValue: R) : R {
         var result = initialValue;
         if (list != null ) {
-            for (var i = 0; i < list.length; i++) {
-                result = predicate(result, list[i]);
-            }
+            list.forEach((element: T): void => {
+                result = predicate(result, element);
+            });
         }
         return result;
     }

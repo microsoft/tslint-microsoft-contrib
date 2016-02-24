@@ -16,4 +16,7 @@ tslint-microsoft-contrib.iml
 
 **/tags
 
+# local npm cache
+.npm_cache
+
 out.html

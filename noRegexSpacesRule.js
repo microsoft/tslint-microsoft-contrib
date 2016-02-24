@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Spaces in regular expressions are hard to count. Use ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoRegexSpacesRuleWalker = (function (_super) {
     __extends(NoRegexSpacesRuleWalker, _super);
@@ -31,5 +32,5 @@ var NoRegexSpacesRuleWalker = (function (_super) {
         _super.prototype.visitRegularExpressionLiteral.call(this, node);
     };
     return NoRegexSpacesRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noRegexSpacesRule.js.map

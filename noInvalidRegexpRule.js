@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new NoInvalidRegexpRuleWalker(sourceFile, this.getOptions()));
     };
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoInvalidRegexpRuleWalker = (function (_super) {
     __extends(NoInvalidRegexpRuleWalker, _super);
@@ -37,7 +38,7 @@ var NoInvalidRegexpRuleWalker = (function (_super) {
                 if (arg1.kind === SyntaxKind.current().StringLiteral) {
                     var regexpText = arg1.text;
                     try {
-                        var regex = new RegExp(regexpText);
+                        new RegExp(regexpText);
                     }
                     catch (e) {
                         this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), e.message));
@@ -47,5 +48,5 @@ var NoInvalidRegexpRuleWalker = (function (_super) {
         }
     };
     return NoInvalidRegexpRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noInvalidRegexpRule.js.map

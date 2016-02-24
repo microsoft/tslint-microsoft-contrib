@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -17,7 +18,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden http url in string: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoHttpStringWalker = (function (_super) {
     __extends(NoHttpStringWalker, _super);
@@ -53,5 +54,5 @@ var NoHttpStringWalker = (function (_super) {
         return null;
     };
     return NoHttpStringWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noHttpStringRule.js.map

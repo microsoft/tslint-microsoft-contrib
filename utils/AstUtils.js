@@ -1,3 +1,4 @@
+"use strict";
 var ts = require('typescript');
 var SyntaxKind = require('./SyntaxKind');
 var AstUtils;
@@ -84,19 +85,19 @@ var AstUtils;
     }
     AstUtils.dumpTypeInfo = dumpTypeInfo;
     function isPrivate(node) {
-        return !!(node.flags & 32);
+        return !!(node.flags & ts.NodeFlags.Private);
     }
     AstUtils.isPrivate = isPrivate;
     function isProtected(node) {
-        return !!(node.flags & 64);
+        return !!(node.flags & ts.NodeFlags.Protected);
     }
     AstUtils.isProtected = isProtected;
     function isPublic(node) {
-        return !!(node.flags & 16);
+        return !!(node.flags & ts.NodeFlags.Public);
     }
     AstUtils.isPublic = isPublic;
     function isStatic(node) {
-        return !!(node.flags & 128);
+        return !!(node.flags & ts.NodeFlags.Static);
     }
     AstUtils.isStatic = isStatic;
     function findParentBlock(child) {

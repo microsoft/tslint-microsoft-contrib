@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,7 +19,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var PromiseAnalyzer = (function (_super) {
     __extends(PromiseAnalyzer, _super);
@@ -69,7 +70,7 @@ var PromiseAnalyzer = (function (_super) {
         }
     };
     return PromiseAnalyzer;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 var PromiseCompletionWalker = (function (_super) {
     __extends(PromiseCompletionWalker, _super);
     function PromiseCompletionWalker(sourceFile, options, completionIdentifiers) {
@@ -158,5 +159,5 @@ var PromiseCompletionWalker = (function (_super) {
         });
     };
     return PromiseCompletionWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=promiseMustCompleteRule.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -27,7 +28,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var ExportNameWalker = (function (_super) {
     __extends(ExportNameWalker, _super);
@@ -89,6 +90,6 @@ var ExportNameWalker = (function (_super) {
         });
     };
     return ExportNameWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 exports.ExportNameWalker = ExportNameWalker;
 //# sourceMappingURL=exportNameRule.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Use arrow function instead of function expression';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoFunctionExpressionRuleWalker = (function (_super) {
     __extends(NoFunctionExpressionRuleWalker, _super);
@@ -33,7 +34,7 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
         _super.prototype.visitFunctionExpression.call(this, node);
     };
     return NoFunctionExpressionRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 var SingleFunctionWalker = (function (_super) {
     __extends(SingleFunctionWalker, _super);
     function SingleFunctionWalker() {
@@ -51,5 +52,5 @@ var SingleFunctionWalker = (function (_super) {
     SingleFunctionWalker.prototype.visitArrowFunction = function (node) {
     };
     return SingleFunctionWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noFunctionExpressionRule.js.map

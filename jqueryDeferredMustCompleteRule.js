@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32,7 +33,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var JQueryDeferredAnalyzer = (function (_super) {
     __extends(JQueryDeferredAnalyzer, _super);
@@ -70,7 +71,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
         }
     };
     return JQueryDeferredAnalyzer;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 var DeferredCompletionWalker = (function (_super) {
     __extends(DeferredCompletionWalker, _super);
     function DeferredCompletionWalker(sourceFile, options, deferredIdentifier) {
@@ -154,5 +155,5 @@ var DeferredCompletionWalker = (function (_super) {
         _super.prototype.visitFunctionExpression.call(this, node);
     };
     return DeferredCompletionWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=jqueryDeferredMustCompleteRule.js.map

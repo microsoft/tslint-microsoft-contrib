@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden call to ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDisableAutoSanitizationWalker = (function (_super) {
     __extends(NoDisableAutoSanitizationWalker, _super);
@@ -31,5 +32,5 @@ var NoDisableAutoSanitizationWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoDisableAutoSanitizationWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noDisableAutoSanitizationRule.js.map

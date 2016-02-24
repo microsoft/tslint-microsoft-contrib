@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -27,7 +28,7 @@ var Rule = (function (_super) {
         'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
     ];
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoUnnecessaryBindRuleWalker = (function (_super) {
     __extends(NoUnnecessaryBindRuleWalker, _super);
@@ -59,7 +60,7 @@ var NoUnnecessaryBindRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoUnnecessaryBindRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 var TypeScriptFunctionAnalyzer = (function () {
     function TypeScriptFunctionAnalyzer() {
     }
@@ -75,7 +76,7 @@ var TypeScriptFunctionAnalyzer = (function () {
         return node.expression.expression;
     };
     return TypeScriptFunctionAnalyzer;
-})();
+}());
 var UnderscoreStaticAnalyzer = (function () {
     function UnderscoreStaticAnalyzer() {
     }
@@ -122,7 +123,7 @@ var UnderscoreStaticAnalyzer = (function () {
         return null;
     };
     return UnderscoreStaticAnalyzer;
-})();
+}());
 var UnderscoreInstanceAnalyzer = (function () {
     function UnderscoreInstanceAnalyzer() {
     }
@@ -163,7 +164,7 @@ var UnderscoreInstanceAnalyzer = (function () {
         return null;
     };
     return UnderscoreInstanceAnalyzer;
-})();
+}());
 function isFunctionLiteral(expression) {
     if (expression.kind === SyntaxKind.current().FunctionExpression) {
         return true;

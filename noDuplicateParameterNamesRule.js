@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Duplicate parameter name: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDuplicateParameterNamesWalker = (function (_super) {
     __extends(NoDuplicateParameterNamesWalker, _super);
@@ -58,5 +59,5 @@ var NoDuplicateParameterNamesWalker = (function (_super) {
         });
     };
     return NoDuplicateParameterNamesWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noDuplicateParameterNamesRule.js.map

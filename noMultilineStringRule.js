@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoMultilineStringWalker = (function (_super) {
     __extends(NoMultilineStringWalker, _super);
@@ -33,5 +34,5 @@ var NoMultilineStringWalker = (function (_super) {
         _super.prototype.visitNode.call(this, node);
     };
     return NoMultilineStringWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noMultilineStringRule.js.map

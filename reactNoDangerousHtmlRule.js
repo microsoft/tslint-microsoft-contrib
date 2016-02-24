@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -28,7 +29,7 @@ var Rule = (function (_super) {
         return null;
     };
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDangerousHtmlWalker = (function (_super) {
     __extends(NoDangerousHtmlWalker, _super);
@@ -80,5 +81,5 @@ var NoDangerousHtmlWalker = (function (_super) {
         return found;
     };
     return NoDangerousHtmlWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=reactNoDangerousHtmlRule.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var Utils;
 (function (Utils) {
     function exists(list, predicate) {

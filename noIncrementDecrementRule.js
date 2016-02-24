@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
     };
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoIncrementDecrementWalker = (function (_super) {
     __extends(NoIncrementDecrementWalker, _super);
@@ -39,5 +40,5 @@ var NoIncrementDecrementWalker = (function (_super) {
         }
     };
     return NoIncrementDecrementWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noIncrementDecrementRule.js.map

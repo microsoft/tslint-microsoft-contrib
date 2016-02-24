@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -29,6 +30,6 @@ var ErrorTolerantWalker = (function (_super) {
         return result;
     };
     return ErrorTolerantWalker;
-})(Lint.RuleWalker);
+}(Lint.RuleWalker));
 module.exports = ErrorTolerantWalker;
 //# sourceMappingURL=ErrorTolerantWalker.js.map

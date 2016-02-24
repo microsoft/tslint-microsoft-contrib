@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -54,7 +55,7 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         return this.isTypeFunction(this.typeChecker.getTypeAtLocation(expression), this.typeChecker);
     };
     ScopedSymbolTrackingWalker.prototype.isTypeFunction = function (expressionType, typeChecker) {
-        var signatures = typeChecker.getSignaturesOfType(expressionType, 0);
+        var signatures = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             var signatureDeclaration = signatures[0].declaration;
             if (signatureDeclaration.kind === SyntaxKind.current().FunctionType) {
@@ -135,7 +136,7 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         this.scope = this.scope.parent;
     };
     return ScopedSymbolTrackingWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 function isDeclarationFunctionType(node) {
     if (node.type != null) {
         return node.type.kind === SyntaxKind.current().FunctionType;
@@ -169,7 +170,7 @@ var GlobalReferenceCollector = (function (_super) {
         }
     };
     return GlobalReferenceCollector;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 var Scope = (function () {
     function Scope(parent) {
         this.symbols = {};
@@ -212,6 +213,6 @@ var Scope = (function () {
         refCollector.nonFunctionIdentifiers.forEach(function (identifier) { _this.addNonFunctionSymbol(identifier); });
     };
     return Scope;
-})();
+}());
 module.exports = ScopedSymbolTrackingWalker;
 //# sourceMappingURL=ScopedSymbolTrackingWalker.js.map

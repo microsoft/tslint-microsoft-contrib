@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -19,7 +20,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoCookiesWalker = (function (_super) {
     __extends(NoCookiesWalker, _super);
@@ -35,7 +36,7 @@ var NoCookiesWalker = (function (_super) {
             try {
                 var leftSideType = this.typeChecker.getTypeAtLocation(leftSide);
                 var typeAsString = this.typeChecker.typeToString(leftSideType);
-                if (leftSideType.flags === 1 || typeAsString === 'Document') {
+                if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }
             }
@@ -48,5 +49,5 @@ var NoCookiesWalker = (function (_super) {
         _super.prototype.visitPropertyAccessExpression.call(this, node);
     };
     return NoCookiesWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noCookiesRule.js.map

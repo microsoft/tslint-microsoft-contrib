@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,7 +19,7 @@ var Rule = (function (_super) {
     Rule.GENERICS_FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
     Rule.CONSTRUCTOR_FAILURE_STRING = 'Replace Array constructor with an array literal: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoGenericArrayWalker = (function (_super) {
     __extends(NoGenericArrayWalker, _super);
@@ -45,5 +46,5 @@ var NoGenericArrayWalker = (function (_super) {
         _super.prototype.visitNewExpression.call(this, node);
     };
     return NoGenericArrayWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=preferArrayLiteralRule.js.map

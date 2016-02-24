@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden with statement';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoWithStatementWalker = (function (_super) {
     __extends(NoWithStatementWalker, _super);
@@ -30,5 +31,5 @@ var NoWithStatementWalker = (function (_super) {
         _super.prototype.visitNode.call(this, node);
     };
     return NoWithStatementWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noWithStatementRule.js.map

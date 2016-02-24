@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Found an invalid comparison for NaN: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var UseIsnanRuleWalker = (function (_super) {
     __extends(UseIsnanRuleWalker, _super);
@@ -33,5 +34,5 @@ var UseIsnanRuleWalker = (function (_super) {
         return node.kind === SyntaxKind.current().Identifier && node.getText() === 'NaN';
     };
     return UseIsnanRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=useIsnanRule.js.map

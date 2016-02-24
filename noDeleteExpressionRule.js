@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -17,7 +18,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Variables should not be deleted: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDeleteExpression = (function (_super) {
     __extends(NoDeleteExpression, _super);
@@ -44,5 +45,5 @@ var NoDeleteExpression = (function (_super) {
         this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
     };
     return NoDeleteExpression;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noDeleteExpressionRule.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -57,6 +58,6 @@ var BannedTermWalker = (function (_super) {
         return this.bannedTerms.indexOf(text) !== -1;
     };
     return BannedTermWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 module.exports = BannedTermWalker;
 //# sourceMappingURL=BannedTermWalker.js.map

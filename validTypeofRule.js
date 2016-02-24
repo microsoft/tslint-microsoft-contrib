@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,7 +19,7 @@ var Rule = (function (_super) {
     Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
     Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var ValidTypeofRuleWalker = (function (_super) {
     __extends(ValidTypeofRuleWalker, _super);
@@ -63,5 +64,5 @@ var ValidTypeofRuleWalker = (function (_super) {
         return Math.min(this.hammingDistance(source.substr(1), target) + 1, this.hammingDistance(target.substr(1), source) + 1, this.hammingDistance(source.substr(1), target.substr(1)) + (source[0] !== target[0] ? 1 : 0)) + 1;
     };
     return ValidTypeofRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=validTypeofRule.js.map

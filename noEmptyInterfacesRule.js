@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoEmptyInterfacesRuleWalker = (function (_super) {
     __extends(NoEmptyInterfacesRuleWalker, _super);
@@ -38,5 +39,5 @@ var NoEmptyInterfacesRuleWalker = (function (_super) {
         return node.heritageClauses[0].types.length >= 2;
     };
     return NoEmptyInterfacesRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noEmptyInterfacesRule.js.map

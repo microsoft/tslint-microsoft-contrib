@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new NoUnexternalizedStringsRuleWalker(sourceFile, this.getOptions()));
     };
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoUnexternalizedStringsRuleWalker = (function (_super) {
     __extends(NoUnexternalizedStringsRuleWalker, _super);
@@ -91,7 +92,6 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
         }
     };
     NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
-    NoUnexternalizedStringsRuleWalker.DOUBLE_QUOTE = '"';
     return NoUnexternalizedStringsRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noUnexternalizedStringsRule.js.map

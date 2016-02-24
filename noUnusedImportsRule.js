@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -27,7 +28,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'unused import: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var GatherNoRequireImportsWalker = (function (_super) {
     __extends(GatherNoRequireImportsWalker, _super);
@@ -53,7 +54,7 @@ var GatherNoRequireImportsWalker = (function (_super) {
         }
     };
     return GatherNoRequireImportsWalker;
-})(Lint.RuleWalker);
+}(Lint.RuleWalker));
 var NoUnusedImportsWalker = (function (_super) {
     __extends(NoUnusedImportsWalker, _super);
     function NoUnusedImportsWalker(sourceFile, options, languageServices, noRequireReferences) {
@@ -77,5 +78,5 @@ var NoUnusedImportsWalker = (function (_super) {
         }
     };
     return NoUnusedImportsWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noUnusedImportsRule.js.map

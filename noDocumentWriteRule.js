@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -21,7 +22,7 @@ var Rule = (function (_super) {
     Rule.WRITE_FAILURE = 'Forbidden call to document.write';
     Rule.WRITELN_FAILURE = 'Forbidden call to document.writeln';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDocumentWriteWalker = (function (_super) {
     __extends(NoDocumentWriteWalker, _super);
@@ -37,7 +38,7 @@ var NoDocumentWriteWalker = (function (_super) {
             if (leftSide) {
                 var leftSideType = this.typeChecker.getTypeAtLocation(leftSide);
                 var typeAsString = this.typeChecker.typeToString(leftSideType);
-                if (leftSideType.flags === 1 || typeAsString === 'Document') {
+                if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
                     if (functionName === 'write') {
                         this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.WRITE_FAILURE));
                     }
@@ -50,5 +51,5 @@ var NoDocumentWriteWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoDocumentWriteWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noDocumentWriteRule.js.map

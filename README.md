@@ -8,14 +8,14 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.1
+Version 2.0.2
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
-**TSLint version 3.2.x users**: use project tslint-microsoft-contrib version 2.x
-**TSLint version 3.1.x users**: Unsupported
-**TSLint version 3.0.x users**: Unsupported
-**TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
+* **TSLint version >= 3.2.x users**: use project tslint-microsoft-contrib version 2.x
+* **TSLint version 3.1.x users**: Unsupported
+* **TSLint version 3.0.x users**: Unsupported
+* **TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
 
 Installation
 ------------
@@ -25,6 +25,7 @@ Installation
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.1)
 * [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)
 * [1.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-1.0.0)
 * [0.0.4](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-0.0.4)

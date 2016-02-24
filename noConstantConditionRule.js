@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Found constant conditional: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoConstantConditionRuleWalker = (function (_super) {
     __extends(NoConstantConditionRuleWalker, _super);
@@ -66,5 +67,5 @@ var NoConstantConditionRuleWalker = (function (_super) {
         _super.prototype.visitForStatement.call(this, node);
     };
     return NoConstantConditionRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noConstantConditionRule.js.map

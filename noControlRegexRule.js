@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoControlRegexRuleWalker = (function (_super) {
     __extends(NoControlRegexRuleWalker, _super);
@@ -51,5 +52,5 @@ var NoControlRegexRuleWalker = (function (_super) {
         }
     };
     return NoControlRegexRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noControlRegexRule.js.map

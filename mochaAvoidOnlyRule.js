@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -17,7 +18,7 @@ var Rule = (function (_super) {
     Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
     Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var MochaAvoidOnlyRuleWalker = (function (_super) {
     __extends(MochaAvoidOnlyRuleWalker, _super);
@@ -43,5 +44,5 @@ var MochaAvoidOnlyRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return MochaAvoidOnlyRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=mochaAvoidOnlyRule.js.map

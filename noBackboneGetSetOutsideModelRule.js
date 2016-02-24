@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,7 +19,7 @@ var Rule = (function (_super) {
     Rule.GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
     Rule.SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
     __extends(NoBackboneGetSetOutsideModelRuleWalker, _super);
@@ -40,5 +41,5 @@ var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoBackboneGetSetOutsideModelRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noBackboneGetSetOutsideModelRule.js.map

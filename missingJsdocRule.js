@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var MissingJSDocWalker = (function (_super) {
     __extends(MissingJSDocWalker, _super);
@@ -30,5 +31,5 @@ var MissingJSDocWalker = (function (_super) {
         }
     };
     return MissingJSDocWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=missingJsdocRule.js.map

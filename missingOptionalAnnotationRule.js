@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -15,7 +16,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var MissingOptionalAnnotationWalker = (function (_super) {
     __extends(MissingOptionalAnnotationWalker, _super);
@@ -59,5 +60,5 @@ var MissingOptionalAnnotationWalker = (function (_super) {
         });
     };
     return MissingOptionalAnnotationWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=missingOptionalAnnotationRule.js.map

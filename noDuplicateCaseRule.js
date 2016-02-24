@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +17,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Duplicate case found in switch statement: ';
     return Rule;
-})(Lint.Rules.AbstractRule);
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoDuplicateCaseRuleWalker = (function (_super) {
     __extends(NoDuplicateCaseRuleWalker, _super);
@@ -43,5 +44,5 @@ var NoDuplicateCaseRuleWalker = (function (_super) {
         _super.prototype.visitSwitchStatement.call(this, node);
     };
     return NoDuplicateCaseRuleWalker;
-})(ErrorTolerantWalker);
+}(ErrorTolerantWalker));
 //# sourceMappingURL=noDuplicateCaseRule.js.map

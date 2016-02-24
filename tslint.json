@@ -44,7 +44,7 @@
     "react-no-dangerous-html": true,
     "use-named-parameter": true,
     "valid-typeof": true,
-
+    "max-func-body-length": [true, 4574],
     "class-name": true,
     "curly": true,
     "eofline": false,

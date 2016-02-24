@@ -14,7 +14,7 @@ function demoScriptFail1() {
     return "Sample text \-235";
 }
 
-function demoScriptFail1() {
+function demoScriptFail2() {
     return 'Sample text \351';
     return 'Sample text \354 more text';
     return 'Sample text \33';

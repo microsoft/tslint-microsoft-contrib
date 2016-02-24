@@ -26,7 +26,6 @@ interface UnexternalizedStringsOptions {
 class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
 
     private static SINGLE_QUOTE: string = '\'';
-    private static DOUBLE_QUOTE: string = '"';
 
     private signatures: Map<boolean>;
     private messageIndex: number;

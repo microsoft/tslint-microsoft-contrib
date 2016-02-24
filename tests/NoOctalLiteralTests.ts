@@ -14,15 +14,7 @@ describe('noOctalLiteralRule', () : void => {
      var ruleName : string = 'no-octal-literal';
 
      it('should not fail on similar but acceptable strings', () : void => {
-         var script : string = `
-/**
- * The following code should have no errors:
- */
-function demoScriptPass1() {
-    var x = "Sample text \xB2";
-    var y = "Sample text \0111"; // longer than octal
-}`;
-
+         var script : string = 'test-data/NoOctalLiteralTestInput-passing.ts';
          TestHelper.assertViolations(ruleName, script, [ ]);
      });
 

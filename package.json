@@ -33,11 +33,12 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-mocha-test": "0.12.7",
     "grunt-ts": "5.2.0",
-    "grunt-tslint": "3.0.1",
+    "grunt-tslint": "3.0.3",
     "load-grunt-tasks": "3.2.0",
     "mocha": "2.2.5",
     "time-grunt": "1.2.1",
-    "tslint": "3.2.1",
+    "tslint": "3.5.0",
+    "typescript": "1.8.2",
     "underscore": "1.8.3"
   }
 }

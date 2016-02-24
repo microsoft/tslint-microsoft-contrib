@@ -33,7 +33,9 @@ class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
                 if (arg1.kind === SyntaxKind.current().StringLiteral) {
                     let regexpText: string = (<ts.StringLiteral>arg1).text;
                     try {
-                        var regex = new RegExp(regexpText);
+                        /* tslint:disable:no-unused-expression */
+                        new RegExp(regexpText);
+                        /* tslint:enable:no-unused-expression */
                     } catch (e) {
                         this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), e.message));
                     }

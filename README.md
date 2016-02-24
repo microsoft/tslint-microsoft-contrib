@@ -12,10 +12,10 @@ Version 2.0.2
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
-**TSLint version 3.2.x users**: use project tslint-microsoft-contrib version 2.x
-**TSLint version 3.1.x users**: Unsupported
-**TSLint version 3.0.x users**: Unsupported
-**TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
+* **TSLint version 3.2.x users**: use project tslint-microsoft-contrib version 2.x
+* **TSLint version 3.1.x users**: Unsupported
+* **TSLint version 3.0.x users**: Unsupported
+* **TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
 
 Installation
 ------------

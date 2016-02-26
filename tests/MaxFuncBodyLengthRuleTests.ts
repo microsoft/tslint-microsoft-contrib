@@ -80,7 +80,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         it('should fail', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max function body length exceeded - max: 5, actual: 14",
+                    "failure": "Max function body length exceeded in method hasBodyLengthOf10 - max: 5, actual: 15",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -89,7 +89,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded - max: 5, actual: 12",
+                    "failure": "Max method body length exceeded in method sparks - max: 5, actual: 13",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -98,7 +98,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max arrow function body length exceeded - max: 5, actual: 8",
+                    "failure": "Max arrow function body length exceeded - max: 5, actual: 7",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -125,7 +125,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         it('should fail', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max function body length exceeded - max: 6, actual: 14",
+                    "failure": "Max function body length exceeded in method hasBodyLengthOf10 - max: 6, actual: 15",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -134,7 +134,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded - max: 7, actual: 12",
+                    "failure": "Max method body length exceeded in method sparks - max: 7, actual: 13",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -143,7 +143,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max arrow function body length exceeded - max: 4, actual: 8",
+                    "failure": "Max arrow function body length exceeded - max: 4, actual: 7",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -155,6 +155,29 @@ describe('maxFuncBodyLengthRule', () : void => {
         });
     });
 
+    describe('when using mocha describe blocks', () => {
+
+        beforeEach(() => {
+            options = [ true,
+                5, // max length is now 5
+                {
+                    'ignore-parameters-to-function-regex': 'describe'
+                }
+            ];
+        });
+
+        it('should be able to ignore describe calls', () : void => {
+            TestHelper.assertViolationsWithOptions(ruleName, options, `
+            describe('something', (): void => {
+                // line 2
+                // line 3
+                // line 4
+                // line 5
+            }); // line 6
+            `, []);
+        });
+
+    });
 
 });
 /* tslint:enable:quotemark */

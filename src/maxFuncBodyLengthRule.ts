@@ -1,7 +1,8 @@
-//// <reference path='../../typings/node/node.d.ts'/>
-
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
+import SyntaxKind = require('./utils/SyntaxKind');
+import AstUtils = require('./utils/AstUtils');
+import Utils = require('./utils/Utils');
 
 /**
  * Implementation of the max-func-body-length rule.
@@ -15,46 +16,69 @@ export class Rule extends Lint.Rules.AbstractRule {
 const FUNC_BODY_LENGTH = 'func-body-length';
 const ARROW_BODY_LENGTH = 'arrow-body-length';
 const METHOD_BODY_LENGTH = 'method-body-length';
+const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
-
-    private static NON_EMPTY: RegExp = /^\s*\S/gm;
 
     private maxBodyLength: number;
     private maxFuncBodyLength: number;
     private maxArrowBodyLength: number;
     private maxMethodBodyLength: number;
+    private ignoreParametersToFunctionRegex: RegExp;
+    private ignoreNodes: ts.Node[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-
         this.parseOptions();
     }
 
-    public visitNode(node: ts.Node) {
-        if (!node) {
-            return;
+    protected visitCallExpression(node: ts.CallExpression): void {
+        let functionName = AstUtils.getFunctionName(node);
+        if (this.ignoreParametersToFunctionRegex && this.ignoreParametersToFunctionRegex.test(functionName)) {
+            // temporarily store a list of ignored references
+            node.arguments.forEach((argument: ts.Expression): void => {
+                this.ignoreNodes.push(argument);
+            });
+            super.visitCallExpression(node);
+            // clear the list of ignored references
+            this.ignoreNodes = Utils.removeAll(this.ignoreNodes, node.arguments);
+        } else {
+            super.visitCallExpression(node);
         }
-
-        let kind = node.kind;
-        if (kind === ts.SyntaxKind.FunctionDeclaration ||
-            kind === ts.SyntaxKind.MethodDeclaration ||
-            kind === ts.SyntaxKind.ArrowFunction) {
-
-                let bodyLength = this.calcBodyLength(node);
-                if (this.isFunctionTooLong(kind, bodyLength)) {
-                    this.addFuncBodyTooLongFailure(node, bodyLength);
-                }
-        }
-
-        super.visitNode(node);
     }
 
-    private calcBodyLength (node: ts.Node) {
-        let sourceFileText = this.getSourceFile().text;
-        let funPart = sourceFileText.slice(node.pos, node.end);
-        let nonEmptyLinesCount = (funPart.match(MaxFunctionBodyLengthRuleWalker.NON_EMPTY) || []).length;
-        return nonEmptyLinesCount;
+    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+        this.validate(node);
+        super.visitArrowFunction(node);
+    }
+
+    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
+        this.validate(node);
+        super.visitMethodDeclaration(node);
+    }
+
+    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
+        this.validate(node);
+        super.visitFunctionDeclaration(node);
+    }
+
+    private validate(node: ts.FunctionLikeDeclaration): void {
+        if (!Utils.contains(this.ignoreNodes, node)) {
+            let bodyLength = this.calcBodyLength(node);
+            if (this.isFunctionTooLong(node.kind, bodyLength)) {
+                this.addFuncBodyTooLongFailure(node, bodyLength);
+            }
+        }
+    }
+
+    private calcBodyLength(node: ts.FunctionLikeDeclaration) {
+        if (node.body == null) {
+            return 0;
+        }
+        let sourceFile: ts.SourceFile = this.getSourceFile();
+        let startLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
+        let endLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
+        return endLine - startLine;
     }
 
     private isFunctionTooLong (nodeKind: ts.SyntaxKind, length: number): boolean {
@@ -62,9 +86,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private parseOptions () {
-        this.getOptions()
-        .forEach((opt: any) => {
-
+        this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'number') {
                 this.maxBodyLength = opt;
                 return;
@@ -74,29 +96,36 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
                 this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
                 this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
+                let regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
+                if (regex) {
+                    this.ignoreParametersToFunctionRegex = new RegExp(regex);
+                }
             }
-
         });
     }
 
-    private addFuncBodyTooLongFailure(node: ts.Node, length: number) {
-        let failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node.kind, length));
+    private addFuncBodyTooLongFailure(node: ts.FunctionLikeDeclaration, length: number) {
+        let failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
         this.addFailure(failure);
     }
 
-    private formatFailureText (nodeKind: ts.SyntaxKind, length: number) {
-        let funcTypeText: string = this.getFuncTypeText(nodeKind);
-        let maxLength: number = this.getMaxLength(nodeKind);
+    private formatFailureText (node: ts.FunctionLikeDeclaration, length: number) {
+        let funcTypeText: string = this.getFuncTypeText(node.kind);
+        let maxLength: number = this.getMaxLength(node.kind);
 
-        return `Max ${ funcTypeText } body length exceeded - max: ${ maxLength }, actual: ${ length }`;
+        let methodName: string = '';
+        if (node.kind === SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind.current().FunctionDeclaration) {
+            methodName = ' in method ' + (<any>node.name).text;
+        }
+        return `Max ${ funcTypeText } body length exceeded${ methodName } - max: ${ maxLength }, actual: ${ length }`;
     }
 
     private getFuncTypeText (nodeKind: ts.SyntaxKind) {
-        if (nodeKind === ts.SyntaxKind.FunctionDeclaration) {
+        if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
             return 'function';
-        } else if (nodeKind === ts.SyntaxKind.MethodDeclaration) {
+        } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
             return 'method';
-        } else if (nodeKind === ts.SyntaxKind.ArrowFunction) {
+        } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             return 'arrow function';
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);
@@ -106,11 +135,11 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private getMaxLength (nodeKind: ts.SyntaxKind) {
         let result: number;
 
-        if (nodeKind === ts.SyntaxKind.FunctionDeclaration) {
+        if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
             result = this.maxFuncBodyLength;
-        } else if (nodeKind === ts.SyntaxKind.MethodDeclaration) {
+        } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
             result = this.maxMethodBodyLength;
-        } else if (nodeKind === ts.SyntaxKind.ArrowFunction) {
+        } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             result = this.maxArrowBodyLength;
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);

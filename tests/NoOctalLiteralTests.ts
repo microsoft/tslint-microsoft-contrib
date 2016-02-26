@@ -6,6 +6,7 @@
 import TestHelper = require('./TestHelper');
 
 /* tslint:disable:no-octal-literal */
+/* tslint:disable:max-func-body-length */
 /**
  * Unit tests.
  */
@@ -33,7 +34,7 @@ function demoScriptFail() {
          TestHelper.assertViolations(ruleName, script, [ ]);
      });
 
-     it('should produce violations ', () : void => {
+    it('should produce violations ', () : void => {
          var inputFile : string = 'test-data/NoOctalLiteralTestInput.ts';
          TestHelper.assertViolations(ruleName, inputFile, [
              {
@@ -151,3 +152,4 @@ function demoScriptFail() {
 /* tslint:enable:quotemark */
 /* tslint:enable:no-octal-literal */
 /* tslint:enable:no-multiline-string */
+/* tslint:enable:max-func-body-length */

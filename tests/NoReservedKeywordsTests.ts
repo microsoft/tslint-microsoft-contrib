@@ -3,6 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
+/* tslint:disable:max-func-body-length */
 
 import TestHelper = require('./TestHelper');
 
@@ -4591,3 +4592,4 @@ describe('noBannedTermsRule', () : void => {
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */
+/* tslint:enable:max-func-body-length */

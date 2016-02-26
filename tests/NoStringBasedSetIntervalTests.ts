@@ -2,6 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
+/* tslint:disable:max-func-body-length */
 import TestHelper = require('./TestHelper');
 
 /**
@@ -121,3 +122,4 @@ describe('noStringBasedSetIntervalRule', () : void => {
 
 });
 /* tslint:enable:quotemark */
+/* tslint:enable:max-func-body-length */

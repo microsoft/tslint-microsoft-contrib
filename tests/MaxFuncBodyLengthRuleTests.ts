@@ -33,6 +33,18 @@ describe('maxFuncBodyLengthRule', () : void => {
         }
 
         class Magic {
+
+            constructor (mana) {
+                if (!mana || mana === 0) {
+                    throw new Error('Not enough mana.');
+                }
+
+                this.spells = mana / 10;
+                // very long comment on the spells calculation
+                // every spell takes 10 mana you know
+                // so..
+            }
+
             sparks () {
                 for (let i = 0; i < 100; i++) {
                     try {
@@ -80,7 +92,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         it('should fail', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max function body length exceeded in method hasBodyLengthOf10 - max: 5, actual: 15",
+                    "failure": "Max function body length exceeded in function hasBodyLengthOf10() - max: 5, actual: 15",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -89,12 +101,21 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded in method sparks - max: 5, actual: 13",
+                    "failure": "Max constructor body length exceeded in class Magic - max: 5, actual: 9",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
                         "character": 13,
-                        "line": 22
+                        "line": 23
+                    }
+                },
+                {
+                    "failure": "Max method body length exceeded in method sparks() - max: 5, actual: 13",
+                    "name": "file.ts",
+                    "ruleName": "max-func-body-length",
+                    "startPosition": {
+                        "character": 13,
+                        "line": 34
                     }
                 },
                 {
@@ -103,7 +124,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     "ruleName": "max-func-body-length",
                     "startPosition": {
                         "character": 36,
-                        "line": 38
+                        "line": 50
                     }
                 }
             ]);
@@ -117,7 +138,8 @@ describe('maxFuncBodyLengthRule', () : void => {
                 {
                     'func-body-length': 6,
                     'method-body-length': 7,
-                    'arrow-body-length': 4
+                    'arrow-body-length': 4,
+                    'ctor-body-length': 3
                 }
             ];
         });
@@ -125,7 +147,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         it('should fail', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max function body length exceeded in method hasBodyLengthOf10 - max: 6, actual: 15",
+                    "failure": "Max function body length exceeded in function hasBodyLengthOf10() - max: 6, actual: 15",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
@@ -134,12 +156,21 @@ describe('maxFuncBodyLengthRule', () : void => {
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded in method sparks - max: 7, actual: 13",
+                    "failure": "Max constructor body length exceeded in class Magic - max: 3, actual: 9",
                     "name": "file.ts",
                     "ruleName": "max-func-body-length",
                     "startPosition": {
                         "character": 13,
-                        "line": 22
+                        "line": 23
+                    }
+                },
+                {
+                    "failure": "Max method body length exceeded in method sparks() - max: 7, actual: 13",
+                    "name": "file.ts",
+                    "ruleName": "max-func-body-length",
+                    "startPosition": {
+                        "character": 13,
+                        "line": 34
                     }
                 },
                 {
@@ -148,7 +179,7 @@ describe('maxFuncBodyLengthRule', () : void => {
                     "ruleName": "max-func-body-length",
                     "startPosition": {
                         "character": 36,
-                        "line": 38
+                        "line": 50
                     }
                 }
             ]);

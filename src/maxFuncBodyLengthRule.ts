@@ -16,6 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 const FUNC_BODY_LENGTH = 'func-body-length';
 const ARROW_BODY_LENGTH = 'arrow-body-length';
 const METHOD_BODY_LENGTH = 'method-body-length';
+const CTOR_BODY_LENGTH = 'ctor-body-length';
 const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
@@ -24,6 +25,8 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private maxFuncBodyLength: number;
     private maxArrowBodyLength: number;
     private maxMethodBodyLength: number;
+    private maxCtorBodyLength: number;
+    private currentClassName: string;
     private ignoreParametersToFunctionRegex: RegExp;
     private ignoreNodes: ts.Node[] = [];
 
@@ -62,6 +65,16 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
         super.visitFunctionDeclaration(node);
     }
 
+    protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
+        this.validate(node);
+        super.visitConstructorDeclaration(node);
+    }
+
+    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
+        this.currentClassName = (<any>node.name).text;
+        super.visitClassDeclaration(node);
+    }
+
     private validate(node: ts.FunctionLikeDeclaration): void {
         if (!Utils.contains(this.ignoreNodes, node)) {
             let bodyLength = this.calcBodyLength(node);
@@ -96,6 +109,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
                 this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
                 this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
+                this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
                 let regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     this.ignoreParametersToFunctionRegex = new RegExp(regex);
@@ -112,12 +126,18 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private formatFailureText (node: ts.FunctionLikeDeclaration, length: number) {
         let funcTypeText: string = this.getFuncTypeText(node.kind);
         let maxLength: number = this.getMaxLength(node.kind);
+        let placeText: string = this.formatPlaceText(node);
+        return `Max ${ funcTypeText } body length exceeded${ placeText } - max: ${ maxLength }, actual: ${ length }`;
+    }
 
-        let methodName: string = '';
+    private formatPlaceText (node: ts.FunctionLikeDeclaration) {
+        let funcTypeText = this.getFuncTypeText(node.kind);
         if (node.kind === SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind.current().FunctionDeclaration) {
-            methodName = ' in method ' + (<any>node.name).text;
+            return ` in ${ funcTypeText } ${ (<any>node.name).text }()`;
+        } else if (node.kind === SyntaxKind.current().Constructor) {
+            return ` in class ${ this.currentClassName }`;
         }
-        return `Max ${ funcTypeText } body length exceeded${ methodName } - max: ${ maxLength }, actual: ${ length }`;
+        return '';
     }
 
     private getFuncTypeText (nodeKind: ts.SyntaxKind) {
@@ -127,6 +147,8 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
             return 'method';
         } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             return 'arrow function';
+        } else if (nodeKind === SyntaxKind.current().Constructor) {
+            return 'constructor';
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);
         }
@@ -141,6 +163,8 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
             result = this.maxMethodBodyLength;
         } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             result = this.maxArrowBodyLength;
+        } else if (nodeKind === SyntaxKind.current().Constructor) {
+            result = this.maxCtorBodyLength;
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);
         }

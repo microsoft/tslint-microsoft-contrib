@@ -12,10 +12,15 @@ Version 2.0.3
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
-* **TSLint version >= 3.2.x users**: use project tslint-microsoft-contrib version 2.x
-* **TSLint version 3.1.x users**: Unsupported
-* **TSLint version 3.0.x users**: Unsupported
-* **TSLint version 2.x users**: use project tslint-microsoft-contrib version 1.x
+
+#### TSLint and corresponding tslint-microsoft-contrib version
+
+| TSLint version | tslint-microsoft-contrib version |
+| --- | --- |
+| **>= 3.2.x** | 2.x |
+| **3.1.x** | unsupported |
+| **3.0.x** | unsupported |
+| **2.x**   | 1.x |
 
 Installation
 ------------
@@ -25,6 +30,7 @@ Installation
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.2)
 * [2.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.1)
 * [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)
 * [1.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-1.0.0)
@@ -62,7 +68,7 @@ Rule Name   | Description | Since
 `export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 1.0, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
 `use-isnan`                     | Ensures that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant. Similar to the [use-isnan ESLint rule](http://eslint.org/docs/rules/use-isnan).| 1.0
 `jquery-deferred-must-complete` | When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/26). | 1.0
-`max-func-body-length`          | Avoid long functions. The line count of a function body must not exceed the value configured within this rule's options. <br>You can setup a general max function body length applied for every function/method/arrow function e.g. \[true, 30\] or set different maximum length for every type e.g. \[true, \{ "func-body-length": 10 , "arrow-body-length": 5, "method-body-length": 15 \}\]. To specify a function name whose parameters you can ignore for this rule, pass a regular expression as a string(this can be useful for Mocha users to ignore the describe() function) | 2.0.3
+`max-func-body-length`          | Avoid long functions. The line count of a function body must not exceed the value configured within this rule's options. <br>You can setup a general max function body length applied for every function/method/arrow function e.g. \[true, 30\] or set different maximum length for every type e.g. \[true, \{ "func-body-length": 10 , "arrow-body-length": 5, "method-body-length": 15, "ctor-body-length": 5 \}\]. To specify a function name whose parameters you can ignore for this rule, pass a regular expression as a string(this can be useful for Mocha users to ignore the describe() function) | 2.0.3
 `missing-jsdoc`                 | All files must have a top level [JSDoc](http://usejsdoc.org/) comment. A JSDoc comment starts with /** (not one more or one less asterisk) and a JSDoc at the 'top-level' appears without leading spaces. Trailing spaces are acceptable but not recommended. | 1.0
 `missing-optional-annotation`   | A parameter that follows one or more parameters marked as optional is not itself marked optional | 0.0.1
 `mocha-avoid-only`              | Do not invoke Mocha's describe.only or it.only functions. These functions are useful ways to run a single unit test or a single test case during your build, but please be careful to not push these methods calls to your version control repositiory because it will turn off any of the other tests.| 1.0

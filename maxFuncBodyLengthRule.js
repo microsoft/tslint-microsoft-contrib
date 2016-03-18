@@ -22,6 +22,7 @@ exports.Rule = Rule;
 var FUNC_BODY_LENGTH = 'func-body-length';
 var ARROW_BODY_LENGTH = 'arrow-body-length';
 var METHOD_BODY_LENGTH = 'method-body-length';
+var CTOR_BODY_LENGTH = 'ctor-body-length';
 var IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
 var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     __extends(MaxFunctionBodyLengthRuleWalker, _super);
@@ -56,6 +57,15 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         this.validate(node);
         _super.prototype.visitFunctionDeclaration.call(this, node);
     };
+    MaxFunctionBodyLengthRuleWalker.prototype.visitConstructorDeclaration = function (node) {
+        this.validate(node);
+        _super.prototype.visitConstructorDeclaration.call(this, node);
+    };
+    MaxFunctionBodyLengthRuleWalker.prototype.visitClassDeclaration = function (node) {
+        this.currentClassName = node.name.text;
+        _super.prototype.visitClassDeclaration.call(this, node);
+        this.currentClassName = undefined;
+    };
     MaxFunctionBodyLengthRuleWalker.prototype.validate = function (node) {
         if (!Utils.contains(this.ignoreNodes, node)) {
             var bodyLength = this.calcBodyLength(node);
@@ -87,6 +97,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
                 _this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
                 _this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 _this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
+                _this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
                 var regex = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     _this.ignoreParametersToFunctionRegex = new RegExp(regex);
@@ -101,11 +112,18 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     MaxFunctionBodyLengthRuleWalker.prototype.formatFailureText = function (node, length) {
         var funcTypeText = this.getFuncTypeText(node.kind);
         var maxLength = this.getMaxLength(node.kind);
-        var methodName = '';
+        var placeText = this.formatPlaceText(node);
+        return "Max " + funcTypeText + " body length exceeded" + placeText + " - max: " + maxLength + ", actual: " + length;
+    };
+    MaxFunctionBodyLengthRuleWalker.prototype.formatPlaceText = function (node) {
+        var funcTypeText = this.getFuncTypeText(node.kind);
         if (node.kind === SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind.current().FunctionDeclaration) {
-            methodName = ' in method ' + node.name.text;
+            return " in " + funcTypeText + " " + node.name.text + "()";
         }
-        return "Max " + funcTypeText + " body length exceeded" + methodName + " - max: " + maxLength + ", actual: " + length;
+        else if (node.kind === SyntaxKind.current().Constructor) {
+            return " in class " + this.currentClassName;
+        }
+        return '';
     };
     MaxFunctionBodyLengthRuleWalker.prototype.getFuncTypeText = function (nodeKind) {
         if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
@@ -116,6 +134,9 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         }
         else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             return 'arrow function';
+        }
+        else if (nodeKind === SyntaxKind.current().Constructor) {
+            return 'constructor';
         }
         else {
             throw new Error("Unsupported node kind: " + nodeKind);
@@ -131,6 +152,9 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         }
         else if (nodeKind === SyntaxKind.current().ArrowFunction) {
             result = this.maxArrowBodyLength;
+        }
+        else if (nodeKind === SyntaxKind.current().Constructor) {
+            result = this.maxCtorBodyLength;
         }
         else {
             throw new Error("Unsupported node kind: " + nodeKind);

@@ -39,15 +39,43 @@ var ExportNameWalker = (function (_super) {
         var _this = this;
         var exportedTopLevelElements = [];
         node.statements.forEach(function (element) {
-            if (element.kind === SyntaxKind.current().ExportAssignment) {
-                var exportAssignment = element;
-                _this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
-            }
-            else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
-                exportedTopLevelElements.push(element);
-            }
+            var exportStatements = _this.getExportStatements(element);
+            exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
         });
+        if (exportedTopLevelElements.length === 0) {
+            node.statements.forEach(function (element) {
+                if (element.kind === SyntaxKind.current().ModuleDeclaration) {
+                    var exportStatements = _this.getExportStatementsWithinModules(element);
+                    exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
+                }
+            });
+        }
         this.validateExportedElements(exportedTopLevelElements);
+    };
+    ExportNameWalker.prototype.getExportStatementsWithinModules = function (moduleDeclaration) {
+        var _this = this;
+        if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleDeclaration) {
+            return this.getExportStatementsWithinModules(moduleDeclaration.body);
+        }
+        else if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleBlock) {
+            var exportStatements_1 = [];
+            var moduleBlock = moduleDeclaration.body;
+            moduleBlock.statements.forEach(function (element) {
+                exportStatements_1 = exportStatements_1.concat(_this.getExportStatements(element));
+            });
+            return exportStatements_1;
+        }
+    };
+    ExportNameWalker.prototype.getExportStatements = function (element) {
+        var exportStatements = [];
+        if (element.kind === SyntaxKind.current().ExportAssignment) {
+            var exportAssignment = element;
+            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+        }
+        else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
+            exportStatements.push(element);
+        }
+        return exportStatements;
     };
     ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
         if (exportedElements.length === 1) {

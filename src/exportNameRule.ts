@@ -32,28 +32,60 @@ export class ExportNameWalker extends ErrorTolerantWalker {
 
     protected visitSourceFile(node: ts.SourceFile): void {
 
-        var exportedTopLevelElements: any[] = [];
+        var exportedTopLevelElements: ts.Statement[] = [];
 
-        node.statements.forEach((element: any): void => {
-            if (element.kind === SyntaxKind.current().ExportAssignment) {
-                let exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
-                this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
-            } else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
-                exportedTopLevelElements.push(element);
-            }
+        // exports are normally declared at the top level
+        node.statements.forEach((element: ts.Statement): void => {
+            let exportStatements: ts.Statement[] = this.getExportStatements(element);
+            exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
         });
+
+        // exports might be hidden inside a namespace
+        if (exportedTopLevelElements.length === 0) {
+            node.statements.forEach((element: ts.Statement): void => {
+                if (element.kind === SyntaxKind.current().ModuleDeclaration) {
+                    let exportStatements: ts.Statement[] = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element));
+                    exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
+                }
+            });
+        }
         this.validateExportedElements(exportedTopLevelElements);
     }
 
-    private validateExportedElements(exportedElements: any[]): void {
+    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] {
+        if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleDeclaration) {
+            // modules may be nested so recur into the structure
+            return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
+        } else if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleBlock) {
+            let exportStatements: ts.Statement[] = [];
+            let moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
+            moduleBlock.statements.forEach((element: ts.Statement): void => {
+                exportStatements = exportStatements.concat(this.getExportStatements(element));
+            });
+            return exportStatements;
+        }
+    }
+
+    private getExportStatements(element: ts.Statement): ts.Statement[] {
+        let exportStatements: ts.Statement[] = [];
+        if (element.kind === SyntaxKind.current().ExportAssignment) {
+            let exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
+            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+        } else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
+            exportStatements.push(element);
+        }
+        return exportStatements;
+    }
+
+    private validateExportedElements(exportedElements: ts.Statement[]): void {
         // only validate the exported elements when a single export statement is made
         if (exportedElements.length === 1) {
             if (exportedElements[0].kind === SyntaxKind.current().ModuleDeclaration ||
                 exportedElements[0].kind === SyntaxKind.current().ClassDeclaration ||
                 exportedElements[0].kind === SyntaxKind.current().FunctionDeclaration) {
-                this.validateExport(exportedElements[0].name.text, exportedElements[0]);
+                this.validateExport((<any>exportedElements[0]).name.text, exportedElements[0]);
             } else if (exportedElements[0].kind === SyntaxKind.current().VariableStatement) {
-                let variableStatement: ts.VariableStatement = exportedElements[0];
+                let variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
                 // ignore comma separated variable lists
                 if (variableStatement.declarationList.declarations.length === 1) {
                     let variableDeclaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];

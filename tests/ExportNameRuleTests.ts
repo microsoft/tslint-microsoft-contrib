@@ -71,11 +71,37 @@ describe('exportNameRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
+        it('when a single namespaced class is named the same as the file', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            var script : string = `
+                namespace com.example {
+                    export class file {
+                    }
+                }
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
         it('when single class is name same as the file with nested elements', () : void => {
             // TestHelper assumes that all scripts are within file.ts
             var script : string = `
                 export class file {
                     export module file2 {
+                    }
+                    export class file3 {
+                    }
+                }
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('when multiple classes are exported within a namespace', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            var script : string = `
+                namespace com.example {
+                    export class file2 {
                     }
                     export class file3 {
                     }
@@ -190,6 +216,24 @@ describe('exportNameRule', () : void => {
                     "name": "test-data/ExportNameRuleFailingTestInput.ts",
                     "ruleName": "export-name",
                     "startPosition": { "character": 10, "line": 4 }
+                }
+            ]);
+        });
+
+        it('for conflicting name in namespace', () : void => {
+            exceptions.length = 0;
+            var inputScript : string = `
+                namespace com.example {
+                    export class NotMatching {
+                    }
+                }
+            `;
+            TestHelper.assertViolations(ruleName, inputScript, [
+                {
+                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and NotMatching",
+                    "name": "file.ts",
+                    "ruleName": "export-name",
+                    "startPosition": { "character": 21, "line": 3 }
                 }
             ]);
         });

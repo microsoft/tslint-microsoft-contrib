@@ -29,7 +29,8 @@ module TestHelper {
         };
     }
 
-    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string, expectedFailures : IExpectedFailure[]) {
+    function runRuleAndEnforceAssertions(ruleName: string, userOptions: string[], inputFileOrScript: string,
+		expectedFailures: IExpectedFailure[]) {
 
         const configuration: IRuleConfiguration = {
             rules: {}
@@ -50,14 +51,14 @@ module TestHelper {
 
 		let result: Lint.LintResult;
         if (inputFileOrScript.match(/.*\.ts$/)) {
-            const contents = fs.readFileSync(inputFileOrScript, "utf8");
+            const contents = fs.readFileSync(inputFileOrScript, 'utf8');
             const linter = new Lint.Linter(inputFileOrScript, contents, options);
             result = linter.lint();
         } else {
-            const linter = new Lint.Linter("file.ts", inputFileOrScript, options);
+            const linter = new Lint.Linter('file.ts', inputFileOrScript, options);
             result = linter.lint();
         }
-		
+
         const actualFailures: IExpectedFailure[] = JSON.parse(result.output);
 
         // All the information we need is line and character of start position. For JSON comparison
@@ -91,13 +92,13 @@ module TestHelper {
     export function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
     }
-    export function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
+    export function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string,
+		expectedFailures: IExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
     }
     export function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
     }
-	
 }
 
 export = TestHelper;

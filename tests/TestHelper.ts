@@ -24,17 +24,25 @@ module TestHelper {
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-    export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
+
+    export function assertNoViolation(ruleName: string,
+                                      inputFileOrScript: string) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
     }
-    export function assertNoViolationWithOptions(ruleName : string, options: any[], inputFileOrScript : string) {
+    export function assertNoViolationWithOptions(ruleName: string,
+                                                 options: any[],
+                                                 inputFileOrScript: string) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
     }
-    export function assertViolationsWithOptions(ruleName : string, options: any[], inputFileOrScript : string,
-                                                expectedFailures : ExpectedFailure[]) {
+    export function assertViolationsWithOptions(ruleName: string,
+                                                options: any[],
+                                                inputFileOrScript: string,
+                                                expectedFailures: ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
     }
-    export function assertViolations(ruleName : string, inputFileOrScript : string, expectedFailures : ExpectedFailure[]) {
+    export function assertViolations(ruleName: string,
+                                     inputFileOrScript: string,
+                                     expectedFailures: ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
     }
 
@@ -89,7 +97,7 @@ module TestHelper {
         const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, null, 2)}`;
         chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
-        expectedFailures.forEach((expected : ExpectedFailure, index: number) : void => {
+        expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
             var actual = actualFailures[index];
             chai.assert.deepEqual(actual, expected);
         });

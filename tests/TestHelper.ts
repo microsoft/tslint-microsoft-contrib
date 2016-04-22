@@ -84,7 +84,7 @@ module TestHelper {
             delete expected.endPosition;
         });
 
-        var errorMessage = 'Wrong # of failures: \n' + JSON.stringify(actualFailures, null, 2);
+        const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, null, 2)}`;
         chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
         expectedFailures.forEach((expected: IExpectedFailure, index: number): void => {

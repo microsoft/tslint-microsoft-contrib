@@ -24,18 +24,6 @@ module TestHelper {
         endPosition?: IFailurePosition;
         startPosition: IFailurePosition;
     }
-    export function assertNoViolation(ruleName : string, inputFileOrScript : string) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
-    }
-    export function assertNoViolationWithOptions(ruleName : string, options: any[], inputFileOrScript : string) {
-        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
-    }
-    export function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
-    }
-    export function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
-    }
 
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string, expectedFailures : IExpectedFailure[]) {
 
@@ -92,6 +80,20 @@ module TestHelper {
             chai.assert.deepEqual(actual, expected);
         });
     }
+
+	export function assertNoViolation(ruleName: string, inputFileOrScript: string) {
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
+    }
+    export function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
+    }
+    export function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
+    }
+    export function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: IExpectedFailure[]) {
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
+    }
+	
 }
 
 export = TestHelper;

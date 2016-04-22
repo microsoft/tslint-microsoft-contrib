@@ -30,6 +30,7 @@ Installation
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.3](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.3)
 * [2.0.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.2)
 * [2.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.1)
 * [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)

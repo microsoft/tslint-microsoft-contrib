@@ -3,7 +3,6 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import * as Lint from 'tslint/lib/lint';
-import Linter = require('tslint');
 import fs = require('fs');
 import chai = require('chai');
 
@@ -42,23 +41,23 @@ module TestHelper {
             configuration.rules[ruleName] = true;
         }
 
-        var options : Lint.ILinterOptions = {
+        const options : Lint.ILinterOptions = {
             formatter: 'json',
             configuration: configuration,
             rulesDirectory: 'dist/src/',
             formattersDirectory: 'customFormatters/'
         };
 
-        var linter : Linter;
-        if (inputFileOrScript.match(/.*\.ts/)) {
-            var contents = fs.readFileSync(inputFileOrScript, 'utf8');
-            linter = new Linter(inputFileOrScript, contents, options);
+		let result: Lint.LintResult;
+        if (inputFileOrScript.match(/.*\.ts$/)) {
+            const contents = fs.readFileSync(inputFileOrScript, "utf8");
+            const linter = new Lint.Linter(inputFileOrScript, contents, options);
+            result = linter.lint();
         } else {
-            linter = new Linter('file.ts', inputFileOrScript, options);
+            const linter = new Lint.Linter("file.ts", inputFileOrScript, options);
+            result = linter.lint();
         }
 		
-        var result : Lint.LintResult = linter.lint();
-
         const actualFailures: IExpectedFailure[] = JSON.parse(result.output);
 
         // All the information we need is line and character of start position. For JSON comparison

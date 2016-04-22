@@ -24,6 +24,11 @@ module TestHelper {
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
+    interface IRuleConfiguration {
+        rules: {
+            [key: string]: boolean | any[];
+        };
+    }
 
     export function assertNoViolation(ruleName: string,
                                       inputFileOrScript: string) {
@@ -49,7 +54,7 @@ module TestHelper {
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
                                          expectedFailures : ExpectedFailure[]) {
 
-        var configuration = {
+        const configuration: IRuleConfiguration = {
             rules: {}
         };
         if (userOptions != null && userOptions.length > 0) {
@@ -73,7 +78,7 @@ module TestHelper {
         } else {
             linter = new Linter('file.ts', inputFileOrScript, options);
         }
-
+		
         var result : Lint.LintResult = linter.lint();
 
         var actualFailures: ExpectedFailure[] = JSON.parse(result.output);

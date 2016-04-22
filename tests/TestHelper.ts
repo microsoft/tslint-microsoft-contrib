@@ -3,7 +3,6 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import * as Lint from 'tslint/lib/lint';
-import Linter = require('tslint');
 import fs = require('fs');
 import chai = require('chai');
 
@@ -24,7 +23,7 @@ module TestHelper {
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-    interface IRuleConfiguration {
+    interface RuleConfiguration {
         rules: {
             [key: string]: boolean | any[];
         };
@@ -54,7 +53,7 @@ module TestHelper {
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
                                          expectedFailures : ExpectedFailure[]) {
 
-        const configuration: IRuleConfiguration = {
+        const configuration: RuleConfiguration = {
             rules: {}
         };
         if (userOptions != null && userOptions.length > 0) {
@@ -64,24 +63,24 @@ module TestHelper {
             configuration.rules[ruleName] = true;
         }
 
-        var options : Lint.ILinterOptions = {
+        const options : Lint.ILinterOptions = {
             formatter: 'json',
             configuration: configuration,
             rulesDirectory: 'dist/src/',
             formattersDirectory: 'customFormatters/'
         };
 
-        var linter : Linter;
-        if (inputFileOrScript.match(/.*\.ts/)) {
-            var contents = fs.readFileSync(inputFileOrScript, 'utf8');
-            linter = new Linter(inputFileOrScript, contents, options);
+		let result: Lint.LintResult;
+        if (inputFileOrScript.match(/.*\.ts$/)) {
+            const contents = fs.readFileSync(inputFileOrScript, 'utf8');
+            const linter = new Lint.Linter(inputFileOrScript, contents, options);
+            result = linter.lint();
         } else {
-            linter = new Linter('file.ts', inputFileOrScript, options);
+            const linter = new Lint.Linter('file.ts', inputFileOrScript, options);
+            result = linter.lint();
         }
-		
-        var result : Lint.LintResult = linter.lint();
 
-        var actualFailures: ExpectedFailure[] = JSON.parse(result.output);
+        const actualFailures: ExpectedFailure[] = JSON.parse(result.output);
 
         // All the information we need is line and character of start position. For JSON comparison
         // to work, we will delete the information that we are not interested in from both actual and

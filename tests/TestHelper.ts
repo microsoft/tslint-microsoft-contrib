@@ -75,7 +75,7 @@ module TestHelper {
             delete actual.startPosition.position;
             delete actual.endPosition;
             // Editors start counting lines and characters from 1, but tslint does it from 0.
-            // To make thing easier to debug, aling to editor values.
+            // To make thing easier to debug, align to editor values.
             actual.startPosition.line = actual.startPosition.line + 1;
             actual.startPosition.character = actual.startPosition.character + 1;
         });

@@ -24,10 +24,15 @@ module TestHelper {
         endPosition?: IFailurePosition;
         startPosition: IFailurePosition;
     }
+    interface IRuleConfiguration {
+        rules: {
+            [key: string]: boolean | any[];
+        };
+    }
 
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string, expectedFailures : IExpectedFailure[]) {
 
-        var configuration = {
+        const configuration: IRuleConfiguration = {
             rules: {}
         };
         if (userOptions != null && userOptions.length > 0) {
@@ -51,7 +56,7 @@ module TestHelper {
         } else {
             linter = new Linter('file.ts', inputFileOrScript, options);
         }
-
+		
         var result : Lint.LintResult = linter.lint();
 
         const actualFailures: IExpectedFailure[] = JSON.parse(result.output);

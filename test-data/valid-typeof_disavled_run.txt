@@ -1,0 +1,3486 @@
+[4mRunning "clean:src" (clean) task[24m
+[32m>> [39m1 path cleaned.
+
+[4mRunning "ts:default" (ts) task[24m
+[33mCompiling...[39m
+[36mCleared fast compile cache for target: default[39m
+[36m### Fast Compile >>./src/chaiVagueErrorsRule.ts[39m
+[36m### Fast Compile >>./src/exportNameRule.ts[39m
+[36m### Fast Compile >>./src/jqueryDeferredMustCompleteRule.ts[39m
+[36m### Fast Compile >>./src/missingJsdocRule.ts[39m
+[36m### Fast Compile >>./src/missingOptionalAnnotationRule.ts[39m
+[36m### Fast Compile >>./src/mochaAvoidOnlyRule.ts[39m
+[36m### Fast Compile >>./src/ngIncompleteObjectRule.ts[39m
+[36m### Fast Compile >>./src/noBackboneGetSetOutsideModelRule.ts[39m
+[36m### Fast Compile >>./src/noBannedTermsRule.ts[39m
+[36m### Fast Compile >>./src/noConstantConditionRule.ts[39m
+[36m### Fast Compile >>./src/noControlRegexRule.ts[39m
+[36m### Fast Compile >>./src/noCookiesRule.ts[39m
+[36m### Fast Compile >>./src/noDeleteExpressionRule.ts[39m
+[36m### Fast Compile >>./src/noDisableAutoSanitizationRule.ts[39m
+[36m### Fast Compile >>./src/noDocumentWriteRule.ts[39m
+[36m### Fast Compile >>./src/noDuplicateCaseRule.ts[39m
+[36m### Fast Compile >>./src/noDuplicateParameterNamesRule.ts[39m
+[36m### Fast Compile >>./src/noEmptyInterfacesRule.ts[39m
+[36m### Fast Compile >>./src/noExecScriptRule.ts[39m
+[36m### Fast Compile >>./src/noForInRule.ts[39m
+[36m### Fast Compile >>./src/noFunctionConstructorWithStringArgsRule.ts[39m
+[36m### Fast Compile >>./src/noFunctionExpressionRule.ts[39m
+[36m### Fast Compile >>./src/noHttpStringRule.ts[39m
+[36m### Fast Compile >>./src/noIncrementDecrementRule.ts[39m
+[36m### Fast Compile >>./src/noInvalidRegexpRule.ts[39m
+[36m### Fast Compile >>./src/noMissingVisibilityModifiersRule.ts[39m
+[36m### Fast Compile >>./src/noMultilineStringRule.ts[39m
+[36m### Fast Compile >>./src/noMultipleVarDeclRule.ts[39m
+[36m### Fast Compile >>./src/noOctalLiteralRule.ts[39m
+[36m### Fast Compile >>./src/noRegexSpacesRule.ts[39m
+[36m### Fast Compile >>./src/noReservedKeywordsRule.ts[39m
+[36m### Fast Compile >>./src/noSparseArraysRule.ts[39m
+[36m### Fast Compile >>./src/noStringBasedSetImmediateRule.ts[39m
+[36m### Fast Compile >>./src/noStringBasedSetIntervalRule.ts[39m
+[36m### Fast Compile >>./src/noStringBasedSetTimeoutRule.ts[39m
+[36m### Fast Compile >>./src/noUnnecessaryBindRule.ts[39m
+[36m### Fast Compile >>./src/noUnnecessarySemicolonsRule.ts[39m
+[36m### Fast Compile >>./src/noUnusedImportsRule.ts[39m
+[36m### Fast Compile >>./src/noWithStatementRule.ts[39m
+[36m### Fast Compile >>./src/preferArrayLiteralRule.ts[39m
+[36m### Fast Compile >>./src/promiseMustCompleteRule.ts[39m
+[36m### Fast Compile >>./src/reactNoDangerousHtmlRule.ts[39m
+[36m### Fast Compile >>./src/references.ts[39m
+[36m### Fast Compile >>./src/useIsnanRule.ts[39m
+[36m### Fast Compile >>./src/useNamedParameterRule.ts[39m
+[36m### Fast Compile >>./src/utils/AstUtils.ts[39m
+[36m### Fast Compile >>./src/utils/BannedTermWalker.ts[39m
+[36m### Fast Compile >>./src/utils/ErrorTolerantWalker.ts[39m
+[36m### Fast Compile >>./src/utils/NoStringParameterToFunctionCallWalker.ts[39m
+[36m### Fast Compile >>./src/utils/ScopedSymbolTrackingWalker.ts[39m
+[36m### Fast Compile >>./src/utils/SyntaxKind.ts[39m
+[36m### Fast Compile >>./src/utils/Utils.ts[39m
+[36m### Fast Compile >>./src/validTypeofRule.ts[39m
+[36m### Fast Compile >>./tests/ChaiVagueErrorsRuleTests.ts[39m
+[36m### Fast Compile >>./tests/ExportNameRuleTests.ts[39m
+[36m### Fast Compile >>./tests/MissingJsdocRuleTests.ts[39m
+[36m### Fast Compile >>./tests/MissingOptionalAnnotationTests.ts[39m
+[36m### Fast Compile >>./tests/MochaAvoidOnlyRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoBackboneGetSetOutsideModelRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoBannedTermsTests.ts[39m
+[36m### Fast Compile >>./tests/NoConstantConditionRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoControlRegexRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoCookiesTests.ts[39m
+[36m### Fast Compile >>./tests/NoDeleteExpressionTests.ts[39m
+[36m### Fast Compile >>./tests/NoDisableAutoSanitizationTests.ts[39m
+[36m### Fast Compile >>./tests/NoDocumentWriteTests.ts[39m
+[36m### Fast Compile >>./tests/NoDuplicateCaseRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoDuplicateParameterNamesTests.ts[39m
+[36m### Fast Compile >>./tests/NoEmptyInterfacesRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoExecScriptTests.ts[39m
+[36m### Fast Compile >>./tests/NoForInRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoFunctionConstructorWithStringArgsTests.ts[39m
+[36m### Fast Compile >>./tests/NoFunctionExpressionRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoHttpStringRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoIncrementDecrementTests.ts[39m
+[36m### Fast Compile >>./tests/NoInvalidRegexpRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoMissingVisibilityModifiersRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoMultilineStringTests.ts[39m
+[36m### Fast Compile >>./tests/NoMultipleVarDeclRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoOctalLiteralTests.ts[39m
+[36m### Fast Compile >>./tests/NoRegexSpacesRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoReservedKeywordsTests.ts[39m
+[36m### Fast Compile >>./tests/NoSparseArraysRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoStringBasedSetImmediateTests.ts[39m
+[36m### Fast Compile >>./tests/NoStringBasedSetIntervalTests.ts[39m
+[36m### Fast Compile >>./tests/NoStringBasedSetTimeoutTests.ts[39m
+[36m### Fast Compile >>./tests/NoUnnecessaryBindRuleTests.ts[39m
+[36m### Fast Compile >>./tests/NoUnnecessarySemicolonsTests.ts[39m
+[36m### Fast Compile >>./tests/NoUnusedImportsTests.ts[39m
+[36m### Fast Compile >>./tests/NoWithStatementTests.ts[39m
+[36m### Fast Compile >>./tests/PromiseMustCompleteRuleTests.ts[39m
+[36m### Fast Compile >>./tests/ReactNoDangerousHtmlRuleTests.ts[39m
+[36m### Fast Compile >>./tests/TestHelper.ts[39m
+[36m### Fast Compile >>./tests/UseIsnanRuleTests.ts[39m
+[36m### Fast Compile >>./tests/UseNamedParameterRuleTests.ts[39m
+[36m### Fast Compile >>./tests/ValidTypeofRuleTests.ts[39m
+[36m### Fast Compile >>./tests/jqueryDeferredMustCompleteRuleTests.ts[39m
+[36m### Fast Compile >>./tests/preferArrayLiteralRuleTests.ts[39m
+Using tsc v1.7.5
+
+
+
+[32mTypeScript compilation complete: 4.59s for 99 TypeScript files.[39m
+
+[4mRunning "mochaTest:test" (mochaTest) task[24m
+
+
+  chaiVagueErrorsRule
+
+    √ should pass on xxx
+
+    √ should fail on ok
+
+    √ should fail on true
+
+    √ should fail on false
+
+    √ should fail on null
+
+    √ should fail on undefined
+
+    √ should fail on equal
+
+    √ should fail on eql
+
+  exportNameRule
+    should pass
+
+      √ when export equals assignment matches
+
+      √ for conflicting name when suppressed
+
+      √ when single module is named same as the file
+
+      √ when single module is named same as the file with nested elements
+
+      √ when single class is named same as the file
+
+      √ when single class is name same as the file with nested elements
+
+      √ when single let is named same as the file
+
+      √ when single const is named same as the file
+
+      √ when single function is named same as the file
+
+      √ when anonymous Object is exported
+
+      √ when multiple classes are exported
+
+      √ multiple modules are exported
+
+      √ multiple variables are exported
+
+      √ when multiple consts are exported
+
+      √ when multiple lets are exported
+
+      √ when a variety of things are exported
+    should fail
+
+      √ for conflicting name
+
+      √ when mis-named module is exported
+
+      √ when mis-named class is exported
+
+      √ when mis-named function is exported
+
+      √ when mis-named let defined variable is exported
+
+      √ when mis-named const is exported
+
+      √ when mis-named var defined variable is exported
+
+  missing-jsdoc
+
+    √ should not fail on top level comment
+
+    √ should not fail on top level comment with trailing spaces
+
+    √ should fail on missing comment
+
+    √ should fail on one star comment
+
+    √ should fail on three star comment
+
+    √ should fail on trailing chars
+
+    √ should fail on leading spaces
+
+  missingOptionalAnnotationRule
+
+    √ should not produce violations
+
+    √ should not produce violations for 2nd parameter that has a default initializer
+
+    √ should produce a violation when 1st parameter has a default initializer
+
+    √ should produce violations
+
+  mochaAvoidOnlyRule
+
+    √ should pass when only is not invoked
+
+    √ should fail on it.only with lambda
+
+    √ should fail on it.only with function
+
+    √ should fail on describe.only with lambda
+
+    √ should fail on describe.only with function
+
+  noBackboneGetSetOutsideModelRule
+
+    √ should pass on get and set calls on the this reference
+
+    √ should pass on get and set calls with wrong # parameters and wrong parameter types
+
+    √ should fail on get and set on an object different than this
+
+  noBannedTermsRule
+    module variables
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    module functions
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    class variables
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    class properties
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    class methods
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    methods parameters
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    function parameters
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    arrow function parameters
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    local variables
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+    interface declarations
+
+      √ should not refer to caller
+
+      √ should not refer to callee
+
+      √ should not refer to arguments
+
+      √ should not refer to eval
+
+  noConstantConditionRule
+
+    √ should pass on comparisons
+
+    √ should fail on if-booleans
+
+    √ should fail on if-numbers
+
+    √ should fail on ternary-booleans
+
+    √ should fail on ternary-numbers
+
+    √ should fail on while-booleans
+
+    √ should fail on while-numbers
+
+    √ should fail on do-while-booleans
+
+    √ should fail on do-while-numbers
+
+    √ should fail on for-booleans
+
+    √ should fail on for-numbers
+
+  noControlRegexRule
+
+    √ should pass on chars higher than x20
+
+    √ should fail on x1f
+
+    √ should fail on x00
+
+  noCookiesRule
+
+    √ should not produce violations (359ms)
+
+    √ should produce violations (219ms)
+
+    √ should not throw error  (187ms)
+
+  noDeleteExpressionRule
+
+    √ should not produce violations
+
+    √ should produce violations 
+
+  noDisableAutoSanitizationRule
+
+    √ should produce violation for execUnsafeLocalFunction
+
+    √ should produce violation for setInnerHTMLUnsafe
+
+  noDocumentWriteRule
+
+    √ should not produce violations 
+
+    √ should produce violations 
+
+  noDuplicateCaseRule
+
+    √ should pass on valid switch
+
+    √ should fail on string duplicates
+
+    √ should fail on number duplicates
+
+    √ should fail on identifier duplicates
+
+  noDuplicateParameterNames
+
+    √ should produce violations 
+
+  noEmptyInterfacesRule
+
+    √ should pass on interface with 1 attribute
+
+    √ should pass on interface with two different parents
+
+    √ should fail on interface with only 1 parent (what is the point?)
+
+    √ should fail on empty interface
+
+  noExecScriptRule
+
+    √ should produce violations 
+
+  noForInRule
+
+    √ should pass on regular for statement
+
+    √ should fail on for-in statement
+
+  noFunctionConstructorWithStringArgsRule
+
+    √ should produce violations 
+
+  noFunctionExpressionRule
+
+    √ should pass on arrow function
+
+    √ should pass on function with this
+
+    √ should fail on function expression
+
+    √ should fail on nested function expression
+
+  noHttpStringRule
+
+    √ should ban http strings in variables
+
+    √ should ban http strings in default values
+
+    √ should allow https strings in variables
+
+    √ should allow https strings in default values
+
+    √ should allow http strings in that match the exclude regex
+
+    √ should disallow http strings in that do not match the exclude regex
+
+  noIncrementDecrementRule
+
+    √ should produce violations 
+
+  noInvalidRegexpRule
+
+    √ should pass on valid input
+
+    √ should fail on invalid string in constuctor
+
+    √ should fail on invalid string in function call
+
+  noMissingVisibilityModifiers
+
+    √ should allow field modifiers
+
+    √ should allow method modifiers
+
+    √ should not allow missing field modifiers
+
+    √ should not allow missing method modifiers
+
+  noMultilineStringRule
+
+    √ should produce violations 
+
+  noMultipleVarDeclRule
+
+    √ should pass on separate var declaration and multiple var declarations within a for loop
+
+    √ should fail on multiple var declaration
+
+  noOctalLiteralRule
+
+    √ should not fail on similar but acceptable strings
+
+    √ should fail on 3 digit octal literals
+
+    √ should produce violations 
+
+  noRegexSpacesRule
+
+    √ should pass on single space
+
+    √ should pass on RegExp object
+
+    √ should pass on no spaces
+
+    √ should fail on spaces in middle
+
+    √ should fail on leading spaces
+
+    √ should fail on trailing spaces
+
+  noBannedTermsRule
+
+    √ should not allow the break reserved word
+
+    √ should not allow the case reserved word
+
+    √ should not allow the catch reserved word
+
+    √ should not allow the class reserved word
+
+    √ should not allow the const reserved word
+
+    √ should not allow the continue reserved word
+
+    √ should not allow the debugger reserved word
+
+    √ should not allow the default reserved word
+
+    √ should not allow the delete reserved word
+
+    √ should not allow the do reserved word
+
+    √ should not allow the else reserved word
+
+    √ should not allow the enum reserved word
+
+    √ should not allow the export reserved word
+
+    √ should not allow the extends reserved word
+
+    √ should not allow the false reserved word
+
+    √ should not allow the finally reserved word
+
+    √ should not allow the for reserved word
+
+    √ should not allow the function reserved word
+
+    √ should not allow the if reserved word
+
+    √ should not allow the import in reserved word
+
+    √ should not allow the instanceof reserved word
+
+    √ should not allow the new reserved word
+
+    √ should not allow the null reserved word
+
+    √ should not allow the return reserved word
+
+    √ should not allow the super reserved word
+
+    √ should not allow the switch reserved word
+
+    √ should not allow the this reserved word
+
+    √ should not allow the throw reserved word
+
+    √ should not allow the true reserved word
+
+    √ should not allow the try reserved word
+
+    √ should not allow the typeof reserved word
+
+    √ should not allow the var reserved word
+
+    √ should not allow the void reserved word
+
+    √ should not allow the while reserved word
+
+    √ should not allow the with reserved word
+
+    √ should not allow the as reserved word
+
+    √ should not allow the implements reserved word
+
+    √ should not allow the interface reserved word
+
+    √ should not allow the let reserved word
+
+    √ should not allow the package reserved word
+
+    √ should not allow the private reserved word
+
+    √ should not allow the protected reserved word
+
+    √ should not allow the public reserved word
+
+    √ should not allow the static reserved word
+
+    √ should not allow the yield reserved word
+
+    √ should not allow the any reserved word
+
+    √ should not allow the boolean reserved word
+
+    √ should not allow the constructor reserved word
+
+    √ should not allow the declare reserved word
+
+    √ should not allow the get reserved word
+
+    √ should not allow the module reserved word
+
+    √ should not allow the require reserved word
+
+    √ should not allow the number reserved word
+
+    √ should not allow the set reserved word
+
+    √ should not allow the string reserved word
+
+    √ should not allow the symbol reserved word
+
+    √ should not allow the type reserved word
+
+    √ should not allow the from reserved word
+
+    √ should not allow the of reserved word
+
+    √ should not allow local variable named require
+
+    √ should not allow local variable named module
+
+  noSparseArraysRule
+
+    √ should pass on dense arrays
+
+    √ should fail on comma with no elements
+
+    √ should fail on array with many commas
+
+    √ should fail on array with elements and commas
+
+  noStringBasedSetImmediateRule
+
+    √ should produce violations 
+
+  noStringBasedSetIntervalRule
+
+    √ should produce violations 
+
+  noStringBasedSetTimeoutRule
+
+    √ should not throw error - case 1
+
+    √ should not throw error - case 2
+
+    √ should support type inference on shadowed variables
+
+    √ should not throw error - case 3
+
+    √ should not throw error - case 4
+
+    √ should not throw error - case 5
+
+    √ should not produce violations
+
+    √ should produce violations for string literals
+
+    √ should produce violations for string variables
+
+    √ should produce violations for any variables
+
+    √ should produce violations for any functions
+
+    √ should produce violations for string functions
+
+    √ should produce violations for parameters
+
+    √ should not produce violations what used to be a false positive case
+
+    √ should not fail within a constructor
+
+    √ should create violations on template strings
+
+    √ should pass all Issue #46 usages
+
+  noUnnecessaryBindRule
+    should pass
+
+      √ should pass on function/lambda literals with multiple parameters
+
+      √ should pass on function/lambda literals with non-this parameter
+
+      √ should pass on underscore static invocation with no context
+
+      √ should pass on underscore invocation with no context
+
+      √ should pass on underscore static invocation with context
+
+      √ should pass on underscore invocation with context
+
+      √ should pass on "this" context with non-literal function
+
+      √ should pass on _.sortedIndex
+
+      √ should pass on underscore static invocation with unknown method
+
+      √ should pass on underscore invocation with unknown method
+    should fail
+
+      √ should fail on binding this on function literal
+
+      √ should fail on binding this on lambda
+
+      √ should fail on underscore static invocation with this as context and function
+
+      √ should fail on underscore static invocation with this as context and lambda
+
+      √ should fail on underscore instance invocation with this as context and function
+
+      √ should fail on underscore instance invocation with this as context and lambda
+
+      √ fail on _.reduce - static invocation - function parameter
+
+      √ fail on _.reduce - static invocation - lambda parameter
+
+      √ fail on _.reduce - instance invocation - function parameter
+
+      √ fail on _.reduce - instance invocation - lambda parameter
+
+      √ fail on _.sortedIndex - static invocation - function literal
+
+      √ fail on _.sortedIndex - static invocation - lambda
+
+      √ fail on _.sortedIndex - instance invocation - function literal
+
+      √ fail on _.sortedIndex - instance invocation - lambda
+
+      √ fail on _.bind - function literal
+
+      √ fail on _.bind - lambda
+
+  noUnnecessarySemiColons
+
+    √ should produce violations
+
+  noUnusedImportsRule
+
+    √ should detect an unused import
+
+    √ should flag an unused relative import
+
+    √ should not flag imports that are used as other imports
+
+  noWithStatementsRule
+
+    √ should produce violations
+
+  promiseMustCompleteRule
+    should pass
+
+      √ when promise completes
+
+      √ on resolve - lambda
+
+      √ on resolve - function
+
+      √ on resolve - alternative name
+
+      √ on reject
+
+      √ on reject - function
+
+      √ on reject - alternative name
+
+      √ when single branch is completed - with if-statement
+
+      √ when single branch is completed - with if-else-statement
+
+      √ when single branch is completed - with if-else-statement
+
+      √ with nested if-else statement
+
+      √ when resolved within a function
+
+      √ when resolved within a lambda
+
+      √ when resolved within a lambda - with extra parameter
+
+      √ when resolved within a for loop
+
+      √ when resolved within a for in loop
+
+      √ when resolved within a while loop
+
+      √ when resolve reference escaped into a function call
+
+      √ when reject reference escaped into a function call
+
+      √ when non-shadowed parameter resolves within a function
+
+      √ when non-shadowed parameter rejects within a function
+
+      √ when non-shadowed parameter resolves within a lambda
+
+      √ when non-shadowed parameter rejects within a lambda
+    should fail
+
+      √ when empty lambda
+
+      √ when empty function
+
+      √ when has no complete
+
+      √ when single branch is missing complete - with if-statement
+
+      √ when single branch is missing complete - with if-else-statement
+
+      √ with nested if-else statement
+
+      √ when shadowed parameter resolved within a function
+
+      √ when shadowed parameter rejects within a function
+
+      √ when shadowed parameter resolved within a lambda
+
+      √ when shadowed parameter rejects within a lambda
+
+  reactNoDangerousHtmlRule
+
+    √ should produce violation when function called with no suppression
+
+    √ should not produce violation when call exists in exception list
+
+  useIsnanRule
+
+    √ should pass on xxx
+
+    √ should fail on equality NaN
+
+    √ should fail on other binary expressions
+
+  useNamedParameterRule
+
+    √ should ban referencing arguments by numeric index
+
+    √ should allow referencing arguments by variable index
+
+  validTypeofRule
+
+    √ should pass on valid typeofs
+
+    √ should fail on invalid string with === (47ms)
+
+    √ should fail on invalid string with == (63ms)
+
+    √ should fail on invalid string with !== (94ms)
+
+    √ should fail on invalid string with != (46ms)
+
+  jquery-deferred-must-complete
+    should pass
+
+      √ when deferred named jquery completes
+
+      √ when deferred named jquery completes - let declaration
+
+      √ when deferred named $ completes
+
+      √ on resolve
+
+      √ on reject
+
+      √ when single branch is completed - with if-statement
+
+      √ when single branch is completed - with if-else-statement
+
+      √ when single branch is completed - with if-else-statement
+
+      √ with nested if-else statement
+
+      √ when resolved within a function
+
+      √ when resolved within a lambda
+
+      √ when resolved within a function
+
+      √ when resolved within a lambda
+
+      √ when resolved within a for loop
+
+      √ when resolved within a for in loop
+
+      √ when resolved within a while loop
+
+      √ when deferred reference escaped into a function call
+    should fail
+
+      √ when has no complete
+
+      √ when has no complete - var declared on two lines
+
+      √ when single branch is missing complete - with if-statement
+
+      √ when single branch is missing complete - with if-else-statement
+
+      √ with nested if-else statement
+
+      √ when shadowed parameter resolved within a function
+
+      √ when shadowed parameter resolved within a lambda
+
+  preferArrayLiteralRule
+
+    √ should allow string[] as variable type
+
+    √ should ban Array<string> as variable type
+
+    √ should ban Array<string> as parameter type
+
+    √ should ban new Array() constructor
+
+    √ should ban new Array(4, 5) constructor
+
+    √ should ban new Array(4) constructor
+
+
+  346 passing (2s)
+
+
+[4mRunning "tslint:files" (tslint) task[24m
+[31m>> [39msrc/ngIncompleteObjectRule.ts[688, 21]: Found constant conditional: while (true)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[53, 51]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[56, 76]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[66, 78]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[149, 66]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[282, 64]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[304, 45]: Forbidden -- operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[323, 49]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[375, 40]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[519, 28]: Forbidden -- operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[538, 27]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[602, 48]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[634, 47]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[677, 69]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[681, 71]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[829, 106]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[867, 93]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[886, 92]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[971, 75]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[979, 86]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[984, 98]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1347, 9]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1361, 58]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1372, 97]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1428, 9]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1442, 58]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1458, 105]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1478, 101]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1564, 93]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1627, 65]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1738, 102]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1874, 193]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1903, 112]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1908, 117]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1948, 56]: Forbidden ++ operator
+[31m>> [39msrc/ngIncompleteObjectRule.ts[412, 17]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[418, 21]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[424, 25]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[468, 17]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[475, 21]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[481, 25]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[533, 17]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[546, 17]: Do not use for in statements, use Object.keys instead: for (var e in rValObjectVal)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 146]: Do not use for in statements, use Object.keys instead: for (e in curValObj.__value.__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 102]: Do not use for in statements, use Object.keys instead: for (e in curValObj.__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 64]: Do not use for in statements, use Object.keys instead: for (e in curValObj.__value.__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[832, 25]: Do not use for in statements, use Object.keys instead: for (e in curValObj.__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[834, 21]: Do not use for in statements, use Object.keys instead: for (var e in curValObj)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[848, 21]: Do not use for in statements, use Object.keys instead: for (var e in curValObj)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1378, 21]: Do not use for in statements, use Object.keys instead: for (var e in (<MyTsExprEvalElement>nodeData).__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1394, 13]: Do not use for in statements, use Object.keys instead: for (var e in <any>nodeData)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1484, 21]: Do not use for in statements, use Object.keys instead: for (var e in (<MyTsExprEvalElement>nodeData).__value)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1500, 13]: Do not use for in statements, use Object.keys instead: for (var e in <any>nodeData)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1596, 13]: Do not use for in statements, use Object.keys instead: for (var e in lValObject)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1599, 13]: Do not use for in statements, use Object.keys instead: for (var e in rValObject)
+[31m>> [39msrc/ngIncompleteObjectRule.ts[195, 5]: Field missing visibility modifier: conTextType: ts.SyntaxKind = ts.SyntaxKind.Unknown;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[196, 5]: Field missing visibility modifier: id: string = "";
+[31m>> [39msrc/ngIncompleteObjectRule.ts[198, 5]: Field missing visibility modifier: values: string[][];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[199, 5]: Field missing visibility modifier: seq: number;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[209, 5]: Field missing visibility modifier: gFileName:string;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[210, 5]: Field missing visibility modifier: conTextStack: conTextStackItem[] = [];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[211, 5]: Field missing visibility modifier: tsGblConText = { moduleName: "", classIfName: "", methodName: "", classIfType: "" };
+[31m>> [39msrc/ngIncompleteObjectRule.ts[212, 5]: Field missing visibility modifier: lineAndCharacter:ts.LineAndCharacter ;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[213, 5]: Method missing visibility modifier: clear() {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[228, 5]: Method missing visibility modifier: updateLineAndCharacter(newLineAndCharacter:ts.LineAndCharacter){
+[31m>> [39msrc/ngIncompleteObjectRule.ts[231, 5]: Method missing visibility modifier: getLineAndCharacter():string {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[234, 5]: Method missing visibility modifier: isBlock(tn: ts.SyntaxKind): boolean {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[246, 5]: Method missing visibility modifier: isInConstructor():boolean{
+[31m>> [39msrc/ngIncompleteObjectRule.ts[250, 5]: Method missing visibility modifier: push(tn: ts.SyntaxKind) {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[261, 5]: Method missing visibility modifier: pop(tn) {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[268, 5]: Method missing visibility modifier: setType(tn: ts.SyntaxKind) {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[276, 5]: Method missing visibility modifier: convertSymbol2Name(valSymbols: string[]): {className:string, methodName:string} {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[289, 5]: Method missing visibility modifier: convertSymbol2NameStr(valName: {className:string, methodName:string} ): string {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[292, 5]: Method missing visibility modifier: getValSymbols(rvalSymbols: string[]): any {// get value for symbols list
+[31m>> [39msrc/ngIncompleteObjectRule.ts[382, 5]: Method missing visibility modifier: setValSymbols2AnyValG(lValSymbols: string[], rValObject: any) { // for function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[432, 5]: Method missing visibility modifier: setValSymbols2NewValC(lValSymbols: string[], rValObject: any) { // for current level function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[489, 5]: Method missing visibility modifier: setValSymbols2AnyVal(lValSymbols: string[], rValObject: any) { // for function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[553, 5]: Method missing visibility modifier: getValSymbols2AnyValG(lValSymbols: string[]): any { // for function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[596, 5]: Method missing visibility modifier: getVars(k: number): string {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[607, 5]: Method missing visibility modifier: exitError(errorMessage: String) {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[628, 5]: Field missing visibility modifier: exceptNames: string[];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1578, 5]: Method missing visibility modifier: setValExprAnyVal(lValNode: ts.Expression, rValObject: any) { // for function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1583, 5]: Method missing visibility modifier: setValExpr(lValNode: ts.Expression, rValNode: any) { // for function arguments,valiable-declare
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1587, 5]: Method missing visibility modifier: meargeObjectsItems(lValObject: MyTsExprEvalType, operatorTokenStr: string, rValObject: MyTsExprEvalType): MyTsExprEvalType {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1645, 5]: Method missing visibility modifier: updateValExpr(lValNode: ts.Expression, operator: string, rValNode: ts.Expression, rValTypeStr: string): MyTsExprEvalType { // for assign ,valiable -declare init
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1668, 5]: Method missing visibility modifier: pushValExpr(lValNode: ts.Expression, rValNode: ts.Expression, rValTypeStr: string) {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1693, 5]: Method missing visibility modifier: convertFuncType2JSComments(curType: string,o:string[]): string[] {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1713, 5]: Field missing visibility modifier: curRuleWorker: Lint.RuleWalker;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1714, 5]: Field missing visibility modifier: callNames: string[] =[];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1715, 5]: Field missing visibility modifier: valueExpand: boolean = true;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1716, 5]: Field missing visibility modifier: checkVauge: boolean = true;
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1717, 5]: Field missing visibility modifier: ajgularModuleVarName: string[] = [];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1718, 5]: Field missing visibility modifier: deferedBindName:string[] =[];
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1723, 5]: Method missing visibility modifier: pre_$inject(targetNode: ts.Identifier | ts.Expression, targetArgsNodesArray: ts.ArrayLiteralExpression, elementsLengthOffset: number): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1754, 5]: Method missing visibility modifier: rem_define_TsClass(targetNode: ts.Identifier, parentNode: ts.ClassDeclaration | ts.InterfaceDeclaration, curTypeStr: string): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1763, 5]: Method missing visibility modifier: rem_TS_PropertyDeclaration(targetNode: ts.PropertyDeclaration, parentNode: ts.Declaration): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1795, 5]: Method missing visibility modifier: rem_TS_PropertyDefined(targetNode: ts.Identifier, parentNode: ts.Declaration): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1836, 5]: Method missing visibility modifier: rem_TS_VariableDeclaration_initValue(targetNode: ts.Identifier, exprRightNOde: ts.Expression): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1850, 5]: Method missing visibility modifier: rem_define_Parameter(targetNode: ts.ParameterDeclaration, parentNode: ts.Node): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1921, 5]: Method missing visibility modifier: rem_BinaryExpression(targetNode: ts.BinaryExpression): void {
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1935, 5]: Method missing visibility modifier: rem_CallLikeExpression(targetNode: ts.LeftHandSideExpression, targetArgs: ts.NodeArray<ts.Expression>): void{
+[31m>> [39msrc/ngIncompleteObjectRule.ts[296, 9]: Do not use comma separated variable declarations: curValContextLevel: number,
+[31m>> [39msrc/ngIncompleteObjectRule.ts[175, 18]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[700, 30]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[722, 42]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[739, 42]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1707, 2]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1711, 2]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1735, 18]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1782, 101]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1815, 74]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1874, 207]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1903, 126]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1908, 131]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1965, 2]: unnecessary semi-colon
+[31m>> [39msrc/ngIncompleteObjectRule.ts[194, 7]: name must be in pascal case
+[31m>> [39msrc/ngIncompleteObjectRule.ts[208, 7]: name must be in pascal case
+[31m>> [39msrc/ngIncompleteObjectRule.ts[412, 17]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[418, 21]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[424, 25]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[468, 17]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[475, 21]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[481, 25]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[533, 17]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[546, 17]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 146]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 102]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1596, 13]: for (... in ...) statements must be filtered with an if statement
+[31m>> [39msrc/ngIncompleteObjectRule.ts[980, 43]: forbidden bitwise operation
+[31m>> [39msrc/ngIncompleteObjectRule.ts[980, 72]: forbidden bitwise operation
+[31m>> [39msrc/ngIncompleteObjectRule.ts[980, 146]: forbidden bitwise operation
+[31m>> [39msrc/ngIncompleteObjectRule.ts[609, 9]: function invocation disallowed: console.trace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 43]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 69]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 96]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 123]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[37, 89]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[346, 24]: block is empty
+[31m>> [39msrc/ngIncompleteObjectRule.ts[55, 41]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[65, 41]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[75, 46]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[76, 50]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[84, 46]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[85, 50]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[247, 100]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[248, 94]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[356, 224]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[356, 325]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[359, 224]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[359, 325]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[399, 31]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[399, 59]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[449, 31]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[449, 59]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[450, 31]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[450, 58]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[504, 31]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[504, 59]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[505, 31]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[505, 58]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[532, 77]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[545, 47]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 76]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 76]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 50]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[927, 55]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[927, 81]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[964, 30]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1388, 44]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1388, 33]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1388, 79]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1388, 68]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1389, 60]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1389, 49]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1494, 44]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1494, 33]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1494, 79]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1494, 68]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1495, 60]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1495, 49]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1505, 29]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1505, 53]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1506, 45]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1657, 24]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1664, 20]: object access via string literals is disallowed
+[31m>> [39msrc/ngIncompleteObjectRule.ts[857, 18]: expected a 'break' before 'case'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[228, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[246, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[279, 9]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[325, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[326, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[327, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[328, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[333, 48]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[338, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[344, 76]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[353, 135]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[356, 351]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[359, 354]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[409, 18]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[416, 22]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[422, 26]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[450, 70]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[455, 40]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[465, 18]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[473, 22]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[479, 26]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[505, 70]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[529, 10]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[556, 10]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[574, 22]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[580, 25]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[600, 9]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[615, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[622, 20]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[690, 25]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[691, 25]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[708, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[759, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[804, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[808, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[809, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[814, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[816, 25]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[816, 82]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[817, 25]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[830, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[900, 188]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 21]: misplaced opening brace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 17]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1349, 28]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1357, 65]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1401, 56]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1403, 37]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1405, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1407, 44]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1430, 28]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1438, 65]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1461, 66]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1466, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1470, 76]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1510, 56]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1512, 37]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1514, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1516, 44]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1531, 25]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1533, 13]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1534, 13]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1590, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1591, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1592, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1606, 21]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1625, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1628, 69]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1673, 9]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1674, 9]: misplaced 'else'
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1708, 25]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1815, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1935, 113]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1936, 53]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1939, 90]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 32]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 38]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 58]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 64]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 85]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 91]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 112]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 118]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[37, 32]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[37, 38]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[37, 78]: expected parameter: 'msg' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[37, 84]: expected parameter: 'obj' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[261, 11]: expected parameter: 'tn' to have a typedef
+[31m>> [39msrc/ngIncompleteObjectRule.ts[159, 74]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[324, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[330, 42]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[331, 42]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[332, 42]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[394, 16]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[434, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[444, 16]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[495, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[499, 16]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[592, 95]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[681, 67]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[682, 211]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[682, 246]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[708, 70]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[759, 70]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1000, 91]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1654, 82]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1694, 28]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1699, 53]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1818, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[36, 129]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[52, 103]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[158, 21]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[159, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[159, 33]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[159, 43]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[164, 65]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[164, 97]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[166, 65]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[166, 101]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[170, 69]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[172, 83]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[209, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[212, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[215, 60]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[228, 48]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[231, 27]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[246, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[265, 118]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[276, 58]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[276, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[277, 33]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[277, 52]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[277, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[277, 88]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[278, 61]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[278, 87]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[283, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[289, 47]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[289, 66]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[294, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[294, 53]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[322, 26]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[324, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[324, 186]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[325, 81]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[326, 115]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[327, 107]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[329, 36]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[330, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[330, 131]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[330, 135]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[331, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[331, 133]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[331, 137]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[332, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[332, 133]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[332, 137]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[337, 70]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[338, 33]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[353, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[356, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[359, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[376, 59]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 26]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 41]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 57]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 74]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[390, 166]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 58]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 63]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 71]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[397, 18]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[399, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[399, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[405, 136]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[409, 92]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[409, 105]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[410, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[410, 122]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[412, 130]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[416, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[416, 125]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[418, 150]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[422, 132]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[422, 145]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[424, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[440, 166]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 58]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 63]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 71]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[447, 18]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[449, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[449, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[450, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[450, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[454, 93]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[455, 11]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[462, 140]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[465, 92]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[465, 105]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[466, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[466, 123]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[468, 130]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[473, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[473, 125]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[475, 150]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[479, 132]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[479, 145]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[481, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 58]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 63]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 71]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[502, 18]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[504, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[504, 84]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[505, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[505, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[509, 92]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[526, 83]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[529, 73]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[556, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[557, 33]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[557, 40]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[557, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[565, 132]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[566, 136]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[569, 143]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[574, 85]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[580, 104]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[599, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[600, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[619, 12]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[630, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[634, 107]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[655, 26]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[663, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[677, 178]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 62]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 75]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 90]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 102]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[681, 163]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[682, 247]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[682, 284]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[689, 126]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[690, 185]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[691, 37]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[703, 79]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[708, 27]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[708, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[714, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[759, 27]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[759, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[771, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[795, 106]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[803, 151]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[804, 75]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 43]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 155]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 162]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 166]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[807, 86]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[808, 115]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[809, 123]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 247]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 254]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 272]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 220]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 160]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[815, 106]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[816, 134]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[817, 143]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 205]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 212]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 201]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 208]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[832, 115]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[839, 239]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 109]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[860, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[865, 248]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[869, 286]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 52]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 78]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 90]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 52]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 78]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 90]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[901, 23]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[901, 71]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[906, 34]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 116]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 131]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 149]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 156]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 126]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 141]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 170]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 177]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 160]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 175]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 187]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 154]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 169]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 181]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[919, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 45]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 57]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[927, 19]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[927, 119]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 57]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 88]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 97]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 124]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 131]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[942, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[942, 40]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 78]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 87]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 102]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 122]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1001, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1001, 46]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 128]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 135]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 148]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 155]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 79]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 103]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 110]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 79]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 103]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 110]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 80]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 105]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 79]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 103]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 110]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 81]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 107]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 114]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 78]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 101]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 108]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 79]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 103]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 110]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 81]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 88]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 81]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 107]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 114]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 82]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 109]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 116]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1024, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 47]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 59]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1035, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 32]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 47]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 59]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1043, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 127]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 139]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 51]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 129]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 144]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 156]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1342, 20]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1342, 57]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1346, 64]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1349, 11]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1357, 18]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1361, 108]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1361, 120]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1367, 38]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1380, 115]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1385, 93]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1388, 19]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 179]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1393, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1396, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1401, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1403, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1405, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1407, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1409, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1412, 99]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1417, 78]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1423, 20]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1423, 58]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1427, 65]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1430, 11]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1438, 18]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1442, 109]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1442, 121]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1448, 38]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1449, 66]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1455, 45]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1456, 43]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1457, 47]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1460, 48]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1461, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1461, 116]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1466, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1466, 76]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1470, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1491, 94]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1494, 19]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 179]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1499, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1502, 77]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1505, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1510, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1512, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1514, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1516, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1518, 22]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1531, 11]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 160]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1533, 20]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1533, 122]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1534, 66]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1562, 252]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1566, 256]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1590, 147]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1591, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1591, 124]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1592, 112]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1592, 124]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1596, 72]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1601, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1621, 137]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1625, 135]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1634, 123]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1638, 162]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1639, 137]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1642, 125]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 29]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1672, 68]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1673, 96]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1693, 48]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1693, 50]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1700, 19]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1700, 81]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1704, 119]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1714, 26]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1718, 21]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1718, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1767, 39]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1777, 118]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1782, 101]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1817, 31]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1819, 25]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1839, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1841, 30]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1937, 33]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1939, 15]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1940, 38]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1943, 42]: missing whitespace
+[31m>> [39msrc/ngIncompleteObjectRule.ts[345, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[345, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[345, 62]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[345, 78]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[348, 104]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[348, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[348, 162]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[348, 179]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[357, 123]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[360, 123]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 17]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 33]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[380, 67]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[391, 77]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[396, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[401, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[409, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[410, 80]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[410, 106]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[416, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[422, 123]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[441, 77]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[446, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[452, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[465, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[466, 80]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[466, 106]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[473, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[479, 123]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[496, 77]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[501, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[507, 27]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[532, 148]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[532, 173]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[545, 88]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[545, 113]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[616, 5]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:
+[31m>> [39m__PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[617, 5]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:
+[31m>> [39m__value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[618, 5]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:
+[31m>> [39m__vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[619, 5]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:
+[31m>> [39m__type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[663, 42]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 54]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 66]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[680, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[681, 86]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[682, 57]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[703, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[703, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[703, 100]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[703, 112]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[709, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[712, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[712, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[713, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[713, 62]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[714, 45]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[714, 65]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[716, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[717, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[717, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[717, 121]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[717, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[718, 64]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[718, 101]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[718, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[718, 172]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[719, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[719, 119]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[719, 135]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[719, 147]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[720, 62]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[721, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[721, 89]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[721, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[721, 117]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[724, 56]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[724, 93]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[725, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[725, 88]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[725, 97]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[725, 113]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[725, 125]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[727, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[727, 119]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[727, 135]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[727, 147]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[730, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[730, 74]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[731, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[731, 59]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[733, 83]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[734, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[734, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[734, 121]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[734, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[735, 64]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[735, 101]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[735, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[735, 172]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[736, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[736, 119]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[736, 135]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[736, 147]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[737, 62]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[738, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[738, 89]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[738, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[738, 117]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[741, 56]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[741, 93]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[742, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[742, 88]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[742, 97]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[742, 113]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[742, 125]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[744, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[744, 119]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[744, 135]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[744, 147]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[748, 61]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[748, 111]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[748, 127]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[748, 139]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[750, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[751, 35]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[753, 35]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[761, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[762, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[763, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[767, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[767, 74]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[768, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[769, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[769, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[770, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[770, 62]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[771, 45]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[771, 65]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[772, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[772, 89]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[773, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[774, 54]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[775, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[775, 75]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[775, 114]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[777, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[781, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[781, 63]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[783, 44]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[787, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[789, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[792, 35]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 35]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 122]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 140]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[805, 155]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 74]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 125]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 144]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 181]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 204]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 216]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 238]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 247]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[810, 264]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 108]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 116]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 158]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[811, 166]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 113]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 121]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 166]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 174]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 201]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[812, 209]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 77]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 122]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[813, 149]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[814, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[814, 67]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[815, 42]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[815, 84]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[816, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[816, 100]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[817, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[817, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[819, 45]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[819, 70]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 139]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 162]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 174]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 196]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 205]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[820, 222]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 135]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 158]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 170]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 192]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 201]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[824, 218]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[829, 36]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[829, 90]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[829, 141]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[830, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 42]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 84]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 92]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 150]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[831, 158]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[832, 45]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[832, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[839, 61]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[839, 78]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[839, 210]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[839, 226]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 36]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 53]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 80]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[840, 96]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[844, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[844, 47]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[844, 170]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[844, 186]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[847, 36]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[847, 75]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[847, 125]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 53]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 64]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 91]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 139]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 149]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[854, 167]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 30]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 53]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 64]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 188]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 204]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[856, 222]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 59]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[874, 82]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 59]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[896, 82]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 48]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 107]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 124]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[911, 141]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 117]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 134]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 154]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[912, 162]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 151]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 168]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[915, 179]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 145]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 162]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[917, 173]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[919, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 21]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:
+[31m>> [39m__PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 38]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[924, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 49]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 88]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[928, 116]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 78]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 95]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[943, 114]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[961, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[961, 67]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[961, 87]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[961, 102]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[967, 54]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[967, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[967, 86]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[967, 106]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[974, 52]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[974, 81]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[974, 115]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[999, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1001, 23]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1001, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1001, 58]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 112]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 128]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1003, 139]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 132]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 148]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1005, 159]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 87]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1006, 114]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 87]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1007, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 72]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 89]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1008, 123]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 87]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1009, 121]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 73]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 91]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 107]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1010, 118]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 70]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 85]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 101]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1011, 118]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 71]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 87]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1012, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 65]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 81]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1014, 102]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 73]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 91]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 107]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1015, 128]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 74]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 93]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 109]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1016, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1024, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 23]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 40]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1033, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1035, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 23]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 40]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1041, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1043, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1044, 131]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 137]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:   __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1046, 148]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1370, 52]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1371, 54]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1372, 81]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1373, 64]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1373, 144]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1376, 74]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1377, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1378, 67]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1380, 104]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1385, 85]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1392, 165]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1451, 52]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1452, 54]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1453, 61]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1453, 106]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1454, 61]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1458, 89]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1459, 72]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1459, 119]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1460, 109]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1467, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1468, 92]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1469, 85]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1469, 125]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1474, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1478, 85]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1479, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1479, 148]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1483, 68]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1484, 67]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1486, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1491, 86]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1498, 165]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 51]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1532, 153]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1533, 56]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1533, 113]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 72]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 94]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 143]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 153]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 172]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1594, 193]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1614, 57]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1614, 104]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1615, 65]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1624, 69]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1624, 115]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1630, 34]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1635, 26]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1637, 26]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1641, 22]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1649, 73]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1649, 120]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1656, 80]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1656, 112]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1660, 80]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1660, 112]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1660, 133]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1660, 165]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 73]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 90]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 103]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1671, 118]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1672, 43]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1673, 66]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1675, 29]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1684, 29]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1687, 39]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1688, 25]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1756, 55]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1839, 59]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1876, 32]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1876, 57]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1876, 99]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1876, 150]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1877, 70]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1878, 79]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1879, 170]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1882, 50]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode: __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1894, 37]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1894, 53]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1894, 96]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1912, 105]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __PickUp
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1912, 122]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __vague
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1912, 138]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __type
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39msrc/ngIncompleteObjectRule.ts[1912, 165]: An error occurred visiting a node.
+[31m>> [39mWalker: NoIncompleteObjectWalker
+[31m>> [39mNode:  __value
+[31m>> [39mError: Not supports var name as same name of this RuleWorker.
+[31m>> [39m1152 errors in 97 files
+[33mWarning: Task "tslint:files" failed. Use --force to continue.[39m
+
+[31mAborted due to warnings.[39m
+
+
+Execution Time (2016-01-20 07:08:12 UTC)
+ts:default          4.7s  ██ 2%
+mochaTest:test      2.4s  █ 1%
+tslint:files    3m 14.6s  █████████████████████████████████████████████ 96%
+Total 3m 21.7s
+

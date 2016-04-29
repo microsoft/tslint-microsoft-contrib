@@ -62,17 +62,21 @@ module AstUtils {
                 });
             }
 
-            var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
-            console.log('\tquickInfo.kind         = ' + quickInfo.kind);
-            console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
-            console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+            var quickInfo: ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
+            if (quickInfo) {
+                console.log('\tquickInfo.kind         = ' + quickInfo.kind);
+                console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
+                console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
+                console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
+                console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+            }
 
-            var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
-            console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
-            console.log('\ttype.flags: ' + expressionType.flags);
-            console.log('\ttype.symbol: ' + expressionType.symbol);
+            var expressionType: ts.Type = typeChecker.getTypeAtLocation(expression);
+            if (expressionType) {
+                console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
+                console.log('\ttype.flags: ' + expressionType.flags);
+                console.log('\ttype.symbol: ' + expressionType.symbol);
+            }
 
             var expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
             if (expressionSymbol == null) {

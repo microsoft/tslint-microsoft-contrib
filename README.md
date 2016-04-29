@@ -132,18 +132,12 @@ Debug code
 If command fails because of file access permissions, prefix it with sudo.
 
     npm install -g node-inspector
-    node-inspector
 
-In another terminal window run:
+Then run:
 
-    # on *nix machines:
-    node --debug-brk /usr/local/bin/grunt mochaTest
-    # on Windows machines:
-    node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
+    node-debug grunt mochaTest
 
-Open in browser:
-
-    http://127.0.0.1:8080/?ws=127.0.0.1:8080&port=5858
+The `node-debug` command will load Node Inspector in your default browser (works in Chrome and Opera only).
 
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 

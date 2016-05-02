@@ -73,6 +73,7 @@
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
+    "no-inner-html": true,
     "no-string-literal": true,
     "no-switch-case-fall-through": true,
     "trailing-comma": true,

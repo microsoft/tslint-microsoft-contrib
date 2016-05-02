@@ -40,6 +40,6 @@ You will want your tslint ruleset defined similarly to this if you'd like to ena
             "no-string-based-set-timeout": true,
             "no-duplicate-key": true,
             "no-eval": true,
-            "use-strict": false,
+            "use-strict": true,
         }
       }

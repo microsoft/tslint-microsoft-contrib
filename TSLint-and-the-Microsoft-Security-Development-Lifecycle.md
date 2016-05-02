@@ -21,3 +21,25 @@ Rule Name              | From          | Description
 `no-banned-terms`               | tslint-microsoft-contrib | Do not access terms or variables that create ambiguity or are banned in strict mode.
 `no-reserved-keywords`          | tslint-microsoft-contrib | Do not use reserved and future reserved keywords as identifiers.
 `no-document-domain`            | tslint-microsoft-contrib | Do not write to document.domain. Scripts setting document.domain to any value should be validated to ensure that the value is on a list of allowed sites.
+
+You will want your tslint ruleset defined similarly to this if you'd like to enable all of these rules: 
+
+      {
+        "rules": {
+            "no-banned-terms": true,
+            "no-delete-expression": true,
+            "no-document-domain": true,
+            "no-disable-auto-sanitization": true,
+            "no-duplicate-parameter-names": true,
+            "no-exec-script": true,
+            "no-function-constructor-with-string-args": true,
+            "no-octal-literal": true,
+            "no-reserved-keywords": true,
+            "no-string-based-set-immediate": true,
+            "no-string-based-set-interval": true,
+            "no-string-based-set-timeout": true,
+            "no-duplicate-key": true,
+            "no-eval": true,
+            "use-strict": false,
+        }
+      }

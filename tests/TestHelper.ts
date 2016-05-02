@@ -71,7 +71,7 @@ module TestHelper {
         };
 
 		let result: Lint.LintResult;
-        if (inputFileOrScript.match(/.*\.ts$/)) {
+        if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             const contents = fs.readFileSync(inputFileOrScript, 'utf8');
             const linter = new Lint.Linter(inputFileOrScript, contents, options);
             result = linter.lint();

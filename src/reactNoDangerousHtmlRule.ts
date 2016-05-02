@@ -60,19 +60,46 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
 
         if (keyNode.kind === SyntaxKind.current().Identifier) {
             if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
-                if (!this.isSuppressed(this.currentMethodName)) {
-                    var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
-                        '    of source file ' + this.getSourceFile().fileName + '"\n' +
-                        '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
-                        '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
-                        '    acceptable usage then add the exception to xss_exceptions.json';
-                    var position = node.getStart();
-                    var failure = this.createFailure(position, (<any>keyNode).text.length, failureString);
-                    this.addFailure(failure);
-                }
+                this.addFailureIfNotSuppressed(node, <ts.Identifier>keyNode);
             }
         }
         super.visitPropertyAssignment(node);
+    }
+
+
+    protected visitJsxElement(node: ts.JsxElement): void {
+        this.handleJsxOpeningElement(node.openingElement);
+        super.visitJsxElement(node);
+    }
+
+    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
+        this.handleJsxOpeningElement(node);
+        super.visitJsxSelfClosingElement(node);
+    }
+
+    private handleJsxOpeningElement(node: ts.JsxOpeningElement): void {
+        node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+                const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
+                const attributeName = jsxAttribute.name.text;
+                if (attributeName === 'dangerouslySetInnerHTML') {
+                    this.addFailureIfNotSuppressed(node, <ts.Identifier>jsxAttribute.name);
+                }
+            }
+        });
+    }
+
+    private addFailureIfNotSuppressed(parent: ts.Node, node: { text: string; }): void {
+        if (!this.isSuppressed(this.currentMethodName)) {
+            var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
+                '    of source file ' + this.getSourceFile().fileName + '"\n' +
+                '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
+                '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
+                '    acceptable usage then add the exception to xss_exceptions.json';
+            var position = parent.getStart();
+            var failure = this.createFailure(position, node.text.length, failureString);
+            this.addFailure(failure);
+        }
     }
 
     private isSuppressed(methodName : string): boolean {

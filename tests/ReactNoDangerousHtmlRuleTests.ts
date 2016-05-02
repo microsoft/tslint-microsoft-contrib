@@ -64,6 +64,35 @@ describe('reactNoDangerousHtmlRule', () : void => {
             []
         );
     });
+
+    it('should find violations in .tsx files', (): void => {
+        TestHelper.assertViolations(
+            ruleName,
+            'test-data/ReactNoDangerousHtmlRule-failing.tsx',
+            [
+                {
+                    "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
+                    "test-data/ReactNoDangerousHtmlRule-failing.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
+                    "representative. If they decide that this is an\n    acceptable usage then add the exception " +
+                    "to xss_exceptions.json",
+                    "name": "test-data/ReactNoDangerousHtmlRule-failing.tsx",
+                    "ruleName": "react-no-dangerous-html",
+                    "startPosition": { "character": 1, "line": 5 }
+                },
+                {
+                    "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
+                    "test-data/ReactNoDangerousHtmlRule-failing.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
+                    "representative. If they decide that this is an\n    acceptable usage then add the exception " +
+                    "to xss_exceptions.json",
+                    "name": "test-data/ReactNoDangerousHtmlRule-failing.tsx",
+                    "ruleName": "react-no-dangerous-html",
+                    "startPosition": { "character": 12, "line": 10 }
+                }
+            ]
+        );
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

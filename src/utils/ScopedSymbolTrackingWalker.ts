@@ -186,9 +186,12 @@ class GlobalReferenceCollector extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void { } // do not descend into fresh scopes
     /* tslint:enable:no-empty */
 
+    // need to make this public so it can be invoked outside of class
+    /* tslint:disable:no-unnecessary-override */
     public visitNode(node: ts.Node): void {
         super.visitNode(node);
     }
+    /* tslint:enable:no-unnecessary-override */
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         if (isDeclarationFunctionType(node)) {

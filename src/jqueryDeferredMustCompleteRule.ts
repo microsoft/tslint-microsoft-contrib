@@ -87,9 +87,11 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     // need to make this public so it can invoked from parent walker
+    /* tslint:disable:no-unnecessary-override */
     public visitNode(node: ts.Node): void {
         super.visitNode(node);
     }
+    /* tslint:enable:no-unnecessary-override */
 
     public isAlwaysCompleted() : boolean {
         if (this.wasCompleted) {

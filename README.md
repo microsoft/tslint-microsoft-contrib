@@ -104,8 +104,9 @@ Rule Name   | Description | Since
 `no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-unexternalized-strings`     | Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales. The rule can be configured using an object literal as document in the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/95#issuecomment-173149989)| 2.0.1
-`no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unnecessary-bind`           | Do not bind 'this' as the context for a function literal or lambda expression. If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind. If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas. Works for Underscore methods as well.  | 1.0
+`no-unnecessary-override`       | Do not write a method that only calls super() on the parent method with the same arguments. You can safely remove methods like this and Javascript will correctly dispatch the method to the parent object. | 2.0.4
+`no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0

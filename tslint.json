@@ -30,6 +30,7 @@
     "no-multiline-string": true,
     "no-multiple-var-decl": true,
     "no-unnecessary-bind": true,
+    "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,
     "no-regex-spaces": true,

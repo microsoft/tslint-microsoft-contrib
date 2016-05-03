@@ -16,7 +16,7 @@ describe('noInnerHtmlRule', () : void => {
     it('should pass on reading innerHTML strings', () : void => {
         var script : string = `
             var foo = element.innerHTML;
-            var bar = element.outputHTML;
+            var bar = element.outerHTML;
             var baz = $(element).html();
             var quxFunction = $(element).html;
         `;
@@ -26,19 +26,19 @@ describe('noInnerHtmlRule', () : void => {
 
     it('should fail on writing to innerHTML', () : void => {
         var script : string = `
-            element.innerHTML = '<div/>';
-            parent.child.innerHTML = '<div/>';
+            element.innerHTML = '<div></div>';
+            parent.child.innerHTML = '<div></div>';
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Writing a string to the innerHTML property is insecure: element.innerHTML = '<div/>'",
+                "failure": "Writing a string to the innerHTML property is insecure: element.innerHTML = '<div></div>'",
                 "name": "file.ts",
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
-                "failure": "Writing a string to the innerHTML property is insecure: parent.child.innerHTML = '<div/>'",
+                "failure": "Writing a string to the innerHTML property is insecure: parent.child.innerHTML = '<div></div>'",
                 "name": "file.ts",
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 3 }
@@ -48,19 +48,19 @@ describe('noInnerHtmlRule', () : void => {
 
     it('should fail on writing to outerHTML', () : void => {
         var script : string = `
-            element.outerHTML = '<div/>';
-            parent.child.outerHTML = '<div/>';
+            element.outerHTML = '<div></div>';
+            parent.child.outerHTML = someVariable;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Writing a string to the outerHTML property is insecure: element.outerHTML = '<div/>'",
+                "failure": "Writing a string to the outerHTML property is insecure: element.outerHTML = '<div></div>'",
                 "name": "file.ts",
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
-                "failure": "Writing a string to the outerHTML property is insecure: parent.child.outerHTML = '<div/>'",
+                "failure": "Writing a string to the outerHTML property is insecure: parent.child.outerHTML = someVariable",
                 "name": "file.ts",
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 3 }
@@ -70,12 +70,12 @@ describe('noInnerHtmlRule', () : void => {
 
     it('should fail on invoking html(x)', () : void => {
         var script : string = `
-            $(element).html('<div/>');
+            $(element).html('whatever');
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Using the html() function to write a string to innerHTML is insecure: $(element).html('<div/>')",
+                "failure": "Using the html() function to write a string to innerHTML is insecure: $(element).html('whatever')",
                 "name": "file.ts",
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }

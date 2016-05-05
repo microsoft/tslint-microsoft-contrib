@@ -29,6 +29,7 @@
     "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
     "no-multiple-var-decl": true,
+    "no-stateless-class": true,
     "no-unnecessary-bind": true,
     "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,

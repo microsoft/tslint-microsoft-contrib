@@ -96,7 +96,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         while ((parent = node.parent)) {
             let kind = parent.kind;
             if (kind === kinds.CallExpression) {
-                let callExpression = parent as ts.CallExpression;
+                let callExpression = <ts.CallExpression>parent;
                 return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<any>node) }};
             } else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
                 return { ignoreUsage: true };

@@ -138,7 +138,10 @@ module.exports = function(grunt) {
         ' during the build.', function () {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
-        var rulesToSkip = { 'no-unexternalized-strings': true };
+        var rulesToSkip = {
+            'no-unexternalized-strings': true,
+            'prefer-as-cast': true
+        };
         getAllRuleNames().forEach(function(ruleName) {
             if (rulesToSkip[ruleName]) {
                 return;

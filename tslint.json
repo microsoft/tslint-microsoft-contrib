@@ -31,6 +31,7 @@
     "no-multiple-var-decl": true,
     "no-stateless-class": true,
     "no-unnecessary-bind": true,
+    "no-unnecessary-local-variable": true,
     "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,
     "no-octal-literal": true,

@@ -31,6 +31,12 @@ describe('exportNameRule', () : void => {
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
+        it('when export equals assignment matches in tsx file', () : void => {
+            exceptions.length = 0;
+            var inputFile : string = 'test-data/ExportNameRulePassingTestInput.tsx';
+            TestHelper.assertViolations(ruleName, inputFile, []);
+        });
+
         it('for conflicting name when suppressed', () : void => {
             exceptions.push('ThisIsNot.*NameOfTheFile');
             var inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
@@ -203,6 +209,19 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, []);
         });
+
+        it('when a module and a function are exported', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            var script : string = `
+                module file {
+                    export function toErrorReport() {
+                    }
+                }
+                export = file;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, []);
+        });
     });
 
     describe('should fail', (): void => {
@@ -214,6 +233,20 @@ describe('exportNameRule', () : void => {
                     "failure": "The exported module or identifier name must match the file name. " +
                     "Found: test-data/ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile",
                     "name": "test-data/ExportNameRuleFailingTestInput.ts",
+                    "ruleName": "export-name",
+                    "startPosition": { "character": 10, "line": 4 }
+                }
+            ]);
+        });
+
+        it('for conflicting name in tsx file', () : void => {
+            exceptions.length = 0;
+            var inputFile : string = 'test-data/ExportNameRuleFailingTestInput.tsx';
+            TestHelper.assertViolations(ruleName, inputFile, [
+                {
+                    "failure": "The exported module or identifier name must match the file name. " +
+                    "Found: test-data/ExportNameRuleFailingTestInput.tsx and ThisIsNotTheNameOfTheFile",
+                    "name": "test-data/ExportNameRuleFailingTestInput.tsx",
                     "ruleName": "export-name",
                     "startPosition": { "character": 10, "line": 4 }
                 }

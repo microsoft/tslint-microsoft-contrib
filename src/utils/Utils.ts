@@ -57,7 +57,10 @@ module Utils {
         });
     }
 
-    function filter<T>(list: T[], predicate: (element: T) => boolean): T[] {
+    /**
+     * A filter() function.
+     */
+    export function filter<T>(list: T[], predicate: (element: T) => boolean): T[] {
         if (list == null || list.length === 0) {
             return [];
         }

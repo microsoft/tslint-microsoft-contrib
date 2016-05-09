@@ -32,7 +32,17 @@ export class ExportNameWalker extends ErrorTolerantWalker {
 
     protected visitSourceFile(node: ts.SourceFile): void {
 
-        var exportedTopLevelElements: ts.Statement[] = [];
+        // look for single export assignment from file first
+        let singleExport: ts.Statement[] = Utils.filter(node.statements, (element: ts.Statement): boolean => {
+            return element.kind === SyntaxKind.current().ExportAssignment;
+        });
+        if (singleExport.length === 1) {
+            let exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>singleExport[0];
+            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+            return; // there is a single export and it is valid, so do not proceed
+        }
+
+        let exportedTopLevelElements: ts.Statement[] = [];
 
         // exports are normally declared at the top level
         node.statements.forEach((element: ts.Statement): void => {

@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.3
+Version 2.0.4
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
@@ -30,6 +30,7 @@ Installation
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.3](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.3)
 * [2.0.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.2)
 * [2.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.1)
 * [2.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.0)
@@ -90,6 +91,7 @@ Rule Name   | Description | Since
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 1.0, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-for-in`                     | Avoid use of for-in statements. They can be replaced by Object.keys | 1.0
+`no-inner-html`                 | Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function. Writing values to innerHTML can expose your website to XSS injection attacks. All strings must be escaped before being rendered to the page.| 2.0.4
 `no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
@@ -98,15 +100,20 @@ Rule Name   | Description | Since
 `no-regex-spaces`               | Do not use multiple spaces in a regular expression literal. Similar to the [ESLint no-regex-spaces](http://eslint.org/docs/rules/no-regex-spaces.html) rule | 1.0
 `no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. | 0.0.1
 `no-sparse-arrays`              | Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple commas being used in an array literal. Based on the [ESLint no-sparse-arrays](http://eslint.org/docs/rules/no-sparse-arrays) rule | 1.0
+`no-stateless-class`            | A stateless class represents a failure in the object oriented design of the system. A class without state is better modeled as a module or given some state. A stateless class is defined as a class with only static members and no parent class.| 2.0.4
 `no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-unexternalized-strings`     | Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales. The rule can be configured using an object literal as document in the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/95#issuecomment-173149989)| 2.0.1
-`no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unnecessary-bind`           | Do not bind 'this' as the context for a function literal or lambda expression. If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind. If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas. Works for Underscore methods as well.  | 1.0
+`no-unnecessary-local-variable` | Do not declare a variable only to return it from the function on the next line. It is always less code to simply return the expression that initializes the variable. | 2.0.4
+`no-unnecessary-override`       | Do not write a method that only calls super() on the parent method with the same arguments. You can safely remove methods like this and Javascript will correctly dispatch the method to the parent object. | 2.0.4
+`no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
-`prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript from of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4,5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
+`prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
+`prefer-as-cast`                | Prefer the new 'as-cast' syntax instead of tradition type casts. For example, prefer 'myVariable as string' instead of '<string>myVariable'. This can make working with React .tsx files easier because in .tsx files only the as-cast syntax is supported. | 2.0.4
+`prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. | 2.0.4
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 1.0
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
@@ -131,18 +138,12 @@ Debug code
 If command fails because of file access permissions, prefix it with sudo.
 
     npm install -g node-inspector
-    node-inspector
 
-In another terminal window run:
+Then run:
 
-    # on *nix machines:
-    node --debug-brk /usr/local/bin/grunt mochaTest
-    # on Windows machines:
-    node --debug-brk /c/Users/[your alias]/AppData/Roaming/npm/node_modules/grunt-cli/bin/grunt
+    node-debug grunt mochaTest
 
-Open in browser:
-
-    http://127.0.0.1:8080/?ws=127.0.0.1:8080&port=5858
+The `node-debug` command will load Node Inspector in your default browser (works in Chrome and Opera only).
 
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 

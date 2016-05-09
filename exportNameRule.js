@@ -37,6 +37,14 @@ var ExportNameWalker = (function (_super) {
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
+        var singleExport = Utils.filter(node.statements, function (element) {
+            return element.kind === SyntaxKind.current().ExportAssignment;
+        });
+        if (singleExport.length === 1) {
+            var exportAssignment = singleExport[0];
+            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+            return;
+        }
         var exportedTopLevelElements = [];
         node.statements.forEach(function (element) {
             var exportStatements = _this.getExportStatements(element);

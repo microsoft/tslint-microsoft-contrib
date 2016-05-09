@@ -52,6 +52,7 @@ var Utils;
             return memo;
         }, []);
     }
+    Utils.filter = filter;
 })(Utils || (Utils = {}));
 module.exports = Utils;
 //# sourceMappingURL=Utils.js.map

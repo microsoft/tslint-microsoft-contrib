@@ -46,7 +46,7 @@ var ValidTypeofRuleWalker = (function (_super) {
         var _this = this;
         var closestMatch = 99999999;
         return Utils.reduce(Rule.VALID_TERMS, function (closestTerm, thisTerm) {
-            var distance = _this.hammingDistance(term, thisTerm);
+            var distance = _this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
                 closestTerm = thisTerm;
@@ -54,15 +54,37 @@ var ValidTypeofRuleWalker = (function (_super) {
             return closestTerm;
         }, '');
     };
-    ValidTypeofRuleWalker.prototype.hammingDistance = function (source, target) {
-        if (source.length === 0) {
-            return target.length;
+    ValidTypeofRuleWalker.prototype.levenshteinDistance = function (a, b) {
+        if (a.length === 0) {
+            return b.length;
         }
-        if (target.length === 0) {
-            return source.length;
+        if (b.length === 0) {
+            return a.length;
         }
-        return Math.min(this.hammingDistance(source.substr(1), target) + 1, this.hammingDistance(target.substr(1), source) + 1, this.hammingDistance(source.substr(1), target.substr(1)) + (source[0] !== target[0] ? 1 : 0)) + 1;
+        var matrix = [];
+        for (var i = 0; i <= b.length; i++) {
+            matrix[i] = [i];
+        }
+        for (var i = 0; i <= a.length; i++) {
+            matrix[0][i] = i;
+        }
+        for (var i = 1; i <= b.length; i++) {
+            for (var j = 1; j <= a.length; j++) {
+                if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                    matrix[i][j] = matrix[i - 1][j - 1];
+                }
+                else {
+                    var substitutionValue = matrix[i - 1][j - 1] + 1;
+                    var insertionValue = matrix[i][j - 1] + 1;
+                    var deletionDistance = matrix[i - 1][j] + 1;
+                    var minDistance = Math.min(substitutionValue, insertionValue, deletionDistance);
+                    matrix[i][j] = minDistance;
+                }
+            }
+        }
+        return matrix[b.length][a.length];
     };
+    ;
     return ValidTypeofRuleWalker;
 }(ErrorTolerantWalker));
 //# sourceMappingURL=validTypeofRule.js.map

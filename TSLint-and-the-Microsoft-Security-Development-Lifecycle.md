@@ -43,3 +43,9 @@ You will want your tslint ruleset defined similarly to this if you'd like to ena
             "use-strict": true,
         }
       }
+
+There are also some other security related rules that are not specifically part of the SDL. We recommend that you also use these rules: 
+* no-document-write - Do not use document.write (because it accepts unsanitized input)
+* no-http-string – It can cause an http connection without TLS thus allowing a cookie stealing attack
+* no-inner-html	Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function
+* react-no-dangerous-html - Do not use React's dangerouslySetInnerHTML API (because it accepts unsanitized input)

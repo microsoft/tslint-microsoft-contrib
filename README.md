@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.4
+Version 2.0.5
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
@@ -98,6 +98,7 @@ Rule Name   | Description | Since
 `no-multiple-var-decl`          | Do not use comma separated variable declarations | 1.0
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
 `no-regex-spaces`               | Do not use multiple spaces in a regular expression literal. Similar to the [ESLint no-regex-spaces](http://eslint.org/docs/rules/no-regex-spaces.html) rule | 1.0
+`no-relative-imports`           | Do not use relative paths when importing external modules or ES6 import declarations. | 2.0.5
 `no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. | 0.0.1
 `no-sparse-arrays`              | Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple commas being used in an array literal. Based on the [ESLint no-sparse-arrays](http://eslint.org/docs/rules/no-sparse-arrays) rule | 1.0
 `no-stateless-class`            | A stateless class represents a failure in the object oriented design of the system. A class without state is better modeled as a module or given some state. A stateless class is defined as a class with only static members and no parent class.| 2.0.4

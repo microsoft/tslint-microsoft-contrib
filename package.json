@@ -15,6 +15,7 @@
   "bugs": {
     "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
   },
+  "main": ".",
   "keywords": [
     "tslint",
     "microsoft",

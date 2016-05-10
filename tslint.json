@@ -2,6 +2,7 @@
   "rules": {
     "chai-vague-errors": true,
     "export-name": true,
+    "import-name": true,
     "use-isnan": true,
     "jquery-deferred-must-complete": true,
     "missing-jsdoc": true,

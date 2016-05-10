@@ -45,7 +45,6 @@
     "no-unused-imports": true,
     "no-with-statement": true,
     "prefer-array-literal": true,
-    "prefer-as-cast": false,
     "prefer-type-cast": true,
     "promise-must-complete": true,
     "react-no-dangerous-html": true,

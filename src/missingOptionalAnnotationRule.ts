@@ -16,8 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
-
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.validateParameters(node);
         super.visitMethodDeclaration(node);

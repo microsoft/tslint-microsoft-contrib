@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('mochaAvoidOnlyRule', () : void => {
-
     var ruleName : string = 'mocha-avoid-only';
 
     it('should pass when only is not invoked', () : void => {

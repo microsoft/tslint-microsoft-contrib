@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDocumentDomainRule', () : void => {
-
     var ruleName : string = 'no-document-domain';
 
     it('should pass when not setting a value to document.domain', () : void => {

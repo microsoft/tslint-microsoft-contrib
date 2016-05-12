@@ -18,7 +18,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().StringLiteral) {
             var stringText : string = (<ts.LiteralExpression>node).text;

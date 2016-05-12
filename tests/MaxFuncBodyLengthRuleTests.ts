@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('maxFuncBodyLengthRule', () : void => {
-
         let options;
         var script : string = `
         (function () { alert('!'); })();
@@ -84,7 +83,6 @@ describe('maxFuncBodyLengthRule', () : void => {
     });
 
     describe('when general option is used and functions lengths exceed its value', () => {
-
         beforeEach(() => {
             options = [ true, 5 ];
         });
@@ -132,7 +130,6 @@ describe('maxFuncBodyLengthRule', () : void => {
     });
 
     describe('when syntax kind wise options are used and functions lengths exceed their value', () => {
-
         beforeEach(() => {
             options = [ true,
                 {
@@ -187,7 +184,6 @@ describe('maxFuncBodyLengthRule', () : void => {
     });
 
     describe('when using mocha describe blocks', () => {
-
         beforeEach(() => {
             options = [ true,
                 5, // max length is now 5

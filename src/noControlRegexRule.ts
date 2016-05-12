@@ -17,8 +17,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoControlRegexRuleWalker extends ErrorTolerantWalker {
-
-
     protected visitNewExpression(node: ts.NewExpression): void {
         this.validateCall(node);
         super.visitNewExpression(node);
@@ -41,9 +39,9 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
     private validateCall(expression: ts.CallExpression): void {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
-                let arg1: ts.Expression = expression.arguments[0];
+                const arg1: ts.Expression = expression.arguments[0];
                 if (arg1.kind === SyntaxKind.current().StringLiteral) {
-                    let regexpText: string = (<ts.StringLiteral>arg1).text;
+                    const regexpText: string = (<ts.StringLiteral>arg1).text;
                     if (/[\x00-\x1f]/.test(regexpText)) {
                         this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING));
                     }

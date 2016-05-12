@@ -17,15 +17,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoRelativeImportsRuleWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().ExternalModuleReference) {
-            let moduleExpression: ts.Expression = (<ts.ExternalModuleReference>node).expression;
+            const moduleExpression: ts.Expression = (<ts.ExternalModuleReference>node).expression;
             if (!this.isModuleExpressionValid(moduleExpression)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText()));
             }
         } else if (node.kind === SyntaxKind.current().ImportDeclaration) {
-            let moduleExpression: ts.Expression = (<ts.ImportDeclaration>node).moduleSpecifier;
+            const moduleExpression: ts.Expression = (<ts.ImportDeclaration>node).moduleSpecifier;
             if (!this.isModuleExpressionValid(moduleExpression)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText()));
             }
@@ -35,7 +34,7 @@ class NoRelativeImportsRuleWalker extends ErrorTolerantWalker {
 
     private isModuleExpressionValid(expression: ts.Expression): boolean {
         if (expression.kind === SyntaxKind.current().StringLiteral) {
-            let moduleName: ts.StringLiteral = <ts.StringLiteral>expression;
+            const moduleName: ts.StringLiteral = <ts.StringLiteral>expression;
             if (moduleName.text[0] === '.') {
                 return false;
             }

@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  */
 
 describe('noWithStatementsRule', () : void => {
-
     it('should produce violations', () : void => {
         var ruleName : string = 'no-with-statement';
         var script : string = `

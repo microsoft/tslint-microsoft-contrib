@@ -6,8 +6,6 @@ import * as Lint from 'tslint/lib/lint';
  * Errors are often thrown when the TypeChecker is invoked.
  */
 class ErrorTolerantWalker extends Lint.RuleWalker {
-
-
     protected visitNode(node: ts.Node): void {
         try {
             super.visitNode(node);

@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDisableAutoSanitizationRule', () : void => {
-
     it('should produce violation for execUnsafeLocalFunction', () : void => {
         var ruleName : string = 'no-disable-auto-sanitization';
         var script : string = 'var retVal = MSApp.execUnsafeLocalFunction(() => {});';

@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noCookiesRule', () : void => {
-
     it('should not produce violations', () : void => {
         var ruleName : string = 'no-cookies';
         var inputFile : string = 'test-data/NoCookiesPassingTestInput.ts';

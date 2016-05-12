@@ -17,8 +17,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
-
-
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (this.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
@@ -28,11 +26,10 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
         super.visitPropertyAccessExpression(node);
     }
 
-
     protected visitCallExpression(node: ts.CallExpression): void {
         if (this.isExpectInvocation(node)) {
             if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-                let propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
+                const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
                 if (/equal|equals|eql/.test(propExpression.name.getText())) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
@@ -46,7 +43,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     }
 
     private isExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): boolean {
-        let callExpression: ts.CallExpression = ChaiVagueErrorsRuleWalker.getLeftMostCallExpression(node);
+        const callExpression: ts.CallExpression = ChaiVagueErrorsRuleWalker.getLeftMostCallExpression(node);
         if (callExpression == null) {
             return false;
         }

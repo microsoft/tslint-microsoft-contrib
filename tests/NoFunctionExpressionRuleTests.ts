@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noFunctionExpressionRule', () : void => {
-
     var ruleName : string = 'no-function-expression';
 
     it('should pass on arrow function', () : void => {

@@ -20,7 +20,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDocumentWriteWalker extends ErrorTolerantWalker {
-
     private languageService : ts.LanguageService;
     private typeChecker : ts.TypeChecker;
 
@@ -33,7 +32,6 @@ class NoDocumentWriteWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression) {
         var functionName = AstUtils.getFunctionName(node);
         if (functionName === 'write' || functionName === 'writeln') {
-
             var leftSide : ts.Expression = (<any>node.expression).expression;
             if (leftSide) {
                 var leftSideType : ts.Type = this.typeChecker.getTypeAtLocation(leftSide);

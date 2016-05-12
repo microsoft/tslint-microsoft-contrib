@@ -16,8 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class PreferTypeCastRuleWalker extends ErrorTolerantWalker {
-
-
     protected visitSourceFile(node: ts.SourceFile): void {
         if (/.*\.tsx/.test(node.fileName) === false) {
             super.visitSourceFile(node);

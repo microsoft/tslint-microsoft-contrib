@@ -7,7 +7,6 @@ import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParamete
  * Implementation of the no-string-based-set-interval rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());

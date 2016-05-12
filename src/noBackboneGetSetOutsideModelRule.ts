@@ -21,16 +21,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoBackboneGetSetOutsideModelRuleWalker extends ErrorTolerantWalker {
-
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionTarget(node) !== 'this') {
-            let functionName: string = AstUtils.getFunctionName(node);
+            const functionName: string = AstUtils.getFunctionName(node);
             if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
-                var msg: string = Rule.GET_FAILURE_STRING + node.getText();
+                const msg: string = Rule.GET_FAILURE_STRING + node.getText();
                 this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
             }
             if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
-                var msg: string = Rule.SET_FAILURE_STRING + node.getText();
+                const msg: string = Rule.SET_FAILURE_STRING + node.getText();
                 this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
             }
         }

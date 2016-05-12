@@ -18,8 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static isPromiseInstantiation(expression: ts.Expression) : boolean {
         if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
-            let functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
-            let functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
+            const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
+            const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
             if (functionName === 'Deferred' &&
                 (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
@@ -35,13 +35,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
-
-
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && Rule.isPromiseInstantiation(node.right)) {
             if (node.left.kind === SyntaxKind.current().Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
-                    let name : ts.Identifier = <ts.Identifier>node.left;
+                    const name : ts.Identifier = <ts.Identifier>node.left;
                     this.validateDeferredUsage(node, name);
                 }
             }
@@ -52,7 +50,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         if (Rule.isPromiseInstantiation(node.initializer)) {
             if ((<ts.Identifier>node.name).text != null) {
-                let name : ts.Identifier = <ts.Identifier>node.name;
+                const name : ts.Identifier = <ts.Identifier>node.name;
                 this.validateDeferredUsage(node, name);
             }
         }
@@ -60,8 +58,8 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     }
 
     private validateDeferredUsage(rootNode: ts.Node, deferredIdentifier: ts.Identifier) : void {
-        let parent : ts.Node = AstUtils.findParentBlock(rootNode);
-        let blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
+        const parent : ts.Node = AstUtils.findParentBlock(rootNode);
+        const blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
             var failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
@@ -73,7 +71,6 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
 }
 
 class DeferredCompletionWalker extends ErrorTolerantWalker {
-
     private deferredIdentifier : ts.Identifier;
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true
@@ -104,12 +101,11 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitIfStatement(node: ts.IfStatement): void {
-
         this.hasBranches = true;
 
         // an if statement is a branch, so we need to see if this branch completes.
-        let ifAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.walkerOptions, this.deferredIdentifier);
-        let elseAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.walkerOptions, this.deferredIdentifier);
+        const ifAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.walkerOptions, this.deferredIdentifier);
+        const elseAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.walkerOptions, this.deferredIdentifier);
 
         ifAnalyzer.visitNode(node.thenStatement);
 
@@ -126,11 +122,10 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-
-            let prop : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
+            const prop : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
 
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
-                let functionName : string = prop.name.getText(); // possibly resolve or reject
+                const functionName : string = prop.name.getText(); // possibly resolve or reject
                 if (Rule.isCompletionFunction(functionName)) {
                     this.wasCompleted = true;
                     return; // this branch was completed, do not walk any more.
@@ -138,7 +133,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
             }
         }
 
-        let referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
+        const referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, argument);
         });
         if (referenceEscaped) {
@@ -150,7 +145,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
 
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
-        var isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
+        const isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {
@@ -162,7 +157,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        var isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
+        const isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {

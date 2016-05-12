@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDuplicateParameterNames', () : void => {
-
     var RULE_NAME : string = 'no-duplicate-parameter-names';
 
     it('should produce violations ', () : void => {

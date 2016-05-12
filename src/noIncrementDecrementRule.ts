@@ -8,14 +8,12 @@ import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
  * Implementation of the no-increment-decrement rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
     }
 }
 
 class NoIncrementDecrementWalker extends ErrorTolerantWalker {
-
     protected visitPostfixUnaryExpression(node: ts.PostfixUnaryExpression): void {
         this.validateUnaryExpression(node);
         super.visitPostfixUnaryExpression(node);

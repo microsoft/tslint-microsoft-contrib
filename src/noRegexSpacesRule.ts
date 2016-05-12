@@ -16,12 +16,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoRegexSpacesRuleWalker extends ErrorTolerantWalker {
-
-
     protected visitRegularExpressionLiteral(node: ts.Node): void {
         var match: RegExpExecArray = /( {2,})+?/.exec(node.getText());
         if (match != null) {
-            let replacement: string = '{' + match[0].length + '}';
+            const replacement: string = '{' + match[0].length + '}';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement));
         }
 

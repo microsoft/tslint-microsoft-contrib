@@ -9,7 +9,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noUnusedImportsRule', () : void => {
-
     it('should detect an unused import', () : void => {
         var ruleName : string = 'no-unused-imports';
         var inputFile : string = 'test-data/NoUnusedImportsTestInput.ts';

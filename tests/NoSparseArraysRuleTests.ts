@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noSparseArraysRule', () : void => {
-
     var ruleName : string = 'no-sparse-arrays';
 
     it('should pass on dense arrays', () : void => {

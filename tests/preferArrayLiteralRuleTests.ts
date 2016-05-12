@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('preferArrayLiteralRule', () : void => {
-
     var ruleName : string = 'prefer-array-literal';
 
     it('should allow string[] as variable type', () : void => {

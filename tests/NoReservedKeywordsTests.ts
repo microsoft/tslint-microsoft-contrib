@@ -11,7 +11,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBannedTermsRule', () : void => {
-
     var RULE_NAME : string = 'no-reserved-keywords';
 
     it('should not allow the break reserved word', () : void => {

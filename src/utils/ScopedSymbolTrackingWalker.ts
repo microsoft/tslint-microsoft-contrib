@@ -9,7 +9,6 @@ import AstUtils = require('./AstUtils');
  * and identifiers in the current scope.
  */
 class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
-
     private languageServices: ts.LanguageService;
     private typeChecker : ts.TypeChecker;
     private scope: Scope;
@@ -40,7 +39,7 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
 
         if (expression.kind === SyntaxKind.current().Identifier) {
-            let typeInfo : ts.DefinitionInfo[] = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
+            const typeInfo : ts.DefinitionInfo[] = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null) {
                 if (typeInfo[0].kind === 'function' || typeInfo[0].kind === 'local function') {
                     return true; // variables with type function are OK to pass
@@ -50,7 +49,6 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
 
         if (expression.kind === SyntaxKind.current().CallExpression) {
-
             // calling Function.bind is a special case that makes tslint throw an exception
             if ((<any>expression).expression.name && (<any>expression).expression.name.getText() === 'bind') {
                 return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
@@ -58,8 +56,8 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
 
             try {
                 // seems like another tslint error of some sort
-                let signature : ts.Signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
-                let expressionType : ts.Type = this.typeChecker.getReturnTypeOfSignature(signature);
+                const signature : ts.Signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
+                const expressionType : ts.Type = this.typeChecker.getReturnTypeOfSignature(signature);
                 return this.isTypeFunction(expressionType, this.typeChecker);
             } catch (e) {
                 // this exception is only thrown in unit tests, not the node debugger :(
@@ -71,9 +69,9 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     }
 
     private isTypeFunction(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
-        let signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
+        const signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
-            let signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
+            const signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
             if (signatureDeclaration.kind === SyntaxKind.current().FunctionType) {
                 return true; // variables of type function are allowed to be passed as parameters
             }
@@ -106,7 +104,7 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
                 // add all declared methods as valid functions
                 this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
             } else if (element.kind === SyntaxKind.current().PropertyDeclaration) {
-                let prop: ts.PropertyDeclaration = <ts.PropertyDeclaration>element;
+                const prop: ts.PropertyDeclaration = <ts.PropertyDeclaration>element;
                 // add all declared function properties as valid functions
                 if (isDeclarationFunctionType(prop)) {
                     this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
@@ -175,7 +173,6 @@ function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDec
 }
 
 class GlobalReferenceCollector extends ErrorTolerantWalker {
-
     public functionIdentifiers: string[] = [];
     public nonFunctionIdentifiers: string[] = [];
 

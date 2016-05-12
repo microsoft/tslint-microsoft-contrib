@@ -28,17 +28,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
-
     protected visitCallExpression(node: ts.CallExpression): void {
-
         var analyzers: CallAnalyzer[] = [
             new TypeScriptFunctionAnalyzer(), new UnderscoreStaticAnalyzer(), new UnderscoreInstanceAnalyzer()
         ];
 
         analyzers.forEach((analyzer: CallAnalyzer): void => {
             if (analyzer.canHandle(node)) {
-                let contextArgument: ts.Expression = analyzer.getContextArgument(node);
-                let functionArgument: ts.Expression = analyzer.getFunctionArgument(node);
+                const contextArgument: ts.Expression = analyzer.getContextArgument(node);
+                const functionArgument: ts.Expression = analyzer.getFunctionArgument(node);
                 if (contextArgument == null || functionArgument == null) {
                     return;
                 }
@@ -81,7 +79,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
         var isUnderscore: boolean = AstUtils.getFunctionTarget(node) === '_';
         if (isUnderscore) {
-            let functionName: string = AstUtils.getFunctionName(node);
+            const functionName: string = AstUtils.getFunctionName(node);
             if (functionName === 'bind') {
                 return node.arguments.length === 2;
             }
@@ -90,7 +88,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
     }
 
     public getContextArgument(node: ts.CallExpression): ts.Expression {
-        let functionName: string = AstUtils.getFunctionName(node);
+        const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
         } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
@@ -121,9 +119,9 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
 class UnderscoreInstanceAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
         if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-            let propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
+            const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
             if (propExpression.expression.kind === SyntaxKind.current().CallExpression) {
-                let call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
+                const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 return call.expression.getText() === '_';
             }
         }
@@ -131,7 +129,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
     }
 
     public getContextArgument(node: ts.CallExpression): ts.Expression {
-        let functionName: string = AstUtils.getFunctionName(node);
+        const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
@@ -143,7 +141,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
     }
 
     public getFunctionArgument(node: ts.CallExpression): ts.Expression {
-        let functionName: string = AstUtils.getFunctionName(node);
+        const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
         } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {

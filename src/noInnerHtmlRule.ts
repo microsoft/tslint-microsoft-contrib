@@ -19,7 +19,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
-
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         // look for assignments to property expressions where the
         // left hand side is either innerHTML or outerHTML

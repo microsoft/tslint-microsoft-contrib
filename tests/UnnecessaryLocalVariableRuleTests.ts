@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('unnecessaryLocalVariableRule', () : void => {
-
     var ruleName : string = 'no-unnecessary-local-variable';
 
     it('should pass on good usages', () : void => {

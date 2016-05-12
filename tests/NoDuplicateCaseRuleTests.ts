@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDuplicateCaseRule', () : void => {
-
     var ruleName : string = 'no-duplicate-case';
 
     it('should pass on valid switch', () : void => {

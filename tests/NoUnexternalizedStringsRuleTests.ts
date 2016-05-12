@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noUnexternalizedStringsRule', () : void => {
-
     var ruleName : string = 'no-unexternalized-strings';
 
     it('should pass on single quote', () : void => {

@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('importNameRule', () : void => {
-
     var ruleName : string = 'import-name';
 
     it('should pass on matching names of external module', () : void => {

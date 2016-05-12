@@ -16,9 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
-
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
-
         // do we have an empty interface?
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
             this.addFailure(

@@ -20,7 +20,6 @@ const CTOR_BODY_LENGTH = 'ctor-body-length';
 const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
-
     private maxBodyLength: number;
     private maxFuncBodyLength: number;
     private maxArrowBodyLength: number;
@@ -36,7 +35,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        let functionName = AstUtils.getFunctionName(node);
+        const functionName = AstUtils.getFunctionName(node);
         if (this.ignoreParametersToFunctionRegex && this.ignoreParametersToFunctionRegex.test(functionName)) {
             // temporarily store a list of ignored references
             node.arguments.forEach((argument: ts.Expression): void => {
@@ -78,7 +77,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private validate(node: ts.FunctionLikeDeclaration): void {
         if (!Utils.contains(this.ignoreNodes, node)) {
-            let bodyLength = this.calcBodyLength(node);
+            const bodyLength = this.calcBodyLength(node);
             if (this.isFunctionTooLong(node.kind, bodyLength)) {
                 this.addFuncBodyTooLongFailure(node, bodyLength);
             }
@@ -89,9 +88,9 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
         if (node.body == null) {
             return 0;
         }
-        let sourceFile: ts.SourceFile = this.getSourceFile();
-        let startLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
-        let endLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
+        const sourceFile: ts.SourceFile = this.getSourceFile();
+        const startLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
+        const endLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
         return endLine - startLine;
     }
 
@@ -111,7 +110,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
                 this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
-                let regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
+                const regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     this.ignoreParametersToFunctionRegex = new RegExp(regex);
                 }
@@ -120,19 +119,19 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private addFuncBodyTooLongFailure(node: ts.FunctionLikeDeclaration, length: number) {
-        let failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
+        const failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
         this.addFailure(failure);
     }
 
     private formatFailureText (node: ts.FunctionLikeDeclaration, length: number) {
-        let funcTypeText: string = this.getFuncTypeText(node.kind);
-        let maxLength: number = this.getMaxLength(node.kind);
-        let placeText: string = this.formatPlaceText(node);
+        const funcTypeText: string = this.getFuncTypeText(node.kind);
+        const maxLength: number = this.getMaxLength(node.kind);
+        const placeText: string = this.formatPlaceText(node);
         return `Max ${ funcTypeText } body length exceeded${ placeText } - max: ${ maxLength }, actual: ${ length }`;
     }
 
     private formatPlaceText (node: ts.FunctionLikeDeclaration) {
-        let funcTypeText = this.getFuncTypeText(node.kind);
+        const funcTypeText = this.getFuncTypeText(node.kind);
         if (node.kind === SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind.current().FunctionDeclaration) {
             return ` in ${ funcTypeText } ${ (<any>node.name).text }()`;
         } else if (node.kind === SyntaxKind.current().Constructor) {

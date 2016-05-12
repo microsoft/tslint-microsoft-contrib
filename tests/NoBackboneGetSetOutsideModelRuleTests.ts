@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBackboneGetSetOutsideModelRule', () : void => {
-
     var ruleName : string = 'no-backbone-get-set-outside-model';
 
     it('should pass on get and set calls on the this reference', () : void => {

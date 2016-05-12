@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noFunctionConstructorWithStringArgsRule', () : void => {
-
     var RULE_NAME : string = 'no-function-constructor-with-string-args';
 
     it('should produce violations ', () : void => {

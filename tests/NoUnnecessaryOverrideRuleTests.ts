@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noUnnecessaryOverrideRule', () : void => {
-
     var ruleName : string = 'no-unnecessary-override';
 
     describe('should pass', (): void => {

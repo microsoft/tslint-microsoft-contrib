@@ -22,7 +22,7 @@ class NoDeleteExpression extends ErrorTolerantWalker {
         super.visitExpressionStatement(node);
         if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
-            let deletedObject: ts.Node = node.expression.getChildren()[1];
+            const deletedObject: ts.Node = node.expression.getChildren()[1];
             if (deletedObject != null && deletedObject.kind === SyntaxKind.current().Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
@@ -30,7 +30,7 @@ class NoDeleteExpression extends ErrorTolerantWalker {
     }
 
     public addNoDeleteFailure(deletedObject: ts.Node): void {
-        let msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
+        const msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
         this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
     }
 

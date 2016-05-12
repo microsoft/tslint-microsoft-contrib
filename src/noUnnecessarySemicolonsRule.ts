@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));

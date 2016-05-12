@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noUnnecessaryBindRule', () : void => {
-
     var ruleName : string = 'no-unnecessary-bind';
 
     describe('should pass', () : void => {
@@ -119,7 +118,6 @@ describe('noUnnecessaryBindRule', () : void => {
     });
 
     describe('should fail', (): void => {
-
         it('should fail on binding this on function literal', () : void => {
             var script : string = `
             (function() {}).bind(this);

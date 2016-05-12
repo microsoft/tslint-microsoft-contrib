@@ -18,7 +18,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
-
     protected visitCallExpression(node: ts.CallExpression): void {
         if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             if (node.arguments.length === 2) {

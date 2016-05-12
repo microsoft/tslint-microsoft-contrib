@@ -7,7 +7,6 @@ import * as ts from 'typescript';
  * elements.
  */
 module SyntaxKind {
-
     export interface SyntaxKind {
         Unknown: number;
         EndOfFileToken: number;

@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
-
     protected visitBlock(node: ts.Block): void {
         this.validateStatementArray(node.statements);
         super.visitBlock(node);

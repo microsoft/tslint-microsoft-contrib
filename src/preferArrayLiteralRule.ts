@@ -17,10 +17,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoGenericArrayWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().TypeReference) {
-            let ref : ts.TypeReferenceNode = <ts.TypeReferenceNode>node;
+            const ref : ts.TypeReferenceNode = <ts.TypeReferenceNode>node;
             if ((<ts.Identifier>ref.typeName).text === 'Array') {
                 var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
                 var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);

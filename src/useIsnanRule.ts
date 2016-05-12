@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UseIsnanRuleWalker extends ErrorTolerantWalker {
-
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (this.isExpressionNaN(node.left) || this.isExpressionNaN(node.right)) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.getText()));

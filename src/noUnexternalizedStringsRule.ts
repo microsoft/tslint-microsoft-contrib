@@ -24,7 +24,6 @@ interface UnexternalizedStringsOptions {
 }
 
 class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
-
     private static SINGLE_QUOTE: string = '\'';
 
     private signatures: Map<boolean>;
@@ -36,8 +35,8 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         this.signatures = Object.create(null);
         this.ignores = Object.create(null);
         this.messageIndex = undefined;
-        let options: any[] = this.getOptions();
-        let first: UnexternalizedStringsOptions = options && options.length > 0 ? options[0] : null;
+        const options: any[] = this.getOptions();
+        const first: UnexternalizedStringsOptions = options && options.length > 0 ? options[0] : null;
         if (first) {
             if (Array.isArray(first.signatures)) {
                 first.signatures.forEach((signature: string) => this.signatures[signature] = true);
@@ -58,18 +57,18 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
     }
 
     private checkStringLiteral(node: ts.StringLiteral): void {
-        let text = node.getText();
+        const text = node.getText();
         // The string literal is enclosed in single quotes. Treat as OK.
         if (text.length >= 2 && text[0] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE
             && text[text.length - 1] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE) {
             return;
         }
-        let info = this.findDescribingParent(node);
+        const info = this.findDescribingParent(node);
         // Ignore strings in import and export nodes.
         if (info && info.ignoreUsage) {
             return;
         }
-        let callInfo = info ? info.callInfo : null;
+        const callInfo = info ? info.callInfo : null;
         if (callInfo  && this.ignores[callInfo.callExpression.expression.getText()]) {
             return;
         }
@@ -78,7 +77,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             return;
         }
         // We have a string that is a direct argument into the localize call.
-        let messageArg: ts.Expression = callInfo.argIndex === this.messageIndex
+        const messageArg: ts.Expression = callInfo.argIndex === this.messageIndex
             ? callInfo.callExpression.arguments[this.messageIndex]
             : null;
         if (messageArg && messageArg !== node) {
@@ -91,12 +90,12 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
 
     private findDescribingParent(node: ts.Node):
             { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } {
-        let kinds = SyntaxKind.current();
+        const kinds = SyntaxKind.current();
         let parent: ts.Node;
         while ((parent = node.parent)) {
-            let kind = parent.kind;
+            const kind = parent.kind;
             if (kind === kinds.CallExpression) {
-                let callExpression = <ts.CallExpression>parent;
+                const callExpression = <ts.CallExpression>parent;
                 return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<any>node) }};
             } else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
                 return { ignoreUsage: true };

@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoWithStatementWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().WithStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));

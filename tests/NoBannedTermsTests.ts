@@ -10,11 +10,9 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBannedTermsRule', () : void => {
-
     var RULE_NAME : string = 'no-banned-terms';
 
     describe('module variables', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `module Sample {
@@ -69,7 +67,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('module functions', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `module Sample {
@@ -124,7 +121,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('class variables', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `class Sample {
@@ -179,7 +175,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('class properties', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `class Sample {
@@ -266,7 +261,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('class methods', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `class Sample {
@@ -321,7 +315,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('methods parameters', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `class Sample {
@@ -376,7 +369,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('function parameters', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `module Sample {
@@ -431,7 +423,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('arrow function parameters', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `module Sample {
@@ -486,7 +477,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('local variables', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `var caller;`,
@@ -533,7 +523,6 @@ describe('noBannedTermsRule', () : void => {
     });
 
     describe('interface declarations', () => {
-
         it('should not refer to caller', () : void => {
             TestHelper.assertViolations(RULE_NAME,
                 `interface Sample {

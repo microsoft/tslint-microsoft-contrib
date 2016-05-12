@@ -10,16 +10,13 @@ const FAILURE_STRING = 'Unnecessary method override. A method that only calls su
  * Implementation of the no-unnecessary-override rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoUnnecessaryOverrideRuleWalker(sourceFile, this.getOptions()));
     }
 }
 
 class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-
         if (node.body != null) {
             const statement: ts.Statement = this.getSingleStatement(node.body);
             if (statement != null) {
@@ -92,7 +89,6 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
     }
 
     private getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression {
-
         let expression: ts.Expression;
         if (statement.kind === SyntaxKind.current().ExpressionStatement) {
             expression = (<ts.ExpressionStatement>statement).expression;

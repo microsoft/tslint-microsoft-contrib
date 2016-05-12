@@ -9,7 +9,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noStringBasedSetTimeoutRule', () : void => {
-
     var RULE_NAME : string = 'no-string-based-set-timeout';
 
     it('should not throw error - case 1', () : void => {

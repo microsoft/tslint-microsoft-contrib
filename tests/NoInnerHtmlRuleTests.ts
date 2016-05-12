@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noInnerHtmlRule', () : void => {
-
     var ruleName : string = 'no-inner-html';
 
     it('should pass on reading innerHTML strings', () : void => {

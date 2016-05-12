@@ -11,7 +11,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noOctalLiteralRule', () : void => {
-
      var ruleName : string = 'no-octal-literal';
 
      it('should not fail on similar but acceptable strings', () : void => {

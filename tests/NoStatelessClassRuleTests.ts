@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noStatelessClassRule', () : void => {
-
     var ruleName : string = 'no-stateless-class';
 
     it('should pass on when class has some state', () : void => {

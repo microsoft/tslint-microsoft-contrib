@@ -29,15 +29,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 export class ExportNameWalker extends ErrorTolerantWalker {
-
     protected visitSourceFile(node: ts.SourceFile): void {
-
         // look for single export assignment from file first
-        let singleExport: ts.Statement[] = Utils.filter(node.statements, (element: ts.Statement): boolean => {
+        const singleExport: ts.Statement[] = Utils.filter(node.statements, (element: ts.Statement): boolean => {
             return element.kind === SyntaxKind.current().ExportAssignment;
         });
         if (singleExport.length === 1) {
-            let exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>singleExport[0];
+            const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>singleExport[0];
             this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
             return; // there is a single export and it is valid, so do not proceed
         }
@@ -46,7 +44,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
 
         // exports are normally declared at the top level
         node.statements.forEach((element: ts.Statement): void => {
-            let exportStatements: ts.Statement[] = this.getExportStatements(element);
+            const exportStatements: ts.Statement[] = this.getExportStatements(element);
             exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
         });
 
@@ -54,7 +52,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach((element: ts.Statement): void => {
                 if (element.kind === SyntaxKind.current().ModuleDeclaration) {
-                    let exportStatements: ts.Statement[] = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element));
+                    const exportStatements: ts.Statement[] = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element));
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
             });
@@ -68,7 +66,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
         } else if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleBlock) {
             let exportStatements: ts.Statement[] = [];
-            let moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
+            const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             moduleBlock.statements.forEach((element: ts.Statement): void => {
                 exportStatements = exportStatements.concat(this.getExportStatements(element));
             });
@@ -77,9 +75,9 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private getExportStatements(element: ts.Statement): ts.Statement[] {
-        let exportStatements: ts.Statement[] = [];
+        const exportStatements: ts.Statement[] = [];
         if (element.kind === SyntaxKind.current().ExportAssignment) {
-            let exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
+            const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
             this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
         } else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
             exportStatements.push(element);
@@ -95,10 +93,10 @@ export class ExportNameWalker extends ErrorTolerantWalker {
                 exportedElements[0].kind === SyntaxKind.current().FunctionDeclaration) {
                 this.validateExport((<any>exportedElements[0]).name.text, exportedElements[0]);
             } else if (exportedElements[0].kind === SyntaxKind.current().VariableStatement) {
-                let variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
+                const variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
                 // ignore comma separated variable lists
                 if (variableStatement.declarationList.declarations.length === 1) {
-                    let variableDeclaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
+                    const variableDeclaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
                     this.validateExport((<any>variableDeclaration.name).text, variableDeclaration);
                 }
             }

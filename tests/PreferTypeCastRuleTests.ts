@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('preferTypeCastRule', () : void => {
-
     var ruleName : string = 'prefer-type-cast';
 
     it('should pass on traditional type cast', () : void => {

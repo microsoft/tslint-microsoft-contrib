@@ -18,13 +18,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class PromiseAnalyzer extends ErrorTolerantWalker {
-
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
         if (node.expression.kind === SyntaxKind.current().Identifier
             && node.expression.getText() === 'Promise'
             && node.arguments != null && node.arguments.length > 0) {
-
-            let firstArg: ts.Expression = node.arguments[0];
+            const firstArg: ts.Expression = node.arguments[0];
             if (firstArg.kind === SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind.current().FunctionExpression) {
                 return true;
             }
@@ -38,8 +36,8 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
             return result;
         }
 
-        let arg1: ts.ParameterDeclaration = declaration.parameters[0];
-        let arg2: ts.ParameterDeclaration = declaration.parameters[1];
+        const arg1: ts.ParameterDeclaration = declaration.parameters[0];
+        const arg2: ts.ParameterDeclaration = declaration.parameters[1];
         if (arg1 != null && arg1.name.kind === SyntaxKind.current().Identifier) {
             result.push(<ts.Identifier>declaration.parameters[0].name);
         }
@@ -51,16 +49,16 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 
     protected visitNewExpression(node: ts.NewExpression): void {
         if (this.isPromiseDeclaration(node)) {
-            let functionArgument: ts.FunctionLikeDeclaration = <ts.FunctionLikeDeclaration><any>node.arguments[0];
-            let functionBody = functionArgument.body;
-            let competionIdentifiers : ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
+            const functionArgument: ts.FunctionLikeDeclaration = <ts.FunctionLikeDeclaration><any>node.arguments[0];
+            const functionBody = functionArgument.body;
+            const competionIdentifiers : ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
             this.validatePromiseUsage(node, functionBody, competionIdentifiers);
         }
         super.visitNewExpression(node);
     }
 
     private validatePromiseUsage(promiseInstantiation: ts.NewExpression, block: ts.Node, completionIdentifiers: ts.Identifier[]) : void {
-        let blockAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.getOptions(), completionIdentifiers);
+        const blockAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.getOptions(), completionIdentifiers);
         blockAnalyzer.visitNode(block);
         if (!blockAnalyzer.isAlwaysCompleted()) {
             var failure = this.createFailure(promiseInstantiation.getStart(), promiseInstantiation.getWidth(), Rule.FAILURE_STRING);
@@ -70,7 +68,6 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 }
 
 class PromiseCompletionWalker extends ErrorTolerantWalker {
-
     private completionIdentifiers: ts.Identifier[];
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true
@@ -104,8 +101,8 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
         this.hasBranches = true;
 
         // an if statement is a branch, so we need to see if this branch completes.
-        let ifAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, this.completionIdentifiers);
-        let elseAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, this.completionIdentifiers);
+        const ifAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, this.completionIdentifiers);
+        const elseAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, this.completionIdentifiers);
 
         ifAnalyzer.visitNode(node.thenStatement);
 
@@ -121,7 +118,6 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-
         if (node.expression.kind === SyntaxKind.current().Identifier) {
             if (this.isCompletionIdentifier(node.expression)) {
                 this.wasCompleted = true;
@@ -129,7 +125,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
             }
         }
 
-        let referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
+        const referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
             return this.isCompletionIdentifier(argument);
         });
         if (referenceEscaped) {
@@ -143,7 +139,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
         // walk into function body but do not track any shadowed identifiers
         var nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
-        let analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
+        const analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
         analyzer.visitNode(node.body);
         if (analyzer.isAlwaysCompleted()) {
             this.wasCompleted = true;
@@ -153,7 +149,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         // walk into function body but do not track any shadowed identifiers
         var nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
-        let analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
+        const analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
         analyzer.visitNode(node.body);
         if (analyzer.isAlwaysCompleted()) {
             this.wasCompleted = true;
@@ -161,8 +157,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
     }
 
     private getNonShadowedCompletionIdentifiers(declaration: ts.FunctionLikeDeclaration): ts.Identifier[] {
-
-        let result: ts.Identifier[] = [];
+        const result: ts.Identifier[] = [];
         this.completionIdentifiers.forEach((identifier: ts.Identifier): void => {
             // if this identifier is not shadowed, then add it to result
             var isShadowed: boolean = Utils.exists(declaration.parameters, (parameter: ts.ParameterDeclaration): boolean => {

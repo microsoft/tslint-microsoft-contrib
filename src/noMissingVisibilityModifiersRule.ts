@@ -14,8 +14,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
-
-
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             var failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);

@@ -18,7 +18,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoCookiesWalker extends ErrorTolerantWalker {
-
     private languageService : ts.LanguageService;
     private typeChecker : ts.TypeChecker;
 
@@ -32,7 +31,6 @@ class NoCookiesWalker extends ErrorTolerantWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         var propertyName = node.name.text;
         if (propertyName === 'cookie') {
-
             var leftSide : ts.Expression = node.expression;
             try {
                 var leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);

@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noControlRegexRule', () : void => {
-
     var ruleName : string = 'no-control-regex';
 
     it('should pass on chars higher than x20', () : void => {

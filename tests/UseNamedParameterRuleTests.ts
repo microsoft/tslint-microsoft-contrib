@@ -9,7 +9,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('useNamedParameterRule', () : void => {
-
     var ruleName : string = 'use-named-parameter';
 
     it('should ban referencing arguments by numeric index', () : void => {

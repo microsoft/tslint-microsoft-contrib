@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('missing-jsdoc', () : void => {
-
     var ruleName : string = 'missing-jsdoc';
 
     it('should not fail on top level comment', () : void => {

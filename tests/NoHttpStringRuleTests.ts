@@ -9,7 +9,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noHttpStringRule', () : void => {
-
     const ruleName : string = 'no-http-string';
 
     it('should ban http strings in variables', () : void => {

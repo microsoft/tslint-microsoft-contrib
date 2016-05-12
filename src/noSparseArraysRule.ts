@@ -18,7 +18,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoSparseArraysRuleWalker extends ErrorTolerantWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().ArrayLiteralExpression) {
             if (this.isSparseArray(<ts.ArrayLiteralExpression>node)) {

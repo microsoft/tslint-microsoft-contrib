@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noRegexSpacesRule', () : void => {
-
     var ruleName : string = 'no-regex-spaces';
 
     it('should pass on single space', () : void => {

@@ -19,8 +19,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
-
-
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         if (!this.isClassStateful(node)) {
             const className: string = node.name == null ? '<unknown>' : node.name.text;

@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoMultipleVarDeclRuleWalker extends ErrorTolerantWalker {
-
     protected visitVariableStatement(node: ts.VariableStatement): void {
         if (node.declarationList.declarations.length > 1) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(),

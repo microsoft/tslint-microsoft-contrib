@@ -98,6 +98,9 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
             expression = (<ts.ExpressionStatement>statement).expression;
         } else if (statement.kind === SyntaxKind.current().ReturnStatement) {
             expression = (<ts.ReturnStatement>statement).expression;
+            if (expression == null) {
+                return null; // return statements do not have to have an expression
+            }
         } else {
             return null;
         }

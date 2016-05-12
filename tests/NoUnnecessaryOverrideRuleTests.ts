@@ -236,6 +236,16 @@ describe('noUnnecessaryOverrideRule', () : void => {
                 }
             ]);
         });
+
+        it('should not fail on empty void method', () : void => {
+            var script : string = `
+                class BaseComponent {
+                    public function1(): void { return; }
+                }
+            `;
+
+            TestHelper.assertViolations(ruleName, script, []);
+        });
     });
 });
 /* tslint:enable:quotemark */

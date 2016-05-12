@@ -5,6 +5,7 @@
 import * as Lint from 'tslint/lib/lint';
 import fs = require('fs');
 import chai = require('chai');
+import { EOL } from 'os';
 
 /**
  * Test Utilities.
@@ -30,28 +31,32 @@ module TestHelper {
     }
 
     export function assertNoViolation(ruleName: string,
-                                      inputFileOrScript: string) {
+                                      inputFileOrScript: string | string[]) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
     }
     export function assertNoViolationWithOptions(ruleName: string,
                                                  options: any[],
-                                                 inputFileOrScript: string) {
+                                                 inputFileOrScript: string | string[]) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
     }
     export function assertViolationsWithOptions(ruleName: string,
                                                 options: any[],
-                                                inputFileOrScript: string,
+                                                inputFileOrScript: string | string[],
                                                 expectedFailures: ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
     }
     export function assertViolations(ruleName: string,
-                                     inputFileOrScript: string,
+                                     inputFileOrScript: string | string[],
                                      expectedFailures: ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
     }
 
-    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
+    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScriptLines : string | string[],
                                          expectedFailures : ExpectedFailure[]) {
+
+        const inputFileOrScript: string = (inputFileOrScriptLines instanceof Array)
+            ? inputFileOrScriptLines.join(EOL)
+            : inputFileOrScriptLines;
 
         const configuration: RuleConfiguration = {
             rules: {}

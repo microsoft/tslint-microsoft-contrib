@@ -20,6 +20,7 @@
     "no-duplicate-case": true,
     "no-duplicate-parameter-names": true,
     "no-empty-interfaces": true,
+    "no-empty-line-after-opening-brace": false,
     "no-exec-script": true,
     "no-function-constructor-with-string-args": true,
     "no-function-expression": true,

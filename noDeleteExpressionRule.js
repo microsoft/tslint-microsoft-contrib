@@ -29,13 +29,7 @@ var NoDeleteExpression = (function (_super) {
         _super.prototype.visitExpressionStatement.call(this, node);
         if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
             var deletedObject = node.expression.getChildren()[1];
-            if (deletedObject.kind === SyntaxKind.current().ElementAccessExpression) {
-                var deletedExpression = deletedObject.expression;
-                if (deletedExpression.kind !== SyntaxKind.current().PropertyAccessExpression) {
-                    this.addNoDeleteFailure(deletedObject);
-                }
-            }
-            else if (deletedObject.kind !== SyntaxKind.current().PropertyAccessExpression) {
+            if (deletedObject != null && deletedObject.kind === SyntaxKind.current().Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

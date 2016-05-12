@@ -100,6 +100,48 @@ var AstUtils;
         return !!(node.flags & ts.NodeFlags.Static);
     }
     AstUtils.isStatic = isStatic;
+    function isBindingPattern(node) {
+        return node != null && (node.kind === SyntaxKind.current().ArrayBindingPattern ||
+            node.kind === SyntaxKind.current().ObjectBindingPattern);
+    }
+    function walkUpBindingElementsAndPatterns(node) {
+        while (node && (node.kind === SyntaxKind.current().BindingElement || isBindingPattern(node))) {
+            node = node.parent;
+        }
+        return node;
+    }
+    function getCombinedNodeFlags(node) {
+        node = walkUpBindingElementsAndPatterns(node);
+        var flags = node.flags;
+        if (node.kind === SyntaxKind.current().VariableDeclaration) {
+            node = node.parent;
+        }
+        if (node && node.kind === SyntaxKind.current().VariableDeclarationList) {
+            flags |= node.flags;
+            node = node.parent;
+        }
+        if (node && node.kind === SyntaxKind.current().VariableStatement) {
+            flags |= node.flags;
+        }
+        return flags;
+    }
+    function isLet(node) {
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Let);
+    }
+    AstUtils.isLet = isLet;
+    function isExported(node) {
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
+    }
+    AstUtils.isExported = isExported;
+    function isAssignmentOperator(token) {
+        return token >= SyntaxKind.current().FirstAssignment && token <= SyntaxKind.current().LastAssignment;
+    }
+    AstUtils.isAssignmentOperator = isAssignmentOperator;
+    function isBindingLiteralExpression(node) {
+        return (!!node) &&
+            (node.kind === SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind.current().ArrayLiteralExpression);
+    }
+    AstUtils.isBindingLiteralExpression = isBindingLiteralExpression;
     function findParentBlock(child) {
         var parent = child.parent;
         while (parent != null) {

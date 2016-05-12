@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.5
+Version 2.0.6
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
@@ -85,6 +85,7 @@ Rule Name   | Description | Since
 `no-duplicate-case`             | Do not use duplicate case labels in switch statements. Similar to the [ESLint no-duplicate-case](http://eslint.org/docs/rules/no-duplicate-case.html) rule | 1.0
 `no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names | 0.0.1
 `no-empty-interfaces`           | Do not use empty interfaces. They are compile-time only artifacts and they serve no useful purpose | 1.0
+`no-empty-line-after-opening-brace` | Avoid an empty line after an opening brace. | 2.0.6
 `no-exec-script`                | Do not use the execScript functions | 0.0.1
 `no-for-in`                     | Avoid use of for-in statements. They can be replaced by Object.keys | 1.0
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1
@@ -113,6 +114,7 @@ Rule Name   | Description | Since
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
+`prefer-const`                  | Use `const` to declare variables if they are only assigned a value once. | 2.0.6
 `prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the 'as type' casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 1.0
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2

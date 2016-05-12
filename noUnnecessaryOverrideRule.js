@@ -93,6 +93,9 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         }
         else if (statement.kind === SyntaxKind.current().ReturnStatement) {
             expression = statement.expression;
+            if (expression == null) {
+                return null;
+            }
         }
         else {
             return null;

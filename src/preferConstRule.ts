@@ -166,7 +166,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
         const completedKeys = Object.keys(completed);
 
         /* tslint:disable:no-increment-decrement */
-        for (var i = 0; i < completedKeys.length; i++) {
+        for (let i = 0; i < completedKeys.length; i++) {
         /* tslint:enable:no-increment-decrement */
             const name = completedKeys[i];
             if (Object.hasOwnProperty.call(completed, name)) {

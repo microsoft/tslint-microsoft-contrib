@@ -19,7 +19,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
-
     private languageService: ts.LanguageService;
     private typeChecker : ts.TypeChecker;
 

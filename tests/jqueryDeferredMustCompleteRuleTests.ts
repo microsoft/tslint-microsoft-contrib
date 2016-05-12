@@ -9,11 +9,9 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('jquery-deferred-must-complete', () : void => {
-
     var ruleName : string = 'jquery-deferred-must-complete';
 
     describe('should pass', () : void => {
-
         it('when deferred named jquery completes', () : void => {
             var script : string = `
             function myMethod() : JQueryPromise<void> {
@@ -266,7 +264,6 @@ describe('jquery-deferred-must-complete', () : void => {
     });
 
     describe('should fail', () : void => {
-
         it('when has no complete', () : void => {
             var script : string = `
             function myMethod() : JQueryPromise<void> {

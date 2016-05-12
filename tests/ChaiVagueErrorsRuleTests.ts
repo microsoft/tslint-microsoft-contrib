@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('chaiVagueErrorsRule', () : void => {
-
     var ruleName : string = 'chai-vague-errors';
 
     it('should pass on xxx', () : void => {

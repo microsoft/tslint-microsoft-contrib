@@ -16,13 +16,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
-
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '='
             && node.left.kind === SyntaxKind.current().PropertyAccessExpression
             && this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)) {
-
-            let msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
+            const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
         }
         super.visitBinaryExpression(node);

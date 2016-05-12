@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('useIsnanRule', () : void => {
-
     var ruleName : string = 'use-isnan';
 
     it('should pass on xxx', () : void => {

@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noMultipleVarDeclRule', () : void => {
-
     var ruleName : string = 'no-multiple-var-decl';
 
     it('should pass on separate var declaration and multiple var declarations within a for loop', () : void => {

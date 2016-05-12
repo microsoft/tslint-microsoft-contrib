@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noEmptyInterfacesRule', () : void => {
-
     var ruleName : string = 'no-empty-interfaces';
 
     it('should pass on interface with 1 attribute', () : void => {

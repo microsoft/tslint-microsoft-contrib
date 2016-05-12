@@ -14,7 +14,6 @@ interface Exception {
  * Implementation of the react-no-dangerous-html rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
@@ -38,7 +37,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDangerousHtmlWalker extends ErrorTolerantWalker {
-
     private languageServices : ts.LanguageService;
     private currentMethodName : string;
 

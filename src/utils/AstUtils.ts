@@ -5,8 +5,6 @@ import SyntaxKind = require('./SyntaxKind');
  * General utility class.
  */
 module AstUtils {
-
-
     export function getFunctionName(node : ts.CallExpression) : string {
         var expression: ts.Expression = node.expression;
         var functionName : string = (<any>expression).text;
@@ -18,7 +16,7 @@ module AstUtils {
 
     export function getFunctionTarget(expression: ts.CallExpression) : string {
         if (expression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-            let propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
+            const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
         return null;

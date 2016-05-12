@@ -10,11 +10,9 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('promiseMustCompleteRule', () : void => {
-
     var ruleName : string = 'promise-must-complete';
 
     describe('should pass', () : void => {
-
         it('when promise completes', () : void => {
             var script : string = `
                 new Promise<string>((resolve, reject) => {
@@ -270,7 +268,6 @@ describe('promiseMustCompleteRule', () : void => {
     });
 
     describe('should fail', () : void => {
-
         it('when empty lambda', () : void => {
             var script : string = `
                 new Promise<string>(() => {

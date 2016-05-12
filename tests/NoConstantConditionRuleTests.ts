@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noConstantConditionRule', () : void => {
-
     var ruleName : string = 'no-constant-condition';
 
     it('should pass on comparisons', () : void => {

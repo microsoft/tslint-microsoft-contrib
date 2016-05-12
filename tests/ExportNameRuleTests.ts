@@ -10,7 +10,6 @@ import exportNameRule = require('../src/exportNameRule');
  * Unit tests.
  */
 describe('exportNameRule', () : void => {
-
     var ruleName : string = 'export-name';
     var exceptions : string[] = [];
     var original: any;

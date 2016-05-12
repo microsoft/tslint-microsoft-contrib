@@ -28,7 +28,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class GatherNoRequireImportsWalker extends Lint.RuleWalker {
-
     public noRequireReferences: { [index: string]: boolean; } = {};
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
@@ -52,7 +51,6 @@ class GatherNoRequireImportsWalker extends Lint.RuleWalker {
 }
 
 class NoUnusedImportsWalker extends ErrorTolerantWalker {
-
     private languageServices: ts.LanguageService;
     private noRequireReferences: { [index: string]: boolean; } = {};
 

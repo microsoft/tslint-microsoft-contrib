@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UseNamedParameterWalker extends ErrorTolerantWalker {
-
     protected visitElementAccessExpression(node: ts.ElementAccessExpression): void {
         if (node.argumentExpression != null) {
             if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {

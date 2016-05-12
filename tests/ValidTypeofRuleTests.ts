@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('validTypeofRule', () : void => {
-
     var ruleName : string = 'valid-typeof';
 
     it('should pass on valid typeofs', () : void => {

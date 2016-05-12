@@ -11,7 +11,6 @@ import { EOL } from 'os';
  * Test Utilities.
  */
 module TestHelper {
-
     export interface FailurePosition {
         character: number;
         line: number;
@@ -53,7 +52,6 @@ module TestHelper {
 
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScriptLines : string | string[],
                                          expectedFailures : ExpectedFailure[]) {
-
         const inputFileOrScript: string = (inputFileOrScriptLines instanceof Array)
             ? inputFileOrScriptLines.join(EOL)
             : inputFileOrScriptLines;

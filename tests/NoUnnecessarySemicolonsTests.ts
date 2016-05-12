@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noUnnecessarySemiColons', () : void => {
-
     it('should produce violations', () : void => {
         var ruleName : string = 'no-unnecessary-semicolons';
         var inputFile : string = 'test-data/NoUnnecessarySemicolonsTestInput.ts';

@@ -16,7 +16,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
-
     private isConstant(node: ts.Node): boolean {
         return node.kind === SyntaxKind.current().FalseKeyword
             || node.kind === SyntaxKind.current().TrueKeyword
@@ -25,7 +24,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     protected visitIfStatement(node: ts.IfStatement): void {
         if (this.isConstant(node.expression)) {
-            let message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
+            const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         super.visitIfStatement(node);
@@ -34,7 +33,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     protected visitConditionalExpression(node: ts.ConditionalExpression): void {
         if (this.isConstant(node.condition)) {
-            let message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
+            const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         super.visitConditionalExpression(node);
@@ -43,7 +42,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     protected visitWhileStatement(node: ts.WhileStatement): void {
         if (this.isConstant(node.expression)) {
-            let message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+            const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         super.visitWhileStatement(node);
@@ -52,7 +51,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     protected visitDoStatement(node: ts.DoStatement): void {
         if (this.isConstant(node.expression)) {
-            let message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+            const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         super.visitDoStatement(node);
@@ -62,7 +61,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     protected visitForStatement(node: ts.ForStatement): void {
         if (node.condition != null) {
             if (this.isConstant(node.condition)) {
-                let message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
+                const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
             }
         }

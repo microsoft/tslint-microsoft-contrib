@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noInvalidRegexpRule', () : void => {
-
     var ruleName : string = 'no-invalid-regexp';
 
     it('should pass on valid input', () : void => {

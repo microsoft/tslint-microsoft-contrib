@@ -8,9 +8,7 @@ import chai = require('chai');
  * Unit tests.
  */
 describe('Utils', () : void => {
-
     describe('contains', (): void => {
-
         it('should handle empty states', (): void => {
             chai.expect(Utils.contains([], null)).to.equal(false, 'empty array should not contain false');
             chai.expect(Utils.contains([], undefined)).to.equal(false, 'empty array should not contain undefined');
@@ -29,10 +27,10 @@ describe('Utils', () : void => {
         });
 
         it('should handle objects', (): void => {
-            let obj1: Object = {};
-            let obj2: Object = {};
-            let obj3: Object = {};
-            let objList = [obj1, obj2];
+            const obj1: Object = {};
+            const obj2: Object = {};
+            const obj3: Object = {};
+            const objList = [obj1, obj2];
 
             chai.expect(Utils.contains(objList, obj1)).to.equal(true, 'object equality test for obj1');
             chai.expect(Utils.contains(objList, obj2)).to.equal(true, 'object equality test for obj2');
@@ -41,7 +39,6 @@ describe('Utils', () : void => {
     });
 
     describe('removeAll', (): void => {
-
         it('should handle empty states', (): void => {
             chai.expect(Utils.removeAll([], null)).to.deep.equal([], 'remove null from empty array');
             chai.expect(Utils.removeAll([], undefined)).to.deep.equal([], 'remove undefined from empty array');
@@ -64,10 +61,10 @@ describe('Utils', () : void => {
         });
 
         it('should handle objects', (): void => {
-            let obj1: Object = {};
-            let obj2: Object = {};
-            let obj3: Object = {};
-            let objList: Object[] = [obj1, obj2, obj3];
+            const obj1: Object = {};
+            const obj2: Object = {};
+            const obj3: Object = {};
+            const objList: Object[] = [obj1, obj2, obj3];
 
             chai.expect(Utils.removeAll(objList, [obj1])).to.deep.equal([obj2, obj2], 'removing object');
             chai.expect(Utils.removeAll(objList, [obj1, obj3])).to.deep.equal([obj2], 'removing two objects');

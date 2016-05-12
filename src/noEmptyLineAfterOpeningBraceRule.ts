@@ -36,7 +36,6 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
             if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 scanner.getToken() === ts.SyntaxKind.NewLineTrivia) {
-
                 var leadingEmptyLineFailure = this.createFailure(scanner.getStartPos(), 1, Rule.FAILURE_STRING);
                 this.addFailure(leadingEmptyLineFailure);
             }

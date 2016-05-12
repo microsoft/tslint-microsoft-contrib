@@ -20,7 +20,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ValidTypeofRuleWalker extends ErrorTolerantWalker {
-
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.left.kind === SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind.current().StringLiteral) {
             this.validateTypeOf(<ts.StringLiteral>node.right);
@@ -32,8 +31,8 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
 
     private validateTypeOf(node: ts.StringLiteral): void {
         if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
-            let start: number = node.getStart();
-            let width: number = node.getWidth();
+            const start: number = node.getStart();
+            const width: number = node.getWidth();
             this.addFailure(this.createFailure(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?'));
         }
     }

@@ -16,13 +16,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoMultilineStringWalker extends ErrorTolerantWalker {
-
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
-            let fullText : string = node.getFullText();
-            let firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
-            let trimmed : string = firstLine.substring(0, 40);
+            const fullText : string = node.getFullText();
+            const firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
+            const trimmed : string = firstLine.substring(0, 40);
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...'));
         }
         super.visitNode(node);

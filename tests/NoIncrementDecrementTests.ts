@@ -8,7 +8,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noIncrementDecrementRule', () : void => {
-
     var RULE_NAME : string = 'no-increment-decrement';
 
     it('should produce violations ', () : void => {

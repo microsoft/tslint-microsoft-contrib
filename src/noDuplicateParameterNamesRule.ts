@@ -15,7 +15,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.validateParameterNames(node);
         super.visitMethodDeclaration(node);

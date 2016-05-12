@@ -17,7 +17,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoEvalScriptWalker extends ErrorTolerantWalker {
-
     protected visitCallExpression(node: ts.CallExpression) {
         this.validateExpression(node);
         super.visitCallExpression(node);

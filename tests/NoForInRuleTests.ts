@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noForInRule', () : void => {
-
     var ruleName : string = 'no-for-in';
 
     it('should pass on regular for statement', () : void => {

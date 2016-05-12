@@ -10,7 +10,6 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noRelativeImportsRule', () : void => {
-
     var ruleName : string = 'no-relative-imports';
 
     it('should pass on absolute path require imports', () : void => {

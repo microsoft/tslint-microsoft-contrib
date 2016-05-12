@@ -15,7 +15,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoForInRuleWalker extends ErrorTolerantWalker {
-
     protected visitForInStatement(node: ts.ForInStatement): void {
         var initializer: string = node.initializer.getText();
         var expression: string = node.expression.getText();

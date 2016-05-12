@@ -85,6 +85,7 @@ Rule Name   | Description | Since
 `no-duplicate-case`             | Do not use duplicate case labels in switch statements. Similar to the [ESLint no-duplicate-case](http://eslint.org/docs/rules/no-duplicate-case.html) rule | 1.0
 `no-duplicate-parameter-names`  | Do not write functions or methods with duplicate parameter names | 0.0.1
 `no-empty-interfaces`           | Do not use empty interfaces. They are compile-time only artifacts and they serve no useful purpose | 1.0
+`no-empty-line-after-opening-brace` | Avoid an empty line after an opening brace. | 0.0.1
 `no-exec-script`                | Do not use the execScript functions | 0.0.1
 `no-for-in`                     | Avoid use of for-in statements. They can be replaced by Object.keys | 1.0
 `no-function-constructor-with-string-args` | Do not use the version of the Function constructor that accepts a string argument to define the body of the function | 0.0.1

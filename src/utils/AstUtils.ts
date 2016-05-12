@@ -118,6 +118,65 @@ module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
+
+    function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
+        return node != null && (node.kind === SyntaxKind.current().ArrayBindingPattern ||
+            node.kind === SyntaxKind.current().ObjectBindingPattern);
+    }
+
+    function walkUpBindingElementsAndPatterns(node: ts.Node): ts.Node {
+        while (node && (node.kind === SyntaxKind.current().BindingElement || isBindingPattern(node))) {
+            node = node.parent;
+        }
+
+        return node;
+    }
+
+    function getCombinedNodeFlags(node: ts.Node): ts.NodeFlags {
+        node = walkUpBindingElementsAndPatterns(node);
+
+        let flags = node.flags;
+        if (node.kind === SyntaxKind.current().VariableDeclaration) {
+            node = node.parent;
+        }
+
+        if (node && node.kind === SyntaxKind.current().VariableDeclarationList) {
+            /* tslint:disable:no-bitwise */
+            flags |= node.flags;
+            /* tslint:enable:no-bitwise */
+            node = node.parent;
+        }
+
+        if (node && node.kind === SyntaxKind.current().VariableStatement) {
+            /* tslint:disable:no-bitwise */
+            flags |= node.flags;
+            /* tslint:enable:no-bitwise */
+        }
+
+        return flags;
+    }
+
+    export function isLet(node: ts.Node): boolean {
+        /* tslint:disable:no-bitwise */
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Let);
+        /* tslint:enable:no-bitwise */
+    }
+
+    export function isExported(node: ts.Node): boolean {
+        /* tslint:disable:no-bitwise */
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
+        /* tslint:enable:no-bitwise */
+    }
+
+    export function isAssignmentOperator(token: ts.SyntaxKind): boolean {
+        return token >= SyntaxKind.current().FirstAssignment && token <= SyntaxKind.current().LastAssignment;
+    }
+
+    export function isBindingLiteralExpression(node: ts.Node): node is (ts.ArrayLiteralExpression | ts.ObjectLiteralExpression) {
+        return (!!node) &&
+            (node.kind === SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind.current().ArrayLiteralExpression);
+    }
+
     export function findParentBlock(child: ts.Node) : ts.Node {
         var parent : ts.Node = child.parent;
         while (parent != null) {

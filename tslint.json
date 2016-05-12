@@ -46,6 +46,7 @@
     "no-with-statement": true,
     "prefer-array-literal": true,
     "prefer-type-cast": true,
+    "prefer-const": true,
     "promise-must-complete": true,
     "react-no-dangerous-html": true,
     "use-named-parameter": true,

@@ -4,10 +4,13 @@ var _ = require('underscore');
 
 module.exports = function(grunt) {
 
-    function getAllRuleNames() {
-        var ruleFiles = grunt.file.expand('src/*Rule.ts');
-        return _(ruleFiles).map(function(filename) {
-            filename = filename.substring(4, filename.length - 7);
+    function getAllRuleNames(options) {
+        options = options || { skipTsLintRules: false }
+
+        var convertToRuleNames = function(filename) {
+            filename = filename
+                .replace(/Rule\..*/, '')  // file extension plus Rule name
+                .replace(/.*\//, '');     // leading path
             return _(filename).reduce(function(memo, element) {
                 if (element.toLowerCase() === element) {
                     memo = memo + element;
@@ -16,7 +19,16 @@ module.exports = function(grunt) {
                 }
                 return memo;
             }, '');
-        });
+        };
+
+        var contribRules = _(grunt.file.expand('src/*Rule.ts')).map(convertToRuleNames);
+        var baseRules = [];
+        if (!options.skipTsLintRules) {
+            baseRules = _(grunt.file.expand('node_modules/tslint/lib/rules/*Rule.js')).map(convertToRuleNames);
+        }
+        var allRules = baseRules.concat(contribRules);
+        allRules.sort();
+        return allRules;
     }
 
     function camelCase(input) {
@@ -121,7 +133,7 @@ module.exports = function(grunt) {
 
         var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
         var packageJson = grunt.file.readJSON('package.json', { encoding: 'UTF-8' });
-        getAllRuleNames().forEach(function(ruleName) {
+        getAllRuleNames({ skipTsLintRules: true }).forEach(function(ruleName) {
             if (readmeText.indexOf(ruleName) === -1) {
                 grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
             }
@@ -134,8 +146,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('validate-config', 'A task that makes sure all the rules in the project are defined in to run' +
-        ' during the build.', function () {
+    grunt.registerTask('validate-config', 'A task that makes sure all the rules in the project are defined to run during the build.', function () {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
@@ -143,16 +154,22 @@ module.exports = function(grunt) {
             'no-relative-imports': true,
             'no-empty-line-after-opening-brace': true
         };
+        var errors = [];
         getAllRuleNames().forEach(function(ruleName) {
             if (rulesToSkip[ruleName]) {
                 return;
             }
-            if (tslintConfig.rules[ruleName] !== true) {
+            if (tslintConfig.rules[ruleName] !== true && tslintConfig.rules[ruleName] !== false) {
                 if (tslintConfig.rules[ruleName] == null || tslintConfig.rules[ruleName][0] !== true) {
-                    grunt.fail.warn('A rule was found that is not enabled on the project: ' + ruleName);
+                    errors.push('A rule was found that is not enabled on the project: ' + ruleName);
                 }
             }
         });
+
+        if (errors.length > 0) {
+            console.log(tslintConfig)
+            grunt.fail.warn(errors.join('\n'));
+        }
     });
 
     grunt.registerTask('create-rule', 'A task that creates a new rule from the rule templates. --rule-name parameter required', function () {

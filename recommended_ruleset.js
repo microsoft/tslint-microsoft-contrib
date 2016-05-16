@@ -50,6 +50,7 @@ module.exports = {
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
         "no-invalid-this": true,
+        "no-jquery-raw-elements": true,
         "no-missing-visibility-modifiers": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,

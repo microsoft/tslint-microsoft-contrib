@@ -64,6 +64,7 @@
     "no-internal-module": false,
     "no-invalid-regexp": true,
     "no-invalid-this": true,
+    "no-jquery-raw-elements": true,
     "no-missing-visibility-modifiers": true,
     "no-multiline-string": true,
     "no-multiple-var-decl": true,

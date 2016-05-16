@@ -22,6 +22,10 @@ export module AstUtils {
         return null;
     }
 
+    export function isJQuery(functionTarget: string): boolean {
+        return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
+    }
+
     export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
         if (modifiers == null) {
             return false;

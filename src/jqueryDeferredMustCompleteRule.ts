@@ -23,8 +23,7 @@ function isPromiseInstantiation(expression: ts.Expression) : boolean {
         const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
         const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
-        if (functionName === 'Deferred' &&
-            (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
+        if (functionName === 'Deferred' && AstUtils.isJQuery(functionTarget)) {
             return true;
         }
     }

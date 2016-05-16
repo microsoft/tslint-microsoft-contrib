@@ -102,6 +102,7 @@ module.exports = {
         "no-unnecessary-local-variable": true,
         "no-var-keyword": true,
         "no-var-requires": true,
+        "no-var-self": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
         "prefer-array-literal": true,

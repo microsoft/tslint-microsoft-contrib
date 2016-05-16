@@ -13,10 +13,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node): void {
+    protected visitCallExpression(node: ts.CallExpression): void {
         const expressionText: string = node.expression.getText();
 
-        if (expressionText !== "$" && expressionText.toLowerCase() !== "jquery") {
+        if (expressionText !== '$' && expressionText.toLowerCase() !== 'jquery') {
             return;
         }
 
@@ -35,16 +35,16 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
 
     private argumentContainsAttribute(argument: string): boolean {
         // Case: "input"
-        if (argument.indexOf(`"<`) === -1) {
+        if (argument.indexOf('\"<') === -1) {
             return false;
         }
 
         // Case: "<input readonly='true' />"
-        if (argument.indexOf("=") !== -1) {
+        if (argument.indexOf('=') !== -1) {
             return true;
         }
 
-        const spaceIndex: number = argument.indexOf(" ");
+        const spaceIndex: number = argument.indexOf(' ');
 
         // Case: "<input/>"
         // Case: "<input/>"
@@ -53,7 +53,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         }
 
         // Case: "<input />"
-        if (argument.substring(spaceIndex).trim() === "/>\"") {
+        if (argument.substring(spaceIndex).trim() === '/>"') {
             return false;
         }
 

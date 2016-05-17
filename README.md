@@ -58,9 +58,12 @@ Add the new rulesDirectory to your tslint task:
 
 The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
 
-A sample configuration file with all options is available here: [tslint.json](tslint.json)
-
-Having trouble deciding which rules to enable? We now publish our recommendations here: [recommended_ruleset.js](recommended_ruleset.js)
+##### Which Rules Should I Turn On?
+There certainly are a lot of options! Here are some links to get you started.
+* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js)
+* A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
+* A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
+* And our configuration file with all options is available here: [tslint.json](tslint.json)
 
 Supported Rules
 -----

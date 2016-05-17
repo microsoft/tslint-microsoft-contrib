@@ -60,6 +60,8 @@ The tslint.json file does not change format when using this package. Just add ou
 
 A sample configuration file with all options is available here: [tslint.json](tslint.json)
 
+Having trouble deciding which rules to enable? We now publish our recommendations here: [recommended_ruleset.js](recommended_ruleset.js)
+
 Supported Rules
 -----
 

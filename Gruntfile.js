@@ -1,6 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
+var RecommendedRuleset = require('./recommended_ruleset');
 
 module.exports = function(grunt) {
 
@@ -63,6 +64,12 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '.',
                         src: ['README.md'],
+                        dest: 'dist/build'
+                    },
+                    {
+                        expand: true,
+                        cwd: '.',
+                        src: ['recommended_ruleset.js'],
                         dest: 'dist/build'
                     }
                 ]
@@ -167,7 +174,22 @@ module.exports = function(grunt) {
         });
 
         if (errors.length > 0) {
-            console.log(tslintConfig)
+            grunt.fail.warn(errors.join('\n'));
+        }
+    });
+
+    grunt.registerTask('validate-recommendations', 'A task that makes sure all the rules in the project are defined in the recommended_ruleset.js.', function () {
+        var errors = [];
+        var allRules = RecommendedRuleset.rules;
+        getAllRuleNames().forEach(function(ruleName) {
+            if (allRules[ruleName] !== true && allRules[ruleName] !== false) {
+                if (allRules[ruleName] == null || allRules[ruleName][0] !== true) {
+                    errors.push('A rule was found that is not found in recommended_ruleset.js: ' + ruleName);
+                }
+            }
+        });
+
+        if (errors.length > 0) {
             grunt.fail.warn(errors.join('\n'));
         }
     });
@@ -205,6 +227,7 @@ module.exports = function(grunt) {
         'tslint',
         'validate-documentation',
         'validate-config',
+        'validate-recommendations',
         'copy:package',
         'create-package-json-for-npm'
     ]);

@@ -16,27 +16,28 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
     }
 
-    public static isPromiseInstantiation(expression: ts.Expression) : boolean {
-        if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
-            const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
-            const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
+}
 
-            if (functionName === 'Deferred' &&
-                (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
-                return true;
-            }
+function isPromiseInstantiation(expression: ts.Expression) : boolean {
+    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
+        const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
+        const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
+
+        if (functionName === 'Deferred' &&
+            (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
+            return true;
         }
-        return false;
     }
+    return false;
+}
 
-    public static isCompletionFunction(functionName : string) : boolean {
-        return /^(resolve|reject)$/.test(functionName);
-    }
+function isCompletionFunction(functionName : string) : boolean {
+    return /^(resolve|reject)$/.test(functionName);
 }
 
 class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.operatorToken.getText() === '=' && Rule.isPromiseInstantiation(node.right)) {
+        if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === SyntaxKind.current().Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
                     const name : ts.Identifier = <ts.Identifier>node.left;
@@ -48,7 +49,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (Rule.isPromiseInstantiation(node.initializer)) {
+        if (isPromiseInstantiation(node.initializer)) {
             if ((<ts.Identifier>node.name).text != null) {
                 const name : ts.Identifier = <ts.Identifier>node.name;
                 this.validateDeferredUsage(node, name);
@@ -126,7 +127,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
                 const functionName : string = prop.name.getText(); // possibly resolve or reject
-                if (Rule.isCompletionFunction(functionName)) {
+                if (isCompletionFunction(functionName)) {
                     this.wasCompleted = true;
                     return; // this branch was completed, do not walk any more.
                 }

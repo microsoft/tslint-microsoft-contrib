@@ -77,6 +77,7 @@ module.exports = {
         "class-name": true,
         "comment-format": true,
         "export-name": true,
+        "function-name": true,
         "import-name": true,
         "interface-name": true,
         "jsdoc-format": true,

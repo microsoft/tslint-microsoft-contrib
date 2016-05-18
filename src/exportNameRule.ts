@@ -17,7 +17,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
     }
 
+    /* tslint:disable:function-name */
     public static getExceptions(options : Lint.IOptions) : string[] {
+    /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }

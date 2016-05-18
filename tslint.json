@@ -9,6 +9,7 @@
     "eofline": false,
     "export-name": true,
     "forin": true,
+    "function-name": true,
     "import-name": true,
     "indent": false,
     "interface-name": false,

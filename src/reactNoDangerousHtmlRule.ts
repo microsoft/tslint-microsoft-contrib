@@ -25,7 +25,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     /**
      * Exposed for testing.
      */
+    /* tslint:disable:function-name */
     public static getExceptions(options : Lint.IOptions) : Exception[] {
+    /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }

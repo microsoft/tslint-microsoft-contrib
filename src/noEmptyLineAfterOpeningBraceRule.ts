@@ -23,11 +23,11 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
     }
 
     public visitSourceFile(node: ts.SourceFile): void {
-        this._scanAllTokens(node);
+        this.scanAllTokens(node);
         super.visitSourceFile(node);
     }
 
-    private _scanAllTokens(node: ts.SourceFile): void {
+    private scanAllTokens(node: ts.SourceFile): void {
         this.scanner.setTextPos(0);
         let previous: ts.SyntaxKind;
         let previousPrevious: ts.SyntaxKind;

@@ -75,6 +75,35 @@ describe('noJqueryRawElementsRule', () : void => {
          ]);
     });
 
+    it('should fail on tag string concatenation', () : void => {
+        var script : string = `
+            $("<" + tagName + " />");
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "HTML string manipulation is a security risk; use jQuery instead",
+                "name": "file.ts",
+                "ruleName": ruleName,
+                "startPosition": { "character": 13, "line": 2 }
+            }
+         ]);
+    });
+
+    it('should fail on attribute string concatenation', () : void => {
+        var script : string = `
+            $("<div className='" + className + "' >");
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "HTML string manipulation is a security risk; use jQuery instead",
+                "name": "file.ts",
+                "ruleName": ruleName,
+                "startPosition": { "character": 13, "line": 2 }
+            }
+         ]);
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

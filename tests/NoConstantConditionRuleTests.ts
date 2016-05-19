@@ -18,6 +18,9 @@ describe('noConstantConditionRule', () : void => {
             if (something === true) {}
             if (something > 1) {}
             if (1 > something) {}
+            if (0 < 9 < 4 > something) {}
+            if (something < 9 < 4 > 2) {}
+            if (0 && 9 || 4 && !something) {}
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -38,6 +41,208 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: if (true)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 3 }
+            }
+        ]);
+    });
+
+    it('should fail on constant comparisons', () : void => {
+        var script : string = `
+            if (0 < 9) {}
+            if (0 > 9) {}
+            if (0 <= 9) {}
+            if (0 >= 9) {}
+            if (0 == 9) {}
+            if (0 != 9) {}
+            if (0 === 9) {}
+            if (0 !== 9) {}
+            if (0 >= 9) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (0 < 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 > 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 3 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 <= 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 4 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 >= 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 5 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 == 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 6 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 != 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 7 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 === 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 8 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 !== 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 9 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 >= 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 10 }
+            }
+        ]);
+    });
+
+    it('should fail on nested constant comparison', () : void => {
+        var script : string = `
+            if (0 < 9 < 4 > 2) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (0 < 9 < 4 > 2)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            }
+        ]);
+    });
+
+    it('should fail on constant infix arithmetic', () : void => {
+        var script : string = `
+            if (0 + 9) {}
+            if (0 - 9) {}
+            if (0 * 9) {}
+            if (0 / 9) {}
+            if (0 % 9) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (0 + 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 - 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 3 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 * 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 4 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 / 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 5 }
+            },
+            {
+                "failure": "Found constant conditional: if (0 % 9)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 6 }
+            }
+        ]);
+    });
+
+    it('should fail on constant postfix arithmetic', () : void => {
+        var script : string = `
+            if (0++) {}
+            if (0--) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (0++)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found constant conditional: if (0--)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 3 }
+            }
+        ]);
+    });
+
+    it('should fail on constant prefix arithmetic', () : void => {
+        var script : string = `
+            if (++0) {}
+            if (--0) {}
+            if (!true) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (++0)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found constant conditional: if (--0)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 3 }
+            },
+            {
+                "failure": "Found constant conditional: if (!true)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 4 }
+            }
+        ]);
+    });
+
+    it('should fail on logic operators', () : void => {
+        var script : string = `
+            if (0 && 2) {}
+            if (3 || 9) {}
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found constant conditional: if (0 && 2)",
+                "name": "file.ts",
+                "ruleName": "no-constant-condition",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found constant conditional: if (3 || 9)",
                 "name": "file.ts",
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }

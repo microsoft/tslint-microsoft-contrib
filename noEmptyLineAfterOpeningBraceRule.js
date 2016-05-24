@@ -26,10 +26,10 @@ var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
         this.scanner = ts.createScanner(1, false, 0, sourceFile.text);
     }
     NoEmptyLineAfterOpeningBraceWalker.prototype.visitSourceFile = function (node) {
-        this._scanAllTokens(node);
+        this.scanAllTokens(node);
         _super.prototype.visitSourceFile.call(this, node);
     };
-    NoEmptyLineAfterOpeningBraceWalker.prototype._scanAllTokens = function (node) {
+    NoEmptyLineAfterOpeningBraceWalker.prototype.scanAllTokens = function (node) {
         var _this = this;
         this.scanner.setTextPos(0);
         var previous;

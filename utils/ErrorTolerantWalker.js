@@ -15,11 +15,13 @@ var ErrorTolerantWalker = (function (_super) {
             _super.prototype.visitNode.call(this, node);
         }
         catch (e) {
-            var msg = 'An error occurred visiting a node.'
-                + '\nWalker: ' + this.getClassName()
-                + '\nNode: ' + (node.getFullText ? node.getFullText() : '<unknown>')
-                + '\n' + e;
-            this.addFailure(this.createFailure(node.getStart ? node.getStart() : 0, node.getWidth ? node.getWidth() : 0, msg));
+            if (ErrorTolerantWalker.DEBUG) {
+                var msg = 'An error occurred visiting a node.'
+                    + '\nWalker: ' + this.getClassName()
+                    + '\nNode: ' + (node.getFullText ? node.getFullText() : '<unknown>')
+                    + '\n' + e;
+                this.addFailure(this.createFailure(node.getStart ? node.getStart() : 0, node.getWidth ? node.getWidth() : 0, msg));
+            }
         }
     };
     ErrorTolerantWalker.prototype.getClassName = function () {
@@ -29,6 +31,7 @@ var ErrorTolerantWalker = (function (_super) {
         }
         return result;
     };
+    ErrorTolerantWalker.DEBUG = true;
     return ErrorTolerantWalker;
 }(Lint.RuleWalker));
 module.exports = ErrorTolerantWalker;

@@ -25,6 +25,20 @@ var NoConstantConditionRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoConstantConditionRuleWalker.prototype.isConstant = function (node) {
+        if (node.kind === SyntaxKind.current().BinaryExpression) {
+            var expression = node;
+            var kind = expression.operatorToken.kind;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return this.isConstant(expression.left) && this.isConstant(expression.right);
+            }
+        }
+        if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
+            var expression = node;
+            var kind = expression.operator;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return this.isConstant(expression.operand);
+            }
+        }
         return node.kind === SyntaxKind.current().FalseKeyword
             || node.kind === SyntaxKind.current().TrueKeyword
             || node.kind === SyntaxKind.current().NumericLiteral;

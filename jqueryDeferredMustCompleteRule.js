@@ -17,31 +17,31 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
     };
-    Rule.isPromiseInstantiation = function (expression) {
-        if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
-            var functionName = AstUtils.getFunctionName(expression);
-            var functionTarget = AstUtils.getFunctionTarget(expression);
-            if (functionName === 'Deferred' &&
-                (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
-                return true;
-            }
-        }
-        return false;
-    };
-    Rule.isCompletionFunction = function (functionName) {
-        return /^(resolve|reject)$/.test(functionName);
-    };
     Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+function isPromiseInstantiation(expression) {
+    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
+        var functionName = AstUtils.getFunctionName(expression);
+        var functionTarget = AstUtils.getFunctionTarget(expression);
+        if (functionName === 'Deferred' &&
+            (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
+            return true;
+        }
+    }
+    return false;
+}
+function isCompletionFunction(functionName) {
+    return /^(resolve|reject)$/.test(functionName);
+}
 var JQueryDeferredAnalyzer = (function (_super) {
     __extends(JQueryDeferredAnalyzer, _super);
     function JQueryDeferredAnalyzer() {
         _super.apply(this, arguments);
     }
     JQueryDeferredAnalyzer.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.getText() === '=' && Rule.isPromiseInstantiation(node.right)) {
+        if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === SyntaxKind.current().Identifier) {
                 if (node.left.text != null) {
                     var name_1 = node.left;
@@ -52,7 +52,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
         _super.prototype.visitBinaryExpression.call(this, node);
     };
     JQueryDeferredAnalyzer.prototype.visitVariableDeclaration = function (node) {
-        if (Rule.isPromiseInstantiation(node.initializer)) {
+        if (isPromiseInstantiation(node.initializer)) {
             if (node.name.text != null) {
                 var name_2 = node.name;
                 this.validateDeferredUsage(node, name_2);
@@ -115,7 +115,7 @@ var DeferredCompletionWalker = (function (_super) {
             var prop = node.expression;
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
                 var functionName = prop.name.getText();
-                if (Rule.isCompletionFunction(functionName)) {
+                if (isCompletionFunction(functionName)) {
                     this.wasCompleted = true;
                     return;
                 }

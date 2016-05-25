@@ -65,17 +65,93 @@ var NoUnusedImportsWalker = (function (_super) {
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
         if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
-            this.validateReferencesForVariable(node.name.text, node.name.getStart());
+            this.validateReferencesForVariable(node);
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);
     };
-    NoUnusedImportsWalker.prototype.validateReferencesForVariable = function (name, position) {
-        var references = this.languageServices.getReferencesAtPosition('file.ts', position);
-        if (references.length <= 1 && !this.noRequireReferences[name]) {
-            var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
-            var failure = this.createFailure(position, name.length, failureString);
-            this.addFailure(failure);
+    NoUnusedImportsWalker.prototype.visitImportDeclaration = function (node) {
+        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+            this.validateReferencesForVariable(node);
         }
+        _super.prototype.visitImportDeclaration.call(this, node);
+    };
+    NoUnusedImportsWalker.prototype.validateReferencesForVariable = function (node) {
+        var _this = this;
+        var variableStack = [];
+        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+            var name_1 = node.name.text;
+            var position = node.name.getStart();
+            variableStack.push({ name: name_1, position: position });
+        }
+        else {
+            var importClause = node.importClause;
+            if (importClause != null) {
+                if (importClause.name != null) {
+                    var name_2 = importClause.name.text;
+                    var position = importClause.getStart();
+                    variableStack.push({ name: name_2, position: position });
+                }
+                else if (importClause.namedBindings != null) {
+                    if (importClause.namedBindings.kind === SyntaxKind.current().NamespaceImport) {
+                        var imports = importClause.namedBindings;
+                        var name_3 = imports.name.text;
+                        var position = imports.name.getStart();
+                        variableStack.push({ name: name_3, position: position });
+                    }
+                    else if (importClause.namedBindings.kind === SyntaxKind.current().NamedImports) {
+                        var imports = importClause.namedBindings;
+                        imports.elements.forEach(function (importSpec) {
+                            var name = importSpec.name.text;
+                            var position = importSpec.name.getStart();
+                            variableStack.push({ name: name, position: position });
+                        });
+                    }
+                }
+            }
+        }
+        variableStack.forEach(function (variable) {
+            var name = variable.name;
+            var position = variable.position;
+            var references = _this.languageServices.getReferencesAtPosition('file.ts', position);
+            if (references.length <= 1 && !_this.noRequireReferences[name]) {
+                if (_this.isTsxFile()) {
+                    if (_this.isReactImport(node)) {
+                        return;
+                    }
+                    if (new RegExp('\\b(' + name + ')\\b', 'm').test(_this.getSourceFile().text)) {
+                        return;
+                    }
+                }
+                var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
+                var failure = _this.createFailure(position, name.length, failureString);
+                _this.addFailure(failure);
+            }
+        });
+    };
+    NoUnusedImportsWalker.prototype.isReactImport = function (node) {
+        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+            var importDeclaration = node;
+            if (importDeclaration.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {
+                var moduleExpression = importDeclaration.moduleReference.expression;
+                return this.isModuleExpressionReact(moduleExpression);
+            }
+        }
+        else if (node.kind === SyntaxKind.current().ImportDeclaration) {
+            var importDeclaration = node;
+            var moduleExpression = importDeclaration.moduleSpecifier;
+            return this.isModuleExpressionReact(moduleExpression);
+        }
+        return false;
+    };
+    NoUnusedImportsWalker.prototype.isModuleExpressionReact = function (moduleExpression) {
+        if (moduleExpression != null && moduleExpression.kind === SyntaxKind.current().StringLiteral) {
+            var moduleName = moduleExpression;
+            return /react/i.test(moduleName.text);
+        }
+        return false;
+    };
+    NoUnusedImportsWalker.prototype.isTsxFile = function () {
+        return /.*\.tsx/.test(this.getSourceFile().fileName);
     };
     return NoUnusedImportsWalker;
 }(ErrorTolerantWalker));

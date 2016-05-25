@@ -31,7 +31,7 @@ var ErrorTolerantWalker = (function (_super) {
         }
         return result;
     };
-    ErrorTolerantWalker.DEBUG = true;
+    ErrorTolerantWalker.DEBUG = false;
     return ErrorTolerantWalker;
 }(Lint.RuleWalker));
 module.exports = ErrorTolerantWalker;

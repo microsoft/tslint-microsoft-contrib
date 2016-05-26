@@ -5,6 +5,8 @@ import SyntaxKind = require('./utils/SyntaxKind');
 import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
 import AstUtils = require('./utils/AstUtils');
 
+type Import = ts.ImportEqualsDeclaration | ts.ImportDeclaration;
+
 /**
  * Implementation of the no-unused-import rule.
  */
@@ -84,49 +86,54 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
      * the language service in typescript 1.4 doesn't seem to search for references in other imports.
      * This will be fixed, but we can work around it by keeping track for the import references manually.
      */
-    private validateReferencesForVariable(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration) {
-        const variableStack: { name: string; position: number; }[] = [];
+    private validateReferencesForVariable(node: Import) {
+
+        if (this.isTsxFile() && this.isReactImport(node)) {
+            // react must be imported into tsx components
+            return;
+        }
+
+        const variableStack: { name: string; position: number; importNode: Import; }[] = [];
         if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
             const name: string = (<ts.ImportEqualsDeclaration>node).name.text;
             const position: number = (<ts.ImportEqualsDeclaration>node).name.getStart();
-            variableStack.push({ name: name, position: position });
+            variableStack.push({ name: name, position: position, importNode: node });
         } else {
             const importClause: ts.ImportClause = (<ts.ImportDeclaration>node).importClause;
             if (importClause != null) {
                 if (importClause.name != null) {
                     const name: string = importClause.name.text;
                     const position: number = importClause.getStart();
-                    variableStack.push({ name: name, position: position });
+                    variableStack.push({ name: name, position: position, importNode: node });
                 } else if (importClause.namedBindings != null) {
                     if (importClause.namedBindings.kind === SyntaxKind.current().NamespaceImport) {
                         const imports: ts.NamespaceImport = <ts.NamespaceImport>importClause.namedBindings;
                         const name: string = imports.name.text;
                         const position: number = imports.name.getStart();
-                        variableStack.push({ name: name, position: position });
+                        variableStack.push({ name: name, position: position, importNode: node });
                     } else if (importClause.namedBindings.kind === SyntaxKind.current().NamedImports) {
                         const imports: ts.NamedImports = <ts.NamedImports>importClause.namedBindings;
                         imports.elements.forEach((importSpec: ts.ImportSpecifier): void => {
                             const name: string = importSpec.name.text;
                             const position: number = importSpec.name.getStart();
-                            variableStack.push({ name: name, position: position });
+                            variableStack.push({ name: name, position: position, importNode: node });
                         });
                     }
                 }
             }
         }
 
-        variableStack.forEach((variable: { name: string; position: number; }): void => {
+        variableStack.forEach((variable: { name: string; position: number; importNode: Import; }): void => {
             const name: string = variable.name;
             const position: number = variable.position;
             var references = this.languageServices.getReferencesAtPosition('file.ts', position);
             if (references.length <= 1 && !this.noRequireReferences[name]) {
                 if (this.isTsxFile()) {
-                    // react must be imported into tsx components
-                    if (this.isReactImport(node)) {
-                        return;
-                    }
                     // there is a bug in how the language services finds nodes in tsx files
-                    if (new RegExp('\\b(' + name + ')\\b', 'm').test(this.getSourceFile().text)) {
+                    const sourceText: string = this.getSourceFile().text;
+                    const endOfImport: number = variable.importNode.getEnd();
+                    const restOfFile: string = sourceText.substring(endOfImport);
+                    if (new RegExp('\\b(' + name + ')\\b', 'm').test(restOfFile)) {
                         return;
                     }
                 }
@@ -137,7 +144,7 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isReactImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration): boolean {
+    private isReactImport(node: Import): boolean {
         if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
             const importDeclaration: ts.ImportEqualsDeclaration = <ts.ImportEqualsDeclaration>node;
             if (importDeclaration.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {

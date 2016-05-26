@@ -6,7 +6,8 @@ export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseCompon
 
     public render() {
         return <div
-            className='AuthorSummary'>
+            className='AuthorSummary'
+            dir={I18nFacade.getLanguageDirectionality()}>
             'some text'
         </div>;
     }

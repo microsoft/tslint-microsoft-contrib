@@ -98,7 +98,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React imports in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsFailingReactInput.tsx';
+        var inputFile : string = 'test-data/NoUnusedImportsPassingReactInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -107,7 +107,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React ES6 imports in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsFailingReactES6Input.tsx';
+        var inputFile : string = 'test-data/NoUnusedImportsPassingReactES6Input.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -268,6 +268,22 @@ console.log(AB);`;
                 "startPosition": { "line": 2, "character": 20 }
             }
         ]);
+    });
+
+    it('should fail on missing reference in tsx files', () : void => {
+        var inputFile : string = 'test-data/NoUnusedImportsFailingReactInput.tsx';
+        TestHelper.assertViolations(
+            ruleName,
+            inputFile,
+            [
+                {
+                    "failure": "unused import: 'I18nFacade'",
+                    "name": "test-data/NoUnusedImportsFailingReactInput.tsx",
+                    "ruleName": "no-unused-imports",
+                    "startPosition": { "character": 8, "line": 3 }
+                }
+            ]
+        );
     });
 
 });

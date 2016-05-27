@@ -17,52 +17,19 @@ export class Rule extends Lint.Rules.AbstractRule {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-
-        var referencedDotImports : { [index: string]: boolean; } = this.getReferencedDotImports(sourceFile, this.getOptions());
-        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService, referencedDotImports));
-    }
-
-    private getReferencedDotImports(sourceFile : ts.SourceFile, options : Lint.IOptions) : { [index: string]: boolean; } {
-        var gatherImportHandler = new GatherNoRequireImportsWalker(sourceFile, options);
-        this.applyWithWalker(gatherImportHandler);
-        return gatherImportHandler.noRequireReferences;
-    }
-}
-
-class GatherNoRequireImportsWalker extends Lint.RuleWalker {
-    public noRequireReferences: { [index: string]: boolean; } = {};
-
-    protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
-        var moduleReference = node.moduleReference;
-        if (moduleReference.kind === SyntaxKind.current().QualifiedName) {
-            if ((<any>moduleReference).left != null) {
-                this.gatherReferenceFromImport((<any>moduleReference).left.text);
-            }
-        }
-        super.visitImportEqualsDeclaration(node);
-    }
-
-
-    private gatherReferenceFromImport(qualifiedName : string) : void {
-        if (qualifiedName) {
-            qualifiedName.split('.').forEach((name : string) => {
-                this.noRequireReferences[name] = true;
-            });
-        }
+        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     }
 }
 
 class NoUnusedImportsWalker extends ErrorTolerantWalker {
     private languageServices: ts.LanguageService;
-    private noRequireReferences: { [index: string]: boolean; } = {};
+    private cachedSourceText: string;
 
     public constructor(sourceFile : ts.SourceFile,
                        options : Lint.IOptions,
-                       languageServices : ts.LanguageService,
-                       noRequireReferences: { [index: string]: boolean; }) {
+                       languageServices : ts.LanguageService) {
         super(sourceFile, options);
         this.languageServices = languageServices;
-        this.noRequireReferences = noRequireReferences;
     }
 
 
@@ -127,21 +94,26 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
             const name: string = variable.name;
             const position: number = variable.position;
             var references = this.languageServices.getReferencesAtPosition('file.ts', position);
-            if (references.length <= 1 && !this.noRequireReferences[name]) {
-                if (this.isTsxFile()) {
-                    // there is a bug in how the language services finds nodes in tsx files
-                    const sourceText: string = this.getSourceFile().text;
-                    const endOfImport: number = variable.importNode.getEnd();
-                    const restOfFile: string = sourceText.substring(endOfImport);
-                    if (new RegExp('\\b(' + name + ')\\b', 'm').test(restOfFile)) {
-                        return;
-                    }
+            if (references.length <= 1) {
+                // there is a bug in how the language services finds nodes in ts and tsx files
+                const sourceText: string = this.getSourceText();
+                const endOfImport: number = variable.importNode.getEnd();
+                const restOfFile: string = sourceText.substring(endOfImport);
+                if (new RegExp('\\b(' + name + ')\\b', 'm').test(restOfFile)) {
+                    return;
                 }
                 var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
                 var failure = this.createFailure(position, name.length, failureString);
                 this.addFailure(failure);
             }
         });
+    }
+
+    private getSourceText(): string {
+        if (this.cachedSourceText == null) {
+            this.cachedSourceText = this.getSourceFile().text;
+        }
+        return this.cachedSourceText;
     }
 
     private isReactImport(node: Import): boolean {

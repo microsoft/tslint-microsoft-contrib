@@ -174,6 +174,16 @@ console.log(AB);`;
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
+    it('should pass on dot-import (from MSE)', (): void => {
+        const inputScript: string = `
+            import React = require('react');
+            import Simulate = React.addons.TestUtils.Simulate;
+            Simulate.doit();
+        `;
+
+        TestHelper.assertViolations( ruleName, inputScript, []);
+    });
+
     it('should fail on ES6 star import', () : void => {
         var inputFile : string = `
             import * as chai2 from 'chai'

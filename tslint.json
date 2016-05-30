@@ -99,7 +99,7 @@
     "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace" ],
     "one-variable-per-declaration": true,
     "prefer-array-literal": true,
-    "prefer-const": true,
+    "prefer-const": false,
     "prefer-type-cast": true,
     "promise-must-complete": true,
     "quotemark": [true, "single"],

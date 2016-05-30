@@ -118,8 +118,8 @@ module.exports = function(grunt) {
             options: {
                 configuration: grunt.file.readJSON("tslint.json"),
                 rulesDirectory: 'dist/src',
-                formattersDirectory: 'dist/src',
-                formatter: 'fix-no-var-keyword'
+                //formattersDirectory: 'dist/src',
+                //formatter: 'fix-no-var-keyword'
             },
             files: {
                 src: [

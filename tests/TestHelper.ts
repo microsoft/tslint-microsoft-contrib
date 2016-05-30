@@ -50,9 +50,7 @@ module TestHelper {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
     }
 
-    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
-                                         expectedFailures : ExpectedFailure[]) {
-
+    export function runRule(ruleName : string, userOptions: string[], inputFileOrScript : string): Lint.LintResult {
         const configuration: RuleConfiguration = {
             rules: {}
         };
@@ -80,7 +78,14 @@ module TestHelper {
             result = linter.lint();
         }
 
-        const actualFailures: ExpectedFailure[] = JSON.parse(result.output);
+        return result;
+    }
+
+    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
+                                         expectedFailures : ExpectedFailure[]) {
+
+        const lintResult: Lint.LintResult = runRule(ruleName, userOptions, inputFileOrScript);
+        const actualFailures: ExpectedFailure[] = JSON.parse(lintResult.output);
 
         // All the information we need is line and character of start position. For JSON comparison
         // to work, we will delete the information that we are not interested in from both actual and

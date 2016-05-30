@@ -128,6 +128,12 @@ Rule Name   | Description | Since
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 `valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
 
+Supported Formatters
+-----
+
+Formatter Name          | Description | Since
+:----------             | :------------ | -------------
+`fix-no-unused-imports` | This formatter automatically fixes any unused imports found by the no-unused-imports rule. | 2.0.8
 
 Development
 -----------

@@ -5,6 +5,17 @@ var RecommendedRuleset = require('./recommended_ruleset');
 
 module.exports = function(grunt) {
 
+    function camelize(input) {
+        return _(input).reduce(function(memo, element) {
+            if (element.toLowerCase() === element) {
+                memo = memo + element;
+            } else {
+                memo = memo + '-' + element.toLowerCase();
+            }
+            return memo;
+        }, '');
+    }
+
     function getAllRuleNames(options) {
         options = options || { skipTsLintRules: false }
 
@@ -12,14 +23,7 @@ module.exports = function(grunt) {
             filename = filename
                 .replace(/Rule\..*/, '')  // file extension plus Rule name
                 .replace(/.*\//, '');     // leading path
-            return _(filename).reduce(function(memo, element) {
-                if (element.toLowerCase() === element) {
-                    memo = memo + element;
-                } else {
-                    memo = memo + '-' + element.toLowerCase();
-                }
-                return memo;
-            }, '');
+            return camelize(filename);
         };
 
         var contribRules = _(grunt.file.expand('src/*Rule.ts')).map(convertToRuleNames);
@@ -30,6 +34,20 @@ module.exports = function(grunt) {
         var allRules = baseRules.concat(contribRules);
         allRules.sort();
         return allRules;
+    }
+
+    function getAllFormatterNames() {
+
+        var convertToRuleNames = function(filename) {
+            filename = filename
+                .replace(/Formatter\..*/, '')  // file extension plus Rule name
+                .replace(/.*\//, '');     // leading path
+            return camelize(filename);
+        };
+
+        var formatters = _(grunt.file.expand('src/*Formatter.ts')).map(convertToRuleNames);
+        formatters.sort();
+        return formatters;
     }
 
     function camelCase(input) {
@@ -143,6 +161,11 @@ module.exports = function(grunt) {
         getAllRuleNames({ skipTsLintRules: true }).forEach(function(ruleName) {
             if (readmeText.indexOf(ruleName) === -1) {
                 grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
+            }
+        });
+        getAllFormatterNames().forEach(function(formatterName) {
+            if (readmeText.indexOf(formatterName) === -1) {
+                grunt.fail.warn('A formatter was found that is not documented in README.md: ' + formatterName);
             }
         });
 

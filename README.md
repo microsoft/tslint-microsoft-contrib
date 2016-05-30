@@ -119,6 +119,7 @@ Rule Name   | Description | Since
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
+`no-var-self`                   | Do not use `var self = this`; instead, manage scope with `() => {}` closures. This is a common practice in JavaScript projects converted to TypeScript.
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
 `prefer-const`                  | Use `const` to declare variables if they are only assigned a value once. | 2.0.6
 `prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the 'as type' casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4

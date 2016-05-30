@@ -21,8 +21,8 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
         if (node.kind === SyntaxKind.current().TypeReference) {
             const ref : ts.TypeReferenceNode = <ts.TypeReferenceNode>node;
             if ((<ts.Identifier>ref.typeName).text === 'Array') {
-                var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                let failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
+                let failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
@@ -31,9 +31,9 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
 
 
     protected visitNewExpression(node: ts.NewExpression): void {
-        var functionName  = AstUtils.getFunctionName(node);
+        let functionName  = AstUtils.getFunctionName(node);
         if (functionName === 'Array') {
-            var failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
+            let failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), failureString));
         }
         super.visitNewExpression(node);

@@ -8,10 +8,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDuplicateParameterNames', () : void => {
-    var RULE_NAME : string = 'no-duplicate-parameter-names';
+    let RULE_NAME : string = 'no-duplicate-parameter-names';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoDuplicateParameterNamesTestInput.ts';
+        let inputFile : string = 'test-data/NoDuplicateParameterNamesTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Duplicate parameter name: 'duplicateConstructorParameter'",

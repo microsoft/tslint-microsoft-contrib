@@ -22,7 +22,7 @@ module Utils {
      * A reduce function.
      */
     export function reduce<T, R>(list : T[], predicate: (memo: R, element: T) => R, initialValue: R) : R {
-        var result = initialValue;
+        let result = initialValue;
         if (list != null ) {
             list.forEach((element: T): void => {
                 result = predicate(result, element);

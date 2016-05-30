@@ -38,7 +38,7 @@ describe('fixNoVarKeywordFormatter', () : void => {
     const ruleName : string = 'no-var-keyword';
 
     it('should fix a var keyword', () : void => {
-        var input : string = `
+        let input : string = `
 var foo = bar;
 `;
 

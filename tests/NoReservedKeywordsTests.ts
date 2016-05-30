@@ -11,10 +11,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBannedTermsRule', () : void => {
-    var RULE_NAME : string = 'no-reserved-keywords';
+    let RULE_NAME : string = 'no-reserved-keywords';
 
     it('should not allow the break reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-break.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-break.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: break",
@@ -73,7 +73,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the case reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-case.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-case.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [  {
             "failure": "Forbidden reference to reserved keyword: case",
             "name": "test-data/NoReservedKeywordsTestInput-case.ts",
@@ -131,7 +131,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the catch reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-catch.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-catch.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
@@ -190,7 +190,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the class reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-class.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-class.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: class",
@@ -222,7 +222,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the const reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-const.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-const.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: const",
@@ -281,7 +281,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the continue reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-continue.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-continue.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
@@ -340,7 +340,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the debugger reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-debugger.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-debugger.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
@@ -399,7 +399,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the default reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-default.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-default.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: default",
@@ -458,7 +458,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the delete reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-delete.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-delete.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
@@ -517,7 +517,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the do reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-do.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-do.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: do",
@@ -576,7 +576,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the else reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-else.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-else.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: else",
@@ -635,7 +635,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the enum reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-enum.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-enum.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
@@ -694,7 +694,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the export reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-export.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-export.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: export",
@@ -753,7 +753,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the extends reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-extends.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-extends.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
@@ -812,7 +812,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the false reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-false.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-false.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: false",
@@ -871,7 +871,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the finally reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-finally.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-finally.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
@@ -930,7 +930,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the for reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-for.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-for.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: for",
@@ -989,7 +989,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the function reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-function.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-function.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: function",
@@ -1048,7 +1048,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the if reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-if.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-if.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: if",
@@ -1107,7 +1107,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the import in reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-import.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-import.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: import",
@@ -1166,7 +1166,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the instanceof reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-instanceof.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-instanceof.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
@@ -1225,7 +1225,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the new reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-new.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-new.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: new",
@@ -1284,7 +1284,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the null reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-null.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-null.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: null",
@@ -1343,7 +1343,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the return reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-return.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-return.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: return",
@@ -1402,7 +1402,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the super reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-super.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-super.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: super",
@@ -1461,7 +1461,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the switch reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-switch.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-switch.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
@@ -1520,7 +1520,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the this reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-this.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-this.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: this",
@@ -1579,7 +1579,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the throw reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-throw.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-throw.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
@@ -1638,7 +1638,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the true reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-true.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-true.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: true",
@@ -1697,7 +1697,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the try reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-try.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-try.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: try",
@@ -1756,7 +1756,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the typeof reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-typeof.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-typeof.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
@@ -1815,7 +1815,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the var reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-var.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-var.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: var",
@@ -1874,7 +1874,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the void reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-void.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-void.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: void",
@@ -1933,7 +1933,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the while reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-while.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-while.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: while",
@@ -1992,7 +1992,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the with reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-with.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-with.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: with",
@@ -2051,7 +2051,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the as reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-as.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-as.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: as",
@@ -2164,7 +2164,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the implements reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-implements.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-implements.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
@@ -2259,7 +2259,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the interface reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-interface.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-interface.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
@@ -2354,7 +2354,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the let reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-let.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-let.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: let",
@@ -2449,7 +2449,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the package reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-package.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-package.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: package",
@@ -2544,7 +2544,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the private reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-private.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-private.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: private",
@@ -2639,7 +2639,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the protected reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-protected.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-protected.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
@@ -2734,7 +2734,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the public reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-public.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-public.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: public",
@@ -2829,7 +2829,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the static reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-static.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-static.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: static",
@@ -2924,7 +2924,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the yield reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-yield.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-yield.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
@@ -3019,7 +3019,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the any reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-any.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-any.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: any",
@@ -3132,7 +3132,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the boolean reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-boolean.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-boolean.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
@@ -3245,7 +3245,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the constructor reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-constructor.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-constructor.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
@@ -3340,7 +3340,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the declare reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-declare.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-declare.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
@@ -3453,7 +3453,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the get reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-get.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-get.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: get",
@@ -3566,7 +3566,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the module reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-module.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-module.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: module",
@@ -3670,7 +3670,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the require reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-require.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-require.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: require",
@@ -3774,7 +3774,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the number reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-number.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-number.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: number",
@@ -3887,7 +3887,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the set reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-set.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-set.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: set",
@@ -4000,7 +4000,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the string reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-string.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-string.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: string",
@@ -4113,7 +4113,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the symbol reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-symbol.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-symbol.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
@@ -4226,7 +4226,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the type reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-type.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-type.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: type",
@@ -4339,7 +4339,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the from reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-from.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-from.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: from",
@@ -4452,7 +4452,7 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the of reserved word', () : void => {
-        var inputFile : string = 'test-data/NoReservedKeywordsTestInput-of.ts';
+        let inputFile : string = 'test-data/NoReservedKeywordsTestInput-of.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: of",

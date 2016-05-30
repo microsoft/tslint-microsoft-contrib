@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noRelativeImportsRule', () : void => {
-    var ruleName : string = 'no-relative-imports';
+    let ruleName : string = 'no-relative-imports';
 
     it('should pass on absolute path require imports', () : void => {
-        var script : string = `
+        let script : string = `
             import App = require('App');
             import App = require('common/App');
         `;
@@ -22,7 +22,7 @@ describe('noRelativeImportsRule', () : void => {
     });
 
     it('should pass on absolute path ES6 imports', () : void => {
-        var script : string = `
+        let script : string = `
             ﻿import OfficeApp from 'OfficeApp';
             ﻿import OfficeApp from 'common/OfficeApp';
         `;
@@ -31,7 +31,7 @@ describe('noRelativeImportsRule', () : void => {
     });
 
     it('should fail on relative path require import', () : void => {
-        var script : string = `
+        let script : string = `
             import App = require('./App');
             import App = require('../common/App');
         `;
@@ -53,7 +53,7 @@ describe('noRelativeImportsRule', () : void => {
     });
 
     it('should fail on relative path ES6 import', () : void => {
-        var script : string = `
+        let script : string = `
             ﻿import OfficeApp from './OfficeApp';
             ﻿import OfficeApp from '../common/OfficeApp';
         `;

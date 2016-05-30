@@ -41,9 +41,9 @@ class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
     }
 
     private validateParameterNames(node : ts.SignatureDeclaration) {
-        var seenNames : {[index: string]: boolean} = {};
+        let seenNames : {[index: string]: boolean} = {};
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
-            var parameterName : string = (<any>parameter.name).text;  // how does one check if the union type is Identifier?
+            let parameterName : string = (<any>parameter.name).text;  // how does one check if the union type is Identifier?
             if (parameterName != null) {
                 if (seenNames[parameterName]) {
                     this.addFailure(this.createFailure(

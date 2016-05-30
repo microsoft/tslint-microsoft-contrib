@@ -16,10 +16,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoForInRuleWalker extends ErrorTolerantWalker {
     protected visitForInStatement(node: ts.ForInStatement): void {
-        var initializer: string = node.initializer.getText();
-        var expression: string = node.expression.getText();
+        let initializer: string = node.initializer.getText();
+        let expression: string = node.expression.getText();
 
-        var msg: string = Rule.FAILURE_STRING + 'for (' + initializer + ' in ' + expression + ')';
+        let msg: string = Rule.FAILURE_STRING + 'for (' + initializer + ' in ' + expression + ')';
         this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
     }
 }

@@ -38,7 +38,7 @@ describe('fixNoUnusedImportsFormatter', () : void => {
     const ruleName : string = 'no-unused-imports';
 
     it('should fix an unused import at start of file', () : void => {
-        var input : string = `import Unused = require('Unused');
+        let input : string = `import Unused = require('Unused');
 class NoUnusedImportsTestInput {
     constructor() {
     }
@@ -54,7 +54,7 @@ class NoUnusedImportsTestInput {
     });
 
     it('should fix an unused import at last import line', () : void => {
-        var input : string = `import Used = require('Used');
+        let input : string = `import Used = require('Used');
 import Unused = require('Unused');
 
 class NoUnusedImportsTestInput {

@@ -8,15 +8,15 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDocumentWriteRule', () : void => {
-    var RULE_NAME : string = 'no-document-write';
+    let RULE_NAME : string = 'no-document-write';
 
     it('should not produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoDocumentWritePassingTestInput.ts';
+        let inputFile : string = 'test-data/NoDocumentWritePassingTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, []);
     });
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoDocumentWriteFailingTestInput.ts';
+        let inputFile : string = 'test-data/NoDocumentWriteFailingTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden call to document.write",

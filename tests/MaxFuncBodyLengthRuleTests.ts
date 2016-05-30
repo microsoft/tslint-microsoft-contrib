@@ -11,7 +11,7 @@ import TestHelper = require('./TestHelper');
  */
 describe('maxFuncBodyLengthRule', () : void => {
         let options;
-        var script : string = `
+        let script : string = `
         (function () { alert('!'); })();
 
         function hasBodyLengthOf10 (x, y, z) {
@@ -70,7 +70,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         };
         `;
 
-    var ruleName : string = 'max-func-body-length';
+    let ruleName : string = 'max-func-body-length';
 
     describe('when functions do not exceed general option value and syntax kind wise options are not used', () => {
         beforeEach(() => {

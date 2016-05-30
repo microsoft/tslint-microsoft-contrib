@@ -11,15 +11,15 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noOctalLiteralRule', () : void => {
-     var ruleName : string = 'no-octal-literal';
+     let ruleName : string = 'no-octal-literal';
 
      it('should not fail on similar but acceptable strings', () : void => {
-         var script : string = 'test-data/NoOctalLiteralTestInput-passing.ts';
+         let script : string = 'test-data/NoOctalLiteralTestInput-passing.ts';
          TestHelper.assertViolations(ruleName, script, [ ]);
      });
 
      it('should fail on 3 digit octal literals', () : void => {
-         var script : string = `
+         let script : string = `
 /**
  * The following code should have no errors:
  */
@@ -34,7 +34,7 @@ function demoScriptFail() {
      });
 
     it('should produce violations ', () : void => {
-         var inputFile : string = 'test-data/NoOctalLiteralTestInput.ts';
+         let inputFile : string = 'test-data/NoOctalLiteralTestInput.ts';
          TestHelper.assertViolations(ruleName, inputFile, [
              {
                  "failure": "Octal literals should not be used: \\251",

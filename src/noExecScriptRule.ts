@@ -23,10 +23,10 @@ class NoEvalScriptWalker extends ErrorTolerantWalker {
     }
 
     private validateExpression(node : ts.CallExpression) : void {
-        var expression: ts.Expression = node.expression;
-        var functionName : string = AstUtils.getFunctionName(node);
+        let expression: ts.Expression = node.expression;
+        let functionName : string = AstUtils.getFunctionName(node);
         if (functionName === 'execScript') {
-            var msg : string = Rule.FAILURE_STRING + expression.getFullText().trim();
+            let msg : string = Rule.FAILURE_STRING + expression.getFullText().trim();
             this.addFailure(this.createFailure(expression.getStart(), expression.getWidth(), msg));
         }
     }

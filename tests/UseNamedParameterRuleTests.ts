@@ -9,10 +9,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('useNamedParameterRule', () : void => {
-    var ruleName : string = 'use-named-parameter';
+    let ruleName : string = 'use-named-parameter';
 
     it('should ban referencing arguments by numeric index', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 function add() {
     return arguments[0] + arguments[1];
 }`;
@@ -34,7 +34,7 @@ function add() {
     });
 
     it('should allow referencing arguments by variable index', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 function add() {
     return arguments[whatever()] + arguments[n];
 }`;

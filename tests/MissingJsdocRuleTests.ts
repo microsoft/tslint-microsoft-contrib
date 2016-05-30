@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('missing-jsdoc', () : void => {
-    var ruleName : string = 'missing-jsdoc';
+    let ruleName : string = 'missing-jsdoc';
 
     it('should not fail on top level comment', () : void => {
-        var script : string = `
+        let script : string = `
 /**
  * whatever
  */
@@ -23,7 +23,7 @@ function whatever() { }`;
     });
 
     it('should not fail on top level comment with trailing spaces', () : void => {
-        var script : string = `
+        let script : string = `
 /**
  * whatever
  */
@@ -33,7 +33,7 @@ function whatever() { }`;
     });
 
     it('should fail on missing comment', () : void => {
-        var script : string = `
+        let script : string = `
 function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
@@ -47,7 +47,7 @@ function whatever() { }`;
     });
 
     it('should fail on one star comment', () : void => {
-        var script : string = `
+        let script : string = `
 /*
  * whatever
  */
@@ -64,7 +64,7 @@ function whatever() { }`;
     });
 
     it('should fail on three star comment', () : void => {
-        var script : string = `
+        let script : string = `
 /***
  * whatever
  */
@@ -81,7 +81,7 @@ function whatever() { }`;
     });
 
     it('should fail on trailing chars', () : void => {
-        var script : string = `
+        let script : string = `
 /** bad format
  * whatever
  */
@@ -98,7 +98,7 @@ function whatever() { }`;
     });
 
     it('should fail on leading spaces', () : void => {
-        var script : string = `
+        let script : string = `
     /**
      * whatever
      */

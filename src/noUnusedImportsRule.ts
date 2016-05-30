@@ -14,9 +14,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'unused import: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        let documentRegistry = ts.createDocumentRegistry();
+        let languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        let languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     }
 }
@@ -93,7 +93,7 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
         variableStack.forEach((variable: { name: string; position: number; importNode: Import; }): void => {
             const name: string = variable.name;
             const position: number = variable.position;
-            var references = this.languageServices.getReferencesAtPosition('file.ts', position);
+            let references = this.languageServices.getReferencesAtPosition('file.ts', position);
             if (references.length <= 1) {
                 // there is a bug in how the language services finds nodes in ts and tsx files
                 const sourceText: string = this.getSourceText();
@@ -102,8 +102,8 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
                 if (new RegExp('\\b(' + name + ')\\b', 'm').test(restOfFile)) {
                     return;
                 }
-                var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
-                var failure = this.createFailure(position, name.length, failureString);
+                let failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
+                let failure = this.createFailure(position, name.length, failureString);
                 this.addFailure(failure);
             }
         });

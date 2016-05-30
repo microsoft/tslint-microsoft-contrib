@@ -15,7 +15,7 @@ class ErrorTolerantWalker extends Lint.RuleWalker {
         } catch (e) {
             // turn this on when trying out new rules on foreign codebases
             if (ErrorTolerantWalker.DEBUG) {
-                var msg: string = 'An error occurred visiting a node.'
+                let msg: string = 'An error occurred visiting a node.'
                     + '\nWalker: ' + this.getClassName()
                     + '\nNode: ' + (node.getFullText ? node.getFullText() : '<unknown>')
                     + '\n' + e;
@@ -31,7 +31,7 @@ class ErrorTolerantWalker extends Lint.RuleWalker {
     private getClassName(): string {
         // Some versions of IE have the word "function" in the constructor name and
         // have the function body there as well. This rips out and returns the function name.
-        var result: string = this.constructor.toString().match(/function\s+([\w\$]+)\s*\(/)[1] || '';
+        let result: string = this.constructor.toString().match(/function\s+([\w\$]+)\s*\(/)[1] || '';
         if (result == null || result.length === 0) {
             throw new Error('Could not determine class name from input: ' + this.constructor.toString());
         }

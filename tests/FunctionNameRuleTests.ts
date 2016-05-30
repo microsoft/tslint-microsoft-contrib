@@ -11,10 +11,10 @@ import TestHelper = require('./TestHelper');
  */
 describe('functionNameRule', () : void => {
 
-    var ruleName : string = 'function-name';
+    let ruleName : string = 'function-name';
 
     it('should pass on correctly named functions', () : void => {
-        var script : string = `
+        let script : string = `
             function foo() {}
             class MyClass {
                 foo() {}
@@ -33,7 +33,7 @@ describe('functionNameRule', () : void => {
     });
 
     it('should pass on correctly public static methods', () : void => {
-        var script : string = `
+        let script : string = `
             class MyClass {
                 static FOO() {}
                 static FOO_BAR() {}
@@ -46,7 +46,7 @@ describe('functionNameRule', () : void => {
     });
 
     it('should pass on correctly private static methods', () : void => {
-        var script : string = `
+        let script : string = `
             class MyClass {
                 private static bar() {}
                 private static bar1() {}
@@ -59,7 +59,7 @@ describe('functionNameRule', () : void => {
     });
 
     it('should fail on incorrect public methods', () : void => {
-        var script : string = `
+        let script : string = `
             class MyClass {
                 Foo() {}
                 _foo() {}
@@ -104,7 +104,7 @@ describe('functionNameRule', () : void => {
     });
 
     it('should fail on incorrect private methods', () : void => {
-        var script : string = `
+        let script : string = `
             class MyClass {
                 private Foo() {}
                 private _foo() {}
@@ -149,7 +149,7 @@ describe('functionNameRule', () : void => {
     });
 
     it('should fail on incorrect static methods', () : void => {
-        var script : string = `
+        let script : string = `
             class MyClass {
                 static Foo() {}
                 static _foo() {}
@@ -195,7 +195,7 @@ describe('functionNameRule', () : void => {
         });
 
         it('should allow passing names', (): void => {
-            var script : string = `
+            let script : string = `
             function myFunction() {}
             class MyClass {
                 myMethod() {}
@@ -207,7 +207,7 @@ describe('functionNameRule', () : void => {
         });
 
         it('should ban non-passing names', (): void => {
-            var script : string = `
+            let script : string = `
             function notMyFunction() {}
             class MyClass {
                 notMyMethod() {}

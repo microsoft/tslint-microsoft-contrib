@@ -42,7 +42,7 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
     }
 
     private validateParameters(node : ts.SignatureDeclaration) {
-        var optionalParameterFound = false;
+        let optionalParameterFound = false;
         if (node.parameters == null) {
             return;
         }
@@ -51,7 +51,7 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
                 optionalParameterFound = true;
             } else if (optionalParameterFound && parameter.initializer == null) {
                 // we found a non-optional parameter that comes *after* an optional parameter
-                var msg = Rule.FAILURE_STRING + parameter.getFullText();
+                let msg = Rule.FAILURE_STRING + parameter.getFullText();
                 this.addFailure(this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), msg));
             }
         });

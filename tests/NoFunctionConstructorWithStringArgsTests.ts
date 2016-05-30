@@ -8,10 +8,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noFunctionConstructorWithStringArgsRule', () : void => {
-    var RULE_NAME : string = 'no-function-constructor-with-string-args';
+    let RULE_NAME : string = 'no-function-constructor-with-string-args';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoFunctionConstructorWithStringArgsTestInput.ts';
+        let inputFile : string = 'test-data/NoFunctionConstructorWithStringArgsTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "forbidden: Function constructor with string arguments ",

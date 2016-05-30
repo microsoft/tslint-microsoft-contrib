@@ -51,7 +51,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     }
 
     private static getLeftMostCallExpression(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression {
-        var leftSide: ts.Node = node.expression;
+        let leftSide: ts.Node = node.expression;
         while (leftSide != null) {
             if (leftSide.kind === SyntaxKind.current().CallExpression) {
                 return <ts.CallExpression>leftSide;

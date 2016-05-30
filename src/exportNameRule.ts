@@ -106,19 +106,19 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private validateExport(exportedName: string, node: ts.Node): void {
-        var regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
+        let regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
-                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                let failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                let failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
     }
 
     private getFilename(): string {
-        var filename = this.getSourceFile().fileName;
-        var lastSlash = filename.lastIndexOf('/');
+        let filename = this.getSourceFile().fileName;
+        let lastSlash = filename.lastIndexOf('/');
         if (lastSlash > -1) {
             return filename.substring(lastSlash + 1);
         }
@@ -126,7 +126,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private isSuppressed(exportedName: string) : boolean {
-        var allExceptions : string[] = Rule.getExceptions(this.getOptions());
+        let allExceptions : string[] = Rule.getExceptions(this.getOptions());
 
         return Utils.exists(allExceptions, (exception: string) : boolean => {
             return new RegExp(exception).test(exportedName);

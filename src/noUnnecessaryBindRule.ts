@@ -29,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-        var analyzers: CallAnalyzer[] = [
+        let analyzers: CallAnalyzer[] = [
             new TypeScriptFunctionAnalyzer(), new UnderscoreStaticAnalyzer(), new UnderscoreInstanceAnalyzer()
         ];
 
@@ -77,7 +77,7 @@ class TypeScriptFunctionAnalyzer implements CallAnalyzer {
 
 class UnderscoreStaticAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
-        var isUnderscore: boolean = AstUtils.getFunctionTarget(node) === '_';
+        let isUnderscore: boolean = AstUtils.getFunctionTarget(node) === '_';
         if (isUnderscore) {
             const functionName: string = AstUtils.getFunctionName(node);
             if (functionName === 'bind') {
@@ -102,7 +102,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
     }
 
     public getFunctionArgument(node: ts.CallExpression): ts.Expression {
-        var functionName: string = AstUtils.getFunctionName(node);
+        let functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {

@@ -8,10 +8,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noIncrementDecrementRule', () : void => {
-    var RULE_NAME : string = 'no-increment-decrement';
+    let RULE_NAME : string = 'no-increment-decrement';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
+        let inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden ++ operator",

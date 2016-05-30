@@ -10,9 +10,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Forbidden call to document.cookie';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        var languageService : ts.LanguageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        let documentRegistry = ts.createDocumentRegistry();
+        let languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        let languageService : ts.LanguageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), languageService));
     }
 }
@@ -29,12 +29,12 @@ class NoCookiesWalker extends ErrorTolerantWalker {
 
 
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
-        var propertyName = node.name.text;
+        let propertyName = node.name.text;
         if (propertyName === 'cookie') {
-            var leftSide : ts.Expression = node.expression;
+            let leftSide : ts.Expression = node.expression;
             try {
-                var leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
-                var typeAsString: string = this.typeChecker.typeToString(leftSideType);
+                let leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
+                let typeAsString: string = this.typeChecker.typeToString(leftSideType);
                 if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }

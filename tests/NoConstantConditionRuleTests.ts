@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noConstantConditionRule', () : void => {
-    var ruleName : string = 'no-constant-condition';
+    let ruleName : string = 'no-constant-condition';
 
     it('should pass on comparisons', () : void => {
-        var script : string = `
+        let script : string = `
             if (something === false) {}
             if (something === true) {}
             if (something > 1) {}
@@ -27,7 +27,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on if-booleans', () : void => {
-        var script : string = `
+        let script : string = `
             if (false) {}
             if (true) {}
         `;
@@ -49,7 +49,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on constant comparisons', () : void => {
-        var script : string = `
+        let script : string = `
             if (0 < 9) {}
             if (0 > 9) {}
             if (0 <= 9) {}
@@ -120,7 +120,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on nested constant comparison', () : void => {
-        var script : string = `
+        let script : string = `
             if (0 < 9 < 4 > 2) {}
         `;
 
@@ -135,7 +135,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on constant infix arithmetic', () : void => {
-        var script : string = `
+        let script : string = `
             if (0 + 9) {}
             if (0 - 9) {}
             if (0 * 9) {}
@@ -178,7 +178,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on constant postfix arithmetic', () : void => {
-        var script : string = `
+        let script : string = `
             if (0++) {}
             if (0--) {}
         `;
@@ -200,7 +200,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on constant prefix arithmetic', () : void => {
-        var script : string = `
+        let script : string = `
             if (++0) {}
             if (--0) {}
             if (!true) {}
@@ -229,7 +229,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on logic operators', () : void => {
-        var script : string = `
+        let script : string = `
             if (0 && 2) {}
             if (3 || 9) {}
         `;
@@ -251,7 +251,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on if-numbers', () : void => {
-        var script : string = `
+        let script : string = `
             if (0) {}
             if (1) {}
         `;
@@ -273,7 +273,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on ternary-booleans', () : void => {
-        var script : string = `
+        let script : string = `
             var x = true ? 1 : 0;
             var y = false ? 1 : 0;
         `;
@@ -295,7 +295,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on ternary-numbers', () : void => {
-        var script : string = `
+        let script : string = `
             var x = 1 ? 1 : 0;
             var y = 0 ? 1 : 0;
         `;
@@ -323,7 +323,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on while-booleans', () : void => {
-        var script : string = `
+        let script : string = `
             while (false) {}
             while (true) {}
         `;
@@ -351,7 +351,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on while-numbers', () : void => {
-        var script : string = `
+        let script : string = `
             while (0) {}
             while (1) {}
         `;
@@ -379,7 +379,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on do-while-booleans', () : void => {
-        var script : string = `
+        let script : string = `
             do {} while (true)
             do {} while (false)
         `;
@@ -407,7 +407,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on do-while-numbers', () : void => {
-        var script : string = `
+        let script : string = `
             do {} while (1)
             do {} while (0)
         `;
@@ -435,7 +435,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on for-booleans', () : void => {
-        var script : string = `
+        let script : string = `
             for (;true;) { }
             for (;false;) { }
         `;
@@ -463,7 +463,7 @@ describe('noConstantConditionRule', () : void => {
     });
 
     it('should fail on for-numbers', () : void => {
-        var script : string = `
+        let script : string = `
             for (;1;) { }
             for (;0;) { }
         `;

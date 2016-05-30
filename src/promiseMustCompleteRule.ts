@@ -31,7 +31,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
     }
 
     private getCompletionIdentifiers(declaration: ts.SignatureDeclaration): ts.Identifier[] {
-        var result: ts.Identifier[] = [];
+        let result: ts.Identifier[] = [];
         if (declaration.parameters == null || declaration.parameters.length === 0) {
             return result;
         }
@@ -61,7 +61,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
         const blockAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.getOptions(), completionIdentifiers);
         blockAnalyzer.visitNode(block);
         if (!blockAnalyzer.isAlwaysCompleted()) {
-            var failure = this.createFailure(promiseInstantiation.getStart(), promiseInstantiation.getWidth(), Rule.FAILURE_STRING);
+            let failure = this.createFailure(promiseInstantiation.getStart(), promiseInstantiation.getWidth(), Rule.FAILURE_STRING);
             this.addFailure(failure);
         }
     }
@@ -138,7 +138,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
 
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
         // walk into function body but do not track any shadowed identifiers
-        var nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
+        let nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
         const analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
         analyzer.visitNode(node.body);
         if (analyzer.isAlwaysCompleted()) {
@@ -148,7 +148,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
 
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         // walk into function body but do not track any shadowed identifiers
-        var nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
+        let nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);
         const analyzer = new PromiseCompletionWalker(this.getSourceFile(), this.walkerOptions, nonShadowedIdentifiers);
         analyzer.visitNode(node.body);
         if (analyzer.isAlwaysCompleted()) {
@@ -160,7 +160,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
         const result: ts.Identifier[] = [];
         this.completionIdentifiers.forEach((identifier: ts.Identifier): void => {
             // if this identifier is not shadowed, then add it to result
-            var isShadowed: boolean = Utils.exists(declaration.parameters, (parameter: ts.ParameterDeclaration): boolean => {
+            let isShadowed: boolean = Utils.exists(declaration.parameters, (parameter: ts.ParameterDeclaration): boolean => {
                 return AstUtils.isSameIdentifer(identifier, parameter.name);
             });
             if (!isShadowed) {

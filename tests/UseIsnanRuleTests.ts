@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('useIsnanRule', () : void => {
-    var ruleName : string = 'use-isnan';
+    let ruleName : string = 'use-isnan';
 
     it('should pass on xxx', () : void => {
-        var script : string = `
+        let script : string = `
         if (isNaN(NaN)) { }
         if (isNaN(something)) { }
         `;
@@ -22,7 +22,7 @@ describe('useIsnanRule', () : void => {
     });
 
     it('should fail on equality NaN', () : void => {
-        var script : string = `
+        let script : string = `
         if (foo == NaN) {  }
         if (NaN === foo) {  }
         if (foo != NaN) {  }
@@ -58,7 +58,7 @@ describe('useIsnanRule', () : void => {
     });
 
     it('should fail on other binary expressions', () : void => {
-        var script : string = `
+        let script : string = `
         if (foo > NaN) { }
         if (NaN >= foo) { }
         if (foo < NaN) { }

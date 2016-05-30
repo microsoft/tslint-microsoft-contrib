@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noInvalidRegexpRule', () : void => {
-    var ruleName : string = 'no-invalid-regexp';
+    let ruleName : string = 'no-invalid-regexp';
 
     it('should pass on valid input', () : void => {
-        var script : string = `
+        let script : string = `
             var a = new RegExp('.');        // valid constructor
             var b = RegExp('.');            // this is the constructor as well
             var c = this.RegExp('[');       // clearly not the typescript RegExp object
@@ -24,7 +24,7 @@ describe('noInvalidRegexpRule', () : void => {
     });
 
     it('should fail on invalid string in constuctor', () : void => {
-        var script : string = `
+        let script : string = `
             new RegExp('\\\\') /*error Invalid regular expression: /\/: \ at end of pattern*/
         `;
 
@@ -39,7 +39,7 @@ describe('noInvalidRegexpRule', () : void => {
     });
 
     it('should fail on invalid string in function call', () : void => {
-        var script : string = `
+        let script : string = `
             RegExp('[')      /*error Invalid regular expression: /[/: Unterminated character class*/
         `;
 

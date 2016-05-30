@@ -9,8 +9,8 @@ import TestHelper = require('./TestHelper');
  */
 describe('noDisableAutoSanitizationRule', () : void => {
     it('should produce violation for execUnsafeLocalFunction', () : void => {
-        var ruleName : string = 'no-disable-auto-sanitization';
-        var script : string = 'var retVal = MSApp.execUnsafeLocalFunction(() => {});';
+        let ruleName : string = 'no-disable-auto-sanitization';
+        let script : string = 'var retVal = MSApp.execUnsafeLocalFunction(() => {});';
         TestHelper.assertViolations(
             ruleName,
             script,
@@ -26,8 +26,8 @@ describe('noDisableAutoSanitizationRule', () : void => {
     });
 
     it('should produce violation for setInnerHTMLUnsafe', () : void => {
-        var ruleName : string = 'no-disable-auto-sanitization';
-        var script : string = 'WinJS.Utilities.setInnerHTMLUnsafe(element, text);';
+        let ruleName : string = 'no-disable-auto-sanitization';
+        let script : string = 'WinJS.Utilities.setInnerHTMLUnsafe(element, text);';
         TestHelper.assertViolations(
             ruleName,
             script,

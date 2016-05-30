@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        var walker: Lint.RuleWalker = new BannedTermWalker(
+        let walker: Lint.RuleWalker = new BannedTermWalker(
             sourceFile,
             this.getOptions(),
             Rule.FAILURE_STRING,

@@ -26,11 +26,11 @@ class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingWalker {
     }
 
     private validateExpression(node : ts.CallExpression) : void {
-        var functionName : string = AstUtils.getFunctionName(node);
-        var firstArg : ts.Expression = node.arguments[0];
+        let functionName : string = AstUtils.getFunctionName(node);
+        let firstArg : ts.Expression = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
             if (!this.isExpressionEvaluatingToFunction(firstArg)) {
-                var msg : string = this.failureString + firstArg.getFullText().trim().substring(0, 40);
+                let msg : string = this.failureString + firstArg.getFullText().trim().substring(0, 40);
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
             }
         }

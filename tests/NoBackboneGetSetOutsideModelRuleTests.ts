@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBackboneGetSetOutsideModelRule', () : void => {
-    var ruleName : string = 'no-backbone-get-set-outside-model';
+    let ruleName : string = 'no-backbone-get-set-outside-model';
 
     it('should pass on get and set calls on the this reference', () : void => {
-        var script : string = `
+        let script : string = `
             var datetime = this.get('timestamp');
             this.set('modificationdate', datetime);
         `;
@@ -22,7 +22,7 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
     });
 
     it('should pass on get and set calls with wrong # parameters and wrong parameter types', () : void => {
-        var script : string = `
+        let script : string = `
             model.get();
             model.get(someIdentifier);
             model.get('timestamp', 'someOtherValue');
@@ -36,7 +36,7 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
     });
 
     it('should fail on get and set on an object different than this', () : void => {
-        var script : string = `
+        let script : string = `
             var datetime = model.get('timestamp');
             model.set('modificationdate', datetime);
         `;

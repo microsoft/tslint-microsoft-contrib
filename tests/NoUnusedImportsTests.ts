@@ -13,7 +13,7 @@ describe('noUnusedImportsRule', () : void => {
     const ruleName : string = 'no-unused-imports';
 
     it('should pass on require import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import chai = require('chai')
 
             class NoUnusedImportsTestInput {
@@ -26,7 +26,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should pass on ES6 star import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import * as chai2 from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -39,7 +39,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should pass on ES6 import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import chai3 from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -52,7 +52,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should pass on ES6 braced import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import { chai4 } from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -65,7 +65,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should pass on ES6 braced multi-import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import { chai5, chai6 } from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -79,7 +79,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should fail on unused require import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import NoUnusedImportsRule = require('../src/noUnusedImportsRule');
 
             class NoUnusedImportsTestInput {
@@ -98,7 +98,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React imports in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsPassingReactInput.tsx';
+        let inputFile : string = 'test-data/NoUnusedImportsPassingReactInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -107,7 +107,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React ES6 imports in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsPassingReactES6Input.tsx';
+        let inputFile : string = 'test-data/NoUnusedImportsPassingReactES6Input.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -116,7 +116,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle import static references in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsFailingInput.tsx';
+        let inputFile : string = 'test-data/NoUnusedImportsFailingInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -125,7 +125,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should flag an unused relative import', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 import DM = require("DM");
 import AB = DM.Dependency;
 console.log(DM);`; // AB import is not used!
@@ -141,7 +141,7 @@ console.log(DM);`; // AB import is not used!
     });
 
     it('should flag an unused relative ES6 import', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 import DM from "DM";
 import AB as DM.Dependency;
 console.log(DM);`; // AB import is not used!
@@ -157,7 +157,7 @@ console.log(DM);`; // AB import is not used!
     });
 
     it('should not flag imports that are used as other imports', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 import DM = require("DM");
 import AB = DM.Dependency;
 console.log(AB);`;
@@ -166,7 +166,7 @@ console.log(AB);`;
     });
 
     it('should not flag imports that are used as other ES6 imports', () : void => {
-        var inputScript : string = `
+        let inputScript : string = `
 import DM as "DM";
 import AB as DM.Dependency;
 console.log(AB);`;
@@ -185,7 +185,7 @@ console.log(AB);`;
     });
 
     it('should fail on ES6 star import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import * as chai2 from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -204,7 +204,7 @@ console.log(AB);`;
     });
 
     it('should fail on ES6 import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import chai3 from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -223,7 +223,7 @@ console.log(AB);`;
     });
 
     it('should fail on ES6 braced import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import { chai4 } from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -242,7 +242,7 @@ console.log(AB);`;
     });
 
     it('should fail on ES6 braced multi-import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import { chai5, chai6 } from 'chai'
 
             class NoUnusedImportsTestInput {
@@ -262,7 +262,7 @@ console.log(AB);`;
     });
 
     it('should fail on unused require import', () : void => {
-        var inputFile : string = `
+        let inputFile : string = `
             import NoUnusedImportsRule = require('../src/noUnusedImportsRule');
 
             class NoUnusedImportsTestInput {
@@ -281,7 +281,7 @@ console.log(AB);`;
     });
 
     it('should fail on missing reference in tsx files', () : void => {
-        var inputFile : string = 'test-data/NoUnusedImportsFailingReactInput.tsx';
+        let inputFile : string = 'test-data/NoUnusedImportsFailingReactInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,

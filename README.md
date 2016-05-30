@@ -134,6 +134,7 @@ Supported Formatters
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------
 `fix-no-unused-imports` | This formatter automatically fixes any unused imports found by the no-unused-imports rule. | 2.0.8
+`fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations. | 2.0.8
 
 Development
 -----------

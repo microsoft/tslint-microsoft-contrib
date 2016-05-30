@@ -92,7 +92,7 @@
     "no-unused-imports": true,
     "no-unused-variable": true,
     "no-use-before-declare": true,
-    "no-var-keyword": false,
+    "no-var-keyword": true,
     "no-var-requires": true,
     "no-with-statement": true,
     "object-literal-sort-keys": false,

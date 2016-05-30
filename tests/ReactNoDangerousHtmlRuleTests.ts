@@ -6,7 +6,7 @@
 import TestHelper = require('./TestHelper');
 import reactNoDangerousHtmlRule = require('../src/reactNoDangerousHtmlRule');
 
-let dangerousScript : string = `
+const dangerousScript : string = `
 class MyComponent {
     public render() : ReactTypes.ReactElement<any> {
         return React.createElement("div", {
@@ -21,8 +21,8 @@ class MyComponent {
  * Unit tests.
  */
 describe('reactNoDangerousHtmlRule', () : void => {
-    let ruleName : string = 'react-no-dangerous-html';
-    let exceptions : {}[] = [];
+    const ruleName : string = 'react-no-dangerous-html';
+    const exceptions : {}[] = [];
     let original: any;
 
     beforeEach(() : void => {

@@ -37,7 +37,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        let functionName = AstUtils.getFunctionName(node);
+        const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText()));

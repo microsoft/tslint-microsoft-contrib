@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoDisableAutoSanitizationWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-        let functionName : string = AstUtils.getFunctionName(node);
+        const functionName : string = AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
         }

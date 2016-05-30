@@ -15,9 +15,9 @@ interface Exception {
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        let documentRegistry = ts.createDocumentRegistry();
-        let languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
-        let languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        const documentRegistry = ts.createDocumentRegistry();
+        const languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
+        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
 
         return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions(), languageService));
     }
@@ -56,7 +56,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
 
     protected visitPropertyAssignment(node: ts.PropertyAssignment): void {
         super.visitPropertyAssignment(node);
-        let keyNode : ts.DeclarationName = node.name;
+        const keyNode : ts.DeclarationName = node.name;
 
         if (keyNode.kind === SyntaxKind.current().Identifier) {
             if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
@@ -91,19 +91,19 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
 
     private addFailureIfNotSuppressed(parent: ts.Node, node: { text: string; }): void {
         if (!this.isSuppressed(this.currentMethodName)) {
-            let failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
+            const failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
                 '    of source file ' + this.getSourceFile().fileName + '"\n' +
                 '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
-            let position = parent.getStart();
-            let failure = this.createFailure(position, node.text.length, failureString);
+            const position = parent.getStart();
+            const failure = this.createFailure(position, node.text.length, failureString);
             this.addFailure(failure);
         }
     }
 
     private isSuppressed(methodName : string): boolean {
-        let exceptions : Exception[] = Rule.getExceptions(this.getOptions());
+        const exceptions : Exception[] = Rule.getExceptions(this.getOptions());
         if (exceptions == null || exceptions.length === 0) {
             return false; // no file specified means the usage is not suppressed
         }

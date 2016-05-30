@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noEmptyInterfacesRule', () : void => {
-    let ruleName : string = 'no-empty-interfaces';
+    const ruleName : string = 'no-empty-interfaces';
 
     it('should pass on interface with 1 attribute', () : void => {
-        let script : string = `
+        const script : string = `
             interface MyInterface {
                 attribute: string;
             }
@@ -23,7 +23,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should pass on interface with two different parents', () : void => {
-        let script : string = `
+        const script : string = `
             interface MyInterface extends First, Second {
             }
         `;
@@ -32,7 +32,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should fail on interface with only 1 parent (what is the point?)', () : void => {
-        let script : string = `
+        const script : string = `
             interface MyInterface extends First {
             }
         `;
@@ -48,7 +48,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should fail on empty interface', () : void => {
-        let script : string = `
+        const script : string = `
             interface MyInterface {
                 // adding comments will not help you.
             }

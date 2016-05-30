@@ -12,7 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     private static BANNED_TERMS : string[] = [ 'caller', 'callee', 'arguments', 'eval' ];
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        let walker : Lint.RuleWalker = new BannedTermWalker(
+        const walker : Lint.RuleWalker = new BannedTermWalker(
             sourceFile,
             this.getOptions(),
             Rule.FAILURE_STRING,

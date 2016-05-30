@@ -17,8 +17,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 class MissingJSDocWalker extends ErrorTolerantWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            let failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-            let failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+            const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
+            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
             this.addFailure(failure);
         }
         // do not continue walking

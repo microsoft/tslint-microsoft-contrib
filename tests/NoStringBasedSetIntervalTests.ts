@@ -9,10 +9,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noStringBasedSetIntervalRule', () : void => {
-    let RULE_NAME : string = 'no-string-based-set-interval';
+    const RULE_NAME : string = 'no-string-based-set-interval';
 
     it('should produce violations ', () : void => {
-        let inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
+        const inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden setInterval string parameter: \"var x = 'should fail'\"",

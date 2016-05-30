@@ -10,8 +10,8 @@ import exportNameRule = require('../src/exportNameRule');
  * Unit tests.
  */
 describe('exportNameRule', () : void => {
-    let ruleName : string = 'export-name';
-    let exceptions : string[] = [];
+    const ruleName : string = 'export-name';
+    const exceptions : string[] = [];
     let original: any;
 
     beforeEach(() : void => {
@@ -26,25 +26,25 @@ describe('exportNameRule', () : void => {
     describe('should pass', (): void => {
         it('when export equals assignment matches', () : void => {
             exceptions.length = 0;
-            let inputFile : string = 'test-data/ExportNameRulePassingTestInput.ts';
+            const inputFile : string = 'test-data/ExportNameRulePassingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('when export equals assignment matches in tsx file', () : void => {
             exceptions.length = 0;
-            let inputFile : string = 'test-data/ExportNameRulePassingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportNameRulePassingTestInput.tsx';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('for conflicting name when suppressed', () : void => {
             exceptions.push('ThisIsNot.*NameOfTheFile');
-            let inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
+            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, [ ]);
         });
 
         it('when single module is named same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export module file {
                 }
             `;
@@ -54,7 +54,7 @@ describe('exportNameRule', () : void => {
 
         it('when single module is named same as the file with nested elements', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export module file {
                     export module file2 {
                     }
@@ -68,7 +68,7 @@ describe('exportNameRule', () : void => {
 
         it('when single class is named same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export class file {
                 }
             `;
@@ -78,7 +78,7 @@ describe('exportNameRule', () : void => {
 
         it('when a single namespaced class is named the same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 namespace com.example {
                     export class file {
                     }
@@ -90,7 +90,7 @@ describe('exportNameRule', () : void => {
 
         it('when single class is name same as the file with nested elements', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export class file {
                     export module file2 {
                     }
@@ -104,7 +104,7 @@ describe('exportNameRule', () : void => {
 
         it('when multiple classes are exported within a namespace', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 namespace com.example {
                     export class file2 {
                     }
@@ -118,7 +118,7 @@ describe('exportNameRule', () : void => {
 
         it('when single let is named same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export let file = [];
             `;
 
@@ -127,7 +127,7 @@ describe('exportNameRule', () : void => {
 
         it('when single const is named same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export const file = [];
             `;
 
@@ -136,7 +136,7 @@ describe('exportNameRule', () : void => {
 
         it('when single function is named same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export function file() {};
             `;
 
@@ -145,7 +145,7 @@ describe('exportNameRule', () : void => {
 
         it('when anonymous Object is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export {};
             `;
 
@@ -154,7 +154,7 @@ describe('exportNameRule', () : void => {
 
         it('when multiple classes are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export class file { }
                 export class file2 { }
             `;
@@ -164,7 +164,7 @@ describe('exportNameRule', () : void => {
 
         it('multiple modules are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export module file { }
                 export module file2 { }
             `;
@@ -174,7 +174,7 @@ describe('exportNameRule', () : void => {
 
         it('multiple variables are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export var x, y;
             `;
 
@@ -183,7 +183,7 @@ describe('exportNameRule', () : void => {
 
         it('when multiple consts are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export const x = '', y = '';
             `;
 
@@ -192,7 +192,7 @@ describe('exportNameRule', () : void => {
 
         it('when multiple lets are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export let x = '', y = '';
             `;
 
@@ -201,7 +201,7 @@ describe('exportNameRule', () : void => {
 
         it('when a variety of things are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export let y = '';
                 export module file2 { }
             `;
@@ -211,7 +211,7 @@ describe('exportNameRule', () : void => {
 
         it('when a module and a function are exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 module file {
                     export function toErrorReport() {
                     }
@@ -226,7 +226,7 @@ describe('exportNameRule', () : void => {
     describe('should fail', (): void => {
         it('for conflicting name', () : void => {
             exceptions.length = 0;
-            let inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
+            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
                     "failure": "The exported module or identifier name must match the file name. " +
@@ -240,7 +240,7 @@ describe('exportNameRule', () : void => {
 
         it('for conflicting name in tsx file', () : void => {
             exceptions.length = 0;
-            let inputFile : string = 'test-data/ExportNameRuleFailingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.tsx';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
                     "failure": "The exported module or identifier name must match the file name. " +
@@ -254,7 +254,7 @@ describe('exportNameRule', () : void => {
 
         it('for conflicting name in namespace', () : void => {
             exceptions.length = 0;
-            let inputScript : string = `
+            const inputScript : string = `
                 namespace com.example {
                     export class NotMatching {
                     }
@@ -272,7 +272,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named module is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export module Example1 {}
             `;
 
@@ -289,7 +289,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named class is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export class Example2 {}
             `;
 
@@ -305,7 +305,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named function is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export function Example3() {}
             `;
 
@@ -322,7 +322,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named let defined variable is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export let Example4 = [];
             `;
 
@@ -338,7 +338,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named const is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export const Example5 = [];
             `;
 
@@ -354,7 +354,7 @@ describe('exportNameRule', () : void => {
 
         it('when mis-named var defined variable is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
-            let script : string = `
+            const script : string = `
                 export var Example6 = [];
             `;
 

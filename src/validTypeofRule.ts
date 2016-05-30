@@ -40,7 +40,7 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
     private getClosestTerm(term: string): string {
         let closestMatch: number = 99999999;
         return Utils.reduce(Rule.VALID_TERMS, (closestTerm: string, thisTerm: string) : string => {
-            let distance = this.levenshteinDistance(term, thisTerm);
+            const distance = this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
                 closestTerm = thisTerm;

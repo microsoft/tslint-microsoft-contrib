@@ -317,7 +317,7 @@ module SyntaxKind {
     let cachedKinds: SyntaxKind.SyntaxKind;
 
     /* tslint:disable:variable-name */
-    let SyntaxKind_1_5: SyntaxKind = {
+    const SyntaxKind_1_5: SyntaxKind = {
         /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
@@ -576,7 +576,7 @@ module SyntaxKind {
     };
 
     /* tslint:disable:variable-name */
-    let SyntaxKind_1_6: SyntaxKind = {
+    const SyntaxKind_1_6: SyntaxKind = {
         /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
@@ -875,7 +875,7 @@ module SyntaxKind {
     };
 
     /* tslint:disable:variable-name */
-    let SyntaxKind_1_7: SyntaxKind = {
+    const SyntaxKind_1_7: SyntaxKind = {
         /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
@@ -1176,7 +1176,7 @@ module SyntaxKind {
     };
 
     /* tslint:disable:variable-name */
-    let SyntaxKind_1_8: SyntaxKind = {
+    const SyntaxKind_1_8: SyntaxKind = {
         /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,
@@ -1480,7 +1480,7 @@ module SyntaxKind {
     };
 
     /* tslint:disable:variable-name */
-    let SyntaxKind_1_9: SyntaxKind = {
+    const SyntaxKind_1_9: SyntaxKind = {
         /* tslint:enable:variable-name */
         Unknown: 0,
         EndOfFileToken: 1,

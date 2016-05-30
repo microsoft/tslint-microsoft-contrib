@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDuplicateCaseRule', () : void => {
-    let ruleName : string = 'no-duplicate-case';
+    const ruleName : string = 'no-duplicate-case';
 
     it('should pass on valid switch', () : void => {
-        let script : string = `
+        const script : string = `
             var a = 1;
 
             switch (a) {
@@ -29,7 +29,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on string duplicates', () : void => {
-        let script : string = `
+        const script : string = `
             switch (a) {
                 case 1:
                     break;
@@ -53,7 +53,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on number duplicates', () : void => {
-        let script : string = `
+        const script : string = `
             switch (a) {
                 case "1":
                     break;
@@ -77,7 +77,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on identifier duplicates', () : void => {
-        let script : string = `
+        const script : string = `
             switch (a) {
                 case one:
                     break;

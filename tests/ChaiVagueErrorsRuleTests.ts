@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('chaiVagueErrorsRule', () : void => {
-    let ruleName : string = 'chai-vague-errors';
+    const ruleName : string = 'chai-vague-errors';
 
     it('should pass on xxx', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.equal(true, 'message');;
             expect(something).to.be.equal(false, 'message');;
             expect(something).to.not.equal(null, 'message');;
@@ -24,7 +24,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on ok', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.ok;
             chai.expect(something).to.ok;
             expect(something).to.be.ok;
@@ -60,7 +60,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on true', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.true;
             chai.expect(something).to.be.true;
             expect(something).to.not.be.true;
@@ -89,7 +89,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on false', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.false;
             expect(something).to.be.false;
             expect(something).to.not.be.false;
@@ -118,7 +118,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on null', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.null;
             expect(something).to.be.null;
             expect(something).to.not.be.null;
@@ -147,7 +147,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on undefined', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.undefined;
             expect(something).to.be.undefined;
             expect(something).to.not.be.undefined;
@@ -176,7 +176,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on equal', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.equal(true);
             expect(something).to.equals(true);
             expect(something).to.be.equal(true);
@@ -233,7 +233,7 @@ describe('chaiVagueErrorsRule', () : void => {
     });
 
     it('should fail on eql', () : void => {
-        let script : string = `
+        const script : string = `
             expect(something).to.eql(true);
             expect(something).to.be.eql(true);
             chai.expect(something).to.not.be.eql(false);

@@ -10,7 +10,7 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noBannedTermsRule', () : void => {
-    let RULE_NAME : string = 'no-banned-terms';
+    const RULE_NAME : string = 'no-banned-terms';
 
     describe('module variables', () => {
         it('should not refer to caller', () : void => {

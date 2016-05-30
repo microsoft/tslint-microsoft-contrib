@@ -63,8 +63,8 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
         const blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
-            let failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
-            let failure = this.createFailure(rootNode.getStart(), rootNode.getWidth(), failureString);
+            const failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
+            const failure = this.createFailure(rootNode.getStart(), rootNode.getWidth(), failureString);
             this.addFailure(failure);
         }
     }

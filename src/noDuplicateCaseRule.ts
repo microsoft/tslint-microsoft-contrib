@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
     protected visitSwitchStatement(node: ts.SwitchStatement): void {
-        let seenLabels: string[] = [];
+        const seenLabels: string[] = [];
         node.caseBlock.clauses.forEach((clauseOrDefault: ts.CaseOrDefaultClause): void => {
             if (clauseOrDefault.kind === SyntaxKind.current().CaseClause) {
                 const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;

@@ -8,10 +8,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noMultilineStringRule', () : void => {
-    let RULE_NAME : string = 'no-multiline-string';
+    const RULE_NAME : string = 'no-multiline-string';
 
     it('should produce violations ', () : void => {
-        let inputFile : string = 'test-data/NoMultilineStringTestInput.ts';
+        const inputFile : string = 'test-data/NoMultilineStringTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden Multiline string:  `some...",

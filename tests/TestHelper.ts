@@ -107,7 +107,7 @@ module TestHelper {
         chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
         expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
-            let actual = actualFailures[index];
+            const actual = actualFailures[index];
             chai.assert.deepEqual(actual, expected);
         });
     }

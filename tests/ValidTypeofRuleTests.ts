@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('validTypeofRule', () : void => {
-    let ruleName : string = 'valid-typeof';
+    const ruleName : string = 'valid-typeof';
 
     it('should pass on valid typeofs', () : void => {
-        let script : string = `
+        const script : string = `
             typeof bar === "undefined"
             typeof bar == "undefined"
             typeof bar !== "undefined"
@@ -35,7 +35,7 @@ describe('validTypeofRule', () : void => {
     });
 
     it('should fail on invalid string with ===', () : void => {
-        let script : string = `
+        const script : string = `
             typeof foo === "strnig"
             "strnig" === typeof foo
         `;
@@ -58,7 +58,7 @@ describe('validTypeofRule', () : void => {
     });
 
     it('should fail on invalid string with ==', () : void => {
-        let script : string = `
+        const script : string = `
             typeof foo == "funcion"
             "fction" == typeof foo
         `;
@@ -80,7 +80,7 @@ describe('validTypeofRule', () : void => {
     });
 
     it('should fail on invalid string with !==', () : void => {
-        let script : string = `
+        const script : string = `
             typeof foo !== "undfind"
             "ndefined" !== typeof foo
         `;
@@ -102,7 +102,7 @@ describe('validTypeofRule', () : void => {
     });
 
     it('should fail on invalid string with !=', () : void => {
-        let script : string = `
+        const script : string = `
             typeof foo != "bollean"
             "bollen" != typeof foo
         `;

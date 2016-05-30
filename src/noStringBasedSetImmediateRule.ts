@@ -8,11 +8,11 @@ import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParamete
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        let documentRegistry = ts.createDocumentRegistry();
-        let languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        let languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        const documentRegistry = ts.createDocumentRegistry();
+        const languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
 
-        let walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
+        const walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
             sourceFile , 'setImmediate', this.getOptions(), languageService
         );
         return this.applyWithWalker(walker);

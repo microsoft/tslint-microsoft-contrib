@@ -48,11 +48,11 @@ export class Formatter extends AbstractFormatter {
     }
 
     private formatFailure(failure: RuleFailure): string {
-        let fileName: string = failure.getFileName();
-        let failureString: string = failure.getFailure();
-        let ruleName: string = failure.getRuleName();
-        let lineAndCharacter = failure.getStartPosition().getLineAndCharacter();
-        let positionTuple = '[' + (lineAndCharacter.line + 1) + ', ' + (lineAndCharacter.character + 1) + ']';
+        const fileName: string = failure.getFileName();
+        const failureString: string = failure.getFailure();
+        const ruleName: string = failure.getRuleName();
+        const lineAndCharacter = failure.getStartPosition().getLineAndCharacter();
+        const positionTuple = '[' + (lineAndCharacter.line + 1) + ', ' + (lineAndCharacter.character + 1) + ']';
         return '(' + ruleName + ') ' + fileName + positionTuple + ': ' + failureString;
     }
 }

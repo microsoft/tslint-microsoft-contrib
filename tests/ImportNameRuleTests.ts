@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('importNameRule', () : void => {
-    let ruleName : string = 'import-name';
+    const ruleName : string = 'import-name';
 
     it('should pass on matching names of external module', () : void => {
-        let script : string = `
+        const script : string = `
             import App = require('App');
             import App = require('x/y/z/App');
         `;
@@ -22,7 +22,7 @@ describe('importNameRule', () : void => {
     });
 
     it('should pass on matching names of ES6 import', () : void => {
-        let script : string = `
+        const script : string = `
             import App from 'App';
             import App from 'x/y/z/App';
         `;
@@ -31,7 +31,7 @@ describe('importNameRule', () : void => {
     });
 
     it('should pass on matching names of simple import', () : void => {
-        let script : string = `
+        const script : string = `
             import DependencyManager = DM.DependencyManager;
         `;
 
@@ -39,7 +39,7 @@ describe('importNameRule', () : void => {
     });
 
     it('should fail on misnamed external module', () : void => {
-        let script : string = `
+        const script : string = `
             import MyCoolApp = require('App');
             import MyCoolApp2 = require('x/y/z/App');
         `;
@@ -61,7 +61,7 @@ describe('importNameRule', () : void => {
     });
 
     it('should fail on misnamed import', () : void => {
-        let script : string = `
+        const script : string = `
             import MyCoolApp from 'App';
             import MyCoolApp2 from 'x/y/z/App';
         `;
@@ -83,7 +83,7 @@ describe('importNameRule', () : void => {
     });
 
     it('should fail on misnamed rename', () : void => {
-        let script : string = `
+        const script : string = `
             import Service = DM.DependencyManager;
         `;
 

@@ -96,7 +96,7 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         this.scope = new Scope(this.scope);
         node.members.forEach((element: ts.ClassElement): void => {
-            let prefix: string = AstUtils.isStatic(element)
+            const prefix: string = AstUtils.isStatic(element)
                 ? node.name.getText() + '.'
                 : 'this.';
 
@@ -240,7 +240,7 @@ class Scope {
     }
 
     public addGlobalScope(node: ts.Node, sourceFile : ts.SourceFile, options : Lint.IOptions): void {
-        let refCollector = new GlobalReferenceCollector(sourceFile, options);
+        const refCollector = new GlobalReferenceCollector(sourceFile, options);
         refCollector.visitNode(node);
         refCollector.functionIdentifiers.forEach((identifier: string): void => { this.addFunctionSymbol(identifier); });
         refCollector.nonFunctionIdentifiers.forEach((identifier: string): void => { this.addNonFunctionSymbol(identifier); });

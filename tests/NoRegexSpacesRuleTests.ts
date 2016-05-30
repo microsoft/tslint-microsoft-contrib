@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noRegexSpacesRule', () : void => {
-    let ruleName : string = 'no-regex-spaces';
+    const ruleName : string = 'no-regex-spaces';
 
     it('should pass on single space', () : void => {
-        let script : string = `
+        const script : string = `
             var re = /foo {3}bar/;
         `;
 
@@ -21,7 +21,7 @@ describe('noRegexSpacesRule', () : void => {
     });
 
     it('should pass on RegExp object', () : void => {
-        let script : string = `
+        const script : string = `
             var re = new RegExp("foo   bar");
         `;
 
@@ -29,7 +29,7 @@ describe('noRegexSpacesRule', () : void => {
     });
 
     it('should pass on no spaces', () : void => {
-        let script : string = `
+        const script : string = `
             var re = /foobar/;
         `;
 
@@ -37,7 +37,7 @@ describe('noRegexSpacesRule', () : void => {
     });
 
     it('should fail on spaces in middle', () : void => {
-        let script : string = `
+        const script : string = `
             var re = /foo   bar/;
         `;
 
@@ -52,7 +52,7 @@ describe('noRegexSpacesRule', () : void => {
     });
 
     it('should fail on leading spaces', () : void => {
-        let script : string = `
+        const script : string = `
             var re = /  bar/;
         `;
 
@@ -67,7 +67,7 @@ describe('noRegexSpacesRule', () : void => {
     });
 
     it('should fail on trailing spaces', () : void => {
-        let script : string = `
+        const script : string = `
             var re = /bar    /;
         `;
 

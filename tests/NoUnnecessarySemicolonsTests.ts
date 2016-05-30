@@ -9,8 +9,8 @@ import TestHelper = require('./TestHelper');
  */
 describe('noUnnecessarySemiColons', () : void => {
     it('should produce violations', () : void => {
-        let ruleName : string = 'no-unnecessary-semicolons';
-        let inputFile : string = 'test-data/NoUnnecessarySemicolonsTestInput.ts';
+        const ruleName : string = 'no-unnecessary-semicolons';
+        const inputFile : string = 'test-data/NoUnnecessarySemicolonsTestInput.ts';
         TestHelper.assertViolations(
             ruleName,
             inputFile,

@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noInnerHtmlRule', () : void => {
-    let ruleName : string = 'no-inner-html';
+    const ruleName : string = 'no-inner-html';
 
     it('should pass on reading innerHTML strings', () : void => {
-        let script : string = `
+        const script : string = `
             var foo = element.innerHTML;
             var bar = element.outerHTML;
             var baz = $(element).html();
@@ -24,7 +24,7 @@ describe('noInnerHtmlRule', () : void => {
     });
 
     it('should fail on writing to innerHTML', () : void => {
-        let script : string = `
+        const script : string = `
             element.innerHTML = '<div></div>';
             parent.child.innerHTML = '<div></div>';
         `;
@@ -46,7 +46,7 @@ describe('noInnerHtmlRule', () : void => {
     });
 
     it('should fail on writing to outerHTML', () : void => {
-        let script : string = `
+        const script : string = `
             element.outerHTML = '<div></div>';
             parent.child.outerHTML = someVariable;
         `;
@@ -68,7 +68,7 @@ describe('noInnerHtmlRule', () : void => {
     });
 
     it('should fail on invoking html(x)', () : void => {
-        let script : string = `
+        const script : string = `
             $(element).html('whatever');
         `;
 

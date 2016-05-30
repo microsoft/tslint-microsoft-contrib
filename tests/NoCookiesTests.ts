@@ -9,8 +9,8 @@ import TestHelper = require('./TestHelper');
  */
 describe('noCookiesRule', () : void => {
     it('should not produce violations', () : void => {
-        let ruleName : string = 'no-cookies';
-        let inputFile : string = 'test-data/NoCookiesPassingTestInput.ts';
+        const ruleName : string = 'no-cookies';
+        const inputFile : string = 'test-data/NoCookiesPassingTestInput.ts';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -19,8 +19,8 @@ describe('noCookiesRule', () : void => {
     });
 
     it('should produce violations', () : void => {
-        let ruleName : string = 'no-cookies';
-        let inputFile : string = 'test-data/NoCookiesFailingTestInput.ts';
+        const ruleName : string = 'no-cookies';
+        const inputFile : string = 'test-data/NoCookiesFailingTestInput.ts';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -60,8 +60,8 @@ describe('noCookiesRule', () : void => {
     });
 
     it('should not throw error ', () : void => {
-        let ruleName : string = 'no-cookies';
-        let inputFile : string = 'test-data/NoCookiesTestInput-error.ts';
+        const ruleName : string = 'no-cookies';
+        const inputFile : string = 'test-data/NoCookiesTestInput-error.ts';
         TestHelper.assertViolations(
             ruleName,
             inputFile,

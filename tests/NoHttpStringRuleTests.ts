@@ -12,7 +12,7 @@ describe('noHttpStringRule', () : void => {
     const ruleName : string = 'no-http-string';
 
     it('should ban http strings in variables', () : void => {
-        let inputScript : string = 'var x = \'http://www.examples.com\'';
+        const inputScript : string = 'var x = \'http://www.examples.com\'';
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
@@ -24,7 +24,7 @@ describe('noHttpStringRule', () : void => {
     });
 
     it('should ban http strings in default values', () : void => {
-        let inputScript : string = 'function f(x : string = \'http://www.example.com/whatever\') {}';
+        const inputScript : string = 'function f(x : string = \'http://www.example.com/whatever\') {}';
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.example.com/whatever'",
@@ -36,24 +36,24 @@ describe('noHttpStringRule', () : void => {
     });
 
     it('should allow https strings in variables', () : void => {
-        let inputScript : string = 'var x = \'https://www.microsoft.com\'';
+        const inputScript : string = 'var x = \'https://www.microsoft.com\'';
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
     it('should allow https strings in default values', () : void => {
-        let inputScript : string = 'function f(x : string = \'https://www.microsoft.com\') {}';
+        const inputScript : string = 'function f(x : string = \'https://www.microsoft.com\') {}';
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
 	it('should allow http strings in that match the exclude regex', (): void => {
-        let inputScript: string = 'var x = "http://www.allowed.com"';
-		let excludeRules = ["http://www\\.allowed\\.com/?"];
+        const inputScript: string = 'var x = "http://www.allowed.com"';
+		const excludeRules = ["http://www\\.allowed\\.com/?"];
         TestHelper.assertNoViolationWithOptions(ruleName, excludeRules, inputScript);
     });
 
 	it('should disallow http strings in that do not match the exclude regex', (): void => {
-        let inputScript: string = 'var x = "http://www.notallowed.com"';
-		let excludeRules = ["http://www\\.allowed\\.com/?"];
+        const inputScript: string = 'var x = "http://www.notallowed.com"';
+		const excludeRules = ["http://www\\.allowed\\.com/?"];
         TestHelper.assertViolationsWithOptions(ruleName, excludeRules, inputScript, [{
 			"failure": "Forbidden http url in string: 'http://www.notallowed.com'",
 			"name": "file.ts",

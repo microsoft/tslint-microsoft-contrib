@@ -60,7 +60,7 @@ class BannedTermWalker extends ErrorTolerantWalker {
     private validateNode(node: ts.Node) : void {
         if ((<any>node).name) {
             if ((<any>node).name.text) {
-                let text : string = (<any>node).name.text;
+                const text : string = (<any>node).name.text;
                 if (this.isBannedTerm(text)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), this.failureString + text));
                 }

@@ -10,10 +10,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noForInRule', () : void => {
-    let ruleName : string = 'no-for-in';
+    const ruleName : string = 'no-for-in';
 
     it('should pass on regular for statement', () : void => {
-        let script : string = `
+        const script : string = `
             for (var i = 0; i < 100; i++) {
 
             }
@@ -23,7 +23,7 @@ describe('noForInRule', () : void => {
     });
 
     it('should fail on for-in statement', () : void => {
-        let script : string = `
+        const script : string = `
             for (name in object) {
 
             }

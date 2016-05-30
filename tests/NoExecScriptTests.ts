@@ -8,10 +8,10 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noExecScriptRule', () : void => {
-    let RULE_NAME : string = 'no-exec-script';
+    const RULE_NAME : string = 'no-exec-script';
 
     it('should produce violations ', () : void => {
-        let inputFile : string = 'test-data/NoExecScriptTestInput.ts';
+        const inputFile : string = 'test-data/NoExecScriptTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "forbidden execScript: execScript",

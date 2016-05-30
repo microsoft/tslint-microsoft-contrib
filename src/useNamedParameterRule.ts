@@ -20,8 +20,8 @@ class UseNamedParameterWalker extends ErrorTolerantWalker {
         if (node.argumentExpression != null) {
             if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
-                    let failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
-                    let failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                    const failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
+                    const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                     this.addFailure(failure);
                 }
             }

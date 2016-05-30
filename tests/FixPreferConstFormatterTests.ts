@@ -38,7 +38,7 @@ describe('fixPreferConstFormatter', () : void => {
     const ruleName : string = 'prefer-const';
 
     it('should fix a let keyword', () : void => {
-        let input : string = `
+        const input : string = `
 let foo = bar;
 `;
 

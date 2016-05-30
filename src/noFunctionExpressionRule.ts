@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        let walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
+        const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
         node.getChildren().forEach((node: ts.Node) => {
             walker.walk(node);
         });

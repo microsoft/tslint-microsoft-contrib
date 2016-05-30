@@ -9,7 +9,7 @@ import TestHelper = require('./TestHelper');
  * Unit tests.
  */
 describe('noDeleteExpressionRule', (): void => {
-    let RULE_NAME: string = 'no-delete-expression';
+    const RULE_NAME: string = 'no-delete-expression';
 
     it('should not produce violations', (): void => {
         const script: string = `

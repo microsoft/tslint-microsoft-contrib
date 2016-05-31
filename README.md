@@ -100,6 +100,7 @@ Rule Name   | Description | Since
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-inner-html`                 | Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function. Writing values to innerHTML can expose your website to XSS injection attacks. All strings must be escaped before being rendered to the page.| 2.0.4
 `no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
+`no-jquery-raw-elements`        | Do not create jQuery elements with attributes using string concatenation.
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-multiple-var-decl`          | Deprecated - This rule is now part of the base TSLint product as the rule named 'one-variable-per-declaration'. Do not use comma separated variable declarations | 1.0

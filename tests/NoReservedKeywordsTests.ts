@@ -5,7 +5,7 @@
 /* tslint:disable:no-multiline-string */
 /* tslint:disable:max-func-body-length */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.

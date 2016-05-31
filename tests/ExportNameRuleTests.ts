@@ -3,8 +3,8 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
-import exportNameRule = require('../src/exportNameRule');
+import {TestHelper} from './TestHelper';
+import {Rule} from '../src/exportNameRule';
 
 /**
  * Unit tests.
@@ -15,12 +15,12 @@ describe('exportNameRule', () : void => {
     let original: any;
 
     beforeEach(() : void => {
-        original = exportNameRule.Rule.getExceptions;
-        exportNameRule.Rule.getExceptions = () : any => { return exceptions; };
+        original = Rule.getExceptions;
+        Rule.getExceptions = () : any => { return exceptions; };
     });
 
     afterEach(() : void => {
-        exportNameRule.Rule.getExceptions = original;
+        Rule.getExceptions = original;
     });
 
     describe('should pass', (): void => {

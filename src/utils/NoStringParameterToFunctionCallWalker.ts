@@ -1,13 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import ScopedSymbolTrackingWalker = require('./ScopedSymbolTrackingWalker');
+import {ScopedSymbolTrackingWalker} from './ScopedSymbolTrackingWalker';
 
-import AstUtils = require('./AstUtils');
+import {AstUtils} from './AstUtils';
 
 /**
  * A walker that creates failures whenever it detects a string parameter is being passed to a certain constructor. .
  */
-class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingWalker {
+export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingWalker {
     private failureString : string;
     private targetFunctionName : string;
 
@@ -36,5 +36,3 @@ class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingWalker {
         }
     }
 }
-
-export = NoStringParameterToFunctionCallWalker;

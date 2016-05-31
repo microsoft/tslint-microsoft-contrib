@@ -2,7 +2,7 @@
  * Control flow functions.
  */
 /* tslint:disable:no-increment-decrement */
-module Utils {
+export module Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
@@ -72,5 +72,3 @@ module Utils {
     }
 }
 /* tslint:enable:no-increment-decrement */
-
-export = Utils;

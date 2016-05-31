@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import SyntaxKind = require('./utils/SyntaxKind');
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import Utils = require('./utils/Utils');
+import {SyntaxKind} from './utils/SyntaxKind';
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {Utils} from './utils/Utils';
 
 /**
  * Implementation of the no-http-string rule.

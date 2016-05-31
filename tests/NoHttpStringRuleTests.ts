@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-http-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.

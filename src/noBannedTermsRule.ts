@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 
-import BannedTermWalker = require('./utils/BannedTermWalker');
+import {BannedTermWalker} from './utils/BannedTermWalker';
 
 /**
  * Implementation of the no-banned-terms rule.

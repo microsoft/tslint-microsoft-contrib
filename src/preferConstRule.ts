@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
-import AstUtils = require('./utils/AstUtils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the prefer-const rule.

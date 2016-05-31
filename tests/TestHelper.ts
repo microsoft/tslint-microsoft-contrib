@@ -3,13 +3,13 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import * as Lint from 'tslint/lib/lint';
-import fs = require('fs');
-import chai = require('chai');
+import * as fs from 'fs';
+import * as chai from 'chai';
 
 /**
  * Test Utilities.
  */
-module TestHelper {
+export module TestHelper {
 
     export interface FailurePosition {
         character: number;
@@ -112,5 +112,3 @@ module TestHelper {
         });
     }
 }
-
-export = TestHelper;

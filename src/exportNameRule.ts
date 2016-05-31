@@ -2,10 +2,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import Utils = require('./utils/Utils');
-import SyntaxKind = require('./utils/SyntaxKind');
-import AstUtils = require('./utils/AstUtils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {Utils} from './utils/Utils';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the export-name rule.

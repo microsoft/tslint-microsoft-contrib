@@ -3,8 +3,8 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import chai = require('chai');
-import TestHelper = require('./TestHelper');
+import * as chai from 'chai';
+import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixPreferConstFormatter';
 
 class FixPreferConstFormatterForTesting extends Formatter {

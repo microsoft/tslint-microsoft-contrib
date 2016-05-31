@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
-import AstUtils = require('./utils/AstUtils');
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the no-exec-script rule.

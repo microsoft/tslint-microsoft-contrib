@@ -2,7 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.

@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-import SyntaxKind = require('./SyntaxKind');
+import {SyntaxKind} from './SyntaxKind';
 
 /**
  * General utility class.
  */
-module AstUtils {
+export module AstUtils {
     export function getFunctionName(node : ts.CallExpression) : string {
         const expression: ts.Expression = node.expression;
         let functionName : string = (<any>expression).text;
@@ -196,5 +196,3 @@ module AstUtils {
         return false;
     }
 }
-
-export = AstUtils;

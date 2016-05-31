@@ -3,8 +3,8 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
-import reactNoDangerousHtmlRule = require('../src/reactNoDangerousHtmlRule');
+import {TestHelper} from './TestHelper';
+import {Rule} from '../src/reactNoDangerousHtmlRule';
 
 const dangerousScript : string = `
 class MyComponent {
@@ -26,12 +26,12 @@ describe('reactNoDangerousHtmlRule', () : void => {
     let original: any;
 
     beforeEach(() : void => {
-        original = reactNoDangerousHtmlRule.Rule.getExceptions;
-        reactNoDangerousHtmlRule.Rule.getExceptions = () : any => { return exceptions; };
+        original = Rule.getExceptions;
+        Rule.getExceptions = () : any => { return exceptions; };
     });
 
     afterEach(() : void => {
-        reactNoDangerousHtmlRule.Rule.getExceptions = original;
+        Rule.getExceptions = original;
     });
 
     it('should produce violation when function called with no suppression', () : void => {

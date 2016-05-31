@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import AstUtils = require('./utils/AstUtils');
-import Utils = require('./utils/Utils');
-import SyntaxKind = require('./utils/SyntaxKind');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {AstUtils} from './utils/AstUtils';
+import {Utils} from './utils/Utils';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 /**
  * Implementation of the jquery-deferred-must-complete rule.

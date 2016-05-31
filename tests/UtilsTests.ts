@@ -1,8 +1,8 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-import Utils = require('../src/utils/Utils');
-import chai = require('chai');
+import {Utils} from '../src/utils/Utils';
+import * as chai from 'chai';
 
 /**
  * Unit tests.

@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import SyntaxKind = require('./utils/SyntaxKind');
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import AstUtils = require('./utils/AstUtils');
+import {SyntaxKind} from './utils/SyntaxKind';
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {AstUtils} from './utils/AstUtils';
 /**
  * Implementation of the prefer-array-literal rule.
  */

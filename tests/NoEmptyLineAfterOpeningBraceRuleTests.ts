@@ -1,7 +1,7 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /* tslint:disable:no-multiline-string */
 

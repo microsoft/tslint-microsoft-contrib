@@ -5,7 +5,7 @@ import * as Lint from 'tslint/lib/lint';
  * A base walker class that gracefully handles unexpected errors.
  * Errors are often thrown when the TypeChecker is invoked.
  */
-class ErrorTolerantWalker extends Lint.RuleWalker {
+export class ErrorTolerantWalker extends Lint.RuleWalker {
 
     private static DEBUG: boolean = false;
 
@@ -39,5 +39,3 @@ class ErrorTolerantWalker extends Lint.RuleWalker {
     }
 
 }
-
-export = ErrorTolerantWalker;

@@ -1,14 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import SyntaxKind = require('./SyntaxKind');
-import AstUtils = require('./AstUtils');
+import {ErrorTolerantWalker} from './ErrorTolerantWalker';
+import {SyntaxKind} from './SyntaxKind';
+import {AstUtils} from './AstUtils';
 
 /**
  * This exists so that you can try to tell the types of variables
  * and identifiers in the current scope.
  */
-class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
+export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     private languageServices: ts.LanguageService;
     private typeChecker : ts.TypeChecker;
     private scope: Scope;
@@ -246,5 +246,3 @@ class Scope {
         refCollector.nonFunctionIdentifiers.forEach((identifier: string): void => { this.addNonFunctionSymbol(identifier); });
     }
 }
-
-export = ScopedSymbolTrackingWalker;

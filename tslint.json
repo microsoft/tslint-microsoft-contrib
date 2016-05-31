@@ -72,7 +72,7 @@
     "no-octal-literal": true,
     "no-reference": false,
     "no-regex-spaces": true,
-    "no-require-imports": false,
+    "no-require-imports": true,
     "no-reserved-keywords": true,
     "no-shadowed-variable": false,
     "no-sparse-arrays": true,

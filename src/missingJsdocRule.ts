@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
 /**
  * Implementation of the missing-jsdoc rule.

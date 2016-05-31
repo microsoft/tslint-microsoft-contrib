@@ -4,7 +4,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.

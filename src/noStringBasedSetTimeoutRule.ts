@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParameterToFunctionCallWalker');
+import {NoStringParameterToFunctionCallWalker} from './utils/NoStringParameterToFunctionCallWalker';
 
 /**
  * Implementation of the no-string-based-set-timeout rule.

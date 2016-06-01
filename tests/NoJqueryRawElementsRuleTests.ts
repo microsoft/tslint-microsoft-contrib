@@ -29,7 +29,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
-    it.only('should pass on any simple content inside tags', () : void => {
+    it('should pass on any simple content inside tags', () : void => {
         const script : string = `
             $("<div>some simple content</div>");
         `;

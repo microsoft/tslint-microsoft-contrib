@@ -21,6 +21,14 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on a simple open tag', () : void => {
+        const script : string = `
+            $("<div>");
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on simple open and close tags', () : void => {
         const script : string = `
             $("<div></div>");
@@ -29,7 +37,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
-    it.only('should pass on any simple content inside tags', () : void => {
+    it('should pass on any simple content inside tags', () : void => {
         const script : string = `
             $("<div>some simple content</div>");
         `;

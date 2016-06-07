@@ -43,8 +43,13 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
             return false;
         }
 
+        if (/^<[A-Za-z]+\s*>$/.test(text) === true) {
+            // element looks like a simple open tag
+            return false;
+        }
+
         if (/^<[A-Za-z]+\s*\/>$/.test(text) === true) {
-            // element looks like a simple self-closing tag or a simple opening tag
+            // element looks like a simple self-closing tag
             return false;
         }
 

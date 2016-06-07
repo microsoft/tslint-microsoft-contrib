@@ -4,13 +4,13 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noBannedTermsRule', () : void => {
-    var RULE_NAME : string = 'no-banned-terms';
+    const RULE_NAME : string = 'no-banned-terms';
 
     describe('module variables', () => {
         it('should not refer to caller', () : void => {

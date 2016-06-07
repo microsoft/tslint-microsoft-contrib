@@ -3,7 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
@@ -11,8 +11,8 @@ import TestHelper = require('./TestHelper');
 
 describe('noWithStatementsRule', () : void => {
     it('should produce violations', () : void => {
-        var ruleName : string = 'no-with-statement';
-        var script : string = `
+        const ruleName : string = 'no-with-statement';
+        const script : string = `
             with ({}) {
                 a = 1;
                 b = 2;

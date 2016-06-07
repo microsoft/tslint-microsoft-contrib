@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
 /**
  * Implementation of the no-empty-line-after-opening-brace rule.
@@ -23,11 +23,11 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
     }
 
     public visitSourceFile(node: ts.SourceFile): void {
-        this._scanAllTokens(node);
+        this.scanAllTokens(node);
         super.visitSourceFile(node);
     }
 
-    private _scanAllTokens(node: ts.SourceFile): void {
+    private scanAllTokens(node: ts.SourceFile): void {
         this.scanner.setTextPos(0);
         let previous: ts.SyntaxKind;
         let previousPrevious: ts.SyntaxKind;
@@ -37,7 +37,7 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 scanner.getToken() === ts.SyntaxKind.NewLineTrivia) {
 
-                var leadingEmptyLineFailure = this.createFailure(scanner.getStartPos(), 1, Rule.FAILURE_STRING);
+                const leadingEmptyLineFailure = this.createFailure(scanner.getStartPos(), 1, Rule.FAILURE_STRING);
                 this.addFailure(leadingEmptyLineFailure);
             }
 

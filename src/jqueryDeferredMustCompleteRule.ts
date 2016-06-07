@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import AstUtils = require('./utils/AstUtils');
-import Utils = require('./utils/Utils');
-import SyntaxKind = require('./utils/SyntaxKind');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {AstUtils} from './utils/AstUtils';
+import {Utils} from './utils/Utils';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 /**
  * Implementation of the jquery-deferred-must-complete rule.
@@ -16,27 +16,27 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
     }
 
-    public static isPromiseInstantiation(expression: ts.Expression) : boolean {
-        if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
-            const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
-            const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
+}
 
-            if (functionName === 'Deferred' &&
-                (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
-                return true;
-            }
+function isPromiseInstantiation(expression: ts.Expression) : boolean {
+    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
+        const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
+        const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
+
+        if (functionName === 'Deferred' && AstUtils.isJQuery(functionTarget)) {
+            return true;
         }
-        return false;
     }
+    return false;
+}
 
-    public static isCompletionFunction(functionName : string) : boolean {
-        return /^(resolve|reject)$/.test(functionName);
-    }
+function isCompletionFunction(functionName : string) : boolean {
+    return /^(resolve|reject)$/.test(functionName);
 }
 
 class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.operatorToken.getText() === '=' && Rule.isPromiseInstantiation(node.right)) {
+        if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === SyntaxKind.current().Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
                     const name : ts.Identifier = <ts.Identifier>node.left;
@@ -48,7 +48,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (Rule.isPromiseInstantiation(node.initializer)) {
+        if (isPromiseInstantiation(node.initializer)) {
             if ((<ts.Identifier>node.name).text != null) {
                 const name : ts.Identifier = <ts.Identifier>node.name;
                 this.validateDeferredUsage(node, name);
@@ -62,8 +62,8 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
         const blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
-            var failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
-            var failure = this.createFailure(rootNode.getStart(), rootNode.getWidth(), failureString);
+            const failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
+            const failure = this.createFailure(rootNode.getStart(), rootNode.getWidth(), failureString);
             this.addFailure(failure);
         }
     }
@@ -126,7 +126,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
                 const functionName : string = prop.name.getText(); // possibly resolve or reject
-                if (Rule.isCompletionFunction(functionName)) {
+                if (isCompletionFunction(functionName)) {
                     this.wasCompleted = true;
                     return; // this branch was completed, do not walk any more.
                 }

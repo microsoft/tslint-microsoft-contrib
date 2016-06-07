@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('preferTypeCastRule', () : void => {
-    var ruleName : string = 'prefer-type-cast';
+    const ruleName : string = 'prefer-type-cast';
 
     it('should pass on traditional type cast', () : void => {
-        var script : string = `
+        const script : string = `
             let myString = <string>myVariable;
         `;
 
@@ -25,7 +25,7 @@ describe('preferTypeCastRule', () : void => {
     });
 
     it('should fail on as-cast', () : void => {
-        var script : string = `
+        const script : string = `
             let myString = myVariable as string;
         `;
 

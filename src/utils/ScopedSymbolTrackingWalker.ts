@@ -1,14 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
-import SyntaxKind = require('./SyntaxKind');
-import AstUtils = require('./AstUtils');
+import {ErrorTolerantWalker} from './ErrorTolerantWalker';
+import {SyntaxKind} from './SyntaxKind';
+import {AstUtils} from './AstUtils';
 
 /**
  * This exists so that you can try to tell the types of variables
  * and identifiers in the current scope.
  */
-class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
+export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     private languageServices: ts.LanguageService;
     private typeChecker : ts.TypeChecker;
     private scope: Scope;
@@ -96,7 +96,7 @@ class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         this.scope = new Scope(this.scope);
         node.members.forEach((element: ts.ClassElement): void => {
-            var prefix: string = AstUtils.isStatic(element)
+            const prefix: string = AstUtils.isStatic(element)
                 ? node.name.getText() + '.'
                 : 'this.';
 
@@ -240,11 +240,9 @@ class Scope {
     }
 
     public addGlobalScope(node: ts.Node, sourceFile : ts.SourceFile, options : Lint.IOptions): void {
-        var refCollector = new GlobalReferenceCollector(sourceFile, options);
+        const refCollector = new GlobalReferenceCollector(sourceFile, options);
         refCollector.visitNode(node);
         refCollector.functionIdentifiers.forEach((identifier: string): void => { this.addFunctionSymbol(identifier); });
         refCollector.nonFunctionIdentifiers.forEach((identifier: string): void => { this.addNonFunctionSymbol(identifier); });
     }
 }
-
-export = ScopedSymbolTrackingWalker;

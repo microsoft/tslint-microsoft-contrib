@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import AstUtils = require('./utils/AstUtils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the mo-missing-visibility-modifiers rule.
@@ -16,8 +16,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
-            var failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+            const failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
+            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
             this.addFailure(failure);
         }
         super.visitPropertyDeclaration(node);
@@ -26,8 +26,8 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
-            var failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+            const failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
+            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
             this.addFailure(failure);
         }
         super.visitMethodDeclaration(node);
@@ -38,7 +38,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
     }
 
     private getFailureCodeSnippet(node: ts.Node) {
-        var message: string = node.getText();
+        const message: string = node.getText();
         if (message.indexOf('\n') > 0) {
             return message.substr(0, message.indexOf('\n'));
         }

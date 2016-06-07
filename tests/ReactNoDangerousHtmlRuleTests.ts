@@ -3,10 +3,10 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
-import reactNoDangerousHtmlRule = require('../src/reactNoDangerousHtmlRule');
+import {TestHelper} from './TestHelper';
+import {Rule} from '../src/reactNoDangerousHtmlRule';
 
-var dangerousScript : string = `
+const dangerousScript : string = `
 class MyComponent {
     public render() : ReactTypes.ReactElement<any> {
         return React.createElement("div", {
@@ -21,17 +21,17 @@ class MyComponent {
  * Unit tests.
  */
 describe('reactNoDangerousHtmlRule', () : void => {
-    var ruleName : string = 'react-no-dangerous-html';
-    var exceptions : {}[] = [];
-    var original: any;
+    const ruleName : string = 'react-no-dangerous-html';
+    const exceptions : {}[] = [];
+    let original: any;
 
     beforeEach(() : void => {
-        original = reactNoDangerousHtmlRule.Rule.getExceptions;
-        reactNoDangerousHtmlRule.Rule.getExceptions = () : any => { return exceptions; };
+        original = Rule.getExceptions;
+        Rule.getExceptions = () : any => { return exceptions; };
     });
 
     afterEach(() : void => {
-        reactNoDangerousHtmlRule.Rule.getExceptions = original;
+        Rule.getExceptions = original;
     });
 
     it('should produce violation when function called with no suppression', () : void => {

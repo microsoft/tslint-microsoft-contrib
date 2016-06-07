@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import BannedTermWalker = require('./utils/BannedTermWalker');
+import {BannedTermWalker} from './utils/BannedTermWalker';
 
 /**
  * Implementation of the no-reserved-keywords rule.
@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        var walker: Lint.RuleWalker = new BannedTermWalker(
+        const walker: Lint.RuleWalker = new BannedTermWalker(
             sourceFile,
             this.getOptions(),
             Rule.FAILURE_STRING,

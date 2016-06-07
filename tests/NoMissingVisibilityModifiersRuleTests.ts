@@ -3,16 +3,16 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noMissingVisibilityModifiers', () : void => {
-    var ruleName : string = 'no-missing-visibility-modifiers';
+    const ruleName : string = 'no-missing-visibility-modifiers';
 
     it('should allow field modifiers', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 class {
     private myField1;
     protected myField2;
@@ -26,7 +26,7 @@ class {
     });
 
     it('should allow method modifiers', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 class {
     private myMethod1() {};
     protected myMethod2() {};
@@ -40,7 +40,7 @@ class {
     });
 
     it('should not allow missing field modifiers', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 class {
     myField1;
     static myField2;
@@ -63,7 +63,7 @@ class {
     });
 
     it('should not allow missing method modifiers', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 class {
     myMethod1() {
     };

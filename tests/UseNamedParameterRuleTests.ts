@@ -3,16 +3,16 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('useNamedParameterRule', () : void => {
-    var ruleName : string = 'use-named-parameter';
+    const ruleName : string = 'use-named-parameter';
 
     it('should ban referencing arguments by numeric index', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 function add() {
     return arguments[0] + arguments[1];
 }`;
@@ -34,7 +34,7 @@ function add() {
     });
 
     it('should allow referencing arguments by variable index', () : void => {
-        var inputScript : string = `
+        const inputScript : string = `
 function add() {
     return arguments[whatever()] + arguments[n];
 }`;

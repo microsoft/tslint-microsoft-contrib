@@ -2,16 +2,16 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noFunctionConstructorWithStringArgsRule', () : void => {
-    var RULE_NAME : string = 'no-function-constructor-with-string-args';
+    const RULE_NAME : string = 'no-function-constructor-with-string-args';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoFunctionConstructorWithStringArgsTestInput.ts';
+        const inputFile : string = 'test-data/NoFunctionConstructorWithStringArgsTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "forbidden: Function constructor with string arguments ",

@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noDuplicateCaseRule', () : void => {
-    var ruleName : string = 'no-duplicate-case';
+    const ruleName : string = 'no-duplicate-case';
 
     it('should pass on valid switch', () : void => {
-        var script : string = `
+        const script : string = `
             var a = 1;
 
             switch (a) {
@@ -29,7 +29,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on string duplicates', () : void => {
-        var script : string = `
+        const script : string = `
             switch (a) {
                 case 1:
                     break;
@@ -53,7 +53,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on number duplicates', () : void => {
-        var script : string = `
+        const script : string = `
             switch (a) {
                 case "1":
                     break;
@@ -77,7 +77,7 @@ describe('noDuplicateCaseRule', () : void => {
     });
 
     it('should fail on identifier duplicates', () : void => {
-        var script : string = `
+        const script : string = `
             switch (a) {
                 case one:
                     break;

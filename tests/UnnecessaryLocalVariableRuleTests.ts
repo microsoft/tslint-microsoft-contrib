@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('unnecessaryLocalVariableRule', () : void => {
-    var ruleName : string = 'no-unnecessary-local-variable';
+    const ruleName : string = 'no-unnecessary-local-variable';
 
     it('should pass on good usages', () : void => {
-        var script : string = `
+        const script : string = `
             class MyClass {
                 private myMethod1() {
                     let x = 1;
@@ -30,7 +30,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on class function', () : void => {
-        var script : string = `
+        const script : string = `
             class MyClass {
                 private myMethod() {
                     let x = 1;
@@ -50,7 +50,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on if statement inside function', () : void => {
-        var script : string = `
+        const script : string = `
             class MyClass {
                 private myMethod() {
                     if (foo) {
@@ -73,7 +73,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on statements inside source file', () : void => {
-        var script : string = `
+        const script : string = `
             let x = 1;
             return x;
         `;
@@ -89,7 +89,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on statements inside module', () : void => {
-        var script : string = `
+        const script : string = `
             module MyModule {
                 let x = 1;
                 return x;
@@ -107,7 +107,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on statements inside case clause', () : void => {
-        var script : string = `
+        const script : string = `
             switch (whatever) {
                 case 1:
                     let x = 1;
@@ -126,7 +126,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
     });
 
     it('should fail on statements inside default clause of switch statement', () : void => {
-        var script : string = `
+        const script : string = `
             switch (whatever) {
                 default:
                     let x = 1;

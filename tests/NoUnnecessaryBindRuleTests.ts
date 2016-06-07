@@ -4,17 +4,17 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noUnnecessaryBindRule', () : void => {
-    var ruleName : string = 'no-unnecessary-bind';
+    const ruleName : string = 'no-unnecessary-bind';
 
     describe('should pass', () : void => {
         it('should pass on function/lambda literals with multiple parameters', () : void => {
-            var script : string = `
+            const script : string = `
             _.bind(function() {}, this, someArg);
             (function() {}).bind(this, someArg);
             (() => {}).bind(this, someArg);
@@ -25,7 +25,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on function/lambda literals with non-this parameter', () : void => {
-            var script : string = `
+            const script : string = `
             (function() {}).bind(context);
             (() => {}).bind(context);
             (someReference).bind(context);
@@ -35,7 +35,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore static invocation with no context', () : void => {
-            var script : string = `
+            const script : string = `
             _.forEach(list, function() {});
             _.forEach(list, () => {});
             _.forEach(list, someReference);
@@ -45,7 +45,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore invocation with no context', () : void => {
-            var script : string = `
+            const script : string = `
             _(list).collect(function() {});
             _(list).collect(() => {});
             _(list).collect(someReference);
@@ -55,7 +55,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore static invocation with context', () : void => {
-            var script : string = `
+            const script : string = `
             _.bind(function() {}, context);
             _.map(list, function() {}, context);
             _.map(list, () => {}, context);
@@ -66,7 +66,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore invocation with context', () : void => {
-            var script : string = `
+            const script : string = `
             _(list).map(function() {}, context);
             _(list).map(() => {}, context);
             _(list).map(someReference, context);
@@ -76,7 +76,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on "this" context with non-literal function', () : void => {
-            var script : string = `
+            const script : string = `
             (someReference).bind(this);
             _(list).reject(someReference, this);
             _.reject(list, someReference, this);
@@ -87,7 +87,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('should pass on _.sortedIndex', () : void => {
             // sortedIndex is unique because the function parameter is the 2nd in the list
-            var script : string = `
+            const script : string = `
             _(list).sortedIndex(value, someReference, this);
             _.sortedIndex(list, value, someReference, this);
 
@@ -99,7 +99,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore static invocation with unknown method', () : void => {
-            var script : string = `
+            const script : string = `
             _.not_an_underscore_function(list, function() {}, this);
             _.not_an_underscore_function(list, () => {}, this);
         `;
@@ -108,7 +108,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should pass on underscore invocation with unknown method', () : void => {
-            var script : string = `
+            const script : string = `
             _(list).not_an_underscore_function(function() {}, context);
             _(list).not_an_underscore_function(() => {}, context);
         `;
@@ -119,7 +119,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
     describe('should fail', (): void => {
         it('should fail on binding this on function literal', () : void => {
-            var script : string = `
+            const script : string = `
             (function() {}).bind(this);
         `;
 
@@ -134,7 +134,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should fail on binding this on lambda', () : void => {
-            var script : string = `
+            const script : string = `
             (() => {}).bind(this);
         `;
 
@@ -149,7 +149,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should fail on underscore static invocation with this as context and function', () : void => {
-            var script : string = `
+            const script : string = `
                 _.map(list, function() {}, this);
             `;
 
@@ -164,7 +164,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should fail on underscore static invocation with this as context and lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 _.map(list, () => {}, this);
             `;
 
@@ -179,7 +179,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should fail on underscore instance invocation with this as context and function', () : void => {
-            var script : string = `
+            const script : string = `
                 _(list).forEach(function() {}, this);
             `;
             TestHelper.assertViolations(ruleName, script, [
@@ -193,7 +193,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('should fail on underscore instance invocation with this as context and lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 _(list).every(() => {}, this);
             `;
             TestHelper.assertViolations(ruleName, script, [
@@ -208,7 +208,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.reduce - static invocation - function parameter', () : void => {
             // reduce is a special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _.reduce(list, function () {}, memo, this);
             `;
 
@@ -223,7 +223,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.reduce - static invocation - lambda parameter', () : void => {
             // reduce is a special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _.reduce(list, () => {}, memo, this);
             `;
 
@@ -239,7 +239,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.reduce - instance invocation - function parameter', () : void => {
             // reduce is a special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _(list).reduce(function () {}, memo, this);
             `;
 
@@ -255,7 +255,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.reduce - instance invocation - lambda parameter', () : void => {
             // reduce is a special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _(list).reduce(() => {}, memo, this);
             `;
 
@@ -271,7 +271,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.sortedIndex - static invocation - function literal', () : void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _.sortedIndex(list, value, function () {}, this);
             `;
 
@@ -287,7 +287,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.sortedIndex - static invocation - lambda', () : void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _.sortedIndex(list, value, () => {}, this);
             `;
 
@@ -303,7 +303,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.sortedIndex - instance invocation - function literal', () : void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _(list).sortedIndex(value, function () {}, this);
             `;
 
@@ -319,7 +319,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
         it('fail on _.sortedIndex - instance invocation - lambda', () : void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
-            var script : string = `
+            const script : string = `
                 _(list).sortedIndex(value, () => {}, this);
             `;
 
@@ -334,7 +334,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('fail on _.bind - function literal', () : void => {
-            var script : string = `
+            const script : string = `
                 _.bind(function () {}, this);
             `;
 
@@ -349,7 +349,7 @@ describe('noUnnecessaryBindRule', () : void => {
         });
 
         it('fail on _.bind - lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 _.bind(() => {}, this);
             `;
 

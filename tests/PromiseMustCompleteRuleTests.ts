@@ -4,17 +4,17 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('promiseMustCompleteRule', () : void => {
-    var ruleName : string = 'promise-must-complete';
+    const ruleName : string = 'promise-must-complete';
 
     describe('should pass', () : void => {
         it('when promise completes', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         resolve('value');
@@ -31,7 +31,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on resolve - lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     resolve('value');
                 })`;
@@ -40,7 +40,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on resolve - function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>(function (resolve, reject) {
                     resolve('value');
                 })`;
@@ -49,7 +49,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on resolve - alternative name', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((someOtherName, reject) => {
                     someOtherName('value');
                 })`;
@@ -58,7 +58,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on reject', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     reject('value);
                 })`;
@@ -67,7 +67,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on reject - function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>(function (resolve, reject) {
                     reject('value);
                 })`;
@@ -76,7 +76,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('on reject - alternative name', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, someOtherName) => {
                     someOtherName('value);
                 })`;
@@ -85,7 +85,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when single branch is completed - with if-statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         resolve('value');
@@ -96,7 +96,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         resolve('value');
@@ -109,7 +109,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         if (somethingElse) {
@@ -129,7 +129,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('with nested if-else statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         if (somethingElse) {
@@ -150,7 +150,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function () {
                         resolve('value');
@@ -160,7 +160,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(() => {
                         resolve();
@@ -170,7 +170,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a lambda - with extra parameter', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((someParm) => {
                         resolve('value');
@@ -180,7 +180,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a for loop', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     for(var x = 0; x < something.length; x++) {
                         resolve('value');
@@ -190,7 +190,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a for in loop', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     for(var x in something) {
                         resolve('value');
@@ -200,7 +200,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolved within a while loop', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     while (something) {
                         resolve();
@@ -210,7 +210,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when resolve reference escaped into a function call', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     doSomething(resolve); // reference escapes and we assume it resolves
                 })`;
@@ -218,7 +218,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when reject reference escaped into a function call', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     doSomething(reject); // reference escapes and we assume it resolves
                 })`;
@@ -226,7 +226,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when non-shadowed parameter resolves within a function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (arg1, reject) {
                         resolve('value');
@@ -236,7 +236,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when non-shadowed parameter rejects within a function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (resolve, arg2) {
                         reject();
@@ -246,7 +246,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when non-shadowed parameter resolves within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((arg1, reject) => {
                         resolve('value');
@@ -256,7 +256,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when non-shadowed parameter rejects within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((resolve, arg2) => {
                         reject();
@@ -269,7 +269,7 @@ describe('promiseMustCompleteRule', () : void => {
 
     describe('should fail', () : void => {
         it('when empty lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>(() => {
                 })`;
 
@@ -284,7 +284,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when empty function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>(function {
                 })`;
 
@@ -299,7 +299,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when has no complete', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                 })`;
 
@@ -314,7 +314,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when single branch is missing complete - with if-statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         someOtherFunction();
@@ -332,7 +332,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when single branch is missing complete - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         resolve('value');
@@ -352,7 +352,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('with nested if-else statement', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
                         if (somethingElse) {
@@ -379,7 +379,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when shadowed parameter resolved within a function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (resolve) {  // this parameter actually shadows the one in the enclosing scope
                         resolve();
@@ -396,7 +396,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when shadowed parameter rejects within a function', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (reject) {  // this parameter actually shadows the one in the enclosing scope
                         reject();
@@ -413,7 +413,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when shadowed parameter resolved within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((arg1, resolve) => { // this parameter actually shadows the one in the enclosing scope
                         resolve('value');
@@ -430,7 +430,7 @@ describe('promiseMustCompleteRule', () : void => {
         });
 
         it('when shadowed parameter rejects within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((reject) => {  // this parameter actually shadows the one in the enclosing scope
                         reject();

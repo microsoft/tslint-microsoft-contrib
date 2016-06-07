@@ -2,10 +2,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import Utils = require('./utils/Utils');
-import SyntaxKind = require('./utils/SyntaxKind');
-import AstUtils = require('./utils/AstUtils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {Utils} from './utils/Utils';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the export-name rule.
@@ -17,7 +17,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
     }
 
+    /* tslint:disable:function-name */
     public static getExceptions(options : Lint.IOptions) : string[] {
+    /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
@@ -104,19 +106,19 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private validateExport(exportedName: string, node: ts.Node): void {
-        var regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
+        const regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
-                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
     }
 
     private getFilename(): string {
-        var filename = this.getSourceFile().fileName;
-        var lastSlash = filename.lastIndexOf('/');
+        const filename = this.getSourceFile().fileName;
+        const lastSlash = filename.lastIndexOf('/');
         if (lastSlash > -1) {
             return filename.substring(lastSlash + 1);
         }
@@ -124,7 +126,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private isSuppressed(exportedName: string) : boolean {
-        var allExceptions : string[] = Rule.getExceptions(this.getOptions());
+        const allExceptions : string[] = Rule.getExceptions(this.getOptions());
 
         return Utils.exists(allExceptions, (exception: string) : boolean => {
             return new RegExp(exception).test(exportedName);

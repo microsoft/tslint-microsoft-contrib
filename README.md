@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.7
+Version 2.0.8
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
@@ -58,7 +58,12 @@ Add the new rulesDirectory to your tslint task:
 
 The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
 
-A sample configuration file with all options is available here: [tslint.json](tslint.json)
+##### Which Rules Should I Turn On?
+There certainly are a lot of options! Here are some links to get you started.
+* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js)
+* A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
+* A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
+* And our configuration file with all options is available here: [tslint.json](tslint.json)
 
 Supported Rules
 -----
@@ -67,6 +72,7 @@ Rule Name   | Description | Since
 :---------- | :------------ | -------------
 `chai-vague-errors`             | Avoid Chai assertions that result in vague errors. For example, asserting `expect(something).to.be.true` will result in the failure message "Expected true received false". This is a vague error message that does not reveal the underlying problem. It is especially vague in TypeScript because stack trace line numbers often do not match the source code. A better pattern to follow is the xUnit Patterns [Assertion Message](http://xunitpatterns.com/Assertion%20Message.html) pattern. The previous code sample could be better written as `expect(something).to.equal(true, 'expected something to have occurred');`| 1.0
 `export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 1.0, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
+`function-name`                 | Applies a naming convention to function names and method names. You can configure the naming convention by passing parameters. Please note, the private-method-regex does take precedence over the static-method-regex, so a private static method must match the private-method-regex. The default values are: <br>    [ true, { <br>        "method-regex": "^[a-z][\\w\\d]+$",<br>        "private-method-regex": "^[a-z][\\w\\d]+$",<br>        "static-method-regex": "^[A-Z_\\d]+$",<br>       "function-regex": "^[a-z][\\w\\d]+$"<br>    }] | 2.0.7
 `import-name`                   | The name of the imported module must match the name of the thing being imported. For example, it is valid to name imported modules the same as the module name: `import Service = require('x/y/z/Service')` and `import Service from 'x/y/z/Service'`. But it is invalid to change the name being imported, such as: `import MyCoolService = require('x/y/z/Service')` and `import MyCoolService from 'x/y/z/Service'`. | 2.0.5
 `jquery-deferred-must-complete` | When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/26). | 1.0
 `max-func-body-length`          | Avoid long functions. The line count of a function body must not exceed the value configured within this rule's options. <br>You can setup a general max function body length applied for every function/method/arrow function e.g. \[true, 30\] or set different maximum length for every type e.g. \[true, \{ "func-body-length": 10 , "arrow-body-length": 5, "method-body-length": 15, "ctor-body-length": 5 \}\]. To specify a function name whose parameters you can ignore for this rule, pass a regular expression as a string(this can be useful for Mocha users to ignore the describe() function) | 2.0.3
@@ -94,6 +100,7 @@ Rule Name   | Description | Since
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-inner-html`                 | Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function. Writing values to innerHTML can expose your website to XSS injection attacks. All strings must be escaped before being rendered to the page.| 2.0.4
 `no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
+`no-jquery-raw-elements`        | Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects. Instead use the JQuery element API. | 2.0.8
 `no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-multiple-var-decl`          | Deprecated - This rule is now part of the base TSLint product as the rule named 'one-variable-per-declaration'. Do not use comma separated variable declarations | 1.0
@@ -113,6 +120,7 @@ Rule Name   | Description | Since
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
+`no-var-self`                   | Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
 `prefer-const`                  | Use `const` to declare variables if they are only assigned a value once. | 2.0.6
 `prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the 'as type' casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
@@ -122,6 +130,15 @@ Rule Name   | Description | Since
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 `valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
 
+Supported Formatters
+-----
+
+Formatter Name          | Description | Since
+:----------             | :------------ | -------------
+`fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
+`fix-no-unused-imports` | This formatter automatically fixes any unused imports found by the no-unused-imports rule. | 2.0.8
+`fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
+`fix-prefer-const`      | This formatter automatically converts let variable declarations into const declarations found by the prefer-const rule. | 2.0.8
 
 Development
 -----------

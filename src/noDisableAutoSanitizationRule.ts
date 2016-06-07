@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import AstUtils = require('./utils/AstUtils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {AstUtils} from './utils/AstUtils';
 
 /**
  * Implementation of the no-disable-auto-sanitization rule.
@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoDisableAutoSanitizationWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-        var functionName : string = AstUtils.getFunctionName(node);
+        const functionName : string = AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
         }

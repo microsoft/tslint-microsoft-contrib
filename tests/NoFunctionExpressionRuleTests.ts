@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noFunctionExpressionRule', () : void => {
-    var ruleName : string = 'no-function-expression';
+    const ruleName : string = 'no-function-expression';
 
     it('should pass on arrow function', () : void => {
-        var script : string = `
+        const script : string = `
             var x = (): void => {
 	        }
         `;
@@ -22,7 +22,7 @@ describe('noFunctionExpressionRule', () : void => {
     });
 
     it('should pass on function with this', (): void => {
-        var script: string = `
+        const script: string = `
             var x = function() {
                 this.accessBoundProperty;
 	        }
@@ -33,7 +33,7 @@ describe('noFunctionExpressionRule', () : void => {
 
 
    it('should fail on function expression', () : void => {
-        var script : string = `
+        const script : string = `
 	        var x = function() {
                 var y = function() {
                     this.accessProperty;
@@ -53,7 +53,7 @@ describe('noFunctionExpressionRule', () : void => {
     });
 
     it('should fail on nested function expression', () : void => {
-        var script : string = `
+        const script : string = `
 	        var x = function() {
 	            this.someReference;
                 var y = function() {

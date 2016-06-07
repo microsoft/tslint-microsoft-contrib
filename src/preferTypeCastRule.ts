@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 const FAILURE_STRING: string = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
 

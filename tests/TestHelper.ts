@@ -3,13 +3,13 @@
 /// <reference path="../typings/chai.d.ts" />
 
 import * as Lint from 'tslint/lib/lint';
-import fs = require('fs');
-import chai = require('chai');
+import * as fs from 'fs';
+import * as chai from 'chai';
 
 /**
  * Test Utilities.
  */
-module TestHelper {
+export module TestHelper {
 
     export interface FailurePosition {
         character: number;
@@ -50,9 +50,7 @@ module TestHelper {
         runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
     }
 
-    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
-                                         expectedFailures : ExpectedFailure[]) {
-
+    export function runRule(ruleName : string, userOptions: string[], inputFileOrScript : string): Lint.LintResult {
         const configuration: RuleConfiguration = {
             rules: {}
         };
@@ -80,7 +78,14 @@ module TestHelper {
             result = linter.lint();
         }
 
-        const actualFailures: ExpectedFailure[] = JSON.parse(result.output);
+        return result;
+    }
+
+    function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
+                                         expectedFailures : ExpectedFailure[]) {
+
+        const lintResult: Lint.LintResult = runRule(ruleName, userOptions, inputFileOrScript);
+        const actualFailures: ExpectedFailure[] = JSON.parse(lintResult.output);
 
         // All the information we need is line and character of start position. For JSON comparison
         // to work, we will delete the information that we are not interested in from both actual and
@@ -102,10 +107,8 @@ module TestHelper {
         chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
 
         expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
-            var actual = actualFailures[index];
+            const actual = actualFailures[index];
             chai.assert.deepEqual(actual, expected);
         });
     }
 }
-
-export = TestHelper;

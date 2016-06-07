@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
-import Utils = require('./utils/Utils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {Utils} from './utils/Utils';
 
 /**
  * Implementation of the valid-typeof rule.
@@ -38,9 +38,9 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
     }
 
     private getClosestTerm(term: string): string {
-        var closestMatch: number = 99999999;
+        let closestMatch: number = 99999999;
         return Utils.reduce(Rule.VALID_TERMS, (closestTerm: string, thisTerm: string) : string => {
-            var distance = this.levenshteinDistance(term, thisTerm);
+            const distance = this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
                 closestTerm = thisTerm;

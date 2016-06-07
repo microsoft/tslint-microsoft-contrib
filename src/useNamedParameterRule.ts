@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import SyntaxKind = require('./utils/SyntaxKind');
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {SyntaxKind} from './utils/SyntaxKind';
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
 /**
  * Implementation of the use-named-parameter rule.
@@ -20,8 +20,8 @@ class UseNamedParameterWalker extends ErrorTolerantWalker {
         if (node.argumentExpression != null) {
             if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
-                    var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
-                    var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                    const failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
+                    const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                     this.addFailure(failure);
                 }
             }

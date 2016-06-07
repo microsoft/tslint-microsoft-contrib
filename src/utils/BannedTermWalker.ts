@@ -1,11 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import ErrorTolerantWalker = require('./ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 
 /**
  * Implementation of the banned-term rulesets.
  */
-class BannedTermWalker extends ErrorTolerantWalker {
+export class BannedTermWalker extends ErrorTolerantWalker {
     private failureString : string;
     private bannedTerms: string[];
 
@@ -60,7 +60,7 @@ class BannedTermWalker extends ErrorTolerantWalker {
     private validateNode(node: ts.Node) : void {
         if ((<any>node).name) {
             if ((<any>node).name.text) {
-                var text : string = (<any>node).name.text;
+                const text : string = (<any>node).name.text;
                 if (this.isBannedTerm(text)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), this.failureString + text));
                 }
@@ -73,5 +73,3 @@ class BannedTermWalker extends ErrorTolerantWalker {
     }
 
 }
-
-export = BannedTermWalker;

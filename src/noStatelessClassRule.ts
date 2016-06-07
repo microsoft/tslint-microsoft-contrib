@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
-import AstUtils = require('./utils/AstUtils');
-import Utils = require('./utils/Utils');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {AstUtils} from './utils/AstUtils';
+import {Utils} from './utils/Utils';
 
 
 const FAILURE_STRING: string = 'A stateless class was found. This indicates a failure in the object model: ';

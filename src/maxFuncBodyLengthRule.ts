@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import SyntaxKind = require('./utils/SyntaxKind');
-import AstUtils = require('./utils/AstUtils');
-import Utils = require('./utils/Utils');
+import {SyntaxKind} from './utils/SyntaxKind';
+import {AstUtils} from './utils/AstUtils';
+import {Utils} from './utils/Utils';
 
 /**
  * Implementation of the max-func-body-length rule.

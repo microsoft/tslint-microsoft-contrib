@@ -1,18 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import NoStringParameterToFunctionCallWalker = require('./utils/NoStringParameterToFunctionCallWalker');
+import {NoStringParameterToFunctionCallWalker} from './utils/NoStringParameterToFunctionCallWalker';
 
 /**
  * Implementation of the no-string-based-set-timeout rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        const documentRegistry = ts.createDocumentRegistry();
+        const languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
+        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
 
-        var walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
+        const walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
             sourceFile , 'setTimeout', this.getOptions(), languageService
         );
         return this.applyWithWalker(walker);

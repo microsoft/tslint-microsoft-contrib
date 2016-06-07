@@ -3,13 +3,13 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noDeleteExpressionRule', (): void => {
-    var RULE_NAME: string = 'no-delete-expression';
+    const RULE_NAME: string = 'no-delete-expression';
 
     it('should not produce violations', (): void => {
         const script: string = `

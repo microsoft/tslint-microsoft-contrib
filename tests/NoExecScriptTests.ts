@@ -2,16 +2,16 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noExecScriptRule', () : void => {
-    var RULE_NAME : string = 'no-exec-script';
+    const RULE_NAME : string = 'no-exec-script';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoExecScriptTestInput.ts';
+        const inputFile : string = 'test-data/NoExecScriptTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "forbidden execScript: execScript",

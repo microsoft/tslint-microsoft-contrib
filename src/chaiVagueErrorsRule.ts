@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 /**
  * Implementation of the chai-vague-errors rule.
@@ -51,7 +51,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     }
 
     private static getLeftMostCallExpression(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression {
-        var leftSide: ts.Node = node.expression;
+        let leftSide: ts.Node = node.expression;
         while (leftSide != null) {
             if (leftSide.kind === SyntaxKind.current().CallExpression) {
                 return <ts.CallExpression>leftSide;

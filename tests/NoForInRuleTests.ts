@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noForInRule', () : void => {
-    var ruleName : string = 'no-for-in';
+    const ruleName : string = 'no-for-in';
 
     it('should pass on regular for statement', () : void => {
-        var script : string = `
+        const script : string = `
             for (var i = 0; i < 100; i++) {
 
             }
@@ -23,7 +23,7 @@ describe('noForInRule', () : void => {
     });
 
     it('should fail on for-in statement', () : void => {
-        var script : string = `
+        const script : string = `
             for (name in object) {
 
             }

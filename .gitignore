@@ -4,6 +4,7 @@ npm-debug.log
 # TypeScrit temporary/cache files
 **/.baseDir.ts
 **/.tscache/
+tscommand-*.tmp.txt
 
 **/dist/
 

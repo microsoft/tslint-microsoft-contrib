@@ -3,17 +3,17 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('jquery-deferred-must-complete', () : void => {
-    var ruleName : string = 'jquery-deferred-must-complete';
+    const ruleName : string = 'jquery-deferred-must-complete';
 
     describe('should pass', () : void => {
         it('when deferred named jquery completes', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -32,7 +32,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when deferred named jquery completes - let declaration', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -51,7 +51,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when deferred named $ completes', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
                 if (something) {
@@ -71,7 +71,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('on resolve', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
                 deferred.resolve();
@@ -83,7 +83,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('on reject', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
                 deferred.reject();
@@ -95,7 +95,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when single branch is completed - with if-statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -109,7 +109,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -124,7 +124,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when single branch is completed - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -146,7 +146,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('with nested if-else statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -169,7 +169,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a function', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall(function () {
@@ -181,7 +181,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall(() => {
@@ -193,7 +193,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a function', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall(function (someParm) {
@@ -205,7 +205,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall((someParm) => { // this parameter actually shadows the one in the enclosing scope
@@ -217,7 +217,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a for loop', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 for(var x = 0; x < something.length; x++) {
@@ -229,7 +229,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a for in loop', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 for(var x in something) {
@@ -241,7 +241,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when resolved within a while loop', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 while (something) {
@@ -253,7 +253,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when deferred reference escaped into a function call', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 doSomething(deferred); // reference escapes and we assume it resolves
@@ -265,7 +265,7 @@ describe('jquery-deferred-must-complete', () : void => {
 
     describe('should fail', () : void => {
         it('when has no complete', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
                 return deferred.promise();
@@ -284,7 +284,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when has no complete - var declared on two lines', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void>;
                 deferred = $.Deferred<void>();
@@ -304,7 +304,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when single branch is missing complete - with if-statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -325,7 +325,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when single branch is missing complete - with if-else-statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -348,7 +348,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('with nested if-else statement', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 if (something) {
@@ -378,7 +378,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when shadowed parameter resolved within a function', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall(function (deferred) {  // this parameter actually shadows the one in the enclosing scope
@@ -398,7 +398,7 @@ describe('jquery-deferred-must-complete', () : void => {
         });
 
         it('when shadowed parameter resolved within a lambda', () : void => {
-            var script : string = `
+            const script : string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
                 someCall((arg1, deferred) => { // this parameter actually shadows the one in the enclosing scope

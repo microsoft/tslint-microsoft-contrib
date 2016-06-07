@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noEmptyInterfacesRule', () : void => {
-    var ruleName : string = 'no-empty-interfaces';
+    const ruleName : string = 'no-empty-interfaces';
 
     it('should pass on interface with 1 attribute', () : void => {
-        var script : string = `
+        const script : string = `
             interface MyInterface {
                 attribute: string;
             }
@@ -23,7 +23,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should pass on interface with two different parents', () : void => {
-        var script : string = `
+        const script : string = `
             interface MyInterface extends First, Second {
             }
         `;
@@ -32,7 +32,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should fail on interface with only 1 parent (what is the point?)', () : void => {
-        var script : string = `
+        const script : string = `
             interface MyInterface extends First {
             }
         `;
@@ -48,7 +48,7 @@ describe('noEmptyInterfacesRule', () : void => {
     });
 
     it('should fail on empty interface', () : void => {
-        var script : string = `
+        const script : string = `
             interface MyInterface {
                 // adding comments will not help you.
             }

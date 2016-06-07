@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('useIsnanRule', () : void => {
-    var ruleName : string = 'use-isnan';
+    const ruleName : string = 'use-isnan';
 
     it('should pass on xxx', () : void => {
-        var script : string = `
+        const script : string = `
         if (isNaN(NaN)) { }
         if (isNaN(something)) { }
         `;
@@ -22,7 +22,7 @@ describe('useIsnanRule', () : void => {
     });
 
     it('should fail on equality NaN', () : void => {
-        var script : string = `
+        const script : string = `
         if (foo == NaN) {  }
         if (NaN === foo) {  }
         if (foo != NaN) {  }
@@ -58,7 +58,7 @@ describe('useIsnanRule', () : void => {
     });
 
     it('should fail on other binary expressions', () : void => {
-        var script : string = `
+        const script : string = `
         if (foo > NaN) { }
         if (NaN >= foo) { }
         if (foo < NaN) { }

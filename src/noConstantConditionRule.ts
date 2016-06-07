@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-import SyntaxKind = require('./utils/SyntaxKind');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 /**
  * Implementation of the no-constant-condition rule.
@@ -16,7 +16,25 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
+
     private isConstant(node: ts.Node): boolean {
+
+        if (node.kind === SyntaxKind.current().BinaryExpression) {
+            const expression: ts.BinaryExpression = <ts.BinaryExpression>node;
+            const kind: ts.SyntaxKind = expression.operatorToken.kind;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return this.isConstant(expression.left) && this.isConstant(expression.right);
+            }
+        }
+        if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
+            const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
+                <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
+            const kind: ts.SyntaxKind = expression.operator;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return this.isConstant(expression.operand);
+            }
+        }
+        //console.log(ts.SyntaxKind[node.kind] + ' ' + node.getText());
         return node.kind === SyntaxKind.current().FalseKeyword
             || node.kind === SyntaxKind.current().TrueKeyword
             || node.kind === SyntaxKind.current().NumericLiteral;

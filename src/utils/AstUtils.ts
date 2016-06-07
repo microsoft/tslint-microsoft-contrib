@@ -1,13 +1,13 @@
 import * as ts from 'typescript';
-import SyntaxKind = require('./SyntaxKind');
+import {SyntaxKind} from './SyntaxKind';
 
 /**
  * General utility class.
  */
-module AstUtils {
+export module AstUtils {
     export function getFunctionName(node : ts.CallExpression) : string {
-        var expression: ts.Expression = node.expression;
-        var functionName : string = (<any>expression).text;
+        const expression: ts.Expression = node.expression;
+        let functionName : string = (<any>expression).text;
         if (functionName === undefined && (<any>expression).name) {
             functionName = (<any>expression).name.text;
         }
@@ -22,11 +22,15 @@ module AstUtils {
         return null;
     }
 
+    export function isJQuery(functionTarget: string): boolean {
+        return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
+    }
+
     export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
         if (modifiers == null) {
             return false;
         }
-        var result : boolean = false;
+        let result : boolean = false;
         modifiers.forEach((modifier : ts.Node) : void => {
             if (modifier.kind === modifierKind) {
                 result = true;
@@ -42,7 +46,7 @@ module AstUtils {
 
         if (expression.kind === SyntaxKind.current().Identifier
             || expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-            var definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
+            const definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
                     console.log('\tdefinitionInfo-' + index);
@@ -51,7 +55,7 @@ module AstUtils {
                 });
             }
 
-            var typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
+            const typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo) {
                 typeInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
                     console.log('\ttypeDefinitionInfo-' + index);
@@ -60,19 +64,19 @@ module AstUtils {
                 });
             }
 
-            var quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
+            const quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
             console.log('\tquickInfo.kind         = ' + quickInfo.kind);
             console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
             console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
             console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
             console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
 
-            var expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
+            const expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
             console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
             console.log('\ttype.flags: ' + expressionType.flags);
             console.log('\ttype.symbol: ' + expressionType.symbol);
 
-            var expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
+            const expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
             if (expressionSymbol == null) {
                 console.log('\tsymbol: ' + expressionSymbol);
             } else {
@@ -81,7 +85,7 @@ module AstUtils {
                 console.log('\tsymbol.declarations: ' + expressionSymbol.declarations);
             }
 
-            var contextualType : ts.Type = typeChecker.getContextualType(expression);
+            const contextualType : ts.Type = typeChecker.getContextualType(expression);
             if (contextualType == null) {
                 console.log('\tcontextualType: ' + contextualType);
             } else {
@@ -176,7 +180,7 @@ module AstUtils {
     }
 
     export function findParentBlock(child: ts.Node) : ts.Node {
-        var parent : ts.Node = child.parent;
+        let parent : ts.Node = child.parent;
         while (parent != null) {
             if (parent.kind === SyntaxKind.current().Block) {
                 return parent;
@@ -196,5 +200,3 @@ module AstUtils {
         return false;
     }
 }
-
-export = AstUtils;

@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noMultipleVarDeclRule', () : void => {
-    var ruleName : string = 'no-multiple-var-decl';
+    const ruleName : string = 'no-multiple-var-decl';
 
     it('should pass on separate var declaration and multiple var declarations within a for loop', () : void => {
-        var script : string = `
+        const script : string = `
             var x = 1;
             var y: number = 2;
             var z = [3, 4];
@@ -24,7 +24,7 @@ describe('noMultipleVarDeclRule', () : void => {
     });
 
     it('should fail on multiple var declaration', () : void => {
-        var script : string = `
+        const script : string = `
             var x = 1,
                 y = 2;
             var x, y = 2, z;

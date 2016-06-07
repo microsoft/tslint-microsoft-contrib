@@ -3,16 +3,16 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:max-func-body-length */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noStringBasedSetIntervalRule', () : void => {
-    var RULE_NAME : string = 'no-string-based-set-interval';
+    const RULE_NAME : string = 'no-string-based-set-interval';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
+        const inputFile : string = 'test-data/NoStringBasedSetIntervalTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden setInterval string parameter: \"var x = 'should fail'\"",

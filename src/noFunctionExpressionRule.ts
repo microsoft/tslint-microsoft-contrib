@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
 /**
  * Implementation of the no-function-expression rule.
@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        var walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
+        const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
         node.getChildren().forEach((node: ts.Node) => {
             walker.walk(node);
         });

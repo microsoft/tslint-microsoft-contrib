@@ -4,17 +4,17 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noUnnecessaryOverrideRule', () : void => {
-    var ruleName : string = 'no-unnecessary-override';
+    const ruleName : string = 'no-unnecessary-override';
 
     describe('should pass', (): void => {
         it('when adding a parameter', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     private myField;
                     myMethod1() {
@@ -30,7 +30,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when negating result', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         -super.myMethod();
@@ -42,7 +42,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when removing a parameter', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod1(arg1, arg2) {
                         super.myMethod1(arg1);
@@ -57,7 +57,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when transposing parameters', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
                         super.myMethod(arg2, arg1);
@@ -69,7 +69,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when changing a parameter', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
                         super.myMethod(arg1, arg2 * 2);
@@ -81,7 +81,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when adding statements before ', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         console.log('some logging...');
@@ -94,7 +94,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when adding statements after', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         super.myMethod();
@@ -107,7 +107,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('when calling different methods', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         super.notMyMethod();
@@ -121,7 +121,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
 
     describe('should fail', (): void => {
         it('should fail on calling super with 0 args and no return', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         super.myMethod();
@@ -140,7 +140,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should fail on calling super with 0 args and return', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         return super.myMethod();
@@ -159,7 +159,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should fail on calling super with argument', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod(arg1) {
                         super.myMethod(arg1);
@@ -178,7 +178,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should fail on calling super with two arguments', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
                         super.myMethod(arg1, arg2);
@@ -197,7 +197,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should fail on calling super with default arguments', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod(arg1 = true, arg2 = false) {
                         super.myMethod(arg1, arg2);
@@ -216,7 +216,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should fail on calling super with comments involved', () : void => {
-            var script : string = `
+            const script : string = `
                 class MyClass {
                     myMethod() {
                         // here is a line comment
@@ -237,7 +237,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
         });
 
         it('should not fail on empty void method', () : void => {
-            var script : string = `
+            const script : string = `
                 class BaseComponent {
                     public function1(): void { return; }
                 }

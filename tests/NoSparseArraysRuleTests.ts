@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noSparseArraysRule', () : void => {
-    var ruleName : string = 'no-sparse-arrays';
+    const ruleName : string = 'no-sparse-arrays';
 
     it('should pass on dense arrays', () : void => {
-        var script : string = `
+        const script : string = `
             var a = [];
             var b = [1];
             var c = ['1', '2'];
@@ -25,7 +25,7 @@ describe('noSparseArraysRule', () : void => {
     });
 
     it('should fail on comma with no elements', () : void => {
-        var script : string = `
+        const script : string = `
             var x = [,];
         `;
 
@@ -40,7 +40,7 @@ describe('noSparseArraysRule', () : void => {
     });
 
     it('should fail on array with many commas', () : void => {
-        var script : string = `
+        const script : string = `
             var x = [,,,];
         `;
 
@@ -55,7 +55,7 @@ describe('noSparseArraysRule', () : void => {
     });
 
     it('should fail on array with elements and commas', () : void => {
-        var script : string = `
+        const script : string = `
             var x = [,1,2,3];
             var z = [1,,2,3];
         `;

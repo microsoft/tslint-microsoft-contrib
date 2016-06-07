@@ -3,17 +3,17 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /* tslint:disable:no-octal-literal */
 /**
  * Unit tests.
  */
 describe('missing-jsdoc', () : void => {
-    var ruleName : string = 'missing-jsdoc';
+    const ruleName : string = 'missing-jsdoc';
 
     it('should not fail on top level comment', () : void => {
-        var script : string = `
+        const script : string = `
 /**
  * whatever
  */
@@ -23,7 +23,7 @@ function whatever() { }`;
     });
 
     it('should not fail on top level comment with trailing spaces', () : void => {
-        var script : string = `
+        const script : string = `
 /**
  * whatever
  */
@@ -33,7 +33,7 @@ function whatever() { }`;
     });
 
     it('should fail on missing comment', () : void => {
-        var script : string = `
+        const script : string = `
 function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
@@ -47,7 +47,7 @@ function whatever() { }`;
     });
 
     it('should fail on one star comment', () : void => {
-        var script : string = `
+        const script : string = `
 /*
  * whatever
  */
@@ -64,7 +64,7 @@ function whatever() { }`;
     });
 
     it('should fail on three star comment', () : void => {
-        var script : string = `
+        const script : string = `
 /***
  * whatever
  */
@@ -81,7 +81,7 @@ function whatever() { }`;
     });
 
     it('should fail on trailing chars', () : void => {
-        var script : string = `
+        const script : string = `
 /** bad format
  * whatever
  */
@@ -98,7 +98,7 @@ function whatever() { }`;
     });
 
     it('should fail on leading spaces', () : void => {
-        var script : string = `
+        const script : string = `
     /**
      * whatever
      */

@@ -3,16 +3,16 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:max-func-body-length */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noStringBasedSetImmediateRule', () : void => {
-    var RULE_NAME : string = 'no-string-based-set-immediate';
+    const RULE_NAME : string = 'no-string-based-set-immediate';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoStringBasedSetImmediateTestInput.ts';
+        const inputFile : string = 'test-data/NoStringBasedSetImmediateTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden setImmediate string parameter: \"var x = 'should fail'\"",

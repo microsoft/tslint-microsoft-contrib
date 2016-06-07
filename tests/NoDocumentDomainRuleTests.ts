@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noDocumentDomainRule', () : void => {
-    var ruleName : string = 'no-document-domain';
+    const ruleName : string = 'no-document-domain';
 
     it('should pass when not setting a value to document.domain', () : void => {
-        var script : string = `
+        const script : string = `
             console.log(document.domain);
             console.log(document.domain.value);
             let x = document.domain;
@@ -27,7 +27,7 @@ describe('noDocumentDomainRule', () : void => {
     });
 
     it('should fail on assigning constant', () : void => {
-        var script : string = `
+        const script : string = `
             document.domain = 'some value';
         `;
 
@@ -42,7 +42,7 @@ describe('noDocumentDomainRule', () : void => {
     });
 
     it('should fail on assigning variable', () : void => {
-        var script : string = `
+        const script : string = `
             document.domain = someValue;
         `;
 
@@ -57,7 +57,7 @@ describe('noDocumentDomainRule', () : void => {
     });
 
     it('should fail on assigning variable on window', () : void => {
-        var script : string = `
+        const script : string = `
             window.document.domain = someValue;
         `;
 
@@ -72,7 +72,7 @@ describe('noDocumentDomainRule', () : void => {
     });
 
     it('should pass when document is aliased because the type checker is so weak', () : void => {
-        var script : string = `
+        const script : string = `
             let doc: Document = document;
             doc.domain = 'some value';
         `;

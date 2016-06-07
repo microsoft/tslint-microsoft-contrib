@@ -2,7 +2,7 @@
  * Control flow functions.
  */
 /* tslint:disable:no-increment-decrement */
-module Utils {
+export module Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
@@ -22,7 +22,7 @@ module Utils {
      * A reduce function.
      */
     export function reduce<T, R>(list : T[], predicate: (memo: R, element: T) => R, initialValue: R) : R {
-        var result = initialValue;
+        let result = initialValue;
         if (list != null ) {
             list.forEach((element: T): void => {
                 result = predicate(result, element);
@@ -72,5 +72,3 @@ module Utils {
     }
 }
 /* tslint:enable:no-increment-decrement */
-
-export = Utils;

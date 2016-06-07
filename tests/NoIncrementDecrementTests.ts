@@ -2,16 +2,16 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noIncrementDecrementRule', () : void => {
-    var RULE_NAME : string = 'no-increment-decrement';
+    const RULE_NAME : string = 'no-increment-decrement';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
+        const inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden ++ operator",

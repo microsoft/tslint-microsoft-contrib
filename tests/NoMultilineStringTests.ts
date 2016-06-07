@@ -2,16 +2,16 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noMultilineStringRule', () : void => {
-    var RULE_NAME : string = 'no-multiline-string';
+    const RULE_NAME : string = 'no-multiline-string';
 
     it('should produce violations ', () : void => {
-        var inputFile : string = 'test-data/NoMultilineStringTestInput.ts';
+        const inputFile : string = 'test-data/NoMultilineStringTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden Multiline string:  `some...",

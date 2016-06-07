@@ -2,15 +2,15 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noDisableAutoSanitizationRule', () : void => {
     it('should produce violation for execUnsafeLocalFunction', () : void => {
-        var ruleName : string = 'no-disable-auto-sanitization';
-        var script : string = 'var retVal = MSApp.execUnsafeLocalFunction(() => {});';
+        const ruleName : string = 'no-disable-auto-sanitization';
+        const script : string = 'var retVal = MSApp.execUnsafeLocalFunction(() => {});';
         TestHelper.assertViolations(
             ruleName,
             script,
@@ -26,8 +26,8 @@ describe('noDisableAutoSanitizationRule', () : void => {
     });
 
     it('should produce violation for setInnerHTMLUnsafe', () : void => {
-        var ruleName : string = 'no-disable-auto-sanitization';
-        var script : string = 'WinJS.Utilities.setInnerHTMLUnsafe(element, text);';
+        const ruleName : string = 'no-disable-auto-sanitization';
+        const script : string = 'WinJS.Utilities.setInnerHTMLUnsafe(element, text);';
         TestHelper.assertViolations(
             ruleName,
             script,

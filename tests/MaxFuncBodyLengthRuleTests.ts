@@ -4,14 +4,14 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('maxFuncBodyLengthRule', () : void => {
         let options;
-        var script : string = `
+        const script : string = `
         (function () { alert('!'); })();
 
         function hasBodyLengthOf10 (x, y, z) {
@@ -70,7 +70,7 @@ describe('maxFuncBodyLengthRule', () : void => {
         };
         `;
 
-    var ruleName : string = 'max-func-body-length';
+    const ruleName : string = 'max-func-body-length';
 
     describe('when functions do not exceed general option value and syntax kind wise options are not used', () => {
         beforeEach(() => {

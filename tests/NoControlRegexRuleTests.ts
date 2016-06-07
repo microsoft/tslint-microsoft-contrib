@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('noControlRegexRule', () : void => {
-    var ruleName : string = 'no-control-regex';
+    const ruleName : string = 'no-control-regex';
 
     it('should pass on chars higher than x20', () : void => {
-        var script : string = `
+        const script : string = `
             var pattern1 = /\\x20/;
             var pattern2 = /\\x21/;
             var pattern3 = /\\x30/;
@@ -26,7 +26,7 @@ describe('noControlRegexRule', () : void => {
     });
 
     it('should fail on x1f', () : void => {
-        var script : string = `
+        const script : string = `
             var pattern1 = /\\x1f/;
             var pattern2 = new RegExp("something \\x1f something else");
             var pattern3 = RegExp("\\x1f trailing text");
@@ -55,7 +55,7 @@ describe('noControlRegexRule', () : void => {
     });
 
     it('should fail on x00', () : void => {
-        var script : string = `
+        const script : string = `
             var pattern1 = /\\x00/;
             var pattern2 = new RegExp("\\x00");
             var pattern3 = RegExp("\\x00");

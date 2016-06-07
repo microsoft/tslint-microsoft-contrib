@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 
 /**
  * Implementation of the no-for-in rule.
@@ -16,10 +16,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoForInRuleWalker extends ErrorTolerantWalker {
     protected visitForInStatement(node: ts.ForInStatement): void {
-        var initializer: string = node.initializer.getText();
-        var expression: string = node.expression.getText();
+        const initializer: string = node.initializer.getText();
+        const expression: string = node.expression.getText();
 
-        var msg: string = Rule.FAILURE_STRING + 'for (' + initializer + ' in ' + expression + ')';
+        const msg: string = Rule.FAILURE_STRING + 'for (' + initializer + ' in ' + expression + ')';
         this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
     }
 }

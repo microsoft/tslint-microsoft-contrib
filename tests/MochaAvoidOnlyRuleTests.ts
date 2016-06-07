@@ -4,16 +4,16 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('mochaAvoidOnlyRule', () : void => {
-    var ruleName : string = 'mocha-avoid-only';
+    const ruleName : string = 'mocha-avoid-only';
 
     it('should pass when only is not invoked', () : void => {
-        var script : string = `
+        const script : string = `
             describe('some unit test', () => {
                 it('some test', () => {
                     // some test code
@@ -41,7 +41,7 @@ describe('mochaAvoidOnlyRule', () : void => {
     });
 
     it('should fail on it.only with lambda', () : void => {
-        var script : string = `
+        const script : string = `
             describe('some unit test', () => {
                 it.only('some test', () => {
                     // some test code
@@ -60,7 +60,7 @@ describe('mochaAvoidOnlyRule', () : void => {
     });
 
     it('should fail on it.only with function', () : void => {
-        var script : string = `
+        const script : string = `
             describe('some unit test', () => {
                 it.only('some test', function() {
                     // some test code
@@ -79,7 +79,7 @@ describe('mochaAvoidOnlyRule', () : void => {
     });
 
     it('should fail on describe.only with lambda', () : void => {
-        var script : string = `
+        const script : string = `
             describe.only('some unit test', () => {
                 // some test code
             });
@@ -96,7 +96,7 @@ describe('mochaAvoidOnlyRule', () : void => {
     });
 
     it('should fail on describe.only with function', () : void => {
-        var script : string = `
+        const script : string = `
             describe.only('some unit test', function() {
                 // some test code
             });

@@ -21,6 +21,17 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+
+    it('should pass on simple opening tag (Issue #153)', () : void => {
+        const script : string = `
+            const x = {
+                html: "<pre>" + $("<div>").text(message).html() + "</pre>"
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on simple open and close tags', () : void => {
         const script : string = `
             $("<div></div>");

@@ -1,14 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 // use SyntaxKind.current() instead of ts.SyntaxKind to compare kinds // TODO: delete comment
-import SyntaxKind = require('./utils/SyntaxKind');
+import {SyntaxKind} from './utils/SyntaxKind';
 // use (and contribute to) AstUtils for common AST functions // TODO: delete comment
-import AstUtils = require('./utils/AstUtils');
+import {AstUtils} from './utils/AstUtils';
 // use Utils instead of Underscore functions // TODO: delete comment
-import Utils = require('./utils/Utils');
-
+import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message
 

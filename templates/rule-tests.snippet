@@ -4,17 +4,17 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import TestHelper = require('./TestHelper');
+import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('%RULE_FILE_NAME%', () : void => {
 
-    var ruleName : string = '%RULE_NAME%';
+    const ruleName : string = '%RULE_NAME%';
 
     it('should pass on xxx', () : void => {
-        var script : string = `
+        const script : string = `
             // todo: add passing example
         `;
 
@@ -22,7 +22,7 @@ describe('%RULE_FILE_NAME%', () : void => {
     });
 
     it('should fail on xxx', () : void => {
-        var script : string = `
+        const script : string = `
             // todo: add failing example and update assertions
         `;
 

@@ -99,6 +99,7 @@ module.exports = {
         "no-relative-imports": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
+        "no-typeof-undefined": true,
         "no-unnecessary-local-variable": true,
         "no-var-keyword": true,
         "no-var-requires": true,

@@ -44,7 +44,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             if (Array.isArray(first.ignores)) {
                 first.ignores.forEach((ignore: string) => this.ignores[ignore] = true);
             }
-            if (typeof first.messageIndex !== 'undefined') {
+            if (first.messageIndex !== undefined) {
                 this.messageIndex = first.messageIndex;
             }
         }

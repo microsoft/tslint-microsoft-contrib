@@ -53,6 +53,5 @@ var Utils;
         }, []);
     }
     Utils.filter = filter;
-})(Utils || (Utils = {}));
-module.exports = Utils;
+})(Utils = exports.Utils || (exports.Utils = {}));
 //# sourceMappingURL=Utils.js.map

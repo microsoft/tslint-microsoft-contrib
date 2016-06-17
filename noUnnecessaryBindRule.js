@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -60,14 +60,14 @@ var NoUnnecessaryBindRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoUnnecessaryBindRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 var TypeScriptFunctionAnalyzer = (function () {
     function TypeScriptFunctionAnalyzer() {
     }
     TypeScriptFunctionAnalyzer.prototype.canHandle = function (node) {
-        return !!(AstUtils.getFunctionName(node) === 'bind'
+        return !!(AstUtils_1.AstUtils.getFunctionName(node) === 'bind'
             && node.arguments.length === 1
-            && node.expression.kind === SyntaxKind.current().PropertyAccessExpression);
+            && node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression);
     };
     TypeScriptFunctionAnalyzer.prototype.getContextArgument = function (node) {
         return node.arguments[0];
@@ -81,9 +81,9 @@ var UnderscoreStaticAnalyzer = (function () {
     function UnderscoreStaticAnalyzer() {
     }
     UnderscoreStaticAnalyzer.prototype.canHandle = function (node) {
-        var isUnderscore = AstUtils.getFunctionTarget(node) === '_';
+        var isUnderscore = AstUtils_1.AstUtils.getFunctionTarget(node) === '_';
         if (isUnderscore) {
-            var functionName = AstUtils.getFunctionName(node);
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
             if (functionName === 'bind') {
                 return node.arguments.length === 2;
             }
@@ -91,7 +91,7 @@ var UnderscoreStaticAnalyzer = (function () {
         return isUnderscore;
     };
     UnderscoreStaticAnalyzer.prototype.getContextArgument = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
         }
@@ -107,7 +107,7 @@ var UnderscoreStaticAnalyzer = (function () {
         return null;
     };
     UnderscoreStaticAnalyzer.prototype.getFunctionArgument = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         }
@@ -128,9 +128,9 @@ var UnderscoreInstanceAnalyzer = (function () {
     function UnderscoreInstanceAnalyzer() {
     }
     UnderscoreInstanceAnalyzer.prototype.canHandle = function (node) {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             var propExpression = node.expression;
-            if (propExpression.expression.kind === SyntaxKind.current().CallExpression) {
+            if (propExpression.expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
                 var call = propExpression.expression;
                 return call.expression.getText() === '_';
             }
@@ -138,7 +138,7 @@ var UnderscoreInstanceAnalyzer = (function () {
         return false;
     };
     UnderscoreInstanceAnalyzer.prototype.getContextArgument = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         }
@@ -151,7 +151,7 @@ var UnderscoreInstanceAnalyzer = (function () {
         return null;
     };
     UnderscoreInstanceAnalyzer.prototype.getFunctionArgument = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
         }
@@ -166,19 +166,19 @@ var UnderscoreInstanceAnalyzer = (function () {
     return UnderscoreInstanceAnalyzer;
 }());
 function isFunctionLiteral(expression) {
-    if (expression.kind === SyntaxKind.current().FunctionExpression) {
+    if (expression.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
         return true;
     }
-    if (expression.kind === SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ParenthesizedExpression) {
         return isFunctionLiteral(expression.expression);
     }
     return false;
 }
 function isArrowFunction(expression) {
-    if (expression.kind === SyntaxKind.current().ArrowFunction) {
+    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction) {
         return true;
     }
-    if (expression.kind === SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ParenthesizedExpression) {
         return isArrowFunction(expression.expression);
     }
     return false;

@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -34,7 +34,7 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
     };
     ChaiVagueErrorsRuleWalker.prototype.visitCallExpression = function (node) {
         if (this.isExpectInvocation(node)) {
-            if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+            if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
                 var propExpression = node.expression;
                 if (/equal|equals|eql/.test(propExpression.name.getText())) {
                     if (node.arguments.length === 1) {
@@ -57,10 +57,10 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
     ChaiVagueErrorsRuleWalker.getLeftMostCallExpression = function (node) {
         var leftSide = node.expression;
         while (leftSide != null) {
-            if (leftSide.kind === SyntaxKind.current().CallExpression) {
+            if (leftSide.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
                 return leftSide;
             }
-            else if (leftSide.kind === (SyntaxKind.current().PropertyAccessExpression)) {
+            else if (leftSide.kind === (SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression)) {
                 leftSide = leftSide.expression;
             }
             else {
@@ -70,5 +70,5 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
         return null;
     };
     return ChaiVagueErrorsRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=chaiVagueErrorsRule.js.map

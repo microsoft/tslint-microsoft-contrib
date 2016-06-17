@@ -34,5 +34,5 @@ var ErrorTolerantWalker = (function (_super) {
     ErrorTolerantWalker.DEBUG = false;
     return ErrorTolerantWalker;
 }(Lint.RuleWalker));
-module.exports = ErrorTolerantWalker;
+exports.ErrorTolerantWalker = ErrorTolerantWalker;
 //# sourceMappingURL=ErrorTolerantWalker.js.map

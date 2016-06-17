@@ -5,10 +5,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var Utils = require('./utils/Utils');
-var SyntaxKind = require('./utils/SyntaxKind');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -37,8 +37,8 @@ var ExportNameWalker = (function (_super) {
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
-        var singleExport = Utils.filter(node.statements, function (element) {
-            return element.kind === SyntaxKind.current().ExportAssignment;
+        var singleExport = Utils_1.Utils.filter(node.statements, function (element) {
+            return element.kind === SyntaxKind_1.SyntaxKind.current().ExportAssignment;
         });
         if (singleExport.length === 1) {
             var exportAssignment = singleExport[0];
@@ -52,7 +52,7 @@ var ExportNameWalker = (function (_super) {
         });
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach(function (element) {
-                if (element.kind === SyntaxKind.current().ModuleDeclaration) {
+                if (element.kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration) {
                     var exportStatements = _this.getExportStatementsWithinModules(element);
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
@@ -62,10 +62,10 @@ var ExportNameWalker = (function (_super) {
     };
     ExportNameWalker.prototype.getExportStatementsWithinModules = function (moduleDeclaration) {
         var _this = this;
-        if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleDeclaration) {
+        if (moduleDeclaration.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration) {
             return this.getExportStatementsWithinModules(moduleDeclaration.body);
         }
-        else if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleBlock) {
+        else if (moduleDeclaration.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleBlock) {
             var exportStatements_1 = [];
             var moduleBlock = moduleDeclaration.body;
             moduleBlock.statements.forEach(function (element) {
@@ -76,23 +76,23 @@ var ExportNameWalker = (function (_super) {
     };
     ExportNameWalker.prototype.getExportStatements = function (element) {
         var exportStatements = [];
-        if (element.kind === SyntaxKind.current().ExportAssignment) {
+        if (element.kind === SyntaxKind_1.SyntaxKind.current().ExportAssignment) {
             var exportAssignment = element;
             this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
         }
-        else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
+        else if (AstUtils_1.AstUtils.hasModifier(element.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
             exportStatements.push(element);
         }
         return exportStatements;
     };
     ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === SyntaxKind.current().ModuleDeclaration ||
-                exportedElements[0].kind === SyntaxKind.current().ClassDeclaration ||
-                exportedElements[0].kind === SyntaxKind.current().FunctionDeclaration) {
+            if (exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration ||
+                exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().ClassDeclaration ||
+                exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration) {
                 this.validateExport(exportedElements[0].name.text, exportedElements[0]);
             }
-            else if (exportedElements[0].kind === SyntaxKind.current().VariableStatement) {
+            else if (exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
                 var variableStatement = exportedElements[0];
                 if (variableStatement.declarationList.declarations.length === 1) {
                     var variableDeclaration = variableStatement.declarationList.declarations[0];
@@ -121,11 +121,11 @@ var ExportNameWalker = (function (_super) {
     };
     ExportNameWalker.prototype.isSuppressed = function (exportedName) {
         var allExceptions = Rule.getExceptions(this.getOptions());
-        return Utils.exists(allExceptions, function (exception) {
+        return Utils_1.Utils.exists(allExceptions, function (exception) {
             return new RegExp(exception).test(exportedName);
         });
     };
     return ExportNameWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 exports.ExportNameWalker = ExportNameWalker;
 //# sourceMappingURL=exportNameRule.js.map

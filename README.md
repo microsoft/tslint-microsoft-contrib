@@ -8,7 +8,7 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.7
+Version 2.0.8
 -------------
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
@@ -100,7 +100,8 @@ Rule Name   | Description | Since
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-inner-html`                 | Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function. Writing values to innerHTML can expose your website to XSS injection attacks. All strings must be escaped before being rendered to the page.| 2.0.4
 `no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
-`no-missing-visibility-modifiers` | Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
+`no-jquery-raw-elements`        | Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects. Instead use the JQuery element API. | 2.0.8
+`no-missing-visibility-modifiers` | Deprecated - This rule is in the TSLint product as `member-access`. Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-multiple-var-decl`          | Deprecated - This rule is now part of the base TSLint product as the rule named 'one-variable-per-declaration'. Do not use comma separated variable declarations | 1.0
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
@@ -112,6 +113,7 @@ Rule Name   | Description | Since
 `no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-timeout`   | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument | 0.0.1
+`no-typeof-undefined`           | Do not use the idiom `typeof x === 'undefined'`. You can safely use the simpler `x === undefined` or perhaps `x == null` if you want to check for either null or undefined. | 2.0.8
 `no-unexternalized-strings`     | Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales. The rule can be configured using an object literal as document in the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/95#issuecomment-173149989)| 2.0.1
 `no-unnecessary-bind`           | Do not bind 'this' as the context for a function literal or lambda expression. If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind. If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas. Works for Underscore methods as well.  | 1.0
 `no-unnecessary-local-variable` | Do not declare a variable only to return it from the function on the next line. It is always less code to simply return the expression that initializes the variable. | 2.0.4
@@ -119,15 +121,26 @@ Rule Name   | Description | Since
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unused-imports`             | Remove unused imports | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
+`no-var-self`                   | Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. | 1.0
 `prefer-const`                  | Use `const` to declare variables if they are only assigned a value once. | 2.0.6
 `prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the 'as type' casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 1.0
 `react-no-dangerous-html`       | Do not use React's dangerouslySetInnerHTML API. This rule finds usages of the dangerouslySetInnerHTML API (but not any JSX references). For more info see the [react-no-dangerous-html Rule wiki page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/react-no-dangerous-html-Rule). | 0.0.2
+`react-this-binding-issue`      | Several errors can occur when using React and React.Component subclasses. When using React components you must be careful to correctly bind the 'this' reference on any methods that you pass off to child components as callbacks. For example, it is common to define a private method called 'onClick' and then specify `onClick={this.onClick}` as a JSX attribute. If you do this then the 'this' reference will be undefined when your private method is invoked. The React documentation suggests that you bind the 'this' reference on all of your methods within the constructor: `this.onClick = this.onClick.bind(this);`. This rule will create a violation if 1) a method reference is passed to a JSX attribute without being bound in the constructor. And 2) a method is bound multiple times in the constructor. | 2.0.8
 `use-isnan`                     | Deprecated - This rule is now part of the base TSLint product. Ensures that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant. Similar to the [use-isnan ESLint rule](http://eslint.org/docs/rules/use-isnan).| 1.0
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 `valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
 
+Supported Formatters
+-----
+
+Formatter Name          | Description | Since
+:----------             | :------------ | -------------
+`fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
+`fix-no-unused-imports` | This formatter automatically fixes any unused imports found by the no-unused-imports rule. | 2.0.8
+`fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
+`fix-prefer-const`      | This formatter automatically converts let variable declarations into const declarations found by the prefer-const rule. | 2.0.8
 
 Development
 -----------

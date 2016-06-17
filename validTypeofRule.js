@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
-var Utils = require('./utils/Utils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -27,10 +27,10 @@ var ValidTypeofRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     ValidTypeofRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.left.kind === SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind.current().StringLiteral) {
+        if (node.left.kind === SyntaxKind_1.SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             this.validateTypeOf(node.right);
         }
-        else if (node.right.kind === SyntaxKind.current().TypeOfExpression && node.left.kind === SyntaxKind.current().StringLiteral) {
+        else if (node.right.kind === SyntaxKind_1.SyntaxKind.current().TypeOfExpression && node.left.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             this.validateTypeOf(node.left);
         }
         _super.prototype.visitBinaryExpression.call(this, node);
@@ -45,7 +45,7 @@ var ValidTypeofRuleWalker = (function (_super) {
     ValidTypeofRuleWalker.prototype.getClosestTerm = function (term) {
         var _this = this;
         var closestMatch = 99999999;
-        return Utils.reduce(Rule.VALID_TERMS, function (closestTerm, thisTerm) {
+        return Utils_1.Utils.reduce(Rule.VALID_TERMS, function (closestTerm, thisTerm) {
             var distance = _this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
@@ -86,5 +86,5 @@ var ValidTypeofRuleWalker = (function (_super) {
     };
     ;
     return ValidTypeofRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=validTypeofRule.js.map

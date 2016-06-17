@@ -1484,6 +1484,5 @@ var SyntaxKind;
         return cachedKinds;
     }
     SyntaxKind.current = current;
-})(SyntaxKind || (SyntaxKind = {}));
-module.exports = SyntaxKind;
+})(SyntaxKind = exports.SyntaxKind || (exports.SyntaxKind = {}));
 //# sourceMappingURL=SyntaxKind.js.map

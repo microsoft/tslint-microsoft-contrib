@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -46,7 +46,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.visitPropertyAssignment = function (node) {
         _super.prototype.visitPropertyAssignment.call(this, node);
         var keyNode = node.name;
-        if (keyNode.kind === SyntaxKind.current().Identifier) {
+        if (keyNode.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             if (keyNode.text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, keyNode);
             }
@@ -64,7 +64,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.handleJsxOpeningElement = function (node) {
         var _this = this;
         node.attributes.forEach(function (attribute) {
-            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
                 var jsxAttribute = attribute;
                 var attributeName = jsxAttribute.name.text;
                 if (attributeName === 'dangerouslySetInnerHTML') {
@@ -104,5 +104,5 @@ var NoDangerousHtmlWalker = (function (_super) {
         return found;
     };
     return NoDangerousHtmlWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=reactNoDangerousHtmlRule.js.map

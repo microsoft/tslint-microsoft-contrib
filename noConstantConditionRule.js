@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,23 +25,23 @@ var NoConstantConditionRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoConstantConditionRuleWalker.prototype.isConstant = function (node) {
-        if (node.kind === SyntaxKind.current().BinaryExpression) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
             var expression = node;
             var kind = expression.operatorToken.kind;
-            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
                 return this.isConstant(expression.left) && this.isConstant(expression.right);
             }
         }
-        if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind_1.SyntaxKind.current().PostfixUnaryExpression) {
             var expression = node;
             var kind = expression.operator;
-            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
                 return this.isConstant(expression.operand);
             }
         }
-        return node.kind === SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind.current().NumericLiteral;
+        return node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
+            || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
+            || node.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral;
     };
     NoConstantConditionRuleWalker.prototype.visitIfStatement = function (node) {
         if (this.isConstant(node.expression)) {
@@ -81,5 +81,5 @@ var NoConstantConditionRuleWalker = (function (_super) {
         _super.prototype.visitForStatement.call(this, node);
     };
     return NoConstantConditionRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noConstantConditionRule.js.map

@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ErrorTolerantWalker = require('./ErrorTolerantWalker');
+var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
 var BannedTermWalker = (function (_super) {
     __extends(BannedTermWalker, _super);
     function BannedTermWalker(sourceFile, options, failureString, bannedTerms) {
@@ -58,6 +58,6 @@ var BannedTermWalker = (function (_super) {
         return this.bannedTerms.indexOf(text) !== -1;
     };
     return BannedTermWalker;
-}(ErrorTolerantWalker));
-module.exports = BannedTermWalker;
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+exports.BannedTermWalker = BannedTermWalker;
 //# sourceMappingURL=BannedTermWalker.js.map

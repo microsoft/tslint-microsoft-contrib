@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -35,7 +35,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             if (Array.isArray(first.ignores)) {
                 first.ignores.forEach(function (ignore) { return _this.ignores[ignore] = true; });
             }
-            if (typeof first.messageIndex !== 'undefined') {
+            if (first.messageIndex !== undefined) {
                 this.messageIndex = first.messageIndex;
             }
         }
@@ -71,7 +71,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
         }
     };
     NoUnexternalizedStringsRuleWalker.prototype.findDescribingParent = function (node) {
-        var kinds = SyntaxKind.current();
+        var kinds = SyntaxKind_1.SyntaxKind.current();
         var parent;
         while ((parent = node.parent)) {
             var kind = parent.kind;
@@ -93,5 +93,5 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
     };
     NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
     return NoUnexternalizedStringsRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noUnexternalizedStringsRule.js.map

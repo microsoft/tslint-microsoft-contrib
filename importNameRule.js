@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,14 +25,14 @@ var ImportNameRuleWalker = (function (_super) {
     }
     ImportNameRuleWalker.prototype.visitImportEqualsDeclaration = function (node) {
         var name = node.name.text;
-        if (node.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {
+        if (node.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
             var moduleRef = node.moduleReference;
-            if (moduleRef.expression.kind === SyntaxKind.current().StringLiteral) {
+            if (moduleRef.expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
                 var moduleName = moduleRef.expression.text;
                 this.validateImport(node, name, moduleName);
             }
         }
-        else if (node.moduleReference.kind === SyntaxKind.current().QualifiedName) {
+        else if (node.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().QualifiedName) {
             var moduleName = node.moduleReference.getText();
             moduleName = moduleName.replace(/.*\./, '');
             this.validateImport(node, name, moduleName);
@@ -42,7 +42,7 @@ var ImportNameRuleWalker = (function (_super) {
     ImportNameRuleWalker.prototype.visitImportDeclaration = function (node) {
         if (node.importClause.name != null) {
             var name_1 = node.importClause.name.text;
-            if (node.moduleSpecifier.kind === SyntaxKind.current().StringLiteral) {
+            if (node.moduleSpecifier.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
                 var moduleName = node.moduleSpecifier.text;
                 this.validateImport(node, name_1, moduleName);
             }
@@ -57,5 +57,5 @@ var ImportNameRuleWalker = (function (_super) {
         }
     };
     return ImportNameRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=importNameRule.js.map

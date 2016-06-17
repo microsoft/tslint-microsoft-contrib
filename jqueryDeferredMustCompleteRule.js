@@ -5,10 +5,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
-var Utils = require('./utils/Utils');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var Utils_1 = require('./utils/Utils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -22,11 +22,10 @@ var Rule = (function (_super) {
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 function isPromiseInstantiation(expression) {
-    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
-        var functionName = AstUtils.getFunctionName(expression);
-        var functionTarget = AstUtils.getFunctionTarget(expression);
-        if (functionName === 'Deferred' &&
-            (functionTarget === '$' || /^(jquery)$/i.test(functionTarget))) {
+    if (expression != null && expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+        var functionName = AstUtils_1.AstUtils.getFunctionName(expression);
+        var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(expression);
+        if (functionName === 'Deferred' && AstUtils_1.AstUtils.isJQuery(functionTarget)) {
             return true;
         }
     }
@@ -42,7 +41,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
     }
     JQueryDeferredAnalyzer.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
-            if (node.left.kind === SyntaxKind.current().Identifier) {
+            if (node.left.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
                 if (node.left.text != null) {
                     var name_1 = node.left;
                     this.validateDeferredUsage(node, name_1);
@@ -61,7 +60,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
         _super.prototype.visitVariableDeclaration.call(this, node);
     };
     JQueryDeferredAnalyzer.prototype.validateDeferredUsage = function (rootNode, deferredIdentifier) {
-        var parent = AstUtils.findParentBlock(rootNode);
+        var parent = AstUtils_1.AstUtils.findParentBlock(rootNode);
         var blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
@@ -71,7 +70,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
         }
     };
     return JQueryDeferredAnalyzer;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 var DeferredCompletionWalker = (function (_super) {
     __extends(DeferredCompletionWalker, _super);
     function DeferredCompletionWalker(sourceFile, options, deferredIdentifier) {
@@ -111,9 +110,9 @@ var DeferredCompletionWalker = (function (_super) {
     };
     DeferredCompletionWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             var prop = node.expression;
-            if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
+            if (AstUtils_1.AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
                 var functionName = prop.name.getText();
                 if (isCompletionFunction(functionName)) {
                     this.wasCompleted = true;
@@ -121,8 +120,8 @@ var DeferredCompletionWalker = (function (_super) {
                 }
             }
         }
-        var referenceEscaped = Utils.exists(node.arguments, function (argument) {
-            return AstUtils.isSameIdentifer(_this.deferredIdentifier, argument);
+        var referenceEscaped = Utils_1.Utils.exists(node.arguments, function (argument) {
+            return AstUtils_1.AstUtils.isSameIdentifer(_this.deferredIdentifier, argument);
         });
         if (referenceEscaped) {
             this.wasCompleted = true;
@@ -132,8 +131,8 @@ var DeferredCompletionWalker = (function (_super) {
     };
     DeferredCompletionWalker.prototype.visitArrowFunction = function (node) {
         var _this = this;
-        var isDeferredShadowed = Utils.exists(node.parameters, function (param) {
-            return AstUtils.isSameIdentifer(_this.deferredIdentifier, param.name);
+        var isDeferredShadowed = Utils_1.Utils.exists(node.parameters, function (param) {
+            return AstUtils_1.AstUtils.isSameIdentifer(_this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {
             this.hasBranches = true;
@@ -144,8 +143,8 @@ var DeferredCompletionWalker = (function (_super) {
     };
     DeferredCompletionWalker.prototype.visitFunctionExpression = function (node) {
         var _this = this;
-        var isDeferredShadowed = Utils.exists(node.parameters, function (param) {
-            return AstUtils.isSameIdentifer(_this.deferredIdentifier, param.name);
+        var isDeferredShadowed = Utils_1.Utils.exists(node.parameters, function (param) {
+            return AstUtils_1.AstUtils.isSameIdentifer(_this.deferredIdentifier, param.name);
         });
         if (isDeferredShadowed) {
             this.hasBranches = true;
@@ -155,5 +154,5 @@ var DeferredCompletionWalker = (function (_super) {
         _super.prototype.visitFunctionExpression.call(this, node);
     };
     return DeferredCompletionWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=jqueryDeferredMustCompleteRule.js.map

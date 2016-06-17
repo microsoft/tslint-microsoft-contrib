@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -56,10 +56,10 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         for (var i = 0; i < allParameters.length; i++) {
             var parameter = allParameters[i];
             var argument = call.arguments[i];
-            if (argument.kind !== SyntaxKind.current().Identifier) {
+            if (argument.kind !== SyntaxKind_1.SyntaxKind.current().Identifier) {
                 return false;
             }
-            if (parameter.name.kind !== SyntaxKind.current().Identifier) {
+            if (parameter.name.kind !== SyntaxKind_1.SyntaxKind.current().Identifier) {
                 return false;
             }
             var argumentName = argument.text;
@@ -75,11 +75,11 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         if (call == null) {
             return false;
         }
-        if (call.expression.kind !== SyntaxKind.current().PropertyAccessExpression) {
+        if (call.expression.kind !== SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             return false;
         }
         var propAccess = call.expression;
-        if (propAccess.expression.kind !== SyntaxKind.current().SuperKeyword) {
+        if (propAccess.expression.kind !== SyntaxKind_1.SyntaxKind.current().SuperKeyword) {
             return false;
         }
         var declaredMethodName = this.getMethodName(node);
@@ -88,10 +88,10 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
     };
     NoUnnecessaryOverrideRuleWalker.prototype.getCallExpressionFromStatement = function (statement) {
         var expression;
-        if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+        if (statement.kind === SyntaxKind_1.SyntaxKind.current().ExpressionStatement) {
             expression = statement.expression;
         }
-        else if (statement.kind === SyntaxKind.current().ReturnStatement) {
+        else if (statement.kind === SyntaxKind_1.SyntaxKind.current().ReturnStatement) {
             expression = statement.expression;
             if (expression == null) {
                 return null;
@@ -100,22 +100,22 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         else {
             return null;
         }
-        if (expression.kind !== SyntaxKind.current().CallExpression) {
+        if (expression.kind !== SyntaxKind_1.SyntaxKind.current().CallExpression) {
             return null;
         }
         var call = expression;
-        if (call.expression.kind !== SyntaxKind.current().PropertyAccessExpression) {
+        if (call.expression.kind !== SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             return null;
         }
         return call;
     };
     NoUnnecessaryOverrideRuleWalker.prototype.getMethodName = function (node) {
         var nameNode = node.name;
-        if (nameNode.kind === SyntaxKind.current().Identifier) {
+        if (nameNode.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             return nameNode.text;
         }
         return '<unknown>';
     };
     return NoUnnecessaryOverrideRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noUnnecessaryOverrideRule.js.map

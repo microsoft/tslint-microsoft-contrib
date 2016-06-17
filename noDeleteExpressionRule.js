@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -27,9 +27,9 @@ var NoDeleteExpression = (function (_super) {
     }
     NoDeleteExpression.prototype.visitExpressionStatement = function (node) {
         _super.prototype.visitExpressionStatement.call(this, node);
-        if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
+        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().DeleteExpression) {
             var deletedObject = node.expression.getChildren()[1];
-            if (deletedObject != null && deletedObject.kind === SyntaxKind.current().Identifier) {
+            if (deletedObject != null && deletedObject.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }
@@ -39,5 +39,5 @@ var NoDeleteExpression = (function (_super) {
         this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
     };
     return NoDeleteExpression;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noDeleteExpressionRule.js.map

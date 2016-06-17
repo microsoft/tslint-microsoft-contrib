@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ScopedSymbolTrackingWalker = require('./ScopedSymbolTrackingWalker');
-var AstUtils = require('./AstUtils');
+var ScopedSymbolTrackingWalker_1 = require('./ScopedSymbolTrackingWalker');
+var AstUtils_1 = require('./AstUtils');
 var NoStringParameterToFunctionCallWalker = (function (_super) {
     __extends(NoStringParameterToFunctionCallWalker, _super);
     function NoStringParameterToFunctionCallWalker(sourceFile, targetFunctionName, options, languageServices) {
@@ -18,7 +18,7 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     NoStringParameterToFunctionCallWalker.prototype.validateExpression = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         var firstArg = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
             if (!this.isExpressionEvaluatingToFunction(firstArg)) {
@@ -28,6 +28,6 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
         }
     };
     return NoStringParameterToFunctionCallWalker;
-}(ScopedSymbolTrackingWalker));
-module.exports = NoStringParameterToFunctionCallWalker;
+}(ScopedSymbolTrackingWalker_1.ScopedSymbolTrackingWalker));
+exports.NoStringParameterToFunctionCallWalker = NoStringParameterToFunctionCallWalker;
 //# sourceMappingURL=NoStringParameterToFunctionCallWalker.js.map

@@ -1,6 +1,6 @@
 "use strict";
 var ts = require('typescript');
-var SyntaxKind = require('./SyntaxKind');
+var SyntaxKind_1 = require('./SyntaxKind');
 var AstUtils;
 (function (AstUtils) {
     function getFunctionName(node) {
@@ -13,13 +13,17 @@ var AstUtils;
     }
     AstUtils.getFunctionName = getFunctionName;
     function getFunctionTarget(expression) {
-        if (expression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             var propExp = expression.expression;
             return propExp.expression.getText();
         }
         return null;
     }
     AstUtils.getFunctionTarget = getFunctionTarget;
+    function isJQuery(functionTarget) {
+        return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
+    }
+    AstUtils.isJQuery = isJQuery;
     function hasModifier(modifiers, modifierKind) {
         if (modifiers == null) {
             return false;
@@ -36,8 +40,8 @@ var AstUtils;
     function dumpTypeInfo(expression, languageServices, typeChecker) {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
-        if (expression.kind === SyntaxKind.current().Identifier
-            || expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier
+            || expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             var definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach(function (definitionInfo, index) {
@@ -101,11 +105,11 @@ var AstUtils;
     }
     AstUtils.isStatic = isStatic;
     function isBindingPattern(node) {
-        return node != null && (node.kind === SyntaxKind.current().ArrayBindingPattern ||
-            node.kind === SyntaxKind.current().ObjectBindingPattern);
+        return node != null && (node.kind === SyntaxKind_1.SyntaxKind.current().ArrayBindingPattern ||
+            node.kind === SyntaxKind_1.SyntaxKind.current().ObjectBindingPattern);
     }
     function walkUpBindingElementsAndPatterns(node) {
-        while (node && (node.kind === SyntaxKind.current().BindingElement || isBindingPattern(node))) {
+        while (node && (node.kind === SyntaxKind_1.SyntaxKind.current().BindingElement || isBindingPattern(node))) {
             node = node.parent;
         }
         return node;
@@ -113,14 +117,14 @@ var AstUtils;
     function getCombinedNodeFlags(node) {
         node = walkUpBindingElementsAndPatterns(node);
         var flags = node.flags;
-        if (node.kind === SyntaxKind.current().VariableDeclaration) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().VariableDeclaration) {
             node = node.parent;
         }
-        if (node && node.kind === SyntaxKind.current().VariableDeclarationList) {
+        if (node && node.kind === SyntaxKind_1.SyntaxKind.current().VariableDeclarationList) {
             flags |= node.flags;
             node = node.parent;
         }
-        if (node && node.kind === SyntaxKind.current().VariableStatement) {
+        if (node && node.kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
             flags |= node.flags;
         }
         return flags;
@@ -134,18 +138,18 @@ var AstUtils;
     }
     AstUtils.isExported = isExported;
     function isAssignmentOperator(token) {
-        return token >= SyntaxKind.current().FirstAssignment && token <= SyntaxKind.current().LastAssignment;
+        return token >= SyntaxKind_1.SyntaxKind.current().FirstAssignment && token <= SyntaxKind_1.SyntaxKind.current().LastAssignment;
     }
     AstUtils.isAssignmentOperator = isAssignmentOperator;
     function isBindingLiteralExpression(node) {
         return (!!node) &&
-            (node.kind === SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind.current().ArrayLiteralExpression);
+            (node.kind === SyntaxKind_1.SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression);
     }
     AstUtils.isBindingLiteralExpression = isBindingLiteralExpression;
     function findParentBlock(child) {
         var parent = child.parent;
         while (parent != null) {
-            if (parent.kind === SyntaxKind.current().Block) {
+            if (parent.kind === SyntaxKind_1.SyntaxKind.current().Block) {
                 return parent;
             }
             parent = parent.parent;
@@ -157,12 +161,24 @@ var AstUtils;
         if (source == null || target == null) {
             return false;
         }
-        if (source.kind === SyntaxKind.current().Identifier && target.kind === SyntaxKind.current().Identifier) {
+        if (source.kind === SyntaxKind_1.SyntaxKind.current().Identifier && target.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             return source.getText() === target.getText();
         }
         return false;
     }
     AstUtils.isSameIdentifer = isSameIdentifer;
-})(AstUtils || (AstUtils = {}));
-module.exports = AstUtils;
+    function getDeclaredMethodNames(node) {
+        var result = [];
+        node.members.forEach(function (classElement) {
+            if (classElement.kind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration) {
+                var methodDeclaration = classElement;
+                if (methodDeclaration.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+                    result.push(methodDeclaration.name.text);
+                }
+            }
+        });
+        return result;
+    }
+    AstUtils.getDeclaredMethodNames = getDeclaredMethodNames;
+})(AstUtils = exports.AstUtils || (exports.AstUtils = {}));
 //# sourceMappingURL=AstUtils.js.map

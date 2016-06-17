@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,11 +25,11 @@ var NoWithStatementWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoWithStatementWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().WithStatement) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().WithStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         _super.prototype.visitNode.call(this, node);
     };
     return NoWithStatementWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noWithStatementRule.js.map

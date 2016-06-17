@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -38,7 +38,7 @@ var PreferConstWalker = (function (_super) {
         }).forEach(function (e) { return _this.addFailure(e); });
     };
     PreferConstWalker.prototype.visitBinaryExpression = function (node) {
-        if (AstUtils.isAssignmentOperator(node.operatorToken.kind)) {
+        if (AstUtils_1.AstUtils.isAssignmentOperator(node.operatorToken.kind)) {
             this.visitLeftHandSideExpression(node.left);
         }
         _super.prototype.visitBinaryExpression.call(this, node);
@@ -52,7 +52,7 @@ var PreferConstWalker = (function (_super) {
         _super.prototype.visitPostfixUnaryExpression.call(this, node);
     };
     PreferConstWalker.prototype.visitModuleDeclaration = function (node) {
-        if (node.body.kind === SyntaxKind.current().ModuleBlock) {
+        if (node.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleBlock) {
             this.visitBlock(node.body);
         }
         _super.prototype.visitModuleDeclaration.call(this, node);
@@ -76,7 +76,7 @@ var PreferConstWalker = (function (_super) {
         var _this = this;
         var names = {};
         statements.forEach(function (statement) {
-            if (statement.kind === SyntaxKind.current().VariableStatement) {
+            if (statement.kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
                 _this.collectLetIdentifiers(statement.declarationList, names);
             }
         });
@@ -84,8 +84,8 @@ var PreferConstWalker = (function (_super) {
     };
     PreferConstWalker.prototype.visitAnyForStatement = function (node) {
         var names = {};
-        if (AstUtils.isLet(node.initializer)) {
-            if (node.initializer.kind === SyntaxKind.current().VariableDeclarationList) {
+        if (AstUtils_1.AstUtils.isLet(node.initializer)) {
+            if (node.initializer.kind === SyntaxKind_1.SyntaxKind.current().VariableDeclarationList) {
                 this.collectLetIdentifiers(node.initializer, names);
             }
         }
@@ -104,44 +104,44 @@ var PreferConstWalker = (function (_super) {
         });
     };
     PreferConstWalker.prototype.visitAnyUnaryExpression = function (node) {
-        if (node.operator === SyntaxKind.current().PlusPlusToken || node.operator === SyntaxKind.current().MinusMinusToken) {
+        if (node.operator === SyntaxKind_1.SyntaxKind.current().PlusPlusToken || node.operator === SyntaxKind_1.SyntaxKind.current().MinusMinusToken) {
             this.visitLeftHandSideExpression(node.operand);
         }
     };
     PreferConstWalker.prototype.collectLetIdentifiers = function (list, ret) {
         var _this = this;
         list.declarations.forEach(function (node) {
-            if (AstUtils.isLet(node) && !AstUtils.isExported(node)) {
+            if (AstUtils_1.AstUtils.isLet(node) && !AstUtils_1.AstUtils.isExported(node)) {
                 _this.collectNameIdentifiers(node, node.name, ret);
             }
         });
     };
     PreferConstWalker.prototype.visitLeftHandSideExpression = function (node) {
-        while (node.kind === SyntaxKind.current().ParenthesizedExpression) {
+        while (node.kind === SyntaxKind_1.SyntaxKind.current().ParenthesizedExpression) {
             node = node.expression;
         }
-        if (node.kind === SyntaxKind.current().Identifier) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             this.markAssignment(node);
         }
-        else if (AstUtils.isBindingLiteralExpression(node)) {
+        else if (AstUtils_1.AstUtils.isBindingLiteralExpression(node)) {
             this.visitBindingLiteralExpression(node);
         }
     };
     PreferConstWalker.prototype.visitBindingLiteralExpression = function (node) {
         var _this = this;
-        if (node.kind === SyntaxKind.current().ObjectLiteralExpression) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().ObjectLiteralExpression) {
             var pattern = node;
             pattern.properties.forEach(function (element) {
                 var kind = element.kind;
-                if (kind === SyntaxKind.current().ShorthandPropertyAssignment) {
+                if (kind === SyntaxKind_1.SyntaxKind.current().ShorthandPropertyAssignment) {
                     _this.markAssignment(element.name);
                 }
-                else if (kind === SyntaxKind.current().PropertyAssignment) {
+                else if (kind === SyntaxKind_1.SyntaxKind.current().PropertyAssignment) {
                     _this.visitLeftHandSideExpression(element.initializer);
                 }
             });
         }
-        else if (node.kind === SyntaxKind.current().ArrayLiteralExpression) {
+        else if (node.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression) {
             var pattern = node;
             pattern.elements.forEach(function (element) {
                 _this.visitLeftHandSideExpression(element);
@@ -151,7 +151,7 @@ var PreferConstWalker = (function (_super) {
     PreferConstWalker.prototype.visitBindingPatternIdentifiers = function (pattern) {
         var _this = this;
         pattern.elements.forEach(function (element) {
-            if (element.name.kind === SyntaxKind.current().Identifier) {
+            if (element.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
                 _this.markAssignment(element.name);
             }
             else {
@@ -170,7 +170,7 @@ var PreferConstWalker = (function (_super) {
         }
     };
     PreferConstWalker.prototype.collectNameIdentifiers = function (declaration, node, table) {
-        if (node.kind === SyntaxKind.current().Identifier) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             table[node.text] = { declaration: declaration, usages: 0 };
         }
         else {
@@ -184,5 +184,5 @@ var PreferConstWalker = (function (_super) {
         });
     };
     return PreferConstWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=preferConstRule.js.map

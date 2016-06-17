@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -40,7 +40,7 @@ var MissingVisibilityModifierWalker = (function (_super) {
         _super.prototype.visitMethodDeclaration.call(this, node);
     };
     MissingVisibilityModifierWalker.prototype.isMissingVisibilityModifier = function (node) {
-        return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
+        return !(AstUtils_1.AstUtils.isPrivate(node) || AstUtils_1.AstUtils.isProtected(node) || AstUtils_1.AstUtils.isPublic(node));
     };
     MissingVisibilityModifierWalker.prototype.getFailureCodeSnippet = function (node) {
         var message = node.getText();
@@ -50,5 +50,5 @@ var MissingVisibilityModifierWalker = (function (_super) {
         return message;
     };
     return MissingVisibilityModifierWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noMissingVisibilityModifiersRule.js.map

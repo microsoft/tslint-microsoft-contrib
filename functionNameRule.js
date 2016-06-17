@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var METHOD_REGEX = 'method-regex';
 var PRIVATE_METHOD_REGEX = 'private-method-regex';
 var STATIC_METHOD_REGEX = 'static-method-regex';
@@ -42,12 +42,12 @@ var FunctionNameRuleWalker = (function (_super) {
     }
     FunctionNameRuleWalker.prototype.visitMethodDeclaration = function (node) {
         var name = node.name.getText();
-        if (AstUtils.isPrivate(node)) {
+        if (AstUtils_1.AstUtils.isPrivate(node)) {
             if (!this.privateMethodRegex.test(name)) {
                 this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + this.privateMethodRegex + ": " + name));
             }
         }
-        else if (AstUtils.isStatic(node)) {
+        else if (AstUtils_1.AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {
                 this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Static method name does not match " + this.staticMethodRegex + ": " + name));
             }
@@ -78,5 +78,5 @@ var FunctionNameRuleWalker = (function (_super) {
         return defaultValue;
     };
     return FunctionNameRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=functionNameRule.js.map

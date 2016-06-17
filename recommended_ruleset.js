@@ -50,7 +50,7 @@ module.exports = {
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
         "no-invalid-this": true,
-        "no-missing-visibility-modifiers": true,
+        "no-jquery-raw-elements": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,
         "no-stateless-class": true,
@@ -64,6 +64,7 @@ module.exports = {
         "no-with-statement": true,
         "promise-must-complete": true,
         "radix": true,
+        "react-this-binding-issue": true,
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
@@ -99,9 +100,11 @@ module.exports = {
         "no-relative-imports": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
+        "no-typeof-undefined": true,
         "no-unnecessary-local-variable": true,
         "no-var-keyword": true,
         "no-var-requires": true,
+        "no-var-self": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
         "prefer-array-literal": true,
@@ -145,6 +148,7 @@ module.exports = {
          */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
+        "no-missing-visibility-modifiers": true, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "no-unreachable": false                // now supported by TypeScript compiler

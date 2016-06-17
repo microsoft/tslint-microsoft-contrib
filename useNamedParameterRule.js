@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -26,7 +26,7 @@ var UseNamedParameterWalker = (function (_super) {
     }
     UseNamedParameterWalker.prototype.visitElementAccessExpression = function (node) {
         if (node.argumentExpression != null) {
-            if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
+            if (node.argumentExpression.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
                     var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
@@ -37,5 +37,5 @@ var UseNamedParameterWalker = (function (_super) {
         _super.prototype.visitElementAccessExpression.call(this, node);
     };
     return UseNamedParameterWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=useNamedParameterRule.js.map

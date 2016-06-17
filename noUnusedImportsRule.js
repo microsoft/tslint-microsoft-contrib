@@ -6,9 +6,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -18,70 +18,40 @@ var Rule = (function (_super) {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        var referencedDotImports = this.getReferencedDotImports(sourceFile, this.getOptions());
-        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService, referencedDotImports));
-    };
-    Rule.prototype.getReferencedDotImports = function (sourceFile, options) {
-        var gatherImportHandler = new GatherNoRequireImportsWalker(sourceFile, options);
-        this.applyWithWalker(gatherImportHandler);
-        return gatherImportHandler.noRequireReferences;
+        return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     };
     Rule.FAILURE_STRING = 'unused import: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var GatherNoRequireImportsWalker = (function (_super) {
-    __extends(GatherNoRequireImportsWalker, _super);
-    function GatherNoRequireImportsWalker() {
-        _super.apply(this, arguments);
-        this.noRequireReferences = {};
-    }
-    GatherNoRequireImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        var moduleReference = node.moduleReference;
-        if (moduleReference.kind === SyntaxKind.current().QualifiedName) {
-            if (moduleReference.left != null) {
-                this.gatherReferenceFromImport(moduleReference.left.text);
-            }
-        }
-        _super.prototype.visitImportEqualsDeclaration.call(this, node);
-    };
-    GatherNoRequireImportsWalker.prototype.gatherReferenceFromImport = function (qualifiedName) {
-        var _this = this;
-        if (qualifiedName) {
-            qualifiedName.split('.').forEach(function (name) {
-                _this.noRequireReferences[name] = true;
-            });
-        }
-    };
-    return GatherNoRequireImportsWalker;
-}(Lint.RuleWalker));
 var NoUnusedImportsWalker = (function (_super) {
     __extends(NoUnusedImportsWalker, _super);
-    function NoUnusedImportsWalker(sourceFile, options, languageServices, noRequireReferences) {
+    function NoUnusedImportsWalker(sourceFile, options, languageServices) {
         _super.call(this, sourceFile, options);
-        this.noRequireReferences = {};
         this.languageServices = languageServices;
-        this.noRequireReferences = noRequireReferences;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);
     };
     NoUnusedImportsWalker.prototype.visitImportDeclaration = function (node) {
-        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         _super.prototype.visitImportDeclaration.call(this, node);
     };
     NoUnusedImportsWalker.prototype.validateReferencesForVariable = function (node) {
         var _this = this;
+        if (this.isTsxFile() && this.isReactImport(node)) {
+            return;
+        }
         var variableStack = [];
-        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportEqualsDeclaration) {
             var name_1 = node.name.text;
             var position = node.name.getStart();
-            variableStack.push({ name: name_1, position: position });
+            variableStack.push({ name: name_1, position: position, importNode: node });
         }
         else {
             var importClause = node.importClause;
@@ -89,21 +59,21 @@ var NoUnusedImportsWalker = (function (_super) {
                 if (importClause.name != null) {
                     var name_2 = importClause.name.text;
                     var position = importClause.getStart();
-                    variableStack.push({ name: name_2, position: position });
+                    variableStack.push({ name: name_2, position: position, importNode: node });
                 }
                 else if (importClause.namedBindings != null) {
-                    if (importClause.namedBindings.kind === SyntaxKind.current().NamespaceImport) {
+                    if (importClause.namedBindings.kind === SyntaxKind_1.SyntaxKind.current().NamespaceImport) {
                         var imports = importClause.namedBindings;
                         var name_3 = imports.name.text;
                         var position = imports.name.getStart();
-                        variableStack.push({ name: name_3, position: position });
+                        variableStack.push({ name: name_3, position: position, importNode: node });
                     }
-                    else if (importClause.namedBindings.kind === SyntaxKind.current().NamedImports) {
+                    else if (importClause.namedBindings.kind === SyntaxKind_1.SyntaxKind.current().NamedImports) {
                         var imports = importClause.namedBindings;
                         imports.elements.forEach(function (importSpec) {
                             var name = importSpec.name.text;
                             var position = importSpec.name.getStart();
-                            variableStack.push({ name: name, position: position });
+                            variableStack.push({ name: name, position: position, importNode: node });
                         });
                     }
                 }
@@ -113,14 +83,12 @@ var NoUnusedImportsWalker = (function (_super) {
             var name = variable.name;
             var position = variable.position;
             var references = _this.languageServices.getReferencesAtPosition('file.ts', position);
-            if (references.length <= 1 && !_this.noRequireReferences[name]) {
-                if (_this.isTsxFile()) {
-                    if (_this.isReactImport(node)) {
-                        return;
-                    }
-                    if (new RegExp('\\b(' + name + ')\\b', 'm').test(_this.getSourceFile().text)) {
-                        return;
-                    }
+            if (references.length <= 1) {
+                var sourceText = _this.getSourceText();
+                var endOfImport = variable.importNode.getEnd();
+                var restOfFile = sourceText.substring(endOfImport);
+                if (new RegExp('\\b(' + name + ')\\b', 'm').test(restOfFile)) {
+                    return;
                 }
                 var failureString = Rule.FAILURE_STRING + '\'' + name + '\'';
                 var failure = _this.createFailure(position, name.length, failureString);
@@ -128,15 +96,21 @@ var NoUnusedImportsWalker = (function (_super) {
             }
         });
     };
+    NoUnusedImportsWalker.prototype.getSourceText = function () {
+        if (this.cachedSourceText == null) {
+            this.cachedSourceText = this.getSourceFile().text;
+        }
+        return this.cachedSourceText;
+    };
     NoUnusedImportsWalker.prototype.isReactImport = function (node) {
-        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportEqualsDeclaration) {
             var importDeclaration = node;
-            if (importDeclaration.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {
+            if (importDeclaration.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
                 var moduleExpression = importDeclaration.moduleReference.expression;
                 return this.isModuleExpressionReact(moduleExpression);
             }
         }
-        else if (node.kind === SyntaxKind.current().ImportDeclaration) {
+        else if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportDeclaration) {
             var importDeclaration = node;
             var moduleExpression = importDeclaration.moduleSpecifier;
             return this.isModuleExpressionReact(moduleExpression);
@@ -144,7 +118,7 @@ var NoUnusedImportsWalker = (function (_super) {
         return false;
     };
     NoUnusedImportsWalker.prototype.isModuleExpressionReact = function (moduleExpression) {
-        if (moduleExpression != null && moduleExpression.kind === SyntaxKind.current().StringLiteral) {
+        if (moduleExpression != null && moduleExpression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             var moduleName = moduleExpression;
             return /react/i.test(moduleName.text);
         }
@@ -154,5 +128,5 @@ var NoUnusedImportsWalker = (function (_super) {
         return /.*\.tsx/.test(this.getSourceFile().fileName);
     };
     return NoUnusedImportsWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noUnusedImportsRule.js.map

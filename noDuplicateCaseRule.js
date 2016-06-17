@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -28,7 +28,7 @@ var NoDuplicateCaseRuleWalker = (function (_super) {
         var _this = this;
         var seenLabels = [];
         node.caseBlock.clauses.forEach(function (clauseOrDefault) {
-            if (clauseOrDefault.kind === SyntaxKind.current().CaseClause) {
+            if (clauseOrDefault.kind === SyntaxKind_1.SyntaxKind.current().CaseClause) {
                 var clause = clauseOrDefault;
                 if (clause.expression != null) {
                     var caseText = clause.expression.getText();
@@ -44,5 +44,5 @@ var NoDuplicateCaseRuleWalker = (function (_super) {
         _super.prototype.visitSwitchStatement.call(this, node);
     };
     return NoDuplicateCaseRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noDuplicateCaseRule.js.map

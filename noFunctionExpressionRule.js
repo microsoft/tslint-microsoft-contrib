@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -34,7 +34,7 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
         _super.prototype.visitFunctionExpression.call(this, node);
     };
     return NoFunctionExpressionRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 var SingleFunctionWalker = (function (_super) {
     __extends(SingleFunctionWalker, _super);
     function SingleFunctionWalker() {
@@ -52,5 +52,5 @@ var SingleFunctionWalker = (function (_super) {
     SingleFunctionWalker.prototype.visitArrowFunction = function (node) {
     };
     return SingleFunctionWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noFunctionExpressionRule.js.map

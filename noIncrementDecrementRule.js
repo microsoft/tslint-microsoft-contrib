@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -32,13 +32,13 @@ var NoIncrementDecrementWalker = (function (_super) {
         _super.prototype.visitPrefixUnaryExpression.call(this, node);
     };
     NoIncrementDecrementWalker.prototype.validateUnaryExpression = function (node) {
-        if (node.operator === SyntaxKind.current().PlusPlusToken) {
+        if (node.operator === SyntaxKind_1.SyntaxKind.current().PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
         }
-        else if (node.operator === SyntaxKind.current().MinusMinusToken) {
+        else if (node.operator === SyntaxKind_1.SyntaxKind.current().MinusMinusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden -- operator'));
         }
     };
     return NoIncrementDecrementWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noIncrementDecrementRule.js.map

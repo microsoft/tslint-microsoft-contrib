@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,12 +25,12 @@ var NoDisableAutoSanitizationWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoDisableAutoSanitizationWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
         }
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoDisableAutoSanitizationWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noDisableAutoSanitizationRule.js.map

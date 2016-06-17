@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -31,7 +31,7 @@ var NoFunctionConstructorWithStringArgsWalker = (function (_super) {
         this.typeChecker = this.languageService.getProgram().getTypeChecker();
     }
     NoFunctionConstructorWithStringArgsWalker.prototype.visitNewExpression = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'Function') {
             if (node.arguments.length > 0) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
@@ -40,5 +40,5 @@ var NoFunctionConstructorWithStringArgsWalker = (function (_super) {
         _super.prototype.visitNewExpression.call(this, node);
     };
     return NoFunctionConstructorWithStringArgsWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noFunctionConstructorWithStringArgsRule.js.map

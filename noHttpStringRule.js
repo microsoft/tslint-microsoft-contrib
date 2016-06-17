@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var Utils = require('./utils/Utils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -26,7 +26,7 @@ var NoHttpStringWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoHttpStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             var stringText = node.text;
             if (/.*http:.*/.test(stringText)) {
                 if (!this.isSuppressed(stringText)) {
@@ -40,7 +40,7 @@ var NoHttpStringWalker = (function (_super) {
     };
     NoHttpStringWalker.prototype.isSuppressed = function (stringText) {
         var allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
-        return Utils.exists(allExceptions, function (exception) {
+        return Utils_1.Utils.exists(allExceptions, function (exception) {
             return new RegExp(exception).test(stringText);
         });
     };
@@ -54,5 +54,5 @@ var NoHttpStringWalker = (function (_super) {
         return null;
     };
     return NoHttpStringWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noHttpStringRule.js.map

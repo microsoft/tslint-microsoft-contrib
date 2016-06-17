@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -27,13 +27,13 @@ var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoBackboneGetSetOutsideModelRuleWalker.prototype.visitCallExpression = function (node) {
-        if (AstUtils.getFunctionTarget(node) !== 'this') {
-            var functionName = AstUtils.getFunctionName(node);
-            if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
+        if (AstUtils_1.AstUtils.getFunctionTarget(node) !== 'this') {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
                 var msg = Rule.GET_FAILURE_STRING + node.getText();
                 this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
             }
-            if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
+            if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
                 var msg = Rule.SET_FAILURE_STRING + node.getText();
                 this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
             }
@@ -41,5 +41,5 @@ var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoBackboneGetSetOutsideModelRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noBackboneGetSetOutsideModelRule.js.map

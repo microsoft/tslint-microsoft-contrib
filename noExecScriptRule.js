@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -30,12 +30,12 @@ var NoEvalScriptWalker = (function (_super) {
     };
     NoEvalScriptWalker.prototype.validateExpression = function (node) {
         var expression = node.expression;
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'execScript') {
             var msg = Rule.FAILURE_STRING + expression.getFullText().trim();
             this.addFailure(this.createFailure(expression.getStart(), expression.getWidth(), msg));
         }
     };
     return NoEvalScriptWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noExecScriptRule.js.map

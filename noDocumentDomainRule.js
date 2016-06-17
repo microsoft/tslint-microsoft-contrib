@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -26,7 +26,7 @@ var NoDocumentDomainRuleWalker = (function (_super) {
     }
     NoDocumentDomainRuleWalker.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '='
-            && node.left.kind === SyntaxKind.current().PropertyAccessExpression
+            && node.left.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression
             && this.isDocumentDomainProperty(node.left)) {
             var msg = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
@@ -41,5 +41,5 @@ var NoDocumentDomainRuleWalker = (function (_super) {
             || node.expression.getText() === 'window.document';
     };
     return NoDocumentDomainRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noDocumentDomainRule.js.map

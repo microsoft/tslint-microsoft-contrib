@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -26,7 +26,7 @@ var NoOctalLiteral = (function (_super) {
         _super.apply(this, arguments);
     }
     NoOctalLiteral.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             this.failOnOctalString(node);
         }
         _super.prototype.visitNode.call(this, node);
@@ -41,5 +41,5 @@ var NoOctalLiteral = (function (_super) {
         }
     };
     return NoOctalLiteral;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noOctalLiteralRule.js.map

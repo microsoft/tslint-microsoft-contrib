@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
-var Utils = require('./utils/Utils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -26,7 +26,7 @@ var NoSparseArraysRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoSparseArraysRuleWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().ArrayLiteralExpression) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression) {
             if (this.isSparseArray(node)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
             }
@@ -34,10 +34,10 @@ var NoSparseArraysRuleWalker = (function (_super) {
         _super.prototype.visitNode.call(this, node);
     };
     NoSparseArraysRuleWalker.prototype.isSparseArray = function (node) {
-        return Utils.exists(node.elements, function (element) {
-            return element.kind === SyntaxKind.current().OmittedExpression;
+        return Utils_1.Utils.exists(node.elements, function (element) {
+            return element.kind === SyntaxKind_1.SyntaxKind.current().OmittedExpression;
         });
     };
     return NoSparseArraysRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noSparseArraysRule.js.map

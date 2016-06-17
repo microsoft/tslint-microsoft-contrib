@@ -5,10 +5,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var SyntaxKind = require('./utils/SyntaxKind');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var AstUtils = require('./utils/AstUtils');
-var Utils = require('./utils/Utils');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -27,11 +27,11 @@ var PromiseAnalyzer = (function (_super) {
         _super.apply(this, arguments);
     }
     PromiseAnalyzer.prototype.isPromiseDeclaration = function (node) {
-        if (node.expression.kind === SyntaxKind.current().Identifier
+        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier
             && node.expression.getText() === 'Promise'
             && node.arguments != null && node.arguments.length > 0) {
             var firstArg = node.arguments[0];
-            if (firstArg.kind === SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind.current().FunctionExpression) {
+            if (firstArg.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
                 return true;
             }
         }
@@ -44,10 +44,10 @@ var PromiseAnalyzer = (function (_super) {
         }
         var arg1 = declaration.parameters[0];
         var arg2 = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === SyntaxKind.current().Identifier) {
+        if (arg1 != null && arg1.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             result.push(declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === SyntaxKind.current().Identifier) {
+        if (arg2 != null && arg2.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             result.push(declaration.parameters[1].name);
         }
         return result;
@@ -70,7 +70,7 @@ var PromiseAnalyzer = (function (_super) {
         }
     };
     return PromiseAnalyzer;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 var PromiseCompletionWalker = (function (_super) {
     __extends(PromiseCompletionWalker, _super);
     function PromiseCompletionWalker(sourceFile, options, completionIdentifiers) {
@@ -110,13 +110,13 @@ var PromiseCompletionWalker = (function (_super) {
     };
     PromiseCompletionWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
-        if (node.expression.kind === SyntaxKind.current().Identifier) {
+        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
             if (this.isCompletionIdentifier(node.expression)) {
                 this.wasCompleted = true;
                 return;
             }
         }
-        var referenceEscaped = Utils.exists(node.arguments, function (argument) {
+        var referenceEscaped = Utils_1.Utils.exists(node.arguments, function (argument) {
             return _this.isCompletionIdentifier(argument);
         });
         if (referenceEscaped) {
@@ -144,8 +144,8 @@ var PromiseCompletionWalker = (function (_super) {
     PromiseCompletionWalker.prototype.getNonShadowedCompletionIdentifiers = function (declaration) {
         var result = [];
         this.completionIdentifiers.forEach(function (identifier) {
-            var isShadowed = Utils.exists(declaration.parameters, function (parameter) {
-                return AstUtils.isSameIdentifer(identifier, parameter.name);
+            var isShadowed = Utils_1.Utils.exists(declaration.parameters, function (parameter) {
+                return AstUtils_1.AstUtils.isSameIdentifer(identifier, parameter.name);
             });
             if (!isShadowed) {
                 result.push(identifier);
@@ -154,10 +154,10 @@ var PromiseCompletionWalker = (function (_super) {
         return result;
     };
     PromiseCompletionWalker.prototype.isCompletionIdentifier = function (sourceIdentifier) {
-        return Utils.exists(this.completionIdentifiers, function (identifier) {
-            return AstUtils.isSameIdentifer(sourceIdentifier, identifier);
+        return Utils_1.Utils.exists(this.completionIdentifiers, function (identifier) {
+            return AstUtils_1.AstUtils.isSameIdentifer(sourceIdentifier, identifier);
         });
     };
     return PromiseCompletionWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=promiseMustCompleteRule.js.map

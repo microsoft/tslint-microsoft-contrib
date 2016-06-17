@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var FAILURE_STRING = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -30,11 +30,11 @@ var PreferTypeCastRuleWalker = (function (_super) {
         }
     };
     PreferTypeCastRuleWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().AsExpression) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().AsExpression) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
         }
         _super.prototype.visitNode.call(this, node);
     };
     return PreferTypeCastRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=preferTypeCastRule.js.map

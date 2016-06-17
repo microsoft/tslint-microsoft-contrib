@@ -5,10 +5,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
-var AstUtils = require('./utils/AstUtils');
-var Utils = require('./utils/Utils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var AstUtils_1 = require('./utils/AstUtils');
+var Utils_1 = require('./utils/Utils');
 var FAILURE_STRING = 'A stateless class was found. This indicates a failure in the object model: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -34,24 +34,24 @@ var NoStatelessClassRuleWalker = (function (_super) {
         _super.prototype.visitClassDeclaration.call(this, node);
     };
     NoStatelessClassRuleWalker.prototype.isClassStateful = function (node) {
-        if (Utils.exists(node.heritageClauses, function (clause) {
-            return clause.token === SyntaxKind.current().ExtendsKeyword;
+        if (Utils_1.Utils.exists(node.heritageClauses, function (clause) {
+            return clause.token === SyntaxKind_1.SyntaxKind.current().ExtendsKeyword;
         })) {
             return true;
         }
         if (node.members.length === 0) {
             return false;
         }
-        return Utils.exists(node.members, function (classElement) {
-            if (classElement.kind === SyntaxKind.current().Constructor) {
+        return Utils_1.Utils.exists(node.members, function (classElement) {
+            if (classElement.kind === SyntaxKind_1.SyntaxKind.current().Constructor) {
                 return false;
             }
-            if (AstUtils.isStatic(classElement)) {
+            if (AstUtils_1.AstUtils.isStatic(classElement)) {
                 return false;
             }
             return true;
         });
     };
     return NoStatelessClassRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noStatelessClassRule.js.map

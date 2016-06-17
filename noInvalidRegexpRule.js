@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -35,7 +35,7 @@ var NoInvalidRegexpRuleWalker = (function (_super) {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 var arg1 = expression.arguments[0];
-                if (arg1.kind === SyntaxKind.current().StringLiteral) {
+                if (arg1.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
                     var regexpText = arg1.text;
                     try {
                         new RegExp(regexpText);
@@ -48,5 +48,5 @@ var NoInvalidRegexpRuleWalker = (function (_super) {
         }
     };
     return NoInvalidRegexpRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noInvalidRegexpRule.js.map

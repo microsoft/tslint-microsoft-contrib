@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var NoStringParameterToFunctionCallWalker = require('./utils/NoStringParameterToFunctionCallWalker');
+var NoStringParameterToFunctionCallWalker_1 = require('./utils/NoStringParameterToFunctionCallWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -16,7 +16,7 @@ var Rule = (function (_super) {
         var documentRegistry = ts.createDocumentRegistry();
         var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        var walker = new NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), languageService);
+        var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), languageService);
         return this.applyWithWalker(walker);
     };
     return Rule;

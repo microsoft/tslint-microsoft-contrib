@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var FAILURE_STRING_EXT = 'External module is being loaded from a relative path. Please use an absolute path: ';
 var FAILURE_STRING_IMPORT = 'Imported module is being loaded from a relative path. Please use an absolute path: ';
 var Rule = (function (_super) {
@@ -26,13 +26,13 @@ var NoRelativeImportsRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoRelativeImportsRuleWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind.current().ExternalModuleReference) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
             var moduleExpression = node.expression;
             if (!this.isModuleExpressionValid(moduleExpression)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText()));
             }
         }
-        else if (node.kind === SyntaxKind.current().ImportDeclaration) {
+        else if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportDeclaration) {
             var moduleExpression = node.moduleSpecifier;
             if (!this.isModuleExpressionValid(moduleExpression)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText()));
@@ -41,7 +41,7 @@ var NoRelativeImportsRuleWalker = (function (_super) {
         _super.prototype.visitNode.call(this, node);
     };
     NoRelativeImportsRuleWalker.prototype.isModuleExpressionValid = function (expression) {
-        if (expression.kind === SyntaxKind.current().StringLiteral) {
+        if (expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             var moduleName = expression;
             if (moduleName.text[0] === '.') {
                 return false;
@@ -50,5 +50,5 @@ var NoRelativeImportsRuleWalker = (function (_super) {
         return true;
     };
     return NoRelativeImportsRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noRelativeImportsRule.js.map

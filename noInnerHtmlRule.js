@@ -5,9 +5,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
-var AstUtils = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var AstUtils_1 = require('./utils/AstUtils');
 var FAILURE_INNER = 'Writing a string to the innerHTML property is insecure: ';
 var FAILURE_OUTER = 'Writing a string to the outerHTML property is insecure: ';
 var FAILURE_JQUERY = 'Using the html() function to write a string to innerHTML is insecure: ';
@@ -28,8 +28,8 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         _super.apply(this, arguments);
     }
     NoInnerHtmlRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.kind === SyntaxKind.current().EqualsToken) {
-            if (node.left.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().EqualsToken) {
+            if (node.left.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
                 var propAccess = node.left;
                 var propName = propAccess.name.text;
                 if (propName === 'innerHTML') {
@@ -43,7 +43,7 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         _super.prototype.visitBinaryExpression.call(this, node);
     };
     NoInnerHtmlRuleWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils.getFunctionName(node);
+        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText()));
@@ -52,5 +52,5 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoInnerHtmlRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noInnerHtmlRule.js.map

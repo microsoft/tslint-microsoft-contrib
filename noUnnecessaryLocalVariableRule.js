@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
-var SyntaxKind = require('./utils/SyntaxKind');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
 var FAILURE_STRING = 'Unnecessary local variable: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -41,7 +41,7 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         _super.prototype.visitDefaultClause.call(this, node);
     };
     UnnecessaryLocalVariableRuleWalker.prototype.visitModuleDeclaration = function (node) {
-        if (node.body != null && node.body.kind === SyntaxKind.current().ModuleBlock) {
+        if (node.body != null && node.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleBlock) {
             this.validateStatementArray(node.body.statements);
         }
         _super.prototype.visitModuleDeclaration.call(this, node);
@@ -61,11 +61,11 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         }
     };
     UnnecessaryLocalVariableRuleWalker.prototype.tryToGetDeclaredVariableName = function (statement) {
-        if (statement != null && statement.kind === SyntaxKind.current().VariableStatement) {
+        if (statement != null && statement.kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
             var variableStatement = statement;
             if (variableStatement.declarationList.declarations.length === 1) {
                 var declaration = variableStatement.declarationList.declarations[0];
-                if (declaration.name != null && declaration.name.kind === SyntaxKind.current().Identifier) {
+                if (declaration.name != null && declaration.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
                     return declaration.name.text;
                 }
             }
@@ -73,14 +73,14 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         return null;
     };
     UnnecessaryLocalVariableRuleWalker.prototype.tryToGetReturnedVariableName = function (statement) {
-        if (statement != null && statement.kind === SyntaxKind.current().ReturnStatement) {
+        if (statement != null && statement.kind === SyntaxKind_1.SyntaxKind.current().ReturnStatement) {
             var returnStatement = statement;
-            if (returnStatement.expression != null && returnStatement.expression.kind === SyntaxKind.current().Identifier) {
+            if (returnStatement.expression != null && returnStatement.expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
                 return returnStatement.expression.text;
             }
         }
         return null;
     };
     return UnnecessaryLocalVariableRuleWalker;
-}(ErrorTolerantWalker));
+}(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noUnnecessaryLocalVariableRule.js.map

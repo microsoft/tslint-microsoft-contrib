@@ -64,6 +64,7 @@ module.exports = {
         "no-with-statement": true,
         "promise-must-complete": true,
         "radix": true,
+        "react-this-binding-issue": true,
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,

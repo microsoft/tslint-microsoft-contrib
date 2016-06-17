@@ -199,4 +199,18 @@ export module AstUtils {
         }
         return false;
     }
+
+    export function getDeclaredMethodNames(node: ts.ClassDeclaration): string[] {
+        const result: string[] = [];
+        node.members.forEach((classElement: ts.ClassElement): void => {
+            if (classElement.kind === SyntaxKind.current().MethodDeclaration) {
+                const methodDeclaration: ts.MethodDeclaration = <ts.MethodDeclaration>classElement;
+                if (methodDeclaration.name.kind === SyntaxKind.current().Identifier) {
+                    result.push((<ts.Identifier>methodDeclaration.name).text);
+                }
+            }
+        });
+        return result;
+    }
+
 }

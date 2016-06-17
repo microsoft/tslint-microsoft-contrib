@@ -9,7 +9,7 @@ import {TestHelper} from './TestHelper';
 /**
  * Unit tests.
  */
-describe.only('reactThisBindingIssueRule', () : void => {
+describe('reactThisBindingIssueRule', () : void => {
 
     const ruleName : string = 'react-this-binding-issue';
 
@@ -24,10 +24,32 @@ describe.only('reactThisBindingIssueRule', () : void => {
 
         TestHelper.assertViolations(ruleName, file, [
             {
-                "failure": "A function is having its 'this' reference bound twice in the constructor: this.listener = this.listener.bind(this)",
+                "failure": "A function is having its 'this' reference bound twice in the constructor: " +
+                "this.listener = this.listener.bind(this)",
                 "name": "test-data/ReactThisBindingIssue-doublebinding.tsx",
                 "ruleName": "react-this-binding-issue",
                 "startPosition": { "character": 9, "line": 8 }
+            }
+        ]);
+    });
+
+    it('should fail on unbound listener', () : void => {
+        const file : string = 'test-data/ReactThisBindingIssue-unbound.tsx';
+
+        TestHelper.assertViolations(ruleName, file, [
+            {
+                "failure": "A class method is passed as a JSX attribute without having the 'this' reference " +
+                "bound in the constructor: this.listener",
+                "name": "test-data/ReactThisBindingIssue-unbound.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 22, "line": 11  }
+            },
+            {
+                "failure": "A class method is passed as a JSX attribute without having the 'this' reference " +
+                "bound in the constructor: this.listener",
+                "name": "test-data/ReactThisBindingIssue-unbound.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 28, "line": 14 }
             }
         ]);
     });

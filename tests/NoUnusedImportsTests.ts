@@ -98,7 +98,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React imports in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImportsPassingReactInput.tsx';
+        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsPassingReactInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -107,7 +107,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React ES6 imports in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImportsPassingReactES6Input.tsx';
+        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsPassingReactES6Input.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -116,7 +116,7 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle import static references in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImportsFailingInput.tsx';
+        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsFailingInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -281,14 +281,14 @@ console.log(AB);`;
     });
 
     it('should fail on missing reference in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImportsFailingReactInput.tsx';
+        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsFailingReactInput.tsx';
         TestHelper.assertViolations(
             ruleName,
             inputFile,
             [
                 {
                     "failure": "unused import: 'I18nFacade'",
-                    "name": "test-data/NoUnusedImportsFailingReactInput.tsx",
+                    "name": "test-data/NoUnusedImports/NoUnusedImportsFailingReactInput.tsx",
                     "ruleName": "no-unused-imports",
                     "startPosition": { "character": 8, "line": 3 }
                 }

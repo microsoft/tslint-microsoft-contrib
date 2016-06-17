@@ -14,7 +14,7 @@ describe('noOctalLiteralRule', () : void => {
      const ruleName : string = 'no-octal-literal';
 
      it('should not fail on similar but acceptable strings', () : void => {
-         const script : string = 'test-data/NoOctalLiteralTestInput-passing.ts';
+         const script : string = 'test-data/NoOctalLiteral/NoOctalLiteralTestInput-passing.ts';
          TestHelper.assertViolations(ruleName, script, [ ]);
      });
 
@@ -34,113 +34,113 @@ function demoScriptFail() {
      });
 
     it('should produce violations ', () : void => {
-         const inputFile : string = 'test-data/NoOctalLiteralTestInput.ts';
+         const inputFile : string = 'test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts';
          TestHelper.assertViolations(ruleName, inputFile, [
              {
                  "failure": "Octal literals should not be used: \\251",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 6, "character": 25}
              },
              {
                  "failure": "Octal literals should not be used: \\254",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 7, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\23",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 8, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\7",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 9, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\025",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 10, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\0",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 11, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-0",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 12, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-035",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 13, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-235",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 14, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\351",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 18, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\354",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 19, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\33",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 20, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\6",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 21, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\125",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 22, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\0",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 23, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-0",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 24, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-035",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 25, "character": 25 }
              },
              {
                  "failure": "Octal literals should not be used: \\-235",
-                 "name": "test-data/NoOctalLiteralTestInput.ts",
+                 "name": "test-data/NoOctalLiteral/NoOctalLiteralTestInput.ts",
                  "ruleName": "no-octal-literal",
                  "startPosition": { "line": 26, "character": 25 }
              }

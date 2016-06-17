@@ -26,19 +26,19 @@ describe('exportNameRule', () : void => {
     describe('should pass', (): void => {
         it('when export equals assignment matches', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportNameRulePassingTestInput.ts';
+            const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('when export equals assignment matches in tsx file', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportNameRulePassingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput.tsx';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('for conflicting name when suppressed', () : void => {
             exceptions.push('ThisIsNot.*NameOfTheFile');
-            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
+            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, [ ]);
         });
 
@@ -226,12 +226,12 @@ describe('exportNameRule', () : void => {
     describe('should fail', (): void => {
         it('for conflicting name', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.ts';
+            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
                     "failure": "The exported module or identifier name must match the file name. " +
-                    "Found: test-data/ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile",
-                    "name": "test-data/ExportNameRuleFailingTestInput.ts",
+                    "Found: test-data/ExportName/ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile",
+                    "name": "test-data/ExportName/ExportNameRuleFailingTestInput.ts",
                     "ruleName": "export-name",
                     "startPosition": { "character": 10, "line": 4 }
                 }
@@ -240,12 +240,12 @@ describe('exportNameRule', () : void => {
 
         it('for conflicting name in tsx file', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportNameRuleFailingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.tsx';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
                     "failure": "The exported module or identifier name must match the file name. " +
-                    "Found: test-data/ExportNameRuleFailingTestInput.tsx and ThisIsNotTheNameOfTheFile",
-                    "name": "test-data/ExportNameRuleFailingTestInput.tsx",
+                    "Found: test-data/ExportName/ExportNameRuleFailingTestInput.tsx and ThisIsNotTheNameOfTheFile",
+                    "name": "test-data/ExportName/ExportNameRuleFailingTestInput.tsx",
                     "ruleName": "export-name",
                     "startPosition": { "character": 10, "line": 4 }
                 }

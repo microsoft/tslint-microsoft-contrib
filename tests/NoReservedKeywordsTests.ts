@@ -14,11 +14,11 @@ describe('noBannedTermsRule', () : void => {
     const RULE_NAME : string = 'no-reserved-keywords';
 
     it('should not allow the break reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-break.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: break",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -27,7 +27,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -36,7 +36,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: break",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -45,7 +45,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: break",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -54,7 +54,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: break",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -63,7 +63,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: break",
-                "name": "test-data/NoReservedKeywordsTestInput-break.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -73,10 +73,10 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the case reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-case.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [  {
             "failure": "Forbidden reference to reserved keyword: case",
-            "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+            "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
             "ruleName": "no-reserved-keywords",
             "startPosition": {
                 "character": 5,
@@ -85,7 +85,7 @@ describe('noBannedTermsRule', () : void => {
         },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -94,7 +94,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: case",
-                "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -103,7 +103,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: case",
-                "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -112,7 +112,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: case",
-                "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -121,7 +121,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: case",
-                "name": "test-data/NoReservedKeywordsTestInput-case.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-case.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -131,11 +131,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the catch reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-catch.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -144,7 +144,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -153,7 +153,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -162,7 +162,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -171,7 +171,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -180,7 +180,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: catch",
-                "name": "test-data/NoReservedKeywordsTestInput-catch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-catch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -190,11 +190,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the class reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-class.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-class.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: class",
-                "name": "test-data/NoReservedKeywordsTestInput-class.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-class.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -203,7 +203,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: class",
-                "name": "test-data/NoReservedKeywordsTestInput-class.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-class.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -212,7 +212,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: class",
-                "name": "test-data/NoReservedKeywordsTestInput-class.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-class.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -222,11 +222,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the const reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-const.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: const",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -235,7 +235,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -244,7 +244,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: const",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -253,7 +253,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: const",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -262,7 +262,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: const",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -271,7 +271,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: const",
-                "name": "test-data/NoReservedKeywordsTestInput-const.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-const.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -281,11 +281,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the continue reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-continue.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -294,7 +294,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -303,7 +303,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -312,7 +312,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -321,7 +321,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -330,7 +330,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: continue",
-                "name": "test-data/NoReservedKeywordsTestInput-continue.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-continue.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -340,11 +340,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the debugger reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-debugger.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -353,7 +353,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -362,7 +362,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -371,7 +371,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -380,7 +380,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -389,7 +389,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: debugger",
-                "name": "test-data/NoReservedKeywordsTestInput-debugger.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-debugger.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -399,11 +399,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the default reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-default.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: default",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -412,7 +412,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -421,7 +421,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: default",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -430,7 +430,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: default",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -439,7 +439,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: default",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -448,7 +448,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: default",
-                "name": "test-data/NoReservedKeywordsTestInput-default.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-default.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -458,11 +458,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the delete reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-delete.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -471,7 +471,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -480,7 +480,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -489,7 +489,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -498,7 +498,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -507,7 +507,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: delete",
-                "name": "test-data/NoReservedKeywordsTestInput-delete.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-delete.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -517,11 +517,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the do reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-do.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: do",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -530,7 +530,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -539,7 +539,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: do",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -548,7 +548,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: do",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -557,7 +557,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: do",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -566,7 +566,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: do",
-                "name": "test-data/NoReservedKeywordsTestInput-do.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-do.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -576,11 +576,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the else reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-else.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: else",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -589,7 +589,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -598,7 +598,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: else",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -607,7 +607,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: else",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -616,7 +616,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: else",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -625,7 +625,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: else",
-                "name": "test-data/NoReservedKeywordsTestInput-else.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-else.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -635,11 +635,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the enum reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-enum.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -648,7 +648,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -657,7 +657,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -666,7 +666,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -675,7 +675,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -684,7 +684,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: enum",
-                "name": "test-data/NoReservedKeywordsTestInput-enum.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-enum.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -694,11 +694,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the export reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-export.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: export",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -707,7 +707,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -716,7 +716,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: export",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -725,7 +725,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: export",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -734,7 +734,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: export",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -743,7 +743,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: export",
-                "name": "test-data/NoReservedKeywordsTestInput-export.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-export.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -753,11 +753,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the extends reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-extends.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -766,7 +766,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -775,7 +775,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -784,7 +784,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -793,7 +793,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -802,7 +802,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: extends",
-                "name": "test-data/NoReservedKeywordsTestInput-extends.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-extends.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -812,11 +812,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the false reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-false.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: false",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -825,7 +825,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -834,7 +834,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: false",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -843,7 +843,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: false",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -852,7 +852,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: false",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -861,7 +861,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: false",
-                "name": "test-data/NoReservedKeywordsTestInput-false.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-false.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -871,11 +871,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the finally reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-finally.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -884,7 +884,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -893,7 +893,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -902,7 +902,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -911,7 +911,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -920,7 +920,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: finally",
-                "name": "test-data/NoReservedKeywordsTestInput-finally.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-finally.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -930,11 +930,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the for reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-for.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: for",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -943,7 +943,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -952,7 +952,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: for",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -961,7 +961,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: for",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -970,7 +970,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: for",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -979,7 +979,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: for",
-                "name": "test-data/NoReservedKeywordsTestInput-for.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-for.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -989,11 +989,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the function reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-function.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: function",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1002,7 +1002,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1011,7 +1011,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: function",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1020,7 +1020,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: function",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1029,7 +1029,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: function",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1038,7 +1038,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: function",
-                "name": "test-data/NoReservedKeywordsTestInput-function.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-function.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1048,11 +1048,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the if reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-if.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: if",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1061,7 +1061,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1070,7 +1070,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: if",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1079,7 +1079,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: if",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1088,7 +1088,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: if",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1097,7 +1097,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: if",
-                "name": "test-data/NoReservedKeywordsTestInput-if.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-if.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1107,11 +1107,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the import in reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-import.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: import",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1120,7 +1120,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1129,7 +1129,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: import",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1138,7 +1138,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: import",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1147,7 +1147,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: import",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1156,7 +1156,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: import",
-                "name": "test-data/NoReservedKeywordsTestInput-import.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-import.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1166,11 +1166,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the instanceof reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-instanceof.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1179,7 +1179,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1188,7 +1188,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1197,7 +1197,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1206,7 +1206,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1215,7 +1215,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: instanceof",
-                "name": "test-data/NoReservedKeywordsTestInput-instanceof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-instanceof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1225,11 +1225,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the new reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-new.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: new",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1238,7 +1238,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1247,7 +1247,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: new",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1256,7 +1256,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: new",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1265,7 +1265,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: new",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1274,7 +1274,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: new",
-                "name": "test-data/NoReservedKeywordsTestInput-new.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-new.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1284,11 +1284,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the null reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-null.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: null",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1297,7 +1297,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1306,7 +1306,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: null",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1315,7 +1315,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: null",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1324,7 +1324,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: null",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1333,7 +1333,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: null",
-                "name": "test-data/NoReservedKeywordsTestInput-null.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-null.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1343,11 +1343,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the return reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-return.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: return",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1356,7 +1356,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1365,7 +1365,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: return",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1374,7 +1374,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: return",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1383,7 +1383,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: return",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1392,7 +1392,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: return",
-                "name": "test-data/NoReservedKeywordsTestInput-return.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-return.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1402,11 +1402,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the super reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-super.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: super",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1415,7 +1415,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1424,7 +1424,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: super",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1433,7 +1433,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: super",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1442,7 +1442,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: super",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1451,7 +1451,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: super",
-                "name": "test-data/NoReservedKeywordsTestInput-super.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-super.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1461,11 +1461,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the switch reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-switch.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1474,7 +1474,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1483,7 +1483,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1492,7 +1492,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1501,7 +1501,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1510,7 +1510,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: switch",
-                "name": "test-data/NoReservedKeywordsTestInput-switch.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-switch.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1520,11 +1520,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the this reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-this.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: this",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1533,7 +1533,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1542,7 +1542,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: this",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1551,7 +1551,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: this",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1560,7 +1560,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: this",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1569,7 +1569,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: this",
-                "name": "test-data/NoReservedKeywordsTestInput-this.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-this.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1579,11 +1579,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the throw reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-throw.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1592,7 +1592,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1601,7 +1601,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1610,7 +1610,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1619,7 +1619,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1628,7 +1628,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: throw",
-                "name": "test-data/NoReservedKeywordsTestInput-throw.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-throw.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1638,11 +1638,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the true reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-true.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: true",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1651,7 +1651,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1660,7 +1660,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: true",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1669,7 +1669,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: true",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1678,7 +1678,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: true",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1687,7 +1687,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: true",
-                "name": "test-data/NoReservedKeywordsTestInput-true.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-true.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1697,11 +1697,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the try reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-try.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: try",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1710,7 +1710,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1719,7 +1719,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: try",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1728,7 +1728,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: try",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1737,7 +1737,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: try",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1746,7 +1746,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: try",
-                "name": "test-data/NoReservedKeywordsTestInput-try.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-try.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1756,11 +1756,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the typeof reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-typeof.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1769,7 +1769,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1778,7 +1778,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1787,7 +1787,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1796,7 +1796,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1805,7 +1805,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: typeof",
-                "name": "test-data/NoReservedKeywordsTestInput-typeof.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-typeof.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1815,11 +1815,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the var reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-var.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1828,7 +1828,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1837,7 +1837,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1846,7 +1846,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1855,7 +1855,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1864,7 +1864,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-var.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-var.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1874,11 +1874,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the void reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-void.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: void",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1887,7 +1887,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1896,7 +1896,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: void",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1905,7 +1905,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: void",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1914,7 +1914,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: void",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1923,7 +1923,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: void",
-                "name": "test-data/NoReservedKeywordsTestInput-void.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-void.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1933,11 +1933,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the while reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-while.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: while",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1946,7 +1946,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1955,7 +1955,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: while",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1964,7 +1964,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: while",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1973,7 +1973,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: while",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1982,7 +1982,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: while",
-                "name": "test-data/NoReservedKeywordsTestInput-while.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-while.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -1992,11 +1992,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the with reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-with.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: with",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2005,7 +2005,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2014,7 +2014,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: with",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2023,7 +2023,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: with",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2032,7 +2032,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: with",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2041,7 +2041,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: with",
-                "name": "test-data/NoReservedKeywordsTestInput-with.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-with.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2051,11 +2051,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the as reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-as.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2064,7 +2064,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2073,7 +2073,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2082,7 +2082,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2091,7 +2091,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2100,7 +2100,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2109,7 +2109,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2118,7 +2118,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -2127,7 +2127,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -2136,7 +2136,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2145,7 +2145,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 19,
@@ -2154,7 +2154,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: as",
-                "name": "test-data/NoReservedKeywordsTestInput-as.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-as.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2164,11 +2164,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the implements reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-implements.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2177,7 +2177,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2186,7 +2186,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2195,7 +2195,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2204,7 +2204,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2213,7 +2213,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2222,7 +2222,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2231,7 +2231,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2240,7 +2240,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 17,
@@ -2249,7 +2249,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: implements",
-                "name": "test-data/NoReservedKeywordsTestInput-implements.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-implements.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2259,11 +2259,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the interface reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-interface.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2272,7 +2272,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2281,7 +2281,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2290,7 +2290,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2299,7 +2299,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2308,7 +2308,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2317,7 +2317,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2326,7 +2326,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2335,7 +2335,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 26,
@@ -2344,7 +2344,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: interface",
-                "name": "test-data/NoReservedKeywordsTestInput-interface.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-interface.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2354,11 +2354,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the let reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-let.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2367,7 +2367,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2376,7 +2376,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2385,7 +2385,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2394,7 +2394,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2403,7 +2403,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2412,7 +2412,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2421,7 +2421,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2430,7 +2430,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 20,
@@ -2439,7 +2439,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: let",
-                "name": "test-data/NoReservedKeywordsTestInput-let.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-let.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2449,11 +2449,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the package reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-package.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2462,7 +2462,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2471,7 +2471,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2480,7 +2480,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2489,7 +2489,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2498,7 +2498,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2507,7 +2507,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2516,7 +2516,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2525,7 +2525,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 24,
@@ -2534,7 +2534,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: package",
-                "name": "test-data/NoReservedKeywordsTestInput-package.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-package.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2544,11 +2544,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the private reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-private.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2557,7 +2557,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2566,7 +2566,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2575,7 +2575,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2584,7 +2584,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2593,7 +2593,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2602,7 +2602,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2611,7 +2611,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2620,7 +2620,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 24,
@@ -2629,7 +2629,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: private",
-                "name": "test-data/NoReservedKeywordsTestInput-private.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-private.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2639,11 +2639,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the protected reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-protected.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2652,7 +2652,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2661,7 +2661,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2670,7 +2670,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2679,7 +2679,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2688,7 +2688,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2697,7 +2697,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2706,7 +2706,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2715,7 +2715,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 26,
@@ -2724,7 +2724,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: protected",
-                "name": "test-data/NoReservedKeywordsTestInput-protected.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-protected.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2734,11 +2734,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the public reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-public.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2747,7 +2747,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2756,7 +2756,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2765,7 +2765,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2774,7 +2774,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2783,7 +2783,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2792,7 +2792,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2801,7 +2801,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2810,7 +2810,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -2819,7 +2819,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: public",
-                "name": "test-data/NoReservedKeywordsTestInput-public.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-public.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2829,11 +2829,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the static reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-static.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2842,7 +2842,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2851,7 +2851,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2860,7 +2860,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2869,7 +2869,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2878,7 +2878,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2887,7 +2887,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2896,7 +2896,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2905,7 +2905,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -2914,7 +2914,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: static",
-                "name": "test-data/NoReservedKeywordsTestInput-static.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-static.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2924,11 +2924,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the yield reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-yield.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -2937,7 +2937,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2946,7 +2946,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2955,7 +2955,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2964,7 +2964,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2973,7 +2973,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2982,7 +2982,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -2991,7 +2991,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3000,7 +3000,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 22,
@@ -3009,7 +3009,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: yield",
-                "name": "test-data/NoReservedKeywordsTestInput-yield.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-yield.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3019,11 +3019,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the any reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-any.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3032,7 +3032,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3041,7 +3041,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3050,7 +3050,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3059,7 +3059,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3068,7 +3068,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3077,7 +3077,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3086,7 +3086,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3095,7 +3095,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3104,7 +3104,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3113,7 +3113,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 20,
@@ -3122,7 +3122,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: any",
-                "name": "test-data/NoReservedKeywordsTestInput-any.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-any.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3132,11 +3132,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the boolean reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-boolean.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3145,7 +3145,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3154,7 +3154,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3163,7 +3163,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3172,7 +3172,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3181,7 +3181,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3190,7 +3190,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3199,7 +3199,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3208,7 +3208,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3217,7 +3217,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3226,7 +3226,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 24,
@@ -3235,7 +3235,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: boolean",
-                "name": "test-data/NoReservedKeywordsTestInput-boolean.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-boolean.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3245,11 +3245,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the constructor reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-constructor.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3258,7 +3258,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3267,7 +3267,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3276,7 +3276,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3285,7 +3285,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3294,7 +3294,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3303,7 +3303,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3312,7 +3312,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3321,7 +3321,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 28,
@@ -3330,7 +3330,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: constructor",
-                "name": "test-data/NoReservedKeywordsTestInput-constructor.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-constructor.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3340,11 +3340,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the declare reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-declare.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3353,7 +3353,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3362,7 +3362,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3371,7 +3371,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3380,7 +3380,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3389,7 +3389,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3398,7 +3398,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3407,7 +3407,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3416,7 +3416,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3425,7 +3425,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3434,7 +3434,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 24,
@@ -3443,7 +3443,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: declare",
-                "name": "test-data/NoReservedKeywordsTestInput-declare.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-declare.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3453,11 +3453,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the get reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-get.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3466,7 +3466,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3475,7 +3475,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3484,7 +3484,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3493,7 +3493,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3502,7 +3502,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3511,7 +3511,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3520,7 +3520,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3529,7 +3529,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3538,7 +3538,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3547,7 +3547,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 20,
@@ -3556,7 +3556,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: get",
-                "name": "test-data/NoReservedKeywordsTestInput-get.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-get.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3566,11 +3566,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the module reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-module.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3579,7 +3579,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3588,7 +3588,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3597,7 +3597,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3606,7 +3606,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3615,7 +3615,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3624,7 +3624,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3633,7 +3633,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3642,7 +3642,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3651,7 +3651,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3660,7 +3660,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": "test-data/NoReservedKeywordsTestInput-module.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-module.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -3670,11 +3670,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the require reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-require.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3683,7 +3683,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3692,7 +3692,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3701,7 +3701,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3710,7 +3710,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3719,7 +3719,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3728,7 +3728,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3737,7 +3737,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3746,7 +3746,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3755,7 +3755,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3764,7 +3764,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": "test-data/NoReservedKeywordsTestInput-require.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-require.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 24,
@@ -3774,11 +3774,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the number reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-number.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3787,7 +3787,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3796,7 +3796,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3805,7 +3805,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3814,7 +3814,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3823,7 +3823,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3832,7 +3832,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3841,7 +3841,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3850,7 +3850,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3859,7 +3859,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3868,7 +3868,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -3877,7 +3877,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: number",
-                "name": "test-data/NoReservedKeywordsTestInput-number.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-number.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3887,11 +3887,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the set reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-set.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -3900,7 +3900,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3909,7 +3909,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3918,7 +3918,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3927,7 +3927,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3936,7 +3936,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3945,7 +3945,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3954,7 +3954,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -3963,7 +3963,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -3972,7 +3972,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -3981,7 +3981,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 20,
@@ -3990,7 +3990,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: set",
-                "name": "test-data/NoReservedKeywordsTestInput-set.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-set.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4000,11 +4000,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the string reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-string.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -4013,7 +4013,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4022,7 +4022,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4031,7 +4031,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4040,7 +4040,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4049,7 +4049,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4058,7 +4058,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4067,7 +4067,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -4076,7 +4076,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4085,7 +4085,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4094,7 +4094,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -4103,7 +4103,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: string",
-                "name": "test-data/NoReservedKeywordsTestInput-string.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-string.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4113,11 +4113,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the symbol reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-symbol.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -4126,7 +4126,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4135,7 +4135,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4144,7 +4144,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4153,7 +4153,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4162,7 +4162,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4171,7 +4171,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4180,7 +4180,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -4189,7 +4189,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4198,7 +4198,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4207,7 +4207,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 23,
@@ -4216,7 +4216,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: symbol",
-                "name": "test-data/NoReservedKeywordsTestInput-symbol.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-symbol.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4226,11 +4226,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the type reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-type.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -4239,7 +4239,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4248,7 +4248,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4257,7 +4257,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4266,7 +4266,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4275,7 +4275,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4284,7 +4284,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4293,7 +4293,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -4302,7 +4302,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4311,7 +4311,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4320,7 +4320,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4329,7 +4329,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: type",
-                "name": "test-data/NoReservedKeywordsTestInput-type.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-type.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4339,11 +4339,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the from reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-from.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -4352,7 +4352,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4361,7 +4361,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4370,7 +4370,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4379,7 +4379,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4388,7 +4388,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4397,7 +4397,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4406,7 +4406,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -4415,7 +4415,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4424,7 +4424,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4433,7 +4433,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4442,7 +4442,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: from",
-                "name": "test-data/NoReservedKeywordsTestInput-from.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-from.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4452,11 +4452,11 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
     it('should not allow the of reserved word', () : void => {
-        const inputFile : string = 'test-data/NoReservedKeywordsTestInput-of.ts';
+        const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 9,
@@ -4465,7 +4465,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4474,7 +4474,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4483,7 +4483,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: var",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4492,7 +4492,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4501,7 +4501,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4510,7 +4510,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4519,7 +4519,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 12,
@@ -4528,7 +4528,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 21,
@@ -4537,7 +4537,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,
@@ -4546,7 +4546,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 19,
@@ -4555,7 +4555,7 @@ describe('noBannedTermsRule', () : void => {
             },
             {
                 "failure": "Forbidden reference to reserved keyword: of",
-                "name": "test-data/NoReservedKeywordsTestInput-of.ts",
+                "name": "test-data/NoReservedKeywords/NoReservedKeywordsTestInput-of.ts",
                 "ruleName": "no-reserved-keywords",
                 "startPosition": {
                     "character": 5,

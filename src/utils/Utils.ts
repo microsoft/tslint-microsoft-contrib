@@ -70,5 +70,15 @@ export module Utils {
             return memo;
         }, []);
     }
+
+    export function trimTo(source: string, maxLength: number): string {
+        if (source == null) {
+            return '';
+        }
+        if (source.length <= maxLength) {
+            return source;
+        }
+        return source.substr(0, maxLength - 2) + '...';
+    }
 }
 /* tslint:enable:no-increment-decrement */

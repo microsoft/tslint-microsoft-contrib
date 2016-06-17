@@ -213,4 +213,13 @@ export module AstUtils {
         return result;
     }
 
+    export function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
+        if (node.type != null) {
+            return node.type.kind === SyntaxKind.current().FunctionType;
+        } else if (node.initializer != null) {
+            return (node.initializer.kind === SyntaxKind.current().ArrowFunction
+            || node.initializer.kind === SyntaxKind.current().FunctionExpression);
+        }
+        return false;
+    }
 }

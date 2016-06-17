@@ -72,4 +72,15 @@ describe('Utils', () : void => {
             chai.expect(Utils.removeAll(objList, [{}, {}, {}])).to.deep.equal([obj1, obj2, obj3], 'removing non-contained objects');
         });
     });
+
+    it('should trim strings properly', (): void => {
+        chai.expect(Utils.trimTo(undefined, 10)).to.equal('');
+        chai.expect(Utils.trimTo(null, 10)).to.equal('');
+        chai.expect(Utils.trimTo('', 10)).to.equal('');
+        chai.expect(Utils.trimTo('123456789', 10)).to.equal('123456789');
+        chai.expect(Utils.trimTo('1234567890', 10)).to.equal('1234567890');
+        chai.expect(Utils.trimTo('12345678901', 10)).to.equal('12345678...');
+        chai.expect(Utils.trimTo('123456789012', 10)).to.equal('12345678...');
+        chai.expect(Utils.trimTo('12345678901234567890', 10)).to.equal('12345678...');
+    });
 });

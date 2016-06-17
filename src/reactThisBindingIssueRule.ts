@@ -1,10 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {Scope} from './utils/Scope';
+import {SyntaxKind} from './utils/SyntaxKind';
+import {Utils} from './utils/Utils';
 
+const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference bound twice in the constructor: ';
 const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
     'reference bound in the constructor: ';
@@ -26,6 +29,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private boundListeners: string[] = [];
     private declaredMethods: string[] = [];
+    private scope: Scope;
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         // reset all state when a class declaration is found because a SourceFile can contain multiple classes
@@ -53,6 +57,48 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
+
+    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
+        // reset variable scope when we encounter a method. Start tracking variables that are instantiated
+        // in scope so we can make sure new function instances are not passed as JSX attributes
+        this.scope = new Scope(null);
+        super.visitMethodDeclaration(node);
+        this.scope = null;
+    }
+
+    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+        if (this.scope != null) {
+            this.scope = new Scope(this.scope);
+        }
+        super.visitArrowFunction(node);
+        if (this.scope != null) {
+            this.scope = this.scope.parent;
+        }
+    }
+
+    protected visitFunctionExpression(node: ts.FunctionExpression): void {
+        if (this.scope != null) {
+            this.scope = new Scope(this.scope);
+        }
+        super.visitFunctionExpression(node);
+        if (this.scope != null) {
+            this.scope = this.scope.parent;
+        }
+    }
+
+
+    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
+        if (this.scope != null) {
+            if (node.name.kind === SyntaxKind.current().Identifier) {
+                const variableName = (<ts.Identifier>node.name).text;
+                if (this.isExpressionAnonymousFunction(node.initializer)) {
+                    this.scope.addFunctionSymbol(variableName);
+                }
+            }
+        }
+        super.visitVariableDeclaration(node);
+    }
+
     private visitJsxOpeningElement(node: ts.JsxOpeningElement): void {
         // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
         node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
@@ -67,8 +113,53 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                     const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
                     this.addFailure(this.createFailure(start, widget, message));
                 }
+            } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
+                const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                const jsxExpression: ts.JsxExpression = attribute.initializer;
+                const expression: ts.Expression = jsxExpression.expression;
+                const start: number = expression.getStart();
+                const widget: number = expression.getWidth();
+                const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
+                this.addFailure(this.createFailure(start, widget, message));
             }
         });
+    }
+
+    private isAttributeAnonymousFunction(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
+        if (attributeLikeElement.kind === SyntaxKind.current().JsxAttribute) {
+            const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind.current().JsxExpression) {
+                const jsxExpression: ts.JsxExpression = attribute.initializer;
+                const expression: ts.Expression = jsxExpression.expression;
+                return this.isExpressionAnonymousFunction(expression);
+            }
+        }
+        return false;
+    }
+
+    private isExpressionAnonymousFunction(expression: ts.Expression): boolean {
+        if (expression == null) {
+            return false;
+        }
+
+        // Arrow functions and Function expressions create new anonymous function instances
+        if (expression.kind === SyntaxKind.current().ArrowFunction
+            || expression.kind === SyntaxKind.current().FunctionExpression) {
+            return true;
+        }
+
+        if (expression.kind === SyntaxKind.current().CallExpression) {
+            const callExpression = <ts.CallExpression>expression;
+            const functionName = AstUtils.getFunctionName(callExpression);
+            if (functionName === 'bind') {
+                return true; // bind functions on Function or _ create a new anonymous instance of a function
+            }
+        }
+        if (expression.kind === SyntaxKind.current().Identifier) {
+            const symbolText: string = expression.getText();
+            return this.scope.isFunctionSymbol(symbolText);
+        }
+        return false;
     }
 
     private isUnboundListener(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {

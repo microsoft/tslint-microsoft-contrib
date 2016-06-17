@@ -3,10 +3,12 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {SyntaxKind} from './SyntaxKind';
 import {AstUtils} from './AstUtils';
+import {Scope} from './Scope';
 
 /**
  * This exists so that you can try to tell the types of variables
- * and identifiers in the current scope.
+ * and identifiers in the current scope. It builds the current scope
+ * from the SourceFile then -> Module -> Class -> Function
  */
 export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     private languageServices: ts.LanguageService;
@@ -58,17 +60,17 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
                 // seems like another tslint error of some sort
                 const signature : ts.Signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
                 const expressionType : ts.Type = this.typeChecker.getReturnTypeOfSignature(signature);
-                return this.isTypeFunction(expressionType, this.typeChecker);
+                return this.isFunctionType(expressionType, this.typeChecker);
             } catch (e) {
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
             }
         }
 
-        return this.isTypeFunction(this.typeChecker.getTypeAtLocation(expression), this.typeChecker);
+        return this.isFunctionType(this.typeChecker.getTypeAtLocation(expression), this.typeChecker);
     }
 
-    private isTypeFunction(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
+    private isFunctionType(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
         const signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             const signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
@@ -106,7 +108,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             } else if (element.kind === SyntaxKind.current().PropertyDeclaration) {
                 const prop: ts.PropertyDeclaration = <ts.PropertyDeclaration>element;
                 // add all declared function properties as valid functions
-                if (isDeclarationFunctionType(prop)) {
+                if (AstUtils.isDeclarationFunctionType(prop)) {
                     this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
                 } else {
                     this.scope.addNonFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
@@ -159,90 +161,5 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         this.scope.addParameters(node.parameters);
         super.visitSetAccessor(node);
         this.scope = this.scope.parent;
-    }
-}
-
-function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
-    if (node.type != null) {
-        return node.type.kind === SyntaxKind.current().FunctionType;
-    } else if (node.initializer != null) {
-        return (node.initializer.kind === SyntaxKind.current().ArrowFunction
-            || node.initializer.kind === SyntaxKind.current().FunctionExpression);
-    }
-    return false;
-}
-
-class GlobalReferenceCollector extends ErrorTolerantWalker {
-    public functionIdentifiers: string[] = [];
-    public nonFunctionIdentifiers: string[] = [];
-
-    /* tslint:disable:no-empty */
-    protected visitModuleDeclaration(node: ts.ModuleDeclaration): void { }   // do not descend into fresh scopes
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void { }     // do not descend into fresh scopes
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void { } // do not descend into fresh scopes
-    protected visitFunctionExpression(node: ts.FunctionExpression): void { } // do not descend into fresh scopes
-    /* tslint:enable:no-empty */
-
-    // need to make this public so it can be invoked outside of class
-    /* tslint:disable:no-unnecessary-override */
-    public visitNode(node: ts.Node): void {
-        super.visitNode(node);
-    }
-    /* tslint:enable:no-unnecessary-override */
-
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (isDeclarationFunctionType(node)) {
-            this.functionIdentifiers.push(node.name.getText());
-        } else {
-            this.nonFunctionIdentifiers.push(node.name.getText());
-        }
-        // do not descend
-    }
-}
-
-class Scope {
-    public parent: Scope;
-    private symbols: { [index: string]: number } = {};
-
-    constructor(parent: Scope) {
-        this.parent = parent;
-    }
-
-    public addFunctionSymbol(symbolString: string): void {
-        this.symbols[symbolString] = SyntaxKind.current().FunctionType;
-    }
-
-    public addNonFunctionSymbol(symbolString: string): void {
-        this.symbols[symbolString] = SyntaxKind.current().Unknown;
-    }
-
-    public isFunctionSymbol(symbolString: string): boolean {
-        if (this.symbols[symbolString] === SyntaxKind.current().FunctionType) {
-            return true;
-        }
-        if (this.symbols[symbolString] === SyntaxKind.current().Unknown) {
-            return false;
-        }
-        if (this.parent != null) {
-            return this.parent.isFunctionSymbol(symbolString);
-        }
-        return false;
-    }
-
-    public addParameters(parameters: ts.ParameterDeclaration[]): void {
-        parameters.forEach((parm: ts.ParameterDeclaration): void => {
-            if (isDeclarationFunctionType(parm)) {
-                this.addFunctionSymbol(parm.name.getText());
-            } else {
-                this.addNonFunctionSymbol(parm.name.getText());
-            }
-        });
-    }
-
-    public addGlobalScope(node: ts.Node, sourceFile : ts.SourceFile, options : Lint.IOptions): void {
-        const refCollector = new GlobalReferenceCollector(sourceFile, options);
-        refCollector.visitNode(node);
-        refCollector.functionIdentifiers.forEach((identifier: string): void => { this.addFunctionSymbol(identifier); });
-        refCollector.nonFunctionIdentifiers.forEach((identifier: string): void => { this.addNonFunctionSymbol(identifier); });
     }
 }

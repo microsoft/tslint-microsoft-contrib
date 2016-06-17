@@ -54,6 +54,73 @@ describe('reactThisBindingIssueRule', () : void => {
         ]);
     });
 
+    it('should fail on anonymous listeners', () : void => {
+        const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx';
+
+        TestHelper.assertViolations(ruleName, file, [
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: this.listener.bind(this)",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 35, "line": 11 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: _.bind(this.listener, this)",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 35, "line": 12 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: this.listener.bind(this, 'so...",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 35, "line": 13 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: () => {}",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 35, "line": 16 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: function() {}",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 35, "line": 17 }
+            }
+        ]);
+    });
+
+    it('should fail on locally instantiated listeners', () : void => {
+        const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx';
+
+        TestHelper.assertViolations(ruleName, file, [
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: listener1",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 22, "line": 14 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: listener2",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 26, "line": 15 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: listener3",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 26, "line": 16 }
+            },
+            {
+                "failure": "A new instance of an anonymous method is passed as a JSX attribute: listener4",
+                "name": "test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx",
+                "ruleName": "react-this-binding-issue",
+                "startPosition": { "character": 25, "line": 17 }
+            }
+        ]);
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

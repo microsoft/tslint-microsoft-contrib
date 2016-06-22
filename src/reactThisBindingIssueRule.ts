@@ -27,9 +27,19 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
+    private allowAnonymousListeners: boolean = false;
     private boundListeners: string[] = [];
     private declaredMethods: string[] = [];
     private scope: Scope;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                this.allowAnonymousListeners = opt.allowAnonymousListeners === true;
+            }
+        });
+    }
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         // reset all state when a class declaration is found because a SourceFile can contain multiple classes
@@ -126,6 +136,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     }
 
     private isAttributeAnonymousFunction(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
+        if (this.allowAnonymousListeners) {
+            return false;
+        }
         if (attributeLikeElement.kind === SyntaxKind.current().JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
             if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind.current().JsxExpression) {

@@ -121,6 +121,22 @@ describe('reactThisBindingIssueRule', () : void => {
             }
         ]);
     });
+
+    it('should pass on anonymous listeners when allowAnonymousListeners is true', () : void => {
+
+        const options: any = [ true, { 'allowAnonymousListeners': true } ];
+        const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx';
+
+        TestHelper.assertViolationsWithOptions(ruleName, options, file, []);
+    });
+
+    it('should pass on locally instantiated listeners when allowAnonymousListeners is true', () : void => {
+
+        const options: any = [ true, { 'allowAnonymousListeners': true } ];
+        const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx';
+
+        TestHelper.assertViolationsWithOptions(ruleName, options, file, []);
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

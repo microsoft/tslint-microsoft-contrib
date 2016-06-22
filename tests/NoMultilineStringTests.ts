@@ -14,7 +14,7 @@ describe('noMultilineStringRule', () : void => {
         const inputFile : string = 'test-data/NoMultilineStringTestInput.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Forbidden Multiline string:  `some...",
+                "failure": "Forbidden Multiline string: `some...",
                 "name": "test-data/NoMultilineStringTestInput.ts",
                 "ruleName": "no-multiline-string",
                 "startPosition": {

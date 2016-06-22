@@ -20,7 +20,7 @@ class NoMultilineStringWalker extends ErrorTolerantWalker {
         if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
             const fullText : string = node.getFullText();
             const firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
-            const trimmed : string = firstLine.substring(0, 40);
+            const trimmed : string = firstLine.substring(0, 40).trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...'));
         }
         super.visitNode(node);

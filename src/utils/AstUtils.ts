@@ -222,4 +222,13 @@ export module AstUtils {
         }
         return false;
     }
+
+    export function isUndefined(node: ts.Expression): boolean {
+        if (node != null) {
+            if (node.kind === SyntaxKind.current().Identifier) {
+                return node.getText() === 'undefined';
+            }
+        }
+        return false;
+    }
 }

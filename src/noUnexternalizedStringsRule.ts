@@ -34,7 +34,6 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         super(sourceFile, opt);
         this.signatures = Object.create(null);
         this.ignores = Object.create(null);
-        this.messageIndex = undefined;
         const options: any[] = this.getOptions();
         const first: UnexternalizedStringsOptions = options && options.length > 0 ? options[0] : null;
         if (first) {

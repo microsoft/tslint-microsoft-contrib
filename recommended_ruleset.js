@@ -102,6 +102,7 @@ module.exports = {
         "no-shadowed-variable": true,
         "no-typeof-undefined": true,
         "no-unnecessary-local-variable": true,
+        "no-unnecessary-field-initialization": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,

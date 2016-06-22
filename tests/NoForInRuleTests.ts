@@ -3,6 +3,7 @@
 
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
+/* tslint:disable:max-line-length */
 
 import {TestHelper} from './TestHelper';
 
@@ -12,9 +13,19 @@ import {TestHelper} from './TestHelper';
 describe('noForInRule', () : void => {
     const ruleName : string = 'no-for-in';
 
-    it('should pass on regular for statement', () : void => {
+    it('should pass on a regular for statement', () : void => {
         const script : string = `
             for (var i = 0; i < 100; i++) {
+
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass on a regular for-of statement', () : void => {
+        const script : string = `
+            for (const item of array) {
 
             }
         `;
@@ -31,7 +42,7 @@ describe('noForInRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use for in statements, use Object.keys instead: for (name in object)",
+                "failure": "Do not use the 'for in' statement: 'for (name in object)'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.",
                 "name": "file.ts",
                 "ruleName": "no-for-in",
                 "startPosition": { "character": 13, "line": 2 }
@@ -42,3 +53,4 @@ describe('noForInRule', () : void => {
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */
+/* tslint:enable:max-line-length */

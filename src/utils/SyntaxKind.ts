@@ -1172,7 +1172,7 @@ export module SyntaxKind {
         LastTemplateToken: 14,
         FirstBinaryOperator: 25,
         LastBinaryOperator: 68,
-        FirstNode: 135,
+        FirstNode: 135
     };
 
     /* tslint:disable:variable-name */

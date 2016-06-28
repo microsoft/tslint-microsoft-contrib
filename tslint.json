@@ -112,7 +112,7 @@
     "react-this-binding-issue": true,
     "semicolon": true,
     "switch-default": false,
-    "trailing-comma": true,
+    "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
     "triple-equals": [true, "allow-null-check"],
     "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
     "typedef-whitespace": false,

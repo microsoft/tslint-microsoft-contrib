@@ -128,7 +128,7 @@ module.exports = {
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
         "semicolon": [true, "always"],
-        "trailing-comma": [true, {"singleline": "never", "multiline": "always"}],
+        "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
         "typedef-whitespace": false,
         "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
 

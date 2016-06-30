@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
+import {SyntaxKind} from './SyntaxKind';
 
 /**
  * Implementation of the banned-term rulesets.
@@ -8,11 +9,17 @@ import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 export class BannedTermWalker extends ErrorTolerantWalker {
     private failureString : string;
     private bannedTerms: string[];
+    private allowQuotedProperties: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString : string, bannedTerms: string[]) {
         super(sourceFile, options);
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
+            }
+        });
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
@@ -33,7 +40,16 @@ export class BannedTermWalker extends ErrorTolerantWalker {
 
 
     protected visitPropertySignature(node: ts.Node): void {
-        this.validateNode(node);
+        if (node.kind === SyntaxKind.current().PropertySignature) {
+            const signature: ts.PropertySignature = <ts.PropertySignature>node;
+            const propertyName = signature.name;
+            // ignore StringLiteral property names if that option is set
+            if (this.allowQuotedProperties === false || propertyName.kind !== SyntaxKind.current().StringLiteral) {
+                this.validateNode(node);
+            }
+        } else {
+            this.validateNode(node);
+        }
         super.visitPropertySignature(node);
     }
 

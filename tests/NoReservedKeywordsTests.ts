@@ -13,6 +13,17 @@ import {TestHelper} from './TestHelper';
 describe('noBannedTermsRule', () : void => {
     const RULE_NAME : string = 'no-reserved-keywords';
 
+    it('should pass when allowing keys in strings', (): void => {
+        const script: string = `
+            interface MyInterface {
+                'break': String;
+            }
+        `;
+        TestHelper.assertViolationsWithOptions(RULE_NAME,
+            [ true, { 'allow-quoted-properties': true }],
+            script, []);
+    });
+
     it('should not allow the break reserved word', () : void => {
         const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [

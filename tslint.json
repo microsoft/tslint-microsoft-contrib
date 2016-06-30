@@ -92,7 +92,7 @@
     "no-unnecessary-semicolons": true,
     "no-unreachable": true,
     "no-unused-expression": true,
-    "no-unused-imports": true,
+    "no-unused-imports": false,
     "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,

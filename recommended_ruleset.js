@@ -58,7 +58,6 @@ module.exports = {
         "no-unnecessary-bind": true,
         "no-unnecessary-override": true,
         "no-unused-expression": true,
-        "no-unused-imports": true,
         "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
@@ -155,7 +154,8 @@ module.exports = {
         "no-missing-visibility-modifiers": true, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unreachable": false                // now supported by TypeScript compiler
+        "no-unreachable": false,               // now supported by TypeScript compiler
+        "no-unused-imports": false             // use tslint no-unused-variable rule instead
 
     }
 };

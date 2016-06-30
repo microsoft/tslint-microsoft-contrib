@@ -128,6 +128,9 @@ module.exports = {
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
         "semicolon": [true, "always"],
+        // forcing trailing commas for multi-line lists results in lists that are easier to reorder and version
+        // control diffs that are more clear. Many teams like to have multiline be 'always'. There is no
+        // clear consensus on this rule but the internal MS JavaScript coding standard does discourage it.
         "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
         "typedef-whitespace": false,
         "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],

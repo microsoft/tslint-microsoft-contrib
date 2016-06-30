@@ -36,7 +36,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         super(sourceFile, options);
         this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'object') {
-                this.allowAnonymousListeners = opt.allowAnonymousListeners === true;
+                this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
             }
         });
     }

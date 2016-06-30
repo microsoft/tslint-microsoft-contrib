@@ -122,17 +122,17 @@ describe('reactThisBindingIssueRule', () : void => {
         ]);
     });
 
-    it('should pass on anonymous listeners when allowAnonymousListeners is true', () : void => {
+    it('should pass on anonymous listeners when allow-anonymous-listeners is true', () : void => {
 
-        const options: any = [ true, { 'allowAnonymousListeners': true } ];
+        const options: any = [ true, { 'allow-anonymous-listeners': true } ];
         const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx';
 
         TestHelper.assertViolationsWithOptions(ruleName, options, file, []);
     });
 
-    it('should pass on locally instantiated listeners when allowAnonymousListeners is true', () : void => {
+    it('should pass on locally instantiated listeners when allow-anonymous-listeners is true', () : void => {
 
-        const options: any = [ true, { 'allowAnonymousListeners': true } ];
+        const options: any = [ true, { 'allow-anonymous-listeners': true } ];
         const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx';
 
         TestHelper.assertViolationsWithOptions(ruleName, options, file, []);

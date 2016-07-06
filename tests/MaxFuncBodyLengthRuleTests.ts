@@ -68,15 +68,28 @@ describe('maxFuncBodyLengthRule', () : void => {
             alert('yay');
             return 2;
         };
-        `;
+
+        export var igniteFire = (a) => {
+            // creating flames is a pretty
+            // complex process.
+            // we should
+            // thoroughly
+            // document
+            /**
+             * the flame-
+             * making
+             * process so that future
+             * wizards know what
+             * the deal is
+             */
+             // but playing with fire is
+             // deadly
+            throw new Error('Use sparks instead, they are less deadly');
+        };`;
 
     const ruleName : string = 'max-func-body-length';
 
     describe('when functions do not exceed general option value and syntax kind wise options are not used', () => {
-        beforeEach(() => {
-            options = [ true, 14 ];
-        });
-
         it('should not fail', () : void => {
             TestHelper.assertViolations(ruleName, script, [ ]);
         });
@@ -123,6 +136,15 @@ describe('maxFuncBodyLengthRule', () : void => {
                     "startPosition": {
                         "character": 36,
                         "line": 50
+                    }
+                },
+                {
+                    "failure": "Max arrow function body length exceeded - max: 5, actual: 16",
+                    "name": "file.ts",
+                    "ruleName": "max-func-body-length",
+                    "startPosition": {
+                        "character": 33,
+                        "line": 59
                     }
                 }
             ]);
@@ -177,6 +199,66 @@ describe('maxFuncBodyLengthRule', () : void => {
                     "startPosition": {
                         "character": 36,
                         "line": 50
+                    }
+                },
+                {
+                    "failure": "Max arrow function body length exceeded - max: 4, actual: 16",
+                    "name": "file.ts",
+                    "ruleName": "max-func-body-length",
+                    "startPosition": {
+                        "character": 33,
+                        "line": 59
+                    }
+                }
+            ]);
+        });
+    });
+
+    describe('when ignoring comments option is used and function lengths exceed their value', () => {
+        beforeEach(() => {
+            options = [ true, 3, { 'ignore-comments': true } ];
+        });
+
+        it('should not fail due to single- or multi- line comments', () : void => {
+            TestHelper.assertNoViolationWithOptions(ruleName, options, `
+                function sum(a,b) {
+                    /**
+                     * add both a and b together
+                     * this is some complex math,
+                     * so it's best we abstract
+                     * it away from the user
+                     */
+                    const sum = a + b;
+                    return sum;
+                }
+
+                function sub(a,b) {
+                    // similarly to sub, this is
+                    // some pretty complex
+                    // arithmetic.
+                    // let's keep this away from
+                    // the user as well.
+
+                    return a - b;
+                }
+            `);
+        });
+
+        it('should fail due to lines with mixed code and comments', () : void => {
+            TestHelper.assertViolationsWithOptions(ruleName, options, `
+                function sum(a,b) {
+                    let sum = a; // start with a
+                    sum += b; // now add b
+                    return sum; // return the result
+                }
+            `, [
+                {
+                    "failure": "Max function body length exceeded in function sum() - max: 3, actual: 4",
+                    "name": "file.ts",
+                    "ruleName": "max-func-body-length",
+                    "startPosition": {
+                        "character": 17,
+                        "line": 2
                     }
                 }
             ]);

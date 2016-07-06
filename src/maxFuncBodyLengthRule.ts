@@ -18,6 +18,7 @@ const ARROW_BODY_LENGTH = 'arrow-body-length';
 const METHOD_BODY_LENGTH = 'method-body-length';
 const CTOR_BODY_LENGTH = 'ctor-body-length';
 const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
+const IGNORE_COMMENTS = 'ignore-comments';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private maxBodyLength: number;
@@ -25,6 +26,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private maxArrowBodyLength: number;
     private maxMethodBodyLength: number;
     private maxCtorBodyLength: number;
+    private ignoreComments: boolean;
     private currentClassName: string;
     private ignoreParametersToFunctionRegex: RegExp;
     private ignoreNodes: ts.Node[] = [];
@@ -77,7 +79,10 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private validate(node: ts.FunctionLikeDeclaration): void {
         if (!Utils.contains(this.ignoreNodes, node)) {
-            const bodyLength = this.calcBodyLength(node);
+            let bodyLength = this.calcBodyLength(node);
+            if (this.ignoreComments) {
+                bodyLength -= this.calcBodyCommentLength(node);
+            }
             if (this.isFunctionTooLong(node.kind, bodyLength)) {
                 this.addFuncBodyTooLongFailure(node, bodyLength);
             }
@@ -92,6 +97,26 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
         const startLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
         const endLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
         return endLine - startLine;
+    }
+
+    private calcBodyCommentLength(node: ts.FunctionLikeDeclaration) {
+        let commentLineCount = 0;
+
+        commentLineCount += node.getFullText()
+            .split(/\n/)
+            .filter((line) => {
+                return line.trim().match(/^\/\//) !== null;
+            })
+            .length;
+
+        const scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
+        Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
+            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+                commentLineCount += scanner.getTokenText().split(/\n/).length;
+            }
+        });
+
+        return commentLineCount;
     }
 
     private isFunctionTooLong (nodeKind: ts.SyntaxKind, length: number): boolean {
@@ -110,6 +135,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
                 this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
+                this.ignoreComments = opt[IGNORE_COMMENTS];
                 const regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     this.ignoreParametersToFunctionRegex = new RegExp(regex);

@@ -58,7 +58,6 @@ module.exports = {
         "no-unnecessary-bind": true,
         "no-unnecessary-override": true,
         "no-unused-expression": true,
-        "no-unused-imports": true,
         "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
@@ -102,6 +101,7 @@ module.exports = {
         "no-shadowed-variable": true,
         "no-typeof-undefined": true,
         "no-unnecessary-local-variable": true,
+        "no-unnecessary-field-initialization": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
@@ -127,7 +127,10 @@ module.exports = {
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
         "semicolon": [true, "always"],
-        "trailing-comma": true,
+        // forcing trailing commas for multi-line lists results in lists that are easier to reorder and version
+        // control diffs that are more clear. Many teams like to have multiline be 'always'. There is no
+        // clear consensus on this rule but the internal MS JavaScript coding standard does discourage it.
+        "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
         "typedef-whitespace": false,
         "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
 
@@ -151,7 +154,8 @@ module.exports = {
         "no-missing-visibility-modifiers": true, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unreachable": false                // now supported by TypeScript compiler
+        "no-unreachable": false,               // now supported by TypeScript compiler
+        "no-unused-imports": false             // use tslint no-unused-variable rule instead
 
     }
 };

@@ -6,9 +6,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
 var AstUtils_1 = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Scope_1 = require('./utils/Scope');
+var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Utils_1 = require('./utils/Utils');
+var FAILURE_ANONYMOUS_LISTENER = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 var FAILURE_DOUBLE_BIND = 'A function is having its \'this\' reference bound twice in the constructor: ';
 var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute without having the \'this\' ' +
     'reference bound in the constructor: ';
@@ -30,10 +33,17 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var ReactThisBindingIssueRuleWalker = (function (_super) {
     __extends(ReactThisBindingIssueRuleWalker, _super);
-    function ReactThisBindingIssueRuleWalker() {
-        _super.apply(this, arguments);
+    function ReactThisBindingIssueRuleWalker(sourceFile, options) {
+        var _this = this;
+        _super.call(this, sourceFile, options);
+        this.allowAnonymousListeners = false;
         this.boundListeners = [];
         this.declaredMethods = [];
+        this.getOptions().forEach(function (opt) {
+            if (typeof (opt) === 'object') {
+                _this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
+            }
+        });
     }
     ReactThisBindingIssueRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;
@@ -56,6 +66,40 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         this.visitJsxOpeningElement(node);
         _super.prototype.visitJsxSelfClosingElement.call(this, node);
     };
+    ReactThisBindingIssueRuleWalker.prototype.visitMethodDeclaration = function (node) {
+        this.scope = new Scope_1.Scope(null);
+        _super.prototype.visitMethodDeclaration.call(this, node);
+        this.scope = null;
+    };
+    ReactThisBindingIssueRuleWalker.prototype.visitArrowFunction = function (node) {
+        if (this.scope != null) {
+            this.scope = new Scope_1.Scope(this.scope);
+        }
+        _super.prototype.visitArrowFunction.call(this, node);
+        if (this.scope != null) {
+            this.scope = this.scope.parent;
+        }
+    };
+    ReactThisBindingIssueRuleWalker.prototype.visitFunctionExpression = function (node) {
+        if (this.scope != null) {
+            this.scope = new Scope_1.Scope(this.scope);
+        }
+        _super.prototype.visitFunctionExpression.call(this, node);
+        if (this.scope != null) {
+            this.scope = this.scope.parent;
+        }
+    };
+    ReactThisBindingIssueRuleWalker.prototype.visitVariableDeclaration = function (node) {
+        if (this.scope != null) {
+            if (node.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+                var variableName = node.name.text;
+                if (this.isExpressionAnonymousFunction(node.initializer)) {
+                    this.scope.addFunctionSymbol(variableName);
+                }
+            }
+        }
+        _super.prototype.visitVariableDeclaration.call(this, node);
+    };
     ReactThisBindingIssueRuleWalker.prototype.visitJsxOpeningElement = function (node) {
         var _this = this;
         node.attributes.forEach(function (attributeLikeElement) {
@@ -71,7 +115,51 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                     _this.addFailure(_this.createFailure(start, widget, message));
                 }
             }
+            else if (_this.isAttributeAnonymousFunction(attributeLikeElement)) {
+                var attribute = attributeLikeElement;
+                var jsxExpression = attribute.initializer;
+                var expression = jsxExpression.expression;
+                var start = expression.getStart();
+                var widget = expression.getWidth();
+                var message = FAILURE_ANONYMOUS_LISTENER + Utils_1.Utils.trimTo(expression.getText(), 30);
+                _this.addFailure(_this.createFailure(start, widget, message));
+            }
         });
+    };
+    ReactThisBindingIssueRuleWalker.prototype.isAttributeAnonymousFunction = function (attributeLikeElement) {
+        if (this.allowAnonymousListeners) {
+            return false;
+        }
+        if (attributeLikeElement.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+            var attribute = attributeLikeElement;
+            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+                var jsxExpression = attribute.initializer;
+                var expression = jsxExpression.expression;
+                return this.isExpressionAnonymousFunction(expression);
+            }
+        }
+        return false;
+    };
+    ReactThisBindingIssueRuleWalker.prototype.isExpressionAnonymousFunction = function (expression) {
+        if (expression == null) {
+            return false;
+        }
+        if (expression.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction
+            || expression.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+            return true;
+        }
+        if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            var callExpression = expression;
+            var functionName = AstUtils_1.AstUtils.getFunctionName(callExpression);
+            if (functionName === 'bind') {
+                return true;
+            }
+        }
+        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+            var symbolText = expression.getText();
+            return this.scope.isFunctionSymbol(symbolText);
+        }
+        return false;
     };
     ReactThisBindingIssueRuleWalker.prototype.isUnboundListener = function (attributeLikeElement) {
         if (attributeLikeElement.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {

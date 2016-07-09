@@ -180,5 +180,25 @@ var AstUtils;
         return result;
     }
     AstUtils.getDeclaredMethodNames = getDeclaredMethodNames;
+    function isDeclarationFunctionType(node) {
+        if (node.type != null) {
+            return node.type.kind === SyntaxKind_1.SyntaxKind.current().FunctionType;
+        }
+        else if (node.initializer != null) {
+            return (node.initializer.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction
+                || node.initializer.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression);
+        }
+        return false;
+    }
+    AstUtils.isDeclarationFunctionType = isDeclarationFunctionType;
+    function isUndefined(node) {
+        if (node != null) {
+            if (node.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+                return node.getText() === 'undefined';
+            }
+        }
+        return false;
+    }
+    AstUtils.isUndefined = isUndefined;
 })(AstUtils = exports.AstUtils || (exports.AstUtils = {}));
 //# sourceMappingURL=AstUtils.js.map

@@ -28,7 +28,7 @@ var NoMultilineStringWalker = (function (_super) {
         if (node.kind === SyntaxKind_1.SyntaxKind.current().NoSubstitutionTemplateLiteral) {
             var fullText = node.getFullText();
             var firstLine = fullText.substring(0, fullText.indexOf('\n'));
-            var trimmed = firstLine.substring(0, 40);
+            var trimmed = firstLine.substring(0, 40).trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...'));
         }
         _super.prototype.visitNode.call(this, node);

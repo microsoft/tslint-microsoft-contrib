@@ -53,5 +53,15 @@ var Utils;
         }, []);
     }
     Utils.filter = filter;
+    function trimTo(source, maxLength) {
+        if (source == null) {
+            return '';
+        }
+        if (source.length <= maxLength) {
+            return source;
+        }
+        return source.substr(0, maxLength - 2) + '...';
+    }
+    Utils.trimTo = trimTo;
 })(Utils = exports.Utils || (exports.Utils = {}));
 //# sourceMappingURL=Utils.js.map

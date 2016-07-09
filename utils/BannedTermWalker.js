@@ -5,12 +5,20 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
+var SyntaxKind_1 = require('./SyntaxKind');
 var BannedTermWalker = (function (_super) {
     __extends(BannedTermWalker, _super);
     function BannedTermWalker(sourceFile, options, failureString, bannedTerms) {
+        var _this = this;
         _super.call(this, sourceFile, options);
+        this.allowQuotedProperties = false;
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
+        this.getOptions().forEach(function (opt) {
+            if (typeof (opt) === 'object') {
+                _this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
+            }
+        });
     }
     BannedTermWalker.prototype.visitVariableDeclaration = function (node) {
         this.validateNode(node);
@@ -25,7 +33,16 @@ var BannedTermWalker = (function (_super) {
         _super.prototype.visitPropertyDeclaration.call(this, node);
     };
     BannedTermWalker.prototype.visitPropertySignature = function (node) {
-        this.validateNode(node);
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().PropertySignature) {
+            var signature = node;
+            var propertyName = signature.name;
+            if (this.allowQuotedProperties === false || propertyName.kind !== SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                this.validateNode(node);
+            }
+        }
+        else {
+            this.validateNode(node);
+        }
         _super.prototype.visitPropertySignature.call(this, node);
     };
     BannedTermWalker.prototype.visitSetAccessor = function (node) {

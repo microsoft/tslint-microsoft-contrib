@@ -14,7 +14,9 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.FAILURE_STRING = 'Do not use for in statements, use Object.keys instead: ';
+    Rule.FAILURE_STRING_FACTORY = function (initializer, expression) {
+        return "Do not use the 'for in' statement: 'for (" + initializer + " in " + expression + ")'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.";
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -26,7 +28,7 @@ var NoForInRuleWalker = (function (_super) {
     NoForInRuleWalker.prototype.visitForInStatement = function (node) {
         var initializer = node.initializer.getText();
         var expression = node.expression.getText();
-        var msg = Rule.FAILURE_STRING + 'for (' + initializer + ' in ' + expression + ')';
+        var msg = Rule.FAILURE_STRING_FACTORY(initializer, expression);
         this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
     };
     return NoForInRuleWalker;

@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
 var AstUtils_1 = require('./utils/AstUtils');
@@ -24,6 +25,7 @@ var ARROW_BODY_LENGTH = 'arrow-body-length';
 var METHOD_BODY_LENGTH = 'method-body-length';
 var CTOR_BODY_LENGTH = 'ctor-body-length';
 var IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
+var IGNORE_COMMENTS = 'ignore-comments';
 var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     __extends(MaxFunctionBodyLengthRuleWalker, _super);
     function MaxFunctionBodyLengthRuleWalker(sourceFile, options) {
@@ -69,6 +71,9 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     MaxFunctionBodyLengthRuleWalker.prototype.validate = function (node) {
         if (!Utils_1.Utils.contains(this.ignoreNodes, node)) {
             var bodyLength = this.calcBodyLength(node);
+            if (this.ignoreComments) {
+                bodyLength -= this.calcBodyCommentLength(node);
+            }
             if (this.isFunctionTooLong(node.kind, bodyLength)) {
                 this.addFuncBodyTooLongFailure(node, bodyLength);
             }
@@ -82,6 +87,22 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         var startLine = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
         var endLine = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
         return endLine - startLine;
+    };
+    MaxFunctionBodyLengthRuleWalker.prototype.calcBodyCommentLength = function (node) {
+        var commentLineCount = 0;
+        commentLineCount += node.getFullText()
+            .split(/\n/)
+            .filter(function (line) {
+            return line.trim().match(/^\/\//) !== null;
+        })
+            .length;
+        var scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
+        Lint.scanAllTokens(scanner, function (scanner) {
+            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+                commentLineCount += scanner.getTokenText().split(/\n/).length;
+            }
+        });
+        return commentLineCount;
     };
     MaxFunctionBodyLengthRuleWalker.prototype.isFunctionTooLong = function (nodeKind, length) {
         return length > this.getMaxLength(nodeKind);
@@ -98,6 +119,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
                 _this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 _this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 _this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
+                _this.ignoreComments = opt[IGNORE_COMMENTS];
                 var regex = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     _this.ignoreParametersToFunctionRegex = new RegExp(regex);

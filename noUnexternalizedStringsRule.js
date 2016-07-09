@@ -25,7 +25,6 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
         _super.call(this, sourceFile, opt);
         this.signatures = Object.create(null);
         this.ignores = Object.create(null);
-        this.messageIndex = undefined;
         var options = this.getOptions();
         var first = options && options.length > 0 ? options[0] : null;
         if (first) {

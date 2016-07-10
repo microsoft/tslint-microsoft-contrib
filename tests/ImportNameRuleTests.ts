@@ -97,6 +97,22 @@ describe('importNameRule', () : void => {
         ]);
     });
 
+    it('should pass on differing names when rule is configured with replacements', () : void => {
+        const script : string = `
+            import Backbone = require('backbone');
+            import React = require('react');
+            import isPlainObject from 'is-plain-object';
+            import baseChartOptions = require('common/component/chart/options/BaseChartOptions');
+        `;
+
+        const options: any[] = [ true, {
+            'backbone': 'Backbone',
+            'react': 'React',
+            'is-plain-object': 'isPlainObject',
+            'BaseChartOptions': 'baseChartOptions'
+        }];
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

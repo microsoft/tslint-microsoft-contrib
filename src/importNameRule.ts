@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {Utils} from './utils/Utils';
 
 /**
  * Implementation of the import-name rule.
@@ -14,6 +15,29 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ImportNameRuleWalker extends ErrorTolerantWalker {
+
+    private replacements: { [index: string]: string; };
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.replacements = this.extractOptions();
+    }
+
+    private extractOptions(): { [index: string]: string; } {
+        const result : { [index: string]: string; } = {};
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                Object.keys(opt).forEach((key: string): void => {
+                    const value: any = opt[key];
+                    if (typeof value === 'string') {
+                        result[key] = value;
+                    }
+                });
+            }
+        });
+        return result;
+    }
+
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
         const name: string = node.name.text;
 
@@ -45,10 +69,22 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private validateImport(node: ts.Node, importedName: string, moduleName: string): void {
         moduleName = moduleName.replace(/.*\//, ''); // chop off the path
-        if (moduleName !== importedName) {
+        if (this.isImportNameValid(importedName, moduleName) === false) {
             const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
     }
 
+    private isImportNameValid(importedName: string, moduleName: string): boolean {
+        if (moduleName === importedName) {
+            return true;
+        }
+
+        return Utils.exists(Object.keys(this.replacements), (replacementKey: string): boolean => {
+            if (new RegExp(replacementKey).test(moduleName)) {
+                return importedName === this.replacements[replacementKey];
+            }
+            return false;
+        });
+    }
 }

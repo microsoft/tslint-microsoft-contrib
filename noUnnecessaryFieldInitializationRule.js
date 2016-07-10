@@ -97,8 +97,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
         if (node == null) {
             return false;
         }
-        return node.kind === SyntaxKind_1.SyntaxKind.current().UndefinedKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword
+        return node.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword
             || node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral
             || node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
             || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword

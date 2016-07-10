@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -20,9 +21,24 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var ImportNameRuleWalker = (function (_super) {
     __extends(ImportNameRuleWalker, _super);
-    function ImportNameRuleWalker() {
-        _super.apply(this, arguments);
+    function ImportNameRuleWalker(sourceFile, options) {
+        _super.call(this, sourceFile, options);
+        this.replacements = this.extractOptions();
     }
+    ImportNameRuleWalker.prototype.extractOptions = function () {
+        var result = {};
+        this.getOptions().forEach(function (opt) {
+            if (typeof (opt) === 'object') {
+                Object.keys(opt).forEach(function (key) {
+                    var value = opt[key];
+                    if (typeof value === 'string') {
+                        result[key] = value;
+                    }
+                });
+            }
+        });
+        return result;
+    };
     ImportNameRuleWalker.prototype.visitImportEqualsDeclaration = function (node) {
         var name = node.name.text;
         if (node.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
@@ -51,10 +67,22 @@ var ImportNameRuleWalker = (function (_super) {
     };
     ImportNameRuleWalker.prototype.validateImport = function (node, importedName, moduleName) {
         moduleName = moduleName.replace(/.*\//, '');
-        if (moduleName !== importedName) {
+        if (this.isImportNameValid(importedName, moduleName) === false) {
             var message = "Misnamed import. Import should be named '" + moduleName + "' but found '" + importedName + "'";
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
+    };
+    ImportNameRuleWalker.prototype.isImportNameValid = function (importedName, moduleName) {
+        var _this = this;
+        if (moduleName === importedName) {
+            return true;
+        }
+        return Utils_1.Utils.exists(Object.keys(this.replacements), function (replacementKey) {
+            if (new RegExp(replacementKey).test(moduleName)) {
+                return importedName === _this.replacements[replacementKey];
+            }
+            return false;
+        });
     };
     return ImportNameRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

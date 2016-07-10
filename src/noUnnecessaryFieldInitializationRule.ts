@@ -96,8 +96,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
         if (node == null) {
             return false;
         }
-        return node.kind === SyntaxKind.current().UndefinedKeyword
-            || node.kind === SyntaxKind.current().NullKeyword
+        return node.kind === SyntaxKind.current().NullKeyword
             || node.kind === SyntaxKind.current().StringLiteral
             || node.kind === SyntaxKind.current().FalseKeyword
             || node.kind === SyntaxKind.current().TrueKeyword

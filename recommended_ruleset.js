@@ -114,6 +114,7 @@ module.exports = {
         "no-typeof-undefined": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
+        "no-unsupported-browser-code": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,

@@ -159,6 +159,7 @@ no-unreachable,"Disallows unreachable code after `break`, `catch`, `throw`, and 
 no-unsafe-finally,"Disallows control flow statements, such as `return`, `continue`, `break` and `throws` in finally blocks.",TSLINT1QMOM2N,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 584, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 584 - Return Inside Finally Block
 CWE 710 - Coding Standards Violation"
+no-unsupported-browser-code,Avoid writing browser-specific code for unsupported browser versions,TSLINTVDVTN9,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-unused-expression,Disallows unused expression statements.,TSLINT4EPRRU,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 563, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 563 - Assignment to Variable without Use ('Unused Variable')
 CWE 710 - Coding Standards Violation"

@@ -111,7 +111,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
         const scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
         Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (scanner.getToken() === SyntaxKind.current().MultiLineCommentTrivia) {
                 commentLineCount += scanner.getTokenText().split(/\n/).length;
             }
         });

@@ -117,6 +117,7 @@ Rule Name   | Description | Since
 `no-unnecessary-local-variable` | Do not declare a variable only to return it from the function on the next line. It is always less code to simply return the expression that initializes the variable. | 2.0.4
 `no-unnecessary-override`       | Do not write a method that only calls super() on the parent method with the same arguments. You can safely remove methods like this and Javascript will correctly dispatch the method to the parent object. | 2.0.4
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
+`no-unsupported-browser-code`   | Avoid writing browser-specific code for unsupported browser versions. Browser versions are specified in the rule configuration options, eg: `[true, [ "IE 11", "Firefox > 40", "Chrome >= 45" ] ]`. Browser-specific blocks of code can then be designated with a single-line comment, like so: `// Browser specific: IE 10`, or with a jsdoc like this: `@browserspecific chrome 40`. | 2.0.10
 `no-unused-imports`             | Deprecated - This rule is now covered by TSLint's no-unused-variables rule. However, it can still be useful to enable this rule and pair it with the fix-no-unused-imports formatter. | 0.0.1
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `no-var-self`                   | Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
@@ -133,7 +134,7 @@ Rule Name   | Description | Since
 Supported Formatters
 -----
 
-These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding. We are trying to fix this. 
+These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding. We are trying to fix this.
 
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------

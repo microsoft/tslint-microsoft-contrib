@@ -49,6 +49,19 @@ let foo = bar;
 const foo = bar;
 `.trim());
     });
+
+    it('should fix a let keyword and preserve whitespace', () : void => {
+        const input : string = `
+let   foo = bar;
+`;
+
+        const formatter = new FixPreferConstFormatterForTesting(input);
+        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        chai.expect(formatter.getOutput().trim()).to.equal(
+            `
+const   foo = bar;
+`.trim());
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

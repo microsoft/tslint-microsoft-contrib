@@ -17,7 +17,7 @@ export class Formatter extends BaseFormatter {
             const start: number = failure.getStartPosition().getPosition();
 
             let leftSide: string = fileContents.substring(0, start);
-            leftSide = leftSide.replace(/let\s?$/, 'const ');
+            leftSide = leftSide.replace(/let(\s)*$/, 'const$1');
             const rightSide: string = fileContents.substring(start);
             const newContent: string = leftSide + rightSide;
 

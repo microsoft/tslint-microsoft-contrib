@@ -3,17 +3,32 @@
 [![Build Status](https://travis-ci.org/Microsoft/tslint-microsoft-contrib.svg?branch=master)](https://travis-ci.org/Microsoft/tslint-microsoft-contrib)
 [![Join the chat at https://gitter.im/Microsoft/tslint-microsoft-contrib](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/tslint-microsoft-contrib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-tslint-microsoft-contrib
-======
+# tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.10
--------------
+
+- [Development and Release Version](#development-and-release-version)
+- [TSLint and corresponding tslint-microsoft-contrib version](#tslint-and-corresponding-tslint-microsoft-contrib-version)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Which Rules Should I Turn On?](#which-rules-should-i-turn-on)
+- [Supported Rules](#supported-rules)
+- [Supported Formatters](#supported-formatters)
+- [Development](#development)
+- [Debug code](#debug-code)
+- [Creating a new Release](#creating-a-new-release)
+- [Code of Conduct](#code-of-conduct)
+
+
+## Development and Release Version
+* 2.0.10 is the [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
+* [2.0.9](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.9) is the latest *Release Version*
+
 The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
 
 
-#### TSLint and corresponding tslint-microsoft-contrib version
+## TSLint and corresponding tslint-microsoft-contrib version
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
@@ -22,20 +37,20 @@ The project has been in use for at least several months on multiple projects. Pl
 | **3.0.x** | unsupported |
 | **2.x**   | 1.x |
 
-Installation
-------------
+
+## Installation
 
     npm install tslint-microsoft-contrib
 
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
-* [2.0.8](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.8)
+* [2.0.9](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.9)
 
-Configuration
--------------
 
-##### Configure your Grunt build task
+## Configuration
+
+**Configure your Grunt build task**
 
 Add the new rulesDirectory to your tslint task:
 
@@ -51,17 +66,18 @@ Add the new rulesDirectory to your tslint task:
       }
     })
 
-The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
+The `tslint.json` file does not change format when using this package. Just add our rule definitions to your existing `tslint.json` file.
 
-##### Which Rules Should I Turn On?
+
+## Which Rules Should I Turn On?
 There certainly are a lot of options! Here are some links to get you started.
 * Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js)
 * A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
 * A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
 * And our configuration file with all options is available here: [tslint.json](tslint.json)
 
-Supported Rules
------
+## Supported Rules
+
 
 Rule Name   | Description | Since
 :---------- | :------------ | -------------
@@ -128,8 +144,7 @@ Rule Name   | Description | Since
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
 `valid-typeof`                  | Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
 
-Supported Formatters
------
+## Supported Formatters
 
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------
@@ -138,8 +153,7 @@ Formatter Name          | Description | Since
 `fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
 `fix-prefer-const`      | This formatter automatically converts let variable declarations into const declarations found by the prefer-const rule. | 2.0.8
 
-Development
------------
+## Development
 
 To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
 
@@ -151,8 +165,8 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     grunt all
     grunt create-rule --rule-name=no-something-or-other
 
-Debug code
------------
+## Debug code
+
 If command fails because of file access permissions, prefix it with sudo.
 
     npm install -g node-inspector
@@ -165,10 +179,10 @@ The `node-debug` command will load Node Inspector in your default browser (works
 
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
-Creating a new Release
-----------------------
+## Creating a new Release
 
 Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases)
 
+## Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

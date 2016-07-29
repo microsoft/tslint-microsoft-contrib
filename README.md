@@ -131,6 +131,8 @@ Rule Name   | Description | Since
 Supported Formatters
 -----
 
+These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding. We are trying to fix this. 
+
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------
 `fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8

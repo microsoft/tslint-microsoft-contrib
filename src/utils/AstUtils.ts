@@ -5,6 +5,15 @@ import {SyntaxKind} from './SyntaxKind';
  * General utility class.
  */
 export module AstUtils {
+
+    export function getLanguageVariant(node: ts.SourceFile): ts.LanguageVariant {
+        if (/.*\.tsx/i.test(node.fileName)) {
+            return ts.LanguageVariant.JSX;
+        } else {
+            return ts.LanguageVariant.Standard;
+        }
+    }
+
     export function getFunctionName(node : ts.CallExpression) : string {
         const expression: ts.Expression = node.expression;
         let functionName : string = (<any>expression).text;

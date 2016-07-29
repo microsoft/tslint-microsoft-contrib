@@ -122,6 +122,7 @@ module.exports = {
         "indent": [true, "spaces"],
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
+        "no-single-line-block-comment": true,
         "no-trailing-whitespace": true,
         "no-unnecessary-semicolons": true,
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],

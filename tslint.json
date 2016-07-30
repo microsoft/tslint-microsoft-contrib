@@ -2,6 +2,7 @@
   "rules": {
     "align": false,
     "ban": false,
+    "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "class-name": true,
     "comment-format": false,

@@ -29,6 +29,7 @@ module.exports = {
          * Common Bugs and Correctness. The following rules should be turned on because they find
          * common bug patterns in the code or enforce type safety.
          */
+        "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "forin": true,
         "jquery-deferred-must-complete": true,

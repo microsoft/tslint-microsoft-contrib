@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ChaiUtils} from './utils/ChaiUtils';
 
 /**
  * Implementation of the chai-vague-errors rule.
@@ -13,12 +14,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ChaiVagueErrorsRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
-        if (this.isExpectInvocation(node)) {
+        if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
             }
@@ -27,10 +27,9 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (this.isExpectInvocation(node)) {
+        if (ChaiUtils.isExpectInvocation(node)) {
             if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
-                const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
-                if (/equal|equals|eql/.test(propExpression.name.getText())) {
+                if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
@@ -40,27 +39,5 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
             }
         }
         super.visitCallExpression(node);
-    }
-
-    private isExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): boolean {
-        const callExpression: ts.CallExpression = ChaiVagueErrorsRuleWalker.getLeftMostCallExpression(node);
-        if (callExpression == null) {
-            return false;
-        }
-        return /.*\.?expect/.test(callExpression.expression.getText());
-    }
-
-    private static getLeftMostCallExpression(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression {
-        let leftSide: ts.Node = node.expression;
-        while (leftSide != null) {
-            if (leftSide.kind === SyntaxKind.current().CallExpression) {
-                return <ts.CallExpression>leftSide;
-            } else if (leftSide.kind === (SyntaxKind.current().PropertyAccessExpression)) {
-                leftSide = (<ts.PropertyAccessExpression>leftSide).expression;
-            } else {
-                return null; // cannot walk any further left in the property expression
-            }
-        }
-        return null;
     }
 }

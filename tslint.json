@@ -118,6 +118,7 @@
     "triple-equals": [true, "allow-null-check"],
     "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
     "typedef-whitespace": false,
+    "underscore-consistent-invocation": true,
     "use-isnan": true,
     "use-named-parameter": true,
     "use-strict": false,

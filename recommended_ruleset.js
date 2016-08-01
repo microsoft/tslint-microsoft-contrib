@@ -29,8 +29,6 @@ module.exports = {
          * Common Bugs and Correctness. The following rules should be turned on because they find
          * common bug patterns in the code or enforce type safety.
          */
-        "chai-prefer-contains-to-index-of": true,
-        "chai-vague-errors": true,
         "forin": true,
         "jquery-deferred-must-complete": true,
         "label-position": true,
@@ -75,6 +73,8 @@ module.exports = {
          * Code Clarity. The following rules should be turned on because they make the code
          * generally more clear to the reader.
          */
+        "chai-prefer-contains-to-index-of": true,
+        "chai-vague-errors": true,
         "class-name": true,
         "comment-format": true,
         "export-name": true,
@@ -111,6 +111,7 @@ module.exports = {
         "prefer-array-literal": true,
         "prefer-const": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
+        "underscore-consistent-invocation": true,
         "variable-name": true,
 
         /**

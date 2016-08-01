@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 /**
@@ -17,18 +16,28 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoGenericArrayWalker extends ErrorTolerantWalker {
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().TypeReference) {
-            const ref : ts.TypeReferenceNode = <ts.TypeReferenceNode>node;
-            if ((<ts.Identifier>ref.typeName).text === 'Array') {
+
+    private allowTypeParameters: boolean = false;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                this.allowTypeParameters = opt['allow-type-parameters'] === true;
+            }
+        });
+    }
+
+    protected visitTypeReference(node: ts.TypeReferenceNode): void {
+        if (this.allowTypeParameters === false) {
+            if ((<ts.Identifier>node.typeName).text === 'Array') {
                 const failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
                 const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }
         }
-        super.visitNode(node);
+        super.visitTypeReference(node);
     }
-
 
     protected visitNewExpression(node: ts.NewExpression): void {
         const functionName  = AstUtils.getFunctionName(node);

@@ -2,6 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:quotemark */
+/* tslint:disable:no-multiline-string */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -15,6 +16,17 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolations(ruleName, inputScript, [
         ]);
     });
+
+    it('should allow Array type parameters when options say to ignore type params', () : void => {
+        const inputScript : string = `
+            let myArray: Array<string> = [];
+
+            interface MyInterface {
+                myArray: Array<string>;
+            }        `;
+        TestHelper.assertViolationsWithOptions(ruleName, [ true, { 'allow-type-parameters': true } ], inputScript, [ ]);
+    });
+
 
     it('should ban Array<string> as variable type', () : void => {
         const inputScript : string = 'var x : Array<string>;';
@@ -42,7 +54,7 @@ describe('preferArrayLiteralRule', () : void => {
 
     it('should ban new Array() constructor', () : void => {
         const inputScript : string = 'new Array()';
-        TestHelper.assertViolations(ruleName, inputScript, [
+        TestHelper.assertViolationsWithOptions(ruleName, [ true, { 'allow-type-parameters': true } ], inputScript, [
             {
                 "failure": "Replace Array constructor with an array literal: new Array()",
                 "name": "file.ts",
@@ -77,3 +89,4 @@ describe('preferArrayLiteralRule', () : void => {
     });
 });
 /* tslint:enable:quotemark */
+/* tslint:enable:no-multiline-string */

@@ -112,6 +112,7 @@
     "radix": false,
     "react-no-dangerous-html": true,
     "react-this-binding-issue": true,
+    "react-unused-props-and-state": true,
     "semicolon": true,
     "switch-default": false,
     "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],

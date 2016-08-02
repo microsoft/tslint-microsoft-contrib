@@ -63,6 +63,7 @@ module.exports = {
         "promise-must-complete": true,
         "radix": true,
         "react-this-binding-issue": true,
+        "react-unused-props-and-state": true,
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,

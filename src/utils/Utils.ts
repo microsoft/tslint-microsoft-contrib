@@ -57,6 +57,13 @@ export module Utils {
     }
 
     /**
+     * A remove() function.
+     */
+    export function remove<T>(source: T[], elementToRemove: T): T[] {
+        return removeAll(source, [elementToRemove]);
+    }
+
+    /**
      * A filter() function.
      */
     export function filter<T>(list: T[], predicate: (element: T) => boolean): T[] {

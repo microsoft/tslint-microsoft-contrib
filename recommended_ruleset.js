@@ -149,6 +149,7 @@ module.exports = {
         // pick one of the two following type-cast formats and use it consistently
         "prefer-type-cast": true,
         "no-angle-bracket-type-assertion": false,
+        "no-unsupported-browser-code": false, // only enable this if you are writing browser-specific code that is to be deprecated in the future
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.

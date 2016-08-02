@@ -92,6 +92,7 @@
     "no-unnecessary-local-variable": true,
     "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,
+    "no-unsupported-browser-code": false,
     "no-unreachable": true,
     "no-unused-expression": true,
     "no-unused-imports": false,

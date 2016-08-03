@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
 
@@ -10,6 +11,20 @@ const FAILURE_STRING = 'Unnecessary method override. A method that only calls su
  * Implementation of the no-unnecessary-override rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-unnecessary-override',
+        type: 'maintainability',
+        description: 'Do not write a method that only calls super() on the parent method with the same arguments.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoUnnecessaryOverrideRuleWalker(sourceFile, this.getOptions()));
     }

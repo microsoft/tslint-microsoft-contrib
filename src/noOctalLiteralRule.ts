@@ -3,11 +3,25 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-octal-literal rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-octal-literal',
+        type: 'maintainability',
+        description: 'Do not use octal literals or escaped octal sequences',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
+
     public static FAILURE_STRING = 'Octal literals should not be used: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

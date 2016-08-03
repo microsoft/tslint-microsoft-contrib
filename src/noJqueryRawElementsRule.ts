@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 import {AstUtils} from './utils/AstUtils';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
 const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery API: ';
@@ -10,6 +11,20 @@ const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery
  * Implementation of the no-jquery-raw-elements rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-jquery-raw-elements',
+        type: 'maintainability',
+        description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
     }

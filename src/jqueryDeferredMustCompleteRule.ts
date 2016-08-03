@@ -5,11 +5,26 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the jquery-deferred-must-complete rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'jquery-deferred-must-complete',
+        type: 'maintainability',
+        description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
+                    'on it within all code branches in the scope.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public static FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

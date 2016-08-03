@@ -3,11 +3,25 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the use-isnan rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'use-isnan',
+        type: 'maintainability',
+        description: 'enforces that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant.',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public static FAILURE_STRING = 'Found an invalid comparison for NaN: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

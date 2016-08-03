@@ -3,11 +3,27 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-multiline-string rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-multiline-string',
+        type: 'maintainability',
+        description: 'Do not declare multiline strings',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+        commonWeaknessEnumeration: '710'
+    };
+
     public static FAILURE_STRING = 'Forbidden Multiline string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

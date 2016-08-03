@@ -4,6 +4,7 @@ import * as Lint from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-backbone-get-set-outside-model rule.
@@ -12,6 +13,20 @@ import {AstUtils} from './utils/AstUtils';
  * on the this reference.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-backbone-get-set-outside-model',
+        type: 'maintainability',
+        description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
     public static SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
 

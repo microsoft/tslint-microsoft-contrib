@@ -1,13 +1,27 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
-
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the missing-optional-annotation rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'missing-optional-annotation',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false,  // now supported by TypeScript compiler'
+    };
+
     public static FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

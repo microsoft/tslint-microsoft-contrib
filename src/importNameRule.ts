@@ -4,11 +4,26 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the import-name rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'import-name',
+        type: 'maintainability',
+        description: 'The name of the imported module must match the name of the thing being imported',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ImportNameRuleWalker(sourceFile, this.getOptions()));
     }

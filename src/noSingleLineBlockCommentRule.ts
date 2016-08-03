@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Replace block comment with a single-line comment';
 
@@ -10,6 +11,20 @@ const FAILURE_STRING: string = 'Replace block comment with a single-line comment
  * Implementation of the no-single-line-block-comment rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-single-line-block-comment',
+        type: 'maintainability',
+        description: 'Avoid single line block comments; use single line comments instead',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        commonWeaknessEnumeration: '710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoSingleLineBlockCommentRuleWalker(sourceFile, this.getOptions()));
     }

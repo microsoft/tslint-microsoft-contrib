@@ -2,11 +2,26 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-duplicate-parameter-names rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-duplicate-parameter-names',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false, // now supported by TypeScript compiler'
+    };
+
     public static FAILURE_STRING = 'Duplicate parameter name: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

@@ -6,6 +6,7 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Scope} from './utils/Scope';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference bound twice in the constructor: ';
@@ -16,6 +17,20 @@ const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attr
  * Implementation of the react-this-binding-issue rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'react-this-binding-issue',
+        type: 'maintainability',
+        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+                     'on any methods that you pass off to child components as callbacks.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithWalker(new ReactThisBindingIssueRuleWalker(sourceFile, this.getOptions()));

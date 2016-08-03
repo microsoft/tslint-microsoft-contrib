@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 
 const FAILURE_UNDEFINED_INIT: string = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
@@ -12,6 +13,20 @@ const FAILURE_UNDEFINED_DUPE: string = 'Unnecessary field initialization. Field 
  * Implementation of the no-unnecessary-field-initialization rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-unnecessary-field-initialization',
+        type: 'maintainability',
+        description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new UnnecessaryFieldInitializationRuleWalker(sourceFile, this.getOptions()));
     }

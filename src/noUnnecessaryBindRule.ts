@@ -4,11 +4,26 @@ import * as Lint from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-unnecessary-bin rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-unnecessary-bind',
+        type: 'maintainability',
+        description: 'Do not bind `this` as the context for a function literal or lambda expression.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
     public static FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
 

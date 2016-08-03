@@ -3,10 +3,26 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
+
 /**
  * Implementation of the prefer-array-literal rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'prefer-array-literal',
+        type: 'maintainability',
+        description: 'Use array literal syntax when declaring or instantiating array types.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static GENERICS_FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
     public static CONSTRUCTOR_FAILURE_STRING = 'Replace Array constructor with an array literal: ';
 

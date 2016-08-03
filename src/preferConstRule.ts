@@ -4,11 +4,26 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the prefer-const rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'prefer-const',
+        type: 'maintainability',
+        description: 'Use const to declare variables if they are only assigned a value once.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 705, 710'
+    };
+
     public static FAILURE_STRING_FACTORY = (identifier: string) => `Identifier '${identifier}' never appears ` +
         'on the LHS of an assignment - use const instead of let for its declaration.';
 

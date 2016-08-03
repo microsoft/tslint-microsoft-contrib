@@ -4,11 +4,29 @@ import * as Lint from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-http-string rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-http-string',
+        type: 'maintainability',
+        /* tslint:disable:no-http-string */
+        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+        /* tslint:enable:no-http-string */
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],',
+        commonWeaknessEnumeration: '319'
+    };
+
     public static FAILURE_STRING = 'Forbidden http url in string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

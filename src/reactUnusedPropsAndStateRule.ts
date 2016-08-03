@@ -4,6 +4,7 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
 const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
@@ -12,6 +13,20 @@ const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: '
  * Implementation of the react-unused-props-and-state rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'react-unused-props-and-state',
+        type: 'maintainability',
+        description: 'Remove unneeded properties defined in React Props and State interfaces',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
     }

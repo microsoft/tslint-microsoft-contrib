@@ -2,11 +2,26 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-for-in rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-for-in',
+        type: 'maintainability',
+        description: 'Avoid use of for-in statements. They can be replaced by Object.keys',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static FAILURE_STRING_FACTORY = (initializer: string, expression: string ) => {
         //tslint:disable-next-line:max-line-length
         return `Do not use the 'for in' statement: 'for (${initializer} in ${expression})'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.`;

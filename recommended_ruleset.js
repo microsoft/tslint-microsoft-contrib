@@ -46,6 +46,7 @@ module.exports = {
         "no-duplicate-case": true,
         "no-duplicate-variable": true,
         "no-empty": true,
+        "no-for-in-array": true,
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
         "no-invalid-this": true,
@@ -56,7 +57,9 @@ module.exports = {
         "no-string-literal": true,
         "no-unnecessary-bind": true,
         "no-unnecessary-override": true,
+        "no-unsafe-finally": true,
         "no-unused-expression": true,
+        "no-unused-new": true,
         "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
@@ -64,8 +67,10 @@ module.exports = {
         "radix": true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
+        "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
+        "use-isnan": true,
         "use-isnan": true,
         "use-named-parameter": true,
         "valid-typeof": true,
@@ -74,6 +79,7 @@ module.exports = {
          * Code Clarity. The following rules should be turned on because they make the code
          * generally more clear to the reader.
          */
+        "arrow-parens": false, // for simple functions the parens on arrow functions are not needed
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "class-name": true,
@@ -83,6 +89,7 @@ module.exports = {
         "import-name": true,
         "interface-name": true,
         "jsdoc-format": true,
+        "max-file-line-count": true,
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
         "member-access": true,
@@ -102,13 +109,15 @@ module.exports = {
         "no-require-imports": true,
         "no-shadowed-variable": true,
         "no-typeof-undefined": true,
-        "no-unnecessary-local-variable": true,
         "no-unnecessary-field-initialization": true,
+        "no-unnecessary-local-variable": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
+        "only-arrow-functions": false,  // there are many valid reasons to declare a function
+        "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
@@ -123,18 +132,20 @@ module.exports = {
         "curly": true,
         "eofline": true,
         "indent": [true, "spaces"],
+        "linebreak-style": true,
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
         "no-single-line-block-comment": true,
         "no-trailing-whitespace": true,
         "no-unnecessary-semicolons": true,
+        "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
         "semicolon": [true, "always"],
-        // forcing trailing commas for multi-line lists results in lists that are easier to reorder and version
-        // control diffs that are more clear. Many teams like to have multiline be 'always'. There is no
-        // clear consensus on this rule but the internal MS JavaScript coding standard does discourage it.
-        "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
+        "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
+                    // lists results in lists that are easier to reorder and version control diffs that are more clear.
+                    // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
+                    // internal MS JavaScript coding standard does discourage it.
         "typedef-whitespace": false,
         "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
 
@@ -142,25 +153,24 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         "ban": false,                // only enable this if you have some code pattern that you want to ban
+        "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
         "no-internal-module": false, // only enable this if you are not using internal modules
+        "no-mergeable-namespace": false,  // your project may require mergeable namespaces
         "no-namespace": false,       // only enable this if you are not using modules/namespaces
         "no-reference": true,        // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
-        // pick one of the two following type-cast formats and use it consistently
-        "prefer-type-cast": true,
-        "no-angle-bracket-type-assertion": false,
+        "prefer-type-cast": true,   // pick either type-cast format and use it consistently
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
          */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
-        "no-missing-visibility-modifiers": true, // use tslint member-access rule instead
+        "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "no-unreachable": false,               // now supported by TypeScript compiler
         "no-unused-imports": false             // use tslint no-unused-variable rule instead
-
     }
 };
 

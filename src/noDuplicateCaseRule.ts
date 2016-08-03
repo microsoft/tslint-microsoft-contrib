@@ -3,11 +3,26 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-duplicate-case rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-duplicate-case',
+        type: 'maintainability',
+        description: 'Do not use duplicate case labels in switch statements.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static FAILURE_STRING = 'Duplicate case found in switch statement: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

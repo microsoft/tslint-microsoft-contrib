@@ -2,11 +2,26 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-empty-interfaces rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-empty-interfaces',
+        type: 'maintainability',
+        description: 'Do not use empty interfaces.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static FAILURE_STRING = 'Do not declare empty interfaces: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

@@ -2,11 +2,26 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-cookies-rule rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-cookies',
+        type: 'maintainability',
+        description: 'Do not use cookies',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '315, 539, 565, 614'
+    };
+
     public static FAILURE_STRING = 'Forbidden call to document.cookie';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

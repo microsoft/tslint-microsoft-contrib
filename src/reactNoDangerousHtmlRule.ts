@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 interface Exception {
     file: string;
@@ -14,6 +15,20 @@ interface Exception {
  * Implementation of the react-no-dangerous-html rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'react-no-dangerous-html',
+        type: 'maintainability',
+        description: 'Do not use React\'s dangerouslySetInnerHTML API.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85, 710'
+    };
+
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const documentRegistry = ts.createDocumentRegistry();
         const languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());

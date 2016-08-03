@@ -1,6 +1,4 @@
 /// <reference path="../typings/node.d.ts" />
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
 
 import * as Lint from 'tslint/lib/lint';
 import * as fs from 'fs';

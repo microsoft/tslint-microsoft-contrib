@@ -3,11 +3,25 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the mocha-avoid-only rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'mocha-avoid-only',
+        type: 'maintainability',
+        description: 'Do not invoke Mocha\'s describe.only or it.only functions.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public static FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
     public static FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
 

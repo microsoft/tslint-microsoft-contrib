@@ -3,11 +3,26 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-function-constructor-with-string-args rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-function-constructor-with-string-args',
+        type: 'maintainability',
+        description: 'Do not use the version of the Function constructor that accepts a string argument to define the body of the function',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95, 676, 242, 116'
+    };
+
     public static FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

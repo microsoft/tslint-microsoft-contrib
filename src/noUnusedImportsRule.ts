@@ -4,6 +4,7 @@ import * as Lint from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 type Import = ts.ImportEqualsDeclaration | ts.ImportDeclaration;
 
@@ -12,6 +13,20 @@ type Import = ts.ImportEqualsDeclaration | ts.ImportDeclaration;
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'unused import: ';
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-unused-imports',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false             // use tslint no-unused-variable rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const documentRegistry = ts.createDocumentRegistry();

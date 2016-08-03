@@ -2,11 +2,26 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {BannedTermWalker} from './utils/BannedTermWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-reserved-keywords rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-reserved-keywords',
+        type: 'maintainability',
+        description: 'Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '398'
+    };
+
     private static FAILURE_STRING = 'Forbidden reference to reserved keyword: ';
     // taken from https://github.com/Microsoft/TypeScript/issues/2536
 

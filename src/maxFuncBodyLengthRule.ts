@@ -3,11 +3,27 @@ import * as Lint from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the max-func-body-length rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'max-func-body-length',
+        type: 'maintainability',
+        description: 'Avoid long functions.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MaxFunctionBodyLengthRuleWalker(sourceFile, this.getOptions()));
     }

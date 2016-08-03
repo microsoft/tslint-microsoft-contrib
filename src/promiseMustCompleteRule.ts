@@ -5,11 +5,26 @@ import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the promise-must-complete rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'promise-must-complete',
+        type: 'maintainability',
+        description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
+                    'called on it within all code branches in the scope.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public static FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

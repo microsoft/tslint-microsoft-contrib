@@ -3,11 +3,25 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-delete-expression rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-delete-expression',
+        type: 'maintainability',
+        description: 'Do not delete expressions. Only properties should be deleted',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
+
     public static FAILURE_STRING = 'Variables should not be deleted: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

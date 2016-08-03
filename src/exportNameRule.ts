@@ -6,11 +6,26 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the export-name rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'export-name',
+        type: 'maintainability',
+        description: 'The name of the exported module must match the filename of the source file',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+
     public static FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

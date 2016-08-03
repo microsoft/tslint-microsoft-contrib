@@ -4,11 +4,25 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the valid-typeof rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'valid-typeof',
+        type: 'maintainability',
+        description: 'Ensures that the results of typeof are compared against a valid string.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+
     public static FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
 
     public static VALID_TERMS = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];

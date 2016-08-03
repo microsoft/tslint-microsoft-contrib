@@ -2,11 +2,27 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-empty-line-after-opening-brace rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-empty-line-after-opening-brace',
+        type: 'maintainability',
+        description: 'Avoid an empty line after an opening brace',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        recommendation: 'false,',
+        commonWeaknessEnumeration: '710'
+    };
+
     public static FAILURE_STRING = 'Opening brace cannot be followed by empty line';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

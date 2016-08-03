@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Prefer x == undefined or x === undefined: ';
 
@@ -10,6 +11,21 @@ const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Pr
  * Implementation of the no-typeof-undefined rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-typeof-undefined',
+        type: 'maintainability',
+        description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
+                    'or perhaps x == null if you want to check for either null or undefined.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoTypeofUndefinedRuleWalker(sourceFile, this.getOptions()));
     }

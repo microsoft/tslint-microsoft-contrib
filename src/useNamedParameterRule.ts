@@ -3,11 +3,26 @@ import * as Lint from 'tslint/lib/lint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the use-named-parameter rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'use-named-parameter',
+        type: 'maintainability',
+        description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '710'
+    };
+
     public static FAILURE_STRING = 'Use a named parameter instead: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

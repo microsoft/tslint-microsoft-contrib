@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_EXT: string = 'External module is being loaded from a relative path. Please use an absolute path: ';
 const FAILURE_STRING_IMPORT: string = 'Imported module is being loaded from a relative path. Please use an absolute path: ';
@@ -11,6 +12,20 @@ const FAILURE_STRING_IMPORT: string = 'Imported module is being loaded from a re
  * Implementation of the no-relative-imports rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-relative-imports',
+        type: 'maintainability',
+        description: 'Do not use relative paths when importing external modules or ES6 import declarations',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoRelativeImportsRuleWalker(sourceFile, this.getOptions()));
     }

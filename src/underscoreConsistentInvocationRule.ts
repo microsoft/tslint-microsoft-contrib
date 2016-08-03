@@ -4,6 +4,7 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STATIC_FOUND: string = 'Static invocation of underscore function found. Prefer instance version instead: ';
 const FAILURE_INSTANCE_FOUND: string = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
@@ -30,6 +31,20 @@ const FUNCTION_NAMES: string[] = [
  * Implementation of the underscore-consistent-invocation rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'underscore-consistent-invocation',
+        type: 'maintainability',
+        description: 'Enforce a consistent usage of the _ functions',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new UnderscoreConsistentInvocationRuleWalker(sourceFile, this.getOptions()));
     }

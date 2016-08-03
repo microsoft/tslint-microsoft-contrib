@@ -3,6 +3,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const METHOD_REGEX = 'method-regex';
 const PRIVATE_METHOD_REGEX = 'private-method-regex';
@@ -13,6 +14,20 @@ const FUNCTION_REGEX = 'function-regex';
  * Implementation of the function-name rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'function-name',
+        type: 'maintainability',
+        description: 'Applies a naming convention to function names and method names',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new FunctionNameRuleWalker(sourceFile, this.getOptions()));
     }

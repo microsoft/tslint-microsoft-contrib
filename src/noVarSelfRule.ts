@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import {RuleWalker, Rules, RuleFailure, IOptions } from 'tslint/lib/lint';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
 
@@ -8,6 +9,20 @@ const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
  * Implementation of the no-var-self rule.
  */
 export class Rule extends Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-var-self',
+        type: 'maintainability',
+        description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public apply(sourceFile: ts.SourceFile): RuleFailure[] {
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     }

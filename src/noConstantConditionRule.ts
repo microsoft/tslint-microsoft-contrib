@@ -3,11 +3,26 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the no-constant-condition rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'no-constant-condition',
+        type: 'maintainability',
+        description: 'Do not use constant expressions in conditions.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 570, 571, 670'
+    };
+
     public static FAILURE_STRING = 'Found constant conditional: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

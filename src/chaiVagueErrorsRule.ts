@@ -4,11 +4,26 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ChaiUtils} from './utils/ChaiUtils';
+import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
  * Implementation of the chai-vague-errors rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
+
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'chai-vague-errors',
+        type: 'maintainability',
+        description: 'Avoid Chai assertions that result in vague errors',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+
     public static FAILURE_STRING = 'Found chai call with vague failure message. Please add an explicit failure message';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

@@ -1,9 +1,85 @@
 "use strict";
 
 var _ = require('underscore');
-var RecommendedRuleset = require('./recommended_ruleset');
 
 module.exports = function(grunt) {
+
+    let additionalMetadata;
+    let allCweDescriptions;
+
+    function getAllRules() {
+        const contribRules = grunt.file.expand('dist/build/*Rule.js');
+        const baseRules = grunt.file.expand('node_modules/tslint/lib/rules/*Rule.js');
+        return contribRules.concat(baseRules);
+    }
+
+    function getMetadataFromFile(ruleFile) {
+        const moduleName = './' + ruleFile.replace(/\.js$/, '');
+        const module = require(moduleName);
+        if (module.Rule.metadata == null) {
+            grunt.fail.warn('No metadata found for ' + moduleName);
+            return;
+        }
+        return module.Rule.metadata;
+    }
+
+    function createCweDescription(metadata) {
+        allCweDescriptions = allCweDescriptions || grunt.file.readJSON('./cwe_descriptions.json', {encoding: 'UTF-8'});
+
+        const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, true);
+        if (cwe === '') {
+            return '';
+        }
+
+        let result = '';
+        cwe.split(',').forEach(function (cweNumber) {
+            cweNumber = cweNumber.trim();
+            const description = allCweDescriptions[cweNumber];
+            if (description == null) {
+                grunt.fail.warn(`Cannot find descption of ${cweNumber} for rule ${metadata['ruleName']} in cwe_descriptions.json`)
+            }
+            if (result !== '') {
+                result = result + '\n';
+            }
+            result = result + `CWE ${cweNumber} - ${description}`
+        });
+        if (result !== '') {
+            return '"' + result + '"';
+        }
+        return result;
+    }
+
+    function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
+        additionalMetadata = additionalMetadata || grunt.file.readJSON('./additional_rule_metadata.json', {encoding: 'UTF-8'});
+
+        let value = metadata[name];
+        if (value == null) {
+            if (additionalMetadata[metadata.ruleName] == null) {
+                if (allowEmpty == false) {
+                    grunt.fail.warn(`Could not read metadata for rule ${metadata.ruleName} from additional_rule_metadata.json`);
+                } else {
+                    return '';
+                }
+            }
+            value = additionalMetadata[metadata.ruleName][name];
+            if (value == null) {
+                if (allowEmpty == false) {
+                    grunt.fail.warn(`Could not read attribute ${name} of rule ${metadata.ruleName}`);
+                }
+                return '';
+            }
+        }
+        if (doNotEscape == true) {
+            return value;
+        }
+        value = value.replace(/^\n+/, ''); // strip leading newlines
+        value = value.replace(/\n/, ' '); // convert newlines
+        if (value.indexOf(',') > -1) {
+            return '"' + value + '"';
+        } else {
+            return value;
+        }
+    }
 
     function camelize(input) {
         return _(input).reduce(function(memo, element) {
@@ -189,6 +265,7 @@ module.exports = function(grunt) {
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
             'no-unexternalized-strings': true,
+            'object-literal-key-quotes': true,
             'no-relative-imports': true,
             'no-empty-line-after-opening-brace': true
         };
@@ -209,20 +286,71 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('validate-recommendations', 'A task that makes sure all the rules in the project are defined in the recommended_ruleset.js.', function () {
-        var errors = [];
-        var allRules = RecommendedRuleset.rules;
-        getAllRuleNames().forEach(function(ruleName) {
-            if (allRules[ruleName] !== true && allRules[ruleName] !== false) {
-                if (allRules[ruleName] == null || allRules[ruleName][0] !== true) {
-                    errors.push('A rule was found that is not found in recommended_ruleset.js: ' + ruleName);
-                }
+    grunt.registerTask('generate-sdl-report', 'A task that generates an SDL report in csv format', function () {
+
+        const rows = [];
+        const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
+        const path = 'teams/SecDev/Support/Lists/WarningCentral';
+        const procedure = 'TSLint Procedure';
+        const header = 'SDL Version,Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
+            'SDL Level,Resolution,SDL Procedure,Item Type,Path,CWE,CWE Description';
+        getAllRules().forEach(function(ruleFile) {
+            const metadata = getMetadataFromFile(ruleFile);
+
+            const issueClass = getMetadataValue(metadata, 'issueClass');
+            if (issueClass === 'Ignored') {
+                return;
             }
+            const ruleName = getMetadataValue(metadata, 'ruleName');
+            const issueType = getMetadataValue(metadata, 'issueType');
+            const severity = getMetadataValue(metadata, 'severity');
+            const level = getMetadataValue(metadata, 'level');
+            const description = getMetadataValue(metadata, 'description');
+            const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
+            const cweDescription = createCweDescription(metadata);
+
+            const row = `7,${ruleName},${description},,tslint,${issueClass},${issueType},${severity},${level},${resolution},${procedure},Item,${path},${cwe},${cweDescription}`;
+            rows.push(row);
+        });
+        rows.sort();
+        rows.unshift(header);
+        grunt.file.write('tslint-warnings.csv', rows.join('\n'), {encoding: 'UTF-8'});
+
+    });
+
+    grunt.registerTask('generate-recommendations', 'A task that generates the recommended_ruleset.js file', function () {
+
+        const groupedRows = {};
+
+        getAllRules().forEach(function(ruleFile) {
+            const metadata = getMetadataFromFile(ruleFile);
+
+            const groupName = getMetadataValue(metadata, 'group');
+            if (groupName === 'Ignored') {
+                return;
+            }
+            if (groupedRows[groupName] == null) {
+                groupedRows[groupName] = [];
+            }
+
+            let recommendation = getMetadataValue(metadata, 'recommendation', true, true);
+            if (recommendation === '') {
+                recommendation = 'true,';
+            }
+            const ruleName = getMetadataValue(metadata, 'ruleName');
+            groupedRows[groupName].push(`        "${ruleName}": ${recommendation}`);
         });
 
-        if (errors.length > 0) {
-            grunt.fail.warn(errors.join('\n'));
-        }
+        _.values(groupedRows).forEach(function (element) { element.sort(); });
+
+        let data = grunt.file.read('./templates/recommended_ruleset.js.snippet', {encoding: 'UTF-8'});
+        data = data.replace('%security_rules%',     groupedRows['Security'].join('\n'));
+        data = data.replace('%correctness_rules%',  groupedRows['Correctness'].join('\n'));
+        data = data.replace('%clarity_rules%',      groupedRows['Clarity'].join('\n'));
+        data = data.replace('%whitespace_rules%',   groupedRows['Whitespace'].join('\n'));
+        data = data.replace('%configurable_rules%', groupedRows['Configurable'].join('\n'));
+        data = data.replace('%deprecated_rules%',   groupedRows['Deprecated'].join('\n'));
+        grunt.file.write('recommended_ruleset.js', data, {encoding: 'UTF-8'});
     });
 
     grunt.registerTask('create-rule', 'A task that creates a new rule from the rule templates. --rule-name parameter required', function () {
@@ -258,9 +386,10 @@ module.exports = function(grunt) {
         'tslint',
         'validate-documentation',
         'validate-config',
-        'validate-recommendations',
         'validate-debug-mode',
         'copy:package',
+        'generate-recommendations',
+        'generate-sdl-report',
         'create-package-json-for-npm'
     ]);
 

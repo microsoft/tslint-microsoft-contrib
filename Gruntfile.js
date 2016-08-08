@@ -313,7 +313,7 @@ module.exports = function(grunt) {
                 return;
             }
             const ruleName = getMetadataValue(metadata, 'ruleName');
-            const tool = 'TSLINT' + hash(ruleName)
+            const errorId = 'TSLINT' + hash(ruleName);
             const issueType = getMetadataValue(metadata, 'issueType');
             const severity = getMetadataValue(metadata, 'severity');
             const level = getMetadataValue(metadata, 'level');
@@ -321,7 +321,7 @@ module.exports = function(grunt) {
             const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
             const cweDescription = createCweDescription(metadata);
 
-            const row = `${ruleName},${description},,${tool},${issueClass},${issueType},${severity},${level},${resolution},${procedure},${cwe},${cweDescription}`;
+            const row = `${ruleName},${description},${errorId},tslint,${issueClass},${issueType},${severity},${level},${resolution},${procedure},${cwe},${cweDescription}`;
             rows.push(row);
         });
         rows.sort();

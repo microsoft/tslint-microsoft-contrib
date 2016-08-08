@@ -16,6 +16,18 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
     };
     Rule.FAILURE_STRING = 'unnecessary semi-colon';
+    Rule.metadata = {
+        ruleName: 'no-unnecessary-semicolons',
+        type: 'maintainability',
+        description: 'Remove unnecessary semicolons',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

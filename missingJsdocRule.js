@@ -14,6 +14,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'missing-jsdoc',
+        type: 'maintainability',
+        description: 'All files must have a top level JSDoc comment.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

@@ -14,6 +14,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDuplicateParameterNamesWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-duplicate-parameter-names',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false, // now supported by TypeScript compiler'
+    };
     Rule.FAILURE_STRING = 'Duplicate parameter name: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

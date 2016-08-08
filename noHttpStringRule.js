@@ -16,6 +16,19 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-http-string',
+        type: 'maintainability',
+        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],',
+        commonWeaknessEnumeration: '319'
+    };
     Rule.FAILURE_STRING = 'Forbidden http url in string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

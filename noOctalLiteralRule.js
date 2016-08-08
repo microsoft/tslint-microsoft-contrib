@@ -16,6 +16,17 @@ var Rule = (function (_super) {
         var noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
         return this.applyWithWalker(noOctalLiteral);
     };
+    Rule.metadata = {
+        ruleName: 'no-octal-literal',
+        type: 'maintainability',
+        description: 'Do not use octal literals or escaped octal sequences',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
     Rule.FAILURE_STRING = 'Octal literals should not be used: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

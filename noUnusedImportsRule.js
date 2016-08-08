@@ -21,6 +21,19 @@ var Rule = (function (_super) {
         return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     };
     Rule.FAILURE_STRING = 'unused import: ';
+    Rule.metadata = {
+        ruleName: 'no-unused-imports',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false             // use tslint no-unused-variable rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

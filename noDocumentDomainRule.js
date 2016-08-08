@@ -15,6 +15,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-document-domain',
+        type: 'maintainability',
+        description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
+            'validated to ensure that the value is on a list of allowed sites.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
     Rule.FAILURE_STRING = 'Forbidden write to document.domain: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

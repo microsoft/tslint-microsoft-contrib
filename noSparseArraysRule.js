@@ -16,6 +16,19 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSparseArraysRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-sparse-arrays',
+        type: 'maintainability',
+        description: 'Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple ' +
+            'commas being used in an array literal.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.FAILURE_STRING = 'Unexpected comma in middle of array';
     return Rule;
 }(Lint.Rules.AbstractRule));

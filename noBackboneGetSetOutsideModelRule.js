@@ -16,6 +16,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoBackboneGetSetOutsideModelRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-backbone-get-set-outside-model',
+        type: 'maintainability',
+        description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
     Rule.SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
     return Rule;

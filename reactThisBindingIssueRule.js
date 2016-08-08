@@ -28,6 +28,18 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-this-binding-issue',
+        type: 'maintainability',
+        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+            'on any methods that you pass off to child components as callbacks.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

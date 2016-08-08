@@ -14,6 +14,19 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoMultipleVarDeclRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-multiple-var-decl',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now part of the base TSLint product as the rule named \'one-variable-per-declaration\'',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false,         // use tslint one-variable-per-declaration rule instead',
+        commonWeaknessEnumeration: '710'
+    };
     Rule.FAILURE_STRING = 'Do not use comma separated variable declarations: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

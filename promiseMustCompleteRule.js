@@ -17,6 +17,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'promise-must-complete',
+        type: 'maintainability',
+        description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
+            'called on it within all code branches in the scope.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
     return Rule;
 }(Lint.Rules.AbstractRule));

@@ -16,6 +16,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'prefer-const',
+        type: 'maintainability',
+        description: 'Use const to declare variables if they are only assigned a value once.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 705, 710'
+    };
     Rule.FAILURE_STRING_FACTORY = function (identifier) { return ("Identifier '" + identifier + "' never appears ") +
         'on the LHS of an assignment - use const instead of let for its declaration.'; };
     return Rule;

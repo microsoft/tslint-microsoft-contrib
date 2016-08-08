@@ -15,6 +15,17 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UseIsnanRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'use-isnan',
+        type: 'maintainability',
+        description: 'enforces that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant.',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING = 'Found an invalid comparison for NaN: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

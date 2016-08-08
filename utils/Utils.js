@@ -41,6 +41,10 @@ var Utils;
         });
     }
     Utils.removeAll = removeAll;
+    function remove(source, elementToRemove) {
+        return removeAll(source, [elementToRemove]);
+    }
+    Utils.remove = remove;
     function filter(list, predicate) {
         if (list == null || list.length === 0) {
             return [];

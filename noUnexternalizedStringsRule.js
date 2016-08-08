@@ -15,6 +15,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnexternalizedStringsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unexternalized-strings',
+        type: 'maintainability',
+        description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
+        options: null,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Configurable',
+        recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

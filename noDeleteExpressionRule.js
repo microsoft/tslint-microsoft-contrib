@@ -16,6 +16,17 @@ var Rule = (function (_super) {
         var noDeleteExpression = new NoDeleteExpression(sourceFile, this.getOptions());
         return this.applyWithWalker(noDeleteExpression);
     };
+    Rule.metadata = {
+        ruleName: 'no-delete-expression',
+        type: 'maintainability',
+        description: 'Do not delete expressions. Only properties should be deleted',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
     Rule.FAILURE_STRING = 'Variables should not be deleted: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

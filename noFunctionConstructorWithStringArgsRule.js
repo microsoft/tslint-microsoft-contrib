@@ -19,6 +19,18 @@ var Rule = (function (_super) {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions(), languageService));
     };
+    Rule.metadata = {
+        ruleName: 'no-function-constructor-with-string-args',
+        type: 'maintainability',
+        description: 'Do not use the version of the Function constructor that accepts a string argument to define the body of the function',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95, 676, 242, 116'
+    };
     Rule.FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
     return Rule;
 }(Lint.Rules.AbstractRule));

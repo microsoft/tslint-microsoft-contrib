@@ -15,6 +15,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-duplicate-case',
+        type: 'maintainability',
+        description: 'Do not use duplicate case labels in switch statements.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.FAILURE_STRING = 'Duplicate case found in switch statement: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

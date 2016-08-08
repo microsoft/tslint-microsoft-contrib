@@ -19,6 +19,18 @@ var Rule = (function (_super) {
         var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setInterval', this.getOptions(), languageService);
         return this.applyWithWalker(walker);
     };
+    Rule.metadata = {
+        ruleName: 'no-string-based-set-interval',
+        type: 'maintainability',
+        description: 'Do not use the version of setInterval that accepts code as a string argument.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95, 676, 242, 116'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

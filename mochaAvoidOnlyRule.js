@@ -15,6 +15,17 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-avoid-only',
+        type: 'maintainability',
+        description: 'Do not invoke Mocha\'s describe.only or it.only functions.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
     Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
     return Rule;

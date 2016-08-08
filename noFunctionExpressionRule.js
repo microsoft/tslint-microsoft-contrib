@@ -14,6 +14,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-function-expression',
+        type: 'maintainability',
+        description: 'Do not use function expressions; use arrow functions (lambdas) instead.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.FAILURE_STRING = 'Use arrow function instead of function expression';
     return Rule;
 }(Lint.Rules.AbstractRule));

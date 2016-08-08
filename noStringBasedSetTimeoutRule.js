@@ -19,6 +19,18 @@ var Rule = (function (_super) {
         var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), languageService);
         return this.applyWithWalker(walker);
     };
+    Rule.metadata = {
+        ruleName: 'no-string-based-set-timeout',
+        type: 'maintainability',
+        description: 'Do not use the version of setTimeout that accepts code as a string argument.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95, 676, 242, 116'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;

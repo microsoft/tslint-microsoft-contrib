@@ -15,6 +15,18 @@ var Rule = (function (_super) {
         var walker = new BannedTermWalker_1.BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
         return this.applyWithWalker(walker);
     };
+    Rule.metadata = {
+        ruleName: 'no-reserved-keywords',
+        type: 'maintainability',
+        description: 'Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '398'
+    };
     Rule.FAILURE_STRING = 'Forbidden reference to reserved keyword: ';
     Rule.BANNED_TERMS = [
         'break', 'case', 'catch', 'class',

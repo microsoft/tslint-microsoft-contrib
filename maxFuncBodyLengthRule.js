@@ -17,6 +17,19 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MaxFunctionBodyLengthRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'max-func-body-length',
+        type: 'maintainability',
+        description: 'Avoid long functions.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -98,7 +111,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
             .length;
         var scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
         Lint.scanAllTokens(scanner, function (scanner) {
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (scanner.getToken() === SyntaxKind_1.SyntaxKind.current().MultiLineCommentTrivia) {
                 commentLineCount += scanner.getTokenText().split(/\n/).length;
             }
         });

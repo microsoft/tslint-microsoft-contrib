@@ -16,6 +16,17 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'valid-typeof',
+        type: 'maintainability',
+        description: 'Ensures that the results of typeof are compared against a valid string.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
     Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
     return Rule;

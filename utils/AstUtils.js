@@ -3,6 +3,15 @@ var ts = require('typescript');
 var SyntaxKind_1 = require('./SyntaxKind');
 var AstUtils;
 (function (AstUtils) {
+    function getLanguageVariant(node) {
+        if (/.*\.tsx/i.test(node.fileName)) {
+            return ts.LanguageVariant.JSX;
+        }
+        else {
+            return ts.LanguageVariant.Standard;
+        }
+    }
+    AstUtils.getLanguageVariant = getLanguageVariant;
     function getFunctionName(node) {
         var expression = node.expression;
         var functionName = expression.text;

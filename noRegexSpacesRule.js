@@ -14,6 +14,17 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoRegexSpacesRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-regex-spaces',
+        type: 'maintainability',
+        description: 'Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING = 'Spaces in regular expressions are hard to count. Use ';
     return Rule;
 }(Lint.Rules.AbstractRule));

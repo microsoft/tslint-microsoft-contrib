@@ -14,6 +14,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-empty-interfaces',
+        type: 'maintainability',
+        description: 'Do not use empty interfaces.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
     return Rule;
 }(Lint.Rules.AbstractRule));

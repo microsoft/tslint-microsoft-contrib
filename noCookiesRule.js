@@ -18,6 +18,18 @@ var Rule = (function (_super) {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), languageService));
     };
+    Rule.metadata = {
+        ruleName: 'no-cookies',
+        type: 'maintainability',
+        description: 'Do not use cookies',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '315, 539, 565, 614'
+    };
     Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
     return Rule;
 }(Lint.Rules.AbstractRule));

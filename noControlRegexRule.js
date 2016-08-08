@@ -15,6 +15,17 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-control-regex',
+        type: 'maintainability',
+        description: 'Do not use control characters in regular expressions',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
     return Rule;
 }(Lint.Rules.AbstractRule));

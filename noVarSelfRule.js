@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var lint_1 = require('tslint/lib/lint');
+var Lint = require('tslint/lib/lint');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
 var FAILURE_STRING = 'Assigning this reference to local variable: ';
 var Rule = (function (_super) {
@@ -15,8 +15,20 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-var-self',
+        type: 'maintainability',
+        description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
-}(lint_1.Rules.AbstractRule));
+}(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var NoVarSelfRuleWalker = (function (_super) {
     __extends(NoVarSelfRuleWalker, _super);
@@ -39,5 +51,5 @@ var NoVarSelfRuleWalker = (function (_super) {
         _super.prototype.visitVariableDeclaration.call(this, node);
     };
     return NoVarSelfRuleWalker;
-}(lint_1.RuleWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noVarSelfRule.js.map

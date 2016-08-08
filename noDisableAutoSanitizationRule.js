@@ -15,6 +15,18 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDisableAutoSanitizationWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-disable-auto-sanitization',
+        type: 'maintainability',
+        description: 'Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. ',
+        options: null,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '157, 159, 75, 79, 85, 749, 676'
+    };
     Rule.FAILURE_STRING = 'Forbidden call to ';
     return Rule;
 }(Lint.Rules.AbstractRule));

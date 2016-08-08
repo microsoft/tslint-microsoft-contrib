@@ -13,6 +13,18 @@ module.exports = function(grunt) {
         return contribRules.concat(baseRules);
     }
 
+    function hash(input) {
+        // initialized with a prime number
+        let hash = 31;
+        let i = 0;
+        for (i = 0; i < input.length; i++) {
+            // multiply by prime so to get the better distribution of the values
+            hash = 31 * hash + input.charCodeAt(i); // run the hash function on all chars
+            hash = hash | 0; // convert to 32 bit signed integer
+        }
+        return Math.abs(hash).toString(32).toUpperCase();
+    }
+
     function getMetadataFromFile(ruleFile) {
         const moduleName = './' + ruleFile.replace(/\.js$/, '');
         const module = require(moduleName);
@@ -290,10 +302,9 @@ module.exports = function(grunt) {
 
         const rows = [];
         const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
-        const path = 'teams/SecDev/Support/Lists/WarningCentral';
         const procedure = 'TSLint Procedure';
-        const header = 'SDL Version,Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
-            'SDL Level,Resolution,SDL Procedure,Item Type,Path,CWE,CWE Description';
+        const header = 'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
+            'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
         getAllRules().forEach(function(ruleFile) {
             const metadata = getMetadataFromFile(ruleFile);
 
@@ -302,6 +313,7 @@ module.exports = function(grunt) {
                 return;
             }
             const ruleName = getMetadataValue(metadata, 'ruleName');
+            const tool = 'TSLINT' + hash(ruleName)
             const issueType = getMetadataValue(metadata, 'issueType');
             const severity = getMetadataValue(metadata, 'severity');
             const level = getMetadataValue(metadata, 'level');
@@ -309,7 +321,7 @@ module.exports = function(grunt) {
             const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
             const cweDescription = createCweDescription(metadata);
 
-            const row = `7,${ruleName},${description},,tslint,${issueClass},${issueType},${severity},${level},${resolution},${procedure},Item,${path},${cwe},${cweDescription}`;
+            const row = `${ruleName},${description},,${tool},${issueClass},${issueType},${severity},${level},${resolution},${procedure},${cwe},${cweDescription}`;
             rows.push(row);
         });
         rows.sort();

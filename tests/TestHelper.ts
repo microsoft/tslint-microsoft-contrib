@@ -1,5 +1,3 @@
-/// <reference path="../typings/node.d.ts" />
-
 import * as Lint from 'tslint/lib/lint';
 import * as fs from 'fs';
 import * as chai from 'chai';
@@ -8,6 +6,21 @@ import * as chai from 'chai';
  * Test Utilities.
  */
 export module TestHelper {
+
+    /**
+     * This setting must point to your rule .js files.
+     */
+    export let RULES_DIRECTORY: string = 'dist/src/';
+
+    /**
+     * This setting must point to your formatter .js files.
+     */
+    export let FORMATTER_DIRECTORY: string = 'customFormatters/';
+
+    /**
+     * You must specify an encoding for file read/writes
+     */
+    export let FILE_ENCODING: string = 'utf8';
 
     export interface FailurePosition {
         character: number;
@@ -62,13 +75,13 @@ export module TestHelper {
         const options : Lint.ILinterOptions = {
             formatter: 'json',
             configuration: configuration,
-            rulesDirectory: 'dist/src/',
-            formattersDirectory: 'customFormatters/'
+            rulesDirectory: RULES_DIRECTORY,
+            formattersDirectory: FORMATTER_DIRECTORY
         };
 
 		let result: Lint.LintResult;
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
-            const contents = fs.readFileSync(inputFileOrScript, 'utf8');
+            const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
             const linter = new Lint.Linter(inputFileOrScript, contents, options);
             result = linter.lint();
         } else {

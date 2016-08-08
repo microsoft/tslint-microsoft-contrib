@@ -5,7 +5,7 @@ import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-interface Exception {
+export interface Exception {
     file: string;
     method: string;
     comment: string;

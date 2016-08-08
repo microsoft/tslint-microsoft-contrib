@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
-import {RuleWalker, Rules, RuleFailure, IOptions } from 'tslint/lib/lint';
+import * as Lint from 'tslint/lib/lint';
+
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -8,7 +9,7 @@ const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
 /**
  * Implementation of the no-var-self rule.
  */
-export class Rule extends Rules.AbstractRule {
+export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-var-self',
@@ -23,16 +24,16 @@ export class Rule extends Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public apply(sourceFile: ts.SourceFile): RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     }
 }
 
-class NoVarSelfRuleWalker extends RuleWalker {
+class NoVarSelfRuleWalker extends Lint.RuleWalker {
 
     private bannedVariableNames: RegExp = /.*/; // default is to ban everything
 
-    constructor(sourceFile: ts.SourceFile, options: IOptions) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         if (options.ruleArguments != null && options.ruleArguments.length > 0) {
             this.bannedVariableNames = new RegExp(options.ruleArguments[0]);

@@ -168,6 +168,12 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
+                        cwd: 'dist/tests',
+                        src: ['TestHelper.js', 'TestHelper.d.ts'],
+                        dest: 'dist/build'
+                    },
+                    {
+                        expand: true,
                         cwd: '.',
                         src: ['README.md'],
                         dest: 'dist/build'
@@ -197,7 +203,8 @@ module.exports = function(grunt) {
                 outDir: 'dist',
                 options: {
                     module: 'commonjs',
-                    target: 'es5'
+                    target: 'es5',
+                    declaration: true
                 }
             },
         },
@@ -211,7 +218,7 @@ module.exports = function(grunt) {
                 src: [
                     'src/**/*.ts',
                     'tests/**/*.ts',
-                    '!src/references.ts'
+                    '!**/references.ts'
                 ]
             }
         },

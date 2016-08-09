@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        group: 'Ignored',
     };
 
     public static FAILURE_STRING = 'Found an invalid comparison for NaN: ';

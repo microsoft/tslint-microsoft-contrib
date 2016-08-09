@@ -71,7 +71,6 @@ module.exports = {
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
-        "use-isnan": true,
         "use-named-parameter": true,
         "valid-typeof": true,
 

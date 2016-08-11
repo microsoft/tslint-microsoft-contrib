@@ -1,3 +1,7 @@
+/**
+ * These rule settings are a broad, general recommendation for a good default configuration.
+ * This file is exported in the npm/nuget package as ./tslint.json.
+ */
 module.exports = {
     "rules": {
 

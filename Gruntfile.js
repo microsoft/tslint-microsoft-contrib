@@ -372,6 +372,11 @@ module.exports = function(grunt) {
         grunt.file.write('recommended_ruleset.js', data, {encoding: 'UTF-8'});
     });
 
+    grunt.registerTask('generate-default-tslint-json', 'A task that converts recommended_ruleset.js to ./dist/build/tslint.json', function () {
+        const data = require('./recommended_ruleset.js');
+        grunt.file.write('./dist/build/tslint.json', JSON.stringify(data, null, 2), {encoding: 'UTF-8'});
+    });
+
     grunt.registerTask('create-rule', 'A task that creates a new rule from the rule templates. --rule-name parameter required', function () {
 
         function applyTemplates(source) {
@@ -408,6 +413,7 @@ module.exports = function(grunt) {
         'validate-debug-mode',
         'copy:package',
         'generate-recommendations',
+        'generate-default-tslint-json',
         'generate-sdl-report',
         'create-package-json-for-npm'
     ]);

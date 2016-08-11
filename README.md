@@ -137,7 +137,7 @@ Rule Name   | Description | Since
 Supported Formatters
 -----
 
-These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding. We are trying to fix this.
+These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as \r\n on Windows).
 
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------

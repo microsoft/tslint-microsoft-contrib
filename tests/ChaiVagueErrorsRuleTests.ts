@@ -275,6 +275,69 @@ describe('chaiVagueErrorsRule', () : void => {
         ]);
     });
 
+    it('should fail on strictly equality in expectation', () : void => {
+        const script : string = `
+            expect(something === undefined).to.equal(true, 'something should not have been set');
+            chai.expect(something === undefined).to.equal(true, 'something should not have been set');
+            expect(something !== undefined).to.equal(false, 'something should not have been set');
+            chai.expect(something !== undefined).to.equal(false, 'something should not have been set');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict equality comparison from the expect call into the assertion value",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict equality comparison from the expect call into the assertion value",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 3 }
+            },
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict inequality comparison from the expect call into the assertion value. ",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 4 }
+            },
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict inequality comparison from the expect call into the assertion value. ",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 5 }
+            }
+        ]);
+    });
+
+    it('should fail on strictly in-equality in expectation', () : void => {
+        const script : string = `
+            expect(something !== undefined).to.equal(true, 'something should not have been set');
+            expect(something === undefined).to.equal(false, 'something should not have been set');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict inequality comparison from the expect call into the assertion value. ",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 2 }
+            },
+            {
+                "failure": "Found chai call with vague failure message. " +
+                    "Move the strict equality comparison from the expect call into the assertion value",
+                "name": "file.ts",
+                "ruleName": "chai-vague-errors",
+                "startPosition": { "character": 13, "line": 3 }
+            }
+        ]);
+    });
 });
 /* tslint:enable:quotemark */
 /* tslint:enable:no-multiline-string */

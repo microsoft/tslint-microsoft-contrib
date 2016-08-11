@@ -28,6 +28,21 @@ export module ChaiUtils {
         return null;
     }
 
+    export function getFirstExpectCallParameter(node: ts.CallExpression): ts.Node {
+        const expectCall: ts.CallExpression = ChaiUtils.getLeftMostCallExpression(node);
+        if (expectCall.arguments.length > 0) {
+            return expectCall.arguments[0];
+        }
+        return null;
+    }
+
+    export function getFirstExpectationParameter(node: ts.CallExpression): ts.Node {
+        if (node.arguments.length > 0) {
+            return node.arguments[0];
+        }
+        return null;
+    }
+
     export function isEqualsInvocation(propExpression: ts.PropertyAccessExpression): boolean {
         return /equal|equals|eq|eql|eqs/.test(propExpression.name.getText());
     }

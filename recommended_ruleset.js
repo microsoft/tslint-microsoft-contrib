@@ -26,6 +26,7 @@ module.exports = {
         "no-string-based-set-immediate": true,
         "no-string-based-set-interval": true,
         "no-string-based-set-timeout": true,
+        "react-iframe-missing-sandbox": true,
         "react-no-dangerous-html": true,
         "use-strict": true,
 

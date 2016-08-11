@@ -48,7 +48,7 @@ module.exports = function(grunt) {
             cweNumber = cweNumber.trim();
             const description = allCweDescriptions[cweNumber];
             if (description == null) {
-                grunt.fail.warn(`Cannot find descption of ${cweNumber} for rule ${metadata['ruleName']} in cwe_descriptions.json`)
+                grunt.fail.warn(`Cannot find description of ${cweNumber} for rule ${metadata['ruleName']} in cwe_descriptions.json`)
             }
             if (result !== '') {
                 result = result + '\n';

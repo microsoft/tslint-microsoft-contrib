@@ -121,6 +121,7 @@
     "promise-must-complete": true,
     "quotemark": [true, "single"],
     "radix": false,
+    "react-iframe-missing-sandbox": true,
     "react-no-dangerous-html": true,
     "react-this-binding-issue": true,
     "react-unused-props-and-state": true,

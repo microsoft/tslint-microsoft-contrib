@@ -85,7 +85,13 @@ export module TestHelper {
             const linter = new Lint.Linter(inputFileOrScript, contents, options);
             result = linter.lint();
         } else {
-            const linter = new Lint.Linter('file.ts', inputFileOrScript, options);
+            let filename: string;
+            if (inputFileOrScript.indexOf('import React') > -1) {
+                filename = 'file.tsx';
+            } else {
+                filename = 'file.ts';
+            }
+            const linter = new Lint.Linter(filename, inputFileOrScript, options);
             result = linter.lint();
         }
 

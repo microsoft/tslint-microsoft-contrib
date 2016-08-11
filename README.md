@@ -159,6 +159,8 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     grunt all
     grunt create-rule --rule-name=no-something-or-other
 
+The repo requires you to use linefeed as a line ending, and asks that you checkout the code with linefeed endings enabled. This does change your global config, so please make a note of your previous values and revert them after the checkout if necessary. 
+
 Debug code
 -----------
 If command fails because of file access permissions, prefix it with sudo.

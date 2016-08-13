@@ -55,7 +55,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
             const fieldName: string = 'this.' + (<ts.Identifier>node.name).getText();
             if (initializer == null) {
                 this.fieldInitializations[fieldName] = undefined;
-            } else if (this.isConstant(initializer)) {
+            } else if (AstUtils.isConstant(initializer)) {
                 this.fieldInitializations[fieldName] = initializer.getText();
             }
         }
@@ -90,7 +90,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                         this.addFailure(this.createFailure(start, width, FAILURE_UNDEFINED_INIT + property.getText()));
                                     }
                                 }
-                            } else if (this.isConstant(binaryExpression.right)) {
+                            } else if (AstUtils.isConstant(binaryExpression.right)) {
                                 // field is being assigned a constant... create error if the field already has that value
                                 const fieldInitValue: string = this.fieldInitializations[propertyName];
                                 if (fieldInitValue === binaryExpression.right.getText()) {
@@ -105,16 +105,5 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                 }
             });
         }
-    }
-
-    private isConstant(node: ts.Expression): boolean {
-        if (node == null) {
-            return false;
-        }
-        return node.kind === SyntaxKind.current().NullKeyword
-            || node.kind === SyntaxKind.current().StringLiteral
-            || node.kind === SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind.current().NumericLiteral;
     }
 }

@@ -39,6 +39,7 @@ module.exports = {
         "label-position": true,
         "label-undefined": true,
         "mocha-avoid-only": true,
+        "mocha-no-side-effect-code": true,
         "no-any": true,
         "no-arg": true,
         "no-backbone-get-set-outside-model": true,

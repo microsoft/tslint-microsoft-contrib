@@ -240,4 +240,35 @@ export module AstUtils {
         }
         return false;
     }
+
+    export function isConstant(node: ts.Expression): boolean {
+        if (node == null) {
+            return false;
+        }
+        return node.kind === SyntaxKind.current().NullKeyword
+            || node.kind === SyntaxKind.current().StringLiteral
+            || node.kind === SyntaxKind.current().FalseKeyword
+            || node.kind === SyntaxKind.current().TrueKeyword
+            || node.kind === SyntaxKind.current().NumericLiteral;
+    }
+
+    export function isConstantExpression(node: ts.Expression): boolean {
+
+        if (node.kind === SyntaxKind.current().BinaryExpression) {
+            const expression: ts.BinaryExpression = <ts.BinaryExpression>node;
+            const kind: ts.SyntaxKind = expression.operatorToken.kind;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return isConstantExpression(expression.left) && isConstantExpression(expression.right);
+            }
+        }
+        if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
+            const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
+                <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
+            const kind: ts.SyntaxKind = expression.operator;
+            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+                return isConstantExpression(expression.operand);
+            }
+        }
+        return isConstant(node);
+    }
 }

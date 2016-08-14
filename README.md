@@ -30,7 +30,7 @@ Installation
 Alternately, you can download the files directly from GitHub:
 
 * [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
-* [2.0.8](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.8)
+* [2.0.9](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.9)
 
 Configuration
 -------------
@@ -160,7 +160,7 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     grunt all
     grunt create-rule --rule-name=no-something-or-other
 
-The repo requires you to use linefeed as a line ending, and asks that you checkout the code with linefeed endings enabled. This does change your global config, so please make a note of your previous values and revert them after the checkout if necessary. 
+The repo requires you to use linefeed as a line ending, and asks that you checkout the code with linefeed endings enabled. This does change your global config, so please make a note of your previous values and revert them after the checkout if necessary.
 
 Debug code
 -----------

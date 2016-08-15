@@ -29,6 +29,7 @@
     "missing-optional-annotation": true,
     "mocha-avoid-only": true,
     "mocha-no-side-effect-code": true,
+    "mocha-unneeded-done": true,
     "new-parens": true,
     "no-angle-bracket-type-assertion": false,
     "no-any": false,

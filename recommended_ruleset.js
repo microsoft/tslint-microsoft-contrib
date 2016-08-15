@@ -100,6 +100,7 @@ module.exports = {
         "member-access": true,
         "member-ordering": true,
         "missing-jsdoc": true,
+        "mocha-unneeded-done": true,
         "new-parens": true,
         "no-construct": true,
         "no-constructor-vars": true,

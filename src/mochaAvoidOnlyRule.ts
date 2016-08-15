@@ -4,6 +4,7 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import {MochaUtils} from './utils/MochaUtils';
 
 /**
  * Implementation of the mocha-avoid-only rule.
@@ -32,6 +33,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
+
+    protected visitSourceFile(node: ts.SourceFile): void {
+        if (MochaUtils.isMochaTest(node)) {
+            super.visitSourceFile(node);
+        }
+    }
+
     protected visitCallExpression(node: ts.CallExpression): void {
         if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
             if (node.arguments.length === 2) {

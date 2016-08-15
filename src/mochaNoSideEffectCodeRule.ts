@@ -5,6 +5,7 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
+import {MochaUtils} from './utils/MochaUtils';
 import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
@@ -52,7 +53,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitSourceFile(node: ts.SourceFile): void {
-        if (this.isMochaTest(node)) {
+        if (MochaUtils.isMochaTest(node)) {
             node.statements.forEach((statement: ts.Statement): void => {
                 // validate variable declarations in global scope
                 if (statement.kind === SyntaxKind.current().VariableStatement) {
@@ -63,7 +64,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
                 }
 
                 // walk into the describe calls
-                if (this.isStatementDescribeCall(statement)) {
+                if (MochaUtils.isStatementDescribeCall(statement)) {
                     const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
                     const call: ts.CallExpression = <ts.CallExpression>expression;
                     this.visitCallExpression(call);
@@ -184,22 +185,5 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         //console.log(ts.SyntaxKind[initializer.kind] + ' ' + initializer.getText());
         const message: string = FAILURE_STRING + Utils.trimTo(parentNode.getText(), 30);
         this.addFailure(this.createFailure(parentNode.getStart(), parentNode.getWidth(), message));
-    }
-
-    private isMochaTest(node: ts.SourceFile): boolean {
-        return Utils.exists(node.statements, (statement: ts.Statement): boolean => {
-            return this.isStatementDescribeCall(statement);
-        });
-    }
-
-    private isStatementDescribeCall(statement: ts.Statement): boolean {
-        if (statement.kind === SyntaxKind.current().ExpressionStatement) {
-            const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-            if (expression.kind === SyntaxKind.current().CallExpression) {
-                const call: ts.CallExpression = <ts.CallExpression>expression;
-                return AstUtils.getFunctionName(call) === 'describe';
-            }
-        }
-        return false;
     }
 }

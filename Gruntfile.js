@@ -272,7 +272,7 @@ module.exports = function(grunt) {
             }
         });
 
-        if (readmeText.indexOf('\nVersion ' + packageJson.version + '\n') === -1) {
+        if (readmeText.indexOf('\nVersion ' + packageJson.version + ' ') === -1) {
             grunt.fail.warn('Version not documented in README.md correctly.\n' +
                 'package.json declares: ' + packageJson.version + '\n' +
                 'README.md declares something different.');

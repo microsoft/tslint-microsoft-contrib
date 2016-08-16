@@ -8,10 +8,25 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.10
+Version 2.0.10 (Stable)
 -------------
-The project has been in use for at least several months on multiple projects. Please report any bugs or false positives you might find!
+The project has been in use for over a year on multiple projects. Please report any bugs or false positives you might find!
 
+See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
+
+Version 2.0.11 (In-Development)
+-------------
+The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
+
+Installation
+------------
+
+    npm install tslint-microsoft-contrib
+
+Alternately, you can download the files directly from GitHub:
+
+* [2.0.9](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.9)
+* [2.0.10](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.10)
 
 #### TSLint and corresponding tslint-microsoft-contrib version
 
@@ -21,16 +36,6 @@ The project has been in use for at least several months on multiple projects. Pl
 | **3.1.x** | unsupported |
 | **3.0.x** | unsupported |
 | **2.x**   | 1.x |
-
-Installation
-------------
-
-    npm install tslint-microsoft-contrib
-
-Alternately, you can download the files directly from GitHub:
-
-* [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases)
-* [2.0.9](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-2.0.9)
 
 Configuration
 -------------

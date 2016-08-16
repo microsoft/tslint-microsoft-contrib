@@ -11,11 +11,12 @@ var Formatter = (function (_super) {
         var _this = this;
         _super.call(this, 'no-var-keyword', function (failure) {
             var fileName = failure.getFileName();
-            var start = failure.getStartPosition();
             var fileContents = _this.readFile(fileName);
-            var leftSide = fileContents.substring(0, start.getPosition());
-            var rightSide = fileContents.substring(start.getPosition() + 3);
-            var newContent = leftSide + 'let' + rightSide;
+            var end = failure.getEndPosition().getPosition();
+            var leftSide = fileContents.substring(0, end);
+            leftSide = leftSide.replace(/var$/, 'let');
+            var rightSide = fileContents.substring(end);
+            var newContent = leftSide + rightSide;
             _this.writeFile(fileName, newContent);
             console.log('Automatically converting var to let. Please re-compile and re-lint: ' + fileName);
         });

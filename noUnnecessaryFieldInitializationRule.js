@@ -59,7 +59,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
             if (initializer == null) {
                 this.fieldInitializations[fieldName] = undefined;
             }
-            else if (this.isConstant(initializer)) {
+            else if (AstUtils_1.AstUtils.isConstant(initializer)) {
                 this.fieldInitializations[fieldName] = initializer.getText();
             }
         }
@@ -90,7 +90,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                                     }
                                 }
                             }
-                            else if (_this.isConstant(binaryExpression.right)) {
+                            else if (AstUtils_1.AstUtils.isConstant(binaryExpression.right)) {
                                 var fieldInitValue = _this.fieldInitializations[propertyName];
                                 if (fieldInitValue === binaryExpression.right.getText()) {
                                     var start = binaryExpression.getStart();
@@ -104,16 +104,6 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                 }
             });
         }
-    };
-    UnnecessaryFieldInitializationRuleWalker.prototype.isConstant = function (node) {
-        if (node == null) {
-            return false;
-        }
-        return node.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral
-            || node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral;
     };
     return UnnecessaryFieldInitializationRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

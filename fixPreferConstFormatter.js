@@ -14,7 +14,7 @@ var Formatter = (function (_super) {
             var fileContents = _this.readFile(fileName);
             var start = failure.getStartPosition().getPosition();
             var leftSide = fileContents.substring(0, start);
-            leftSide = leftSide.replace(/let\s?$/, 'const ');
+            leftSide = leftSide.replace(/let(\s*)$/, 'const$1');
             var rightSide = fileContents.substring(start);
             var newContent = leftSide + rightSide;
             _this.writeFile(fileName, newContent);

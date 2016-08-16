@@ -26,6 +26,21 @@ var ChaiUtils;
         return null;
     }
     ChaiUtils.getLeftMostCallExpression = getLeftMostCallExpression;
+    function getFirstExpectCallParameter(node) {
+        var expectCall = ChaiUtils.getLeftMostCallExpression(node);
+        if (expectCall.arguments.length > 0) {
+            return expectCall.arguments[0];
+        }
+        return null;
+    }
+    ChaiUtils.getFirstExpectCallParameter = getFirstExpectCallParameter;
+    function getFirstExpectationParameter(node) {
+        if (node.arguments.length > 0) {
+            return node.arguments[0];
+        }
+        return null;
+    }
+    ChaiUtils.getFirstExpectationParameter = getFirstExpectationParameter;
     function isEqualsInvocation(propExpression) {
         return /equal|equals|eq|eql|eqs/.test(propExpression.name.getText());
     }

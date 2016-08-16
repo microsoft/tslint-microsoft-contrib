@@ -24,7 +24,7 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        group: 'Ignored'
     };
     Rule.FAILURE_STRING = 'Found an invalid comparison for NaN: ';
     return Rule;

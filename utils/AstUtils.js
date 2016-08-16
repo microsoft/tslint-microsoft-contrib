@@ -209,5 +209,34 @@ var AstUtils;
         return false;
     }
     AstUtils.isUndefined = isUndefined;
+    function isConstant(node) {
+        if (node == null) {
+            return false;
+        }
+        return node.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword
+            || node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral
+            || node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
+            || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
+            || node.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral;
+    }
+    AstUtils.isConstant = isConstant;
+    function isConstantExpression(node) {
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+            var expression = node;
+            var kind = expression.operatorToken.kind;
+            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
+                return isConstantExpression(expression.left) && isConstantExpression(expression.right);
+            }
+        }
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind_1.SyntaxKind.current().PostfixUnaryExpression) {
+            var expression = node;
+            var kind = expression.operator;
+            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
+                return isConstantExpression(expression.operand);
+            }
+        }
+        return isConstant(node);
+    }
+    AstUtils.isConstantExpression = isConstantExpression;
 })(AstUtils = exports.AstUtils || (exports.AstUtils = {}));
 //# sourceMappingURL=AstUtils.js.map

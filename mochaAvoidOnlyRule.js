@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
+var MochaUtils_1 = require('./utils/MochaUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -36,6 +37,11 @@ var MochaAvoidOnlyRuleWalker = (function (_super) {
     function MochaAvoidOnlyRuleWalker() {
         _super.apply(this, arguments);
     }
+    MochaAvoidOnlyRuleWalker.prototype.visitSourceFile = function (node) {
+        if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
+            _super.prototype.visitSourceFile.call(this, node);
+        }
+    };
     MochaAvoidOnlyRuleWalker.prototype.visitCallExpression = function (node) {
         if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
             if (node.arguments.length === 2) {

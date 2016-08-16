@@ -1,3 +1,7 @@
+/**
+ * These rule settings are a broad, general recommendation for a good default configuration.
+ * This file is exported in the npm/nuget package as ./tslint.json.
+ */
 module.exports = {
     "rules": {
 
@@ -22,6 +26,7 @@ module.exports = {
         "no-string-based-set-immediate": true,
         "no-string-based-set-interval": true,
         "no-string-based-set-timeout": true,
+        "react-iframe-missing-sandbox": true,
         "react-no-dangerous-html": true,
         "use-strict": true,
 
@@ -34,6 +39,7 @@ module.exports = {
         "label-position": true,
         "label-undefined": true,
         "mocha-avoid-only": true,
+        "mocha-no-side-effect-code": true,
         "no-any": true,
         "no-arg": true,
         "no-backbone-get-set-outside-model": true,
@@ -71,7 +77,6 @@ module.exports = {
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
-        "use-isnan": true,
         "use-named-parameter": true,
         "valid-typeof": true,
 
@@ -95,6 +100,7 @@ module.exports = {
         "member-access": true,
         "member-ordering": true,
         "missing-jsdoc": true,
+        "mocha-unneeded-done": true,
         "new-parens": true,
         "no-construct": true,
         "no-constructor-vars": true,
@@ -111,6 +117,7 @@ module.exports = {
         "no-typeof-undefined": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
+        "no-unsupported-browser-code": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,

@@ -8,6 +8,10 @@ var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
 var ChaiUtils_1 = require('./utils/ChaiUtils');
+var BASE_ERROR = 'Found chai call with vague failure message. ';
+var FAILURE_STRING = BASE_ERROR + 'Please add an explicit failure message';
+var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
+var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -28,7 +32,6 @@ var Rule = (function (_super) {
         group: 'Clarity',
         commonWeaknessEnumeration: '398, 710'
     };
-    Rule.FAILURE_STRING = 'Found chai call with vague failure message. Please add an explicit failure message';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -40,7 +43,7 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
     ChaiVagueErrorsRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
         if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
             }
         }
         _super.prototype.visitPropertyAccessExpression.call(this, node);
@@ -51,9 +54,23 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
                 if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
-                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
                         }
                     }
+                }
+            }
+            var actualValue = ChaiUtils_1.ChaiUtils.getFirstExpectCallParameter(node);
+            if (actualValue.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+                var expectedValue = ChaiUtils_1.ChaiUtils.getFirstExpectationParameter(node);
+                var binaryExpression = actualValue;
+                var operator = binaryExpression.operatorToken.getText();
+                var expectingBooleanKeyword = expectedValue.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
+                    || expectedValue.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword;
+                if (operator === '===' && expectingBooleanKeyword) {
+                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE));
+                }
+                else if (operator === '!==' && expectingBooleanKeyword) {
+                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE));
                 }
             }
         }

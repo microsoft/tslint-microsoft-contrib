@@ -46,7 +46,14 @@ var TestHelper;
             result = linter.lint();
         }
         else {
-            var linter = new Lint.Linter('file.ts', inputFileOrScript, options);
+            var filename = void 0;
+            if (inputFileOrScript.indexOf('import React') > -1) {
+                filename = 'file.tsx';
+            }
+            else {
+                filename = 'file.ts';
+            }
+            var linter = new Lint.Linter(filename, inputFileOrScript, options);
             result = linter.lint();
         }
         return result;

@@ -5,8 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Lint = require('tslint/lib/lint');
+var AstUtils_1 = require('./utils/AstUtils');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -36,48 +36,29 @@ var NoConstantConditionRuleWalker = (function (_super) {
     function NoConstantConditionRuleWalker() {
         _super.apply(this, arguments);
     }
-    NoConstantConditionRuleWalker.prototype.isConstant = function (node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
-            var expression = node;
-            var kind = expression.operatorToken.kind;
-            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
-                return this.isConstant(expression.left) && this.isConstant(expression.right);
-            }
-        }
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind_1.SyntaxKind.current().PostfixUnaryExpression) {
-            var expression = node;
-            var kind = expression.operator;
-            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
-                return this.isConstant(expression.operand);
-            }
-        }
-        return node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral;
-    };
     NoConstantConditionRuleWalker.prototype.visitIfStatement = function (node) {
-        if (this.isConstant(node.expression)) {
+        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
             var message = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         _super.prototype.visitIfStatement.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitConditionalExpression = function (node) {
-        if (this.isConstant(node.condition)) {
+        if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
             var message = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         _super.prototype.visitConditionalExpression.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitWhileStatement = function (node) {
-        if (this.isConstant(node.expression)) {
+        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
             var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
         _super.prototype.visitWhileStatement.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitDoStatement = function (node) {
-        if (this.isConstant(node.expression)) {
+        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
             var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
@@ -85,7 +66,7 @@ var NoConstantConditionRuleWalker = (function (_super) {
     };
     NoConstantConditionRuleWalker.prototype.visitForStatement = function (node) {
         if (node.condition != null) {
-            if (this.isConstant(node.condition)) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
                 var message = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
             }

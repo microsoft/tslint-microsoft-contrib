@@ -5,7 +5,13 @@
 * The npm packages are pushed to the "releases" branch and tagged with the format "npm-[version]"
 
 # Prepare the tslint-microsoft-contrib master branch
+* Make sure there are 0 closed issues without a milestone. Assign milestone as needed using [this query](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aissue+no%3Amilestone+is%3Aclosed)
+* Close the milestone
+* Open the next milestone
+* Update the [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes
+)
 * make sure package.json contains the version you which to publish
+* update README.md to have the correct version numbers and links
 * git pull
 ```
     git pull
@@ -24,7 +30,7 @@
 * tag the releases branch with the format npm-[version]
 
 ```
-git tag npm-0.0.1
+git tag npm-2.0.10
 git push --tags
 ```
 * Go back to the master branch, increase the version number in package.json and README.md, and push

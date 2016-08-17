@@ -1,7 +1,6 @@
  /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -11,11 +10,19 @@ describe('noIncrementDecrementRule', () : void => {
     const RULE_NAME : string = 'no-increment-decrement';
 
     it('should produce violations ', () : void => {
-        const inputFile : string = 'test-data/NoIncrementDecrementTestInput.ts';
+        const inputFile : string = `
+var x;
+
+x++;
+x--;
+++x;
+--x;
+
+`;
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden ++ operator",
-                "name": "test-data/NoIncrementDecrementTestInput.ts",
+                "name": "file.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 4,
@@ -24,7 +31,7 @@ describe('noIncrementDecrementRule', () : void => {
             },
             {
                 "failure": "Forbidden -- operator",
-                "name": "test-data/NoIncrementDecrementTestInput.ts",
+                "name": "file.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 5,
@@ -33,7 +40,7 @@ describe('noIncrementDecrementRule', () : void => {
             },
             {
                 "failure": "Forbidden ++ operator",
-                "name": "test-data/NoIncrementDecrementTestInput.ts",
+                "name": "file.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 6,
@@ -42,7 +49,7 @@ describe('noIncrementDecrementRule', () : void => {
             },
             {
                 "failure": "Forbidden -- operator",
-                "name": "test-data/NoIncrementDecrementTestInput.ts",
+                "name": "file.ts",
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 7,
@@ -53,4 +60,4 @@ describe('noIncrementDecrementRule', () : void => {
     });
 
 });
-/* tslint:enable:quotemark */
+

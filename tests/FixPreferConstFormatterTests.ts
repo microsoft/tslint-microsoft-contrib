@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixPreferConstFormatter';
@@ -63,5 +61,3 @@ const   foo = bar;
 `.trim());
     });
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */

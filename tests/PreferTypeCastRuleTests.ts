@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 
 import {TestHelper} from './TestHelper';
 
@@ -40,5 +38,4 @@ describe('preferTypeCastRule', () : void => {
     });
 
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */
+

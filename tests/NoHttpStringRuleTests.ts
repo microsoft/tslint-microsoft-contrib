@@ -1,7 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
 /* tslint:disable:no-http-string */
 import {TestHelper} from './TestHelper';
 
@@ -66,5 +65,5 @@ describe('noHttpStringRule', () : void => {
     });
 
 });
-/* tslint:enable:quotemark */
+
 /* tslint:enable:no-http-string */

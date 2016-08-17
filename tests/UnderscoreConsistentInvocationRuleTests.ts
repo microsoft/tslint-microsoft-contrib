@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 /* tslint:disable:max-line-length */
 /* tslint:disable:max-func-body-length */
 
@@ -1006,7 +1004,6 @@ describe('underscoreConsistentInvocationRule', () : void => {
     });
 
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */
+
 /* tslint:enable:max-line-length */
 /* tslint:enable:max-func-body-length */

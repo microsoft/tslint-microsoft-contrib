@@ -3,7 +3,6 @@
 
 import {TestHelper} from './TestHelper';
 
-/* tslint:disable:no-multiline-string */
 
 /**
  * Unit tests.
@@ -47,4 +46,3 @@ describe('noEmptyLineAfterOpeningBraceRule', (): void => {
         ]);
     });
 });
-/* tslint:enable:no-multiline-string */

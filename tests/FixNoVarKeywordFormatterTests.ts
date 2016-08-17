@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixNoVarKeywordFormatter';
@@ -94,5 +92,3 @@ let foo = bar;
         chai.expect(formatter.getOutput()).to.equal(`\r\n    let foo = bar;\r\n`);
     });
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */

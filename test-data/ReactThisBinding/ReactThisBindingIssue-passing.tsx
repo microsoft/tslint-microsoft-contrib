@@ -1,6 +1,6 @@
 import React = require('react');
 
-export class MyComponent extends React.Component<{}, {}> {
+export class MyComponent extends BaseClass {
 
     constructor(props, context) {
         super(props, context);
@@ -27,5 +27,10 @@ export class MyComponent extends React.Component<{}, {}> {
             onMouseDown={this.listener3}>
             onMouseMove={this.notALocalMethod}> // this is not a real method, so it is OK
         </div>;
+    }
+}
+
+export class BaseClass extends React.Component<{}, {}> {
+    public notALocalMethod(): void {
     }
 }

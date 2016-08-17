@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -98,7 +96,21 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React imports in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsPassingReactInput.tsx';
+        const inputFile : string = `import React = require('react');
+import BaseComponent = require('common/component/BaseComponent');
+import I18nFacade = require('common/i18n/I18nFacade');
+
+export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseComponent.State> {
+
+    public render() {
+        return <div
+            className='AuthorSummary'
+            dir={I18nFacade.getLanguageDirectionality()}>
+            'some text'
+        </div>;
+    }
+}
+`;
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -107,7 +119,19 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle React ES6 imports in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsPassingReactES6Input.tsx';
+        const inputFile : string = `import React from 'React';
+import BaseComponent from 'common/component/BaseComponent';
+
+export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseComponent.State> {
+
+    public render() {
+        return <div
+            className='AuthorSummary'>
+            'some text'
+        </div>;
+    }
+}
+`;
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -116,7 +140,21 @@ describe('noUnusedImportsRule', () : void => {
     });
 
     it('should be able to handle import static references in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsFailingInput.tsx';
+        const inputFile : string = `import React = require('react');
+import BaseComponent = require('common/component/BaseComponent');
+import I18nFacade = require('common/i18n/I18nFacade');
+
+export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseComponent.State> {
+
+    public render() {
+        return <div
+            className='AuthorSummary'
+            dir={I18nFacade.getLanguageDirectionality()}>
+            'some text'
+        </div>;
+    }
+}
+`;
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -281,14 +319,27 @@ console.log(AB);`;
     });
 
     it('should fail on missing reference in tsx files', () : void => {
-        const inputFile : string = 'test-data/NoUnusedImports/NoUnusedImportsFailingReactInput.tsx';
+        const inputFile : string = `import React = require('react');
+import BaseComponent = require('common/component/BaseComponent');
+import I18nFacade = require('common/i18n/I18nFacade');
+
+export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseComponent.State> {
+
+    public render() {
+        return <div
+            className='AuthorSummary'>
+            'some text'
+        </div>;
+    }
+}
+`;
         TestHelper.assertViolations(
             ruleName,
             inputFile,
             [
                 {
                     "failure": "unused import: 'I18nFacade'",
-                    "name": "test-data/NoUnusedImports/NoUnusedImportsFailingReactInput.tsx",
+                    "name": "file.tsx",
                     "ruleName": "no-unused-imports",
                     "startPosition": { "character": 8, "line": 3 }
                 }
@@ -297,5 +348,4 @@ console.log(AB);`;
     });
 
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */
+

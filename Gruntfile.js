@@ -197,29 +197,63 @@ module.exports = function(grunt) {
         ts: {
             default: {
                 src: [
-                    './src/**/*.ts',
-                    './tests/**/*.ts'
+                    './src/**/*.ts{,x}',
+                    './tests/**/*.ts{,x}'
                 ],
                 outDir: 'dist',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    declaration: true
+                    declaration: true,
+                    failOnTypeErrors: true,
+                    jsx: 'react'
                 }
             },
+            'test-data': {
+                src: [
+                    './test-data/**/*.ts{,x}'
+                ],
+                outDir: 'dist',
+                options: {
+                    module: 'commonjs',
+                    target: 'es5',
+                    declaration: false,
+                    failOnTypeErrors: true,
+                    jsx: 'react'
+                }
+            }
         },
 
         tslint: {
             options: {
-                configuration: grunt.file.readJSON("tslint.json"),
                 rulesDirectory: 'dist/src'
             },
-            files: {
-                src: [
-                    'src/**/*.ts',
-                    'tests/**/*.ts',
-                    '!**/references.ts'
-                ]
+            prod: {
+                options: {
+                    configuration: grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' })
+                },
+                files: {
+                    src: [
+                        'src/**/*.ts'
+                    ]
+                }
+            },
+            tests: {
+                options: {
+                    configuration: (function() {
+                        let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
+                        tslintJson.rules['no-multiline-string'] = false;
+                        tslintJson.rules['quotemark'] = false;
+                        tslintJson.rules['max-func-body-length'] = false;
+                        return tslintJson;
+                    })(),
+                },
+                files: {
+                    src: [
+                        'tests/**/*.ts',
+                        '!**/references.ts'
+                    ]
+                }
             }
         },
 

@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import {TestHelper} from './TestHelper';
 import {Rule} from '../src/exportNameRule';
 
@@ -32,7 +30,7 @@ describe('exportNameRule', () : void => {
 
         it('when export equals assignment matches in tsx file', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput2.tsx';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
@@ -240,12 +238,12 @@ describe('exportNameRule', () : void => {
 
         it('for conflicting name in tsx file', () : void => {
             exceptions.length = 0;
-            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.tsx';
+            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput2.tsx';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
                     "failure": "The exported module or identifier name must match the file name. " +
-                    "Found: test-data/ExportName/ExportNameRuleFailingTestInput.tsx and ThisIsNotTheNameOfTheFile",
-                    "name": "test-data/ExportName/ExportNameRuleFailingTestInput.tsx",
+                    "Found: test-data/ExportName/ExportNameRuleFailingTestInput2.tsx and ThisIsNotTheNameOfTheFile",
+                    "name": "test-data/ExportName/ExportNameRuleFailingTestInput2.tsx",
                     "ruleName": "export-name",
                     "startPosition": { "character": 10, "line": 4 }
                 }
@@ -370,4 +368,4 @@ describe('exportNameRule', () : void => {
 
     });
 });
-/* tslint:enable:quotemark */
+

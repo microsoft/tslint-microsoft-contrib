@@ -1,7 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -42,4 +41,4 @@ describe('noDisableAutoSanitizationRule', () : void => {
         );
     });
 });
-/* tslint:enable:quotemark */
+

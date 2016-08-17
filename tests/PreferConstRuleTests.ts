@@ -3,7 +3,6 @@
 
 import {TestHelper} from './TestHelper';
 
-/* tslint:disable:no-multiline-string */
 
 /**
  * Unit tests.
@@ -185,4 +184,3 @@ describe('preferConstRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 });
-/* tslint:enable:no-multiline-string */

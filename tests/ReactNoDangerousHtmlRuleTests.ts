@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import {TestHelper} from './TestHelper';
 import {Rule} from '../src/reactNoDangerousHtmlRule';
 
@@ -67,25 +65,36 @@ describe('reactNoDangerousHtmlRule', () : void => {
     it('should find violations in .tsx files', (): void => {
         TestHelper.assertViolations(
             ruleName,
-            'test-data/ReactNoDangerousHtmlRule-failing.tsx',
+            `import React = require('react');
+let text = '<div>some value</div>div>';
+
+// example of element with start and end tag
+<div foo='bar' src={'asdf'} dangerouslySetInnerHTML={{__html: text}} >
+</div>;
+
+function someFunction() {
+    // example of self-closing element
+    return <div dangerouslySetInnerHTML={{__html: text}} />;
+}
+`,
             [
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
-                    "test-data/ReactNoDangerousHtmlRule-failing.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    "file.tsx\"\n    Do *NOT* add a suppression for this warning. " +
                     "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
                     "representative. If they decide that this is an\n    acceptable usage then add the exception " +
                     "to xss_exceptions.json",
-                    "name": "test-data/ReactNoDangerousHtmlRule-failing.tsx",
+                    "name": "file.tsx",
                     "ruleName": "react-no-dangerous-html",
                     "startPosition": { "character": 1, "line": 5 }
                 },
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
-                    "test-data/ReactNoDangerousHtmlRule-failing.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    "file.tsx\"\n    Do *NOT* add a suppression for this warning. " +
                     "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
                     "representative. If they decide that this is an\n    acceptable usage then add the exception " +
                     "to xss_exceptions.json",
-                    "name": "test-data/ReactNoDangerousHtmlRule-failing.tsx",
+                    "name": "file.tsx",
                     "ruleName": "react-no-dangerous-html",
                     "startPosition": { "character": 12, "line": 10 }
                 }
@@ -93,5 +102,4 @@ describe('reactNoDangerousHtmlRule', () : void => {
         );
     });
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */
+

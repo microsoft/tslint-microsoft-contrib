@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 /* tslint:disable:max-func-body-length */
 
 import {TestHelper} from './TestHelper';
@@ -195,6 +193,5 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
         ]);
     });
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */
+
 /* tslint:enable:max-func-body-length */

@@ -1,8 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
-/* tslint:disable:no-multiline-string */
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixNoUnusedImportsFormatter';
@@ -75,5 +73,3 @@ class NoUnusedImportsTestInput {
     });
 
 });
-/* tslint:enable:quotemark */
-/* tslint:enable:no-multiline-string */

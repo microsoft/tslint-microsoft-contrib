@@ -1,7 +1,6 @@
 /// <reference path="../typings/mocha.d.ts" />
 /// <reference path="../typings/chai.d.ts" />
 
-/* tslint:disable:quotemark */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -10,7 +9,20 @@ import {TestHelper} from './TestHelper';
 describe('noCookiesRule', () : void => {
     it('should not produce violations', () : void => {
         const ruleName : string = 'no-cookies';
-        const inputFile : string = 'test-data/NoCookies/NoCookiesPassingTestInput.ts';
+        const inputFile : string = `
+interface DocumentLikeAPI {
+    cookie: string;
+}
+
+function documentLikeAPIFunction() : DocumentLikeAPI {
+    return null;
+}
+
+// These usages are OK because they are not on the DOM document
+var document : DocumentLikeAPI = documentLikeAPIFunction();
+document.cookie = '...';
+document.cookie = '...';
+documentLikeAPIFunction().cookie = '...';`;
         TestHelper.assertViolations(
             ruleName,
             inputFile,
@@ -77,4 +89,4 @@ describe('noCookiesRule', () : void => {
     });
 
 });
-/* tslint:enable:quotemark */
+

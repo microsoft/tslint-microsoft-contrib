@@ -2,6 +2,7 @@
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20milestone%3A2.0.10)
 
 * [#189](https://github.com/Microsoft/tslint-microsoft-contrib/issues/189) new security rule: iframe has invalid or missing sandbox attribute
+* [#73](https://github.com/Microsoft/tslint-microsoft-contrib/issues/73) new rule: unused react interface property
 * [#180](https://github.com/Microsoft/tslint-microsoft-contrib/issues/180) new rule: chai - indexOf can be .contains call
 * [#179](https://github.com/Microsoft/tslint-microsoft-contrib/issues/179) new rule: unneeded mocha done
 * [#171](https://github.com/Microsoft/tslint-microsoft-contrib/issues/171) new rule: no-unsupported-browser-code

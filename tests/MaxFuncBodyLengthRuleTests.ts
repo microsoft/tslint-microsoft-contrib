@@ -286,4 +286,50 @@ describe('maxFuncBodyLengthRule', () : void => {
 
     });
 
+    describe('when function expression passed as a parameter', () => {
+        beforeEach(() => {
+            options = [ true,
+                5, // max length is now 5
+                {
+                }
+            ];
+        });
+
+        it('should be able to ignore describe calls', () : void => {
+            TestHelper.assertViolationsWithOptions(ruleName, options, `
+            describe('something', function name() {
+                // line 2
+                // line 3
+                // line 4
+                // line 5
+                // line 6
+            });
+            describe('something', function () {
+                // line 2
+                // line 3
+                // line 4
+                // line 5
+                // line 6
+            });
+            `, [{
+                "failure": "Max function expression body length exceeded in function expression name() - max: 5," +
+                           " actual: 6",
+                "name": "file.ts",
+                "ruleName": "max-func-body-length",
+                "startPosition": {
+                    "character": 35,
+                    "line": 2
+                }
+            }, {
+                "failure": "Max function expression body length exceeded in function expression () - max: 5, actual: 6",
+                "name": "file.ts",
+                "ruleName": "max-func-body-length",
+                "startPosition": {
+                    "character": 35,
+                    "line": 9
+                }
+            }]);
+        });
+    });
+
 });

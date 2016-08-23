@@ -30,6 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 const FUNC_BODY_LENGTH = 'func-body-length';
+const FUNC_EXPRESSION_BODY_LENGTH = 'func-express-body-length';
 const ARROW_BODY_LENGTH = 'arrow-body-length';
 const METHOD_BODY_LENGTH = 'method-body-length';
 const CTOR_BODY_LENGTH = 'ctor-body-length';
@@ -39,6 +40,7 @@ const IGNORE_COMMENTS = 'ignore-comments';
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private maxBodyLength: number;
     private maxFuncBodyLength: number;
+    private maxFuncExpressionBodyLength: number;
     private maxArrowBodyLength: number;
     private maxMethodBodyLength: number;
     private maxCtorBodyLength: number;
@@ -80,6 +82,11 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
         this.validate(node);
         super.visitFunctionDeclaration(node);
+    }
+
+    protected visitFunctionExpression(node: ts.FunctionExpression): void {
+        this.validate(node);
+        super.visitFunctionExpression(node);
     }
 
     protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
@@ -148,6 +155,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
             if (typeof(opt) === 'object') {
                 this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
+                this.maxFuncExpressionBodyLength = opt[FUNC_EXPRESSION_BODY_LENGTH];
                 this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
@@ -174,8 +182,10 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private formatPlaceText (node: ts.FunctionLikeDeclaration) {
         const funcTypeText = this.getFuncTypeText(node.kind);
-        if (node.kind === SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind.current().FunctionDeclaration) {
-            return ` in ${ funcTypeText } ${ (<any>node.name).text }()`;
+        if (node.kind === SyntaxKind.current().MethodDeclaration ||
+            node.kind === SyntaxKind.current().FunctionDeclaration ||
+            node.kind === SyntaxKind.current().FunctionExpression) {
+            return ` in ${ funcTypeText } ${ (<any>node.name || {text: ''}).text }()`;
         } else if (node.kind === SyntaxKind.current().Constructor) {
             return ` in class ${ this.currentClassName }`;
         }
@@ -185,6 +195,8 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private getFuncTypeText (nodeKind: ts.SyntaxKind) {
         if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
             return 'function';
+        } else if (nodeKind === SyntaxKind.current().FunctionExpression) {
+            return 'function expression';
         } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
             return 'method';
         } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
@@ -201,6 +213,8 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
         if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
             result = this.maxFuncBodyLength;
+        } else if (nodeKind === SyntaxKind.current().FunctionExpression) {
+            result = this.maxFuncExpressionBodyLength;
         } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
             result = this.maxMethodBodyLength;
         } else if (nodeKind === SyntaxKind.current().ArrowFunction) {

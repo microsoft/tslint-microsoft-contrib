@@ -397,12 +397,13 @@ module.exports = function(grunt) {
         _.values(groupedRows).forEach(function (element) { element.sort(); });
 
         let data = grunt.file.read('./templates/recommended_ruleset.js.snippet', {encoding: 'UTF-8'});
-        data = data.replace('%security_rules%',     groupedRows['Security'].join('\n'));
-        data = data.replace('%correctness_rules%',  groupedRows['Correctness'].join('\n'));
-        data = data.replace('%clarity_rules%',      groupedRows['Clarity'].join('\n'));
-        data = data.replace('%whitespace_rules%',   groupedRows['Whitespace'].join('\n'));
-        data = data.replace('%configurable_rules%', groupedRows['Configurable'].join('\n'));
-        data = data.replace('%deprecated_rules%',   groupedRows['Deprecated'].join('\n'));
+        data = data.replace('%security_rules%',       groupedRows['Security'].join('\n'));
+        data = data.replace('%correctness_rules%',    groupedRows['Correctness'].join('\n'));
+        data = data.replace('%clarity_rules%',        groupedRows['Clarity'].join('\n'));
+        data = data.replace('%whitespace_rules%',     groupedRows['Whitespace'].join('\n'));
+        data = data.replace('%configurable_rules%',   groupedRows['Configurable'].join('\n'));
+        data = data.replace('%deprecated_rules%',     groupedRows['Deprecated'].join('\n'));
+        data = data.replace('%accessibilityy_rules%', groupedRows['Accessibility'].join('\n'));
         grunt.file.write('recommended_ruleset.js', data, {encoding: 'UTF-8'});
     });
 

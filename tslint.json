@@ -123,6 +123,7 @@
     "promise-must-complete": true,
     "quotemark": [true, "single"],
     "radix": false,
+    "react-a11y-titles": true,
     "react-iframe-missing-sandbox": true,
     "react-no-dangerous-html": true,
     "react-this-binding-issue": true,

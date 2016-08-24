@@ -127,6 +127,7 @@ module.exports = {
         "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
+        "react-a11y-titles": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
         "variable-name": true,

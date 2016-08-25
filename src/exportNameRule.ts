@@ -47,8 +47,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 export class ExportNameWalker extends ErrorTolerantWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
+
         // look for single export assignment from file first
-        const singleExport: ts.Statement[] = Utils.filter(node.statements, (element: ts.Statement): boolean => {
+        const singleExport: ts.Statement[] = node.statements.filter((element: ts.Statement): boolean => {
             return element.kind === SyntaxKind.current().ExportAssignment;
         });
         if (singleExport.length === 1) {

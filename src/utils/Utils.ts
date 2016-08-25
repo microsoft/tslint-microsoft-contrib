@@ -19,19 +19,6 @@ export module Utils {
     }
 
     /**
-     * A reduce function.
-     */
-    export function reduce<T, R>(list : T[], predicate: (memo: R, element: T) => R, initialValue: R) : R {
-        let result = initialValue;
-        if (list != null ) {
-            list.forEach((element: T): void => {
-                result = predicate(result, element);
-            });
-        }
-        return result;
-    }
-
-    /**
      * A contains function.
      */
     export function contains<T>(list: T[], element: T): boolean {
@@ -51,7 +38,7 @@ export module Utils {
             return [].concat(source); // be sure to return a copy of the array
         }
 
-        return filter(source, (sourceElement: T): boolean => {
+        return source.filter((sourceElement: T): boolean => {
             return !contains(elementsToRemove, sourceElement);
         });
     }
@@ -61,21 +48,6 @@ export module Utils {
      */
     export function remove<T>(source: T[], elementToRemove: T): T[] {
         return removeAll(source, [elementToRemove]);
-    }
-
-    /**
-     * A filter() function.
-     */
-    export function filter<T>(list: T[], predicate: (element: T) => boolean): T[] {
-        if (list == null || list.length === 0) {
-            return [];
-        }
-        return reduce(list, (memo: T[], sourceElement: T): T[] => {
-            if (predicate(sourceElement)) {
-                memo.push(sourceElement);
-            }
-            return memo;
-        }, []);
     }
 
     export function trimTo(source: string, maxLength: number): string {

@@ -91,7 +91,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         if (node.parameters.length === 0) {
             return null;
         }
-        const allDones: ts.ParameterDeclaration[] = Utils.filter(node.parameters, (parameter: ts.ParameterDeclaration): boolean => {
+        const allDones: ts.ParameterDeclaration[] = node.parameters.filter((parameter: ts.ParameterDeclaration): boolean => {
             if (parameter.type != null && parameter.type.getText() === 'MochaDone') {
                 return true;
             }

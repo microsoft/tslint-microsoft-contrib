@@ -127,10 +127,15 @@ module.exports = {
         "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
-        "react-a11y-titles": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
         "variable-name": true,
+
+        /**
+         * Accessibility. The following rules should be turned on to guarantee the best user
+         * experience for keyboard and screen reader users.
+         */
+        "react-a11y-titles": true,
 
         /**
          * Whitespace related rules. The only recommended whitespace strategy is to pick a single format and

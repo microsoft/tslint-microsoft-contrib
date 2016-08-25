@@ -3,7 +3,6 @@ import * as Lint from 'tslint/lib/lint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
-import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -53,7 +52,7 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
 
     private getClosestTerm(term: string): string {
         let closestMatch: number = 99999999;
-        return Utils.reduce(Rule.VALID_TERMS, (closestTerm: string, thisTerm: string) : string => {
+        return Rule.VALID_TERMS.reduce((closestTerm: string, thisTerm: string) : string => {
             const distance = this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;

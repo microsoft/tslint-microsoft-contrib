@@ -435,6 +435,10 @@ module.exports = function(grunt) {
 
             grunt.file.write(sourceFileName, applyTemplates(ruleTemplateText), {encoding: 'UTF-8'});
             grunt.file.write(testFileName, applyTemplates(testTemplateText), {encoding: 'UTF-8'});
+
+            var currentRuleset = grunt.file.readJSON('./tslint.json', {encoding: 'UTF-8'});
+            currentRuleset.rules[ruleName] = true;
+            grunt.file.write('./tslint.json', JSON.stringify(currentRuleset, null, 2), {encoding: 'UTF-8'});
         }
     });
 

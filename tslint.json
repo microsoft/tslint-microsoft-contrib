@@ -19,10 +19,22 @@
     "jsdoc-format": false,
     "label-position": true,
     "label-undefined": true,
-    "linebreak-style": [true, "LF"],
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
     "max-file-line-count": false,
-    "max-func-body-length": [true, 100, { "ignore-parameters-to-function-regex": "describe" }],
-    "max-line-length": [true, 140],
+    "max-func-body-length": [
+      true,
+      100,
+      {
+        "ignore-parameters-to-function-regex": "describe"
+      }
+    ],
+    "max-line-length": [
+      true,
+      140
+    ],
     "member-access": false,
     "member-ordering": false,
     "missing-jsdoc": true,
@@ -39,7 +51,15 @@
     "no-bitwise": true,
     "no-conditional-assignment": false,
     "no-consecutive-blank-lines": false,
-    "no-console": [true, "debug", "info", "log", "time", "timeEnd", "trace" ],
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "log",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
     "no-constant-condition": true,
     "no-construct": true,
     "no-constructor-vars": true,
@@ -64,7 +84,11 @@
     "no-for-in-array": false,
     "no-function-constructor-with-string-args": true,
     "no-function-expression": true,
-    "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],
+    "no-http-string": [
+      true,
+      "http://www.example.com/?.*",
+      "http://www.examples.com/?.*"
+    ],
     "no-increment-decrement": true,
     "no-inferrable-types": false,
     "no-inner-html": true,
@@ -112,8 +136,17 @@
     "no-var-self": true,
     "no-with-statement": true,
     "object-literal-sort-keys": false,
-    "object-literal-key-quotes": [false, "as-needed"],
-    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace" ],
+    "object-literal-key-quotes": [
+      false,
+      "as-needed"
+    ],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
     "one-variable-per-declaration": true,
     "only-arrow-functions": false,
     "ordered-imports": false,
@@ -121,7 +154,10 @@
     "prefer-const": true,
     "prefer-type-cast": true,
     "promise-must-complete": true,
-    "quotemark": [true, "single"],
+    "quotemark": [
+      true,
+      "single"
+    ],
     "radix": false,
     "react-a11y-titles": true,
     "react-iframe-missing-sandbox": true,
@@ -131,9 +167,26 @@
     "restrict-plus-operands": false,
     "semicolon": true,
     "switch-default": false,
-    "trailing-comma": [true, {"singleline": "never", "multiline": "never"}],
-    "triple-equals": [true, "allow-null-check"],
-    "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": "never"
+      }
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typedef": [
+      true,
+      "callSignature",
+      "indexSignature",
+      "parameter",
+      "propertySignature",
+      "variableDeclarator",
+      "memberVariableDeclarator"
+    ],
     "typedef-whitespace": false,
     "underscore-consistent-invocation": true,
     "use-isnan": true,
@@ -141,6 +194,13 @@
     "use-strict": false,
     "valid-typeof": true,
     "variable-name": true,
-    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type" ]
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
   }
 }

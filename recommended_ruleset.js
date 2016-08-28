@@ -114,6 +114,7 @@ module.exports = {
         "no-relative-imports": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
+        "no-suspicious-comment": true,
         "no-typeof-undefined": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,

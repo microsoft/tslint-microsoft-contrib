@@ -54,7 +54,9 @@ class NoCookiesWalker extends ErrorTolerantWalker {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }
             } catch (e) {
+                /* tslint:disable:no-suspicious-comment */
                 // TODO: this error seems like a tslint error
+                /* tslint:enable:no-suspicious-comment */
                 if (leftSide.getFullText().trim() === 'document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }

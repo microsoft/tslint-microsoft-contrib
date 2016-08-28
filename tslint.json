@@ -115,6 +115,7 @@
     "no-string-based-set-interval": true,
     "no-string-based-set-timeout": true,
     "no-string-literal": true,
+    "no-suspicious-comment": true,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-typeof-undefined": true,

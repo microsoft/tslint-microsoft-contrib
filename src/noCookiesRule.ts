@@ -54,7 +54,7 @@ class NoCookiesWalker extends ErrorTolerantWalker {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }
             } catch (e) {
-                // TODO: this error seems like a tslint error
+                // the error thrown seems like a tslint error
                 if (leftSide.getFullText().trim() === 'document') {
                     this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
                 }

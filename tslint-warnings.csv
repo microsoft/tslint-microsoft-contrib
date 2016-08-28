@@ -139,6 +139,7 @@ CWE 242 - Use of Inherently Dangerous Function
 CWE 116 - Improper Encoding or Escaping of Output"
 no-string-literal,Disallows object access via string literals.,TSLINT2USQI0,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+no-suspicious-comment,"Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO",TSLINT1MEQM5S,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,546,"CWE 546 - Suspicious Comment"
 no-switch-case-fall-through,Disallows falling through case statements.,TSLINTOMSBL4,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 484, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 484 - Omitted Break Statement in Switch
 CWE 710 - Coding Standards Violation"

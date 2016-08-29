@@ -137,6 +137,7 @@ module.exports = {
          * experience for keyboard and screen reader users.
          */
         "react-a11y-lang": true,
+        "react-a11y-meta": true,
         "react-a11y-titles": true,
 
         /**

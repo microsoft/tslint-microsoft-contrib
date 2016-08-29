@@ -203,6 +203,7 @@
       "check-separator",
       "check-type"
     ],
-    "react-a11y-lang": true
+    "react-a11y-lang": true,
+    "react-a11y-meta": true
   }
 }

@@ -7,6 +7,7 @@ import {Utils} from './utils/Utils';
 
 const EMPTY_TITLE_FAILURE_STRING: string = 'Title elements must not be empty';
 const LONG_TITLE_FAILURE_STRING: string = "Title length must not be longer than 60 characters";
+const WORD_TITLE_FAILURE_STRING: string = "Title must contain more than one word";
 const MAX_TITLE_LENGTH: number = 60;
 
 /**
@@ -51,9 +52,12 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
                 if (node.children[0].kind === ts.SyntaxKind.JsxText) {
                     const value: ts.JsxText = <ts.JsxText>node.children[0];
                     const text: string = value.getText();
-                    if (text.length <= MAX_TITLE_LENGTH) {
+                    if (text.length > MAX_TITLE_LENGTH) {
                        this.addFailure(this.createFailure(node.getStart(),
                        node.getWidth(), LONG_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)))
+                    } else if (text.indexOf(' ') < 2) {
+                        this.addFailure(this.createFailure(node.getStart(),
+                        node.getWidth(), WORD_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)))
                     }
                 }
             }

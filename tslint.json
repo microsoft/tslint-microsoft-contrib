@@ -1,5 +1,6 @@
 {
   "rules": {
+    "a11y-tabindex-no-positive": true,
     "align": false,
     "arrow-parens": false,
     "ban": false,

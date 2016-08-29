@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-meta',
         type: 'functionality',
-        description: '... add a meaningful one line description',
+        description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
         options: null,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -25,7 +25,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ReactA11yMetaRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactA11yMetaRuleWalker(sourceFile, this.getOptions()));
+        } else {
+            return [];
+        }
     }
 }
 
@@ -48,27 +52,28 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
                 if (parameter.kind === SyntaxKind.current().JsxAttribute) {
                     const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
                     if (attribute.name.getText() === 'http-equiv') {
-                        if (attribute.initializer != null) {
-                            if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
-                                const value: string = (<ts.StringLiteral>attribute.initializer).text;
-                                if (value === 'refresh') {
-                                    this.addFailure(this.createFailure(parent.getStart(), openElement.getWidth(), FAILURE_STRING));
-                                }
-                            } else if (attribute.initializer.kind === SyntaxKind.current().JsxExpression) {
-                                const exp: ts.JsxExpression = <ts.JsxExpression>attribute.initializer;
-                                if (exp.expression.kind === SyntaxKind.current().StringLiteral) {
-                                    const value: string = (<ts.StringLiteral>exp.expression).text;
-                                    if (value === 'refresh') {
-                                        this.addFailure(
-                                            this.createFailure(openElement.getStart(), openElement.getWidth(), FAILURE_STRING)
-                                        );
-                                    }
-                                }
-                            }
+                        if (this.isStringLiteral(attribute.initializer, 'refresh')) {
+                            this.addFailure(this.createFailure(parent.getStart(), openElement.getWidth(), FAILURE_STRING));
                         }
                     }
                 }
             });
         }
+    }
+
+    private isStringLiteral(expression: ts.Expression, literal: string): boolean {
+        if (expression != null) {
+            if (expression.kind === SyntaxKind.current().StringLiteral) {
+                const value: string = (<ts.StringLiteral>expression).text;
+                return value === literal;
+            } else if (expression.kind === SyntaxKind.current().JsxExpression) {
+                const exp: ts.JsxExpression = <ts.JsxExpression>expression;
+                if (exp.expression.kind === SyntaxKind.current().StringLiteral) {
+                    const value: string = (<ts.StringLiteral>exp.expression).text;
+                    return value === literal;
+                }
+            }
+        }
+        return null;
     }
 }

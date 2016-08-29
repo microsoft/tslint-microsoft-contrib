@@ -45,7 +45,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+        } else {
+            return [];
+        }
     }
 }
 

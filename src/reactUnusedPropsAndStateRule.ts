@@ -28,7 +28,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
+        } else {
+            return [];
+        }
     }
 }
 

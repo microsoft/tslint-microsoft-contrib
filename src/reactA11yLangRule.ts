@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-lang',
         type: 'functionality',
-        description: '... add a meaningful one line description',
+        description: 'For accessibility of your website, html elements must have a lang attribute.',
         options: null,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -25,7 +25,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ReactA11yLangRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactA11yLangRuleWalker(sourceFile, this.getOptions()));
+        } else {
+            return [];
+        }
     }
 }
 

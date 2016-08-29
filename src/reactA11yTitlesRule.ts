@@ -4,9 +4,11 @@ import * as Lint from 'tslint/lib/lint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
+import {SyntaxKind} from './utils/SyntaxKind';
 
 const EMPTY_TITLE_FAILURE_STRING: string = 'Title elements must not be empty';
-const LONG_TITLE_FAILURE_STRING: string = "Title length must not be longer than 60 characters";
+const LONG_TITLE_FAILURE_STRING: string = 'Title length must not be longer than 60 characters';
+const WORD_TITLE_FAILURE_STRING: string = 'Title must contain more than one word';
 const MAX_TITLE_LENGTH: number = 60;
 
 /**
@@ -17,9 +19,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-titles',
         type: 'functionality',
-        description: 'For accessibility of your website, HTML x1title elements must not be empty.',
+        description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
         options: null,
-        issueClass: 'Ignored',
+        issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
@@ -52,12 +54,13 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(node.getStart(),
                     node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
             } else if (node.children.length === 1) {
-                if (node.children[0].kind === ts.SyntaxKind.JsxText) {
+                if (node.children[0].kind === SyntaxKind.current().JsxText) {
                     const value: ts.JsxText = <ts.JsxText>node.children[0];
-                    const text: string = value.getText();
-                    if (text.length <= MAX_TITLE_LENGTH) {
-                       this.addFailure(this.createFailure(node.getStart(),
-                       node.getWidth(), LONG_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)))
+                    this.validateTitleText(value.getText(), node);
+                } else if (node.children[0].kind === SyntaxKind.current().JsxExpression) {
+                    const exp: ts.JsxExpression = <ts.JsxExpression>node.children[0];
+                    if (exp.expression.kind === SyntaxKind.current().StringLiteral) {
+                        this.validateTitleText((<ts.StringLiteral>exp.expression).text, node);
                     }
                 }
             }
@@ -65,4 +68,17 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
         super.visitJsxElement(node);
     }
 
+    private validateTitleText(text: string, titleNode: ts.Node): void {
+        if (text.length > MAX_TITLE_LENGTH) {
+            this.addFailure(this.createFailure(
+                titleNode.getStart(),
+                titleNode.getWidth(),
+                LONG_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)));
+        } else if (!(text.indexOf(' ') > 0)) {
+            this.addFailure(this.createFailure(
+                titleNode.getStart(),
+                titleNode.getWidth(),
+                WORD_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)));
+        }
+    }
 }

@@ -1,7 +1,7 @@
 /**
  * @copyright Microsoft Corporation. All rights reserved.
  *
- * @a11yTabindexNoPositiveRule tslint rule of accessibility.
+ * @a11yTabindexNoPositiveRule tslint rule for accessibility.
  */
 
 import * as ts from 'typescript';
@@ -9,7 +9,7 @@ import * as Lint from 'tslint/lib/lint';
 import { getPropName, getStringLiteral, getNumericLiteral } from './utils/JsxAttribute';
 
 export function getFailureString(): string {
-  return `The value of 'tabindex' attribute is invalid or undefined. It must be either -1 or 0.`;
+  return 'The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.';
 }
 
 export class Rule extends Lint.Rules.AbstractRule {

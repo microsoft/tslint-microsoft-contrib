@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { getJsxAttributesFromJsxElement } from '../JsxAttribute';
 
 const hrefString: string = 'href';
+
 /**
  * @Returns the implicit role for an anchor tag.
  */

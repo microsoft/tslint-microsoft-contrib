@@ -1,5 +1,10 @@
 {
   "rules": {
+    "a11y-img-has-alt": true,
+    "a11y-props": true,
+    "a11y-role-has-required-aria-props": true,
+    "a11y-role": true,
+    "a11y-role-supports-aria-props": true,
     "a11y-tabindex-no-positive": true,
     "align": false,
     "arrow-parens": false,

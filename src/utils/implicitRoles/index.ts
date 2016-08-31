@@ -36,6 +36,9 @@ import { TFOOT } from './tfoot';
 import { THEAD } from './thead';
 import { UL } from './ul';
 
+/**
+ * All functions of getting implicit role.
+ */
 export {
 A,
 AREA,

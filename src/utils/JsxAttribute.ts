@@ -44,7 +44,7 @@ export function getStringLiteral(node: ts.JsxAttribute): string {
   } else if (isStringLiteral(initializer)) { // <tag attribute='value' />
     return initializer.text.trim();
   } else if (isJsxExpression(initializer) && isStringLiteral(initializer.expression)) { // <tag attribute={'value'} />
-    return (initializer.expression as ts.StringLiteral).text;
+    return (<ts.StringLiteral>initializer.expression).text;
   } else if (isJsxExpression(initializer) && !initializer.expression) { // <tag attribute={} />
     return '';
   } else {
@@ -65,7 +65,7 @@ export function getNumericLiteral(node: ts.JsxAttribute): string {
   const initializer: ts.Expression = node.initializer;
 
   return isJsxExpression(initializer) && isNumericLiteral(initializer.expression)
-    ? (initializer.expression as ts.LiteralExpression).text
+    ? (<ts.LiteralExpression>initializer.expression).text
     : undefined;
 }
 
@@ -94,7 +94,7 @@ export function getAllAttributesFromJsxElement(node: ts.Node): (ts.JsxAttribute 
  * @returns { [propName: string]: ts.JsxAttribute } a dictionary has lowercase keys.
  */
 export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: string]: ts.JsxAttribute } {
-  let attributesDictionary: { [propName: string]: ts.JsxAttribute } = {};
+  const attributesDictionary: { [propName: string]: ts.JsxAttribute } = {};
 
   getAllAttributesFromJsxElement(node).forEach((attr) => {
     if (isJsxAttribute(attr)) {

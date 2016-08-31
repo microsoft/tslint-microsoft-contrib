@@ -14,8 +14,8 @@ describe('reactA11yLangRule', () : void => {
         const script : string = `
             import React = require('react');
 
-            const x = <html lang='en'></html>;
-            const y = <html lang='en' />;
+            const x = <html lang='en' title="asdf"></html>;
+            const y = <html lang='no' />;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -54,4 +54,29 @@ describe('reactA11yLangRule', () : void => {
             }
         ]);
     });
+
+    it('should fail on invalid language code', () : void => {
+        const script : string = `
+            import React = require('react');
+
+            const x = <html lang='foo'></html>;
+            const y = <html lang='bar' />;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Lang attribute does not have a valid value.",
+                "name": "file.tsx",
+                "ruleName": "react-a11y-lang",
+                "startPosition": { "character": 23, "line": 4 }
+            },
+            {
+                "failure": "Lang attribute does not have a valid value.",
+                "name": "file.tsx",
+                "ruleName": "react-a11y-lang",
+                "startPosition": { "character": 23, "line": 5 }
+            }
+        ]);
+    });
+
 });

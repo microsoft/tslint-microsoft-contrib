@@ -7,10 +7,10 @@ const typeString: string = 'type';
  * @Returns the implicit role for an input tag.
  */
 function getImplicitRoleForInput(node: ts.Node): string {
-  const type: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
+  const typeProp: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
 
-  if (type) {
-    const value: string = getStringLiteral(type) || '';
+  if (typeProp) {
+    const value: string = getStringLiteral(typeProp) || '';
 
     /* tslint:disable:no-switch-case-fall-through */
     switch (value.toUpperCase()) {

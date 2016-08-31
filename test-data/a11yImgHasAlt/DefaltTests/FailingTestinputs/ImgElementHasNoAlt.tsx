@@ -1,0 +1,2 @@
+<img />
+<img notAlt='notAltValue' />

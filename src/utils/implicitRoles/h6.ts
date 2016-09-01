@@ -1,5 +1,5 @@
 /**
- * @Returns the implicit role for an h6tag.
+ * @Returns the implicit role for an h6 tag.
  */
 function getImplicitRoleForH6(): string {
   return 'heading';

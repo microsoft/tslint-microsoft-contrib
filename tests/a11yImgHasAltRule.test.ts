@@ -126,7 +126,7 @@ describe('a11yImgHasAlt', () => {
       const fileDirectory: string = 'test-data/a11yImgHasAlt/CustomElementTests/FailingTestInputs/';
 
       it('when custom element or img has no alt prop', () => {
-        const fileName: string = fileDirectory + 'CustomelementHasNoAltProp.tsx';
+        const fileName: string = fileDirectory + 'CustomElementHasNoAltProp.tsx';
 
         TestHelper.assertViolationsWithOptions(
           ruleName,

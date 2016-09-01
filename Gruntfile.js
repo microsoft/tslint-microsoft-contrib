@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     let additionalMetadata;
     let allCweDescriptions;
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
     }
 
     function createCweDescription(metadata) {
-        allCweDescriptions = allCweDescriptions || grunt.file.readJSON('./cwe_descriptions.json', { encoding: 'UTF-8' });
+        allCweDescriptions = allCweDescriptions || grunt.file.readJSON('./cwe_descriptions.json', {encoding: 'UTF-8'});
 
         const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, true);
         if (cwe === '') {
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
     }
 
     function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
-        additionalMetadata = additionalMetadata || grunt.file.readJSON('./additional_rule_metadata.json', { encoding: 'UTF-8' });
+        additionalMetadata = additionalMetadata || grunt.file.readJSON('./additional_rule_metadata.json', {encoding: 'UTF-8'});
 
         let value = metadata[name];
         if (value == null) {
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
     }
 
     function camelize(input) {
-        return _(input).reduce(function (memo, element) {
+        return _(input).reduce(function(memo, element) {
             if (element.toLowerCase() === element) {
                 memo = memo + element;
             } else {
@@ -107,7 +107,7 @@ module.exports = function (grunt) {
     function getAllRuleNames(options) {
         options = options || { skipTsLintRules: false }
 
-        var convertToRuleNames = function (filename) {
+        var convertToRuleNames = function(filename) {
             filename = filename
                 .replace(/Rule\..*/, '')  // file extension plus Rule name
                 .replace(/.*\//, '');     // leading path
@@ -126,7 +126,7 @@ module.exports = function (grunt) {
 
     function getAllFormatterNames() {
 
-        var convertToRuleNames = function (filename) {
+        var convertToRuleNames = function(filename) {
             filename = filename
                 .replace(/Formatter\..*/, '')  // file extension plus Rule name
                 .replace(/.*\//, '');     // leading path
@@ -139,7 +139,7 @@ module.exports = function (grunt) {
     }
 
     function camelCase(input) {
-        return input.toLowerCase().replace(/-(.)/g, function (match, group1) {
+        return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
             return group1.toUpperCase();
         });
     }
@@ -252,7 +252,7 @@ module.exports = function (grunt) {
             },
             tests: {
                 options: {
-                    configuration: (function () {
+                    configuration: (function() {
                         let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
                         tslintJson.rules['no-multiline-string'] = false;
                         tslintJson.rules['quotemark'] = false;
@@ -305,25 +305,25 @@ module.exports = function (grunt) {
     grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md\n' +
         'and validates that the package.json version is the same version defined in README.md', function () {
 
-            var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
-            var packageJson = grunt.file.readJSON('package.json', { encoding: 'UTF-8' });
-            getAllRuleNames({ skipTsLintRules: true }).forEach(function (ruleName) {
-                if (readmeText.indexOf(ruleName) === -1) {
-                    grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
-                }
-            });
-            getAllFormatterNames().forEach(function (formatterName) {
-                if (readmeText.indexOf(formatterName) === -1) {
-                    grunt.fail.warn('A formatter was found that is not documented in README.md: ' + formatterName);
-                }
-            });
-
-            if (readmeText.indexOf('\nVersion ' + packageJson.version + ' ') === -1) {
-                grunt.fail.warn('Version not documented in README.md correctly.\n' +
-                    'package.json declares: ' + packageJson.version + '\n' +
-                    'README.md declares something different.');
+        var readmeText = grunt.file.read('README.md', { encoding: 'UTF-8' });
+        var packageJson = grunt.file.readJSON('package.json', { encoding: 'UTF-8' });
+        getAllRuleNames({ skipTsLintRules: true }).forEach(function(ruleName) {
+            if (readmeText.indexOf(ruleName) === -1) {
+                grunt.fail.warn('A rule was found that is not documented in README.md: ' + ruleName);
             }
         });
+        getAllFormatterNames().forEach(function(formatterName) {
+            if (readmeText.indexOf(formatterName) === -1) {
+                grunt.fail.warn('A formatter was found that is not documented in README.md: ' + formatterName);
+            }
+        });
+
+        if (readmeText.indexOf('\nVersion ' + packageJson.version + ' ') === -1) {
+            grunt.fail.warn('Version not documented in README.md correctly.\n' +
+                'package.json declares: ' + packageJson.version + '\n' +
+                'README.md declares something different.');
+        }
+    });
 
     grunt.registerTask('validate-config', 'A task that makes sure all the rules in the project are defined to run during the build.', function () {
 
@@ -335,7 +335,7 @@ module.exports = function (grunt) {
             'no-empty-line-after-opening-brace': true
         };
         var errors = [];
-        getAllRuleNames().forEach(function (ruleName) {
+        getAllRuleNames().forEach(function(ruleName) {
             if (rulesToSkip[ruleName]) {
                 return;
             }
@@ -358,7 +358,7 @@ module.exports = function (grunt) {
         const procedure = 'TSLint Procedure';
         const header = 'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
             'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
-        getAllRules().forEach(function (ruleFile) {
+        getAllRules().forEach(function(ruleFile) {
             const metadata = getMetadataFromFile(ruleFile);
 
             const issueClass = getMetadataValue(metadata, 'issueClass');
@@ -379,7 +379,7 @@ module.exports = function (grunt) {
         });
         rows.sort();
         rows.unshift(header);
-        grunt.file.write('tslint-warnings.csv', rows.join('\n'), { encoding: 'UTF-8' });
+        grunt.file.write('tslint-warnings.csv', rows.join('\n'), {encoding: 'UTF-8'});
 
     });
 
@@ -387,7 +387,7 @@ module.exports = function (grunt) {
 
         const groupedRows = {};
 
-        getAllRules().forEach(function (ruleFile) {
+        getAllRules().forEach(function(ruleFile) {
             const metadata = getMetadataFromFile(ruleFile);
 
             const groupName = getMetadataValue(metadata, 'group');
@@ -408,20 +408,20 @@ module.exports = function (grunt) {
 
         _.values(groupedRows).forEach(function (element) { element.sort(); });
 
-        let data = grunt.file.read('./templates/recommended_ruleset.js.snippet', { encoding: 'UTF-8' });
-        data = data.replace('%security_rules%', groupedRows['Security'].join('\n'));
-        data = data.replace('%correctness_rules%', groupedRows['Correctness'].join('\n'));
-        data = data.replace('%clarity_rules%', groupedRows['Clarity'].join('\n'));
-        data = data.replace('%whitespace_rules%', groupedRows['Whitespace'].join('\n'));
-        data = data.replace('%configurable_rules%', groupedRows['Configurable'].join('\n'));
-        data = data.replace('%deprecated_rules%', groupedRows['Deprecated'].join('\n'));
+        let data = grunt.file.read('./templates/recommended_ruleset.js.snippet', {encoding: 'UTF-8'});
+        data = data.replace('%security_rules%',       groupedRows['Security'].join('\n'));
+        data = data.replace('%correctness_rules%',    groupedRows['Correctness'].join('\n'));
+        data = data.replace('%clarity_rules%',        groupedRows['Clarity'].join('\n'));
+        data = data.replace('%whitespace_rules%',     groupedRows['Whitespace'].join('\n'));
+        data = data.replace('%configurable_rules%',   groupedRows['Configurable'].join('\n'));
+        data = data.replace('%deprecated_rules%',     groupedRows['Deprecated'].join('\n'));
         data = data.replace('%accessibilityy_rules%', groupedRows['Accessibility'].join('\n'));
-        grunt.file.write('recommended_ruleset.js', data, { encoding: 'UTF-8' });
+        grunt.file.write('recommended_ruleset.js', data, {encoding: 'UTF-8'});
     });
 
     grunt.registerTask('generate-default-tslint-json', 'A task that converts recommended_ruleset.js to ./dist/build/tslint.json', function () {
         const data = require('./recommended_ruleset.js');
-        grunt.file.write('./dist/build/tslint.json', JSON.stringify(data, null, 2), { encoding: 'UTF-8' });
+        grunt.file.write('./dist/build/tslint.json', JSON.stringify(data, null, 2), {encoding: 'UTF-8'});
     });
 
     grunt.registerTask('create-rule', 'A task that creates a new rule from the rule templates. --rule-name parameter required', function () {
@@ -442,15 +442,15 @@ module.exports = function (grunt) {
             var testFileName = './tests/' + ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Tests.ts';
             var walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
 
-            var ruleTemplateText = grunt.file.read('./templates/rule.snippet', { encoding: 'UTF-8' });
-            var testTemplateText = grunt.file.read('./templates/rule-tests.snippet', { encoding: 'UTF-8' });
+            var ruleTemplateText = grunt.file.read('./templates/rule.snippet', {encoding: 'UTF-8'});
+            var testTemplateText = grunt.file.read('./templates/rule-tests.snippet', {encoding: 'UTF-8'});
 
-            grunt.file.write(sourceFileName, applyTemplates(ruleTemplateText), { encoding: 'UTF-8' });
-            grunt.file.write(testFileName, applyTemplates(testTemplateText), { encoding: 'UTF-8' });
+            grunt.file.write(sourceFileName, applyTemplates(ruleTemplateText), {encoding: 'UTF-8'});
+            grunt.file.write(testFileName, applyTemplates(testTemplateText), {encoding: 'UTF-8'});
 
-            var currentRuleset = grunt.file.readJSON('./tslint.json', { encoding: 'UTF-8' });
+            var currentRuleset = grunt.file.readJSON('./tslint.json', {encoding: 'UTF-8'});
             currentRuleset.rules[ruleName] = true;
-            grunt.file.write('./tslint.json', JSON.stringify(currentRuleset, null, 2), { encoding: 'UTF-8' });
+            grunt.file.write('./tslint.json', JSON.stringify(currentRuleset, null, 2), {encoding: 'UTF-8'});
         }
     });
 

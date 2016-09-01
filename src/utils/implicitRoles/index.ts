@@ -37,7 +37,7 @@ import { THEAD } from './thead';
 import { UL } from './ul';
 
 /**
- * All functions of getting implicit role.
+ * Export function for getting implicit role based on tag name.
  */
 export {
 A,

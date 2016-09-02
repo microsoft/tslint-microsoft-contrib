@@ -168,6 +168,12 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
+                        cwd: 'dist/src',
+                        src: ['**/*.json'],
+                        dest: 'dist/build'
+                    },
+                    {
+                        expand: true,
                         cwd: 'dist/tests',
                         src: ['TestHelper.js', 'TestHelper.d.ts'],
                         dest: 'dist/build'
@@ -185,6 +191,12 @@ module.exports = function(grunt) {
                         dest: 'dist/build'
                     }
                 ]
+            },
+            json: {
+                expand: true,
+                cwd: '.',
+                src: ['src/**/*.json'],
+                dest: 'dist'
             }
         },
 
@@ -444,7 +456,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',
-        'ts',
+        'copy:json',
+        'ts:default',
         'mochaTest',
         'tslint',
         'validate-documentation',

@@ -10,11 +10,11 @@ import { getPropName, getStringLiteral } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const roleSchema: IRoleSchema = require('./utils/attributes/roleSchema.json');
-const roles: IRole[] = roleSchema.roles;
+const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
+const ROLES: IRole[] = ROLE_SCHEMA.roles;
 
 // The array of non-abstract valid rules.
-const validRoles: string[] = Object.keys(roles).filter(role => roles[role].isAbstract === false);
+const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => ROLES[role].isAbstract === false);
 
 export function getFailureStringUndefinedRole(): string {
   return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +
@@ -62,7 +62,7 @@ class A11yRoleRuleWalker extends Lint.RuleWalker {
       // just because this rule is not checking if it is using multiple role definition.
       const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
 
-      if (normalizedValues.some(value => value && validRoles.indexOf(value) === -1)) {
+      if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
         this.addFailure(this.createFailure(
           node.getStart(),
           node.getWidth(),

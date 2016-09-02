@@ -7,6 +7,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
 import {
   getJsxAttributesFromJsxElement,
@@ -44,6 +45,19 @@ A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/r
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata: ExtendedMetadata = {
+    ruleName: 'a11y-role-has-required-aria-props',
+    type: 'maintainability',
+    description: 'Elements with aria roles must have all required attributes according to the role.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+  };
+
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     return sourceFile.languageVariant === ts.LanguageVariant.JSX
       ? this.applyWithWalker(new A11yRoleHasRequiredAriaPropsWalker(sourceFile, this.getOptions()))

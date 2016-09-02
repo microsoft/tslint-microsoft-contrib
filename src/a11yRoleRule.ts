@@ -6,6 +6,8 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
+
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName, getStringLiteral } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
 
@@ -28,6 +30,19 @@ https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata: ExtendedMetadata = {
+    ruleName: 'a11y-role',
+    type: 'maintainability',
+    description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+  };
+
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     return sourceFile.languageVariant === ts.LanguageVariant.JSX
       ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))

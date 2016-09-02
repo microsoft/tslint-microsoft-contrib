@@ -7,6 +7,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName } from './utils/JsxAttribute';
 import { IAria } from './utils/attributes/IAria';
 
@@ -20,6 +21,19 @@ https://www.w3.org/TR/2014/REC-wai-aria-20140320/states_and_properties#state_pro
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata: ExtendedMetadata = {
+    ruleName: 'a11y-props',
+    type: 'maintainability',
+    description: 'Enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+  };
+
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     return sourceFile.languageVariant === ts.LanguageVariant.JSX
       ? this.applyWithWalker(new A11yPropsWalker(sourceFile, this.getOptions()))

@@ -29,37 +29,37 @@ describe('a11yPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
+            startPosition: { character: 16, line: 3 },
             failure: getFailureString('aria-')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
+            startPosition: { character: 16, line: 4 },
             failure: getFailureString('Aria-')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
+            startPosition: { character: 16, line: 5 },
             failure: getFailureString('aria-a')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 4 },
+            startPosition: { character: 16, line: 6 },
             failure: getFailureString('aria-lable')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 5 },
+            startPosition: { character: 16, line: 7 },
             failure: getFailureString('aria-la')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 19, line: 5 },
+            startPosition: { character: 29, line: 7 },
             failure: getFailureString('aria-unchecked')
           }
         ]

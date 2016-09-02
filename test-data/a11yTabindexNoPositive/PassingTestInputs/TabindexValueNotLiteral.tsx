@@ -1,3 +1,6 @@
-<div tabindex={ value }/>
-<div tabindex={ tabindex }></div>
-<div tabindex={ 0 + 1 } />
+import React = require('react');
+
+let value, tabindex;
+const e = <div tabindex={ value }/>
+const j = <div tabindex={ tabindex }></div>
+const o = <div tabindex={ 0 + 1 } />

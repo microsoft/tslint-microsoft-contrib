@@ -34,30 +34,42 @@ describe('a11yTabindexNoPositive', () => {
         ruleName,
         fileName,
         [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
-            failure: getFailureString()
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
-            failure: getFailureString()
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
-            failure: getFailureString()
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 4 },
-            failure: getFailureString()
-          }
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 3 }
+            },
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 4 }
+            },
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 5 }
+            },
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 6 }
+            },
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 7 }
+            },
+            {
+                "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
+                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "ruleName": "react-a11y-tabindex-no-positive",
+                "startPosition": { "character": 16, "line": 8 }
+            }
         ]
       );
     });
@@ -72,19 +84,19 @@ describe('a11yTabindexNoPositive', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
+            startPosition: { character: 16, line: 3 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
+            startPosition: { character: 16, line: 4 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
+            startPosition: { character: 16, line: 5 },
             failure: getFailureString()
           }
         ]
@@ -101,31 +113,31 @@ describe('a11yTabindexNoPositive', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
+            startPosition: { character: 16, line: 3 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
+            startPosition: { character: 16, line: 4 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
+            startPosition: { character: 16, line: 5 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 4 },
+            startPosition: { character: 16, line: 6 },
             failure: getFailureString()
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 5 },
+            startPosition: { character: 16, line: 7 },
             failure: getFailureString()
           }
         ]

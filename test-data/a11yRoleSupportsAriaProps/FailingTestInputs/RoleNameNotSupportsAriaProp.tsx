@@ -1,8 +1,10 @@
+import React = require('react');
+
 // only one role.
-<div role='button' aria-checked />
+const a = <div role='button' aria-checked />
 
 // Multiple roles.
-<div role='button img' aria-label aria-checked />
+const b = <div role='button img' aria-label aria-checked />
 
 // when there have role prop and implicit role, it will use role prop value.
-<input role='button' type='checkbox' aria-checked />
+const c = <input role='button' type='checkbox' aria-checked />

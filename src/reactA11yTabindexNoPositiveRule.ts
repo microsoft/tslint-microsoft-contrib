@@ -6,7 +6,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getPropName, getStringLiteral, getNumericLiteral } from './utils/JsxAttribute';
+import { getPropName, getStringLiteral, getNumericLiteral, isEmpty } from './utils/JsxAttribute';
 
 export function getFailureString(): string {
   return 'The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.';
@@ -44,17 +44,11 @@ class A11yTabindexNoPositiveWalker extends Lint.RuleWalker {
 
     // In case the attribute has no value of empty value.
     if (literalString === '') {
-      this.addFailure(this.createFailure(
-        node.getStart(),
-        node.getWidth(),
-        getFailureString()
-      ));
+      this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
     } else if (literalString && literalString !== '-1' && literalString !== '0') {
-      this.addFailure(this.createFailure(
-        node.getStart(),
-        node.getWidth(),
-        getFailureString()
-      ));
+      this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+    } else if (isEmpty(node)) {
+      this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
     }
   }
 }

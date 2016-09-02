@@ -1,30 +1,32 @@
-<aside aria-expanded />
-<article aria-expanded />
-<body aria-expanded />
-<button aria-pressed />
-<datalist aria-expanded />
-<details aria-expanded />
-<dialog aria-expanded />
-<dl aria-expanded />
-<form aria-hidden />
-<h1 aria-hidden />
-<h2 aria-hidden />
-<h3 aria-hidden />
-<h4 aria-hidden />
-<h5 aria-hidden />
-<h6 aria-hidden />
-<hr aria-hidden />
-<li aria-expanded />
-<meter aria-atomic />
-<nav aria-expanded />
-<ol aria-expanded />
-<option aria-atomic />
-<output aria-expanded />
-<progress aria-atomic />
-<section aria-expanded />
-<select aria-expanded />
-<tbody aria-expanded />
-<textarea aria-hidden />
-<tfoot aria-expanded />
-<thead aria-expanded />
-<ul aria-expanded />
+import React = require('react');
+
+const a = <aside aria-expanded />
+const b = <article aria-expanded />
+const c = <body aria-expanded />
+const d = <button aria-pressed />
+const e = <datalist aria-expanded />
+const f = <details aria-expanded />
+const g = <dialog aria-expanded />
+const h = <dl aria-expanded />
+const i = <form aria-hidden />
+const j = <h1 aria-hidden />
+const k = <h2 aria-hidden />
+const l = <h3 aria-hidden />
+const m = <h4 aria-hidden />
+const n = <h5 aria-hidden />
+const o = <h6 aria-hidden />
+const p = <hr aria-hidden />
+const q = <li aria-expanded />
+const r = <meter aria-atomic />
+const s = <nav aria-expanded />
+const t = <ol aria-expanded />
+const a1 = <option aria-atomic />
+const b1 = <output aria-expanded />
+const c1 = <progress aria-atomic />
+const d1 = <section aria-expanded />
+const e1 = <select aria-expanded />
+const f1 = <tbody aria-expanded />
+const g1 = <textarea aria-hidden />
+const h1 = <tfoot aria-expanded />
+const i1 = <thead aria-expanded />
+const j1 = <ul aria-expanded />

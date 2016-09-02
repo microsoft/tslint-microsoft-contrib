@@ -1,4 +1,6 @@
-<div tabindex='0' />
-<div TaBindex='-1' />
-<div tabindex={ 0 } />
-<div tabindex={ -1 } />
+import React = require('react');
+
+const d = <div tabindex='0' />
+const a = <div TaBindex='-1' />
+const l = <div tabindex={ 0 } />
+const p = <div tabindex={ -1 } />

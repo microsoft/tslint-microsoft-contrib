@@ -123,19 +123,19 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 5 },
+            startPosition: { character: 11, line: 7 },
             failure: getFailureStringForNotImplicitRole(['button', 'img'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 8 },
+            startPosition: { character: 11, line: 10 },
             failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
           }
         ]
@@ -152,37 +152,37 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForImplicitRole('a', 'link', ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForImplicitRole('area', 'link', ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 3 },
+            startPosition: { character: 11, line: 5 },
             failure: getFailureStringForImplicitRole('link', 'link', ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 4 },
+            startPosition: { character: 11, line: 6 },
             failure: getFailureStringForImplicitRole('img', 'img', ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 5 },
+            startPosition: { character: 11, line: 7 },
             failure: getFailureStringForImplicitRole('menu', 'toolbar', ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 6 },
+            startPosition: { character: 11, line: 8 },
             failure: getFailureStringForImplicitRole('aside', 'complementary', ['aria-checked'])
           }
         ]

@@ -14,6 +14,7 @@ import {
   isJsxSelfClosingElement,
   isJsxOpeningElement
 } from './TypeGuard';
+import {SyntaxKind} from './SyntaxKind';
 
 export function getPropName(node: ts.JsxAttribute): string {
   if (!isJsxAttribute(node)) {
@@ -50,6 +51,28 @@ export function getStringLiteral(node: ts.JsxAttribute): string {
   } else {
     return undefined;
   }
+}
+
+export function isEmpty(node: ts.JsxAttribute): boolean {
+  const initializer: ts.Expression = node.initializer;
+
+  if (initializer == null) {
+    return true;
+  } else if (isStringLiteral(initializer)) {
+    return initializer.text.trim() === '';
+  } else if (initializer.kind === SyntaxKind.current().Identifier) {
+    return initializer.getText() === 'undefined';
+  } else if (initializer.kind === SyntaxKind.current().NullKeyword) {
+    return true;
+  } else if ((<any>initializer).expression != null) {
+    const expression: ts.Expression = (<any>initializer).expression;
+    if (expression.kind === SyntaxKind.current().Identifier) {
+      return expression.getText() === 'undefined';
+    } else if (expression.kind === SyntaxKind.current().NullKeyword) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**

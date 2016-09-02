@@ -6,7 +6,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getPropName, getStringLiteral } from './utils/JsxAttribute';
+import { getPropName, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
@@ -63,18 +63,10 @@ class A11yRoleRuleWalker extends Lint.RuleWalker {
       const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
 
       if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
-        this.addFailure(this.createFailure(
-          node.getStart(),
-          node.getWidth(),
-          getFailureStringInvalidRole(roleValue)
-        ));
+        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue)));
       }
-    } else if (roleValue === '') {
-      this.addFailure(this.createFailure(
-        node.getStart(),
-        node.getWidth(),
-        getFailureStringUndefinedRole()
-      ));
+    } else if (roleValue === '' || isEmpty(node)) {
+      this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringUndefinedRole()));
     }
 
     super.visitJsxAttribute(node);

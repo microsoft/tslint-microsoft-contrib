@@ -1,2 +1,4 @@
-<div role='combobox' />
-<div role={ 'combobox' } expanded />
+import React = require('react');
+
+const a = <div role='combobox' />
+const b = <div role={ 'combobox' } expanded />

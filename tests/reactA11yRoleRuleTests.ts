@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringInvalidRole, getFailureStringUndefinedRole } from '../src/reactA11yRoleRule';
+import { getFailureStringInvalidRole } from '../src/reactA11yRoleRule';
 
 /**
  * Unit tests for a11y-role
@@ -42,19 +42,19 @@ describe('a11yRoleRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
+            startPosition: { character: 16, line: 3 },
             failure: getFailureStringInvalidRole('myRoleName')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
+            startPosition: { character: 16, line: 4 },
             failure: getFailureStringInvalidRole('wrong')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
+            startPosition: { character: 16, line: 5 },
             failure: getFailureStringInvalidRole('role')
           }
         ]);
@@ -70,19 +70,19 @@ describe('a11yRoleRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 1 },
+            startPosition: { character: 16, line: 3 },
             failure: getFailureStringInvalidRole('input')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 2 },
+            startPosition: { character: 16, line: 4 },
             failure: getFailureStringInvalidRole('landmark')
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 6, line: 3 },
+            startPosition: { character: 16, line: 5 },
             failure: getFailureStringInvalidRole('structure')
           }
         ]);
@@ -95,24 +95,41 @@ describe('a11yRoleRule', () => {
         ruleName,
         fileName,
         [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 4 },
-            failure: getFailureStringUndefinedRole()
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 5 },
-            failure: getFailureStringUndefinedRole()
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 6, line: 6 },
-            failure: getFailureStringUndefinedRole()
-          }
+            {
+                "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
+                "_definitions, or simply remove this attribute",
+                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "ruleName": "react-a11y-role",
+                "startPosition": { "character": 16, "line": 6 }
+            },
+            {
+                "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
+                "_definitions, or simply remove this attribute",
+                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "ruleName": "react-a11y-role",
+                "startPosition": { "character": 16, "line": 7 }
+            },
+            {
+                "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
+                "_definitions, or simply remove this attribute",
+                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "ruleName": "react-a11y-role",
+                "startPosition": { "character": 16, "line": 8 }
+            },
+            {
+                "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
+                "_definitions, or simply remove this attribute",
+                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "ruleName": "react-a11y-role",
+                "startPosition": { "character": 16, "line": 9 }
+            },
+            {
+                "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
+                "_definitions, or simply remove this attribute",
+                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "ruleName": "react-a11y-role",
+                "startPosition": { "character": 16, "line": 10 }
+            }
         ]);
     });
   });

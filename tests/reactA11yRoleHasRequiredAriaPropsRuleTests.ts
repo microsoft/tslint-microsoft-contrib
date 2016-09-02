@@ -44,7 +44,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(
               ['slider'],
               ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -53,7 +53,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(
               ['slider'],
               ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -62,7 +62,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 3 },
+            startPosition: { character: 11, line: 5 },
             failure: getFailureStringForNotImplicitRole(
               ['slider'],
               ['aria-valuenow']
@@ -82,7 +82,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(
               ['spinbutton'],
               ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -91,7 +91,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(
               ['button', 'spinbutton'],
               ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -100,7 +100,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 3 },
+            startPosition: { character: 11, line: 5 },
             failure: getFailureStringForNotImplicitRole(
               ['spinbutton'],
               ['aria-valuemin']
@@ -120,13 +120,13 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(['checkbox'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(['checkbox'], ['aria-checked'])
           }
         ]
@@ -143,13 +143,13 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(['combobox'], ['aria-expanded'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(['combobox'], ['aria-expanded'])
           }
         ]
@@ -166,7 +166,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(
               ['scrollbar'],
               ['aria-controls', 'aria-orientation', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -175,7 +175,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(
               ['scrollbar'],
               ['aria-controls', 'aria-orientation', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow']
@@ -184,7 +184,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 3 },
+            startPosition: { character: 11, line: 5 },
             failure: getFailureStringForNotImplicitRole(
               ['scrollbar'],
               ['aria-valuemin', 'aria-valuenow']
@@ -193,7 +193,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 4 },
+            startPosition: { character: 11, line: 6 },
             failure: getFailureStringForNotImplicitRole(
               ['scrollbar'],
               ['aria-valuenow']
@@ -202,7 +202,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 5 },
+            startPosition: { character: 11, line: 7 },
             failure: getFailureStringForNotImplicitRole(
               ['scrollbar'],
               ['aria-controls']
@@ -222,13 +222,13 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 1 },
+            startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(['button', 'checkbox'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 2 },
+            startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(
               ['button', 'checkbox', 'combobox'],
               ['aria-checked', 'aria-expanded']
@@ -237,13 +237,13 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 3 },
+            startPosition: { character: 11, line: 5 },
             failure: getFailureStringForNotImplicitRole(['button', 'checkbox', 'combobox'], ['aria-expanded'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 1, line: 4 },
+            startPosition: { character: 11, line: 6 },
             failure: getFailureStringForNotImplicitRole(['button', 'checkbox', 'combobox'], ['aria-checked'])
           }
         ]

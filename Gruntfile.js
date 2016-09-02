@@ -457,7 +457,7 @@ module.exports = function(grunt) {
     grunt.registerTask('all', 'Performs a cleanup and a full build with all tasks', [
         'clean',
         'copy:json',
-        'ts:default',
+        'ts',
         'mochaTest',
         'tslint',
         'validate-documentation',

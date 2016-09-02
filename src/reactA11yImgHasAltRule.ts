@@ -5,7 +5,8 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import {
   getAllAttributesFromJsxElement,
   getJsxAttributesFromJsxElement,
-  getStringLiteral
+  getStringLiteral,
+  isEmpty
 } from './utils/JsxAttribute';
 import { isJsxSpreadAttribute } from './utils/TypeGuard';
 
@@ -87,7 +88,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         node.getWidth(),
         getFailureStringNoAlt(tagName)
       ));
-    } else if (getStringLiteral(altProp) === '') {
+    } else if (isEmpty(altProp) || getStringLiteral(altProp) === '') {
       this.addFailure(this.createFailure(
         altProp.getStart(),
         altProp.getWidth(),

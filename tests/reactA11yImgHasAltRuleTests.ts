@@ -50,13 +50,13 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 1 },
+              startPosition: { character: 11, line: 3 },
               failure: getFailureStringNoAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 2 },
+              startPosition: { character: 11, line: 4 },
               failure: getFailureStringNoAlt('img')
             }
           ]
@@ -73,25 +73,25 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 1 },
+              startPosition: { character: 16, line: 3 },
               failure: getFailureStringEmptyAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 2 },
+              startPosition: { character: 16, line: 4 },
               failure: getFailureStringEmptyAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 3 },
+              startPosition: { character: 16, line: 5 },
               failure: getFailureStringEmptyAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 4 },
+              startPosition: { character: 16, line: 6 },
               failure: getFailureStringEmptyAlt('img')
             }
           ]
@@ -136,25 +136,25 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 1 },
+              startPosition: { character: 11, line: 4 },
               failure: getFailureStringNoAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 2 },
+              startPosition: { character: 11, line: 5 },
               failure: getFailureStringNoAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 3 },
+              startPosition: { character: 11, line: 6 },
               failure: getFailureStringNoAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 1, line: 4 },
+              startPosition: { character: 11, line: 7 },
               failure: getFailureStringNoAlt('img')
             }
           ]
@@ -172,37 +172,37 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 10, line: 1 },
+              startPosition: { character: 20, line: 4 },
               failure: getFailureStringEmptyAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 10, line: 2 },
+              startPosition: { character: 20, line: 5 },
               failure: getFailureStringEmptyAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 10, line: 3 },
+              startPosition: { character: 20, line: 6 },
               failure: getFailureStringEmptyAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 4 },
+              startPosition: { character: 16, line: 7 },
               failure: getFailureStringEmptyAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 5 },
+              startPosition: { character: 16, line: 8 },
               failure: getFailureStringEmptyAlt('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 6, line: 6 },
+              startPosition: { character: 16, line: 9 },
               failure: getFailureStringEmptyAlt('img')
             }
           ]

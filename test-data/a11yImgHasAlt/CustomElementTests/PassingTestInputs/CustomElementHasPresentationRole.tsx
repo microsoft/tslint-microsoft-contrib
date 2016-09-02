@@ -1,6 +1,10 @@
-<Picture role='presentation' />
-<Picture role={'presentation'} alt='' />
-<Picture role='button presentation' />
-<img role='presentation' />
-<img role={'presentation'} alt={''} />
-<img role='button presentation' />
+import React = require('react');
+
+let Picture;
+
+const a = <Picture role='presentation' />
+const b = <Picture role={'presentation'} alt='' />
+const c = <Picture role='button presentation' />
+const d = <img role='presentation' />
+const e = <img role={'presentation'} alt={''} />
+const f = <img role='button presentation' />

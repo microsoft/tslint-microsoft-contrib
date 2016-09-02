@@ -1,16 +1,18 @@
-<div aria-atomic />
-<div aria-busy />
-<div aria-controls />
-<div aria-describedby />
-<div aria-disabled />
-<div aria-dropeffect />
-<div aria-flowto />
-<div aria-grabbed />
-<div aria-haspopup />
-<div aria-hidden />
-<div aria-invalid />
-<div aria-label />
-<div aria-labelledby />
-<div aria-live />
-<div aria-owns />
-<div aria-relevant />
+import React = require('react');
+
+const a = <div aria-atomic />
+const b = <div aria-busy />
+const c = <div aria-controls />
+const d = <div aria-describedby />
+const e = <div aria-disabled />
+const f = <div aria-dropeffect />
+const g = <div aria-flowto />
+const h = <div aria-grabbed />
+const i = <div aria-haspopup />
+const j = <div aria-hidden />
+const k = <div aria-invalid />
+const l = <div aria-label />
+const m = <div aria-labelledby />
+const n = <div aria-live />
+const o = <div aria-owns />
+const p = <div aria-relevant />

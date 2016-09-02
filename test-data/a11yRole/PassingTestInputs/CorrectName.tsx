@@ -1,4 +1,6 @@
-<div role='region' />
-<div role='button' />
-<div role='list' />
-<div role={ 'link' } />
+import React = require('react');
+
+const a = <div role='region' />
+const b = <div role='button' />
+const c = <div role='list' />
+const d = <div role={ 'link' } />

@@ -1,2 +1,4 @@
-<div role='checkbox' />
-<div role={ 'checkbox' } checked='true' />
+import React = require('react');
+
+const a = <div role='checkbox' />
+const b = <div role={ 'checkbox' } checked='true' />

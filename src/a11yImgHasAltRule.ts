@@ -6,6 +6,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
+
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import {
   getAllAttributesFromJsxElement,

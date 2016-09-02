@@ -6,6 +6,8 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
+
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
 import { getJsxAttributesFromJsxElement, getStringLiteral } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
@@ -30,6 +32,19 @@ export function getFailureStringForImplicitRole(tagName: string, roleName: strin
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata: ExtendedMetadata = {
+    ruleName: 'a11y-role-supports-aria-props',
+    type: 'maintainability',
+    description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+  };
+
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     return sourceFile.languageVariant === ts.LanguageVariant.JSX
       ? this.applyWithWalker(new A11yRoleSupportsAriaPropsWalker(sourceFile, this.getOptions()))

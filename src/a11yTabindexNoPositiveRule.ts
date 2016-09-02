@@ -6,6 +6,8 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
+
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName, getStringLiteral, getNumericLiteral } from './utils/JsxAttribute';
 
 export function getFailureString(): string {
@@ -13,6 +15,19 @@ export function getFailureString(): string {
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata: ExtendedMetadata = {
+    ruleName: 'a11y-tabindex-no-positive',
+    type: 'maintainability',
+    description: 'Enforce tabindex value is **not greater than zero**.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+  };
+
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
     return sourceFile.languageVariant === ts.LanguageVariant.JSX
       ? this.applyWithWalker(new A11yTabindexNoPositiveWalker(sourceFile, this.getOptions()))

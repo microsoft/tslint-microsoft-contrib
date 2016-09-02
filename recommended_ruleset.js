@@ -128,12 +128,6 @@ module.exports = {
         "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
-        "react-a11y-img-has-alt": true,
-        "react-a11y-props": true,
-        "react-a11y-role": true,
-        "react-a11y-role-has-required-aria-props": true,
-        "react-a11y-role-supports-aria-props": true,
-        "react-a11y-tabindex-no-positive": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
         "variable-name": true,
@@ -142,8 +136,14 @@ module.exports = {
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
+        "react-a11y-img-has-alt": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,
+        "react-a11y-props": true,
+        "react-a11y-role": true,
+        "react-a11y-role-has-required-aria-props": true,
+        "react-a11y-role-supports-aria-props": true,
+        "react-a11y-tabindex-no-positive": true,
         "react-a11y-titles": true,
 
         /**

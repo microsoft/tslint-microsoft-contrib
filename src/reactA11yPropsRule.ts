@@ -28,8 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     issueType: 'Warning',
     severity: 'Important',
     level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
+    group: 'Accessibility'
   };
 
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

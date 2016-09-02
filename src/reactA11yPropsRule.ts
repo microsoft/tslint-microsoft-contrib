@@ -10,7 +10,7 @@ import { getPropName } from './utils/JsxAttribute';
 import { IAria } from './utils/attributes/IAria';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const aria: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
+const ARIA_SCHEMA: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 
 export function getFailureString(name: string): string {
   return `This attribute name '${name}' is an invalid ARIA attribute. \
@@ -46,7 +46,7 @@ class A11yPropsWalker extends Lint.RuleWalker {
       return;
     }
 
-    if (!aria[name.toLowerCase()]) {
+    if (!ARIA_SCHEMA[name.toLowerCase()]) {
       this.addFailure(this.createFailure(
         node.getStart(),
         node.getWidth(),

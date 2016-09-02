@@ -15,13 +15,13 @@ import { IRole, IRoleSchema } from './utils/attributes/IRole';
 import { IAria } from './utils/attributes/IAria';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const roleSchema: IRoleSchema = require('./utils/attributes/roleSchema.json');
-const roles: IRole[] = roleSchema.roles;
+const ROLES_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
+const ROLES: IRole[] = ROLES_SCHEMA.roles;
 
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const ariaAttributes: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
-const roleString: string = 'role';
+const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
+const ROLE_STRING: string = 'role';
 
 export function getFailureStringForNotImplicitRole(
   roleNamesInElement: string[],
@@ -75,13 +75,13 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
 
   private checkJsxElement(node: ts.JsxOpeningElement): void {
     const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
-    const roleProp: ts.JsxAttribute = attributesInElement[roleString];
+    const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
 
     // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
     const roleValue: string = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
     const isImplicitRole: boolean = !roleProp && !!roleValue;
     const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
-      .filter((role: string) => !!roles[role]);
+      .filter((role: string) => !!ROLES[role]);
 
     if (normalizedRoles.length === 0) {
       return;
@@ -90,11 +90,11 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
     let requiredAttributeNames: string[] = [];
 
     normalizedRoles.forEach((role: string) => {
-      requiredAttributeNames = requiredAttributeNames.concat(roles[role].requiredProps || []);
+      requiredAttributeNames = requiredAttributeNames.concat(ROLES[role].requiredProps || []);
     });
 
     const attributeNamesInElement: string[] = Object.keys(attributesInElement)
-      .filter((attributeName: string) => !!ariaAttributes[attributeName.toLowerCase()]);
+      .filter((attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]);
 
     // Get the list of missing required aria-* attributes in current element.
     const missingAttributes: string[] = requiredAttributeNames

@@ -1,7 +1,5 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yRoleSupportsAriaPropsRule tslint rule for accessibility.
+ * Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role
  */
 
 import * as ts from 'typescript';
@@ -33,7 +31,7 @@ export function getFailureStringForImplicitRole(tagName: string, roleName: strin
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-role-supports-aria-props',
+    ruleName: 'react-a11y-role-supports-aria-props',
     type: 'maintainability',
     description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
     options: null,

@@ -1,7 +1,5 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yTabindexNoPositiveRule tslint rule for accessibility.
+ * Enforce tabindex value is **not greater than zero**
  */
 
 import * as ts from 'typescript';
@@ -16,7 +14,7 @@ export function getFailureString(): string {
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-tabindex-no-positive',
+    ruleName: 'react-a11y-tabindex-no-positive',
     type: 'maintainability',
     description: 'Enforce tabindex value is **not greater than zero**.',
     options: null,

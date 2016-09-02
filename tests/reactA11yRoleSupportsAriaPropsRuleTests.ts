@@ -2,13 +2,13 @@ import { TestHelper } from './TestHelper';
 import {
   getFailureStringForImplicitRole,
   getFailureStringForNotImplicitRole
-} from '../src/a11yRoleSupportsAriaPropsRule';
+} from '../src/reactA11yRoleSupportsAriaPropsRule';
 
 /**
  * Unit test for a11y-role-supports-aria-props rule.
  */
 describe('a11yRoleSupportsAriaPropsRule', () => {
-  const ruleName: string = 'a11y-role-supports-aria-props';
+  const ruleName: string = 'react-a11y-role-supports-aria-props';
 
   describe('should pass', () => {
     describe('implicit role test', () => {

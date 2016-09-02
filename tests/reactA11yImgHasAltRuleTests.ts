@@ -1,11 +1,11 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringNoAlt, getFailureStringEmptyAlt } from '../src/a11yImgHasAltRule';
+import { getFailureStringNoAlt, getFailureStringEmptyAlt } from '../src/reactA11yImgHasAltRule';
 
 /**
  * Unit test for a11y-img-has-alt rule
  */
 describe('a11yImgHasAlt', () => {
-  const ruleName: string = 'a11y-img-has-alt';
+  const ruleName: string = 'react-a11y-img-has-alt';
 
   describe('default tests', () => {
     describe('should pass', () => {

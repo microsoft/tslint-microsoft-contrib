@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringInvalidRole, getFailureStringUndefinedRole } from '../src/a11yRoleRule';
+import { getFailureStringInvalidRole, getFailureStringUndefinedRole } from '../src/reactA11yRoleRule';
 
 /**
  * Unit tests for a11y-role
@@ -7,7 +7,7 @@ import { getFailureStringInvalidRole, getFailureStringUndefinedRole } from '../s
 
 // tslint:disable:no-empty
 describe('a11yRoleRule', () => {
-  const ruleName: string = 'a11y-role';
+  const ruleName: string = 'react-a11y-role';
 
   describe('should pass', () => {
     it('when the role name is correct', () => {

@@ -1,9 +1,3 @@
-/**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yImgHasAltRule tslint rule for accessibility.
- */
-
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
@@ -29,9 +23,12 @@ Add more details in 'alt' attribute or use role='presentation' for presentationa
 A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
 }
 
+/**
+ * Enforces that img elements have alt text.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-img-has-alt',
+    ruleName: 'react-a11y-img-has-alt',
     type: 'maintainability',
     description: 'Enforce that an `img` element contains the `alt` attribute or `role=\'presentation\'` for decorative image.',
     options: 'string[]',

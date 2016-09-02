@@ -1,7 +1,5 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yRoleHasRequiredAriaPropsRule tslint rule for accessibility.
+ * Elements with aria roles must have all required attributes according to the role
  */
 
 import * as ts from 'typescript';
@@ -46,7 +44,7 @@ A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/r
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-role-has-required-aria-props',
+    ruleName: 'react-a11y-role-has-required-aria-props',
     type: 'maintainability',
     description: 'Elements with aria roles must have all required attributes according to the role.',
     options: null,

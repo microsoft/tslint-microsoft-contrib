@@ -1,11 +1,11 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringForNotImplicitRole } from '../src/a11yRoleHasRequiredAriaPropsRule';
+import { getFailureStringForNotImplicitRole } from '../src/reactA11yRoleHasRequiredAriaPropsRule';
 
 /**
  * Unit test for a11y-role-has-required-aria-props rule
  */
 describe('a11yRoleHasRequiredAriaPropsRule', () => {
-  const ruleName: string = 'a11y-role-has-required-aria-props';
+  const ruleName: string = 'react-a11y-role-has-required-aria-props';
 
   describe('should pass', () => {
     const fileDirectory: string = 'test-data/a11yRoleHasRequiredAriaProps/PassingTestInputs/';

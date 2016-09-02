@@ -1,7 +1,5 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yRole tslint rule for accessibility.
+ * Elements with aria roles must use a **valid**, **non-abstract** aria role
  */
 
 import * as ts from 'typescript';
@@ -31,7 +29,7 @@ https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-role',
+    ruleName: 'react-a11y-role',
     type: 'maintainability',
     description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
     options: null,

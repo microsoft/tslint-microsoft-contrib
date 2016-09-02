@@ -1,7 +1,5 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
- * @a11yPropsRule tslint rule for accessibility.
+ * Enforce all `aria-*` attributes are valid.
  */
 
 import * as ts from 'typescript';
@@ -22,7 +20,7 @@ https://www.w3.org/TR/2014/REC-wai-aria-20140320/states_and_properties#state_pro
 
 export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
-    ruleName: 'a11y-props',
+    ruleName: 'react-a11y-props',
     type: 'maintainability',
     description: 'Enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute.',
     options: null,

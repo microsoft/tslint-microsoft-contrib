@@ -1,11 +1,11 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/a11yTabindexNoPositiveRule';
+import { getFailureString } from '../src/reactA11yTabindexNoPositiveRule';
 
 /**
  * Unit test for tabindex-no-positive
  */
 describe('a11yTabindexNoPositive', () => {
-  const ruleName: string = 'a11y-tabindex-no-positive';
+  const ruleName: string = 'react-a11y-tabindex-no-positive';
 
   describe('should pass', () => {
     it('when the attribute name is not tabindex', () => {

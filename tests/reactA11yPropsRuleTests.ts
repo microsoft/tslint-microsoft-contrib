@@ -1,11 +1,11 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/a11yPropsRule';
+import { getFailureString } from '../src/reactA11yPropsRule';
 
 /**
  * Unit tests for aria-props rule.
  */
 describe('a11yPropsRule', () => {
-  const ruleName: string = 'a11y-props';
+  const ruleName: string = 'react-a11y-props';
 
   describe('should pass', () => {
     it('when the aria-* attribute name is correct', () => {

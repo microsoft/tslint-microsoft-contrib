@@ -136,6 +136,7 @@ module.exports = {
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
+        "react-a11y-anchors": true,
         "react-a11y-img-has-alt": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,

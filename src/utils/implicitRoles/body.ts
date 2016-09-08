@@ -5,4 +5,4 @@ function getImplicitRoleForBody(): string {
   return 'document';
 }
 
-export { getImplicitRoleForBody as BODY };
+export { getImplicitRoleForBody as body };

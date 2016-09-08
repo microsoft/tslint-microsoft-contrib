@@ -5,4 +5,4 @@ function getImplicitRoleForDetails(): string {
   return 'group';
 }
 
-export { getImplicitRoleForDetails as DETAILS };
+export { getImplicitRoleForDetails as details };

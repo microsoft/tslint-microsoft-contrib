@@ -5,4 +5,4 @@ function getImplicitRoleForSelect(): string {
   return 'listbox';
 }
 
-export { getImplicitRoleForSelect as SELECT };
+export { getImplicitRoleForSelect as select };

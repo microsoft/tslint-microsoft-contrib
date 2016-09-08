@@ -5,4 +5,4 @@ function getImplicitRoleForDl(): string {
   return 'list';
 }
 
-export { getImplicitRoleForDl as DL };
+export { getImplicitRoleForDl as dl };

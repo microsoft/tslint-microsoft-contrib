@@ -5,4 +5,4 @@ function getImplicitRoleForTfoot(): string {
   return 'rowgroup';
 }
 
-export { getImplicitRoleForTfoot as TFOOT };
+export { getImplicitRoleForTfoot as tfoot };

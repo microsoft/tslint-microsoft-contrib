@@ -5,4 +5,4 @@ function getImplicitRoleForButton(): string {
   return 'button';
 }
 
-export { getImplicitRoleForButton as BUTTON };
+export { getImplicitRoleForButton as button };

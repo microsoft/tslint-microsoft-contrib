@@ -5,4 +5,4 @@ function getImplicitRoleForSection(): string {
   return 'region';
 }
 
-export { getImplicitRoleForSection as SECTION };
+export { getImplicitRoleForSection as section };

@@ -5,4 +5,4 @@ function getImplicitRoleForOutput(): string {
   return 'status';
 }
 
-export { getImplicitRoleForOutput as OUTPUT };
+export { getImplicitRoleForOutput as output };

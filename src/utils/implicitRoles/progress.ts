@@ -5,4 +5,4 @@ function getImplicitRoleForProgress(): string {
   return 'progressbar';
 }
 
-export { getImplicitRoleForProgress as PROGRESS };
+export { getImplicitRoleForProgress as progress };

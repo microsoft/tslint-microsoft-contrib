@@ -5,4 +5,4 @@ function getImplicitRoleForH5(): string {
   return 'heading';
 }
 
-export { getImplicitRoleForH5 as H5 };
+export { getImplicitRoleForH5 as h5 };

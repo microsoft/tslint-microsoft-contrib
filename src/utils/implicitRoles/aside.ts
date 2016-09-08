@@ -5,4 +5,4 @@ function getImplicitRoleForAside(): string {
   return 'complementary';
 }
 
-export { getImplicitRoleForAside as ASIDE };
+export { getImplicitRoleForAside as aside };

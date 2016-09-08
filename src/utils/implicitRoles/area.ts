@@ -10,4 +10,4 @@ function getImplicitRoleForArea(node: ts.Node): string {
   return getJsxAttributesFromJsxElement(node)[hrefString] ? 'link' : undefined;
 }
 
-export { getImplicitRoleForArea as AREA };
+export { getImplicitRoleForArea as area };

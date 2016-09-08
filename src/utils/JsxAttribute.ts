@@ -1,6 +1,4 @@
 /**
- * @copyright Microsoft Corporation. All rights reserved.
- *
  * @JsxAttribute utilities for react rules.
  */
 
@@ -126,4 +124,46 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
   });
 
   return attributesDictionary;
+}
+
+/**
+ * Get first JsxElement whose tagName equals tagName from code.
+ * @param code - a string of jsx code.
+ * @param exceptTagName - the element's tagName you want to get.
+ * @return { ts.JsxElement | ts.JsxSelfClosingElement } - a element.
+ */
+export function getJsxElementFromCode(code: string, exceptTagName: string): ts.JsxElement | ts.JsxSelfClosingElement {
+  const sourceFile: ts.SourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES6, true);
+
+  return delintNode(sourceFile, exceptTagName);
+}
+
+function delintNode(node: ts.Node, tagName: string): ts.JsxElement | ts.JsxSelfClosingElement {
+  if (isJsxElement(node) && node.openingElement.tagName.getText() === tagName) {
+    return node;
+  } else if (isJsxSelfClosingElement(node) && node.tagName.getText() === tagName) {
+    return node;
+  } else if (!node || node.getChildCount() === 0) {
+    return undefined;
+  }
+
+  return ts.forEachChild(node, (childNode: ts.Node) => delintNode(childNode, tagName));
+}
+
+/**
+ * Get ancestor node whose tagName is ancestorTagName for a node.
+ * @return { ts.JsxElement } the ancestor node or undefined if the ancestor node is not exist.
+ */
+export function getAncestorNode(node: ts.Node, ancestorTagName: string): ts.JsxElement {
+  if (!node) {
+    return undefined;
+  }
+
+  const ancestorNode: ts.Node = node.parent;
+
+  if (isJsxElement(ancestorNode) && ancestorNode.openingElement.tagName.getText() === ancestorTagName) {
+    return ancestorNode;
+  } else {
+    return getAncestorNode(ancestorNode, ancestorTagName);
+  }
 }

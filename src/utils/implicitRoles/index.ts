@@ -48,6 +48,9 @@ import { thead } from './thead';
 import { tr } from './tr';
 import { ul } from './ul';
 
+/**
+ * Export function for getting implicit role based on tag name.
+ */
 export {
 a,
 area,

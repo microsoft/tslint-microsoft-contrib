@@ -1,5 +1,8 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringForNotImplicitRole } from '../src/reactA11yRoleHasRequiredAriaPropsRule';
+import {
+  getFailureStringForNotImplicitRole,
+  getFailureStringForImplicitRole
+} from '../src/reactA11yRoleHasRequiredAriaPropsRule';
 
 /**
  * Unit test for a11y-role-has-required-aria-props rule
@@ -34,8 +37,8 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
   describe('should fail', () => {
     const fileDirectory: string = 'test-data/a11yRoleHasRequiredAriaProps/FailingTestInputs/';
 
-    it('when the slider role missing required props', () => {
-      const fileName: string = fileDirectory + 'SliderRoleMissingRequiredProps.tsx';
+    it('when explcit role missing required props', () => {
+      const fileName: string = fileDirectory + 'ExplicitRoleMissingRequiredProps.tsx';
 
       TestHelper.assertViolations(
         ruleName,
@@ -46,8 +49,8 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             ruleName: ruleName,
             startPosition: { character: 11, line: 3 },
             failure: getFailureStringForNotImplicitRole(
-              ['slider'],
-              ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
+              ['checkbox'],
+              ['aria-checked']
             )
           },
           {
@@ -55,8 +58,8 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             ruleName: ruleName,
             startPosition: { character: 11, line: 4 },
             failure: getFailureStringForNotImplicitRole(
-              ['slider'],
-              ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
+              ['menuitemcheckbox'],
+              ['aria-checked']
             )
           },
           {
@@ -64,130 +67,8 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             ruleName: ruleName,
             startPosition: { character: 11, line: 5 },
             failure: getFailureStringForNotImplicitRole(
-              ['slider'],
-              ['aria-valuenow']
-            )
-          }
-        ]
-      );
-    });
-
-    it('when the spinbutton role missing required props', () => {
-      const fileName: string = fileDirectory + 'SpinbuttonRoleMissingRequiredProps.tsx';
-
-      TestHelper.assertViolations(
-        ruleName,
-        fileName,
-        [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 3 },
-            failure: getFailureStringForNotImplicitRole(
-              ['spinbutton'],
-              ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
-            )
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(
-              ['button', 'spinbutton'],
-              ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
-            )
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 5 },
-            failure: getFailureStringForNotImplicitRole(
-              ['spinbutton'],
-              ['aria-valuemin']
-            )
-          }
-        ]
-      );
-    });
-
-    it('when the checkbox role missing required props', () => {
-      const fileName: string = fileDirectory + 'CheckboxRoleMissingRequiredProps.tsx';
-
-      TestHelper.assertViolations(
-        ruleName,
-        fileName,
-        [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 3 },
-            failure: getFailureStringForNotImplicitRole(['checkbox'], ['aria-checked'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(['checkbox'], ['aria-checked'])
-          }
-        ]
-      );
-    });
-
-    it('when the combobox role missing required props', () => {
-      const fileName: string = fileDirectory + 'ComboboxRoleMissingRequiredProps.tsx';
-
-      TestHelper.assertViolations(
-        ruleName,
-        fileName,
-        [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 3 },
-            failure: getFailureStringForNotImplicitRole(['combobox'], ['aria-expanded'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(['combobox'], ['aria-expanded'])
-          }
-        ]
-      );
-    });
-
-    it('when the scrollbar role missing required props', () => {
-      const fileName: string = fileDirectory + 'ScrollbarRoleMissingRequiredProps.tsx';
-
-      TestHelper.assertViolations(
-        ruleName,
-        fileName,
-        [
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 3 },
-            failure: getFailureStringForNotImplicitRole(
-              ['scrollbar'],
-              ['aria-controls', 'aria-orientation', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow']
-            )
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(
-              ['scrollbar'],
-              ['aria-controls', 'aria-orientation', 'aria-valuemax', 'aria-valuemin', 'aria-valuenow']
-            )
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 5 },
-            failure: getFailureStringForNotImplicitRole(
-              ['scrollbar'],
-              ['aria-valuemin', 'aria-valuenow']
+              ['radio'],
+              ['aria-checked']
             )
           },
           {
@@ -195,25 +76,16 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             ruleName: ruleName,
             startPosition: { character: 11, line: 6 },
             failure: getFailureStringForNotImplicitRole(
-              ['scrollbar'],
-              ['aria-valuenow']
-            )
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 7 },
-            failure: getFailureStringForNotImplicitRole(
-              ['scrollbar'],
-              ['aria-controls']
+              ['spinbutton'],
+              ['aria-valuemax', 'aria-valuemin', 'aria-valuenow']
             )
           }
         ]
       );
     });
 
-    it('when multiple role missing requiredProps', () => {
-      const fileName: string = fileDirectory + 'MultipleRoleMissingRequiredProps.tsx';
+    it('when implicit role missing required props', () => {
+      const fileName: string = fileDirectory + 'ImplicitRoleMissingRequiredProps.tsx';
 
       TestHelper.assertViolations(
         ruleName,
@@ -223,28 +95,21 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             name: fileName,
             ruleName: ruleName,
             startPosition: { character: 11, line: 3 },
-            failure: getFailureStringForNotImplicitRole(['button', 'checkbox'], ['aria-checked'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(
-              ['button', 'checkbox', 'combobox'],
-              ['aria-checked', 'aria-expanded']
+            failure: getFailureStringForImplicitRole(
+              'input',
+              'combobox',
+              ['aria-expanded', 'aria-controls']
             )
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 11, line: 5 },
-            failure: getFailureStringForNotImplicitRole(['button', 'checkbox', 'combobox'], ['aria-expanded'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 6 },
-            failure: getFailureStringForNotImplicitRole(['button', 'checkbox', 'combobox'], ['aria-checked'])
+            startPosition: { character: 11, line: 4 },
+            failure: getFailureStringForImplicitRole(
+              'menuitem',
+              'menuitemradio',
+              ['aria-checked']
+            )
           }
         ]
       );

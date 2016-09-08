@@ -26,7 +26,13 @@ You are using incorrect role or incorrect aria-* attribute`;
 
 export function getFailureStringForImplicitRole(tagName: string, roleName: string, invalidPropNames: string[]): string {
   return `Attribute(s) ${invalidPropNames.join(', ')} not supported \
-    by role ${roleName} which is implicitly set by the HTML tag ${tagName}.`;
+by role ${roleName} which is implicitly set by the HTML tag ${tagName}.`;
+}
+
+export function getFailureStringForNoRole(tagName: string, invalidPropNames: string[]): string {
+  return `Attribute(s) ${invalidPropNames} are not supported by no corresponding role. \
+There is no corresponding role for the HTML tag ${tagName}. \
+A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no-corresponding-role.`;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -82,14 +88,25 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
     // Get the list of not-supported aria-* attributes in current element.
     const invalidAttributeNamesInElement: string[] = attributeNamesInElement
       .filter((attributeName: string) => supportedAttributeNames.indexOf(attributeName) === -1);
+    let failureString: string;
+
+    if (normalizedRoles.length === 0) {
+      failureString = getFailureStringForNoRole(node.tagName.getText(), invalidAttributeNamesInElement);
+    } else if (isImplicitRole) {
+      failureString = getFailureStringForImplicitRole(
+        node.tagName.getText(),
+        normalizedRoles[0],
+        invalidAttributeNamesInElement
+      );
+    } else {
+      failureString = getFailureStringForNotImplicitRole(normalizedRoles, invalidAttributeNamesInElement);
+    }
 
     if (invalidAttributeNamesInElement.length > 0) {
       this.addFailure(this.createFailure(
         node.getStart(),
         node.getWidth(),
-        isImplicitRole ?
-          getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], invalidAttributeNamesInElement) :
-          getFailureStringForNotImplicitRole(normalizedRoles, invalidAttributeNamesInElement)
+        failureString
       ));
     }
   }

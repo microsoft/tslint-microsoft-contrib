@@ -18,10 +18,12 @@ import { IAria } from './utils/attributes/IAria';
 const ROLES_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
 const ROLES: IRole[] = ROLES_SCHEMA.roles;
 
-
 // tslint:disable-next-line:no-require-imports no-var-requires
 const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 const ROLE_STRING: string = 'role';
+
+// h1-h6 tags have implicit role heading with aria-level attribute.
+const TAGS_WITH_ATIA_LEVEL: string[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export function getFailureStringForNotImplicitRole(
   roleNamesInElement: string[],
@@ -74,6 +76,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
   }
 
   private checkJsxElement(node: ts.JsxOpeningElement): void {
+    const tagName: string = node.tagName.getText();
     const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
     const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
 
@@ -94,7 +97,9 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
     });
 
     const attributeNamesInElement: string[] = Object.keys(attributesInElement)
-      .filter((attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]);
+      .filter((attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()])
+      // h1-h6 tags have aria-level
+      .concat(TAGS_WITH_ATIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
 
     // Get the list of missing required aria-* attributes in current element.
     const missingAttributes: string[] = requiredAttributeNames

@@ -1,5 +1,6 @@
 import { TestHelper } from './TestHelper';
 import {
+  getFailureStringForNoRole,
   getFailureStringForImplicitRole,
   getFailureStringForNotImplicitRole
 } from '../src/reactA11yRoleSupportsAriaPropsRule';
@@ -11,110 +12,29 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
   const ruleName: string = 'react-a11y-role-supports-aria-props';
 
   describe('should pass', () => {
-    describe('implicit role test', () => {
-      const fileDirectory: string = 'test-data/a11yRoleSupportsAriaProps/PassingTestInputs/ImplicitRoleTestInputs/';
+    const fileDirectory: string = 'test-data/a11yRoleSupportsAriaProps/PassingTestInputs/';
 
-      it('when a tag implicit role is link', () => {
-        const fileName: string = fileDirectory + 'a/ImplicitLinkRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when area tag implicit role is link', () => {
-        const fileName: string = fileDirectory + 'area/ImplicitLinkRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when img tag implicit role is img', () => {
-        const fileName: string = fileDirectory + 'img/ImplicitImgRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when img tag implicit role is presentation', () => {
-        const fileName: string = fileDirectory + 'img/ImplicitPresentationRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when input tag implicit role is button', () => {
-        const fileName: string = fileDirectory + 'input/ImplicitButtonRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when input tag implicit role is checkbox', () => {
-        const fileName: string = fileDirectory + 'input/ImplicitCheckboxRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when input tag implicit role is slider', () => {
-        const fileName: string = fileDirectory + 'input/ImplicitSliderRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when input tag implicit role is textbox', () => {
-        const fileName: string = fileDirectory + 'input/ImplicitTextboxRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when input tag implicit role is radio', () => {
-        const fileName: string = fileDirectory + 'input/ImplicitRadioRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when link tag implicit role is link', () => {
-        const fileName: string = fileDirectory + 'link/ImplicitLinkRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when menu tag implicit role is toolbar', () => {
-        const fileName: string = fileDirectory + 'menu/ImplicitToolbarRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when menuitem tag implicit role is menuitemcheckbox', () => {
-        const fileName: string = fileDirectory + 'menuitem/ImplicitMenuitemcheckboxRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when menuitem tag implicit role is menuitemradio', () => {
-        const fileName: string = fileDirectory + 'menuitem/ImplicitMenuitemradioRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when menuitem tag implicit role is menuitem', () => {
-        const fileName: string = fileDirectory + 'menuitem/ImplicitMenuitemRole.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when other tags has implicit role', () => {
-        const fileName: string = fileDirectory + 'otherTags.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
+    it('when empty role supports all aria props in element', () => {
+      const fileName: string = fileDirectory + 'EmptyRoleSupportsAllAriaPropsInElement.tsx';
+      TestHelper.assertNoViolation(ruleName, fileName);
     });
 
-    describe('not implicit role test', () => {
-      const fileDirectory: string = 'test-data/a11yRoleSupportsAriaProps/PassingTestInputs/NotImplicitRoleTestInputs/';
+    it('when explicit role supports all aria props in element', () => {
+      const fileName: string = fileDirectory + 'ExplicitRoleSupportsAllAriaPropsInElement.tsx';
+      TestHelper.assertNoViolation(ruleName, fileName);
+    });
 
-      it('when undefined role or empty role value', () => {
-        const fileName: string = fileDirectory + 'UndefinedRoleOrEmptyRoleValue.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when not empty role value', () => {
-        const fileName: string = fileDirectory + 'NotEmptyRoleValue.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when empty role supports global aria props', () => {
-        const fileName: string = fileDirectory + 'GlobalSupportsAriaProp.tsx';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
+    it('when implicit role supports all aria props in element', () => {
+      const fileName: string = fileDirectory + 'ImplicitRoleSupportsAllAriaPropsInElement.tsx';
+      TestHelper.assertNoViolation(ruleName, fileName);
     });
   });
 
   describe('should fail', () => {
     const fileDirectory: string = 'test-data/a11yRoleSupportsAriaProps/FailingTestInputs/';
 
-    it('when role name not supports aria prop', () => {
-      const fileName: string = fileDirectory + 'RoleNameNotSupportsAriaProp.tsx';
+    it('when element has not supported aria props for empty role', () => {
+      const fileName: string = fileDirectory + 'ElementHasNotSupportedAriaPropsForEmptyRole.tsx';
 
       TestHelper.assertViolations(
         ruleName,
@@ -123,27 +43,21 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
           {
             name: fileName,
             ruleName: ruleName,
+            startPosition: { character: 11, line: 3 },
+            failure: getFailureStringForNoRole('div', ['aria-checked'])
+          },
+          {
+            name: fileName,
+            ruleName: ruleName,
             startPosition: { character: 11, line: 4 },
-            failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 7 },
-            failure: getFailureStringForNotImplicitRole(['button', 'img'], ['aria-checked'])
-          },
-          {
-            name: fileName,
-            ruleName: ruleName,
-            startPosition: { character: 11, line: 10 },
-            failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
+            failure: getFailureStringForNoRole('a', ['aria-checked'])
           }
         ]
       );
     });
 
-    it('when implicit role not supports aria prop', () => {
-      const fileName: string = fileDirectory + 'ImplicitRoleNotSupportsAriaProp.tsx';
+    it('when element has not supported aria props for implicit role', () => {
+      const fileName: string = fileDirectory + 'ElementHasNotSupportedAriaPropsForImplicitRole.tsx';
 
       TestHelper.assertViolations(
         ruleName,
@@ -166,24 +80,35 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
             ruleName: ruleName,
             startPosition: { character: 11, line: 5 },
             failure: getFailureStringForImplicitRole('link', 'link', ['aria-checked'])
-          },
+          }
+        ]
+      );
+    });
+
+    it('when element has not supported aria props for explicit role', () => {
+      const fileName: string = fileDirectory + 'ElementHasNotSupportedAriaPropsForExplicitRole.tsx';
+
+      TestHelper.assertViolations(
+        ruleName,
+        fileName,
+        [
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 11, line: 6 },
-            failure: getFailureStringForImplicitRole('img', 'img', ['aria-checked'])
+            startPosition: { character: 11, line: 4 },
+            failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
             startPosition: { character: 11, line: 7 },
-            failure: getFailureStringForImplicitRole('menu', 'toolbar', ['aria-checked'])
+            failure: getFailureStringForNotImplicitRole(['button', 'img'], ['aria-checked'])
           },
           {
             name: fileName,
             ruleName: ruleName,
-            startPosition: { character: 11, line: 8 },
-            failure: getFailureStringForImplicitRole('aside', 'complementary', ['aria-checked'])
+            startPosition: { character: 11, line: 10 },
+            failure: getFailureStringForNotImplicitRole(['button'], ['aria-checked'])
           }
         ]
       );

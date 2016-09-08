@@ -5,4 +5,4 @@ function getImplicitRoleForNav(): string {
   return 'navigation';
 }
 
-export { getImplicitRoleForNav as NAV };
+export { getImplicitRoleForNav as nav };

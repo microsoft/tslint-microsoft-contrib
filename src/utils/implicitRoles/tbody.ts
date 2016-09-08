@@ -5,4 +5,4 @@ function getImplicitRoleForTbody(): string {
   return 'rowgroup';
 }
 
-export { getImplicitRoleForTbody as TBODY };
+export { getImplicitRoleForTbody as tbody };

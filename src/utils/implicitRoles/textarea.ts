@@ -5,4 +5,4 @@ function getImplicitRoleForTextarea(): string {
   return 'textbox';
 }
 
-export { getImplicitRoleForTextarea as TEXTAREA };
+export { getImplicitRoleForTextarea as textarea };

@@ -5,4 +5,4 @@ function getImplicitRoleForDialog(): string {
   return 'dialog';
 }
 
-export { getImplicitRoleForDialog as DIALOG };
+export { getImplicitRoleForDialog as dialog };

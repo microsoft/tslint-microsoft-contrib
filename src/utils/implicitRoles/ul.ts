@@ -5,4 +5,4 @@ function getImplicitRoleForUl(): string {
   return 'list';
 }
 
-export { getImplicitRoleForUl as UL };
+export { getImplicitRoleForUl as ul };

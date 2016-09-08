@@ -16,4 +16,4 @@ function getImplicitRoleForImg(node: ts.Node): string {
   return 'presentation';
 }
 
-export { getImplicitRoleForImg as IMG };
+export { getImplicitRoleForImg as img };

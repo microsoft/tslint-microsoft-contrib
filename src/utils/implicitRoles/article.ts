@@ -5,4 +5,4 @@ function getImplicitRoleForArticle(): string {
   return 'article';
 }
 
-export { getImplicitRoleForArticle as ARTICLE };
+export { getImplicitRoleForArticle as article };

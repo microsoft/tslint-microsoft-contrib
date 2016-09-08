@@ -5,4 +5,4 @@ function getImplicitRoleForDatalist(): string {
   return 'listbox';
 }
 
-export { getImplicitRoleForDatalist as DATALIST };
+export { getImplicitRoleForDatalist as datalist };

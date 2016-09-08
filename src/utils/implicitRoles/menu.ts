@@ -7,10 +7,10 @@ const typeString: string = 'type';
  * @Returns the implicit role for a menu tag.
  */
 function getImplicitRoleForMenu(node: ts.Node): string {
-  const typeProp: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
+  const typeAttribute: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
 
-  if (typeProp) {
-    const value: string = getStringLiteral(typeProp) || undefined;
+  if (typeAttribute) {
+    const value: string = getStringLiteral(typeAttribute) || undefined;
 
     return (value && value.toUpperCase() === 'TOOLBAR') ? 'toolbar' : undefined;
   }
@@ -18,4 +18,4 @@ function getImplicitRoleForMenu(node: ts.Node): string {
   return undefined;
 }
 
-export { getImplicitRoleForMenu as MENU };
+export { getImplicitRoleForMenu as menu };

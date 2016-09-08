@@ -5,4 +5,4 @@ function getImplicitRoleForOl(): string {
   return 'list';
 }
 
-export { getImplicitRoleForOl as OL };
+export { getImplicitRoleForOl as ol };

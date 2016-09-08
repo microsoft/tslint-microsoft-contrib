@@ -10,4 +10,4 @@ function getImplicitRoleForLink(node: ts.Node): string {
   return getJsxAttributesFromJsxElement(node)[hrefString] ? 'link' : undefined;
 }
 
-export { getImplicitRoleForLink as LINK };
+export { getImplicitRoleForLink as link };

@@ -5,4 +5,4 @@ function getImplicitRoleForForm(): string {
   return 'form';
 }
 
-export { getImplicitRoleForForm as FORM };
+export { getImplicitRoleForForm as form };

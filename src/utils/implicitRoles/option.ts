@@ -5,4 +5,4 @@ function getImplicitRoleForOption(): string {
   return 'option';
 }
 
-export { getImplicitRoleForOption as OPTION };
+export { getImplicitRoleForOption as option };

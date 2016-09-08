@@ -5,4 +5,4 @@ function getImplicitRoleForMeter(): string {
   return 'progressbar';
 }
 
-export { getImplicitRoleForMeter as METER };
+export { getImplicitRoleForMeter as meter };

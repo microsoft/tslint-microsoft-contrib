@@ -5,4 +5,4 @@ function getImplicitRoleForThead(): string {
   return 'rowgroup';
 }
 
-export { getImplicitRoleForThead as THEAD };
+export { getImplicitRoleForThead as thead };

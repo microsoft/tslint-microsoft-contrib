@@ -7,10 +7,10 @@ const typeString: string = 'type';
  * @Returns the implicit role for a menuitem tag.
  */
 function getImplicitRoleForMenuitem(node: ts.Node): string {
-  const type: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
+  const typeAttribute: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
 
-  if (type) {
-    const value: string = getStringLiteral(type) || '';
+  if (typeAttribute) {
+    const value: string = getStringLiteral(typeAttribute) || '';
 
     switch (value.toUpperCase()) {
       case 'COMMAND':

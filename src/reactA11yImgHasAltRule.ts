@@ -31,9 +31,9 @@ export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
     ruleName: 'react-a11y-img-has-alt',
     type: 'maintainability',
-    description: 'Enforce that an `img` element contains the `alt` attribute or `role=\'presentation\'` for decorative image.',
+    description: 'Enforce that an `img` element contains the `alt` attribute or `role="presentation"` for decorative image.',
     options: 'string[]',
-    optionExamples: ['[true, [\'Image\']]'],
+    optionExamples: ['true', '[true, ["Image"]]'],
     issueClass: 'Non-SDL',
     issueType: 'Warning',
     severity: 'Important',

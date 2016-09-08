@@ -1,45 +1,52 @@
 {
   "roles": {
     "alert": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded"
       ],
       "isAbstract": false
     },
     "alertdialog": {
-      "requiredProps": [],
       "additionalSupportedProps": [
-        "aria-expanded"
+        "aria-expanded",
+        "aria-modal"
       ],
       "isAbstract": false
     },
     "application": {
-      "requiredProps": [],
       "additionalSupportedProps": [
-        "aria-expanded"
+        "aria-activedescendant"
       ],
       "isAbstract": false
     },
     "article": {
-      "requiredProps": [],
       "additionalSupportedProps": [
-        "aria-expanded"
+        "aria-expanded",
+        "aria-posinset",
+        "aria-setsize"
       ],
       "isAbstract": false
     },
     "banner": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded"
       ],
       "isAbstract": false
     },
     "button": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded",
         "aria-pressed"
+      ],
+      "isAbstract": false
+    },
+    "cell": {
+      "additionalSupportedProps": [
+        "aria-colindex",
+        "aria-colspan",
+        "aria-expanded",
+        "aria-rowindex",
+        "aria-rowspan"
       ],
       "isAbstract": false
     },
@@ -48,40 +55,45 @@
         "aria-checked"
       ],
       "additionalSupportedProps": [
-        "aria-checked"
+        "aria-checked",
+        "aria-readonly"
       ],
       "isAbstract": false
     },
     "columnheader": {
-      "requiredProps": [],
       "additionalSupportedProps": [
-        "aria-sort",
+        "aria-colindex",
+        "aria-colspan",
+        "aria-expanded",
         "aria-readonly",
         "aria-required",
+        "aria-rowindex",
+        "aria-rowspan",
         "aria-selected",
-        "aria-expanded"
+        "aria-sort"
       ],
       "isAbstract": false
     },
     "combobox": {
       "requiredProps": [
-        "aria-expanded"
+        "aria-expanded",
+        "aria-controls"
       ],
       "additionalSupportedProps": [
-        "aria-expanded",
+        "aria-activedescendant",
         "aria-autocomplete",
-        "aria-required",
-        "aria-activedescendant"
+        "aria-expanded",
+        "aria-orientation",
+        "aria-readonly",
+        "aria-required"
       ],
       "isAbstract": false
     },
     "command": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": true
     },
     "complementary": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded"
       ],
@@ -91,32 +103,28 @@
       "additionalSupportedProps": [
         "aria-activedescendant"
       ],
-      "requiredProps": [],
       "isAbstract": true
     },
     "contentinfo": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded"
       ],
       "isAbstract": false
     },
     "definition": {
-      "requiredProps": [],
       "additionalSupportedProps": [
         "aria-expanded"
       ],
       "isAbstract": false
     },
     "dialog": {
-      "requiredProps": [],
       "additionalSupportedProps": [
-        "aria-expanded"
+        "aria-expanded",
+        "aria-modal"
       ],
       "isAbstract": false
     },
     "directory": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
@@ -128,7 +136,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-acknowledgments": {
@@ -137,7 +144,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-afterword": {
@@ -146,7 +152,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-appendix": {
@@ -155,7 +160,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-backlink": {
@@ -164,7 +168,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-biblioentry": {
@@ -176,7 +179,6 @@
         "aria-posinset",
         "aria-setsize"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-bibliography": {
@@ -185,7 +187,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-biblioref": {
@@ -194,7 +195,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-chapter": {
@@ -203,7 +203,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-colophon": {
@@ -212,7 +211,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-conclusion": {
@@ -221,7 +219,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-cover": {
@@ -230,7 +227,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-credit": {
@@ -239,7 +235,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-credits": {
@@ -248,7 +243,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-dedication": {
@@ -257,7 +251,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-endnote": {
@@ -269,7 +262,6 @@
         "aria-posinset",
         "aria-setsize"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-endnotes": {
@@ -278,7 +270,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-epigraph": {
@@ -287,7 +278,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-epilogue": {
@@ -296,7 +286,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-errata": {
@@ -305,7 +294,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-example": {
@@ -314,7 +302,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-footnote": {
@@ -323,7 +310,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-foreword": {
@@ -332,7 +318,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-glossary": {
@@ -341,7 +326,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-glossref": {
@@ -350,7 +334,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-index": {
@@ -359,7 +342,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-introduction": {
@@ -368,7 +350,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-noteref": {
@@ -377,7 +358,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-notice": {
@@ -386,7 +366,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-pagebreak": {
@@ -396,7 +375,6 @@
         "aria-expanded",
         "aria-orientation"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-pagelist": {
@@ -405,7 +383,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-part": {
@@ -414,7 +391,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-preface": {
@@ -423,7 +399,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-prologue": {
@@ -432,12 +407,10 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-pullquote": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-qna": {
@@ -446,7 +419,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-subtitle": {
@@ -455,7 +427,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-tip": {
@@ -464,7 +435,6 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "doc-toc": {
@@ -473,62 +443,75 @@
         "aria-describedat",
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": false
     },
     "document": {
-      "requiredProps": [],
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ]
+    },
+    "feed": {
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ]
+    },
+    "figure": {
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "form": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "grid": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-activedescendant",
+        "aria-colcount",
+        "aria-expanded",
+        "aria-rowcount",
         "aria-level",
         "aria-multiselectable",
-        "aria-readonly",
-        "aria-activedescendant",
-        "aria-expanded"
+        "aria-readonly"
       ]
     },
     "gridcell": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-colindex",
+        "aria-colspan",
+        "aria-expanded",
+        "aria-rowindex",
+        "aria-rowspan",
         "aria-readonly",
         "aria-required",
-        "aria-selected",
-        "aria-expanded"
+        "aria-selected"
       ]
     },
     "group": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-activedescendant",
-        "aria-expanded"
+        "aria-expanded",
+        "aria-activedescendant"
       ]
     },
     "heading": {
-      "requiredProps": [],
+      "requiredProps": [
+        "aria-level"
+      ],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-level",
-        "aria-expanded"
+        "aria-expanded",
+        "aria-level"
       ]
     },
     "img": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
@@ -536,149 +519,153 @@
     },
     "input": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": true
     },
     "landmark": {
       "additionalSupportedProps": [
         "aria-expanded"
       ],
-      "requiredProps": [],
       "isAbstract": true
     },
     "link": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "list": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "listbox": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-multiselectable",
-        "aria-required",
+        "aria-activedescendant",
         "aria-expanded",
-        "aria-activedescendant"
+        "aria-orientation",
+        "aria-multiselectable",
+        "aria-readonly",
+        "aria-required"
       ]
     },
     "listitem": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-expanded",
         "aria-level",
         "aria-posinset",
-        "aria-setsize",
-        "aria-expanded"
+        "aria-setsize"
       ]
     },
     "log": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "main": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "marquee": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "math": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "menu": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-activedescendant",
         "aria-expanded",
-        "aria-activedescendant"
+        "aria-orientation"
       ]
     },
     "menubar": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-activedescendant",
         "aria-expanded",
-        "aria-activedescendant"
+        "aria-orientation"
       ]
     },
     "menuitem": {
-      "requiredProps": [],
-      "isAbstract": false,
-      "additionalSupportedProps": []
-    },
-    "menuitemcheckbox": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-checked"
+        "aria-posinset",
+        "aria-setsize"
       ]
     },
-    "menuitemradio": {
-      "requiredProps": [],
+    "menuitemcheckbox": {
+      "requiredProps": [
+        "aria-checked"
+      ],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-checked",
         "aria-posinset",
-        "aria-selected",
+        "aria-readonly",
+        "aria-setsize"
+      ]
+    },
+    "menuitemradio": {
+      "requiredProps": [
+        "aria-checked"
+      ],
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-checked",
+        "aria-posinset",
+        "aria-readonly",
         "aria-setsize"
       ]
     },
     "navigation": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
+    "none": {
+      "isAbstract": false,
+      "additionalSupportedProps": []
+    },
     "note": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "option": {
-      "requiredProps": [],
+      "requiredProps": [
+        "aria-selected"
+      ],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-checked",
         "aria-posinset",
-        "aria-selected",
-        "aria-setsize"
+        "aria-setsize",
+        "aria-selected"
       ]
     },
     "presentation": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": []
     },
     "progressbar": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-expanded",
         "aria-valuemax",
         "aria-valuemin",
         "aria-valuenow",
@@ -686,22 +673,24 @@
       ]
     },
     "radio": {
-      "requiredProps": [],
+      "requiredProps": [
+        "aria-checked"
+      ],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-checked",
         "aria-posinset",
-        "aria-selected",
-        "aria-setsize"
+        "aria-setsize",
+        "aria-checked"
       ]
     },
     "radiogroup": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-required",
         "aria-activedescendant",
-        "aria-expanded"
+        "aria-expanded",
+        "aria-orientation",
+        "aria-readonly",
+        "aria-required"
       ]
     },
     "range": {
@@ -711,11 +700,9 @@
         "aria-valuenow",
         "aria-valuetext"
       ],
-      "requiredProps": [],
       "isAbstract": true
     },
     "region": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
@@ -723,73 +710,35 @@
     },
     "roletype": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": true
     },
     "row": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-level",
-        "aria-selected",
         "aria-activedescendant",
-        "aria-expanded"
+        "aria-expanded",
+        "aria-colindex",
+        "aria-level",
+        "aria-rowindex",
+        "aria-selected"
       ]
     },
     "rowgroup": {
-      "requiredProps": [],
       "isAbstract": false,
-      "additionalSupportedProps": [
-        "aria-activedescendant",
-        "aria-expanded"
-      ]
+      "additionalSupportedProps": []
     },
     "rowheader": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-sort",
+        "aria-colindex",
+        "aria-colspan",
+        "aria-expanded",
         "aria-readonly",
         "aria-required",
+        "aria-rowindex",
+        "aria-rowspan",
         "aria-selected",
-        "aria-expanded"
-      ]
-    },
-    "search": {
-      "requiredProps": [],
-      "isAbstract": false,
-      "additionalSupportedProps": [
-        "aria-expanded"
-      ]
-    },
-    "section": {
-      "additionalSupportedProps": [
-        "aria-expanded"
-      ],
-      "requiredProps": [],
-      "isAbstract": true
-    },
-    "sectionhead": {
-      "additionalSupportedProps": [
-        "aria-expanded"
-      ],
-      "requiredProps": [],
-      "isAbstract": true
-    },
-    "select": {
-      "additionalSupportedProps": [
-        "aria-activedescendant",
-        "aria-expanded"
-      ],
-      "requiredProps": [],
-      "isAbstract": true
-    },
-    "separator": {
-      "requiredProps": [],
-      "isAbstract": false,
-      "additionalSupportedProps": [
-        "aria-expanded",
-        "aria-orientation"
+        "aria-sort"
       ]
     },
     "scrollbar": {
@@ -802,11 +751,58 @@
       ],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-valuetext",
         "aria-orientation",
         "aria-valuemax",
         "aria-valuemin",
-        "aria-valuenow",
-        "aria-valuetext"
+        "aria-valuenow"
+      ]
+    },
+    "search": {
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ]
+    },
+    "searchbox": {
+      "additionalSupportedProps": [
+        "aria-activedescendant",
+        "aria-autocomplete",
+        "aria-multiline",
+        "aria-placeholder",
+        "aria-readonly",
+        "aria-required"
+      ],
+      "isAbstract": true
+    },
+    "section": {
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ],
+      "isAbstract": true
+    },
+    "sectionhead": {
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ],
+      "isAbstract": true
+    },
+    "select": {
+      "additionalSupportedProps": [
+        "aria-activedescendant",
+        "aria-expanded",
+        "aria-orientation"
+      ],
+      "isAbstract": true
+    },
+    "separator": {
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-orientation",
+        "aria-valuetext",
+        "aria-valuemax",
+        "aria-valuemin",
+        "aria-valuenow"
       ]
     },
     "slider": {
@@ -817,11 +813,12 @@
       ],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-valuetext",
+        "aria-orientation",
+        "aria-readonly",
         "aria-valuemax",
         "aria-valuemin",
-        "aria-valuenow",
-        "aria-orientation",
-        "aria-valuetext"
+        "aria-valuenow"
       ]
     },
     "spinbutton": {
@@ -832,15 +829,16 @@
       ],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-activedescendant",
+        "aria-valuetext",
+        "aria-readonly",
+        "aria-required",
         "aria-valuemax",
         "aria-valuemin",
-        "aria-valuenow",
-        "aria-required",
-        "aria-valuetext"
+        "aria-valuenow"
       ]
     },
     "status": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
@@ -848,110 +846,134 @@
     },
     "structure": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": true
     },
-    "tab": {
-      "requiredProps": [],
+    "switch": {
+      "requiredProps": [
+        "aria-checked"
+      ],
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-readonly",
+        "aria-checked"
+      ]
+    },
+    "tab": {
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded",
+        "aria-posinset",
         "aria-selected",
-        "aria-expanded"
+        "aria-setsize"
+      ]
+    },
+    "table": {
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded",
+        "aria-colcount",
+        "aria-rowcount"
       ]
     },
     "tablist": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-level",
         "aria-activedescendant",
-        "aria-expanded"
+        "aria-level",
+        "aria-multiselectable",
+        "aria-orientation"
       ]
     },
     "tabpanel": {
-      "requiredProps": [],
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-expanded"
+      ]
+    },
+    "term": {
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "textbox": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-activedescendant",
         "aria-autocomplete",
         "aria-multiline",
+        "aria-placeholder",
         "aria-readonly",
         "aria-required"
       ]
     },
     "timer": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "toolbar": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-activedescendant",
-        "aria-expanded"
+        "aria-expanded",
+        "aria-orientation"
       ]
     },
     "tooltip": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
         "aria-expanded"
       ]
     },
     "tree": {
-      "requiredProps": [],
       "isAbstract": false,
       "additionalSupportedProps": [
-        "aria-multiselectable",
-        "aria-required",
-        "aria-activedescendant",
-        "aria-expanded"
-      ]
-    },
-    "treegrid": {
-      "requiredProps": [],
-      "isAbstract": false,
-      "additionalSupportedProps": [
-        "aria-level",
-        "aria-multiselectable",
-        "aria-readonly",
         "aria-activedescendant",
         "aria-expanded",
+        "aria-orientation",
+        "aria-multiselectable",
         "aria-required"
       ]
     },
-    "treeitem": {
-      "requiredProps": [],
+    "treegrid": {
       "isAbstract": false,
       "additionalSupportedProps": [
+        "aria-activedescendant",
+        "aria-colcount",
+        "aria-expanded",
+        "aria-level",
+        "aria-multiselectable",
+        "aria-orientation",
+        "aria-readonly",
+        "aria-required",
+        "aria-rowcount"
+      ]
+    },
+    "treeitem": {
+      "requiredProps": [
+        "aria-selected"
+      ],
+      "isAbstract": false,
+      "additionalSupportedProps": [
+        "aria-checked",
+        "aria-expanded",
         "aria-level",
         "aria-posinset",
-        "aria-setsize",
-        "aria-expanded",
-        "aria-checked",
-        "aria-selected"
+        "aria-selected",
+        "aria-setsize"
       ]
     },
     "widget": {
       "additionalSupportedProps": [],
-      "requiredProps": [],
       "isAbstract": true
     },
     "window": {
-      "extraadditionalSupportedProps": [
-        "aria-expanded"
+      "additionalSupportedProps": [
+        "aria-expanded",
+        "aria-modal"
       ],
-      "requiredProps": [],
       "isAbstract": true
     }
   },
@@ -959,18 +981,23 @@
     "aria-atomic",
     "aria-busy",
     "aria-controls",
+    "aria-current",
     "aria-describedby",
+    "aria-details",
     "aria-disabled",
     "aria-dropeffect",
+    "aria-errormessage",
     "aria-flowto",
     "aria-grabbed",
     "aria-haspopup",
     "aria-hidden",
     "aria-invalid",
+    "aria-keyshortcuts",
     "aria-label",
     "aria-labelledby",
     "aria-live",
     "aria-owns",
-    "aria-relevant"
+    "aria-relevant",
+    "aria-roledescription"
   ]
 }

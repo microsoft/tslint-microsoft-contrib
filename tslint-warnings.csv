@@ -39,7 +39,7 @@ member-ordering,Enforces member ordering.,TSLINT7UKID8,tslint,Non-SDL,Warning,Lo
 CWE 710 - Coding Standards Violation"
 missing-jsdoc,All files must have a top level JSDoc comment.,TSLINT117J7CN,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-mocha-avoid-only,Do not invoke Mocha's describe.only or it.only functions.,TSLINT1M1BHOM,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
+mocha-avoid-only,"Do not invoke Mocha's describe.only, it.only or context.only functions.",TSLINT1M1BHOM,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 new-parens,Requires parentheses when invoking a constructor via the `new` keyword.,TSLINTJF199B,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 no-any,Diallows usages of `any` as a type declaration.,TSLINTKSGO5V,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"

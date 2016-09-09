@@ -20,10 +20,22 @@ export module MochaUtils {
             if (expression.kind === SyntaxKind.current().CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>expression;
                 const expressionText: string = call.expression.getText();
-                return expressionText === 'describe' || expressionText === 'describe.only'
-                    || expressionText === 'describe.skip' || expressionText === 'describe.timeout';
+                return isDescribe(expressionText) || isContext(expressionText);
             }
         }
         return false;
+    }
+
+    function isDescribe(callText: string): boolean {
+        return callText === 'describe' || callText === 'describe.only'
+            || callText === 'describe.skip' || callText === 'describe.timeout';
+    }
+
+    /**
+     * Context is an alias for describe.
+     */
+    function isContext(callText: string): boolean {
+        return callText === 'context' || callText === 'context.only'
+            || callText === 'context.skip' || callText === 'context.timeout';
     }
 }

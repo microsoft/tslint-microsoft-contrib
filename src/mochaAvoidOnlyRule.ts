@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'mocha-avoid-only',
         type: 'maintainability',
-        description: 'Do not invoke Mocha\'s describe.only or it.only functions.',
+        description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
         options: null,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -25,6 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
     public static FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
+    public static FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
@@ -50,6 +51,8 @@ class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT));
                         } else if (node.expression.getText() === 'describe.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_DESCRIBE));
+                        } else if (node.expression.getText() === 'context.only') {
+                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_CONTEXT));
                         }
                     }
                 }

@@ -130,7 +130,7 @@ describe('mochaAvoidOnlyRule', () : void => {
                 "failure": "Do not commit Mocha context.only function call",
                 "name": "file.ts",
                 "ruleName": "mocha-avoid-only",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 12, "line": 2 }
             }
         ]);
     });
@@ -147,7 +147,7 @@ describe('mochaAvoidOnlyRule', () : void => {
                 "failure": "Do not commit Mocha context.only function call",
                 "name": "file.ts",
                 "ruleName": "mocha-avoid-only",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 12, "line": 2 }
             }
         ]);
     });

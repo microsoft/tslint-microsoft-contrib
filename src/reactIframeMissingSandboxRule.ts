@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
         options: null,
-        issueClass: 'Non-SDL',
+        issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',

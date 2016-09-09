@@ -23,7 +23,7 @@ const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/att
 const ROLE_STRING: string = 'role';
 
 // h1-h6 tags have implicit role heading with aria-level attribute.
-const TAGS_WITH_ATIA_LEVEL: string[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const TAGS_WITH_ARIA_LEVEL: string[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export function getFailureStringForNotImplicitRole(
   roleNamesInElement: string[],
@@ -99,7 +99,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
     const attributeNamesInElement: string[] = Object.keys(attributesInElement)
       .filter((attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()])
       // h1-h6 tags have aria-level
-      .concat(TAGS_WITH_ATIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
+      .concat(TAGS_WITH_ARIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
 
     // Get the list of missing required aria-* attributes in current element.
     const missingAttributes: string[] = requiredAttributeNames

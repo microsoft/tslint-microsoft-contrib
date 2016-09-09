@@ -32,6 +32,14 @@ describe('mochaAvoidOnlyRule', () : void => {
                 describe.only(something, () => {});
                 describe.only('', something);
                 describe.only(something, somethingElse);
+                
+                // these are not calls to mocha's context.only
+                context.only();
+                context.only('');
+                context.only(() => {});
+                context.only(something, () => {});
+                context.only('', something);
+                context.only(something, somethingElse);
             });
         `;
 
@@ -106,6 +114,40 @@ describe('mochaAvoidOnlyRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 13, "line": 2 }
+            }
+        ]);
+    });
+
+    it('should fail on context.only with lambda', () : void => {
+        const script : string = `
+            context.only('some unit test', () => {
+                // some test code
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Do not commit Mocha context.only function call",
+                "name": "file.ts",
+                "ruleName": "mocha-avoid-only",
+                "startPosition": { "character": 12, "line": 2 }
+            }
+        ]);
+    });
+
+    it('should fail on context.only with function', () : void => {
+        const script : string = `
+            context.only('some unit test', function() {
+                // some test code
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Do not commit Mocha context.only function call",
+                "name": "file.ts",
+                "ruleName": "mocha-avoid-only",
+                "startPosition": { "character": 12, "line": 2 }
             }
         ]);
     });

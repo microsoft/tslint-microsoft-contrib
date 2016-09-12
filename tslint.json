@@ -6,6 +6,7 @@
     "react-a11y-role": true,
     "react-a11y-role-supports-aria-props": true,
     "react-a11y-tabindex-no-positive": true,
+    "react-a11y-proptypes": true,
     "align": false,
     "arrow-parens": false,
     "ban": false,

@@ -6,4 +6,4 @@ const c = <div aria-level='-123' />
 const d = <div aria-level={ '123' } />
 const e = <div aria-level={ '+123' } />
 const f = <div aria-level={ '-123' } />
-const g = <div aria-valuemax={ 123 } />
+const g = <div aria-level={ 123 } />

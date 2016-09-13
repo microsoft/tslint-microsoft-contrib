@@ -147,6 +147,24 @@ describe('reactA11yProptypesRule', () => {
                         ruleName: ruleName,
                         startPosition: { character: 16, line: 6 },
                         failure: getFailureString('aria-level', 'integer', [])
+                    },
+                    {
+                        name: fileName,
+                        ruleName: ruleName,
+                        startPosition: { character: 16, line: 7 },
+                        failure: getFailureString('aria-level', 'integer', [])
+                    },
+                    {
+                        name: fileName,
+                        ruleName: ruleName,
+                        startPosition: { character: 16, line: 8 },
+                        failure: getFailureString('aria-level', 'integer', [])
+                    },
+                    {
+                        name: fileName,
+                        ruleName: ruleName,
+                        startPosition: { character: 16, line: 9 },
+                        failure: getFailureString('aria-level', 'integer', [])
                     }
                 ]
             );

@@ -61,12 +61,14 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
     public visitJsxAttribute(node: ts.JsxAttribute): void {
         const propName: string = getPropName(node).toLowerCase();
 
-        // if there is not a aria-* attribute, don't check it.
+        // If there is no aria-* attribute, skip it.
         if (!aria[propName]) {
             return;
         }
 
-        const allowUndefined: boolean = aria[propName].allowUndefined || false;
+        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined
+            ? aria[propName].allowUndefined
+            : false;
         const expectedType: string = aria[propName].type;
         const permittedValues: string[] = aria[propName].values;
         const propValue: string = getStringLiteral(node);
@@ -103,7 +105,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         switch (expectedType) {
             case 'boolean': return this.isBoolean(propValueExpression);
             case 'tristate': return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer':
+            case 'integer': return this.isInteger(propValueExpression);
             case 'number': return this.isNumber(propValueExpression);
             case 'string': return this.isString(propValueExpression);
             case 'token':
@@ -186,6 +188,30 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             } else {
                 return isNumericLiteral(expression);
             }
+        }
+
+        return false;
+    }
+
+    private isInteger(node: ts.Expression): boolean {
+        if (isStringLiteral(node)) {
+            const value: number = Number(node.text);
+
+            return !isNaN(value) && Math.round(value) === value;
+        } else if (isJsxExpression(node)) {
+            const expression: ts.Expression = node.expression;
+
+            if (isStringLiteral(expression)) {
+                const value: number = Number(expression.text);
+
+                return !isNaN(value) && Math.round(value) === value;
+            } else if (isNumericLiteral(expression)) {
+                const value: number = Number(expression.text);
+
+                return Math.round(value) === value;
+            }
+
+            return false;
         }
 
         return false;

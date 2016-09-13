@@ -1,3 +1,6 @@
+/**
+ * Enforce that inputs element of type=[image] must have an alt attribute.
+ */
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
 
@@ -7,13 +10,13 @@ import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './uti
 const NO_ALT_ATTRIBUTE_FAILURE_STRING: string =
     'Inputs element of type=[image] must have an alt attribute.';
 const EMPTY_ALT_ATTRIBUTE_FAILURE_STRING: string =
-    'Inputs element of type=[image] must have an not empty alt attribute.'
+    'Inputs element of type=[image] must have an not empty alt attribute.';
 const TYPE_STRING: string = 'type';
 const ALT_STRING: string = 'alt';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: 'react-a11y-submit-button-image-has-alt',
+        ruleName: 'react-a11y-image-button-has-alt',
         type: 'maintainability',
         description: 'Enforce that inputs element of type=[image] must have an alt attribute.',
         options: null,
@@ -26,12 +29,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11ySubmitButtonImageHasAltWalker(sourceFile, this.getOptions()))
+            ? this.applyWithWalker(new ReactA11yImageButtonHasAltWalker(sourceFile, this.getOptions()))
             : [];
     }
 }
 
-class ReactA11ySubmitButtonImageHasAltWalker extends Lint.RuleWalker {
+class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
     public visitJsxElement(node: ts.JsxElement): void {
         this.checkJsxOpeningElement(node.openingElement);
         super.visitJsxElement(node);
@@ -45,14 +48,14 @@ class ReactA11ySubmitButtonImageHasAltWalker extends Lint.RuleWalker {
     private checkJsxOpeningElement(node: ts.JsxOpeningElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (tagName != 'input') {
+        if (tagName !== 'input') {
             return;
         }
 
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const typeAttribute: ts.JsxAttribute = attributes[TYPE_STRING];
 
-        if (!typeAttribute || getStringLiteral(typeAttribute).toLowerCase() != 'image') {
+        if (!typeAttribute || getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
             return;
         }
 

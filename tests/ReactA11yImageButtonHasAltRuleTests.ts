@@ -1,10 +1,10 @@
 import { TestHelper } from './TestHelper';
 
 /**
- * Unit tests for react-a11y-submit-button-image-has-alt rule.
+ * Unit tests for react-a11y-image-button-has-alt rule.
  */
-describe('reactA11ySubmitButtonImageHasAlt', (): void => {
-    const ruleName: string = 'react-a11y-submit-button-image-has-alt';
+describe('reactA11yImageButtonHasAlt', (): void => {
+    const ruleName: string = 'react-a11y-image-button-has-alt';
 
     describe('should pass', (): void => {
         it("when there has no input element with type='image'", (): void => {
@@ -50,7 +50,7 @@ describe('reactA11ySubmitButtonImageHasAlt', (): void => {
                     startPosition: { character: 27, line: 4 },
                     failure: "Inputs element of type=[image] must have an alt attribute."
                 }
-            ])
+            ]);
         });
 
         it("when input element of type='image' has an empty alt attribute.", (): void => {
@@ -94,7 +94,7 @@ describe('reactA11ySubmitButtonImageHasAlt', (): void => {
                     startPosition: { character: 27, line: 7 },
                     failure: "Inputs element of type=[image] must have an not empty alt attribute."
                 }
-            ])
+            ]);
         });
     });
 });

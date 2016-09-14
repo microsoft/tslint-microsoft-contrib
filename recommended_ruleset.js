@@ -26,6 +26,7 @@ module.exports = {
         "no-string-based-set-immediate": true,
         "no-string-based-set-interval": true,
         "no-string-based-set-timeout": true,
+        "react-anchor-blank-noopener": true,
         "react-iframe-missing-sandbox": true,
         "react-no-dangerous-html": true,
         "use-strict": true,
@@ -137,10 +138,13 @@ module.exports = {
          * experience for keyboard and screen reader users.
          */
         "react-a11y-anchors": true,
+        "react-a11y-aria-unsupported-elements": true,
+        "react-a11y-image-button-has-alt": true,
         "react-a11y-img-has-alt": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,
         "react-a11y-props": true,
+        "react-a11y-proptypes": true,
         "react-a11y-role": true,
         "react-a11y-role-has-required-aria-props": true,
         "react-a11y-role-supports-aria-props": true,

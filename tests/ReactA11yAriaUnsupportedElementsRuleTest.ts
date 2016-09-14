@@ -41,13 +41,13 @@ describe('reactA11yAriaUnsupportedElementsRule', () => {
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
-                    startPosition: { character: 31, line: 4 },
+                    startPosition: { character: 23, line: 4 },
                     failure: getFailureString('base', ['aria-label', 'role'])
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
-                    startPosition: { character: 31, line: 5 },
+                    startPosition: { character: 23, line: 5 },
                     failure: getFailureString('base', ['aria-label', 'role'])
                 }
             ]

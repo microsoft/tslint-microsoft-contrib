@@ -1,5 +1,5 @@
 /**
- * Enforce that inputs element of type=[image] must have an alt attribute.
+ * Enforce that inputs element with type="image" must have alt attribute.
  */
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
@@ -8,9 +8,9 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 
 const NO_ALT_ATTRIBUTE_FAILURE_STRING: string =
-    'Inputs element of type=[image] must have an alt attribute.';
+    'Inputs element with type="image" must have alt attribute.';
 const EMPTY_ALT_ATTRIBUTE_FAILURE_STRING: string =
-    'Inputs element of type=[image] must have an not empty alt attribute.';
+    'Inputs element with type="image" must have non-empty alt attribute.';
 const TYPE_STRING: string = 'type';
 const ALT_STRING: string = 'alt';
 
@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-image-button-has-alt',
         type: 'maintainability',
-        description: 'Enforce that inputs element of type=[image] must have an alt attribute.',
+        description: 'Enforce that inputs element with type="image" must have alt attribute.',
         options: null,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

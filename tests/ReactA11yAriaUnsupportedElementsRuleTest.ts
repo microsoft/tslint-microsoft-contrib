@@ -29,11 +29,11 @@ describe('reactA11yAriaUnsupportedElementsRule', () => {
 
     it('should fail when unsupported aria elements have aria-* or role attributes', (): void => {
         const script: string = `
-                    import React = require('react');
+            import React = require('react');
 
-                    const a = <base aria-label role { ...this.props }></base>;
-                    const b = <base aria-label role { ...this.props } />;
-                `;
+            const a = <base aria-label role { ...this.props }></base>;
+            const b = <base aria-label role { ...this.props } />;
+        `;
         TestHelper.assertViolations(
             ruleName,
             script,

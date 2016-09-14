@@ -18,7 +18,7 @@ describe('reactA11yImageButtonHasAlt', (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when input element of type='image' has an not empty alt attribute.", (): void => {
+        it("when input element with type='image' has non-empty alt attribute.", (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='image' alt='altString' />;
@@ -30,7 +30,7 @@ describe('reactA11yImageButtonHasAlt', (): void => {
     });
 
     describe('should fail', (): void => {
-        it("when input element of type='image' has no an alt attribute.", (): void => {
+        it("when input element with type='image' has no alt attribute.", (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='image' />;
@@ -42,18 +42,18 @@ describe('reactA11yImageButtonHasAlt', (): void => {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
-                    failure: "Inputs element of type=[image] must have an alt attribute."
+                    failure: 'Inputs element with type="image" must have alt attribute.'
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
-                    failure: "Inputs element of type=[image] must have an alt attribute."
+                    failure: 'Inputs element with type="image" must have alt attribute.'
                 }
             ]);
         });
 
-        it("when input element of type='image' has an empty alt attribute.", (): void => {
+        it("when input element with type='image' has an empty alt attribute.", (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='image' alt />;
@@ -68,31 +68,31 @@ describe('reactA11yImageButtonHasAlt', (): void => {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
-                    failure: "Inputs element of type=[image] must have an not empty alt attribute."
+                    failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
-                    failure: "Inputs element of type=[image] must have an not empty alt attribute."
+                    failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
-                    failure: "Inputs element of type=[image] must have an not empty alt attribute."
+                    failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
-                    failure: "Inputs element of type=[image] must have an not empty alt attribute."
+                    failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
                     name: 'file.tsx',
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
-                    failure: "Inputs element of type=[image] must have an not empty alt attribute."
+                    failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 }
             ]);
         });

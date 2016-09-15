@@ -40,3 +40,13 @@ export function isJsxSelfClosingElement(node: ts.Node): node is ts.JsxSelfClosin
 export function isJsxOpeningElement(node: ts.Node): node is ts.JsxOpeningElement {
   return node && node.kind === ts.SyntaxKind.JsxOpeningElement;
 }
+
+export function isTrueKeyword(node: ts.Node): node is ts.LiteralExpression {
+  return node && node.kind === ts.SyntaxKind.TrueKeyword;
+}
+export function isFalseKeyword(node: ts.Node): node is ts.LiteralExpression {
+  return node && node.kind === ts.SyntaxKind.FalseKeyword;
+}
+export function isNullKeyword(node: ts.Node): node is ts.LiteralExpression {
+  return node && node.kind === ts.SyntaxKind.NullKeyword;
+}

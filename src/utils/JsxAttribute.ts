@@ -36,7 +36,7 @@ export function getStringLiteral(node: ts.JsxAttribute): string {
     throw new Error('The node must be a JsxAttribute collected by the AST parser.');
   }
 
-  const initializer: ts.Expression = node.initializer;
+  const initializer: ts.Expression = node == null ? null : node.initializer;
 
   if (!initializer) { // <tag attribute/>
     return '';
@@ -52,7 +52,7 @@ export function getStringLiteral(node: ts.JsxAttribute): string {
 }
 
 export function isEmpty(node: ts.JsxAttribute): boolean {
-  const initializer: ts.Expression = node.initializer;
+  const initializer: ts.Expression = node == null ? null : node.initializer;
 
   if (initializer == null) {
     return true;
@@ -83,7 +83,7 @@ export function getNumericLiteral(node: ts.JsxAttribute): string {
     throw new Error('The node must be a JsxAttribute collected by the AST parser.');
   }
 
-  const initializer: ts.Expression = node.initializer;
+  const initializer: ts.Expression = node == null ? null : node.initializer;
 
   return isJsxExpression(initializer) && isNumericLiteral(initializer.expression)
     ? (<ts.LiteralExpression>initializer.expression).text
@@ -97,7 +97,9 @@ export function getNumericLiteral(node: ts.JsxAttribute): string {
 export function getAllAttributesFromJsxElement(node: ts.Node): (ts.JsxAttribute | ts.JsxSpreadAttribute)[] {
   let attributes: (ts.JsxAttribute | ts.JsxSpreadAttribute)[];
 
-  if (isJsxElement(node)) {
+  if (node == null) {
+    return [];
+  } else if (isJsxElement(node)) {
     attributes = node.openingElement.attributes;
   } else if (isJsxSelfClosingElement(node)) {
     attributes = node.attributes;

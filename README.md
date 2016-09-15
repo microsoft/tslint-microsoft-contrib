@@ -173,15 +173,11 @@ Development
 
 To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
 
-    git config --global core.autocrlf input
-    git config --global core.eol lf
-    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git
+    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git --config core.autocrlf=input --config core.eol=lf
     cd tslint-microsoft-contrib
     npm install
     grunt all
     grunt create-rule --rule-name=no-something-or-other
-
-The repo requires you to use linefeed as a line ending, and asks that you checkout the code with linefeed endings enabled. This does change your global config, so please make a note of your previous values and revert them after the checkout if necessary.
 
 Debug code
 -----------

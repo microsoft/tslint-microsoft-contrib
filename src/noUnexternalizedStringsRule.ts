@@ -105,8 +105,8 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
     private findDescribingParent(node: ts.Node):
             { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } {
         const kinds = SyntaxKind.current();
-        let parent: ts.Node;
-        while ((parent = node.parent)) {
+        while ((node.parent != null)) {
+            const parent: ts.Node = node.parent;
             const kind = parent.kind;
             if (kind === kinds.CallExpression) {
                 const callExpression = <ts.CallExpression>parent;

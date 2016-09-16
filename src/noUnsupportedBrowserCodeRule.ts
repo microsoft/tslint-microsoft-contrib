@@ -78,6 +78,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWal
             }
 
             let match;
+            /* tslint:disable-next-line:no-conditional-assignment */
             while ((match = regex.exec(scanner.getTokenText()))) {
                 const browser = this.parseBrowserString(match[1]);
                 const startPos = scanner.getTokenPos() + match.index;

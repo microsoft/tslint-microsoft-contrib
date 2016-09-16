@@ -18,6 +18,7 @@ function-name,Applies a naming convention to function names and method names,TSL
 CWE 710 - Coding Standards Violation"
 indent,Enforces indentation with tabs or spaces.,TSLINTGKM7CB,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+insecure-random,Do not use insecure sources for random bytes,TSLINT143MUPB,tslint,SDL,Error,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,330,"CWE 330 - Use of Insufficiently Random Values"
 interface-name,Requires interface names to begin with a capital 'I',TSLINT1JHB5S2,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 jquery-deferred-must-complete,"When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope.",TSLINTQ72FQV,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
@@ -189,6 +190,8 @@ one-variable-per-declaration,Disallows multiple variable definitions in the same
 only-arrow-functions,Disallows traditional (non-arrow) function expressions.,TSLINT1ANTAAL,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 ordered-imports,Requires that import statements be alphabetized.,TSLINT1FC7VGF,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+possible-timing-attack,Avoid timing attacks by not making direct comaprisons to sensitive data,TSLINTHQC3QI,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"710,749","CWE 710 - Coding Standards Violation
+CWE 749 - Exposed Dangerous Method or Function"
 prefer-array-literal,Use array literal syntax when declaring or instantiating array types.,TSLINTCHFS93,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 prefer-const,Use const to declare variables if they are only assigned a value once.,TSLINTGOC17R,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 705, 710","CWE 398 - Indicator of Poor Code Quality

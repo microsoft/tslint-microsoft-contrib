@@ -9,6 +9,7 @@
   "242": "Use of Inherently Dangerous Function",
   "315": "Cleartext Storage of Sensitive Information in a Cookie",
   "319": "Cleartext Transmission of Sensitive Information",
+  "330": "Use of Insufficiently Random Values",
   "351": "Insufficient Type Distinction",
   "398": "Indicator of Poor Code Quality",
   "453": "Insecure Default Variable Initialization",

@@ -215,6 +215,7 @@
     "react-a11y-lang": true,
     "react-a11y-meta": true,
     "react-a11y-anchors": true,
-    "react-anchor-blank-noopener": true
+    "react-anchor-blank-noopener": true,
+    "insecure-random": true
   }
 }

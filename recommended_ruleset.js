@@ -9,6 +9,7 @@ module.exports = {
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
          */
+        "insecure-random": true,
         "no-banned-terms": true,
         "no-cookies": true,
         "no-delete-expression": true,

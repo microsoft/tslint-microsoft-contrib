@@ -64,7 +64,6 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-
     protected visitStringLiteral(node: ts.StringLiteral): void {
         this.checkStringLiteral(node);
         super.visitStringLiteral(node);

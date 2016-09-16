@@ -26,4 +26,3 @@ describe('noWithStatementsRule', () : void => {
             ]);
     });
 });
-

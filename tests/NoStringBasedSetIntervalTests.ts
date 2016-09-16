@@ -2,6 +2,7 @@
 /// <reference path="../typings/chai.d.ts" />
 
 /* tslint:disable:max-func-body-length */
+/* tslint:disable:no-consecutive-blank-lines */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -174,7 +175,6 @@ function invoke3(anyArg : any) {
             }
         ]);
     });
-
 });
-
 /* tslint:enable:max-func-body-length */
+/* tslint:enable:no-consecutive-blank-lines */

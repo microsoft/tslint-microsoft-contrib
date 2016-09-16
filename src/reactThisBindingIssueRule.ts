@@ -82,7 +82,6 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         // reset variable scope when we encounter a method. Start tracking variables that are instantiated
         // in scope so we can make sure new function instances are not passed as JSX attributes
@@ -110,7 +109,6 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             this.scope = this.scope.parent;
         }
     }
-
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         if (this.scope != null) {

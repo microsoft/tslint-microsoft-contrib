@@ -1,7 +1,3 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
-
 import {TestHelper} from './TestHelper';
 
 /**
@@ -18,7 +14,6 @@ describe('noJqueryRawElementsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
-
 
     it('should pass on simple opening tag (Issue #153)', () : void => {
         const script : string = `
@@ -160,4 +155,3 @@ describe('noJqueryRawElementsRule', () : void => {
         ]);
     });
 });
-

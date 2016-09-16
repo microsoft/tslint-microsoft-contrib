@@ -35,4 +35,3 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(walker);
     }
 }
-

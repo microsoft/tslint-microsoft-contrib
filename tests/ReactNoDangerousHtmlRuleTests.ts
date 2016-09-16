@@ -14,7 +14,6 @@ class MyComponent {
     }
 }`;
 
-
 /**
  * Unit tests.
  */
@@ -102,4 +101,3 @@ function someFunction() {
         );
     });
 });
-

@@ -1,4 +1,3 @@
-
 import * as Lint from 'tslint/lib/lint';
 
 /**
@@ -34,4 +33,3 @@ export type Level = 'Mandatory' | 'Opportunity for Excellence';
  * Ignored - Use this value to exclude the rule from recommended_ruleset.js and the deployed tslint.json file.
  */
 export type Group = 'Ignored' | 'Security' | 'Correctness' | 'Accessibility' | 'Clarity' | 'Whitespace' | 'Configurable' | 'Deprecated';
-

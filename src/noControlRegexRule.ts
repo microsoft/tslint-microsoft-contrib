@@ -41,7 +41,6 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
         super.visitCallExpression(node);
     }
 
-
     protected visitRegularExpressionLiteral(node: ts.Node): void {
         if (/(\\x[0-1][0-9a-f])/.test(node.getText())) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));

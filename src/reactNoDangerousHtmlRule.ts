@@ -81,7 +81,6 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         super.visitPropertyAssignment(node);
     }
 
-
     protected visitJsxElement(node: ts.JsxElement): void {
         this.handleJsxOpeningElement(node.openingElement);
         super.visitJsxElement(node);

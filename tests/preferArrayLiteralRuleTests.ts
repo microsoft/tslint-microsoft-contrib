@@ -25,7 +25,6 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, [ true, { 'allow-type-parameters': true } ], inputScript, [ ]);
     });
 
-
     it('should ban Array<string> as variable type', () : void => {
         const inputScript : string = 'var x : Array<string>;';
         TestHelper.assertViolations(ruleName, inputScript, [
@@ -86,4 +85,3 @@ describe('preferArrayLiteralRule', () : void => {
         ]);
     });
 });
-

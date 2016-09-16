@@ -36,4 +36,3 @@ describe('noUnnecessarySemiColons', () : void => {
         );
     });
 });
-

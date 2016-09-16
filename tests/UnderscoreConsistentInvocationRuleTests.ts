@@ -1002,8 +1002,6 @@ describe('underscoreConsistentInvocationRule', () : void => {
             }
         ]);
     });
-
 });
-
 /* tslint:enable:max-line-length */
 /* tslint:enable:max-func-body-length */

@@ -25,4 +25,3 @@ describe('noFunctionConstructorWithStringArgsRule', () : void => {
     });
 
 });
-

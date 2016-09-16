@@ -158,7 +158,6 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
         super.visitCallExpression(node);
     }
 
-
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
         const isDeferredShadowed : boolean = Utils.exists(node.parameters, (param : ts.ParameterDeclaration) : boolean => {
             return AstUtils.isSameIdentifer(this.deferredIdentifier, param.name);

@@ -1,7 +1,3 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
-
 import {TestHelper} from './TestHelper';
 
 /**
@@ -75,4 +71,3 @@ describe('noRelativeImportsRule', () : void => {
     });
 
 });
-

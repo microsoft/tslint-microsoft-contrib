@@ -48,7 +48,6 @@ export class Rule extends Lint.Rules.AbstractRule {
         'from', 'of'
     ];
 
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker: Lint.RuleWalker = new BannedTermWalker(
             sourceFile,
@@ -59,4 +58,3 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithWalker(walker);
     }
 }
-

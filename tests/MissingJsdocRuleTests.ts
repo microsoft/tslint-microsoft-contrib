@@ -110,6 +110,4 @@ function whatever() { }`;
             }
         ]);
     });
-
-
 });

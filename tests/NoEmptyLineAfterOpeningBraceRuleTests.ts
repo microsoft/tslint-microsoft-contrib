@@ -1,8 +1,4 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
 import {TestHelper} from './TestHelper';
-
 
 /**
  * Unit tests.
@@ -15,7 +11,6 @@ describe('noEmptyLineAfterOpeningBraceRule', (): void => {
 
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
-
 
     it('should allow a multiline block without a newline after the opening brace', (): void => {
         const inputScript: string = `

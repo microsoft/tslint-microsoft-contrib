@@ -63,7 +63,5 @@ describe('noHttpStringRule', (): void => {
             }
         }]);
     });
-
 });
-
 /* tslint:enable:no-http-string */

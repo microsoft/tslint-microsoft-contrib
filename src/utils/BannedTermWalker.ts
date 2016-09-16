@@ -32,12 +32,10 @@ export class BannedTermWalker extends ErrorTolerantWalker {
         super.visitFunctionDeclaration(node);
     }
 
-
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         this.validateNode(node);
         super.visitPropertyDeclaration(node);
     }
-
 
     protected visitPropertySignature(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().PropertySignature) {

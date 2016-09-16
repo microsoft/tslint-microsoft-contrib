@@ -3,7 +3,6 @@
 
 import {TestHelper} from './TestHelper';
 
-
 /**
  * Unit tests.
  */
@@ -173,7 +172,6 @@ describe('preferConstRule', (): void => {
 
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
-
 
     it('should allow a let declaration that is decremented', (): void => {
         const inputScript: string = `

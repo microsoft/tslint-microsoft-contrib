@@ -348,4 +348,3 @@ export class AuthorSummary extends BaseComponent.BaseComponent<Props, BaseCompon
     });
 
 });
-

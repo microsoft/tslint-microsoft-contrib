@@ -70,7 +70,6 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         super.visitImportEqualsDeclaration(node);
     }
 
-
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
         if (node.importClause.name != null) {
             const name: string = node.importClause.name.text;

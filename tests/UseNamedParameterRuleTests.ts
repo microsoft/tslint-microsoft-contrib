@@ -38,7 +38,4 @@ function add() {
 }`;
         TestHelper.assertViolations(ruleName, inputScript, [ ]);
     });
-
-
 });
-

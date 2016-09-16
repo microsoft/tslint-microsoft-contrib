@@ -47,14 +47,12 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
         this.languageServices = languageServices;
     }
 
-
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
         if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         super.visitImportEqualsDeclaration(node);
     }
-
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
         if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {

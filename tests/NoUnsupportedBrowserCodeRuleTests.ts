@@ -193,5 +193,4 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
         ]);
     });
 });
-
 /* tslint:enable:max-func-body-length */

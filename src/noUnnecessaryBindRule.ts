@@ -188,5 +188,3 @@ function isArrowFunction(expression: ts.Expression): boolean {
     }
     return false;
 }
-
-

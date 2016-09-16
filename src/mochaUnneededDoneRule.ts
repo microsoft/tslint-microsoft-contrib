@@ -123,7 +123,6 @@ class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
         return this.count;
     }
 
-
     protected visitIdentifier(node: ts.Identifier): void {
         if (node.getText() === this.identifierText) {
             this.count = this.count + 1;

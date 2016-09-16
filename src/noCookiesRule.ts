@@ -42,7 +42,6 @@ class NoCookiesWalker extends ErrorTolerantWalker {
         this.typeChecker = languageService.getProgram().getTypeChecker();
     }
 
-
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         const propertyName = node.name.text;
         if (propertyName === 'cookie') {

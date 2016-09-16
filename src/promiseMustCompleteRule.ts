@@ -150,7 +150,6 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
         super.visitCallExpression(node);
     }
 
-
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
         // walk into function body but do not track any shadowed identifiers
         const nonShadowedIdentifiers: ts.Identifier[] = this.getNonShadowedCompletionIdentifiers(node);

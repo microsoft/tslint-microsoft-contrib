@@ -1,10 +1,8 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixNoVarKeywordFormatter';
 
+/* tslint:disable:no-consecutive-blank-lines */
 class FixNoVarKeywordFormatterForTesting extends Formatter {
 
     private input: string;
@@ -92,3 +90,4 @@ let foo = bar;
         chai.expect(formatter.getOutput()).to.equal(`\r\n    let foo = bar;\r\n`);
     });
 });
+/* tslint:enable:no-consecutive-blank-lines */

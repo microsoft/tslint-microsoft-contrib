@@ -152,4 +152,3 @@ function function3(requiredArg1, optionalArg2?, requiredArg3) {}`;
         );
     });
 });
-

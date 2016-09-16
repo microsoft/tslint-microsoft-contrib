@@ -501,4 +501,3 @@ $window.setTimeout(\`\${data}\`, 200);`;
     });
 
 });
-

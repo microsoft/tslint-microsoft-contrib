@@ -129,7 +129,6 @@ export module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
-
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
         return node != null && (node.kind === SyntaxKind.current().ArrayBindingPattern ||
             node.kind === SyntaxKind.current().ObjectBindingPattern);

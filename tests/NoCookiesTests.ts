@@ -89,4 +89,3 @@ documentLikeAPIFunction().cookie = '...';`;
     });
 
 });
-

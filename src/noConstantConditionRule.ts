@@ -40,7 +40,6 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         super.visitIfStatement(node);
     }
 
-
     protected visitConditionalExpression(node: ts.ConditionalExpression): void {
         if (AstUtils.isConstantExpression(node.condition)) {
             const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
@@ -48,7 +47,6 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         }
         super.visitConditionalExpression(node);
     }
-
 
     protected visitWhileStatement(node: ts.WhileStatement): void {
         if (AstUtils.isConstantExpression(node.expression)) {
@@ -58,7 +56,6 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         super.visitWhileStatement(node);
     }
 
-
     protected visitDoStatement(node: ts.DoStatement): void {
         if (AstUtils.isConstantExpression(node.expression)) {
             const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
@@ -66,7 +63,6 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         }
         super.visitDoStatement(node);
     }
-
 
     protected visitForStatement(node: ts.ForStatement): void {
         if (node.condition != null) {

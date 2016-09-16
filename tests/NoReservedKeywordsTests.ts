@@ -4574,7 +4574,6 @@ describe('noBannedTermsRule', () : void => {
         ]);
     });
 
-
     it('should not allow local variable named require', () : void => {
         TestHelper.assertViolations(RULE_NAME,
             `var require`,
@@ -4596,7 +4595,5 @@ describe('noBannedTermsRule', () : void => {
                 "startPosition": { "character": 5, "line": 1 }
             }]);
     });
-
 });
-
 /* tslint:enable:max-func-body-length */

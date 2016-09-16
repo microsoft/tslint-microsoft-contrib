@@ -43,7 +43,6 @@ class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
         this.typeChecker = this.languageService.getProgram().getTypeChecker();
     }
 
-
     protected visitNewExpression(node: ts.NewExpression): void {
         const functionName  = AstUtils.getFunctionName(node);
         if (functionName === 'Function') {

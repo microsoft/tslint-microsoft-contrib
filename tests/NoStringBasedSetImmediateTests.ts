@@ -7,6 +7,7 @@ import {TestHelper} from './TestHelper';
 /**
  * Unit tests.
  */
+/* tslint:disable:no-consecutive-blank-lines */
 describe('noStringBasedSetImmediateRule', () : void => {
     const RULE_NAME : string = 'no-string-based-set-immediate';
 
@@ -174,7 +175,6 @@ function invoke3(anyArg : any) {
             }
         ]);
     });
-
 });
-
 /* tslint:enable:max-func-body-length */
+/* tslint:enable:no-consecutive-blank-lines */

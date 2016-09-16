@@ -35,7 +35,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
 
-
     protected visitJsxElement(node: ts.JsxElement): void {
         this.validateOpeningElement(node, node.openingElement);
         super.visitJsxElement(node);

@@ -36,7 +36,6 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
         super.visitBlock(node);
     }
 
-
     protected visitSourceFile(node: ts.SourceFile): void {
         this.validateStatementArray(node.statements);
         super.visitSourceFile(node);

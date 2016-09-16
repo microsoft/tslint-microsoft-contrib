@@ -41,4 +41,3 @@ describe('noDisableAutoSanitizationRule', () : void => {
         );
     });
 });
-

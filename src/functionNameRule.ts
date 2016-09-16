@@ -71,7 +71,6 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
         super.visitMethodDeclaration(node);
     }
 
-
     protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
         if (node.name != null) {
             const name: string = node.name.text;

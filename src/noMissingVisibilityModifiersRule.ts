@@ -39,7 +39,6 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
         super.visitPropertyDeclaration(node);
     }
 
-
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             const failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);

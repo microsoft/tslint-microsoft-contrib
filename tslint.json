@@ -44,7 +44,7 @@
       true,
       140
     ],
-    "member-access": false,
+    "member-access": true,
     "member-ordering": false,
     "missing-jsdoc": true,
     "missing-optional-annotation": true,

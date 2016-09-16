@@ -79,7 +79,7 @@ export module TestHelper {
             formattersDirectory: FORMATTER_DIRECTORY
         };
 
-		let result: Lint.LintResult;
+        let result: Lint.LintResult;
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
             const linter = new Lint.Linter(inputFileOrScript, contents, options);

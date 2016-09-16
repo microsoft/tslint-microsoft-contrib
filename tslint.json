@@ -22,7 +22,7 @@
     "forin": true,
     "function-name": true,
     "import-name": true,
-    "indent": false,
+    "indent": [true, "spaces"],
     "interface-name": false,
     "jquery-deferred-must-complete": true,
     "jsdoc-format": false,

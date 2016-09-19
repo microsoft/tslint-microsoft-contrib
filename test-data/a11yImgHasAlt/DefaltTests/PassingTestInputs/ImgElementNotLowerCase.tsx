@@ -1,4 +1,7 @@
 import React = require('react');
 
-const a = <img />
-const b = <img alt=''/>
+let Img;
+let IMG;
+
+const a = <Img />
+const b = <IMG alt=''/>

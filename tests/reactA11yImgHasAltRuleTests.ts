@@ -1,10 +1,14 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringNoAlt, getFailureStringEmptyAlt } from '../src/reactA11yImgHasAltRule';
+import {
+  getFailureStringNoAlt,
+  getFailureStringNonEmptyAltAndPresentationRole,
+  getFailureStringEmptyAltAndNotPresentationRole
+} from '../src/reactA11yImgHasAltRule';
 
 /**
- * Unit test for a11y-img-has-alt rule
+ * Unit test for react-a11y-img-has-alt rule
  */
-describe('a11yImgHasAlt', () => {
+describe('reactA11yImgHasAlt', () => {
   const ruleName: string = 'react-a11y-img-has-alt';
 
   describe('default tests', () => {
@@ -16,23 +20,23 @@ describe('a11yImgHasAlt', () => {
         TestHelper.assertNoViolation(ruleName, fileName);
       });
 
-      it('when the img element has presentation role', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasPresentationRole';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
-      it('when the img element has no empty alt value', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasAltAndAltValueNotEmpty';
-        TestHelper.assertNoViolation(ruleName, fileName);
-      });
-
       it('when the img tag name is not lower case', () => {
-        const fileName: string = fileDirectory + 'ImgElementNotLowerCase';
+        const fileName: string = fileDirectory + 'ImgElementNotLowerCase.tsx';
         TestHelper.assertNoViolation(ruleName, fileName);
       });
 
       it('when the img element has spread attribute', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasSpreadAttribute';
+        const fileName: string = fileDirectory + 'ImgElementHasSpreadAttribute.tsx';
+        TestHelper.assertNoViolation(ruleName, fileName);
+      });
+
+      it('when the img element has empty alt value and presentation role', () => {
+        const fileName: string = fileDirectory + 'ImgElementHasEmptyAltValueAndPresentationRole.tsx';
+        TestHelper.assertNoViolation(ruleName, fileName);
+      });
+
+      it('when the img element has non-empty alt value and not presentation role', () => {
+        const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndNotPresentationRole.tsx';
         TestHelper.assertNoViolation(ruleName, fileName);
       });
     });
@@ -63,8 +67,8 @@ describe('a11yImgHasAlt', () => {
         );
       });
 
-      it('when the img element has empty alt value', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasEmptyAltValue.tsx';
+      it('when the img element has empty alt value and not presentation role', () => {
+        const fileName: string = fileDirectory + 'ImgElementHasEmptyAltValueAndNotPresentationRole.tsx';
 
         TestHelper.assertViolations(
           ruleName,
@@ -73,26 +77,61 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 3 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 3 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 4 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 4 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 5 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 5 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 6 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 6 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
+            }
+          ]
+        );
+      });
+
+      it('when the img element has non-empty alt value and presentation role', () => {
+        const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndPresentationRole.tsx';
+
+        TestHelper.assertViolations(
+          ruleName,
+          fileName,
+          [
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 5 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 6 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 7 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 8 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
             }
           ]
         );
@@ -111,13 +150,13 @@ describe('a11yImgHasAlt', () => {
         TestHelper.assertNoViolationWithOptions(ruleName, options, fileName);
       });
 
-      it('when custom element or img has presentation role', () => {
-        const fileName: string = fileDirectory + 'CustomElementHasPresentationRole.tsx';
+      it('when custom element or img has empty alt value and presentation role', () => {
+        const fileName: string = fileDirectory + 'CustomElementHasEmptyAltValueAndPresentationRole.tsx';
         TestHelper.assertNoViolationWithOptions(ruleName, options, fileName);
       });
 
-      it('when custom element or img has not empty alt value', () => {
-        const fileName: string = fileDirectory + 'CustomElementHasValidAltValue.tsx';
+      it('when custom element or img has non-empty alt value and not presentation role', () => {
+        const fileName: string = fileDirectory + 'CustomElementHasNonEmptyAltValueAndNotPresentationRole.tsx';
         TestHelper.assertNoViolationWithOptions(ruleName, options, fileName);
       });
     });
@@ -161,8 +200,8 @@ describe('a11yImgHasAlt', () => {
         );
       });
 
-      it('when custom element or img has empty alt value', () => {
-        const fileName: string = fileDirectory + 'CustomElementHasEmptyAltValue.tsx';
+      it('when custom element or img has non-empty alt value and presentation role', () => {
+        const fileName: string = fileDirectory + 'CustomElementHasNonEmptyAltValueAndPresentationRole.tsx';
 
         TestHelper.assertViolationsWithOptions(
           ruleName,
@@ -172,38 +211,86 @@ describe('a11yImgHasAlt', () => {
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 20, line: 4 },
-              failure: getFailureStringEmptyAlt('Picture')
+              startPosition: { character: 11, line: 6 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 20, line: 5 },
-              failure: getFailureStringEmptyAlt('Picture')
+              startPosition: { character: 11, line: 7 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 20, line: 6 },
-              failure: getFailureStringEmptyAlt('Picture')
+              startPosition: { character: 11, line: 8 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 7 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 9 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 8 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 10 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
             },
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 16, line: 9 },
-              failure: getFailureStringEmptyAlt('img')
+              startPosition: { character: 11, line: 11 },
+              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
+            }
+          ]
+        );
+      });
+
+      it('when custom element or img has empty alt value and not presentation role', () => {
+        const fileName: string = fileDirectory + 'CustomElementHasEmptyAltValueAndNotPresentationRole.tsx';
+
+        TestHelper.assertViolationsWithOptions(
+          ruleName,
+          options,
+          fileName,
+          [
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 4 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 5 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 6 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 7 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 8 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 9 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             }
           ]
         );

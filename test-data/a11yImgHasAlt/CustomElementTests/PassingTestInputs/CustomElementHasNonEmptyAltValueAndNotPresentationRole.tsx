@@ -2,9 +2,9 @@ import React = require('react');
 
 let Picture, validAltValue;
 
-const a = <Picture alt='validAltValue' />
-const b = <Picture alt={validAltValue} />
+const a = <Picture alt='validAltValue' role='button' />
+const b = <Picture alt={validAltValue} role='link' />
 const c = <Picture alt={'validAltValue'} />
-const d = <img alt='validAltValue' />
+const d = <img alt='validAltValue' role='button link' />
 const e = <img aLt={validAltValue} />
 const f = <img alt={'validAltValue'} />

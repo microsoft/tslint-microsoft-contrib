@@ -11,7 +11,7 @@ describe('reactA11yProptypesRule', () => {
         const fileDirectory: string = 'test-data/ReactA11yProptypes/PassingTestInputs/';
 
         it('when can not check the type of attribute value until running time', () => {
-            const fileName: string = fileDirectory + 'canNotCheckUtilRunTime';
+            const fileName: string = fileDirectory + 'canNotCheckUntilRunTime.tsx';
             TestHelper.assertNoViolation(ruleName, fileName);
         });
 

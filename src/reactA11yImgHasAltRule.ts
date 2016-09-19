@@ -10,17 +10,24 @@ import {
 } from './utils/JsxAttribute';
 import { isJsxSpreadAttribute } from './utils/TypeGuard';
 
-const roleString: string = 'role';
-const altString: string = 'alt';
+const ROLE_STRING: string = 'role';
+const ALT_STRING: string = 'alt';
 
 export function getFailureStringNoAlt(tagName: string): string {
-  return `<${tagName}> elements must have an alt attribute or use role='presentation' for presentational images. \
+  return `<${tagName}> elements must have an non-empty alt attribute or \
+use empty alt attribute and role='presentation' for presentational images. \
 A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
 }
 
-export function getFailureStringEmptyAlt(tagName: string): string {
-  return `The value of 'alt' attribute in <${tagName}> tag is undefined or empty. \
-Add more details in 'alt' attribute or use role='presentation' for presentational images. \
+export function getFailureStringEmptyAltAndNotPresentationRole(tagName: string): string {
+  return `The value of alt attribute in <${tagName}> tag is empty and role value is not presentation. \
+Add more details in alt attribute or use empty alt attribute and role='presentation' for presentational images. \
+A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
+}
+
+export function getFailureStringNonEmptyAltAndPresentationRole(tagName: string): string {
+  return `The value of alt attribute in <${tagName}> tag is non-empty and role value is presentation. \
+Remove role='presentation' or use empty alt attribute and role='presentation' for presentational images. \
 A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
 }
 
@@ -31,7 +38,8 @@ export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
     ruleName: 'react-a11y-img-has-alt',
     type: 'maintainability',
-    description: 'Enforce that an `img` element contains the `alt` attribute or `role="presentation"` for decorative image.',
+    description: 'Enforce that an `img` element contains the non-empty `alt` attribute or' +
+    'empty alt attribute and `role="presentation"` for decorative image.',
     options: 'string[]',
     optionExamples: ['true', '[true, ["Image"]]'],
     issueClass: 'Non-SDL',
@@ -49,9 +57,19 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ImgHasAltWalker extends Lint.RuleWalker {
+  public visitJsxElement(node: ts.JsxElement): void {
+    this.checkJsxOpeningElement(node.openingElement);
+    super.visitJsxElement(node);
+  }
+
   public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
+    this.checkJsxOpeningElement(node);
+    super.visitJsxSelfClosingElement(node);
+  }
+
+  private checkJsxOpeningElement(node: ts.JsxOpeningElement): void {
     // Tag name is sensitive on lowercase or uppercase, we shoudn't normalize tag names in this rule.
-    const tagName: string = node.tagName && node.tagName.getText();
+    const tagName: string = node.tagName.getText();
     const options: any[] = this.getOptions(); // tslint:disable-line:no-any
 
     // The additionalTagNames are specified by tslint config to check not only 'img' tag but also customized tag.
@@ -71,31 +89,33 @@ class ImgHasAltWalker extends Lint.RuleWalker {
     }
 
     const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
-    const role: ts.JsxAttribute = attributes[roleString];
-    const roleValue: string = role && getStringLiteral(role);
+    const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
-    // if <img> element has role of 'presentation', it's presentational image, don't check it;
-    // @example <img role='presentation' />
-    if (roleValue && roleValue.match(/\bpresentation\b/)) {
-      return;
-    }
-
-    const altProp: ts.JsxAttribute = attributes[altString];
-
-    if (!altProp) {
+    if (!altAttribute) {
       this.addFailure(this.createFailure(
         node.getStart(),
         node.getWidth(),
         getFailureStringNoAlt(tagName)
       ));
-    } else if (isEmpty(altProp) || getStringLiteral(altProp) === '') {
-      this.addFailure(this.createFailure(
-        altProp.getStart(),
-        altProp.getWidth(),
-        getFailureStringEmptyAlt(tagName)
-      ));
-    }
+    } else {
+      const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
+      const roleAttributeValue: string = roleAttribute ? getStringLiteral(roleAttribute) : '';
+      const isPresentationRole: boolean = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
+      const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
 
-    super.visitJsxSelfClosingElement(node);
+      if (!isEmptyAlt && isPresentationRole) { // <img alt='altValue' role='presentation' />
+        this.addFailure(this.createFailure(
+          node.getStart(),
+          node.getWidth(),
+          getFailureStringNonEmptyAltAndPresentationRole(tagName)
+        ));
+      } else if (isEmptyAlt && !isPresentationRole) { // <img alt='' />
+        this.addFailure(this.createFailure(
+          node.getStart(),
+          node.getWidth(),
+          getFailureStringEmptyAltAndNotPresentationRole(tagName)
+        ));
+      }
+    }
   }
 }

@@ -21,14 +21,12 @@ A reference for the presentation role can be found at https://www.w3.org/TR/wai-
 
 export function getFailureStringEmptyAltAndNotPresentationRole(tagName: string): string {
   return `The value of alt attribute in <${tagName}> tag is empty and role value is not presentation. \
-Add more details in alt attribute or use empty alt attribute and role='presentation' for presentational images. \
-A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
+Add more details in alt attribute or specify role attribute to equal 'presentation' when 'alt' attribute is empty.`;
 }
 
 export function getFailureStringNonEmptyAltAndPresentationRole(tagName: string): string {
   return `The value of alt attribute in <${tagName}> tag is non-empty and role value is presentation. \
-Remove role='presentation' or use empty alt attribute and role='presentation' for presentational images. \
-A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
+Remove role='presentation' or specify 'alt' attributeto be empty when role attributes equals 'presentation'.`;
 }
 
 /**
@@ -38,8 +36,8 @@ export class Rule extends Lint.Rules.AbstractRule {
   public static metadata: ExtendedMetadata = {
     ruleName: 'react-a11y-img-has-alt',
     type: 'maintainability',
-    description: 'Enforce that an `img` element contains the non-empty `alt` attribute or' +
-    'empty alt attribute and `role="presentation"` for decorative image.',
+    description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+    'For decorative images, using empty alt attribute and role="presentation".',
     options: 'string[]',
     optionExamples: ['true', '[true, ["Image"]]'],
     issueClass: 'Non-SDL',

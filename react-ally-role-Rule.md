@@ -18,7 +18,6 @@ This rule takes no arguments.
 
 ```tsx
 <div role='datepicker'></div>           <!-- Bad: 'datepicker' is not an aria role -->
-<div role='button datepicker'></div>    <!-- Bad: 'datepicker' is not an aria role -->
 <div role='range'></div>                <!-- Bad: 'range' is an abstract aria role -->
 
 // An empty role is not allowed.

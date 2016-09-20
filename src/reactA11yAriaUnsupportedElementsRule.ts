@@ -57,11 +57,11 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
             return;
         }
 
-        const unsupportedAria: boolean = DOM_SCHEMA[tagName].unsupportedAria != null
-            ? DOM_SCHEMA[tagName].unsupportedAria
+        const supportAria: boolean = DOM_SCHEMA[tagName].supportAria != null
+            ? DOM_SCHEMA[tagName].supportAria
             : false;
 
-        if (!unsupportedAria) {
+        if (supportAria) {
             return;
         }
 

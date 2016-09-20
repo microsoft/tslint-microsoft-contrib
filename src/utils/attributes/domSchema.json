@@ -1,145 +1,341 @@
 {
-    "a": {},
-    "abbr": {},
-    "address": {},
-    "area": {},
-    "article": {},
-    "aside": {},
-    "audio": {},
-    "b": {},
-    "base": {
-        "unsupportedAria": true
+    "a": {
+        "supportAria": true
     },
-    "bdi": {},
-    "bdo": {},
-    "big": {},
-    "blockquote": {},
-    "body": {},
-    "br": {},
-    "button": {},
-    "canvas": {},
-    "caption": {},
-    "cite": {},
-    "code": {},
+    "abbr": {
+        "supportAria": true
+    },
+    "address": {
+        "supportAria": true
+    },
+    "area": {
+        "supportAria": true
+    },
+    "article": {
+        "supportAria": true
+    },
+    "aside": {
+        "supportAria": true
+    },
+    "audio": {
+        "supportAria": true
+    },
+    "b": {
+        "supportAria": true
+    },
+    "base": {
+        "supportAria": false
+    },
+    "bdi": {
+        "supportAria": true
+    },
+    "bdo": {
+        "supportAria": true
+    },
+    "big": {
+        "supportAria": true
+    },
+    "blockquote": {
+        "supportAria": true
+    },
+    "body": {
+        "supportAria": true
+    },
+    "br": {
+        "supportAria": true
+    },
+    "button": {
+        "supportAria": true
+    },
+    "canvas": {
+        "supportAria": true
+    },
+    "caption": {
+        "supportAria": true
+    },
+    "cite": {
+        "supportAria": true
+    },
+    "code": {
+        "supportAria": true
+    },
     "col": {
-        "unsupportedAria": true
+        "supportAria": false
     },
     "colgroup": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "data": {},
-    "datalist": {},
-    "dd": {},
-    "del": {},
-    "details": {},
-    "dfn": {},
-    "dialog": {},
-    "div": {},
-    "dl": {},
-    "dt": {},
-    "em": {},
-    "embed": {},
-    "fieldset": {},
-    "figcaption": {},
-    "figure": {},
-    "footer": {},
-    "form": {},
-    "h1": {},
-    "h2": {},
-    "h3": {},
-    "h4": {},
-    "h5": {},
-    "h6": {},
+    "data": {
+        "supportAria": true
+    },
+    "datalist": {
+        "supportAria": true
+    },
+    "dd": {
+        "supportAria": true
+    },
+    "del": {
+        "supportAria": true
+    },
+    "details": {
+        "supportAria": true
+    },
+    "dfn": {
+        "supportAria": true
+    },
+    "dialog": {
+        "supportAria": true
+    },
+    "div": {
+        "supportAria": true
+    },
+    "dl": {
+        "supportAria": true
+    },
+    "dt": {
+        "supportAria": true
+    },
+    "em": {
+        "supportAria": true
+    },
+    "embed": {
+        "supportAria": true
+    },
+    "fieldset": {
+        "supportAria": true
+    },
+    "figcaption": {
+        "supportAria": true
+    },
+    "figure": {
+        "supportAria": true
+    },
+    "footer": {
+        "supportAria": true
+    },
+    "form": {
+        "supportAria": true
+    },
+    "h1": {
+        "supportAria": true
+    },
+    "h2": {
+        "supportAria": true
+    },
+    "h3": {
+        "supportAria": true
+    },
+    "h4": {
+        "supportAria": true
+    },
+    "h5": {
+        "supportAria": true
+    },
+    "h6": {
+        "supportAria": true
+    },
     "head": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "header": {},
-    "hgroup": {},
-    "hr": {},
+    "header": {
+        "supportAria": true
+    },
+    "hgroup": {
+        "supportAria": true
+    },
+    "hr": {
+        "supportAria": true
+    },
     "html": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "i": {},
-    "iframe": {},
-    "img": {},
-    "input": {},
-    "ins": {},
-    "kbd": {},
-    "keygen": {},
-    "label": {},
-    "legend": {},
-    "li": {},
+    "i": {
+        "supportAria": true
+    },
+    "iframe": {
+        "supportAria": true
+    },
+    "img": {
+        "supportAria": true
+    },
+    "input": {
+        "supportAria": true
+    },
+    "ins": {
+        "supportAria": true
+    },
+    "kbd": {
+        "supportAria": true
+    },
+    "keygen": {
+        "supportAria": true
+    },
+    "label": {
+        "supportAria": true
+    },
+    "legend": {
+        "supportAria": true
+    },
+    "li": {
+        "supportAria": true
+    },
     "link": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "main": {},
-    "map": {},
-    "mark": {},
-    "menu": {},
-    "menuitem": {},
+    "main": {
+        "supportAria": true
+    },
+    "map": {
+        "supportAria": true
+    },
+    "mark": {
+        "supportAria": true
+    },
+    "menu": {
+        "supportAria": true
+    },
+    "menuitem": {
+        "supportAria": true
+    },
     "meta": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "meter": {},
-    "nav": {},
+    "meter": {
+        "supportAria": true
+    },
+    "nav": {
+        "supportAria": true
+    },
     "noscript": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "object": {},
-    "ol": {},
-    "optgroup": {},
-    "option": {},
-    "output": {},
-    "p": {},
+    "object": {
+        "supportAria": true
+    },
+    "ol": {
+        "supportAria": true
+    },
+    "optgroup": {
+        "supportAria": true
+    },
+    "option": {
+        "supportAria": true
+    },
+    "output": {
+        "supportAria": true
+    },
+    "p": {
+        "supportAria": true
+    },
     "param": {
-        "unsupportedAria": true
+        "supportAria": false
     },
     "picture": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "pre": {},
-    "progress": {},
-    "q": {},
-    "rp": {},
-    "rt": {},
-    "ruby": {},
-    "s": {},
-    "samp": {},
+    "pre": {
+        "supportAria": true
+    },
+    "progress": {
+        "supportAria": true
+    },
+    "q": {
+        "supportAria": true
+    },
+    "rp": {
+        "supportAria": true
+    },
+    "rt": {
+        "supportAria": true
+    },
+    "ruby": {
+        "supportAria": true
+    },
+    "s": {
+        "supportAria": true
+    },
+    "samp": {
+        "supportAria": true
+    },
     "script": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "section": {},
-    "select": {},
-    "small": {},
+    "section": {
+        "supportAria": true
+    },
+    "select": {
+        "supportAria": true
+    },
+    "small": {
+        "supportAria": true
+    },
     "source": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "span": {},
-    "strong": {},
+    "span": {
+        "supportAria": true
+    },
+    "strong": {
+        "supportAria": true
+    },
     "style": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "sub": {},
-    "summary": {},
-    "sup": {},
-    "table": {},
-    "tbody": {},
-    "td": {},
-    "textarea": {},
-    "tfoot": {},
-    "th": {},
-    "thead": {},
-    "time": {},
+    "sub": {
+        "supportAria": true
+    },
+    "summary": {
+        "supportAria": true
+    },
+    "sup": {
+        "supportAria": true
+    },
+    "table": {
+        "supportAria": true
+    },
+    "tbody": {
+        "supportAria": true
+    },
+    "td": {
+        "supportAria": true
+    },
+    "textarea": {
+        "supportAria": true
+    },
+    "tfoot": {
+        "supportAria": true
+    },
+    "th": {
+        "supportAria": true
+    },
+    "thead": {
+        "supportAria": true
+    },
+    "time": {
+        "supportAria": true
+    },
     "title": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "tr": {},
+    "tr": {
+        "supportAria": true
+    },
     "track": {
-        "unsupportedAria": true
+        "supportAria": false
     },
-    "u": {},
-    "ul": {},
-    "var": {},
-    "video": {},
-    "wbr": {}
+    "u": {
+        "supportAria": true
+    },
+    "ul": {
+        "supportAria": true
+    },
+    "var": {
+        "supportAria": true
+    },
+    "video": {
+        "supportAria": true
+    },
+    "wbr": {
+        "supportAria": true
+    }
 }

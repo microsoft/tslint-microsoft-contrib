@@ -84,7 +84,7 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
         if (node.parameters.length === 0) {
             return null;
         }
-        var allDones = Utils_1.Utils.filter(node.parameters, function (parameter) {
+        var allDones = node.parameters.filter(function (parameter) {
             if (parameter.type != null && parameter.type.getText() === 'MochaDone') {
                 return true;
             }

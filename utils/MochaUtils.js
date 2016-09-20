@@ -15,12 +15,19 @@ var MochaUtils;
             if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
                 var call = expression;
                 var expressionText = call.expression.getText();
-                return expressionText === 'describe' || expressionText === 'describe.only'
-                    || expressionText === 'describe.skip' || expressionText === 'describe.timeout';
+                return isDescribe(expressionText) || isContext(expressionText);
             }
         }
         return false;
     }
     MochaUtils.isStatementDescribeCall = isStatementDescribeCall;
+    function isDescribe(callText) {
+        return callText === 'describe' || callText === 'describe.only'
+            || callText === 'describe.skip' || callText === 'describe.timeout';
+    }
+    function isContext(callText) {
+        return callText === 'context' || callText === 'context.only'
+            || callText === 'context.skip' || callText === 'context.timeout';
+    }
 })(MochaUtils = exports.MochaUtils || (exports.MochaUtils = {}));
 //# sourceMappingURL=MochaUtils.js.map

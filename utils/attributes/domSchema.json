@@ -1,0 +1,145 @@
+{
+    "a": {},
+    "abbr": {},
+    "address": {},
+    "area": {},
+    "article": {},
+    "aside": {},
+    "audio": {},
+    "b": {},
+    "base": {
+        "unsupportedAria": true
+    },
+    "bdi": {},
+    "bdo": {},
+    "big": {},
+    "blockquote": {},
+    "body": {},
+    "br": {},
+    "button": {},
+    "canvas": {},
+    "caption": {},
+    "cite": {},
+    "code": {},
+    "col": {
+        "unsupportedAria": true
+    },
+    "colgroup": {
+        "unsupportedAria": true
+    },
+    "data": {},
+    "datalist": {},
+    "dd": {},
+    "del": {},
+    "details": {},
+    "dfn": {},
+    "dialog": {},
+    "div": {},
+    "dl": {},
+    "dt": {},
+    "em": {},
+    "embed": {},
+    "fieldset": {},
+    "figcaption": {},
+    "figure": {},
+    "footer": {},
+    "form": {},
+    "h1": {},
+    "h2": {},
+    "h3": {},
+    "h4": {},
+    "h5": {},
+    "h6": {},
+    "head": {
+        "unsupportedAria": true
+    },
+    "header": {},
+    "hgroup": {},
+    "hr": {},
+    "html": {
+        "unsupportedAria": true
+    },
+    "i": {},
+    "iframe": {},
+    "img": {},
+    "input": {},
+    "ins": {},
+    "kbd": {},
+    "keygen": {},
+    "label": {},
+    "legend": {},
+    "li": {},
+    "link": {
+        "unsupportedAria": true
+    },
+    "main": {},
+    "map": {},
+    "mark": {},
+    "menu": {},
+    "menuitem": {},
+    "meta": {
+        "unsupportedAria": true
+    },
+    "meter": {},
+    "nav": {},
+    "noscript": {
+        "unsupportedAria": true
+    },
+    "object": {},
+    "ol": {},
+    "optgroup": {},
+    "option": {},
+    "output": {},
+    "p": {},
+    "param": {
+        "unsupportedAria": true
+    },
+    "picture": {
+        "unsupportedAria": true
+    },
+    "pre": {},
+    "progress": {},
+    "q": {},
+    "rp": {},
+    "rt": {},
+    "ruby": {},
+    "s": {},
+    "samp": {},
+    "script": {
+        "unsupportedAria": true
+    },
+    "section": {},
+    "select": {},
+    "small": {},
+    "source": {
+        "unsupportedAria": true
+    },
+    "span": {},
+    "strong": {},
+    "style": {
+        "unsupportedAria": true
+    },
+    "sub": {},
+    "summary": {},
+    "sup": {},
+    "table": {},
+    "tbody": {},
+    "td": {},
+    "textarea": {},
+    "tfoot": {},
+    "th": {},
+    "thead": {},
+    "time": {},
+    "title": {
+        "unsupportedAria": true
+    },
+    "tr": {},
+    "track": {
+        "unsupportedAria": true
+    },
+    "u": {},
+    "ul": {},
+    "var": {},
+    "video": {},
+    "wbr": {}
+}

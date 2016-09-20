@@ -34,6 +34,7 @@ var Rule = (function (_super) {
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 var FUNC_BODY_LENGTH = 'func-body-length';
+var FUNC_EXPRESSION_BODY_LENGTH = 'func-express-body-length';
 var ARROW_BODY_LENGTH = 'arrow-body-length';
 var METHOD_BODY_LENGTH = 'method-body-length';
 var CTOR_BODY_LENGTH = 'ctor-body-length';
@@ -71,6 +72,10 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     MaxFunctionBodyLengthRuleWalker.prototype.visitFunctionDeclaration = function (node) {
         this.validate(node);
         _super.prototype.visitFunctionDeclaration.call(this, node);
+    };
+    MaxFunctionBodyLengthRuleWalker.prototype.visitFunctionExpression = function (node) {
+        this.validate(node);
+        _super.prototype.visitFunctionExpression.call(this, node);
     };
     MaxFunctionBodyLengthRuleWalker.prototype.visitConstructorDeclaration = function (node) {
         this.validate(node);
@@ -129,6 +134,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
             }
             if (typeof (opt) === 'object') {
                 _this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
+                _this.maxFuncExpressionBodyLength = opt[FUNC_EXPRESSION_BODY_LENGTH];
                 _this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 _this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 _this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
@@ -152,8 +158,10 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     };
     MaxFunctionBodyLengthRuleWalker.prototype.formatPlaceText = function (node) {
         var funcTypeText = this.getFuncTypeText(node.kind);
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration || node.kind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration) {
-            return " in " + funcTypeText + " " + node.name.text + "()";
+        if (node.kind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration ||
+            node.kind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration ||
+            node.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+            return " in " + funcTypeText + " " + (node.name || { text: '' }).text + "()";
         }
         else if (node.kind === SyntaxKind_1.SyntaxKind.current().Constructor) {
             return " in class " + this.currentClassName;
@@ -163,6 +171,9 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     MaxFunctionBodyLengthRuleWalker.prototype.getFuncTypeText = function (nodeKind) {
         if (nodeKind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration) {
             return 'function';
+        }
+        else if (nodeKind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+            return 'function expression';
         }
         else if (nodeKind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration) {
             return 'method';
@@ -181,6 +192,9 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         var result;
         if (nodeKind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration) {
             result = this.maxFuncBodyLength;
+        }
+        else if (nodeKind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+            result = this.maxFuncExpressionBodyLength;
         }
         else if (nodeKind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration) {
             result = this.maxMethodBodyLength;

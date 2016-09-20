@@ -13,16 +13,6 @@ var Utils;
         return false;
     }
     Utils.exists = exists;
-    function reduce(list, predicate, initialValue) {
-        var result = initialValue;
-        if (list != null) {
-            list.forEach(function (element) {
-                result = predicate(result, element);
-            });
-        }
-        return result;
-    }
-    Utils.reduce = reduce;
     function contains(list, element) {
         return exists(list, function (item) {
             return item === element;
@@ -36,7 +26,7 @@ var Utils;
         if (elementsToRemove == null || elementsToRemove.length === 0) {
             return [].concat(source);
         }
-        return filter(source, function (sourceElement) {
+        return source.filter(function (sourceElement) {
             return !contains(elementsToRemove, sourceElement);
         });
     }
@@ -45,18 +35,6 @@ var Utils;
         return removeAll(source, [elementToRemove]);
     }
     Utils.remove = remove;
-    function filter(list, predicate) {
-        if (list == null || list.length === 0) {
-            return [];
-        }
-        return reduce(list, function (memo, sourceElement) {
-            if (predicate(sourceElement)) {
-                memo.push(sourceElement);
-            }
-            return memo;
-        }, []);
-    }
-    Utils.filter = filter;
     function trimTo(source, maxLength) {
         if (source == null) {
             return '';

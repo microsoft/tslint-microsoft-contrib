@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Utils_1 = require('./utils/Utils');
@@ -16,7 +17,12 @@ var Rule = (function (_super) {
         _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
+        }
+        else {
+            return [];
+        }
     };
     Rule.metadata = {
         ruleName: 'react-unused-props-and-state',

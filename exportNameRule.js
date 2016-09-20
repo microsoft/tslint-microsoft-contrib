@@ -49,7 +49,7 @@ var ExportNameWalker = (function (_super) {
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
-        var singleExport = Utils_1.Utils.filter(node.statements, function (element) {
+        var singleExport = node.statements.filter(function (element) {
             return element.kind === SyntaxKind_1.SyntaxKind.current().ExportAssignment;
         });
         if (singleExport.length === 1) {

@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
@@ -28,14 +29,19 @@ var Rule = (function (_super) {
         _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+        if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
+            return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+        }
+        else {
+            return [];
+        }
     };
     Rule.metadata = {
         ruleName: 'react-iframe-missing-sandbox',
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
         options: null,
-        issueClass: 'Non-SDL',
+        issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',

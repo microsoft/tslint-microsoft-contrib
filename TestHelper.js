@@ -73,7 +73,7 @@ var TestHelper;
             delete expected.endPosition;
         });
         var errorMessage = "Wrong # of failures: \n" + JSON.stringify(actualFailures, null, 2);
-        chai.assert.equal(expectedFailures.length, actualFailures.length, errorMessage);
+        chai.assert.equal(actualFailures.length, expectedFailures.length, errorMessage);
         expectedFailures.forEach(function (expected, index) {
             var actual = actualFailures[index];
             chai.assert.deepEqual(actual, expected);

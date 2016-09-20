@@ -83,11 +83,11 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
     };
     NoUnexternalizedStringsRuleWalker.prototype.findDescribingParent = function (node) {
         var kinds = SyntaxKind_1.SyntaxKind.current();
-        var parent;
-        while ((parent = node.parent)) {
-            var kind = parent.kind;
+        while ((node.parent != null)) {
+            var parent_1 = node.parent;
+            var kind = parent_1.kind;
             if (kind === kinds.CallExpression) {
-                var callExpression = parent;
+                var callExpression = parent_1;
                 return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(node) } };
             }
             else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
@@ -99,7 +99,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
                 || kind === kinds.TypeAliasDeclaration || kind === kinds.SourceFile) {
                 return null;
             }
-            node = parent;
+            node = parent_1;
         }
     };
     NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';

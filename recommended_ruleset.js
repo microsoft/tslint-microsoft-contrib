@@ -9,6 +9,7 @@ module.exports = {
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
          */
+        "insecure-random": true,
         "no-banned-terms": true,
         "no-cookies": true,
         "no-delete-expression": true,
@@ -26,6 +27,8 @@ module.exports = {
         "no-string-based-set-immediate": true,
         "no-string-based-set-interval": true,
         "no-string-based-set-timeout": true,
+        "possible-timing-attack": true,
+        "react-anchor-blank-noopener": true,
         "react-iframe-missing-sandbox": true,
         "react-no-dangerous-html": true,
         "use-strict": true,
@@ -114,6 +117,7 @@ module.exports = {
         "no-relative-imports": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
+        "no-suspicious-comment": true,
         "no-typeof-undefined": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
@@ -130,6 +134,24 @@ module.exports = {
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
         "variable-name": true,
+
+        /**
+         * Accessibility. The following rules should be turned on to guarantee the best user
+         * experience for keyboard and screen reader users.
+         */
+        "react-a11y-anchors": true,
+        "react-a11y-aria-unsupported-elements": true,
+        "react-a11y-image-button-has-alt": true,
+        "react-a11y-img-has-alt": true,
+        "react-a11y-lang": true,
+        "react-a11y-meta": true,
+        "react-a11y-props": true,
+        "react-a11y-proptypes": true,
+        "react-a11y-role": true,
+        "react-a11y-role-has-required-aria-props": true,
+        "react-a11y-role-supports-aria-props": true,
+        "react-a11y-tabindex-no-positive": true,
+        "react-a11y-titles": true,
 
         /**
          * Whitespace related rules. The only recommended whitespace strategy is to pick a single format and

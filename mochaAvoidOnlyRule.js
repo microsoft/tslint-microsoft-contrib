@@ -19,7 +19,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'mocha-avoid-only',
         type: 'maintainability',
-        description: 'Do not invoke Mocha\'s describe.only or it.only functions.',
+        description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
         options: null,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -29,6 +29,7 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
     Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
+    Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -53,6 +54,9 @@ var MochaAvoidOnlyRuleWalker = (function (_super) {
                         }
                         else if (node.expression.getText() === 'describe.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_DESCRIBE));
+                        }
+                        else if (node.expression.getText() === 'context.only') {
+                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_CONTEXT));
                         }
                     }
                 }

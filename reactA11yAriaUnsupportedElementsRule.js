@@ -56,10 +56,10 @@ var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
         if (!DOM_SCHEMA[tagName]) {
             return;
         }
-        var unsupportedAria = DOM_SCHEMA[tagName].unsupportedAria != null
-            ? DOM_SCHEMA[tagName].unsupportedAria
+        var supportAria = DOM_SCHEMA[tagName].supportAria != null
+            ? DOM_SCHEMA[tagName].supportAria
             : false;
-        if (!unsupportedAria) {
+        if (supportAria) {
             return;
         }
         var checkAttributeNames = Object.keys(ARIA_SCHEMA).concat('role');

@@ -149,6 +149,7 @@
     "variable-name": true,
     "react-a11y-anchors": true,
     "react-a11y-aria-unsupported-elements": true,
+    "react-a11y-event-has-role": true,
     "react-a11y-image-button-has-alt": true,
     "react-a11y-img-has-alt": true,
     "react-a11y-lang": true,

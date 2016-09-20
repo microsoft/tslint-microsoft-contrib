@@ -8,16 +8,20 @@ var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var JsxAttribute_1 = require('./utils/JsxAttribute');
 var TypeGuard_1 = require('./utils/TypeGuard');
-var roleString = 'role';
-var altString = 'alt';
+var ROLE_STRING = 'role';
+var ALT_STRING = 'alt';
 function getFailureStringNoAlt(tagName) {
-    return "<" + tagName + "> elements must have an alt attribute or use role='presentation' for presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
+    return "<" + tagName + "> elements must have an non-empty alt attribute or use empty alt attribute and role='presentation' for presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
 }
 exports.getFailureStringNoAlt = getFailureStringNoAlt;
-function getFailureStringEmptyAlt(tagName) {
-    return "The value of 'alt' attribute in <" + tagName + "> tag is undefined or empty. Add more details in 'alt' attribute or use role='presentation' for presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
+function getFailureStringEmptyAltAndNotPresentationRole(tagName) {
+    return "The value of alt attribute in <" + tagName + "> tag is empty and role value is not presentation. Add more details in alt attribute or specify role attribute to equal 'presentation' when 'alt' attribute is empty.";
 }
-exports.getFailureStringEmptyAlt = getFailureStringEmptyAlt;
+exports.getFailureStringEmptyAltAndNotPresentationRole = getFailureStringEmptyAltAndNotPresentationRole;
+function getFailureStringNonEmptyAltAndPresentationRole(tagName) {
+    return "The value of alt attribute in <" + tagName + "> tag is non-empty and role value is presentation. Remove role='presentation' or specify 'alt' attributeto be empty when role attributes equals 'presentation'.";
+}
+exports.getFailureStringNonEmptyAltAndPresentationRole = getFailureStringNonEmptyAltAndPresentationRole;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -31,7 +35,8 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'react-a11y-img-has-alt',
         type: 'maintainability',
-        description: 'Enforce that an `img` element contains the `alt` attribute or `role="presentation"` for decorative image.',
+        description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+            'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
         optionExamples: ['true', '[true, ["Image"]]'],
         issueClass: 'Non-SDL',
@@ -48,8 +53,16 @@ var ImgHasAltWalker = (function (_super) {
     function ImgHasAltWalker() {
         _super.apply(this, arguments);
     }
+    ImgHasAltWalker.prototype.visitJsxElement = function (node) {
+        this.checkJsxOpeningElement(node.openingElement);
+        _super.prototype.visitJsxElement.call(this, node);
+    };
     ImgHasAltWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        var tagName = node.tagName && node.tagName.getText();
+        this.checkJsxOpeningElement(node);
+        _super.prototype.visitJsxSelfClosingElement.call(this, node);
+    };
+    ImgHasAltWalker.prototype.checkJsxOpeningElement = function (node) {
+        var tagName = node.tagName.getText();
         var options = this.getOptions();
         var additionalTagNames = options.length > 1 ? options[1] : [];
         var targetTagNames = ['img'].concat(additionalTagNames);
@@ -60,19 +73,22 @@ var ImgHasAltWalker = (function (_super) {
             return;
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
-        var role = attributes[roleString];
-        var roleValue = role && JsxAttribute_1.getStringLiteral(role);
-        if (roleValue && roleValue.match(/\bpresentation\b/)) {
-            return;
-        }
-        var altProp = attributes[altString];
-        if (!altProp) {
+        var altAttribute = attributes[ALT_STRING];
+        if (!altAttribute) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName)));
         }
-        else if (JsxAttribute_1.isEmpty(altProp) || JsxAttribute_1.getStringLiteral(altProp) === '') {
-            this.addFailure(this.createFailure(altProp.getStart(), altProp.getWidth(), getFailureStringEmptyAlt(tagName)));
+        else {
+            var roleAttribute = attributes[ROLE_STRING];
+            var roleAttributeValue = roleAttribute ? JsxAttribute_1.getStringLiteral(roleAttribute) : '';
+            var isPresentationRole = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
+            var isEmptyAlt = JsxAttribute_1.isEmpty(altAttribute) || JsxAttribute_1.getStringLiteral(altAttribute) === '';
+            if (!isEmptyAlt && isPresentationRole) {
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName)));
+            }
+            else if (isEmptyAlt && !isPresentationRole) {
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName)));
+            }
         }
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
     };
     return ImgHasAltWalker;
 }(Lint.RuleWalker));

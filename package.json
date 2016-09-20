@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
   },
-  "main": "package.json",
+  "main": "tslint.json",
   "keywords": [
     "tslint",
     "microsoft",

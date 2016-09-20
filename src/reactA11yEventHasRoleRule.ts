@@ -56,9 +56,9 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
 
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const events: string[] = TARGET_EVENTS.filter((eventName: string): boolean => !!attributes[eventName]);
-        const hasRoleAttribute: boolean = !!attributes[ROLE_STRING] || !!getImplicitRole(node);
+        const hasAriaRole: boolean = !!attributes[ROLE_STRING] || !!getImplicitRole(node);
 
-        if (events.length > 0 && !hasRoleAttribute) {
+        if (events.length > 0 && !hasAriaRole) {
             this.addFailure(this.createFailure(
                 node.getStart(),
                 node.getWidth(),

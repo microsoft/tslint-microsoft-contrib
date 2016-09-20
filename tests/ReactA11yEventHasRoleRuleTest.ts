@@ -15,7 +15,7 @@ describe('reactA11yEventHasRoleRule', () => {
         `;
         TestHelper.assertNoViolation(ruleName, script);
     });
-    it('should pass when dom element with event handel has implicit role', () => {
+    it('should pass when dom element with event handlers has implicit role', () => {
         const script: string = `
             import React = require('react');
 
@@ -24,7 +24,7 @@ describe('reactA11yEventHasRoleRule', () => {
         TestHelper.assertNoViolation(ruleName, script);
     });
 
-    it('should pass when dom element with event handel has role attribute', () => {
+    it('should pass when dom element with event handlers has role attribute', () => {
         const script: string = `
             import React = require('react');
 
@@ -34,7 +34,7 @@ describe('reactA11yEventHasRoleRule', () => {
         TestHelper.assertNoViolation(ruleName, script);
     });
 
-    it('should fail when dom element with event handel has no role attribute and implicit role', () => {
+    it('should fail when dom element with event handlers has no role attribute and implicit role', () => {
         const script: string = `
             import React = require('react');
 

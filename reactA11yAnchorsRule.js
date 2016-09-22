@@ -6,9 +6,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
-var _ = require('underscore');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Utils_1 = require('./utils/Utils');
 var NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
 var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long.';
 var UNIQUE_ALT_FAILURE_STRING = 'Links with images and text content, the alt attribute should be unique to the text content or empty.';
@@ -57,20 +57,20 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             this_1.anchorInfoList.forEach(function (anchorInfo) {
                 if (current.href === anchorInfo.href &&
                     current.text !== anchorInfo.text &&
-                    !_(sameHrefDifferentTexts).include(anchorInfo)) {
+                    !Utils_1.Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
                     sameHrefDifferentTexts.push(anchorInfo);
                     _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current)));
                 }
                 if (current.href !== anchorInfo.href &&
                     current.text === anchorInfo.text &&
-                    !_(differentHrefSameText).include(anchorInfo)) {
+                    !Utils_1.Utils.contains(differentHrefSameText, anchorInfo)) {
                     differentHrefSameText.push(anchorInfo);
                     _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current)));
                 }
             });
         };
         var this_1 = this;
-        while (_(this.anchorInfoList).isEmpty() === false) {
+        while (this.anchorInfoList.length > 0) {
             _loop_1();
         }
     };

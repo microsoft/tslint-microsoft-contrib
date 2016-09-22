@@ -1,17 +1,11 @@
 # 2.0.11 #
 A big release and a big thank you to all the contributors: 
-* Liubin Guo from the Suzhou SOX Publishing team
-* Liaoliang Ye from the Suzhou SOX Publishing team
-* Evgeniia Firsova  from the Suzhou SOX Publishing team
-* MogensFogh from the Microsoft Social Engagement team
-* Daniel Manesku - @danielmanesku from the Microsoft Social Engagement team
-* Cosmin Cojocar - @cosmincojocar from the Microsoft Social Engagement team
-* @loicraux from the Microsoft Social Engagement team
-* Matteo Ferrando - @chamini2
-* Gaurav Ramanan - @gaurav21r
-* Przemysław Duszyński - @Przemek-at-Ais
-* @studds
-* Saurabh Sharma
+From the Suzhou SOX Publishing team
+* Liubin Guo (huge thanks!), Liaoliang Ye, and Evgeniia Firsova
+From the Microsoft Social Engagement team
+* MogensFogh, Daniel Manesku - @danielmanesku, Cosmin Cojocar - @cosmincojocar, and @loicraux 
+From the world outside Microsoft! 
+* Matteo Ferrando - @chamini2, Gaurav Ramanan - @gaurav21r, Przemysław Duszyński - @Przemek-at-Ais, @studds, and Saurabh Sharma
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20milestone%3A2.0.11)
 

@@ -25,6 +25,30 @@ describe('possibleTimingAttackRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on null and undefined comparisons', () : void => {
+        const script : string = `
+            const a1 = password === null;
+            const a2 = password == null;
+            const a3 = password !== null;
+            const a4 = password != null;
+            const a5 = null === secret;
+            const a6 = null == secret;
+            const a7 = null !== secret;
+            const a8 = null != secret;
+
+            const b1 = apiKey === undefined;
+            const b2 = apiKey == undefined;
+            const b3 = apiKey !== undefined;
+            const b4 = apiKey != undefined;
+            const b5 = undefined === token;
+            const b6 = undefined == token;
+            const b7 = undefined !== token;
+            const b8 = undefined != token;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on == comparisons', () : void => {
         const script : string = `
             const a = password == secret;

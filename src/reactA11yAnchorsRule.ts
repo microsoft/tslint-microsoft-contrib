@@ -158,16 +158,17 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             jsxElement.children.forEach((child: ts.JsxChild): void => {
                 title += this.anchorText(child);
             });
-        }
-
-        if (root.kind === SyntaxKind.current().JsxText) {
+        } else if (root.kind === SyntaxKind.current().JsxText) {
             const jsxText: ts.JsxText = <ts.JsxText>root;
             title += jsxText.getText();
-        }
-
-        if (root.kind === SyntaxKind.current().StringLiteral) {
+        } else if (root.kind === SyntaxKind.current().StringLiteral) {
             const literal: ts.StringLiteral = <ts.StringLiteral>root;
             title += literal.text;
+        } else if (root.kind === SyntaxKind.current().JsxExpression) {
+            const expression: ts.JsxExpression = <ts.JsxExpression>root;
+            title += this.anchorText(expression.expression);
+        } else if (root.kind !== SyntaxKind.current().JsxSelfClosingElement) {
+            title += '<unknown>';
         }
 
         return title;

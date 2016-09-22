@@ -19,6 +19,17 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on function call', () : void => {
+        const script : string = `
+            import React = require('react');
+            const anchor = <a href={PrivacyNotification.privacyNoticeLink}>
+                            {TEXT(CommonKey.privacy_notice_2())}
+                        </a>
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on self closing anchor without link text', () : void => {
         const script : string = `
             import React = require('react');

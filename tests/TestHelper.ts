@@ -1,6 +1,7 @@
 import * as Lint from 'tslint/lib/lint';
 import * as fs from 'fs';
 import * as chai from 'chai';
+import {ErrorTolerantWalker} from '../src/utils/ErrorTolerantWalker';
 
 /**
  * Test Utilities.
@@ -79,6 +80,8 @@ export module TestHelper {
             formattersDirectory: FORMATTER_DIRECTORY
         };
 
+        const debug: boolean = ErrorTolerantWalker.DEBUG;
+        ErrorTolerantWalker.DEBUG = true; // never fail silently
         let result: Lint.LintResult;
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
@@ -94,7 +97,7 @@ export module TestHelper {
             const linter = new Lint.Linter(filename, inputFileOrScript, options);
             result = linter.lint();
         }
-
+        ErrorTolerantWalker.DEBUG = debug;
         return result;
     }
 

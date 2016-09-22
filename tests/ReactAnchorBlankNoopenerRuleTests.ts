@@ -45,6 +45,18 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on MSE example', () : void => {
+        const script : string = `
+            import React = require('react');
+
+            const a = <a href={'somelink'}>
+                    {'some text'}
+                </a>
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on missing rel', () : void => {
         const script : string = `
             import React = require('react');

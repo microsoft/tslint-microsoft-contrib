@@ -7,7 +7,7 @@ import * as Lint from 'tslint/lib/lint';
  */
 export class ErrorTolerantWalker extends Lint.RuleWalker {
 
-    private static DEBUG: boolean = false;
+    public static DEBUG: boolean = false;
 
     protected visitNode(node: ts.Node): void {
         try {

@@ -60,7 +60,7 @@ class ReactAnchorBlankNoopenerRuleWalker extends ErrorTolerantWalker {
             const target: ts.JsxAttribute = allAttributes['target'];
             const rel: ts.JsxAttribute = allAttributes['rel'];
             /* tslint:enable:no-string-literal */
-            if (getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
+            if (target != null && getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
                 this.addFailure(this.createFailure(openingElement.getStart(), openingElement.getWidth(), FAILURE_STRING));
             }
         }

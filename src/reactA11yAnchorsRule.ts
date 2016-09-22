@@ -1,12 +1,10 @@
-/// <reference path="../typings/underscore.d.ts" />
-
 import * as ts from 'typescript';
 import * as Lint from 'tslint/lib/lint';
-import * as _ from 'underscore';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {SyntaxKind} from './utils/SyntaxKind';
+import {Utils} from './utils/Utils';
 
 const NO_HASH_FAILURE_STRING: string =
     'Do not use # as anchor href.';
@@ -57,12 +55,12 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         const sameHrefDifferentTexts: AnchorInfo[] = [];
         const differentHrefSameText: AnchorInfo[] = [];
 
-        while (_(this.anchorInfoList).isEmpty() === false) {
+        while (this.anchorInfoList.length > 0) {
             const current: AnchorInfo = this.anchorInfoList.shift();
             this.anchorInfoList.forEach((anchorInfo: AnchorInfo): void => {
                 if (current.href === anchorInfo.href &&
                     current.text !== anchorInfo.text &&
-                    !_(sameHrefDifferentTexts).include(anchorInfo)) {
+                    !Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
 
                     // Same href - different text...
                     sameHrefDifferentTexts.push(anchorInfo);
@@ -72,7 +70,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
                 if (current.href !== anchorInfo.href &&
                     current.text === anchorInfo.text &&
-                    !_(differentHrefSameText).include(anchorInfo)) {
+                    !Utils.contains(differentHrefSameText, anchorInfo)) {
 
                     // Different href - same text...
                     differentHrefSameText.push(anchorInfo);

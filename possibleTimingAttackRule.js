@@ -43,7 +43,9 @@ var PossibleTimingAttackRuleWalker = (function (_super) {
             || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().EqualsEqualsEqualsToken
             || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().ExclamationEqualsToken
             || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().ExclamationEqualsEqualsToken) {
-            if (SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) {
+            if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
+                && node.left.getText() !== 'null' && node.right.getText() !== 'null'
+                && node.left.getText() !== 'undefined' && node.right.getText() !== 'undefined') {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20)));
             }
             else {

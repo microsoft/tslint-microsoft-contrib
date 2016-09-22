@@ -2,6 +2,7 @@
 var Lint = require('tslint/lib/lint');
 var fs = require('fs');
 var chai = require('chai');
+var ErrorTolerantWalker_1 = require('../src/utils/ErrorTolerantWalker');
 var TestHelper;
 (function (TestHelper) {
     TestHelper.RULES_DIRECTORY = 'dist/src/';
@@ -39,6 +40,8 @@ var TestHelper;
             rulesDirectory: TestHelper.RULES_DIRECTORY,
             formattersDirectory: TestHelper.FORMATTER_DIRECTORY
         };
+        var debug = ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG;
+        ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG = true;
         var result;
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             var contents = fs.readFileSync(inputFileOrScript, TestHelper.FILE_ENCODING);
@@ -56,6 +59,7 @@ var TestHelper;
             var linter = new Lint.Linter(filename, inputFileOrScript, options);
             result = linter.lint();
         }
+        ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG = debug;
         return result;
     }
     TestHelper.runRule = runRule;

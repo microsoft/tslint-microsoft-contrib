@@ -58,7 +58,7 @@ var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
             var allAttributes = JsxAttribute_1.getJsxAttributesFromJsxElement(openingElement);
             var target = allAttributes['target'];
             var rel = allAttributes['rel'];
-            if (JsxAttribute_1.getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
+            if (target != null && JsxAttribute_1.getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
                 this.addFailure(this.createFailure(openingElement.getStart(), openingElement.getWidth(), FAILURE_STRING));
             }
         }

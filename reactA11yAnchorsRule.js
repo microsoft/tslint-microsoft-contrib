@@ -134,13 +134,20 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
                 title += _this.anchorText(child);
             });
         }
-        if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxText) {
+        else if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxText) {
             var jsxText = root;
             title += jsxText.getText();
         }
-        if (root.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+        else if (root.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
             var literal = root;
             title += literal.text;
+        }
+        else if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+            var expression = root;
+            title += this.anchorText(expression.expression);
+        }
+        else if (root.kind !== SyntaxKind_1.SyntaxKind.current().JsxSelfClosingElement) {
+            title += '<unknown>';
         }
         return title;
     };

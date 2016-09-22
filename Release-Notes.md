@@ -2,8 +2,10 @@
 A big release and a big thank you to all the contributors: 
 From the Suzhou SOX Publishing team
 * Liubin Guo (huge thanks!), Liaoliang Ye, and Evgeniia Firsova
+
 From the Microsoft Social Engagement team
 * MogensFogh, Daniel Manesku - @danielmanesku, Cosmin Cojocar - @cosmincojocar, and @loicraux 
+
 From the world outside Microsoft! 
 * Matteo Ferrando - @chamini2, Gaurav Ramanan - @gaurav21r, Przemysław Duszyński - @Przemek-at-Ais, @studds, and Saurabh Sharma
 

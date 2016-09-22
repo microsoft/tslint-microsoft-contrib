@@ -1,4 +1,4 @@
-# 2.0.11 #
+# 2.0.12/2.0.13 #
 A big release and a big thank you to all the contributors: 
 From the Suzhou SOX Publishing team
 * Liubin Guo (huge thanks!), Liaoliang Ye, and Evgeniia Firsova
@@ -11,6 +11,7 @@ From the world outside Microsoft!
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20milestone%3A2.0.11)
 
+* [#267](https://github.com/Microsoft/tslint-microsoft-contrib/issues/267) remove underscore dependency in 2.0.11
 * [#256](https://github.com/Microsoft/tslint-microsoft-contrib/issues/256) new security rule: detect-possible-timing-attacks
 * [#210](https://github.com/Microsoft/tslint-microsoft-contrib/issues/210) new security rule: react-anchor-blank-noopener
 * [#187](https://github.com/Microsoft/tslint-microsoft-contrib/issues/187) new security rule: insecure random (CWE-330)

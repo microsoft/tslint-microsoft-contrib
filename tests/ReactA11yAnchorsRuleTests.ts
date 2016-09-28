@@ -84,6 +84,42 @@ describe('reactA11yAnchorsRule', () : void => {
         ]);
     });
 
+    describe('Link text should be at least 4 characters long', () => {
+        it('should pass when length of text equals or larger than 4', () => {
+            const script: string = `
+                import React = require('react');
+                const anchor1 = <a href="someRef1">save</a>;
+                const anchor2 = <a href="someRef2">Delete</a>;
+                const anchor3 = <a href="someRef3"><span>cancel</span></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, []);
+        });
+
+        it('should fail when length of text less than 4', () => {
+            const script: string = `
+                import React = require('react');
+                const anchor1 = <a href="someRef1">ok</a>;
+                const anchor2 = <a href="someRef2"><span>Go</span></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Link text should be at least 4 characters long.",
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 33, "line": 3 }
+                },
+                {
+                    "failure": "Link text should be at least 4 characters long.",
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 33, "line": 4 }
+                }
+            ]);
+        });
+    });
+
     it('should pass when hrefs and texts both are identical', () : void => {
         const script : string = `
             import React = require('react');

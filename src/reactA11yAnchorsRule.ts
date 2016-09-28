@@ -116,7 +116,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
 
-            if (!anchorInfo.text || anchorInfo.text.length <= 4) {
+            if (!anchorInfo.text || anchorInfo.text.length < 4) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
 

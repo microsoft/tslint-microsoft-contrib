@@ -76,7 +76,7 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean {
     } else {
       return undefined;
     }
-  }
+  };
 
   if (isStringLiteral(initializer)) {
     return getBooleanFromString(initializer.text);

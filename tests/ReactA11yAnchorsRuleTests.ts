@@ -84,7 +84,7 @@ describe('reactA11yAnchorsRule', () : void => {
         ]);
     });
 
-    describe('Link text should be at least 4 characters long', () => {
+    describe('Link text should be at least 4 characters long', (): void => {
         it('should pass when length of text equals or larger than 4', () => {
             const script: string = `
                 import React = require('react');
@@ -96,7 +96,7 @@ describe('reactA11yAnchorsRule', () : void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should fail when length of text less than 4', () => {
+        it('should fail when length of text less than 4', (): void => {
             const script: string = `
                 import React = require('react');
                 const anchor1 = <a href="someRef1">ok</a>;
@@ -127,6 +127,18 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor2 = <a href="someRef">someTitle</a>;
             const anchor3 = <a href="someRef">someTitle</a>;
             const anchor4 = <a href="someRef">someTitle</a>;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('shoud pass when hrefs undefiend and texts are variant', (): void => {
+        const script : string = `
+            import React = require('react');
+            const anchor1 = <a>someTitle1</a>;
+            const anchor2 = <a>someTitle2</a>;
+            const anchor3 = <a>someTitle3</a>;
+            const anchor4 = <a>someTitle4</a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);

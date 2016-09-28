@@ -28,6 +28,11 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
       const fileName: string = fileDirectory + 'ImplicitRoleSupportsAllAriaPropsInElement.tsx';
       TestHelper.assertNoViolation(ruleName, fileName);
     });
+
+    it('when role is defined but not retrievable', () => {
+      const fileName: string = fileDirectory + 'UnretrievableRoleSupportsAllAriaPropsInElement.tsx';
+      TestHelper.assertNoViolation(ruleName, fileName);
+    });
   });
 
   describe('should fail', () => {

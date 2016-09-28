@@ -7,7 +7,11 @@ import * as Lint from 'tslint/lib/lint';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getPropName, getStringLiteral } from './utils/JsxAttribute';
+import {
+    getPropName,
+    getStringLiteral,
+    getBooleanLiteral
+} from './utils/JsxAttribute';
 import { IAria } from './utils/attributes/IAria';
 import {
     isStringLiteral,
@@ -72,7 +76,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             : false;
         const expectedType: string = aria[propName].type;
         const permittedValues: string[] = aria[propName].values;
-        const propValue: string = getStringLiteral(node);
+        const propValue: string = getStringLiteral(node) || String(getBooleanLiteral(node));
 
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
@@ -107,9 +111,10 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             case 'number': return this.isNumber(propValueExpression);
             case 'string': return this.isString(propValueExpression);
             case 'token':
-                return this.isString(propValueExpression) && permittedValues.indexOf(propValue.toLowerCase()) > -1;
+                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    permittedValues.indexOf(propValue.toLowerCase()) > -1;
             case 'tokenlist':
-                return this.isString(propValueExpression) &&
+                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
                     propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1);
             default:
                 return false;

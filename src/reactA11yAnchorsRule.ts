@@ -58,7 +58,8 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         while (this.anchorInfoList.length > 0) {
             const current: AnchorInfo = this.anchorInfoList.shift();
             this.anchorInfoList.forEach((anchorInfo: AnchorInfo): void => {
-                if (current.href === anchorInfo.href &&
+                if (current.href &&
+                    current.href === anchorInfo.href &&
                     current.text !== anchorInfo.text &&
                     !Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
 

@@ -10,7 +10,9 @@ import {
   isNumericLiteral,
   isJsxElement,
   isJsxSelfClosingElement,
-  isJsxOpeningElement
+  isJsxOpeningElement,
+  isFalseKeyword,
+  isTrueKeyword
 } from './TypeGuard';
 import {SyntaxKind} from './SyntaxKind';
 
@@ -49,6 +51,52 @@ export function getStringLiteral(node: ts.JsxAttribute): string {
   } else {
     return undefined;
   }
+}
+
+/**
+ * Get the boolean literal in jsx attribute initializer with following format:
+ * @example
+ * <div attribute={ true } />
+ * @example
+ * <div attribute='true' />
+ * @example
+ * <div attribute={ 'true' } />
+ */
+export function getBooleanLiteral(node: ts.JsxAttribute): boolean {
+  if (!isJsxAttribute(node)) {
+    throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+  }
+
+  const initializer: ts.Expression = node == null ? null : node.initializer;
+  const getBooleanFromString: (value: string) => boolean = (value: string) => {
+    if (value.toLowerCase() === 'true') {
+      return true;
+    } else if (value.toLowerCase() === 'false') {
+      return false;
+    } else {
+      return undefined;
+    }
+  };
+
+  if (isStringLiteral(initializer)) {
+    return getBooleanFromString(initializer.text);
+  } else if (isJsxExpression(initializer)) {
+    const expression: ts.Expression = initializer.expression;
+
+    if (isStringLiteral(expression)) {
+      return getBooleanFromString(expression.text);
+    } else {
+      if (isTrueKeyword(expression)) {
+        return true;
+      } else if (isFalseKeyword(expression)) {
+        return false;
+      } else {
+        return undefined;
+      }
+    }
+  }
+
+  return false;
 }
 
 export function isEmpty(node: ts.JsxAttribute): boolean {

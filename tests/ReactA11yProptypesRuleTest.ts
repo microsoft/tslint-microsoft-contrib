@@ -8,7 +8,7 @@ describe('reactA11yProptypesRule', () => {
     const ruleName: string = 'react-a11y-proptypes';
 
     describe('should pass', () => {
-        const fileDirectory: string = 'test-data/ReactA11yProptypes/PassingTestInputs/';
+        const fileDirectory: string = 'test-data/a11yProptypes/PassingTestInputs/';
 
         it('when can not check the type of attribute value until running time', () => {
             const fileName: string = fileDirectory + 'canNotCheckUntilRunTime.tsx';
@@ -57,7 +57,7 @@ describe('reactA11yProptypesRule', () => {
     });
 
     describe('should fail', () => {
-        const fileDirectory: string = 'test-data/ReactA11yProptypes/FailingTestInputs/';
+        const fileDirectory: string = 'test-data/a11yProptypes/FailingTestInputs/';
 
         it('when not allowing undefined attribute value is undefined', () => {
             const fileName: string = fileDirectory + 'notAllowUndefined.tsx';

@@ -7,7 +7,7 @@ import * as Lint from 'tslint/lib/lint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
-import { getJsxAttributesFromJsxElement, getStringLiteral } from './utils/JsxAttribute';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
 import { IAria } from './utils/attributes/IAria';
 
@@ -69,9 +69,17 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
   private checkJsxElement(node: ts.JsxOpeningElement): void {
     const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
     const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
+    let roleValue: string;
 
-    // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
-    const roleValue: string = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
+    if (roleProp) {
+      roleValue = getStringLiteral(roleProp);
+      if (!isEmpty(roleProp) && roleValue === undefined) { // Do NOT check if can't retrieve the right role.
+        return;
+      }
+    } else {
+      roleValue = getImplicitRole(node); // Get implicit role if not specified.
+    }
+
     const isImplicitRole: boolean = !roleProp && !!roleValue;
     const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
       .filter((role: string) => !!ROLES[role]);

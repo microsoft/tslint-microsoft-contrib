@@ -229,5 +229,6 @@
     "no-switch-case-fall-through": false,
     "no-unreachable": false,
     "no-unused-imports": false
-  }
+  },
+  "rulesDirectory": "./"
 }

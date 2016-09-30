@@ -431,7 +431,7 @@ module.exports = function(grunt) {
 
             var ruleFile = camelCase(ruleName) + 'Rule';
             var sourceFileName = './src/' + ruleFile + '.ts';
-            var testFileName = './tests/' + ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Tests.ts';
+            var testFileName = './src/tests/' + ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Tests.ts';
             var walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
 
             var ruleTemplateText = grunt.file.read('./templates/rule.snippet', {encoding: 'UTF-8'});

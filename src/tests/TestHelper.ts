@@ -1,7 +1,7 @@
 import * as Lint from 'tslint/lib/lint';
 import * as fs from 'fs';
 import * as chai from 'chai';
-import {ErrorTolerantWalker} from '../src/utils/ErrorTolerantWalker';
+import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
 
 /**
  * Test Utilities.

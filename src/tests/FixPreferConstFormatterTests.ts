@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
-import {Formatter} from '../src/fixPreferConstFormatter';
+import {Formatter} from '../fixPreferConstFormatter';
 
 class FixPreferConstFormatterForTesting extends Formatter {
 

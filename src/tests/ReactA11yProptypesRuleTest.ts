@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/reactA11yProptypesRule';
+import { getFailureString } from '../reactA11yProptypesRule';
 
 /**
  * Unit test for react-a11y-proptypes rule.

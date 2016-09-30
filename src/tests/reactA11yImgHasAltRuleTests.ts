@@ -3,7 +3,7 @@ import {
   getFailureStringNoAlt,
   getFailureStringNonEmptyAltAndPresentationRole,
   getFailureStringEmptyAltAndNotPresentationRole
-} from '../src/reactA11yImgHasAltRule';
+} from '../reactA11yImgHasAltRule';
 
 /**
  * Unit test for react-a11y-img-has-alt rule

@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
-import {Formatter} from '../src/fixNoUnusedImportsFormatter';
+import {Formatter} from '../fixNoUnusedImportsFormatter';
 
 class FixNoUnusedImportsFormatterForTesting extends Formatter {
 

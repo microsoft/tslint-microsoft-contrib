@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/reactA11yTabindexNoPositiveRule';
+import { getFailureString } from '../reactA11yTabindexNoPositiveRule';
 
 /**
  * Unit test for tabindex-no-positive

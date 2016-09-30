@@ -163,31 +163,23 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'dist/src',
-                        src: ['**/*.js', '!references.js'],
-                        dest: 'dist/build'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'dist/src',
-                        src: ['**/*.json'],
-                        dest: 'dist/build'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'dist/tests',
-                        src: ['TestHelper.js', 'TestHelper.d.ts'],
+                        src: [
+                            '**/*.js',
+                            '**/*.json',
+                            '!tests/**',
+                            'tests/TestHelper.js',
+                            'tests/TestHelper.d.ts',
+                            '!references.js'
+                        ],
                         dest: 'dist/build'
                     },
                     {
                         expand: true,
                         cwd: '.',
-                        src: ['README.md'],
-                        dest: 'dist/build'
-                    },
-                    {
-                        expand: true,
-                        cwd: '.',
-                        src: ['recommended_ruleset.js'],
+                        src: [
+                            'README.md',
+                            'recommended_ruleset.js'
+                        ],
                         dest: 'dist/build'
                     }
                 ]
@@ -202,17 +194,16 @@ module.exports = function(grunt) {
 
         mochaTest: {
             test: {
-                src: ['dist/tests/**/*.js']
+                src: ['dist/src/tests/**/*.js']
             }
         },
 
         ts: {
             default: {
                 src: [
-                    './src/**/*.ts{,x}',
-                    './tests/**/*.ts{,x}'
+                    './src/**/*.ts{,x}'
                 ],
-                outDir: 'dist',
+                outDir: 'dist/src',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
@@ -225,7 +216,7 @@ module.exports = function(grunt) {
                 src: [
                     './test-data/**/*.ts{,x}'
                 ],
-                outDir: 'dist',
+                outDir: 'dist/test-data',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
@@ -246,7 +237,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     src: [
-                        'src/**/*.ts'
+                        'src/**/*.ts',
+                        '!src/tests/**'
                     ]
                 }
             },
@@ -258,12 +250,12 @@ module.exports = function(grunt) {
                         tslintJson.rules['quotemark'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
                         return tslintJson;
-                    })(),
+                    })()
                 },
                 files: {
                     src: [
-                        'tests/**/*.ts',
-                        '!**/references.ts'
+                        'src/tests/**/*.ts',
+                        '!src/tests/references.ts'
                     ]
                 }
             }

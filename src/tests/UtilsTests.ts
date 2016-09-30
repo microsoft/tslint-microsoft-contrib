@@ -1,4 +1,4 @@
-import {Utils} from '../src/utils/Utils';
+import {Utils} from '../utils/Utils';
 import * as chai from 'chai';
 
 /**

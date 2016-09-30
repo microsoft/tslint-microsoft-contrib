@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/reactA11yAriaUnsupportedElementsRule';
+import { getFailureString } from '../reactA11yAriaUnsupportedElementsRule';
 
 /**
  * Unit test for react-a11y-aria-unsupported-elements rule.

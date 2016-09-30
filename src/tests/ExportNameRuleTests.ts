@@ -1,5 +1,5 @@
 import {TestHelper} from './TestHelper';
-import {Rule} from '../src/exportNameRule';
+import {Rule} from '../exportNameRule';
 
 /**
  * Unit tests.

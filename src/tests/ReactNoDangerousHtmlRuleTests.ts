@@ -1,5 +1,5 @@
 import {TestHelper} from './TestHelper';
-import {Rule} from '../src/reactNoDangerousHtmlRule';
+import {Rule} from '../reactNoDangerousHtmlRule';
 
 const dangerousScript : string = `
 class MyComponent {

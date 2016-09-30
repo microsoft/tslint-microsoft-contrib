@@ -1,5 +1,5 @@
-import { getImplicitRole } from '../src/utils/getImplicitRole';
-import { getJsxElementFromCode } from '../src/utils/JsxAttribute';
+import { getImplicitRole } from '../utils/getImplicitRole';
+import { getJsxElementFromCode } from '../utils/JsxAttribute';
 import * as chai from 'chai';
 
 /**

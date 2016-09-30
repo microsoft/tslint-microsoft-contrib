@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureString } from '../src/reactA11yPropsRule';
+import { getFailureString } from '../reactA11yPropsRule';
 
 /**
  * Unit tests for aria-props rule.

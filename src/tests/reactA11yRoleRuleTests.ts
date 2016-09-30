@@ -1,5 +1,5 @@
 import { TestHelper } from './TestHelper';
-import { getFailureStringInvalidRole } from '../src/reactA11yRoleRule';
+import { getFailureStringInvalidRole } from '../reactA11yRoleRule';
 
 /**
  * Unit tests for a11y-role

@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
-import {Formatter} from '../src/fixNoVarKeywordFormatter';
+import {Formatter} from '../fixNoVarKeywordFormatter';
 
 /* tslint:disable:no-consecutive-blank-lines */
 class FixNoVarKeywordFormatterForTesting extends Formatter {

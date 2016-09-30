@@ -2,7 +2,7 @@ import { TestHelper } from './TestHelper';
 import {
   getFailureStringForNotImplicitRole,
   getFailureStringForImplicitRole
-} from '../src/reactA11yRoleHasRequiredAriaPropsRule';
+} from '../reactA11yRoleHasRequiredAriaPropsRule';
 
 /**
  * Unit test for a11y-role-has-required-aria-props rule

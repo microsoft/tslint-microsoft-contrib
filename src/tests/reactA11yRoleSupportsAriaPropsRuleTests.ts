@@ -3,7 +3,7 @@ import {
   getFailureStringForNoRole,
   getFailureStringForImplicitRole,
   getFailureStringForNotImplicitRole
-} from '../src/reactA11yRoleSupportsAriaPropsRule';
+} from '../reactA11yRoleSupportsAriaPropsRule';
 
 /**
  * Unit test for a11y-role-supports-aria-props rule.

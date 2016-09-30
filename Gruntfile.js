@@ -413,6 +413,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('generate-default-tslint-json', 'A task that converts recommended_ruleset.js to ./dist/build/tslint.json', function () {
         const data = require('./recommended_ruleset.js');
+        data['rulesDirectory'] = './';
         grunt.file.write('./dist/build/tslint.json', JSON.stringify(data, null, 2), {encoding: 'UTF-8'});
     });
 

@@ -1,6 +1,3 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
 /* tslint:disable:max-func-body-length */
 import {TestHelper} from './TestHelper';
 

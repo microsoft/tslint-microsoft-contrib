@@ -1,6 +1,3 @@
-/// <reference path="../typings/mocha.d.ts" />
-/// <reference path="../typings/chai.d.ts" />
-
 import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../src/fixPreferConstFormatter';

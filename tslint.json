@@ -113,7 +113,7 @@
     "no-namespace": false,
     "no-null-keyword": false,
     "no-octal-literal": true,
-    "no-reference": false,
+    "no-reference": true,
     "no-regex-spaces": true,
     "no-require-imports": true,
     "no-reserved-keywords": true,

@@ -17,58 +17,58 @@ const ROLES: IRole[] = ROLE_SCHEMA.roles;
 const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => ROLES[role].isAbstract === false);
 
 export function getFailureStringUndefinedRole(): string {
-  return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +
-    'or simply remove this attribute';
+    return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +
+        'or simply remove this attribute';
 }
 
 export function getFailureStringInvalidRole(invalidRoleName: string): string {
-  return `Invalid role attribute value '${invalidRoleName}', elements with ARIA roles must use a valid, \
+    return `Invalid role attribute value '${invalidRoleName}', elements with ARIA roles must use a valid, \
 non-abstract ARIA role. A reference to role definitions can be found at \
 https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
-  public static metadata: ExtendedMetadata = {
-    ruleName: 'react-a11y-role',
-    type: 'maintainability',
-    description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-  };
+    public static metadata: ExtendedMetadata = {
+        ruleName: 'react-a11y-role',
+        type: 'maintainability',
+        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+        options: null,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
 
-  public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-    return sourceFile.languageVariant === ts.LanguageVariant.JSX
-      ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
-      : [];
-  }
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX
+            ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
+            : [];
+    }
 }
 
 class A11yRoleRuleWalker extends Lint.RuleWalker {
-  public visitJsxAttribute(node: ts.JsxAttribute): void {
-    const name: string = getPropName(node);
+    public visitJsxAttribute(node: ts.JsxAttribute): void {
+        const name: string = getPropName(node);
 
-    if (!name || name.toLowerCase() !== 'role') {
-      return;
+        if (!name || name.toLowerCase() !== 'role') {
+            return;
+        }
+
+        const roleValue: string = getStringLiteral(node);
+
+        if (roleValue) {
+            // Splitted by space doesn't mean the multiple role definition is correct,
+            // just because this rule is not checking if it is using multiple role definition.
+            const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
+
+            if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue)));
+            }
+        } else if (roleValue === '' || isEmpty(node)) {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringUndefinedRole()));
+        }
+
+        super.visitJsxAttribute(node);
     }
-
-    const roleValue: string = getStringLiteral(node);
-
-    if (roleValue) {
-      // Splitted by space doesn't mean the multiple role definition is correct,
-      // just because this rule is not checking if it is using multiple role definition.
-      const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
-
-      if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
-        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue)));
-      }
-    } else if (roleValue === '' || isEmpty(node)) {
-      this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringUndefinedRole()));
-    }
-
-    super.visitJsxAttribute(node);
-  }
 }

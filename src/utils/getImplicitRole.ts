@@ -11,17 +11,17 @@ import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './Ty
  * A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no-corresponding-role.
  */
 export function getImplicitRole(node: ts.Node): string {
-  let tagName: string;
+    let tagName: string;
 
-  if (isJsxElement(node)) {
-    tagName = node.openingElement.tagName.getText();
-  } else if (isJsxSelfClosingElement(node)) {
-    tagName = node.tagName.getText();
-  } else if (isJsxOpeningElement(node)) {
-    tagName = node.tagName.getText();
-  } else {
-    tagName = undefined;
-  }
+    if (isJsxElement(node)) {
+        tagName = node.openingElement.tagName.getText();
+    } else if (isJsxSelfClosingElement(node)) {
+        tagName = node.tagName.getText();
+    } else if (isJsxOpeningElement(node)) {
+        tagName = node.tagName.getText();
+    } else {
+        tagName = undefined;
+    }
 
-  return tagName && implicitRoles[tagName] && implicitRoles[tagName](node);
+    return tagName && implicitRoles[tagName] && implicitRoles[tagName](node);
 }

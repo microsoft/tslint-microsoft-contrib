@@ -2,7 +2,7 @@
  * @Returns the implicit role for a dl tag.
  */
 function getImplicitRoleForDl(): string {
-  return 'list';
+    return 'list';
 }
 
 export { getImplicitRoleForDl as dl };

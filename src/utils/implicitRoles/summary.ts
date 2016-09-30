@@ -2,7 +2,7 @@
  * @Returns the implicit role for a summary tag.
  */
 function getImplicitRoleForSummary(): string {
-  return 'button';
+    return 'button';
 }
 
 export { getImplicitRoleForSummary as summary };

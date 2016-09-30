@@ -2,7 +2,7 @@
  * @Returns the implicit role for a tr tag.
  */
 function getImplicitRoleForTr(): string {
-  return 'row';
+    return 'row';
 }
 
 export { getImplicitRoleForTr as tr };

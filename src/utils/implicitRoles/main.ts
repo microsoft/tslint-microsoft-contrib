@@ -2,7 +2,7 @@
  * @Returns the implicit role for a main tag.
  */
 function getImplicitRoleForMain(): string {
-  return 'main';
+    return 'main';
 }
 
 export { getImplicitRoleForMain as main };

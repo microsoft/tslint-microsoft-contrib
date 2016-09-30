@@ -55,7 +55,8 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         var _loop_1 = function() {
             var current = this_1.anchorInfoList.shift();
             this_1.anchorInfoList.forEach(function (anchorInfo) {
-                if (current.href === anchorInfo.href &&
+                if (current.href &&
+                    current.href === anchorInfo.href &&
                     current.text !== anchorInfo.text &&
                     !Utils_1.Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
                     sameHrefDifferentTexts.push(anchorInfo);
@@ -99,7 +100,7 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             if (anchorInfo.href === '#') {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
-            if (!anchorInfo.text || anchorInfo.text.length <= 4) {
+            if (!anchorInfo.text || anchorInfo.text.length < 4) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
             var imageAltText = this.imageAlt(parent);

@@ -66,7 +66,7 @@ var ReactA11yProptypesWalker = (function (_super) {
             : false;
         var expectedType = aria[propName].type;
         var permittedValues = aria[propName].values;
-        var propValue = JsxAttribute_1.getStringLiteral(node);
+        var propValue = JsxAttribute_1.getStringLiteral(node) || String(JsxAttribute_1.getBooleanLiteral(node));
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)));
@@ -88,9 +88,10 @@ var ReactA11yProptypesWalker = (function (_super) {
             case 'number': return this.isNumber(propValueExpression);
             case 'string': return this.isString(propValueExpression);
             case 'token':
-                return this.isString(propValueExpression) && permittedValues.indexOf(propValue.toLowerCase()) > -1;
+                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    permittedValues.indexOf(propValue.toLowerCase()) > -1;
             case 'tokenlist':
-                return this.isString(propValueExpression) &&
+                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
                     propValue.split(' ').every(function (token) { return permittedValues.indexOf(token.toLowerCase()) > -1; });
             default:
                 return false;

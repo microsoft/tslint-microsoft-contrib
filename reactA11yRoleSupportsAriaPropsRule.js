@@ -37,7 +37,8 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'react-a11y-role-supports-aria-props',
         type: 'maintainability',
-        description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
+        description: 'Enforce that elements with explicit or implicit roles defined contain ' +
+            'only `aria-*` properties supported by that `role`.',
         options: null,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -64,7 +65,16 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
     A11yRoleSupportsAriaPropsWalker.prototype.checkJsxElement = function (node) {
         var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var roleProp = attributesInElement[ROLE_STRING];
-        var roleValue = roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(node);
+        var roleValue;
+        if (roleProp != null) {
+            roleValue = JsxAttribute_1.getStringLiteral(roleProp);
+            if (!JsxAttribute_1.isEmpty(roleProp) && roleValue == null) {
+                return;
+            }
+        }
+        else {
+            roleValue = getImplicitRole_1.getImplicitRole(node);
+        }
         var isImplicitRole = !roleProp && !!roleValue;
         var normalizedRoles = (roleValue || '').toLowerCase().split(' ')
             .filter(function (role) { return !!ROLES[role]; });

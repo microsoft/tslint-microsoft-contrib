@@ -33,6 +33,45 @@ function getStringLiteral(node) {
     }
 }
 exports.getStringLiteral = getStringLiteral;
+function getBooleanLiteral(node) {
+    if (!TypeGuard_1.isJsxAttribute(node)) {
+        throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+    }
+    var initializer = node == null ? null : node.initializer;
+    var getBooleanFromString = function (value) {
+        if (value.toLowerCase() === 'true') {
+            return true;
+        }
+        else if (value.toLowerCase() === 'false') {
+            return false;
+        }
+        else {
+            return undefined;
+        }
+    };
+    if (TypeGuard_1.isStringLiteral(initializer)) {
+        return getBooleanFromString(initializer.text);
+    }
+    else if (TypeGuard_1.isJsxExpression(initializer)) {
+        var expression = initializer.expression;
+        if (TypeGuard_1.isStringLiteral(expression)) {
+            return getBooleanFromString(expression.text);
+        }
+        else {
+            if (TypeGuard_1.isTrueKeyword(expression)) {
+                return true;
+            }
+            else if (TypeGuard_1.isFalseKeyword(expression)) {
+                return false;
+            }
+            else {
+                return undefined;
+            }
+        }
+    }
+    return false;
+}
+exports.getBooleanLiteral = getBooleanLiteral;
 function isEmpty(node) {
     var initializer = node == null ? null : node.initializer;
     if (initializer == null) {

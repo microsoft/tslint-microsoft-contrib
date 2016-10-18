@@ -1,3 +1,13 @@
+# 2.0.13 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20milestone%3A2.0.13)
+
+* [#268](https://github.com/Microsoft/tslint-microsoft-contrib/issues/268) Make extends tslint.json easier by adding "rulesDirectory": "./".
+* [#270](https://github.com/Microsoft/tslint-microsoft-contrib/issues/270) TestHelper fail in version 2.0.12
+* [#289](https://github.com/Microsoft/tslint-microsoft-contrib/issues/289) react-a11y-anchors false positive when anchor href is undefined bug
+* [#288](https://github.com/Microsoft/tslint-microsoft-contrib/issues/288) react-a11y-proptypes: fix rule to scan boolean types when analyzing tokens bug
+* [#287](https://github.com/Microsoft/tslint-microsoft-contrib/issues/287) aria-role-supports-props: false positive when role is defined by an expression bug
+* [#269](https://github.com/Microsoft/tslint-microsoft-contrib/issues/269) react-a11y-anchors fails on links that contact exactly 4 characters of text bug
+
 # 2.0.11/2.0.12 #
 A big release and a big thank you to all the contributors: 
 From the Suzhou SOX Publishing team

@@ -72,6 +72,10 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
         let roleValue: string;
 
+        // Match react custom element whose tag name starts with uppercase character.
+        if (node.tagName.getText().match(/^[A-Z].*/)) {
+            return;
+        }
         if (roleProp != null) {
             roleValue = getStringLiteral(roleProp);
             if (!isEmpty(roleProp) && roleValue == null) { // Do NOT check if can't retrieve the right role.

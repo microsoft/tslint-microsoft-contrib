@@ -14,23 +14,28 @@ describe('a11yRoleSupportsAriaPropsRule', () => {
   describe('should pass', () => {
     const fileDirectory: string = 'test-data/a11yRoleSupportsAriaProps/PassingTestInputs/';
 
+    it('when the element is react custom element', () => {
+      const fileName: string = fileDirectory + 'EmptyRoleSupportsAllAriaProps.tsx';
+      TestHelper.assertNoViolation(ruleName, fileName);
+    });
+
     it('when empty role supports all aria props in element', () => {
-      const fileName: string = fileDirectory + 'EmptyRoleSupportsAllAriaPropsInElement.tsx';
+      const fileName: string = fileDirectory + 'EmptyRoleSupportsAllAriaProps.tsx';
       TestHelper.assertNoViolation(ruleName, fileName);
     });
 
     it('when explicit role supports all aria props in element', () => {
-      const fileName: string = fileDirectory + 'ExplicitRoleSupportsAllAriaPropsInElement.tsx';
+      const fileName: string = fileDirectory + 'ExplicitRoleSupportsAllAriaProps.tsx';
       TestHelper.assertNoViolation(ruleName, fileName);
     });
 
     it('when implicit role supports all aria props in element', () => {
-      const fileName: string = fileDirectory + 'ImplicitRoleSupportsAllAriaPropsInElement.tsx';
+      const fileName: string = fileDirectory + 'ImplicitRoleSupportsAllAriaProps.tsx';
       TestHelper.assertNoViolation(ruleName, fileName);
     });
 
     it('when role is defined but not retrievable', () => {
-      const fileName: string = fileDirectory + 'UnretrievableRoleSupportsAllAriaPropsInElement.tsx';
+      const fileName: string = fileDirectory + 'UnretrievableRoleSupportsAllAriaProps.tsx';
       TestHelper.assertNoViolation(ruleName, fileName);
     });
   });

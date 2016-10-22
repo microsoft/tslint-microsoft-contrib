@@ -16,7 +16,6 @@ module.exports = {
         "no-disable-auto-sanitization": true,
         "no-document-domain": true,
         "no-document-write": true,
-        "no-duplicate-key": true,
         "no-eval": true,
         "no-exec-script": true,
         "no-function-constructor-with-string-args": true,

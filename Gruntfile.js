@@ -324,7 +324,8 @@ module.exports = function(grunt) {
             'no-unexternalized-strings': true,
             'object-literal-key-quotes': true,
             'no-relative-imports': true,
-            'no-empty-line-after-opening-brace': true
+            'no-empty-line-after-opening-brace': true,
+            'no-duplicate-key': true
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {

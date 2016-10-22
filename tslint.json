@@ -82,7 +82,6 @@
     "no-document-domain": true,
     "no-document-write": true,
     "no-duplicate-case": true,
-    "no-duplicate-key": true,
     "no-duplicate-parameter-names": true,
     "no-duplicate-variable": true,
     "no-empty": true,

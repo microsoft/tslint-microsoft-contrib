@@ -83,9 +83,7 @@ no-document-write,Do not use document.write,TSLINTMGIOVQ,tslint,SDL,Error,Critic
 CWE 85 - Doubled Character XSS Manipulations"
 no-duplicate-case,Do not use duplicate case labels in switch statements.,TSLINT3MSPFV,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-no-duplicate-key,Disallows duplicate keys in object literals.,TSLINT8C37DG,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 694, 462","CWE 398 - Indicator of Poor Code Quality
-CWE 694 - Use of Multiple Resources with Duplicate Identifier
-CWE 462 - Duplicate Key in Associative List (Alist)"
+no-duplicate-key,Disallows duplicate keys in object literals.,TSLINT8C37DG,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-duplicate-variable,Disallows duplicate variable declarations in the same block scope.,TSLINT6TMGHL,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-empty,Disallows empty blocks.,TSLINTJ99V50,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-empty-interfaces,Do not use empty interfaces.,TSLINT1L2THN7,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality

@@ -245,14 +245,6 @@
     "group": "Clarity",
     "commonWeaknessEnumeration": "710"
   },
-  "no-duplicate-key": {
-    "issueClass": "SDL",
-    "issueType": "Error",
-    "severity": "Critical",
-    "level": "Mandatory",
-    "group": "Security",
-    "commonWeaknessEnumeration": "398, 694, 462"
-  },
   "no-duplicate-variable": {
     "issueClass": "Non-SDL",
     "issueType": "Error",

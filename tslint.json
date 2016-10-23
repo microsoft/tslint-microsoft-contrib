@@ -173,6 +173,7 @@
     "react-iframe-missing-sandbox": true,
     "react-no-dangerous-html": true,
     "react-this-binding-issue": true,
+    "react-tsx-curly-spacing": true,
     "react-unused-props-and-state": true,
     "restrict-plus-operands": false,
     "semicolon": true,

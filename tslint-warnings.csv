@@ -219,6 +219,7 @@ react-no-dangerous-html,Do not use React's dangerouslySetInnerHTML API.,TSLINTPH
 CWE 85 - Doubled Character XSS Manipulations
 CWE 710 - Coding Standards Violation"
 react-this-binding-issue,When using React components you must be careful to correctly bind the `this` reference on any methods that you pass off to child components as callbacks.,TSLINTPH85PH,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
+react-tsx-curly-spacing,Consistently use spaces around the brace characters of JSX attributes.,TSLINT1L70KC2,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 react-unused-props-and-state,Remove unneeded properties defined in React Props and State interfaces,TSLINT9FI4LK,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 restrict-plus-operands,"When adding two variables, operands must both be of type number or of type string.",TSLINT15S62ML,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 597, 351, 480, 704, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 597 - Use of Wrong Operator in String Comparison

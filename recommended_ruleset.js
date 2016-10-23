@@ -170,6 +170,7 @@ module.exports = {
         "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
+        "react-tsx-curly-spacing": true,
         "semicolon": [true, "always"],
         "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
                     // lists results in lists that are easier to reorder and version control diffs that are more clear.

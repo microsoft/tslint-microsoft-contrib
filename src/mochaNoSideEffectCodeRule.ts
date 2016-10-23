@@ -98,8 +98,8 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
                 this.isInDescribe = false;
             }
         } else if (functionName === 'it'
-                || functionName === 'before' || functionName === 'beforeEach'
-                || functionName === 'after' || functionName === 'afterEach') {
+                || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
+                || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll') {
             // variable initialization is allowed inside the lifecycle methods, so do not visit them
             return;
         } else if (this.isInDescribe) {

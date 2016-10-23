@@ -29,10 +29,16 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 beforeEach((): void => {
                     const foo = someValue();
                 });
+                beforeAll((): void => {
+                    const foo = someValue();
+                });
                 after((): void => {
                     const foo = someValue();
                 });
                 afterEach((): void => {
+                    const foo = someValue();
+                });
+                afterAll((): void => {
                     const foo = someValue();
                 });
                 it((): void => {
@@ -148,10 +154,16 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 beforeEach((): void => {
                     const foo = someValue();
                 });
+                beforeAll((): void => {
+                    const foo = someValue();
+                });
                 after((): void => {
                     const foo = someValue();
                 });
                 afterEach((): void => {
+                    const foo = someValue();
+                });
+                afterAll((): void => {
                     const foo = someValue();
                 });
                 it((): void => {

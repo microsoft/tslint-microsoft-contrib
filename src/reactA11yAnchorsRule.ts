@@ -5,11 +5,19 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
+import {getImplicitRole} from './utils/getImplicitRole';
+import {
+    getJsxAttributesFromJsxElement,
+    getStringLiteral
+} from './utils/JsxAttribute';
+
+const ROLE_STRING: string = 'role';
 
 const NO_HASH_FAILURE_STRING: string =
     'Do not use # as anchor href.';
 const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
-    'Link text should be at least 4 characters long.';
+    'Link text should be at least 4 characters long. If you are not using <a> ' +
+    'element as anchor, please specify explicit role, e.g. role=\'button\'';
 const UNIQUE_ALT_FAILURE_STRING: string =
     'Links with images and text content, the alt attribute should be unique to the text content or empty.';
 const SAME_HREF_SAME_TEXT_FAILURE_STRING: string =
@@ -117,7 +125,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
 
-            if (!anchorInfo.text || anchorInfo.text.length < 4) {
+            if (this.imageRole(openingElement) === 'link' && (!anchorInfo.text || anchorInfo.text.length < 4)) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
 
@@ -201,6 +209,14 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         }
 
         return altText;
+    }
+
+    private imageRole(root: ts.Node): string {
+        const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(root);
+        const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
+
+        // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
+        return roleProp ? getStringLiteral(roleProp) : getImplicitRole(root);
     }
 }
 

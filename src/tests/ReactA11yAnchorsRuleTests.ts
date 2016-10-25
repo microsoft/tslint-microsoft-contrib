@@ -35,7 +35,8 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Link text should be at least 4 characters long.",
+                "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
+                    'element as anchor, please specify explicit role, e.g. role=\'button\'',
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
@@ -73,7 +74,8 @@ describe('reactA11yAnchorsRule', () : void => {
                 "startPosition": { "character": 28, "line": 3 }
             },
             {
-                "failure": "Link text should be at least 4 characters long.",
+                "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
+                    'element as anchor, please specify explicit role, e.g. role=\'button\'',
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
@@ -93,6 +95,18 @@ describe('reactA11yAnchorsRule', () : void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
+        it('should pass when role is not link and length of text less than 4', () => {
+            // Anchor without 'href' attribute has no corresponding role.
+            const script: string = `
+                import React = require('react');
+                const anchor1 = <a role='button'>add</a>;
+                const anchor2 = <a role='button'><span className='iconClass'></span></a>;
+                const anchor3 = <a><img src='someURL' alt='someAlt' /></a>;
+            `;
+
+            TestHelper.assertNoViolation(ruleName, script);
+        });
+
         it('should fail when length of text less than 4', (): void => {
             const script: string = `
                 import React = require('react');
@@ -102,13 +116,15 @@ describe('reactA11yAnchorsRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "Link text should be at least 4 characters long.",
+                    "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
+                        'element as anchor, please specify explicit role, e.g. role=\'button\'',
                     "name": "file.tsx",
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 3 }
                 },
                 {
-                    "failure": "Link text should be at least 4 characters long.",
+                    "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
+                        'element as anchor, please specify explicit role, e.g. role=\'button\'',
                     "name": "file.tsx",
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 4 }

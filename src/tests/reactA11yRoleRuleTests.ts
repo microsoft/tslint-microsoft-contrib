@@ -89,7 +89,16 @@ describe('a11yRoleRule', () => {
     });
 
     it('when the role name is not defined', () => {
-      const fileName: string = 'test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx';
+      const fileName: string = `import React = require('react');
+
+/**
+ * It makes no sense to write code below.
+ */
+const a = <div role='' />
+const b = <div role />
+const c = <div role="" />
+const d = <div role={null} />
+const e = <div role={undefined} /> `;
 
       TestHelper.assertViolations(
         ruleName,
@@ -98,35 +107,35 @@ describe('a11yRoleRule', () => {
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 6 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 7 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "name": 'file.tsx',
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 8 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "name": 'file.tsx',
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 9 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": "test-data/a11yRole/FailingTestInputs/UndefinedRole.tsx",
+                "name": 'file.tsx',
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 10 }
             }

@@ -15,6 +15,15 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
+    it('should pass on generator', (): void => {
+        const script: string = `
+            var x = (): void => {
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
     it('should pass on function with this', (): void => {
         const script: string = `
             var x = function() {

@@ -85,14 +85,17 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
     });
 
     it('when implicit role missing required props', () => {
-      const fileName: string = fileDirectory + 'ImplicitRoleMissingRequiredProps.tsx';
+      const fileName: string = `import React = require('react');
+
+const a = <input type='text' list />
+const b = <menuitem type='radio' />`;
 
       TestHelper.assertViolations(
         ruleName,
         fileName,
         [
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 11, line: 3 },
             failure: getFailureStringForImplicitRole(
@@ -102,7 +105,7 @@ describe('a11yRoleHasRequiredAriaPropsRule', () => {
             )
           },
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 11, line: 4 },
             failure: getFailureStringForImplicitRole(

@@ -97,7 +97,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitAnyStatementList(statements: ts.NodeArray<ts.Statement>) {
-        const names: ts.Map<IDeclarationUsages> = {};
+        const names: ts.Map<IDeclarationUsages> = <ts.Map<IDeclarationUsages>>{};
         statements.forEach((statement: ts.Statement): void => {
             if (statement.kind === SyntaxKind.current().VariableStatement) {
                 this.collectLetIdentifiers((<ts.VariableStatement>statement).declarationList, names);
@@ -107,7 +107,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitAnyForStatement(node: ts.ForOfStatement | ts.ForInStatement) {
-        const names: ts.Map<IDeclarationUsages> = {};
+        const names: ts.Map<IDeclarationUsages> = <ts.Map<IDeclarationUsages>>{};
         if (AstUtils.isLet(node.initializer)) {
             if (node.initializer.kind === SyntaxKind.current().VariableDeclarationList) {
                 this.collectLetIdentifiers(<ts.VariableDeclarationList>node.initializer, names);

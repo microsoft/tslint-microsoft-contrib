@@ -27,8 +27,14 @@ describe('a11yTabindexNoPositive', () => {
 
   describe('should fail', () => {
     it('when the tabindex value is undefined', () => {
-      const fileName: string =
-        'test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx';
+      const fileName: string = `import React = require('react');
+
+const e = <div tabindex='' />
+const j = <div tabIndex="" />
+const o = <div Tabindex ></div>
+const t = <div tabindex="  "></div>
+const u = <div tabindex={null}></div>
+const v = <div tabindex={undefined}></div>`;
 
       TestHelper.assertViolations(
         ruleName,
@@ -36,37 +42,37 @@ describe('a11yTabindexNoPositive', () => {
         [
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 3 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 4 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 5 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 6 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 7 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": "test-data/a11yTabindexNoPositive/FailingTestInputs/TabindexValueUndefined.tsx",
+                "name": "file.tsx",
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 8 }
             }
@@ -104,38 +110,44 @@ describe('a11yTabindexNoPositive', () => {
     });
 
     it('when the tabindex value is not -1 or 0', () => {
-      const fileName: string = 'test-data/a11yTabindexNoPositive/FailingTestInputs/InvalidTabindexValue.tsx';
+      const fileName: string = `import React = require('react');
+
+const a = <div tabIndex='1'/>
+const b = <div tabindex={ 1 }></div>
+const c = <div tabindex='-2'></div>
+const d = <div tabindex='-12345678910'></div>
+const e = <div tabindex='+12345678910'></div>      `;
 
       TestHelper.assertViolations(
         ruleName,
         fileName,
         [
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 16, line: 3 },
             failure: getFailureString()
           },
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 16, line: 4 },
             failure: getFailureString()
           },
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 16, line: 5 },
             failure: getFailureString()
           },
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 16, line: 6 },
             failure: getFailureString()
           },
           {
-            name: fileName,
+            name: 'file.tsx',
             ruleName: ruleName,
             startPosition: { character: 16, line: 7 },
             failure: getFailureString()

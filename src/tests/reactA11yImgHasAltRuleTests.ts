@@ -31,7 +31,13 @@ describe('reactA11yImgHasAlt', () => {
       });
 
       it('when the img element has empty alt value and presentation role', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasEmptyAltValueAndPresentationRole.tsx';
+        const fileName: string = `
+            import React = require('react');
+
+            const a = <img role='presentation' alt />
+            const b = <img role='presentation' alt='' />
+            const c = <img role='button presentation' alt={ undefined } />
+            const d = <img role={'presentation button'} alt={''} /> `;
         TestHelper.assertNoViolation(ruleName, fileName);
       });
 
@@ -74,32 +80,37 @@ describe('reactA11yImgHasAlt', () => {
       });
 
       it('when the img element has empty alt value and not presentation role', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasEmptyAltValueAndNotPresentationRole.tsx';
+        const fileName: string = `import React = require('react');
+
+const a = <img alt role='button'/>
+const b = <img Alt='' />
+const c = <img ALT={undefined} />
+const d = <img alt={''} /> `;
 
         TestHelper.assertViolations(
           ruleName,
           fileName,
           [
             {
-              name: fileName,
+              name: 'file.tsx',
               ruleName: ruleName,
               startPosition: { character: 11, line: 3 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: fileName,
+              name: 'file.tsx',
               ruleName: ruleName,
               startPosition: { character: 11, line: 4 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: fileName,
+              name: 'file.tsx',
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: fileName,
+              name: 'file.tsx',
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
@@ -157,7 +168,18 @@ describe('reactA11yImgHasAlt', () => {
       });
 
       it('when custom element or img has empty alt value and presentation role', () => {
-        const fileName: string = fileDirectory + 'CustomElementHasEmptyAltValueAndPresentationRole.tsx';
+        const fileName: string = `
+            import React = require('react');
+
+            let Picture;
+
+            const a = <Picture role='presentation' alt />
+            const b = <Picture role={'presentation'} alt='' />
+            const c = <Picture role='button presentation' alt={undefined} />
+            const d = <img role='presentation' alt={ null } />
+            const e = <img role={'presentation'} alt={ '' } />
+            const f = <img role='button presentation' alt />
+                    `;
         TestHelper.assertNoViolationWithOptions(ruleName, options, fileName);
       });
 

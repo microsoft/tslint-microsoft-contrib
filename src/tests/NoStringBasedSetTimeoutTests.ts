@@ -84,6 +84,14 @@ module SetTimeoutModule {
         TestHelper.assertViolations(RULE_NAME, inputFile, []);
     });
 
+    it('should pass when function parameter is Function', () : void => {
+        const script : string = `
+            function(callback: Function) {
+                setTimeout(callback, 0);
+            }`;
+        TestHelper.assertViolations(RULE_NAME, script, []);
+    });
+
     it('should support type inference on shadowed variables', () : void => {
         const inputFile : string = `
 var globalProp1: () => void;

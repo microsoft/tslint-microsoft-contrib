@@ -223,6 +223,9 @@ export module AstUtils {
 
     export function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
         if (node.type != null) {
+            if (node.type.getText() === 'Function') {
+                return true;
+            }
             return node.type.kind === SyntaxKind.current().FunctionType;
         } else if (node.initializer != null) {
             return (node.initializer.kind === SyntaxKind.current().ArrowFunction

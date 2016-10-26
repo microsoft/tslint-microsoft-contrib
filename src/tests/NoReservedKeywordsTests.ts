@@ -19,6 +19,15 @@ describe('noBannedTermsRule', () : void => {
             script, []);
     });
 
+    it('should pass when this is used as a parameter name (see #261)', (): void => {
+        const script: string = `
+            function futureMethod(this: MyInterface) {
+              return this.toString();
+            }
+        `;
+        TestHelper.assertNoViolation(RULE_NAME, script);
+    });
+
     it('should not allow the break reserved word', () : void => {
         const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-break.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [

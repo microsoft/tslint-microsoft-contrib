@@ -67,7 +67,10 @@ export class BannedTermWalker extends ErrorTolerantWalker {
     }
 
     protected visitParameterDeclaration(node: ts.ParameterDeclaration): void {
-        this.validateNode(node);
+        // typescript 2.0 introduces function level 'this' types
+        if (node.name.getText() !== 'this') {
+            this.validateNode(node);
+        }
         super.visitParameterDeclaration(node);
     }
 

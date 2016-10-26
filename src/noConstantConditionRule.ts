@@ -32,6 +32,25 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
+    private checkLoops: boolean;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.checkLoops = this.extractBoolean('checkLoops');
+    }
+
+    private extractBoolean(keyName: string): boolean {
+        let result : boolean = true;
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                if (opt[keyName] === false || opt[keyName] === 'false') {
+                    result = false;
+                }
+            }
+        });
+        return result;
+    }
+
     protected visitIfStatement(node: ts.IfStatement): void {
         if (AstUtils.isConstantExpression(node.expression)) {
             const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
@@ -49,23 +68,27 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitWhileStatement(node: ts.WhileStatement): void {
-        if (AstUtils.isConstantExpression(node.expression)) {
-            const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+        if (this.checkLoops) {
+            if (AstUtils.isConstantExpression(node.expression)) {
+                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            }
         }
         super.visitWhileStatement(node);
     }
 
     protected visitDoStatement(node: ts.DoStatement): void {
-        if (AstUtils.isConstantExpression(node.expression)) {
-            const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+        if (this.checkLoops) {
+            if (AstUtils.isConstantExpression(node.expression)) {
+                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            }
         }
         super.visitDoStatement(node);
     }
 
     protected visitForStatement(node: ts.ForStatement): void {
-        if (node.condition != null) {
+        if (this.checkLoops && node.condition != null) {
             if (AstUtils.isConstantExpression(node.condition)) {
                 const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));

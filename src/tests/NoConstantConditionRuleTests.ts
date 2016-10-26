@@ -20,6 +20,24 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on hard coded loops when checkLoops is false', () : void => {
+        const script : string = `
+            while (true) {
+                doSomething();
+            };
+
+            for (;true;) {
+                doSomething();
+            };
+
+            do {
+                doSomething();
+            } while (true)`;
+
+        const options: any[] = [ true, { 'checkLoops': false } ];
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, [ ]);
+    });
+
     it('should fail on if-booleans', () : void => {
         const script : string = `
             if (false) {}

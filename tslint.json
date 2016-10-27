@@ -23,7 +23,10 @@
     "forin": true,
     "function-name": true,
     "import-name": true,
-    "indent": [true, "spaces"],
+    "indent": [
+      true,
+      "spaces"
+    ],
     "interface-name": false,
     "jquery-deferred-must-complete": true,
     "jsdoc-format": false,
@@ -218,6 +221,7 @@
     "react-a11y-anchors": true,
     "react-anchor-blank-noopener": true,
     "insecure-random": true,
-    "possible-timing-attack": true
+    "possible-timing-attack": true,
+    "non-literal-require": true
   }
 }

@@ -55,6 +55,18 @@ describe('mochaUnneededDoneRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on standard usage - context/specify', () : void => {
+        const script : string = `
+            context('...', function(): void {
+                specify('...', function(done: MochaDone): void {
+                    something(done);
+                });
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on reassignment', () : void => {
         const script : string = `
             describe('something...', (): void => {
@@ -124,6 +136,26 @@ describe('mochaUnneededDoneRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 28, "line": 19 }
+            }
+        ]);
+    });
+
+    it('should fail on unneeded dones - context/specify', () : void => {
+        const script : string = `
+            context('...', (): void => {
+                specify('...', (done: MochaDone): void => {
+                    doSomething();
+                    done();
+                });
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
+                "name": "file.ts",
+                "ruleName": "mocha-unneeded-done",
+                "startPosition": { "character": 33, "line": 3 }
             }
         ]);
     });

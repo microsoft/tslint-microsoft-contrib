@@ -88,18 +88,14 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        const functionName: string = AstUtils.getFunctionName(node);
-
-        if (functionName === 'describe' || node.expression.getText() === 'describe.skip') {
+        if (MochaUtils.isDescribe(node)) {
             const nestedSubscribe = this.isInDescribe;
             this.isInDescribe = true;
             super.visitCallExpression(node);
             if (nestedSubscribe === false) {
                 this.isInDescribe = false;
             }
-        } else if (functionName === 'it'
-                || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
-                || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll') {
+        } else if (MochaUtils.isLifecycleMethod(node)) {
             // variable initialization is allowed inside the lifecycle methods, so do not visit them
             return;
         } else if (this.isInDescribe) {

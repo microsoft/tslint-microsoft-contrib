@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 
+import {AstUtils} from './AstUtils';
 import {SyntaxKind} from './SyntaxKind';
 import {Utils} from './Utils';
 
@@ -19,23 +20,30 @@ export module MochaUtils {
             const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
             if (expression.kind === SyntaxKind.current().CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>expression;
-                const expressionText: string = call.expression.getText();
-                return isDescribe(expressionText) || isContext(expressionText);
+                return isDescribe(call);
             }
         }
         return false;
     }
 
-    function isDescribe(callText: string): boolean {
-        return callText === 'describe' || callText === 'describe.only'
-            || callText === 'describe.skip' || callText === 'describe.timeout';
+    /**
+     * Tells you if the call is a describe or context call.
+     */
+    export function isDescribe(call: ts.CallExpression): boolean {
+        const functionName: string = AstUtils.getFunctionName(call);
+        const callText: string = call.expression.getText();
+        return functionName === 'describe'
+            || functionName === 'context'
+            || /(describe|context)\.(only|skip|timeout)/.test(callText);
     }
 
     /**
-     * Context is an alias for describe.
+     * Tells you if the call is an it(), specify(), before(), etc.
      */
-    function isContext(callText: string): boolean {
-        return callText === 'context' || callText === 'context.only'
-            || callText === 'context.skip' || callText === 'context.timeout';
+    export function isLifecycleMethod(call: ts.CallExpression): boolean {
+        const functionName: string = AstUtils.getFunctionName(call);
+        return functionName === 'it' || functionName === 'specify'
+            || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
+            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll';
     }
 }

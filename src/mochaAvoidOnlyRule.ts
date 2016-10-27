@@ -24,6 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public static FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
+    public static FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
     public static FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
     public static FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
 
@@ -49,6 +50,8 @@ class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
                         || node.arguments[1].kind === SyntaxKind.current().ArrowFunction) {
                         if (node.expression.getText() === 'it.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT));
+                        } else if (node.expression.getText() === 'specify.only') {
+                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_SPECIFY));
                         } else if (node.expression.getText() === 'describe.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_DESCRIBE));
                         } else if (node.expression.getText() === 'context.only') {

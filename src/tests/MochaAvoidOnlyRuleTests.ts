@@ -61,6 +61,25 @@ describe('mochaAvoidOnlyRule', () : void => {
         ]);
     });
 
+    it('should fail on specify.only with lambda', () : void => {
+        const script : string = `
+            context('some unit test', () => {
+                specify.only('some test', () => {
+                    // some test code
+                });
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Do not commit Mocha specify.only function call",
+                "name": "file.ts",
+                "ruleName": "mocha-avoid-only",
+                "startPosition": { "character": 17, "line": 3 }
+            }
+        ]);
+    });
+
     it('should fail on it.only with function', () : void => {
         const script : string = `
             describe('some unit test', () => {

@@ -50,6 +50,12 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                         const foo = someValue();
                     });
                 });
+                context((): void => {
+                    const CONST4 = false;
+                    specify((): void => {
+                        const foo = someValue();
+                    });
+                });
             });
         `;
 
@@ -133,6 +139,24 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
+                "name": "file.ts",
+                "ruleName": "mocha-no-side-effect-code",
+                "startPosition": { "character": 17, "line": 3 }
+            }
+        ]);
+    });
+
+    it('should fail on context', () : void => {
+        const script : string = `
+            context('someTest', (): void => {
+                expect(convertedTags).to.deep.equal(tags);
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Mocha test contains dangerous variable initialization. " +
+                "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
                 "name": "file.ts",
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 17, "line": 3 }

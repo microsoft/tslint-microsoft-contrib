@@ -30,10 +30,37 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
+
     protected visitNode(node: ts.Node): void {
         if (node.kind === SyntaxKind.current().EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);
+    }
+
+    protected visitForStatement(node: ts.ForStatement): void {
+        if (node.statement.kind === SyntaxKind.current().EmptyStatement) {
+            // walk everything but the statement
+            if (node.initializer) {
+                this.visitNode(node.initializer);
+            }
+            if (node.condition) {
+                this.visitNode(node.condition);
+            }
+            if (node.incrementor) {
+                this.visitNode(node.incrementor);
+            }
+        } else {
+            super.visitForStatement(node);
+        }
+    }
+
+    protected visitWhileStatement(node: ts.WhileStatement): void {
+        if (node.statement.kind === SyntaxKind.current().EmptyStatement) {
+            // walk the expression but not the empty statement
+            this.visitNode(node.expression);
+        } else {
+            super.visitWhileStatement(node);
+        }
     }
 }

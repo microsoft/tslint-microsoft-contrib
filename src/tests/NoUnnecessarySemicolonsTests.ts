@@ -4,8 +4,9 @@ import {TestHelper} from './TestHelper';
  * Unit tests.
  */
 describe('noUnnecessarySemiColons', () : void => {
+    const ruleName : string = 'no-unnecessary-semicolons';
+
     it('should produce violations', () : void => {
-        const ruleName : string = 'no-unnecessary-semicolons';
         const inputFile : string = 'test-data/NoUnnecessarySemicolonsTestInput.ts';
         TestHelper.assertViolations(
             ruleName,
@@ -31,5 +32,49 @@ describe('noUnnecessarySemiColons', () : void => {
                 }
             ]
         );
+    });
+
+    it('should pass on empty while loops', () : void => {
+        const script : string = `
+            while (false);
+        `;
+        TestHelper.assertNoViolation(ruleName, script);
+    });
+
+    it('should fail on empty while loops with semicolon', () : void => {
+        const script : string = `
+            while (false) {
+            };
+        `;
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "unnecessary semi-colon",
+                "name": "file.ts",
+                "ruleName": "no-unnecessary-semicolons",
+                "startPosition": { "character": 14, "line": 3 }
+            }
+        ]);
+    });
+
+    it('should pass on empty for loops', () : void => {
+        const script : string = `
+            for (var i = 0; i < 7; i += 1);
+        `;
+        TestHelper.assertNoViolation(ruleName, script);
+    });
+
+    it('should fail on empty for loops with semicolon', () : void => {
+        const script : string = `
+            for (var i = 0; i < 7; i += 1) {
+            };
+        `;
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "unnecessary semi-colon",
+                "name": "file.ts",
+                "ruleName": "no-unnecessary-semicolons",
+                "startPosition": { "character": 14, "line": 3 }
+            }
+        ]);
     });
 });

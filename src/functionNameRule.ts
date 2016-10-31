@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class FunctionNameRuleWalker extends ErrorTolerantWalker {
 
     private methodRegex: RegExp = /^[a-z][\w\d]+$/;
-    private privateMethodRegex: RegExp = /^[a-z][\w\d]+$/;
+    private privateMethodRegex: RegExp = this.methodRegex;
     private staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
     private functionRegex: RegExp = /^[a-z][\w\d]+$/;
 

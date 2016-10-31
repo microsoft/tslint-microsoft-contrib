@@ -52,6 +52,19 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on correctly protected static methods', () : void => {
+        const script : string = `
+            class MyClass {
+                protected static bar() {}
+                protected static bar1() {}
+                protected static myBar() {}
+                protected static myBar1() {}
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on incorrect public methods', () : void => {
         const script : string = `
             class MyClass {
@@ -138,6 +151,51 @@ describe('functionNameRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "function-name",
                 "startPosition": { "character": 25, "line": 7 }
+            }
+        ]);
+    });
+
+    it('should fail on incorrect protected methods', () : void => {
+        const script : string = `
+            class MyClass {
+                protected Foo() {}
+                protected _foo() {}
+                protected FOO() {}
+                protected _FOO() {}
+                protected _foo() {}
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: Foo",
+                "name": "file.ts",
+                "ruleName": "function-name",
+                "startPosition": { "character": 27, "line": 3 }
+            },
+            {
+                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
+                "name": "file.ts",
+                "ruleName": "function-name",
+                "startPosition": { "character": 27, "line": 4 }
+            },
+            {
+                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: FOO",
+                "name": "file.ts",
+                "ruleName": "function-name",
+                "startPosition": { "character": 27, "line": 5 }
+            },
+            {
+                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO",
+                "name": "file.ts",
+                "ruleName": "function-name",
+                "startPosition": { "character": 27, "line": 6 }
+            },
+            {
+                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
+                "name": "file.ts",
+                "ruleName": "function-name",
+                "startPosition": { "character": 27, "line": 7 }
             }
         ]);
     });

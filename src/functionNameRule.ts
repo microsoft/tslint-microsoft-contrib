@@ -7,6 +7,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const METHOD_REGEX = 'method-regex';
 const PRIVATE_METHOD_REGEX = 'private-method-regex';
+const PROTECTED_METHOD_REGEX = 'protected-method-regex';
 const STATIC_METHOD_REGEX = 'static-method-regex';
 const FUNCTION_REGEX = 'function-regex';
 
@@ -37,6 +38,7 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
 
     private methodRegex: RegExp = /^[a-z][\w\d]+$/;
     private privateMethodRegex: RegExp = this.methodRegex;
+    private protectedMethodRegex: RegExp = this.privateMethodRegex;
     private staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
     private functionRegex: RegExp = /^[a-z][\w\d]+$/;
 
@@ -46,6 +48,7 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
             if (typeof(opt) === 'object') {
                 this.methodRegex = this.getOptionOrDefault(opt, METHOD_REGEX, this.methodRegex);
                 this.privateMethodRegex = this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, this.privateMethodRegex);
+                this.protectedMethodRegex = this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, this.protectedMethodRegex);
                 this.staticMethodRegex = this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, this.staticMethodRegex);
                 this.functionRegex = this.getOptionOrDefault(opt, FUNCTION_REGEX, this.functionRegex);
             }
@@ -58,6 +61,11 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
             if (!this.privateMethodRegex.test(name)) {
                 this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
                     `Private method name does not match ${this.privateMethodRegex}: ${name}`));
+            }
+        } else if (AstUtils.isProtected(node)) {
+            if (!this.protectedMethodRegex.test(name)) {
+                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
+                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`));
             }
         } else if (AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {

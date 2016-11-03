@@ -42,6 +42,42 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass when constructor declares public properties', () : void => {
+        const script : string = `
+            class Point {
+                constructor(public x: number, public y: number) { }
+            }`;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when constructor declares protected properties', () : void => {
+        const script : string = `
+            class Point {
+                constructor(protected x: number, protected y: number) { }
+            }`;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when constructor declares private properties', () : void => {
+        const script : string = `
+            class Point {
+                constructor(private x: number, private y: number) { }
+            }`;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when constructor declares readonly properties', () : void => {
+        const script : string = `
+            class Point {
+                constructor(readonly x: number, readonly y: number) { }
+            }`;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on empty class', () : void => {
         const script : string = `
             // empty class can be a module instead

@@ -42,14 +42,21 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
     }
 
     private isClassStateful(node: ts.ClassDeclaration): boolean {
-        if (Utils.exists(node.heritageClauses, (clause: ts.HeritageClause): boolean => {
-                return clause.token === SyntaxKind.current().ExtendsKeyword;
-            })) {
+        if (this.classExtendsSomething(node)) {
             return true;
         }
         if (node.members.length === 0) {
             return false;
         }
+
+        if (this.classDeclaresConstructorProperties(node)) {
+            return true;
+        }
+
+        return this.classDeclaresInstanceData(node);
+    }
+
+    private classDeclaresInstanceData(node: ts.ClassDeclaration): boolean {
         return Utils.exists(node.members, (classElement: ts.ClassElement): boolean => {
             if (classElement.kind === SyntaxKind.current().Constructor) {
                 return false;
@@ -58,6 +65,30 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
                 return false;
             }
             return true;
+        });
+    }
+
+    private classDeclaresConstructorProperties(node: ts.ClassDeclaration): boolean {
+        return Utils.exists(node.members, (element: ts.ClassElement): boolean => {
+            if (element.kind === SyntaxKind.current().Constructor) {
+                return this.constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
+            }
+            return false;
+        });
+    }
+
+    private constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
+        return Utils.exists(ctor.parameters, (param: ts.ParameterDeclaration): boolean => {
+            return AstUtils.hasModifier(param.modifiers, SyntaxKind.current().PublicKeyword)
+                || AstUtils.hasModifier(param.modifiers, SyntaxKind.current().PrivateKeyword)
+                || AstUtils.hasModifier(param.modifiers, SyntaxKind.current().ProtectedKeyword)
+                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword);
+        });
+    }
+
+    private classExtendsSomething(node: ts.ClassDeclaration): boolean {
+        return Utils.exists(node.heritageClauses, (clause: ts.HeritageClause): boolean => {
+            return clause.token === SyntaxKind.current().ExtendsKeyword;
         });
     }
 }

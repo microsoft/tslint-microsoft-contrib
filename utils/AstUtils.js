@@ -191,6 +191,9 @@ var AstUtils;
     AstUtils.getDeclaredMethodNames = getDeclaredMethodNames;
     function isDeclarationFunctionType(node) {
         if (node.type != null) {
+            if (node.type.getText() === 'Function') {
+                return true;
+            }
             return node.type.kind === SyntaxKind_1.SyntaxKind.current().FunctionType;
         }
         else if (node.initializer != null) {

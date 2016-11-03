@@ -16,7 +16,6 @@ module.exports = {
         "no-disable-auto-sanitization": true,
         "no-document-domain": true,
         "no-document-write": true,
-        "no-duplicate-key": true,
         "no-eval": true,
         "no-exec-script": true,
         "no-function-constructor-with-string-args": true,
@@ -27,6 +26,7 @@ module.exports = {
         "no-string-based-set-immediate": true,
         "no-string-based-set-interval": true,
         "no-string-based-set-timeout": true,
+        "non-literal-require": true,
         "possible-timing-attack": true,
         "react-anchor-blank-noopener": true,
         "react-iframe-missing-sandbox": true,
@@ -171,6 +171,7 @@ module.exports = {
         "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
+        "react-tsx-curly-spacing": true,
         "semicolon": [true, "always"],
         "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
                     // lists results in lists that are easier to reorder and version control diffs that are more clear.

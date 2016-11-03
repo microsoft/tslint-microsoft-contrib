@@ -58,7 +58,9 @@ var BannedTermWalker = (function (_super) {
         _super.prototype.visitMethodDeclaration.call(this, node);
     };
     BannedTermWalker.prototype.visitParameterDeclaration = function (node) {
-        this.validateNode(node);
+        if (node.name.getText() !== 'this') {
+            this.validateNode(node);
+        }
         _super.prototype.visitParameterDeclaration.call(this, node);
     };
     BannedTermWalker.prototype.validateNode = function (node) {

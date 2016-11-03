@@ -78,8 +78,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     MochaNoSideEffectCodeRuleWalker.prototype.visitClassDeclaration = function (node) {
     };
     MochaNoSideEffectCodeRuleWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (functionName === 'describe' || node.expression.getText() === 'describe.skip') {
+        if (MochaUtils_1.MochaUtils.isDescribe(node)) {
             var nestedSubscribe = this.isInDescribe;
             this.isInDescribe = true;
             _super.prototype.visitCallExpression.call(this, node);
@@ -87,9 +86,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
                 this.isInDescribe = false;
             }
         }
-        else if (functionName === 'it'
-            || functionName === 'before' || functionName === 'beforeEach'
-            || functionName === 'after' || functionName === 'afterEach') {
+        else if (MochaUtils_1.MochaUtils.isLifecycleMethod(node)) {
             return;
         }
         else if (this.isInDescribe) {

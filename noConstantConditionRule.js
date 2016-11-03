@@ -33,9 +33,21 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var NoConstantConditionRuleWalker = (function (_super) {
     __extends(NoConstantConditionRuleWalker, _super);
-    function NoConstantConditionRuleWalker() {
-        _super.apply(this, arguments);
+    function NoConstantConditionRuleWalker(sourceFile, options) {
+        _super.call(this, sourceFile, options);
+        this.checkLoops = this.extractBoolean('checkLoops');
     }
+    NoConstantConditionRuleWalker.prototype.extractBoolean = function (keyName) {
+        var result = true;
+        this.getOptions().forEach(function (opt) {
+            if (typeof (opt) === 'object') {
+                if (opt[keyName] === false || opt[keyName] === 'false') {
+                    result = false;
+                }
+            }
+        });
+        return result;
+    };
     NoConstantConditionRuleWalker.prototype.visitIfStatement = function (node) {
         if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
             var message = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
@@ -51,21 +63,25 @@ var NoConstantConditionRuleWalker = (function (_super) {
         _super.prototype.visitConditionalExpression.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitWhileStatement = function (node) {
-        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
-            var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+        if (this.checkLoops) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
+                var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            }
         }
         _super.prototype.visitWhileStatement.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitDoStatement = function (node) {
-        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
-            var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+        if (this.checkLoops) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
+                var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            }
         }
         _super.prototype.visitDoStatement.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitForStatement = function (node) {
-        if (node.condition != null) {
+        if (this.checkLoops && node.condition != null) {
             if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
                 var message = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));

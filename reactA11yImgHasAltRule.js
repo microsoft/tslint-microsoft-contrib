@@ -11,7 +11,7 @@ var TypeGuard_1 = require('./utils/TypeGuard');
 var ROLE_STRING = 'role';
 var ALT_STRING = 'alt';
 function getFailureStringNoAlt(tagName) {
-    return "<" + tagName + "> elements must have an non-empty alt attribute or use empty alt attribute and role='presentation' for presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
+    return "<" + tagName + "> elements must have an non-empty alt attribute or use empty alt attribute as well as role='presentation' for decorative/presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
 }
 exports.getFailureStringNoAlt = getFailureStringNoAlt;
 function getFailureStringEmptyAltAndNotPresentationRole(tagName) {
@@ -82,7 +82,10 @@ var ImgHasAltWalker = (function (_super) {
             var roleAttributeValue = roleAttribute ? JsxAttribute_1.getStringLiteral(roleAttribute) : '';
             var isPresentationRole = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
             var isEmptyAlt = JsxAttribute_1.isEmpty(altAttribute) || JsxAttribute_1.getStringLiteral(altAttribute) === '';
-            if (!isEmptyAlt && isPresentationRole) {
+            var allowNonEmptyAltWithRolePresentation = options.length > 2
+                ? options[2].allowNonEmptyAltWithRolePresentation
+                : false;
+            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName)));
             }
             else if (isEmptyAlt && !isPresentationRole) {

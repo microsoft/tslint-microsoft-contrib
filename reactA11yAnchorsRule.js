@@ -9,8 +9,12 @@ var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
 var Utils_1 = require('./utils/Utils');
+var getImplicitRole_1 = require('./utils/getImplicitRole');
+var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ROLE_STRING = 'role';
 var NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
-var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long.';
+var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long. If you are not using <a> ' +
+    'element as anchor, please specify explicit role, e.g. role=\'button\'';
 var UNIQUE_ALT_FAILURE_STRING = 'Links with images and text content, the alt attribute should be unique to the text content or empty.';
 var SAME_HREF_SAME_TEXT_FAILURE_STRING = 'Links with the same HREF should have the same link text.';
 var DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING = 'Links that point to different HREFs should have different link text.';
@@ -100,7 +104,7 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             if (anchorInfo.href === '#') {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
-            if (!anchorInfo.text || anchorInfo.text.length < 4) {
+            if (this.imageRole(openingElement) === 'link' && (!anchorInfo.text || anchorInfo.text.length < 4)) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
             var imageAltText = this.imageAlt(parent);
@@ -176,6 +180,11 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             altText += this.imageAltAttribute(jsxSelfClosingElement);
         }
         return altText;
+    };
+    ReactA11yAnchorsRuleWalker.prototype.imageRole = function (root) {
+        var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(root);
+        var roleProp = attributesInElement[ROLE_STRING];
+        return roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(root);
     };
     return ReactA11yAnchorsRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

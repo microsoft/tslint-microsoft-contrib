@@ -7,7 +7,6 @@
     "no-disable-auto-sanitization": true,
     "no-document-domain": true,
     "no-document-write": true,
-    "no-duplicate-key": true,
     "no-eval": true,
     "no-exec-script": true,
     "no-function-constructor-with-string-args": true,
@@ -22,6 +21,7 @@
     "no-string-based-set-immediate": true,
     "no-string-based-set-interval": true,
     "no-string-based-set-timeout": true,
+    "non-literal-require": true,
     "possible-timing-attack": true,
     "react-anchor-blank-noopener": true,
     "react-iframe-missing-sandbox": true,
@@ -194,6 +194,7 @@
       true,
       "single"
     ],
+    "react-tsx-curly-spacing": true,
     "semicolon": [
       true,
       "always"

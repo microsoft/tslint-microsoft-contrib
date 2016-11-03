@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var ts = require('typescript');
 var Lint = require('tslint/lib/lint');
 var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var SyntaxKind_1 = require('./utils/SyntaxKind');
@@ -46,14 +47,18 @@ var NoStatelessClassRuleWalker = (function (_super) {
         _super.prototype.visitClassDeclaration.call(this, node);
     };
     NoStatelessClassRuleWalker.prototype.isClassStateful = function (node) {
-        if (Utils_1.Utils.exists(node.heritageClauses, function (clause) {
-            return clause.token === SyntaxKind_1.SyntaxKind.current().ExtendsKeyword;
-        })) {
+        if (this.classExtendsSomething(node)) {
             return true;
         }
         if (node.members.length === 0) {
             return false;
         }
+        if (this.classDeclaresConstructorProperties(node)) {
+            return true;
+        }
+        return this.classDeclaresInstanceData(node);
+    };
+    NoStatelessClassRuleWalker.prototype.classDeclaresInstanceData = function (node) {
         return Utils_1.Utils.exists(node.members, function (classElement) {
             if (classElement.kind === SyntaxKind_1.SyntaxKind.current().Constructor) {
                 return false;
@@ -62,6 +67,28 @@ var NoStatelessClassRuleWalker = (function (_super) {
                 return false;
             }
             return true;
+        });
+    };
+    NoStatelessClassRuleWalker.prototype.classDeclaresConstructorProperties = function (node) {
+        var _this = this;
+        return Utils_1.Utils.exists(node.members, function (element) {
+            if (element.kind === SyntaxKind_1.SyntaxKind.current().Constructor) {
+                return _this.constructorDeclaresProperty(element);
+            }
+            return false;
+        });
+    };
+    NoStatelessClassRuleWalker.prototype.constructorDeclaresProperty = function (ctor) {
+        return Utils_1.Utils.exists(ctor.parameters, function (param) {
+            return AstUtils_1.AstUtils.hasModifier(param.modifiers, SyntaxKind_1.SyntaxKind.current().PublicKeyword)
+                || AstUtils_1.AstUtils.hasModifier(param.modifiers, SyntaxKind_1.SyntaxKind.current().PrivateKeyword)
+                || AstUtils_1.AstUtils.hasModifier(param.modifiers, SyntaxKind_1.SyntaxKind.current().ProtectedKeyword)
+                || AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword);
+        });
+    };
+    NoStatelessClassRuleWalker.prototype.classExtendsSomething = function (node) {
+        return Utils_1.Utils.exists(node.heritageClauses, function (clause) {
+            return clause.token === SyntaxKind_1.SyntaxKind.current().ExtendsKeyword;
         });
     };
     return NoStatelessClassRuleWalker;

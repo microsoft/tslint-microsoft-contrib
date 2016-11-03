@@ -42,6 +42,30 @@ var NoUnnecessarySemicolonsWalker = (function (_super) {
         }
         _super.prototype.visitNode.call(this, node);
     };
+    NoUnnecessarySemicolonsWalker.prototype.visitForStatement = function (node) {
+        if (node.statement.kind === SyntaxKind_1.SyntaxKind.current().EmptyStatement) {
+            if (node.initializer) {
+                this.visitNode(node.initializer);
+            }
+            if (node.condition) {
+                this.visitNode(node.condition);
+            }
+            if (node.incrementor) {
+                this.visitNode(node.incrementor);
+            }
+        }
+        else {
+            _super.prototype.visitForStatement.call(this, node);
+        }
+    };
+    NoUnnecessarySemicolonsWalker.prototype.visitWhileStatement = function (node) {
+        if (node.statement.kind === SyntaxKind_1.SyntaxKind.current().EmptyStatement) {
+            this.visitNode(node.expression);
+        }
+        else {
+            _super.prototype.visitWhileStatement.call(this, node);
+        }
+    };
     return NoUnnecessarySemicolonsWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));
 //# sourceMappingURL=noUnnecessarySemicolonsRule.js.map

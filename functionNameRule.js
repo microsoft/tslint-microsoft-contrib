@@ -9,6 +9,7 @@ var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var AstUtils_1 = require('./utils/AstUtils');
 var METHOD_REGEX = 'method-regex';
 var PRIVATE_METHOD_REGEX = 'private-method-regex';
+var PROTECTED_METHOD_REGEX = 'protected-method-regex';
 var STATIC_METHOD_REGEX = 'static-method-regex';
 var FUNCTION_REGEX = 'function-regex';
 var Rule = (function (_super) {
@@ -40,13 +41,15 @@ var FunctionNameRuleWalker = (function (_super) {
         var _this = this;
         _super.call(this, sourceFile, options);
         this.methodRegex = /^[a-z][\w\d]+$/;
-        this.privateMethodRegex = /^[a-z][\w\d]+$/;
+        this.privateMethodRegex = this.methodRegex;
+        this.protectedMethodRegex = this.privateMethodRegex;
         this.staticMethodRegex = /^[A-Z_\d]+$/;
         this.functionRegex = /^[a-z][\w\d]+$/;
         this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.methodRegex = _this.getOptionOrDefault(opt, METHOD_REGEX, _this.methodRegex);
                 _this.privateMethodRegex = _this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, _this.privateMethodRegex);
+                _this.protectedMethodRegex = _this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, _this.protectedMethodRegex);
                 _this.staticMethodRegex = _this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, _this.staticMethodRegex);
                 _this.functionRegex = _this.getOptionOrDefault(opt, FUNCTION_REGEX, _this.functionRegex);
             }
@@ -57,6 +60,11 @@ var FunctionNameRuleWalker = (function (_super) {
         if (AstUtils_1.AstUtils.isPrivate(node)) {
             if (!this.privateMethodRegex.test(name)) {
                 this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + this.privateMethodRegex + ": " + name));
+            }
+        }
+        else if (AstUtils_1.AstUtils.isProtected(node)) {
+            if (!this.protectedMethodRegex.test(name)) {
+                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Protected method name does not match " + this.protectedMethodRegex + ": " + name));
             }
         }
         else if (AstUtils_1.AstUtils.isStatic(node)) {

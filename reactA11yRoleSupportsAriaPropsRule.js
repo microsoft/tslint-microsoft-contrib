@@ -66,6 +66,9 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
         var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var roleProp = attributesInElement[ROLE_STRING];
         var roleValue;
+        if (node.tagName.getText().match(/^[A-Z].*/)) {
+            return;
+        }
         if (roleProp != null) {
             roleValue = JsxAttribute_1.getStringLiteral(roleProp);
             if (!JsxAttribute_1.isEmpty(roleProp) && roleValue == null) {

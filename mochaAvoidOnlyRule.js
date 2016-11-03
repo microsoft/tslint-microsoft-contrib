@@ -28,6 +28,7 @@ var Rule = (function (_super) {
         group: 'Correctness'
     };
     Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
+    Rule.FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
     Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
     Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
     return Rule;
@@ -51,6 +52,9 @@ var MochaAvoidOnlyRuleWalker = (function (_super) {
                         || node.arguments[1].kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction) {
                         if (node.expression.getText() === 'it.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT));
+                        }
+                        else if (node.expression.getText() === 'specify.only') {
+                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_SPECIFY));
                         }
                         else if (node.expression.getText() === 'describe.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_DESCRIBE));

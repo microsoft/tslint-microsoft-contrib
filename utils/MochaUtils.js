@@ -1,4 +1,5 @@
 "use strict";
+var AstUtils_1 = require('./AstUtils');
 var SyntaxKind_1 = require('./SyntaxKind');
 var Utils_1 = require('./Utils');
 var MochaUtils;
@@ -14,20 +15,26 @@ var MochaUtils;
             var expression = statement.expression;
             if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
                 var call = expression;
-                var expressionText = call.expression.getText();
-                return isDescribe(expressionText) || isContext(expressionText);
+                return isDescribe(call);
             }
         }
         return false;
     }
     MochaUtils.isStatementDescribeCall = isStatementDescribeCall;
-    function isDescribe(callText) {
-        return callText === 'describe' || callText === 'describe.only'
-            || callText === 'describe.skip' || callText === 'describe.timeout';
+    function isDescribe(call) {
+        var functionName = AstUtils_1.AstUtils.getFunctionName(call);
+        var callText = call.expression.getText();
+        return functionName === 'describe'
+            || functionName === 'context'
+            || /(describe|context)\.(only|skip|timeout)/.test(callText);
     }
-    function isContext(callText) {
-        return callText === 'context' || callText === 'context.only'
-            || callText === 'context.skip' || callText === 'context.timeout';
+    MochaUtils.isDescribe = isDescribe;
+    function isLifecycleMethod(call) {
+        var functionName = AstUtils_1.AstUtils.getFunctionName(call);
+        return functionName === 'it' || functionName === 'specify'
+            || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
+            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll';
     }
+    MochaUtils.isLifecycleMethod = isLifecycleMethod;
 })(MochaUtils = exports.MochaUtils || (exports.MochaUtils = {}));
 //# sourceMappingURL=MochaUtils.js.map

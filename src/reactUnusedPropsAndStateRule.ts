@@ -6,6 +6,9 @@ import {Utils} from './utils/Utils';
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
+const PROPS_REGEX = 'props-interface-regex';
+const STATE_REGEX = 'state-interface-regex';
+
 const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
 const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
 
@@ -45,6 +48,31 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private classDeclarations: ts.ClassDeclaration[] = [];
     private propsAlias: string;
     private stateAlias: string;
+    private propsInterfaceRegex: RegExp = /^Props$/;
+    private stateInterfaceRegex: RegExp = /^State$/;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.getOptions().forEach((opt: any) => {
+            if (typeof(opt) === 'object') {
+                this.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, this.propsInterfaceRegex);
+                this.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, this.stateInterfaceRegex);
+            }
+        });
+    }
+
+    private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
+        try {
+            if (option[key] != null) {
+                return new RegExp(option[key]);
+            }
+        } catch (e) {
+            /* tslint:disable:no-console */
+            console.error('Could not read ' + key + ' within react-unused-props-and-state-name configuration');
+            /* tslint:enable:no-console */
+        }
+        return defaultValue;
+    }
 
     protected visitSourceFile(node: ts.SourceFile): void {
 
@@ -73,11 +101,11 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
-        if (node.name.text === 'Props') {
+        if (this.propsInterfaceRegex.test(node.name.text)) {
             this.propNodes = this.getTypeElementData(node);
             this.propNames = Object.keys(this.propNodes);
         }
-        if (node.name.text === 'State') {
+        if (this.stateInterfaceRegex.test(node.name.text)) {
             this.stateNodes = this.getTypeElementData(node);
             this.stateNames = Object.keys(this.stateNodes);
         }

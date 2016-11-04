@@ -473,6 +473,68 @@ describe('reactUnusedPropsAndStateRule', () : void => {
         ]);
     });
 
+    it('should fail on unused Props and State with custom names', () : void => {
+        const script : string = `
+            import React = require('react');
+
+            module VideoContainer {
+                export interface IProps {
+                    myProp1: boolean;
+                    myProp2: boolean;
+                }
+                export interface IState {
+                    myState1: boolean;
+                    myState2: boolean;
+                }
+            }
+
+            class VideoContainer extends React.Component<VideoContainer.IProps, VideoContainer.IState> {
+                constructor(props: VideoContainer.IProps) {
+                    super(props);
+                }
+
+                public render(): ReactTypes.ReactElement<any> {
+                    return null;
+                }
+            }
+            export = VideoContainer;
+        `;
+
+        const options = [ true,
+            {
+                'props-interface-regex': 'Props$',
+                'state-interface-regex': 'State$'
+            }
+        ];
+
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+            {
+                "failure": "Unused React property defined in interface: myProp1",
+                "name": "file.tsx",
+                "ruleName": "react-unused-props-and-state",
+                "startPosition": {"character": 21, "line": 6 }
+            },
+            {
+                "failure": "Unused React property defined in interface: myProp2",
+                "name": "file.tsx",
+                "ruleName": "react-unused-props-and-state",
+                "startPosition": { "character": 21, "line": 7 }
+            },
+            {
+                "failure": "Unused React state defined in interface: myState1",
+                "name": "file.tsx",
+                "ruleName": "react-unused-props-and-state",
+                "startPosition": { "character": 21, "line": 10 }
+            },
+            {
+                "failure": "Unused React state defined in interface: myState2",
+                "name": "file.tsx",
+                "ruleName": "react-unused-props-and-state",
+                "startPosition": { "character": 21, "line": 11 }
+            }
+        ]);
+    });
+
     it('should fail on unused Props and State functions', () : void => {
         const script : string = `
             import React = require('react');

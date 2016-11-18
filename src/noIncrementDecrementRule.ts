@@ -39,7 +39,7 @@ class NoIncrementDecrementWalker extends ErrorTolerantWalker {
         super.visitPrefixUnaryExpression(node);
     }
 
-    private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PrefixUnaryExpression) {
+    private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
         if (node.operator === SyntaxKind.current().PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
         } else if (node.operator === SyntaxKind.current().MinusMinusToken) {

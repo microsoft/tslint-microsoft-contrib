@@ -127,6 +127,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                    return
+                }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                 const listenerText: string = propAccess.getText();
@@ -138,6 +141,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 }
             } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                    return
+                }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const expression: ts.Expression = jsxExpression.expression;
                 const start: number = expression.getStart();

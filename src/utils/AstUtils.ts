@@ -14,7 +14,7 @@ export module AstUtils {
         }
     }
 
-    export function getFunctionName(node : ts.CallExpression) : string {
+    export function getFunctionName(node : ts.CallExpression | ts.NewExpression) : string {
         const expression: ts.Expression = node.expression;
         let functionName : string = (<any>expression).text;
         if (functionName === undefined && (<any>expression).name) {

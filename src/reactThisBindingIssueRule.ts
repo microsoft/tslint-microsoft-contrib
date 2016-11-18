@@ -122,7 +122,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         super.visitVariableDeclaration(node);
     }
 
-    private visitJsxOpeningElement(node: ts.JsxOpeningElement): void {
+    private visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
         node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {

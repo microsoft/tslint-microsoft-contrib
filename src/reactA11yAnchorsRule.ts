@@ -111,7 +111,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         super.visitJsxElement(node);
     }
 
-    private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningElement): void {
+    private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
 
             const anchorInfo: AnchorInfo = {
@@ -138,7 +138,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private getAttribute(openingElement: ts.JsxOpeningElement, attributeName: string): string {
+    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): string {
         const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openingElement.attributes;
         let attributeValue: string;
 
@@ -181,7 +181,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         return title;
     }
 
-    private imageAltAttribute(openingElement: ts.JsxOpeningElement): string {
+    private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
         if (openingElement.tagName.getText() === 'img') {
             const altAttribute: string = this.getAttribute(openingElement, 'alt');
             if (altAttribute) {

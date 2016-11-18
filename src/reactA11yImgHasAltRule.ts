@@ -65,7 +65,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private checkJsxOpeningElement(node: ts.JsxOpeningElement): void {
+    private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // Tag name is sensitive on lowercase or uppercase, we shoudn't normalize tag names in this rule.
         const tagName: string = node.tagName.getText();
         const options: any[] = this.getOptions(); // tslint:disable-line:no-any

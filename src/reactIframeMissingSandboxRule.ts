@@ -65,7 +65,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private handleJsxOpeningElement(node: ts.JsxOpeningElement): void {
+    private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         if (node.tagName.getText() !== 'iframe') {
             return;
         }

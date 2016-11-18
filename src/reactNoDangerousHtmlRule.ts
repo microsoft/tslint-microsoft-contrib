@@ -91,7 +91,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private handleJsxOpeningElement(node: ts.JsxOpeningElement): void {
+    private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (attribute.kind === SyntaxKind.current().JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;

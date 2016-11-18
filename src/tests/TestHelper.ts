@@ -8,20 +8,22 @@ import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
  */
 export module TestHelper {
 
+    /* tslint:disable:prefer-const */
     /**
-     * This setting must point to your rule .js files.
+     * This setting must point to your rule .js files. 3rd party libraries may reuse this class and change value.
      */
     export let RULES_DIRECTORY: string = 'dist/src/';
 
     /**
-     * This setting must point to your formatter .js files.
+     * This setting must point to your formatter .js files. 3rd party libraries may reuse this class and change value.
      */
     export let FORMATTER_DIRECTORY: string = 'customFormatters/';
 
     /**
-     * You must specify an encoding for file read/writes
+     * You must specify an encoding for file read/writes. 3rd party libraries may reuse this class and change value.
      */
     export let FILE_ENCODING: string = 'utf8';
+    /* tslint:enable:prefer-const */
 
     export interface FailurePosition {
         character: number;

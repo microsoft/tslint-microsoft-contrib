@@ -43,7 +43,7 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private validateOpeningElement(node: ts.JsxOpeningElement): void {
+    private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
         if (tagName !== 'input') {

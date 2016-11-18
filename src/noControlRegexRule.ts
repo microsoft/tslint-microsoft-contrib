@@ -49,7 +49,7 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
     }
 
     /* tslint:disable:no-control-regex */
-    private validateCall(expression: ts.CallExpression): void {
+    private validateCall(expression: ts.CallExpression | ts.NewExpression): void {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 const arg1: ts.Expression = expression.arguments[0];

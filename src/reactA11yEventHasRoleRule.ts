@@ -47,7 +47,7 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private checkJsxOpeningElement(node: ts.JsxOpeningElement): void {
+    private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
         if (!DOM_SCHEMA[tagName]) {

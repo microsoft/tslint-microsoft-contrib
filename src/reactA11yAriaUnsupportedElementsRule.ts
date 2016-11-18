@@ -50,7 +50,7 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private validateOpeningElement(node: ts.JsxOpeningElement): void {
+    private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
         if (!DOM_SCHEMA[tagName]) {

@@ -203,12 +203,6 @@ const d = <img alt={''} /> `;
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 11, line: 4 },
-              failure: getFailureStringNoAlt('Picture')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringNoAlt('Picture')
             },
@@ -216,12 +210,18 @@ const d = <img alt={''} /> `;
               name: fileName,
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
-              failure: getFailureStringNoAlt('img')
+              failure: getFailureStringNoAlt('Picture')
             },
             {
               name: fileName,
               ruleName: ruleName,
               startPosition: { character: 11, line: 7 },
+              failure: getFailureStringNoAlt('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 8 },
               failure: getFailureStringNoAlt('img')
             }
           ]
@@ -287,12 +287,6 @@ const d = <img alt={''} /> `;
             {
               name: fileName,
               ruleName: ruleName,
-              startPosition: { character: 11, line: 4 },
-              failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
             },
@@ -306,7 +300,7 @@ const d = <img alt={''} /> `;
               name: fileName,
               ruleName: ruleName,
               startPosition: { character: 11, line: 7 },
-              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
+              failure: getFailureStringEmptyAltAndNotPresentationRole('Picture')
             },
             {
               name: fileName,
@@ -318,6 +312,12 @@ const d = <img alt={''} /> `;
               name: fileName,
               ruleName: ruleName,
               startPosition: { character: 11, line: 9 },
+              failure: getFailureStringEmptyAltAndNotPresentationRole('img')
+            },
+            {
+              name: fileName,
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 10 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             }
           ]

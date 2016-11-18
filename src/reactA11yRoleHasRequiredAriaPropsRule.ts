@@ -71,7 +71,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private checkJsxElement(node: ts.JsxOpeningElement): void {
+    private checkJsxElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];

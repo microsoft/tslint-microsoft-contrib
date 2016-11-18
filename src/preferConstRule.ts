@@ -90,9 +90,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
         this.popDeclarations();
     }
 
-    public visitBlock(node: ts.Block) {
+    public visitBlock(node: ts.Block | ts.ModuleBlock) {
         this.visitAnyStatementList(node.statements);
-        super.visitBlock(node);
+        super.visitBlock(<ts.Block>node);
         this.popDeclarations();
     }
 

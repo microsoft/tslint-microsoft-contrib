@@ -217,6 +217,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
                                              pattern: ts.BindingPattern,
                                              table: ts.Map<IDeclarationUsages>): void {
         pattern.elements.forEach((element): void => {
+            if (element.kind === SyntaxKind.current().OmittedExpression) {
+                return
+            }
             this.collectNameIdentifiers(value, element.name, table);
         });
     }

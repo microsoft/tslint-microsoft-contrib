@@ -183,7 +183,7 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
  * @return { ts.JsxElement | ts.JsxSelfClosingElement } - a element.
  */
 export function getJsxElementFromCode(code: string, exceptTagName: string): ts.JsxElement | ts.JsxSelfClosingElement {
-    const sourceFile: ts.SourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES6, true);
+    const sourceFile: ts.SourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES2015, true);
 
     return delintNode(sourceFile, exceptTagName);
 }

@@ -266,10 +266,7 @@ export module AstUtils {
         if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
             const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
                 <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
-            const kind: ts.SyntaxKind = expression.operator;
-            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
-                return isConstantExpression(expression.operand);
-            }
+            return isConstantExpression(expression.operand);
         }
         return isConstant(node);
     }

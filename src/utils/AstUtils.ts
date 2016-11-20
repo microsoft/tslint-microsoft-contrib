@@ -174,7 +174,7 @@ export module AstUtils {
 
     export function isExported(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        return !!(getCombinedNodeFlags(node) & ts.ModifierFlags.Export);
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
         /* tslint:enable:no-bitwise */
     }
 

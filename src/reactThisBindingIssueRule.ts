@@ -128,7 +128,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
                 if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
-                    return
+                    return;
                 }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
@@ -142,7 +142,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
                 if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
-                    return
+                    return;
                 }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const expression: ts.Expression = jsxExpression.expression;

@@ -181,7 +181,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     private visitBindingPatternIdentifiers(pattern: ts.BindingPattern): void {
         pattern.elements.forEach((element): void => {
             if (element.kind === SyntaxKind.current().OmittedExpression) {
-                return
+                return;
             } else if (element.name.kind === SyntaxKind.current().Identifier) {
                 this.markAssignment(<ts.Identifier>element.name);
             } else {
@@ -218,7 +218,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
                                              table: ts.Map<IDeclarationUsages>): void {
         pattern.elements.forEach((element): void => {
             if (element.kind === SyntaxKind.current().OmittedExpression) {
-                return
+                return;
             }
             this.collectNameIdentifiers(value, element.name, table);
         });

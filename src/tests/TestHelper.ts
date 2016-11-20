@@ -11,17 +11,17 @@ export module TestHelper {
     /**
      * This setting must point to your rule .js files.
      */
-    export let RULES_DIRECTORY: string = 'dist/src/';
+    export const RULES_DIRECTORY: string = 'dist/src/';
 
     /**
      * This setting must point to your formatter .js files.
      */
-    export let FORMATTER_DIRECTORY: string = 'customFormatters/';
+    export const FORMATTER_DIRECTORY: string = 'customFormatters/';
 
     /**
      * You must specify an encoding for file read/writes
      */
-    export let FILE_ENCODING: string = 'utf8';
+    export const FILE_ENCODING: string = 'utf8';
 
     export interface FailurePosition {
         character: number;

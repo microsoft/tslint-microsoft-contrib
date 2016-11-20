@@ -4,11 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Utils_1 = require('./utils/Utils');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Utils_1 = require("./utils/Utils");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var EMPTY_TITLE_FAILURE_STRING = 'Title elements must not be empty';
 var LONG_TITLE_FAILURE_STRING = 'Title length must not be longer than 60 characters';
 var WORD_TITLE_FAILURE_STRING = 'Title must contain more than one word';
@@ -16,7 +16,7 @@ var MAX_TITLE_LENGTH = 60;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -26,24 +26,24 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-titles',
-        type: 'functionality',
-        description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-a11y-titles',
+    type: 'functionality',
+    description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 var ReactA11yTitlesRuleWalker = (function (_super) {
     __extends(ReactA11yTitlesRuleWalker, _super);
     function ReactA11yTitlesRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactA11yTitlesRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
         if (node.tagName.getText() === 'title') {

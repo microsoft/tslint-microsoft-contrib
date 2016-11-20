@@ -1,5 +1,5 @@
 "use strict";
-var ts = require('typescript');
+var ts = require("typescript");
 function isJsxAttribute(node) {
     return node && node.kind === ts.SyntaxKind.JsxAttribute;
 }

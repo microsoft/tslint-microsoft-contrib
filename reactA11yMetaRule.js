@@ -4,15 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var FAILURE_STRING = 'Do not use http-equiv="refresh"';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -22,24 +22,24 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-meta',
-        type: 'functionality',
-        description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
-        options: null,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-a11y-meta',
+    type: 'functionality',
+    description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
+    options: null,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 var ReactA11yMetaRuleWalker = (function (_super) {
     __extends(ReactA11yMetaRuleWalker, _super);
     function ReactA11yMetaRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactA11yMetaRuleWalker.prototype.visitJsxElement = function (node) {
         this.validateOpeningElement(node, node.openingElement);

@@ -4,13 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var NoStringParameterToFunctionCallWalker_1 = require('./utils/NoStringParameterToFunctionCallWalker');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var NoStringParameterToFunctionCallWalker_1 = require("./utils/NoStringParameterToFunctionCallWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         var documentRegistry = ts.createDocumentRegistry();
@@ -19,19 +19,19 @@ var Rule = (function (_super) {
         var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), languageService);
         return this.applyWithWalker(walker);
     };
-    Rule.metadata = {
-        ruleName: 'no-string-based-set-timeout',
-        type: 'maintainability',
-        description: 'Do not use the version of setTimeout that accepts code as a string argument.',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '95, 676, 242, 116'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-string-based-set-timeout',
+    type: 'maintainability',
+    description: 'Do not use the version of setTimeout that accepts code as a string argument.',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    commonWeaknessEnumeration: '95, 676, 242, 116'
+};
 //# sourceMappingURL=noStringBasedSetTimeoutRule.js.map

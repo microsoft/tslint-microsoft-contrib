@@ -4,13 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var AstUtils_1 = require('./utils/AstUtils');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Scope_1 = require('./utils/Scope');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var AstUtils_1 = require("./utils/AstUtils");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Scope_1 = require("./utils/Scope");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
 var FAILURE_ANONYMOUS_LISTENER = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 var FAILURE_DOUBLE_BIND = 'A function is having its \'this\' reference bound twice in the constructor: ';
 var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute without having the \'this\' ' +
@@ -18,7 +18,7 @@ var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute with
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -28,34 +28,34 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-this-binding-issue',
-        type: 'maintainability',
-        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
-            'on any methods that you pass off to child components as callbacks.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-this-binding-issue',
+    type: 'maintainability',
+    description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+        'on any methods that you pass off to child components as callbacks.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
 var ReactThisBindingIssueRuleWalker = (function (_super) {
     __extends(ReactThisBindingIssueRuleWalker, _super);
     function ReactThisBindingIssueRuleWalker(sourceFile, options) {
-        var _this = this;
-        _super.call(this, sourceFile, options);
-        this.allowAnonymousListeners = false;
-        this.boundListeners = [];
-        this.declaredMethods = [];
-        this.getOptions().forEach(function (opt) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.allowAnonymousListeners = false;
+        _this.boundListeners = [];
+        _this.declaredMethods = [];
+        _this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
             }
         });
+        return _this;
     }
     ReactThisBindingIssueRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;
@@ -117,6 +117,9 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         node.attributes.forEach(function (attributeLikeElement) {
             if (_this.isUnboundListener(attributeLikeElement)) {
                 var attribute = attributeLikeElement;
+                if (attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                    return;
+                }
                 var jsxExpression = attribute.initializer;
                 var propAccess = jsxExpression.expression;
                 var listenerText = propAccess.getText();
@@ -129,6 +132,9 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
             }
             else if (_this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 var attribute = attributeLikeElement;
+                if (attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                    return;
+                }
                 var jsxExpression = attribute.initializer;
                 var expression = jsxExpression.expression;
                 var start = expression.getStart();

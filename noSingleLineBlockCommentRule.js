@@ -4,38 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var AstUtils_1 = require('./utils/AstUtils');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_STRING = 'Replace block comment with a single-line comment';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSingleLineBlockCommentRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-single-line-block-comment',
-        type: 'maintainability',
-        description: 'Avoid single line block comments; use single line comments instead',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Whitespace',
-        commonWeaknessEnumeration: '710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-single-line-block-comment',
+    type: 'maintainability',
+    description: 'Avoid single line block comments; use single line comments instead',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Whitespace',
+    commonWeaknessEnumeration: '710'
+};
 var NoSingleLineBlockCommentRuleWalker = (function (_super) {
     __extends(NoSingleLineBlockCommentRuleWalker, _super);
     function NoSingleLineBlockCommentRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoSingleLineBlockCommentRuleWalker.prototype.visitSourceFile = function (node) {
         var _this = this;

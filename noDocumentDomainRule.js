@@ -4,37 +4,37 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-document-domain',
-        type: 'maintainability',
-        description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
-            'validated to ensure that the value is on a list of allowed sites.',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security'
-    };
-    Rule.FAILURE_STRING = 'Forbidden write to document.domain: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-document-domain',
+    type: 'maintainability',
+    description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
+        'validated to ensure that the value is on a list of allowed sites.',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security'
+};
+Rule.FAILURE_STRING = 'Forbidden write to document.domain: ';
 var NoDocumentDomainRuleWalker = (function (_super) {
     __extends(NoDocumentDomainRuleWalker, _super);
     function NoDocumentDomainRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoDocumentDomainRuleWalker.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '='

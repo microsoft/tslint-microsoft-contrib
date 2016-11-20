@@ -4,48 +4,48 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-unnecessary-bind',
-        type: 'maintainability',
-        description: 'Do not bind `this` as the context for a function literal or lambda expression.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
-    };
-    Rule.FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
-    Rule.FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
-    Rule.UNDERSCORE_BINARY_FUNCTION_NAMES = [
-        'all', 'any', 'collect', 'countBy', 'detect', 'each',
-        'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
-        'map', 'max', 'max', 'min', 'partition', 'reject',
-        'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
-    ];
-    Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = [
-        'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
-    ];
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-unnecessary-bind',
+    type: 'maintainability',
+    description: 'Do not bind `this` as the context for a function literal or lambda expression.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398, 710'
+};
+Rule.FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
+Rule.FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
+Rule.UNDERSCORE_BINARY_FUNCTION_NAMES = [
+    'all', 'any', 'collect', 'countBy', 'detect', 'each',
+    'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
+    'map', 'max', 'max', 'min', 'partition', 'reject',
+    'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
+];
+Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = [
+    'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
+];
 var NoUnnecessaryBindRuleWalker = (function (_super) {
     __extends(NoUnnecessaryBindRuleWalker, _super);
     function NoUnnecessaryBindRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoUnnecessaryBindRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;

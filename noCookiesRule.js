@@ -4,13 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         var documentRegistry = ts.createDocumentRegistry();
@@ -18,28 +18,29 @@ var Rule = (function (_super) {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), languageService));
     };
-    Rule.metadata = {
-        ruleName: 'no-cookies',
-        type: 'maintainability',
-        description: 'Do not use cookies',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '315, 539, 565, 614'
-    };
-    Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-cookies',
+    type: 'maintainability',
+    description: 'Do not use cookies',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    commonWeaknessEnumeration: '315, 539, 565, 614'
+};
+Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
 var NoCookiesWalker = (function (_super) {
     __extends(NoCookiesWalker, _super);
     function NoCookiesWalker(sourceFile, options, languageService) {
-        _super.call(this, sourceFile, options);
-        this.languageService = languageService;
-        this.typeChecker = languageService.getProgram().getTypeChecker();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.languageService = languageService;
+        _this.typeChecker = languageService.getProgram().getTypeChecker();
+        return _this;
     }
     NoCookiesWalker.prototype.visitPropertyAccessExpression = function (node) {
         var propertyName = node.name.text;

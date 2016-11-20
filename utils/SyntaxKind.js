@@ -1,5 +1,5 @@
 "use strict";
-var ts = require('typescript');
+var ts = require("typescript");
 var SyntaxKind;
 (function (SyntaxKind) {
     var cachedKinds;

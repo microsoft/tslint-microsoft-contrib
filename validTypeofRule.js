@@ -4,37 +4,37 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'valid-typeof',
-        type: 'maintainability',
-        description: 'Ensures that the results of typeof are compared against a valid string.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
-    Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
-    Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'valid-typeof',
+    type: 'maintainability',
+    description: 'Ensures that the results of typeof are compared against a valid string.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
+Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
+Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
 var ValidTypeofRuleWalker = (function (_super) {
     __extends(ValidTypeofRuleWalker, _super);
     function ValidTypeofRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ValidTypeofRuleWalker.prototype.visitBinaryExpression = function (node) {
         if (node.left.kind === SyntaxKind_1.SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {

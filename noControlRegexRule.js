@@ -4,36 +4,36 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-control-regex',
-        type: 'maintainability',
-        description: 'Do not use control characters in regular expressions',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
-    Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-control-regex',
+    type: 'maintainability',
+    description: 'Do not use control characters in regular expressions',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
+Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
 var NoControlRegexRuleWalker = (function (_super) {
     __extends(NoControlRegexRuleWalker, _super);
     function NoControlRegexRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoControlRegexRuleWalker.prototype.visitNewExpression = function (node) {
         this.validateCall(node);

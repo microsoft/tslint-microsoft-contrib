@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var getImplicitRole_1 = require('./utils/getImplicitRole');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var getImplicitRole_1 = require("./utils/getImplicitRole");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLES_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ROLES = ROLES_SCHEMA.roles;
 var ARIA_ATTRIBUTES = require('./utils/attributes/ariaSchema.json');
@@ -24,31 +24,31 @@ exports.getFailureStringForImplicitRole = getFailureStringForImplicitRole;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new A11yRoleHasRequiredAriaPropsWalker(sourceFile, this.getOptions()))
             : [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-role-has-required-aria-props',
-        type: 'maintainability',
-        description: 'Elements with aria roles must have all required attributes according to the role.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-a11y-role-has-required-aria-props',
+    type: 'maintainability',
+    description: 'Elements with aria roles must have all required attributes according to the role.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
     __extends(A11yRoleHasRequiredAriaPropsWalker, _super);
     function A11yRoleHasRequiredAriaPropsWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     A11yRoleHasRequiredAriaPropsWalker.prototype.visitJsxElement = function (node) {
         this.checkJsxElement(node.openingElement);

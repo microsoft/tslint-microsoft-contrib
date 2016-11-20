@@ -4,39 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSparseArraysRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-sparse-arrays',
-        type: 'maintainability',
-        description: 'Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple ' +
-            'commas being used in an array literal.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
-    };
-    Rule.FAILURE_STRING = 'Unexpected comma in middle of array';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-sparse-arrays',
+    type: 'maintainability',
+    description: 'Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple ' +
+        'commas being used in an array literal.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398, 710'
+};
+Rule.FAILURE_STRING = 'Unexpected comma in middle of array';
 var NoSparseArraysRuleWalker = (function (_super) {
     __extends(NoSparseArraysRuleWalker, _super);
     function NoSparseArraysRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoSparseArraysRuleWalker.prototype.visitNode = function (node) {
         if (node.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression) {

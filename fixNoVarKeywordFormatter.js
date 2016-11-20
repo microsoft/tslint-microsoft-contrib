@@ -4,22 +4,21 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseFormatter_1 = require('./utils/BaseFormatter');
+var BaseFormatter_1 = require("./utils/BaseFormatter");
 var Formatter = (function (_super) {
     __extends(Formatter, _super);
     function Formatter() {
-        var _this = this;
-        _super.call(this, 'no-var-keyword', function (failure) {
+        return _super.call(this, 'no-var-keyword', function (failure) {
             var fileName = failure.getFileName();
-            var fileContents = _this.readFile(fileName);
+            var fileContents = this.readFile(fileName);
             var end = failure.getEndPosition().getPosition();
             var leftSide = fileContents.substring(0, end);
             leftSide = leftSide.replace(/var$/, 'let');
             var rightSide = fileContents.substring(end);
             var newContent = leftSide + rightSide;
-            _this.writeFile(fileName, newContent);
+            this.writeFile(fileName, newContent);
             console.log('Automatically converting var to let. Please re-compile and re-lint: ' + fileName);
-        });
+        }) || this;
     }
     return Formatter;
 }(BaseFormatter_1.BaseFormatter));

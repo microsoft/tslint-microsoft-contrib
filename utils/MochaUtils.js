@@ -1,7 +1,7 @@
 "use strict";
-var AstUtils_1 = require('./AstUtils');
-var SyntaxKind_1 = require('./SyntaxKind');
-var Utils_1 = require('./Utils');
+var AstUtils_1 = require("./AstUtils");
+var SyntaxKind_1 = require("./SyntaxKind");
+var Utils_1 = require("./Utils");
 var MochaUtils;
 (function (MochaUtils) {
     function isMochaTest(node) {

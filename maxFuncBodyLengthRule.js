@@ -4,35 +4,35 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var AstUtils_1 = require('./utils/AstUtils');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var AstUtils_1 = require("./utils/AstUtils");
+var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MaxFunctionBodyLengthRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'max-func-body-length',
-        type: 'maintainability',
-        description: 'Avoid long functions.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'max-func-body-length',
+    type: 'maintainability',
+    description: 'Avoid long functions.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+    commonWeaknessEnumeration: '398, 710'
+};
 var FUNC_BODY_LENGTH = 'func-body-length';
 var FUNC_EXPRESSION_BODY_LENGTH = 'func-express-body-length';
 var ARROW_BODY_LENGTH = 'arrow-body-length';
@@ -43,9 +43,10 @@ var IGNORE_COMMENTS = 'ignore-comments';
 var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     __extends(MaxFunctionBodyLengthRuleWalker, _super);
     function MaxFunctionBodyLengthRuleWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.ignoreNodes = [];
-        this.parseOptions();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.ignoreNodes = [];
+        _this.parseOptions();
+        return _this;
     }
     MaxFunctionBodyLengthRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;

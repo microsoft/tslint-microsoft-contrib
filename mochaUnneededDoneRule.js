@@ -4,38 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
-var MochaUtils_1 = require('./utils/MochaUtils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
+var MochaUtils_1 = require("./utils/MochaUtils");
 var FAILURE_STRING = 'Unneeded Mocha Done. Parameter can be safely removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaUnneededDoneRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'mocha-unneeded-done',
-        type: 'maintainability',
-        description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
-        options: null,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'mocha-unneeded-done',
+    type: 'maintainability',
+    description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
+    options: null,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity'
+};
 var MochaUnneededDoneRuleWalker = (function (_super) {
     __extends(MochaUnneededDoneRuleWalker, _super);
     function MochaUnneededDoneRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     MochaUnneededDoneRuleWalker.prototype.visitSourceFile = function (node) {
         if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
@@ -100,8 +100,9 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
 var IdentifierReferenceCountWalker = (function (_super) {
     __extends(IdentifierReferenceCountWalker, _super);
     function IdentifierReferenceCountWalker(sourceFile, options, identifier) {
-        _super.call(this, sourceFile, options);
-        this.identifierText = identifier.getText();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.identifierText = identifier.getText();
+        return _this;
     }
     IdentifierReferenceCountWalker.prototype.getReferenceCount = function (body) {
         var _this = this;

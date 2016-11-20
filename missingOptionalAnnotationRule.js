@@ -4,36 +4,36 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MissingOptionalAnnotationWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'missing-optional-annotation',
-        type: 'maintainability',
-        description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
-        options: null,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Deprecated',
-        recommendation: 'false,  // now supported by TypeScript compiler'
-    };
-    Rule.FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'missing-optional-annotation',
+    type: 'maintainability',
+    description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
+    options: null,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Deprecated',
+    recommendation: 'false,  // now supported by TypeScript compiler'
+};
+Rule.FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
 var MissingOptionalAnnotationWalker = (function (_super) {
     __extends(MissingOptionalAnnotationWalker, _super);
     function MissingOptionalAnnotationWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     MissingOptionalAnnotationWalker.prototype.visitMethodDeclaration = function (node) {
         this.validateParameters(node);

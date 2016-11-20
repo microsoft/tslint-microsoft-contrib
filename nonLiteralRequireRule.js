@@ -4,39 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var AstUtils_1 = require('./utils/AstUtils');
-var Utils_1 = require('./utils/Utils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var AstUtils_1 = require("./utils/AstUtils");
+var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'Non-literal (insecure) parameter passed to require(): ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NonLiteralRequireRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'non-literal-require',
-        type: 'functionality',
-        description: 'Detect require includes that are not for string literals',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '95,676'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'non-literal-require',
+    type: 'functionality',
+    description: 'Detect require includes that are not for string literals',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    commonWeaknessEnumeration: '95,676'
+};
 var NonLiteralRequireRuleWalker = (function (_super) {
     __extends(NonLiteralRequireRuleWalker, _super);
     function NonLiteralRequireRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NonLiteralRequireRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;

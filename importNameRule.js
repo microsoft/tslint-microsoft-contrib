@@ -4,38 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ImportNameRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'import-name',
-        type: 'maintainability',
-        description: 'The name of the imported module must match the name of the thing being imported',
-        options: null,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'import-name',
+    type: 'maintainability',
+    description: 'The name of the imported module must match the name of the thing being imported',
+    options: null,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '710'
+};
 var ImportNameRuleWalker = (function (_super) {
     __extends(ImportNameRuleWalker, _super);
     function ImportNameRuleWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.replacements = this.extractOptions();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.replacements = _this.extractOptions();
+        return _this;
     }
     ImportNameRuleWalker.prototype.extractOptions = function () {
         var result = {};

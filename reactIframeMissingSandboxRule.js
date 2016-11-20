@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var FAILURE_NOT_FOUND = 'An iframe element requires a sandbox attribute';
 var FAILURE_INVALID_ENTRY = 'An iframe element defines an invalid sandbox attribute: ';
 var FAILURE_INVALID_COMBINATION = 'An iframe element defines a sandbox with both allow-scripts and allow-same-origin';
@@ -26,7 +26,7 @@ var ALLOWED_VALUES = [
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -36,25 +36,25 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-iframe-missing-sandbox',
-        type: 'functionality',
-        description: 'React iframes must specify a sandbox attribute',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Security',
-        commonWeaknessEnumeration: '915'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-iframe-missing-sandbox',
+    type: 'functionality',
+    description: 'React iframes must specify a sandbox attribute',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Security',
+    commonWeaknessEnumeration: '915'
+};
 var ReactIframeMissingSandboxRuleWalker = (function (_super) {
     __extends(ReactIframeMissingSandboxRuleWalker, _super);
     function ReactIframeMissingSandboxRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactIframeMissingSandboxRuleWalker.prototype.visitJsxElement = function (node) {
         this.handleJsxOpeningElement(node.openingElement);

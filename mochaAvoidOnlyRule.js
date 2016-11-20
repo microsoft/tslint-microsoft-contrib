@@ -4,40 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var MochaUtils_1 = require('./utils/MochaUtils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var MochaUtils_1 = require("./utils/MochaUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'mocha-avoid-only',
-        type: 'maintainability',
-        description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
-    Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
-    Rule.FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
-    Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
-    Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'mocha-avoid-only',
+    type: 'maintainability',
+    description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
+Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
+Rule.FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
+Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
+Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
 var MochaAvoidOnlyRuleWalker = (function (_super) {
     __extends(MochaAvoidOnlyRuleWalker, _super);
     function MochaAvoidOnlyRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     MochaAvoidOnlyRuleWalker.prototype.visitSourceFile = function (node) {
         if (MochaUtils_1.MochaUtils.isMochaTest(node)) {

@@ -4,40 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var AstUtils_1 = require('./utils/AstUtils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_UNDEFINED_INIT = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
 var FAILURE_UNDEFINED_DUPE = 'Unnecessary field initialization. Field value already initialized in declaration: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UnnecessaryFieldInitializationRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-unnecessary-field-initialization',
-        type: 'maintainability',
-        description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-unnecessary-field-initialization',
+    type: 'maintainability',
+    description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
 var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
     __extends(UnnecessaryFieldInitializationRuleWalker, _super);
     function UnnecessaryFieldInitializationRuleWalker() {
-        _super.apply(this, arguments);
-        this.fieldInitializations = {};
+        var _this = _super.apply(this, arguments) || this;
+        _this.fieldInitializations = {};
+        return _this;
     }
     UnnecessaryFieldInitializationRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;

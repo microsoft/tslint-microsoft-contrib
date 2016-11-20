@@ -4,14 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ScopedSymbolTrackingWalker_1 = require('./ScopedSymbolTrackingWalker');
-var AstUtils_1 = require('./AstUtils');
+var ScopedSymbolTrackingWalker_1 = require("./ScopedSymbolTrackingWalker");
+var AstUtils_1 = require("./AstUtils");
 var NoStringParameterToFunctionCallWalker = (function (_super) {
     __extends(NoStringParameterToFunctionCallWalker, _super);
     function NoStringParameterToFunctionCallWalker(sourceFile, targetFunctionName, options, languageServices) {
-        _super.call(this, sourceFile, options, languageServices);
-        this.targetFunctionName = targetFunctionName;
-        this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
+        var _this = _super.call(this, sourceFile, options, languageServices) || this;
+        _this.targetFunctionName = targetFunctionName;
+        _this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
+        return _this;
     }
     NoStringParameterToFunctionCallWalker.prototype.visitCallExpression = function (node) {
         this.validateExpression(node);

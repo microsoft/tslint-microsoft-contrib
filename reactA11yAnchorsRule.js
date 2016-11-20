@@ -4,13 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
-var getImplicitRole_1 = require('./utils/getImplicitRole');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
+var getImplicitRole_1 = require("./utils/getImplicitRole");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_STRING = 'role';
 var NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
 var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long. If you are not using <a> ' +
@@ -21,7 +21,7 @@ var DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING = 'Links that point to differen
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -32,31 +32,32 @@ var Rule = (function (_super) {
         }
         return [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-anchors',
-        type: 'functionality',
-        description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-a11y-anchors',
+    type: 'functionality',
+    description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 var ReactA11yAnchorsRuleWalker = (function (_super) {
     __extends(ReactA11yAnchorsRuleWalker, _super);
     function ReactA11yAnchorsRuleWalker() {
-        _super.apply(this, arguments);
-        this.anchorInfoList = [];
+        var _this = _super.apply(this, arguments) || this;
+        _this.anchorInfoList = [];
+        return _this;
     }
     ReactA11yAnchorsRuleWalker.prototype.validateAllAnchors = function () {
         var _this = this;
         var sameHrefDifferentTexts = [];
         var differentHrefSameText = [];
-        var _loop_1 = function() {
+        var _loop_1 = function () {
             var current = this_1.anchorInfoList.shift();
             this_1.anchorInfoList.forEach(function (anchorInfo) {
                 if (current.href &&

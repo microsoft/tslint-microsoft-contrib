@@ -4,36 +4,36 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-empty-interfaces',
-        type: 'maintainability',
-        description: 'Do not use empty interfaces.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
-    Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-empty-interfaces',
+    type: 'maintainability',
+    description: 'Do not use empty interfaces.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
+Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
 var NoEmptyInterfacesRuleWalker = (function (_super) {
     __extends(NoEmptyInterfacesRuleWalker, _super);
     function NoEmptyInterfacesRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoEmptyInterfacesRuleWalker.prototype.visitInterfaceDeclaration = function (node) {
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {

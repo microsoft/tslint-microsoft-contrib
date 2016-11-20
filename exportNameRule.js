@@ -4,15 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Utils_1 = require('./utils/Utils');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var AstUtils_1 = require('./utils/AstUtils');
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Utils_1 = require("./utils/Utils");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
@@ -26,26 +26,26 @@ var Rule = (function (_super) {
         }
         return null;
     };
-    Rule.metadata = {
-        ruleName: 'export-name',
-        type: 'maintainability',
-        description: 'The name of the exported module must match the filename of the source file',
-        options: null,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '710'
-    };
-    Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'export-name',
+    type: 'maintainability',
+    description: 'The name of the exported module must match the filename of the source file',
+    options: null,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '710'
+};
+Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
 var ExportNameWalker = (function (_super) {
     __extends(ExportNameWalker, _super);
     function ExportNameWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;

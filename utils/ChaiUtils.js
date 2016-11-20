@@ -1,5 +1,5 @@
 "use strict";
-var SyntaxKind_1 = require('./SyntaxKind');
+var SyntaxKind_1 = require("./SyntaxKind");
 var ChaiUtils;
 (function (ChaiUtils) {
     function isExpectInvocation(node) {

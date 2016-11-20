@@ -4,38 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoMultilineStringWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-multiline-string',
-        type: 'maintainability',
-        description: 'Do not declare multiline strings',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
-        commonWeaknessEnumeration: '710'
-    };
-    Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-multiline-string',
+    type: 'maintainability',
+    description: 'Do not declare multiline strings',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+    commonWeaknessEnumeration: '710'
+};
+Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
 var NoMultilineStringWalker = (function (_super) {
     __extends(NoMultilineStringWalker, _super);
     function NoMultilineStringWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoMultilineStringWalker.prototype.visitNode = function (node) {
         if (node.kind === SyntaxKind_1.SyntaxKind.current().NoSubstitutionTemplateLiteral) {

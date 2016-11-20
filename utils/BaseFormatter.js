@@ -4,14 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var fs = require('fs');
-var abstractFormatter_1 = require('tslint/lib/language/formatter/abstractFormatter');
+var fs = require("fs");
+var abstractFormatter_1 = require("tslint/lib/language/formatter/abstractFormatter");
 var BaseFormatter = (function (_super) {
     __extends(BaseFormatter, _super);
     function BaseFormatter(ruleName, applyFix) {
-        _super.call(this);
-        this.ruleName = ruleName;
-        this.applyFix = applyFix;
+        var _this = _super.call(this) || this;
+        _this.ruleName = ruleName;
+        _this.applyFix = applyFix.bind(_this);
+        return _this;
     }
     BaseFormatter.prototype.format = function (allFailures) {
         for (var index = allFailures.length - 1; index >= 0; index--) {

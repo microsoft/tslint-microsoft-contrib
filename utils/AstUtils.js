@@ -1,6 +1,6 @@
 "use strict";
-var ts = require('typescript');
-var SyntaxKind_1 = require('./SyntaxKind');
+var ts = require("typescript");
+var SyntaxKind_1 = require("./SyntaxKind");
 var AstUtils;
 (function (AstUtils) {
     function getLanguageVariant(node) {
@@ -98,19 +98,19 @@ var AstUtils;
     }
     AstUtils.dumpTypeInfo = dumpTypeInfo;
     function isPrivate(node) {
-        return !!(node.flags & ts.NodeFlags.Private);
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
     }
     AstUtils.isPrivate = isPrivate;
     function isProtected(node) {
-        return !!(node.flags & ts.NodeFlags.Protected);
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
     }
     AstUtils.isProtected = isProtected;
     function isPublic(node) {
-        return !!(node.flags & ts.NodeFlags.Public);
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
     }
     AstUtils.isPublic = isPublic;
     function isStatic(node) {
-        return !!(node.flags & ts.NodeFlags.Static);
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
     }
     AstUtils.isStatic = isStatic;
     function isBindingPattern(node) {
@@ -143,7 +143,7 @@ var AstUtils;
     }
     AstUtils.isLet = isLet;
     function isExported(node) {
-        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
     }
     AstUtils.isExported = isExported;
     function isAssignmentOperator(token) {
@@ -233,10 +233,7 @@ var AstUtils;
         }
         if (node.kind === SyntaxKind_1.SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind_1.SyntaxKind.current().PostfixUnaryExpression) {
             var expression = node;
-            var kind = expression.operator;
-            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
-                return isConstantExpression(expression.operand);
-            }
+            return isConstantExpression(expression.operand);
         }
         return isConstant(node);
     }

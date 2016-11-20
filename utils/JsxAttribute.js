@@ -1,7 +1,7 @@
 "use strict";
-var ts = require('typescript');
-var TypeGuard_1 = require('./TypeGuard');
-var SyntaxKind_1 = require('./SyntaxKind');
+var ts = require("typescript");
+var TypeGuard_1 = require("./TypeGuard");
+var SyntaxKind_1 = require("./SyntaxKind");
 function getPropName(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
@@ -139,7 +139,7 @@ function getJsxAttributesFromJsxElement(node) {
 }
 exports.getJsxAttributesFromJsxElement = getJsxAttributesFromJsxElement;
 function getJsxElementFromCode(code, exceptTagName) {
-    var sourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES6, true);
+    var sourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES2015, true);
     return delintNode(sourceFile, exceptTagName);
 }
 exports.getJsxElementFromCode = getJsxElementFromCode;

@@ -4,36 +4,36 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-increment-decrement',
-        type: 'maintainability',
-        description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-increment-decrement',
+    type: 'maintainability',
+    description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398, 710'
+};
 var NoIncrementDecrementWalker = (function (_super) {
     __extends(NoIncrementDecrementWalker, _super);
     function NoIncrementDecrementWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoIncrementDecrementWalker.prototype.visitPostfixUnaryExpression = function (node) {
         this.validateUnaryExpression(node);

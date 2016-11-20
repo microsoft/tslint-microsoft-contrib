@@ -4,17 +4,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint/lib/lint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var Utils_1 = require('./utils/Utils');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint/lib/lint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var Utils_1 = require("./utils/Utils");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var FAILURE_STRING = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -24,25 +24,25 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-anchor-blank-noopener',
-        type: 'functionality',
-        description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
-        options: null,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '242,676'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'react-anchor-blank-noopener',
+    type: 'functionality',
+    description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
+    options: null,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    commonWeaknessEnumeration: '242,676'
+};
 var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
     __extends(ReactAnchorBlankNoopenerRuleWalker, _super);
     function ReactAnchorBlankNoopenerRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactAnchorBlankNoopenerRuleWalker.prototype.visitJsxElement = function (node) {
         var openingElement = node.openingElement;

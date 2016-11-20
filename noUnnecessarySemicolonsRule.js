@@ -4,37 +4,37 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
     };
-    Rule.FAILURE_STRING = 'unnecessary semi-colon';
-    Rule.metadata = {
-        ruleName: 'no-unnecessary-semicolons',
-        type: 'maintainability',
-        description: 'Remove unnecessary semicolons',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Whitespace',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.FAILURE_STRING = 'unnecessary semi-colon';
+Rule.metadata = {
+    ruleName: 'no-unnecessary-semicolons',
+    type: 'maintainability',
+    description: 'Remove unnecessary semicolons',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Whitespace',
+    commonWeaknessEnumeration: '398, 710'
+};
 var NoUnnecessarySemicolonsWalker = (function (_super) {
     __extends(NoUnnecessarySemicolonsWalker, _super);
     function NoUnnecessarySemicolonsWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoUnnecessarySemicolonsWalker.prototype.visitNode = function (node) {
         if (node.kind === SyntaxKind_1.SyntaxKind.current().EmptyStatement) {

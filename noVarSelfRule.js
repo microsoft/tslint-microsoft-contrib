@@ -4,40 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
 var FAILURE_STRING = 'Assigning this reference to local variable: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-var-self',
-        type: 'maintainability',
-        description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'no-var-self',
+    type: 'maintainability',
+    description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
 var NoVarSelfRuleWalker = (function (_super) {
     __extends(NoVarSelfRuleWalker, _super);
     function NoVarSelfRuleWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.bannedVariableNames = /.*/;
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.bannedVariableNames = /.*/;
         if (options.ruleArguments != null && options.ruleArguments.length > 0) {
-            this.bannedVariableNames = new RegExp(options.ruleArguments[0]);
+            _this.bannedVariableNames = new RegExp(options.ruleArguments[0]);
         }
+        return _this;
     }
     NoVarSelfRuleWalker.prototype.visitVariableDeclaration = function (node) {
         if (node.initializer != null && node.initializer.kind === SyntaxKind_1.SyntaxKind.current().ThisKeyword) {

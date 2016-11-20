@@ -4,37 +4,37 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint/lib/lint');
-var SyntaxKind_1 = require('./utils/SyntaxKind');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint/lib/lint");
+var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UseNamedParameterWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'use-named-parameter',
-        type: 'maintainability',
-        description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
-        options: null,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '710'
-    };
-    Rule.FAILURE_STRING = 'Use a named parameter instead: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+Rule.metadata = {
+    ruleName: 'use-named-parameter',
+    type: 'maintainability',
+    description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
+    options: null,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '710'
+};
+Rule.FAILURE_STRING = 'Use a named parameter instead: ';
 var UseNamedParameterWalker = (function (_super) {
     __extends(UseNamedParameterWalker, _super);
     function UseNamedParameterWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     UseNamedParameterWalker.prototype.visitElementAccessExpression = function (node) {
         if (node.argumentExpression != null) {

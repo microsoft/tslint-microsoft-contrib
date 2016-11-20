@@ -11,7 +11,7 @@ export class Formatter extends BaseFormatter {
 /* tslint:enable:export-name */
 
     constructor() {
-        super('no-unused-imports', (failure: RuleFailure): void => {
+        super('no-unused-imports', function (this: Formatter, failure: RuleFailure): void {
             const fileName: string = failure.getFileName();
             const start: RuleFailurePosition = failure.getStartPosition();
             const end: RuleFailurePosition = failure.getEndPosition();

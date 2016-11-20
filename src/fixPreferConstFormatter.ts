@@ -11,7 +11,7 @@ export class Formatter extends BaseFormatter {
 /* tslint:enable:export-name */
 
     constructor() {
-        super('prefer-const', (failure: RuleFailure): void => {
+        super('prefer-const', function (this: Formatter, failure: RuleFailure): void {
             const fileName: string = failure.getFileName();
             const fileContents: string = this.readFile(fileName);
             const start: number = failure.getStartPosition().getPosition();

@@ -1,6 +1,6 @@
 import React = require('react');
 
-let Picture = (props) => <img />;
+let Picture = (props) => <span />;
 
 const a = <Picture />
 const b = <Picture role='button img' />

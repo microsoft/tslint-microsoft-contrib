@@ -90,9 +90,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
         this.popDeclarations();
     }
 
-    public visitBlock(node: ts.Block) {
+    public visitBlock(node: ts.Block | ts.ModuleBlock) {
         this.visitAnyStatementList(node.statements);
-        super.visitBlock(node);
+        super.visitBlock(<ts.Block>node);
         this.popDeclarations();
     }
 
@@ -180,7 +180,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
 
     private visitBindingPatternIdentifiers(pattern: ts.BindingPattern): void {
         pattern.elements.forEach((element): void => {
-            if (element.name.kind === SyntaxKind.current().Identifier) {
+            if (element.kind === SyntaxKind.current().OmittedExpression) {
+                return;
+            } else if (element.name.kind === SyntaxKind.current().Identifier) {
                 this.markAssignment(<ts.Identifier>element.name);
             } else {
                 this.visitBindingPatternIdentifiers(<ts.BindingPattern>element.name);
@@ -215,6 +217,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
                                              pattern: ts.BindingPattern,
                                              table: ts.Map<IDeclarationUsages>): void {
         pattern.elements.forEach((element): void => {
+            if (element.kind === SyntaxKind.current().OmittedExpression) {
+                return;
+            }
             this.collectNameIdentifiers(value, element.name, table);
         });
     }

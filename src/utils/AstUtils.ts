@@ -14,7 +14,7 @@ export module AstUtils {
         }
     }
 
-    export function getFunctionName(node : ts.CallExpression) : string {
+    export function getFunctionName(node : ts.CallExpression | ts.NewExpression) : string {
         const expression: ts.Expression = node.expression;
         let functionName : string = (<any>expression).text;
         if (functionName === undefined && (<any>expression).name) {
@@ -107,26 +107,26 @@ export module AstUtils {
 
     export function isPrivate(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(node.flags & ts.NodeFlags.Private);
-        /* tslint:enable:no-bitwise */
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
+        /* tslint:disable:no-bitwise */
     }
 
     export function isProtected(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(node.flags & ts.NodeFlags.Protected);
-        /* tslint:enable:no-bitwise */
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
+        /* tslint:disable:no-bitwise */
     }
 
     export function isPublic(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(node.flags & ts.NodeFlags.Public);
-        /* tslint:enable:no-bitwise */
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
+        /* tslint:disable:no-bitwise */
     }
 
     export function isStatic(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(node.flags & ts.NodeFlags.Static);
-        /* tslint:enable:no-bitwise */
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
+        /* tslint:disable:no-bitwise */
     }
 
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
@@ -174,7 +174,7 @@ export module AstUtils {
 
     export function isExported(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
         /* tslint:enable:no-bitwise */
     }
 
@@ -266,10 +266,7 @@ export module AstUtils {
         if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
             const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
                 <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
-            const kind: ts.SyntaxKind = expression.operator;
-            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
-                return isConstantExpression(expression.operand);
-            }
+            return isConstantExpression(expression.operand);
         }
         return isConstant(node);
     }

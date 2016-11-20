@@ -10,12 +10,12 @@ import {RuleFailure} from 'tslint/lib/language/rule/rule';
 export class BaseFormatter extends AbstractFormatter {
 
     private ruleName: string;
-    private applyFix: (failure: RuleFailure) => void;
+    private applyFix: (this: BaseFormatter, failure: RuleFailure) => void;
 
-    constructor(ruleName: string, applyFix: (failure: RuleFailure) => void) {
+    constructor(ruleName: string, applyFix: (this: BaseFormatter, failure: RuleFailure) => void) {
         super();
         this.ruleName = ruleName;
-        this.applyFix = applyFix;
+        this.applyFix = applyFix.bind(this);
     }
 
     public format(allFailures: RuleFailure[]): string {

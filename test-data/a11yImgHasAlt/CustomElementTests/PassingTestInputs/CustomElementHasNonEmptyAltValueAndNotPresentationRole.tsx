@@ -1,6 +1,7 @@
 import React = require('react');
 
-let Picture, validAltValue;
+let Picture = (props) => <span />;
+let validAltValue;
 
 const a = <Picture alt='validAltValue' role='button' />
 const b = <Picture alt={validAltValue} role='link' />

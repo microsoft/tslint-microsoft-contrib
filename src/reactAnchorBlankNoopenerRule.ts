@@ -52,7 +52,7 @@ class ReactAnchorBlankNoopenerRuleWalker extends ErrorTolerantWalker {
         super.visitJsxSelfClosingElement(node);
     }
 
-    private validateOpeningElement(openingElement: ts.JsxOpeningElement): void {
+    private validateOpeningElement(openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
 
             const allAttributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);

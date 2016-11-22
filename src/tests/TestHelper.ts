@@ -77,7 +77,7 @@ export module TestHelper {
 
         const options : Lint.ILinterOptions = {
             formatter: 'json',
-            configuration: configuration,
+            fix: false,
             rulesDirectory: RULES_DIRECTORY,
             formattersDirectory: FORMATTER_DIRECTORY
         };
@@ -87,8 +87,9 @@ export module TestHelper {
         let result: Lint.LintResult;
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
-            const linter = new Lint.Linter(inputFileOrScript, contents, options);
-            result = linter.lint();
+            const linter = new Lint.Linter(options);
+            linter.lint(inputFileOrScript, contents, configuration);
+            result = linter.getResult();
         } else {
             let filename: string;
             if (inputFileOrScript.indexOf('import React') > -1) {
@@ -96,8 +97,9 @@ export module TestHelper {
             } else {
                 filename = 'file.ts';
             }
-            const linter = new Lint.Linter(filename, inputFileOrScript, options);
-            result = linter.lint();
+            const linter = new Lint.Linter(options);
+            linter.lint(filename, inputFileOrScript, configuration);
+            result = linter.getResult();
         }
         ErrorTolerantWalker.DEBUG = debug;
         return result;

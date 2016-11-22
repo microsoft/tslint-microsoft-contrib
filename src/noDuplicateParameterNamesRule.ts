@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -14,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',

@@ -3,7 +3,7 @@
  */
 
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName, getStringLiteral, isEmpty } from './utils/JsxAttribute';
@@ -33,6 +33,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

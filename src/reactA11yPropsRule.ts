@@ -3,7 +3,7 @@
  */
 
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName } from './utils/JsxAttribute';
@@ -24,6 +24,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

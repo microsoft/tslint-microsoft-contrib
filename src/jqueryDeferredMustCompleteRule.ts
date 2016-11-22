@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
@@ -18,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
                     'on it within all code branches in the scope.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',

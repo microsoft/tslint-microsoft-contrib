@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {SyntaxKind} from './utils/SyntaxKind';
@@ -21,6 +21,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

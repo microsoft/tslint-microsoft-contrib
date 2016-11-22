@@ -2,7 +2,7 @@
  * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
  */
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement} from './utils/JsxAttribute';
@@ -25,6 +25,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

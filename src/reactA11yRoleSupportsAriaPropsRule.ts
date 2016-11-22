@@ -3,7 +3,7 @@
  */
 
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
@@ -42,6 +42,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Enforce that elements with explicit or implicit roles defined contain ' +
         'only `aria-*` properties supported by that `role`.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

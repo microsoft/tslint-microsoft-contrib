@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
@@ -18,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
                     'called on it within all code branches in the scope.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',

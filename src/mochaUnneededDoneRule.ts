@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -19,6 +19,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',

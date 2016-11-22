@@ -1,8 +1,8 @@
 'use strict';
 
 import * as fs from 'fs';
-import {AbstractFormatter} from 'tslint/lib/language/formatter/abstractFormatter';
-import {RuleFailure} from 'tslint/lib/language/rule/rule';
+import {AbstractFormatter} from 'tslint';
+import {RuleFailure} from 'tslint';
 
 /**
  * A base class for formatters that fix linting issues.

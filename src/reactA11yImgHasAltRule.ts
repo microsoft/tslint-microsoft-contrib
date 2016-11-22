@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import {
@@ -39,7 +39,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Enforce that an img element contains the non-empty alt attribute. ' +
         'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
+        optionsDescription: "",
         optionExamples: ['true', '[true, ["Image"]]'],
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

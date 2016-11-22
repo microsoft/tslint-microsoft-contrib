@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
@@ -15,6 +15,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'enforces that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Error',
         severity: 'Critical',

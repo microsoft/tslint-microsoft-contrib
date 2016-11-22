@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
@@ -15,6 +15,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. ',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',

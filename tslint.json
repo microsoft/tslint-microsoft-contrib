@@ -10,13 +10,13 @@
     "react-a11y-role-supports-aria-props": true,
     "react-a11y-tabindex-no-positive": true,
     "react-a11y-proptypes": true,
-    "align": false,
+    "align": [false],
     "arrow-parens": false,
     "ban": false,
     "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "class-name": true,
-    "comment-format": false,
+    "comment-format": [false],
     "curly": true,
     "eofline": false,
     "export-name": true,
@@ -27,7 +27,7 @@
       true,
       "spaces"
     ],
-    "interface-name": false,
+    "interface-name": [false],
     "jquery-deferred-must-complete": true,
     "jsdoc-format": false,
     "label-position": true,
@@ -35,7 +35,7 @@
       true,
       "LF"
     ],
-    "max-file-line-count": false,
+    "max-file-line-count": [false],
     "max-func-body-length": [
       true,
       100,
@@ -48,7 +48,7 @@
       140
     ],
     "member-access": true,
-    "member-ordering": false,
+    "member-ordering": [false],
     "missing-jsdoc": true,
     "missing-optional-annotation": true,
     "mocha-avoid-only": true,
@@ -62,7 +62,7 @@
     "no-banned-terms": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": true,
+    "no-consecutive-blank-lines": [true],
     "no-console": [
       true,
       "debug",
@@ -101,7 +101,7 @@
       "http://www.examples.com/?.*"
     ],
     "no-increment-decrement": true,
-    "no-inferrable-types": false,
+    "no-inferrable-types": [false],
     "no-inner-html": true,
     "no-internal-module": false,
     "no-invalid-regexp": true,
@@ -157,9 +157,9 @@
       "check-else",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": true,
-    "only-arrow-functions": false,
-    "ordered-imports": false,
+    "one-variable-per-declaration": [true],
+    "only-arrow-functions": [false],
+    "ordered-imports": [false],
     "prefer-array-literal": true,
     "prefer-const": true,
     "prefer-type-cast": true,
@@ -176,7 +176,7 @@
     "react-tsx-curly-spacing": true,
     "react-unused-props-and-state": true,
     "restrict-plus-operands": false,
-    "semicolon": true,
+    "semicolon": [true],
     "switch-default": false,
     "trailing-comma": [
       true,
@@ -191,14 +191,13 @@
     ],
     "typedef": [
       true,
-      "callSignature",
-      "indexSignature",
+      "call-signature",
       "parameter",
-      "propertySignature",
-      "variableDeclarator",
-      "memberVariableDeclarator"
+      "property-declaration",
+      "variable-declaration",
+      "member-variable-declaration"
     ],
-    "typedef-whitespace": false,
+    "typedef-whitespace": [false],
     "underscore-consistent-invocation": true,
     "use-isnan": true,
     "use-named-parameter": true,

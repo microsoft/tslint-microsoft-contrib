@@ -1,4 +1,4 @@
-import * as Lint from 'tslint/lib';
+import * as Lint from 'tslint';
 
 /**
  * Additional information that each rule must specify.

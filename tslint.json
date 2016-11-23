@@ -31,7 +31,6 @@
     "jquery-deferred-must-complete": true,
     "jsdoc-format": false,
     "label-position": true,
-    "label-undefined": true,
     "linebreak-style": [
       true,
       "LF"
@@ -137,12 +136,10 @@
     "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,
     "no-unsupported-browser-code": false,
-    "no-unreachable": true,
     "no-unsafe-finally": true,
     "no-unused-expression": true,
     "no-unused-imports": false,
     "no-unused-new": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": true,
@@ -205,7 +202,6 @@
     "underscore-consistent-invocation": true,
     "use-isnan": true,
     "use-named-parameter": true,
-    "use-strict": false,
     "valid-typeof": true,
     "variable-name": true,
     "whitespace": [

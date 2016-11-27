@@ -107,25 +107,41 @@ export module AstUtils {
 
     export function isPrivate(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
+        if ((<any>ts).NodeFlags.Private != null) {
+            return !!(node.flags & (<any>ts).NodeFlags.Private);
+        } else {
+            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Private);
+        }
         /* tslint:enable:no-bitwise */
     }
 
     export function isProtected(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
+        if ((<any>ts).NodeFlags.Protected != null) {
+            return !!(node.flags & (<any>ts).NodeFlags.Protected);
+        } else {
+            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Protected);
+        }
         /* tslint:enable:no-bitwise */
     }
 
     export function isPublic(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
+        if ((<any>ts).NodeFlags.Public != null) {
+            return !!(node.flags & (<any>ts).NodeFlags.Public);
+        } else {
+            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Public);
+        }
         /* tslint:enable:no-bitwise */
     }
 
     export function isStatic(node: ts.Node) : boolean {
         /* tslint:disable:no-bitwise */
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
+        if ((<any>ts).NodeFlags.Static != null) {
+            return !!(node.flags & (<any>ts).NodeFlags.Static);
+        } else {
+            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Static);
+        }
         /* tslint:enable:no-bitwise */
     }
 
@@ -174,7 +190,11 @@ export module AstUtils {
 
     export function isExported(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
+        if ((<any>ts).NodeFlags.Export != null) {
+            return !!(getCombinedNodeFlags(node) & (<any>ts).NodeFlags.Export);
+        } else {
+            return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
+        }
         /* tslint:enable:no-bitwise */
     }
 

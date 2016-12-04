@@ -41,5 +41,8 @@
     "tslint": "3.14.0",
     "typescript": "2.1.1",
     "underscore": "1.8.3"
+  },
+  "peerDependencies": {
+    "tslint": "<4.0.0"
   }
 }

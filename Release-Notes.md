@@ -1,3 +1,26 @@
+# 2.0.14 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A2.0.14)
+
+* [#302](https://github.com/Microsoft/tslint-microsoft-contrib/issues/302) New Rule - react-tsx-curly-spacing - Port TSX curly spacing rule.
+* [#255](https://github.com/Microsoft/tslint-microsoft-contrib/issues/255) New Rule - new security rule: detect-non-literal-require
+* [#311](https://github.com/Microsoft/tslint-microsoft-contrib/issues/311) Enhancement - Configurable Props and State interface names
+* [#310](https://github.com/Microsoft/tslint-microsoft-contrib/issues/310) Enhancement - Rule no-stateless-class does not account for constructors using parameter properties bug
+* [#308](https://github.com/Microsoft/tslint-microsoft-contrib/issues/308) Enhancement - function-name rule - add support for linting protected methods
+* [#303](https://github.com/Microsoft/tslint-microsoft-contrib/issues/303) Enhancement - mocha-no-side-effect: Add support for "BeforeAll()" and "afterAll()" methods (Jasmine)
+* [#301](https://github.com/Microsoft/tslint-microsoft-contrib/issues/301) Enhancement - Declare TypeScript SDK path in VSCode settings.
+* [#292](https://github.com/Microsoft/tslint-microsoft-contrib/issues/292) Enhancement - support checkLoops for noConstantConditionRule
+* [#240](https://github.com/Microsoft/tslint-microsoft-contrib/issues/240) Enhancement - mocha rules: support context and specify feature-request
+* [#317](https://github.com/Microsoft/tslint-microsoft-contrib/issues/317) Documentation - Use inline code in `prefer-type-cast` doc to improve readability
+* [#312](https://github.com/Microsoft/tslint-microsoft-contrib/issues/312) Bug Fix - Support for Typescript 2.1
+* [#307](https://github.com/Microsoft/tslint-microsoft-contrib/issues/307) Bug Fix - False positive for no-unnecessary-semicolons on empty loops bug
+* [#306](https://github.com/Microsoft/tslint-microsoft-contrib/issues/306) Bug Fix - false positive in string timeout methods: Function is treated as string
+* [#305](https://github.com/Microsoft/tslint-microsoft-contrib/issues/305) Bug Fix - fix anchors rule not correctly apply 4 chars rule
+* [#304](https://github.com/Microsoft/tslint-microsoft-contrib/issues/304) Bug Fix - Remove deprecated no-duplicate-key rule
+* [#298](https://github.com/Microsoft/tslint-microsoft-contrib/issues/298) Bug Fix - update rule: react-a11y-img-has-alt - should allow role='presentation' with non-empty alt text.
+* [#296](https://github.com/Microsoft/tslint-microsoft-contrib/issues/296) Bug Fix - update rule: react-a11y-role-supports-aria-props - Do not check custom element
+* [#295](https://github.com/Microsoft/tslint-microsoft-contrib/issues/295) Bug Fix - update rule: react-a11y-anchors - Do not check if role='button'
+* [#261](https://github.com/Microsoft/tslint-microsoft-contrib/issues/261) Bug Fix - 'this' banned term conflicts with Typescript's function this-types
+
 # 2.0.13 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20milestone%3A2.0.13)
 

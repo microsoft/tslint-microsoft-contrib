@@ -4,38 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-document-write',
+        type: 'maintainability',
+        description: 'Do not use document.write',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85'
+    };
+    Rule.WRITE_FAILURE = 'Forbidden call to document.write';
+    Rule.WRITELN_FAILURE = 'Forbidden call to document.writeln';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-document-write',
-    type: 'maintainability',
-    description: 'Do not use document.write',
-    options: null,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '79, 85'
-};
-Rule.WRITE_FAILURE = 'Forbidden call to document.write';
-Rule.WRITELN_FAILURE = 'Forbidden call to document.writeln';
 var NoDocumentWriteWalker = (function (_super) {
     __extends(NoDocumentWriteWalker, _super);
     function NoDocumentWriteWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoDocumentWriteWalker.prototype.visitCallExpression = function (node) {
         var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);

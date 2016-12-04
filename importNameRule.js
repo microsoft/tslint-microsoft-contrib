@@ -4,39 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var Utils_1 = require("./utils/Utils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ImportNameRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'import-name',
+        type: 'maintainability',
+        description: 'The name of the imported module must match the name of the thing being imported',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'import-name',
-    type: 'maintainability',
-    description: 'The name of the imported module must match the name of the thing being imported',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
 var ImportNameRuleWalker = (function (_super) {
     __extends(ImportNameRuleWalker, _super);
     function ImportNameRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.replacements = _this.extractOptions();
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.replacements = this.extractOptions();
     }
     ImportNameRuleWalker.prototype.extractOptions = function () {
         var result = {};
@@ -54,14 +55,14 @@ var ImportNameRuleWalker = (function (_super) {
     };
     ImportNameRuleWalker.prototype.visitImportEqualsDeclaration = function (node) {
         var name = node.name.text;
-        if (node.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
+        if (node.moduleReference.kind === ts.SyntaxKind.ExternalModuleReference) {
             var moduleRef = node.moduleReference;
-            if (moduleRef.expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+            if (moduleRef.expression.kind === ts.SyntaxKind.StringLiteral) {
                 var moduleName = moduleRef.expression.text;
                 this.validateImport(node, name, moduleName);
             }
         }
-        else if (node.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().QualifiedName) {
+        else if (node.moduleReference.kind === ts.SyntaxKind.QualifiedName) {
             var moduleName = node.moduleReference.getText();
             moduleName = moduleName.replace(/.*\./, '');
             this.validateImport(node, name, moduleName);
@@ -71,7 +72,7 @@ var ImportNameRuleWalker = (function (_super) {
     ImportNameRuleWalker.prototype.visitImportDeclaration = function (node) {
         if (node.importClause.name != null) {
             var name_1 = node.importClause.name.text;
-            if (node.moduleSpecifier.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+            if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 var moduleName = node.moduleSpecifier.text;
                 this.validateImport(node, name_1, moduleName);
             }

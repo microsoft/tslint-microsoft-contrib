@@ -4,13 +4,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var Utils_1 = require("./utils/Utils");
-var getImplicitRole_1 = require("./utils/getImplicitRole");
-var JsxAttribute_1 = require("./utils/JsxAttribute");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
+var getImplicitRole_1 = require('./utils/getImplicitRole');
+var JsxAttribute_1 = require('./utils/JsxAttribute');
 var ROLE_STRING = 'role';
 var NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
 var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long. If you are not using <a> ' +
@@ -21,7 +20,7 @@ var DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING = 'Links that point to differen
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -32,32 +31,33 @@ var Rule = (function (_super) {
         }
         return [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-anchors',
+        type: 'functionality',
+        description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-a11y-anchors',
-    type: 'functionality',
-    description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 var ReactA11yAnchorsRuleWalker = (function (_super) {
     __extends(ReactA11yAnchorsRuleWalker, _super);
     function ReactA11yAnchorsRuleWalker() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.anchorInfoList = [];
-        return _this;
+        _super.apply(this, arguments);
+        this.anchorInfoList = [];
     }
     ReactA11yAnchorsRuleWalker.prototype.validateAllAnchors = function () {
         var _this = this;
         var sameHrefDifferentTexts = [];
         var differentHrefSameText = [];
-        var _loop_1 = function () {
+        var _loop_1 = function() {
             var current = this_1.anchorInfoList.shift();
             this_1.anchorInfoList.forEach(function (anchorInfo) {
                 if (current.href &&
@@ -119,11 +119,11 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         var attributes = openingElement.attributes;
         var attributeValue;
         attributes.forEach(function (attribute) {
-            if (attribute.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 var jsxAttribute = attribute;
                 if (jsxAttribute.name.getText() === attributeName &&
                     jsxAttribute.initializer &&
-                    jsxAttribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                    jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     var literal = jsxAttribute.initializer;
                     attributeValue = literal.text;
                 }
@@ -134,25 +134,25 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
     ReactA11yAnchorsRuleWalker.prototype.anchorText = function (root) {
         var _this = this;
         var title = '';
-        if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxElement) {
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
             jsxElement.children.forEach(function (child) {
                 title += _this.anchorText(child);
             });
         }
-        else if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxText) {
+        else if (root.kind === ts.SyntaxKind.JsxText) {
             var jsxText = root;
             title += jsxText.getText();
         }
-        else if (root.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+        else if (root.kind === ts.SyntaxKind.StringLiteral) {
             var literal = root;
             title += literal.text;
         }
-        else if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+        else if (root.kind === ts.SyntaxKind.JsxExpression) {
             var expression = root;
             title += this.anchorText(expression.expression);
         }
-        else if (root.kind !== SyntaxKind_1.SyntaxKind.current().JsxSelfClosingElement) {
+        else if (root.kind !== ts.SyntaxKind.JsxSelfClosingElement) {
             title += '<unknown>';
         }
         return title;
@@ -169,14 +169,14 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
     ReactA11yAnchorsRuleWalker.prototype.imageAlt = function (root) {
         var _this = this;
         var altText = '';
-        if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxElement) {
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
             altText += this.imageAltAttribute(jsxElement.openingElement);
             jsxElement.children.forEach(function (child) {
                 altText += _this.imageAlt(child);
             });
         }
-        if (root.kind === SyntaxKind_1.SyntaxKind.current().JsxSelfClosingElement) {
+        if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             var jsxSelfClosingElement = root;
             altText += this.imageAltAttribute(jsxSelfClosingElement);
         }

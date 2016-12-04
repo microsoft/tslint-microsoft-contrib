@@ -4,46 +4,48 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
-var Utils_1 = require("./utils/Utils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'promise-must-complete',
+        type: 'maintainability',
+        description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
+            'called on it within all code branches in the scope.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+    Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'promise-must-complete',
-    type: 'maintainability',
-    description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
-        'called on it within all code branches in the scope.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 var PromiseAnalyzer = (function (_super) {
     __extends(PromiseAnalyzer, _super);
     function PromiseAnalyzer() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     PromiseAnalyzer.prototype.isPromiseDeclaration = function (node) {
-        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier
+        if (node.expression.kind === ts.SyntaxKind.Identifier
             && node.expression.getText() === 'Promise'
             && node.arguments != null && node.arguments.length > 0) {
             var firstArg = node.arguments[0];
-            if (firstArg.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+            if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
                 return true;
             }
         }
@@ -56,10 +58,10 @@ var PromiseAnalyzer = (function (_super) {
         }
         var arg1 = declaration.parameters[0];
         var arg2 = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (arg1 != null && arg1.name.kind === ts.SyntaxKind.Identifier) {
             result.push(declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (arg2 != null && arg2.name.kind === ts.SyntaxKind.Identifier) {
             result.push(declaration.parameters[1].name);
         }
         return result;
@@ -86,13 +88,12 @@ var PromiseAnalyzer = (function (_super) {
 var PromiseCompletionWalker = (function (_super) {
     __extends(PromiseCompletionWalker, _super);
     function PromiseCompletionWalker(sourceFile, options, completionIdentifiers) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.wasCompleted = false;
-        _this.allBranchesCompleted = true;
-        _this.hasBranches = false;
-        _this.walkerOptions = options;
-        _this.completionIdentifiers = completionIdentifiers;
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.wasCompleted = false;
+        this.allBranchesCompleted = true;
+        this.hasBranches = false;
+        this.walkerOptions = options;
+        this.completionIdentifiers = completionIdentifiers;
     }
     PromiseCompletionWalker.prototype.visitNode = function (node) {
         _super.prototype.visitNode.call(this, node);
@@ -123,7 +124,7 @@ var PromiseCompletionWalker = (function (_super) {
     };
     PromiseCompletionWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
-        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (node.expression.kind === ts.SyntaxKind.Identifier) {
             if (this.isCompletionIdentifier(node.expression)) {
                 this.wasCompleted = true;
                 return;

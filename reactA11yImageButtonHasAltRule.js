@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var JsxAttribute_1 = require("./utils/JsxAttribute");
+var ts = require('typescript');
+var Lint = require('tslint');
+var JsxAttribute_1 = require('./utils/JsxAttribute');
 var NO_ALT_ATTRIBUTE_FAILURE_STRING = 'Inputs element with type="image" must have alt attribute.';
 var EMPTY_ALT_ATTRIBUTE_FAILURE_STRING = 'Inputs element with type="image" must have non-empty alt attribute.';
 var TYPE_STRING = 'type';
@@ -14,31 +14,33 @@ var ALT_STRING = 'alt';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new ReactA11yImageButtonHasAltWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-image-button-has-alt',
+        type: 'maintainability',
+        description: 'Enforce that inputs element with type="image" must have alt attribute.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-a11y-image-button-has-alt',
-    type: 'maintainability',
-    description: 'Enforce that inputs element with type="image" must have alt attribute.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 var ReactA11yImageButtonHasAltWalker = (function (_super) {
     __extends(ReactA11yImageButtonHasAltWalker, _super);
     function ReactA11yImageButtonHasAltWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ReactA11yImageButtonHasAltWalker.prototype.visitJsxElement = function (node) {
         this.validateOpeningElement(node.openingElement);

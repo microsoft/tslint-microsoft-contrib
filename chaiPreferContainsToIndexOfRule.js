@@ -4,44 +4,46 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var AstUtils_1 = require("./utils/AstUtils");
-var ChaiUtils_1 = require("./utils/ChaiUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var ChaiUtils_1 = require('./utils/ChaiUtils');
 var FAILURE_STRING = 'Found chai call with indexOf that can be converted to .contain assertion: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ChaiPreferContainsToIndexOfRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'chai-prefer-contains-to-index-of',
+        type: 'maintainability',
+        description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'chai-prefer-contains-to-index-of',
-    type: 'maintainability',
-    description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
     __extends(ChaiPreferContainsToIndexOfRuleWalker, _super);
     function ChaiPreferContainsToIndexOfRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ChaiPreferContainsToIndexOfRuleWalker.prototype.visitCallExpression = function (node) {
         if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
             if (this.isFirstArgumentIndexOfResult(node)) {
-                if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+                if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
                         if (this.isFirstArgumentNegative1(node)) {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
@@ -65,7 +67,7 @@ var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
         var expectCall = ChaiUtils_1.ChaiUtils.getLeftMostCallExpression(node);
         if (expectCall.arguments != null && expectCall.arguments.length > 0) {
             var firstArgument = expectCall.arguments[0];
-            if (firstArgument.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils_1.AstUtils.getFunctionName(firstArgument) === 'indexOf') {
                     return true;
                 }

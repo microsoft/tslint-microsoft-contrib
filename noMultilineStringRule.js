@@ -4,41 +4,43 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoMultilineStringWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-multiline-string',
+        type: 'maintainability',
+        description: 'Do not declare multiline strings',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-multiline-string',
-    type: 'maintainability',
-    description: 'Do not declare multiline strings',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
 var NoMultilineStringWalker = (function (_super) {
     __extends(NoMultilineStringWalker, _super);
     function NoMultilineStringWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoMultilineStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().NoSubstitutionTemplateLiteral) {
+        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
             var fullText = node.getFullText();
             var firstLine = fullText.substring(0, fullText.indexOf('\n'));
             var trimmed = firstLine.substring(0, 40).trim();

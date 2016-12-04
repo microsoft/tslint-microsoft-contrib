@@ -4,10 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var FAILURE_MISSING_LANG = 'An html element is missing the lang attribute';
 var FAILURE_WRONG_LANG_CODE = 'Lang attribute does not have a valid value. Found: ';
 var LANGUAGE_CODES = [
@@ -26,7 +25,7 @@ var LANGUAGE_CODES = [
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -36,24 +35,26 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-lang',
+        type: 'functionality',
+        description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-a11y-lang',
-    type: 'functionality',
-    description: 'For accessibility of your website, html elements must have a valid lang attribute.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 var ReactA11yLangRuleWalker = (function (_super) {
     __extends(ReactA11yLangRuleWalker, _super);
     function ReactA11yLangRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ReactA11yLangRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
         this.validateOpeningElement(node, node);
@@ -69,10 +70,10 @@ var ReactA11yLangRuleWalker = (function (_super) {
             var attributes = openingElement.attributes;
             var langFound_1 = false;
             attributes.forEach(function (attribute) {
-                if (attribute.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+                if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if (attribute.name.getText() === 'lang') {
                         langFound_1 = true;
-                        if (attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                        if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                             var langText = attribute.initializer.text;
                             if ((LANGUAGE_CODES.indexOf(langText)) === -1) {
                                 _this.addFailure(_this.createFailure(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText));

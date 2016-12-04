@@ -4,36 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-function-expression',
+        type: 'maintainability',
+        description: 'Do not use function expressions; use arrow functions (lambdas) instead.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.FAILURE_STRING = 'Use arrow function instead of function expression';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-function-expression',
-    type: 'maintainability',
-    description: 'Do not use function expressions; use arrow functions (lambdas) instead.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_STRING = 'Use arrow function instead of function expression';
 var NoFunctionExpressionRuleWalker = (function (_super) {
     __extends(NoFunctionExpressionRuleWalker, _super);
     function NoFunctionExpressionRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoFunctionExpressionRuleWalker.prototype.visitFunctionExpression = function (node) {
         var walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
@@ -50,9 +52,8 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
 var SingleFunctionWalker = (function (_super) {
     __extends(SingleFunctionWalker, _super);
     function SingleFunctionWalker() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.isAccessingThis = false;
-        return _this;
+        _super.apply(this, arguments);
+        this.isAccessingThis = false;
     }
     SingleFunctionWalker.prototype.visitNode = function (node) {
         if (node.getText() === 'this') {

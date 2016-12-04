@@ -4,39 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var AstUtils_1 = require("./utils/AstUtils");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Lint = require('tslint');
+var AstUtils_1 = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-constant-condition',
+        type: 'maintainability',
+        description: 'Do not use constant expressions in conditions.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 570, 571, 670'
+    };
+    Rule.FAILURE_STRING = 'Found constant conditional: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-constant-condition',
-    type: 'maintainability',
-    description: 'Do not use constant expressions in conditions.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 570, 571, 670'
-};
-Rule.FAILURE_STRING = 'Found constant conditional: ';
 var NoConstantConditionRuleWalker = (function (_super) {
     __extends(NoConstantConditionRuleWalker, _super);
     function NoConstantConditionRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.checkLoops = _this.extractBoolean('checkLoops');
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.checkLoops = this.extractBoolean('checkLoops');
     }
     NoConstantConditionRuleWalker.prototype.extractBoolean = function (keyName) {
         var result = true;

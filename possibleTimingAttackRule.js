@@ -4,45 +4,47 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var Utils_1 = require("./utils/Utils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
 var FAILURE_STRING = 'Possible timing attack detected. Direct comparison found: ';
 var SENSITIVE_VAR_NAME = /^(password|secret|api|apiKey|token|auth|pass|hash)$/im;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PossibleTimingAttackRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'possible-timing-attack',
+        type: 'functionality',
+        description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Security',
+        commonWeaknessEnumeration: '710,749'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'possible-timing-attack',
-    type: 'functionality',
-    description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Security',
-    commonWeaknessEnumeration: '710,749'
-};
 var PossibleTimingAttackRuleWalker = (function (_super) {
     __extends(PossibleTimingAttackRuleWalker, _super);
     function PossibleTimingAttackRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     PossibleTimingAttackRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().EqualsEqualsToken
-            || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().EqualsEqualsEqualsToken
-            || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().ExclamationEqualsToken
-            || node.operatorToken.kind === SyntaxKind_1.SyntaxKind.current().ExclamationEqualsEqualsToken) {
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
             if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
                 && node.left.getText() !== 'null' && node.right.getText() !== 'null'
                 && node.left.getText() !== 'undefined' && node.right.getText() !== 'undefined') {

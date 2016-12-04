@@ -4,37 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
-var Utils_1 = require("./utils/Utils");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var Utils_1 = require('./utils/Utils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'jquery-deferred-must-complete',
+        type: 'maintainability',
+        description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
+            'on it within all code branches in the scope.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+    Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve ' +
+        'or reject invoked on all code paths: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'jquery-deferred-must-complete',
-    type: 'maintainability',
-    description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
-        'on it within all code branches in the scope.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
 function isPromiseInstantiation(expression) {
-    if (expression != null && expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+    if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(expression);
         var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(expression);
         if (functionName === 'Deferred' && AstUtils_1.AstUtils.isJQuery(functionTarget)) {
@@ -49,11 +52,11 @@ function isCompletionFunction(functionName) {
 var JQueryDeferredAnalyzer = (function (_super) {
     __extends(JQueryDeferredAnalyzer, _super);
     function JQueryDeferredAnalyzer() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     JQueryDeferredAnalyzer.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
-            if (node.left.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+            if (node.left.kind === ts.SyntaxKind.Identifier) {
                 if (node.left.text != null) {
                     var name_1 = node.left;
                     this.validateDeferredUsage(node, name_1);
@@ -86,13 +89,12 @@ var JQueryDeferredAnalyzer = (function (_super) {
 var DeferredCompletionWalker = (function (_super) {
     __extends(DeferredCompletionWalker, _super);
     function DeferredCompletionWalker(sourceFile, options, deferredIdentifier) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.wasCompleted = false;
-        _this.allBranchesCompleted = true;
-        _this.hasBranches = false;
-        _this.walkerOptions = options;
-        _this.deferredIdentifier = deferredIdentifier;
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.wasCompleted = false;
+        this.allBranchesCompleted = true;
+        this.hasBranches = false;
+        this.walkerOptions = options;
+        this.deferredIdentifier = deferredIdentifier;
     }
     DeferredCompletionWalker.prototype.visitNode = function (node) {
         _super.prototype.visitNode.call(this, node);
@@ -123,7 +125,7 @@ var DeferredCompletionWalker = (function (_super) {
     };
     DeferredCompletionWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
-        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var prop = node.expression;
             if (AstUtils_1.AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {
                 var functionName = prop.name.getText();

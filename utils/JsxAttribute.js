@@ -1,7 +1,6 @@
 "use strict";
-var ts = require("typescript");
-var TypeGuard_1 = require("./TypeGuard");
-var SyntaxKind_1 = require("./SyntaxKind");
+var ts = require('typescript');
+var TypeGuard_1 = require('./TypeGuard');
 function getPropName(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
@@ -80,18 +79,18 @@ function isEmpty(node) {
     else if (TypeGuard_1.isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
     }
-    else if (initializer.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+    else if (initializer.kind === ts.SyntaxKind.Identifier) {
         return initializer.getText() === 'undefined';
     }
-    else if (initializer.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword) {
+    else if (initializer.kind === ts.SyntaxKind.NullKeyword) {
         return true;
     }
     else if (initializer.expression != null) {
         var expression = initializer.expression;
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
         }
-        else if (expression.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword) {
+        else if (expression.kind === ts.SyntaxKind.NullKeyword) {
             return true;
         }
     }

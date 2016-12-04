@@ -1,5 +1,5 @@
 "use strict";
-var JsxAttribute_1 = require("../JsxAttribute");
+var JsxAttribute_1 = require('../JsxAttribute');
 var typeString = 'type';
 function getImplicitRoleForMenuitem(node) {
     var typeAttribute = JsxAttribute_1.getJsxAttributesFromJsxElement(node)[typeString];

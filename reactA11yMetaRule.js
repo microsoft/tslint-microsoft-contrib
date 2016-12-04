@@ -4,15 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var FAILURE_STRING = 'Do not use http-equiv="refresh"';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -22,24 +21,26 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-meta',
+        type: 'functionality',
+        description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-a11y-meta',
-    type: 'functionality',
-    description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 var ReactA11yMetaRuleWalker = (function (_super) {
     __extends(ReactA11yMetaRuleWalker, _super);
     function ReactA11yMetaRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ReactA11yMetaRuleWalker.prototype.visitJsxElement = function (node) {
         this.validateOpeningElement(node, node.openingElement);
@@ -53,7 +54,7 @@ var ReactA11yMetaRuleWalker = (function (_super) {
         if (openElement.tagName.getText() === 'meta') {
             var attributes = openElement.attributes;
             attributes.forEach(function (parameter) {
-                if (parameter.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+                if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     var attribute = parameter;
                     if (attribute.name.getText() === 'http-equiv') {
                         if (_this.isStringLiteral(attribute.initializer, 'refresh')) {
@@ -66,13 +67,13 @@ var ReactA11yMetaRuleWalker = (function (_super) {
     };
     ReactA11yMetaRuleWalker.prototype.isStringLiteral = function (expression, literal) {
         if (expression != null) {
-            if (expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+            if (expression.kind === ts.SyntaxKind.StringLiteral) {
                 var value = expression.text;
                 return value === literal;
             }
-            else if (expression.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+            else if (expression.kind === ts.SyntaxKind.JsxExpression) {
                 var exp = expression;
-                if (exp.expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                     var value = exp.expression.text;
                     return value === literal;
                 }

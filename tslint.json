@@ -26,11 +26,9 @@
     "react-anchor-blank-noopener": true,
     "react-iframe-missing-sandbox": true,
     "react-no-dangerous-html": true,
-    "use-strict": true,
     "forin": true,
     "jquery-deferred-must-complete": true,
     "label-position": true,
-    "label-undefined": true,
     "mocha-avoid-only": true,
     "mocha-no-side-effect-code": true,
     "no-any": true,
@@ -111,7 +109,6 @@
     "mocha-unneeded-done": true,
     "new-parens": true,
     "no-construct": true,
-    "no-constructor-vars": true,
     "no-default-export": true,
     "no-empty-interfaces": true,
     "no-for-in": true,
@@ -228,7 +225,6 @@
     "no-missing-visibility-modifiers": false,
     "no-multiple-var-decl": false,
     "no-switch-case-fall-through": false,
-    "no-unreachable": false,
     "no-unused-imports": false
   },
   "rulesDirectory": "./"

@@ -4,42 +4,43 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var AstUtils_1 = require("./utils/AstUtils");
-var MochaUtils_1 = require("./utils/MochaUtils");
-var Utils_1 = require("./utils/Utils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
+var MochaUtils_1 = require('./utils/MochaUtils');
+var Utils_1 = require('./utils/Utils');
 var FAILURE_STRING = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaNoSideEffectCodeRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-no-side-effect-code',
+        type: 'maintainability',
+        description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'mocha-no-side-effect-code',
-    type: 'maintainability',
-    description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
 var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     __extends(MochaNoSideEffectCodeRuleWalker, _super);
     function MochaNoSideEffectCodeRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.isInDescribe = false;
-        _this.parseOptions();
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.isInDescribe = false;
+        this.parseOptions();
     }
     MochaNoSideEffectCodeRuleWalker.prototype.parseOptions = function () {
         var _this = this;
@@ -55,7 +56,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         var _this = this;
         if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
             node.statements.forEach(function (statement) {
-                if (statement.kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
+                if (statement.kind === ts.SyntaxKind.VariableStatement) {
                     var declarationList = statement.declarationList;
                     declarationList.declarations.forEach(function (declaration) {
                         _this.validateExpression(declaration.initializer, declaration);
@@ -102,35 +103,35 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         if (AstUtils_1.AstUtils.isConstant(initializer)) {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression
-            || initializer.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction) {
+        if (initializer.kind === ts.SyntaxKind.FunctionExpression
+            || initializer.kind === ts.SyntaxKind.ArrowFunction) {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression) {
+        if (initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             var arrayLiteral = initializer;
             arrayLiteral.elements.forEach(function (expression) {
                 _this.validateExpression(expression, parentNode);
             });
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().FirstTemplateToken) {
+        if (initializer.kind === ts.SyntaxKind.FirstTemplateToken) {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().TypeAssertionExpression) {
+        if (initializer.kind === ts.SyntaxKind.TypeAssertionExpression) {
             var assertion = initializer;
             this.validateExpression(assertion.expression, parentNode);
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (initializer.kind === ts.SyntaxKind.PropertyAccessExpression) {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (initializer.kind === ts.SyntaxKind.Identifier) {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().ObjectLiteralExpression) {
+        if (initializer.kind === ts.SyntaxKind.ObjectLiteralExpression) {
             var literal = initializer;
             literal.properties.forEach(function (element) {
-                if (element.kind === SyntaxKind_1.SyntaxKind.current().PropertyAssignment) {
+                if (element.kind === ts.SyntaxKind.PropertyAssignment) {
                     var assignment = element;
                     _this.validateExpression(assignment.initializer, parentNode);
                 }
@@ -140,11 +141,11 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         if (initializer.getText() === 'moment()') {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().CallExpression
+        if (initializer.kind === ts.SyntaxKind.CallExpression
             && AstUtils_1.AstUtils.getFunctionTarget(initializer) === 'moment()') {
             return;
         }
-        if (initializer.kind === SyntaxKind_1.SyntaxKind.current().NewExpression) {
+        if (initializer.kind === ts.SyntaxKind.NewExpression) {
             if (AstUtils_1.AstUtils.getFunctionName(initializer) === 'Date') {
                 return;
             }

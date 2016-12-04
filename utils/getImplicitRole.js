@@ -1,6 +1,6 @@
 "use strict";
-var implicitRoles = require("./implicitRoles");
-var TypeGuard_1 = require("./TypeGuard");
+var implicitRoles = require('./implicitRoles');
+var TypeGuard_1 = require('./TypeGuard');
 function getImplicitRole(node) {
     var tagName;
     if (TypeGuard_1.isJsxElement(node)) {

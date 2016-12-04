@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var AstUtils_1 = require("./utils/AstUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var FAILURE_STATIC_FOUND = 'Static invocation of underscore function found. Prefer instance version instead: ';
 var FAILURE_INSTANCE_FOUND = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
 var FUNCTION_NAMES = [
@@ -30,39 +30,41 @@ var FUNCTION_NAMES = [
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UnderscoreConsistentInvocationRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'underscore-consistent-invocation',
+        type: 'maintainability',
+        description: 'Enforce a consistent usage of the _ functions',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'underscore-consistent-invocation',
-    type: 'maintainability',
-    description: 'Enforce a consistent usage of the _ functions',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
     __extends(UnderscoreConsistentInvocationRuleWalker, _super);
     function UnderscoreConsistentInvocationRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.style = 'instance';
-        _this.getOptions().forEach(function (opt) {
+        var _this = this;
+        _super.call(this, sourceFile, options);
+        this.style = 'instance';
+        this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 if (opt.style === 'static') {
                     _this.style = 'static';
                 }
             }
         });
-        return _this;
     }
     UnderscoreConsistentInvocationRuleWalker.prototype.visitCallExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
@@ -75,9 +77,9 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     UnderscoreConsistentInvocationRuleWalker.prototype.isStaticUnderscoreInstanceInvocation = function (node) {
-        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var propExpression = node.expression;
-            if (propExpression.expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
                 var call = propExpression.expression;
                 var target = AstUtils_1.AstUtils.getFunctionTarget(call);
                 var functionName = AstUtils_1.AstUtils.getFunctionName(call);

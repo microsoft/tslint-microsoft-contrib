@@ -4,50 +4,51 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var AstUtils_1 = require("./utils/AstUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var FAILURE_UNDEFINED_INIT = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
 var FAILURE_UNDEFINED_DUPE = 'Unnecessary field initialization. Field value already initialized in declaration: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UnnecessaryFieldInitializationRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unnecessary-field-initialization',
+        type: 'maintainability',
+        description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-unnecessary-field-initialization',
-    type: 'maintainability',
-    description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
     __extends(UnnecessaryFieldInitializationRuleWalker, _super);
     function UnnecessaryFieldInitializationRuleWalker() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.fieldInitializations = {};
-        return _this;
+        _super.apply(this, arguments);
+        this.fieldInitializations = {};
     }
     UnnecessaryFieldInitializationRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;
         this.fieldInitializations = {};
         node.members.forEach(function (member) {
-            if (member.kind === SyntaxKind_1.SyntaxKind.current().PropertyDeclaration) {
+            if (member.kind === ts.SyntaxKind.PropertyDeclaration) {
                 _this.visitPropertyDeclaration(member);
             }
-            else if (member.kind === SyntaxKind_1.SyntaxKind.current().Constructor) {
+            else if (member.kind === ts.SyntaxKind.Constructor) {
                 _this.visitConstructorDeclaration(member);
             }
         });
@@ -55,7 +56,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
     };
     UnnecessaryFieldInitializationRuleWalker.prototype.visitPropertyDeclaration = function (node) {
         var initializer = node.initializer;
-        if (node.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (node.name.kind === ts.SyntaxKind.Identifier) {
             var fieldName = 'this.' + node.name.getText();
             if (initializer == null) {
                 this.fieldInitializations[fieldName] = undefined;
@@ -74,9 +75,9 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
         var _this = this;
         if (node.body != null) {
             node.body.statements.forEach(function (statement) {
-                if (statement.kind === SyntaxKind_1.SyntaxKind.current().ExpressionStatement) {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     var expression = statement.expression;
-                    if (expression.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
                         var binaryExpression = expression;
                         var property = binaryExpression.left;
                         var propertyName = property.getText();

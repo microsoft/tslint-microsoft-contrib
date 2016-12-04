@@ -1,4 +1,4 @@
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 export declare module TestHelper {
     let RULES_DIRECTORY: string;
     let FORMATTER_DIRECTORY: string;

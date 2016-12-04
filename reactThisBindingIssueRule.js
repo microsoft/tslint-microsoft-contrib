@@ -4,13 +4,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var AstUtils_1 = require("./utils/AstUtils");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var Scope_1 = require("./utils/Scope");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var Utils_1 = require("./utils/Utils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var AstUtils_1 = require('./utils/AstUtils');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Scope_1 = require('./utils/Scope');
+var Utils_1 = require('./utils/Utils');
 var FAILURE_ANONYMOUS_LISTENER = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 var FAILURE_DOUBLE_BIND = 'A function is having its \'this\' reference bound twice in the constructor: ';
 var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute without having the \'this\' ' +
@@ -18,7 +17,7 @@ var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute with
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -28,34 +27,36 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-this-binding-issue',
+        type: 'maintainability',
+        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+            'on any methods that you pass off to child components as callbacks.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-this-binding-issue',
-    type: 'maintainability',
-    description: 'When using React components you must be careful to correctly bind the `this` reference ' +
-        'on any methods that you pass off to child components as callbacks.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
 var ReactThisBindingIssueRuleWalker = (function (_super) {
     __extends(ReactThisBindingIssueRuleWalker, _super);
     function ReactThisBindingIssueRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowAnonymousListeners = false;
-        _this.boundListeners = [];
-        _this.declaredMethods = [];
-        _this.getOptions().forEach(function (opt) {
+        var _this = this;
+        _super.call(this, sourceFile, options);
+        this.allowAnonymousListeners = false;
+        this.boundListeners = [];
+        this.declaredMethods = [];
+        this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
             }
         });
-        return _this;
     }
     ReactThisBindingIssueRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;
@@ -103,7 +104,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
     };
     ReactThisBindingIssueRuleWalker.prototype.visitVariableDeclaration = function (node) {
         if (this.scope != null) {
-            if (node.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+            if (node.name.kind === ts.SyntaxKind.Identifier) {
                 var variableName = node.name.text;
                 if (this.isExpressionAnonymousFunction(node.initializer)) {
                     this.scope.addFunctionSymbol(variableName);
@@ -117,7 +118,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         node.attributes.forEach(function (attributeLikeElement) {
             if (_this.isUnboundListener(attributeLikeElement)) {
                 var attribute = attributeLikeElement;
-                if (attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
                 var jsxExpression = attribute.initializer;
@@ -132,7 +133,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
             }
             else if (_this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 var attribute = attributeLikeElement;
-                if (attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
                 var jsxExpression = attribute.initializer;
@@ -148,9 +149,9 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         if (this.allowAnonymousListeners) {
             return false;
         }
-        if (attributeLikeElement.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+        if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             var attribute = attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 var jsxExpression = attribute.initializer;
                 var expression = jsxExpression.expression;
                 return this.isExpressionAnonymousFunction(expression);
@@ -162,29 +163,29 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         if (expression == null) {
             return false;
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction
+            || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true;
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+        if (expression.kind === ts.SyntaxKind.CallExpression) {
             var callExpression = expression;
             var functionName = AstUtils_1.AstUtils.getFunctionName(callExpression);
             if (functionName === 'bind') {
                 return true;
             }
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             var symbolText = expression.getText();
             return this.scope.isFunctionSymbol(symbolText);
         }
         return false;
     };
     ReactThisBindingIssueRuleWalker.prototype.isUnboundListener = function (attributeLikeElement) {
-        if (attributeLikeElement.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+        if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             var attribute = attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 var jsxExpression = attribute.initializer;
-                if (jsxExpression.expression != null && jsxExpression.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+                if (jsxExpression.expression != null && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     var propAccess = jsxExpression.expression;
                     if (propAccess.expression.getText() === 'this') {
                         var listenerText = propAccess.getText();
@@ -202,16 +203,16 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
         var result = [];
         if (node.body != null && node.body.statements != null) {
             node.body.statements.forEach(function (statement) {
-                if (statement.kind === SyntaxKind_1.SyntaxKind.current().ExpressionStatement) {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     var expressionStatement = statement;
                     var expression = expressionStatement.expression;
-                    if (expression.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
                         var binaryExpression = expression;
                         var operator = binaryExpression.operatorToken;
-                        if (operator.kind === SyntaxKind_1.SyntaxKind.current().EqualsToken) {
-                            if (binaryExpression.left.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+                        if (operator.kind === ts.SyntaxKind.EqualsToken) {
+                            if (binaryExpression.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
                                 var leftPropText = binaryExpression.left.getText();
-                                if (binaryExpression.right.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+                                if (binaryExpression.right.kind === ts.SyntaxKind.CallExpression) {
                                     var callExpression = binaryExpression.right;
                                     if (AstUtils_1.AstUtils.getFunctionName(callExpression) === 'bind'
                                         && callExpression.arguments != null

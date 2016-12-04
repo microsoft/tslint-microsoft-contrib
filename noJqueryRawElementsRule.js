@@ -4,44 +4,46 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var AstUtils_1 = require("./utils/AstUtils");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var AstUtils_1 = require('./utils/AstUtils');
 var FAILURE_STRING_MANIPULATION = 'Replace HTML string manipulation with jQuery API: ';
 var FAILURE_STRING_COMPLEX = 'Replace complex HTML strings with jQuery API: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-jquery-raw-elements',
+        type: 'maintainability',
+        description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-jquery-raw-elements',
-    type: 'maintainability',
-    description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
 var NoJqueryRawElementsRuleWalker = (function (_super) {
     __extends(NoJqueryRawElementsRuleWalker, _super);
     function NoJqueryRawElementsRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoJqueryRawElementsRuleWalker.prototype.visitCallExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (AstUtils_1.AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             var firstArg = node.arguments[0];
-            if (firstArg.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+            if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
                 if (this.isComplexHtmlElement(firstArg)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText()));
                 }
@@ -81,9 +83,8 @@ var NoJqueryRawElementsRuleWalker = (function (_super) {
 var HtmlLikeStringLiteralFinder = (function (_super) {
     __extends(HtmlLikeStringLiteralFinder, _super);
     function HtmlLikeStringLiteralFinder() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.found = false;
-        return _this;
+        _super.apply(this, arguments);
+        this.found = false;
     }
     HtmlLikeStringLiteralFinder.prototype.isFound = function () {
         return this.found;

@@ -4,15 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         var documentRegistry = ts.createDocumentRegistry();
@@ -20,38 +19,39 @@ var Rule = (function (_super) {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     };
+    Rule.FAILURE_STRING = 'unused import: ';
+    Rule.metadata = {
+        ruleName: 'no-unused-imports',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false             // use tslint no-unused-variable rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.FAILURE_STRING = 'unused import: ';
-Rule.metadata = {
-    ruleName: 'no-unused-imports',
-    type: 'maintainability',
-    description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Deprecated',
-    recommendation: 'false             // use tslint no-unused-variable rule instead',
-    commonWeaknessEnumeration: '398, 710'
-};
 var NoUnusedImportsWalker = (function (_super) {
     __extends(NoUnusedImportsWalker, _super);
     function NoUnusedImportsWalker(sourceFile, options, languageServices) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageServices = languageServices;
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.languageServices = languageServices;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
-        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         _super.prototype.visitImportEqualsDeclaration.call(this, node);
     };
     NoUnusedImportsWalker.prototype.visitImportDeclaration = function (node) {
-        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         _super.prototype.visitImportDeclaration.call(this, node);
@@ -62,7 +62,7 @@ var NoUnusedImportsWalker = (function (_super) {
             return;
         }
         var variableStack = [];
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
             var name_1 = node.name.text;
             var position = node.name.getStart();
             variableStack.push({ name: name_1, position: position, importNode: node });
@@ -76,13 +76,13 @@ var NoUnusedImportsWalker = (function (_super) {
                     variableStack.push({ name: name_2, position: position, importNode: node });
                 }
                 else if (importClause.namedBindings != null) {
-                    if (importClause.namedBindings.kind === SyntaxKind_1.SyntaxKind.current().NamespaceImport) {
+                    if (importClause.namedBindings.kind === ts.SyntaxKind.NamespaceImport) {
                         var imports = importClause.namedBindings;
                         var name_3 = imports.name.text;
                         var position = imports.name.getStart();
                         variableStack.push({ name: name_3, position: position, importNode: node });
                     }
-                    else if (importClause.namedBindings.kind === SyntaxKind_1.SyntaxKind.current().NamedImports) {
+                    else if (importClause.namedBindings.kind === ts.SyntaxKind.NamedImports) {
                         var imports = importClause.namedBindings;
                         imports.elements.forEach(function (importSpec) {
                             var name = importSpec.name.text;
@@ -117,14 +117,14 @@ var NoUnusedImportsWalker = (function (_super) {
         return this.cachedSourceText;
     };
     NoUnusedImportsWalker.prototype.isReactImport = function (node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
             var importDeclaration = node;
-            if (importDeclaration.moduleReference.kind === SyntaxKind_1.SyntaxKind.current().ExternalModuleReference) {
+            if (importDeclaration.moduleReference.kind === ts.SyntaxKind.ExternalModuleReference) {
                 var moduleExpression = importDeclaration.moduleReference.expression;
                 return this.isModuleExpressionReact(moduleExpression);
             }
         }
-        else if (node.kind === SyntaxKind_1.SyntaxKind.current().ImportDeclaration) {
+        else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
             var importDeclaration = node;
             var moduleExpression = importDeclaration.moduleSpecifier;
             return this.isModuleExpressionReact(moduleExpression);
@@ -132,7 +132,7 @@ var NoUnusedImportsWalker = (function (_super) {
         return false;
     };
     NoUnusedImportsWalker.prototype.isModuleExpressionReact = function (moduleExpression) {
-        if (moduleExpression != null && moduleExpression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+        if (moduleExpression != null && moduleExpression.kind === ts.SyntaxKind.StringLiteral) {
             var moduleName = moduleExpression;
             return /react/i.test(moduleName.text);
         }

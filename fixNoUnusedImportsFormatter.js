@@ -4,11 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseFormatter_1 = require("./utils/BaseFormatter");
+var BaseFormatter_1 = require('./utils/BaseFormatter');
 var Formatter = (function (_super) {
     __extends(Formatter, _super);
     function Formatter() {
-        return _super.call(this, 'no-unused-imports', function (failure) {
+        _super.call(this, 'no-unused-imports', function (failure) {
             var fileName = failure.getFileName();
             var start = failure.getStartPosition();
             var end = failure.getEndPosition();
@@ -30,7 +30,7 @@ var Formatter = (function (_super) {
             }
             this.writeFile(fileName, fileContents);
             console.log('Automatically removing unused import. Please re-compile and re-lint: ' + fileName);
-        }) || this;
+        });
     }
     return Formatter;
 }(BaseFormatter_1.BaseFormatter));

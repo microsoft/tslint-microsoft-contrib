@@ -1,6 +1,5 @@
 "use strict";
-var ts = require("typescript");
-var SyntaxKind_1 = require("./SyntaxKind");
+var ts = require('typescript');
 var AstUtils;
 (function (AstUtils) {
     function getLanguageVariant(node) {
@@ -22,7 +21,7 @@ var AstUtils;
     }
     AstUtils.getFunctionName = getFunctionName;
     function getFunctionTarget(expression) {
-        if (expression.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var propExp = expression.expression;
             return propExp.expression.getText();
         }
@@ -49,8 +48,8 @@ var AstUtils;
     function dumpTypeInfo(expression, languageServices, typeChecker) {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.kind === ts.SyntaxKind.Identifier
+            || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach(function (definitionInfo, index) {
@@ -134,11 +133,11 @@ var AstUtils;
     }
     AstUtils.isStatic = isStatic;
     function isBindingPattern(node) {
-        return node != null && (node.kind === SyntaxKind_1.SyntaxKind.current().ArrayBindingPattern ||
-            node.kind === SyntaxKind_1.SyntaxKind.current().ObjectBindingPattern);
+        return node != null && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
+            node.kind === ts.SyntaxKind.ObjectBindingPattern);
     }
     function walkUpBindingElementsAndPatterns(node) {
-        while (node && (node.kind === SyntaxKind_1.SyntaxKind.current().BindingElement || isBindingPattern(node))) {
+        while (node && (node.kind === ts.SyntaxKind.BindingElement || isBindingPattern(node))) {
             node = node.parent;
         }
         return node;
@@ -146,14 +145,14 @@ var AstUtils;
     function getCombinedNodeFlags(node) {
         node = walkUpBindingElementsAndPatterns(node);
         var flags = node.flags;
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().VariableDeclaration) {
+        if (node.kind === ts.SyntaxKind.VariableDeclaration) {
             node = node.parent;
         }
-        if (node && node.kind === SyntaxKind_1.SyntaxKind.current().VariableDeclarationList) {
+        if (node && node.kind === ts.SyntaxKind.VariableDeclarationList) {
             flags |= node.flags;
             node = node.parent;
         }
-        if (node && node.kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
+        if (node && node.kind === ts.SyntaxKind.VariableStatement) {
             flags |= node.flags;
         }
         return flags;
@@ -172,18 +171,18 @@ var AstUtils;
     }
     AstUtils.isExported = isExported;
     function isAssignmentOperator(token) {
-        return token >= SyntaxKind_1.SyntaxKind.current().FirstAssignment && token <= SyntaxKind_1.SyntaxKind.current().LastAssignment;
+        return token >= ts.SyntaxKind.FirstAssignment && token <= ts.SyntaxKind.LastAssignment;
     }
     AstUtils.isAssignmentOperator = isAssignmentOperator;
     function isBindingLiteralExpression(node) {
         return (!!node) &&
-            (node.kind === SyntaxKind_1.SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind_1.SyntaxKind.current().ArrayLiteralExpression);
+            (node.kind === ts.SyntaxKind.ObjectLiteralExpression || node.kind === ts.SyntaxKind.ArrayLiteralExpression);
     }
     AstUtils.isBindingLiteralExpression = isBindingLiteralExpression;
     function findParentBlock(child) {
         var parent = child.parent;
         while (parent != null) {
-            if (parent.kind === SyntaxKind_1.SyntaxKind.current().Block) {
+            if (parent.kind === ts.SyntaxKind.Block) {
                 return parent;
             }
             parent = parent.parent;
@@ -195,7 +194,7 @@ var AstUtils;
         if (source == null || target == null) {
             return false;
         }
-        if (source.kind === SyntaxKind_1.SyntaxKind.current().Identifier && target.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
             return source.getText() === target.getText();
         }
         return false;
@@ -204,9 +203,9 @@ var AstUtils;
     function getDeclaredMethodNames(node) {
         var result = [];
         node.members.forEach(function (classElement) {
-            if (classElement.kind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration) {
+            if (classElement.kind === ts.SyntaxKind.MethodDeclaration) {
                 var methodDeclaration = classElement;
-                if (methodDeclaration.name.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+                if (methodDeclaration.name.kind === ts.SyntaxKind.Identifier) {
                     result.push(methodDeclaration.name.text);
                 }
             }
@@ -219,18 +218,18 @@ var AstUtils;
             if (node.type.getText() === 'Function') {
                 return true;
             }
-            return node.type.kind === SyntaxKind_1.SyntaxKind.current().FunctionType;
+            return node.type.kind === ts.SyntaxKind.FunctionType;
         }
         else if (node.initializer != null) {
-            return (node.initializer.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction
-                || node.initializer.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression);
+            return (node.initializer.kind === ts.SyntaxKind.ArrowFunction
+                || node.initializer.kind === ts.SyntaxKind.FunctionExpression);
         }
         return false;
     }
     AstUtils.isDeclarationFunctionType = isDeclarationFunctionType;
     function isUndefined(node) {
         if (node != null) {
-            if (node.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+            if (node.kind === ts.SyntaxKind.Identifier) {
                 return node.getText() === 'undefined';
             }
         }
@@ -241,22 +240,22 @@ var AstUtils;
         if (node == null) {
             return false;
         }
-        return node.kind === SyntaxKind_1.SyntaxKind.current().NullKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral
-            || node.kind === SyntaxKind_1.SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind_1.SyntaxKind.current().NumericLiteral;
+        return node.kind === ts.SyntaxKind.NullKeyword
+            || node.kind === ts.SyntaxKind.StringLiteral
+            || node.kind === ts.SyntaxKind.FalseKeyword
+            || node.kind === ts.SyntaxKind.TrueKeyword
+            || node.kind === ts.SyntaxKind.NumericLiteral;
     }
     AstUtils.isConstant = isConstant;
     function isConstantExpression(node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+        if (node.kind === ts.SyntaxKind.BinaryExpression) {
             var expression = node;
             var kind = expression.operatorToken.kind;
-            if (kind >= SyntaxKind_1.SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind_1.SyntaxKind.current().LastBinaryOperator) {
+            if (kind >= ts.SyntaxKind.FirstBinaryOperator && kind <= ts.SyntaxKind.LastBinaryOperator) {
                 return isConstantExpression(expression.left) && isConstantExpression(expression.right);
             }
         }
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind_1.SyntaxKind.current().PostfixUnaryExpression) {
+        if (node.kind === ts.SyntaxKind.PrefixUnaryExpression || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
             var expression = node;
             return isConstantExpression(expression.operand);
         }

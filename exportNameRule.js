@@ -4,15 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var Utils_1 = require("./utils/Utils");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var AstUtils_1 = require("./utils/AstUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
@@ -26,31 +26,33 @@ var Rule = (function (_super) {
         }
         return null;
     };
+    Rule.metadata = {
+        ruleName: 'export-name',
+        type: 'maintainability',
+        description: 'The name of the exported module must match the filename of the source file',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'export-name',
-    type: 'maintainability',
-    description: 'The name of the exported module must match the filename of the source file',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
 var ExportNameWalker = (function (_super) {
     __extends(ExportNameWalker, _super);
     function ExportNameWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
         var singleExport = node.statements.filter(function (element) {
-            return element.kind === SyntaxKind_1.SyntaxKind.current().ExportAssignment;
+            return element.kind === ts.SyntaxKind.ExportAssignment;
         });
         if (singleExport.length === 1) {
             var exportAssignment = singleExport[0];
@@ -64,7 +66,7 @@ var ExportNameWalker = (function (_super) {
         });
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach(function (element) {
-                if (element.kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration) {
+                if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
                     var exportStatements = _this.getExportStatementsWithinModules(element);
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
@@ -74,10 +76,10 @@ var ExportNameWalker = (function (_super) {
     };
     ExportNameWalker.prototype.getExportStatementsWithinModules = function (moduleDeclaration) {
         var _this = this;
-        if (moduleDeclaration.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration) {
+        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             return this.getExportStatementsWithinModules(moduleDeclaration.body);
         }
-        else if (moduleDeclaration.body.kind === SyntaxKind_1.SyntaxKind.current().ModuleBlock) {
+        else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
             var exportStatements_1 = [];
             var moduleBlock = moduleDeclaration.body;
             moduleBlock.statements.forEach(function (element) {
@@ -88,23 +90,23 @@ var ExportNameWalker = (function (_super) {
     };
     ExportNameWalker.prototype.getExportStatements = function (element) {
         var exportStatements = [];
-        if (element.kind === SyntaxKind_1.SyntaxKind.current().ExportAssignment) {
+        if (element.kind === ts.SyntaxKind.ExportAssignment) {
             var exportAssignment = element;
             this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
         }
-        else if (AstUtils_1.AstUtils.hasModifier(element.modifiers, SyntaxKind_1.SyntaxKind.current().ExportKeyword)) {
+        else if (AstUtils_1.AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword)) {
             exportStatements.push(element);
         }
         return exportStatements;
     };
     ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().ModuleDeclaration ||
-                exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().ClassDeclaration ||
-                exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().FunctionDeclaration) {
+            if (exportedElements[0].kind === ts.SyntaxKind.ModuleDeclaration ||
+                exportedElements[0].kind === ts.SyntaxKind.ClassDeclaration ||
+                exportedElements[0].kind === ts.SyntaxKind.FunctionDeclaration) {
                 this.validateExport(exportedElements[0].name.text, exportedElements[0]);
             }
-            else if (exportedElements[0].kind === SyntaxKind_1.SyntaxKind.current().VariableStatement) {
+            else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 var variableStatement = exportedElements[0];
                 if (variableStatement.declarationList.declarations.length === 1) {
                     var variableDeclaration = variableStatement.declarationList.declarations[0];

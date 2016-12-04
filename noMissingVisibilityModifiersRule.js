@@ -4,37 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MissingVisibilityModifierWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-missing-visibility-modifiers',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is in the TSLint product as `member-access`',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false, // use tslint member-access rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-missing-visibility-modifiers',
-    type: 'maintainability',
-    description: 'Deprecated - This rule is in the TSLint product as `member-access`',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Deprecated',
-    recommendation: 'false, // use tslint member-access rule instead',
-    commonWeaknessEnumeration: '398, 710'
-};
 var MissingVisibilityModifierWalker = (function (_super) {
     __extends(MissingVisibilityModifierWalker, _super);
     function MissingVisibilityModifierWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     MissingVisibilityModifierWalker.prototype.visitPropertyDeclaration = function (node) {
         if (this.isMissingVisibilityModifier(node)) {

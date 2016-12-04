@@ -4,38 +4,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var Utils_1 = require("./utils/Utils");
-var MochaUtils_1 = require("./utils/MochaUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Utils_1 = require('./utils/Utils');
+var MochaUtils_1 = require('./utils/MochaUtils');
 var FAILURE_STRING = 'Unneeded Mocha Done. Parameter can be safely removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaUnneededDoneRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-unneeded-done',
+        type: 'maintainability',
+        description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'mocha-unneeded-done',
-    type: 'maintainability',
-    description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
-    options: null,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity'
-};
 var MochaUnneededDoneRuleWalker = (function (_super) {
     __extends(MochaUnneededDoneRuleWalker, _super);
     function MochaUnneededDoneRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     MochaUnneededDoneRuleWalker.prototype.visitSourceFile = function (node) {
         if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
@@ -65,14 +67,14 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
         }
     };
     MochaUnneededDoneRuleWalker.prototype.isIdentifierInvokedDirectlyInBody = function (doneIdentifier, node) {
-        if (node.body == null || node.body.kind !== SyntaxKind_1.SyntaxKind.current().Block) {
+        if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
             return;
         }
         var block = node.body;
         return Utils_1.Utils.exists(block.statements, function (statement) {
-            if (statement.kind === SyntaxKind_1.SyntaxKind.current().ExpressionStatement) {
+            if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                 var expression = statement.expression;
-                if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+                if (expression.kind === ts.SyntaxKind.CallExpression) {
                     var leftHandSideExpression = expression.expression;
                     return leftHandSideExpression.getText() === doneIdentifier.getText();
                 }
@@ -90,7 +92,7 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
             }
             return parameter.name.getText() === 'done';
         });
-        if (allDones.length === 0 || allDones[0].name.kind !== SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (allDones.length === 0 || allDones[0].name.kind !== ts.SyntaxKind.Identifier) {
             return null;
         }
         return allDones[0].name;
@@ -100,9 +102,8 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
 var IdentifierReferenceCountWalker = (function (_super) {
     __extends(IdentifierReferenceCountWalker, _super);
     function IdentifierReferenceCountWalker(sourceFile, options, identifier) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.identifierText = identifier.getText();
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.identifierText = identifier.getText();
     }
     IdentifierReferenceCountWalker.prototype.getReferenceCount = function (body) {
         var _this = this;

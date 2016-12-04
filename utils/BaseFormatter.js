@@ -4,15 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var fs = require("fs");
-var abstractFormatter_1 = require("tslint/lib/language/formatter/abstractFormatter");
+var fs = require('fs');
+var tslint_1 = require('tslint');
 var BaseFormatter = (function (_super) {
     __extends(BaseFormatter, _super);
     function BaseFormatter(ruleName, applyFix) {
-        var _this = _super.call(this) || this;
-        _this.ruleName = ruleName;
-        _this.applyFix = applyFix.bind(_this);
-        return _this;
+        _super.call(this);
+        this.ruleName = ruleName;
+        this.applyFix = applyFix.bind(this);
     }
     BaseFormatter.prototype.format = function (allFailures) {
         for (var index = allFailures.length - 1; index >= 0; index--) {
@@ -39,6 +38,6 @@ var BaseFormatter = (function (_super) {
         return '(' + ruleName + ') ' + fileName + positionTuple + ': ' + failureString;
     };
     return BaseFormatter;
-}(abstractFormatter_1.AbstractFormatter));
+}(tslint_1.Formatters.AbstractFormatter));
 exports.BaseFormatter = BaseFormatter;
 //# sourceMappingURL=BaseFormatter.js.map

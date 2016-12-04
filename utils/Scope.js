@@ -4,25 +4,25 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
-var SyntaxKind_1 = require("./SyntaxKind");
-var AstUtils_1 = require("./AstUtils");
+var ts = require('typescript');
+var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
+var AstUtils_1 = require('./AstUtils');
 var Scope = (function () {
     function Scope(parent) {
         this.symbols = {};
         this.parent = parent;
     }
     Scope.prototype.addFunctionSymbol = function (symbolString) {
-        this.symbols[symbolString] = SyntaxKind_1.SyntaxKind.current().FunctionType;
+        this.symbols[symbolString] = ts.SyntaxKind.FunctionType;
     };
     Scope.prototype.addNonFunctionSymbol = function (symbolString) {
-        this.symbols[symbolString] = SyntaxKind_1.SyntaxKind.current().Unknown;
+        this.symbols[symbolString] = ts.SyntaxKind.Unknown;
     };
     Scope.prototype.isFunctionSymbol = function (symbolString) {
-        if (this.symbols[symbolString] === SyntaxKind_1.SyntaxKind.current().FunctionType) {
+        if (this.symbols[symbolString] === ts.SyntaxKind.FunctionType) {
             return true;
         }
-        if (this.symbols[symbolString] === SyntaxKind_1.SyntaxKind.current().Unknown) {
+        if (this.symbols[symbolString] === ts.SyntaxKind.Unknown) {
             return false;
         }
         if (this.parent != null) {
@@ -54,10 +54,9 @@ exports.Scope = Scope;
 var GlobalReferenceCollector = (function (_super) {
     __extends(GlobalReferenceCollector, _super);
     function GlobalReferenceCollector() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.functionIdentifiers = [];
-        _this.nonFunctionIdentifiers = [];
-        return _this;
+        _super.apply(this, arguments);
+        this.functionIdentifiers = [];
+        this.nonFunctionIdentifiers = [];
     }
     GlobalReferenceCollector.prototype.visitModuleDeclaration = function (node) { };
     GlobalReferenceCollector.prototype.visitClassDeclaration = function (node) { };

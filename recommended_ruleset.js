@@ -31,7 +31,6 @@ module.exports = {
         "react-anchor-blank-noopener": true,
         "react-iframe-missing-sandbox": true,
         "react-no-dangerous-html": true,
-        "use-strict": true,
 
         /**
          * Common Bugs and Correctness. The following rules should be turned on because they find
@@ -40,7 +39,6 @@ module.exports = {
         "forin": true,
         "jquery-deferred-must-complete": true,
         "label-position": true,
-        "label-undefined": true,
         "mocha-avoid-only": true,
         "mocha-no-side-effect-code": true,
         "no-any": true,
@@ -106,7 +104,6 @@ module.exports = {
         "mocha-unneeded-done": true,
         "new-parens": true,
         "no-construct": true,
-        "no-constructor-vars": true,
         "no-default-export": true,
         "no-empty-interfaces": true,
         "no-for-in": true,
@@ -200,7 +197,6 @@ module.exports = {
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unreachable": false,               // now supported by TypeScript compiler
         "no-unused-imports": false             // use tslint no-unused-variable rule instead
     }
 };

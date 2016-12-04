@@ -4,30 +4,32 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'react-tsx-curly-spacing',
+        type: 'style',
+        description: 'Consistently use spaces around the brace characters of JSX attributes.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-tsx-curly-spacing',
-    type: 'style',
-    description: 'Consistently use spaces around the brace characters of JSX attributes.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Whitespace'
-};
 var Spacing;
 (function (Spacing) {
     Spacing[Spacing["always"] = 0] = "always";
@@ -36,13 +38,12 @@ var Spacing;
 var TsxCurlySpacingWalker = (function (_super) {
     __extends(TsxCurlySpacingWalker, _super);
     function TsxCurlySpacingWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
-        _this.allowMultiline = false;
+        _super.call(this, sourceFile, options);
+        this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
+        this.allowMultiline = false;
         if (options.ruleArguments[1] != null) {
-            _this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
+            this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
         }
-        return _this;
     }
     TsxCurlySpacingWalker.prototype.visitJsxExpression = function (node) {
         var childrenCount = node.getChildCount();
@@ -54,7 +55,7 @@ var TsxCurlySpacingWalker = (function (_super) {
         this.validateBraceSpacing(node, penultimate, last, last);
     };
     TsxCurlySpacingWalker.prototype.visitNode = function (node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().JsxExpression) {
+        if (node.kind === ts.SyntaxKind.JsxExpression) {
             this.visitJsxExpression(node);
             this.walkChildren(node);
         }

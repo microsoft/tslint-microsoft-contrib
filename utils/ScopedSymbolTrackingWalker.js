@@ -4,35 +4,33 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
-var SyntaxKind_1 = require("./SyntaxKind");
-var AstUtils_1 = require("./AstUtils");
-var Scope_1 = require("./Scope");
+var ts = require('typescript');
+var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
+var AstUtils_1 = require('./AstUtils');
+var Scope_1 = require('./Scope');
 var ScopedSymbolTrackingWalker = (function (_super) {
     __extends(ScopedSymbolTrackingWalker, _super);
     function ScopedSymbolTrackingWalker(sourceFile, options, languageServices) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageServices = languageServices;
-        _this.typeChecker = _this.languageServices.getProgram().getTypeChecker();
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.languageServices = languageServices;
+        this.typeChecker = this.languageServices.getProgram().getTypeChecker();
     }
     ScopedSymbolTrackingWalker.prototype.isExpressionEvaluatingToFunction = function (expression) {
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction
+            || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true;
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().NoSubstitutionTemplateLiteral
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().TemplateExpression
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().TaggedTemplateExpression
-            || expression.kind === SyntaxKind_1.SyntaxKind.current().BinaryExpression) {
+        if (expression.kind === ts.SyntaxKind.StringLiteral
+            || expression.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
+            || expression.kind === ts.SyntaxKind.TemplateExpression
+            || expression.kind === ts.SyntaxKind.TaggedTemplateExpression
+            || expression.kind === ts.SyntaxKind.BinaryExpression) {
             return false;
         }
         if (this.scope.isFunctionSymbol(expression.getText())) {
             return true;
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             var typeInfo = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null) {
                 if (typeInfo[0].kind === 'function' || typeInfo[0].kind === 'local function') {
@@ -41,7 +39,7 @@ var ScopedSymbolTrackingWalker = (function (_super) {
             }
             return false;
         }
-        if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+        if (expression.kind === ts.SyntaxKind.CallExpression) {
             if (expression.expression.name && expression.expression.name.getText() === 'bind') {
                 return true;
             }
@@ -60,7 +58,7 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         var signatures = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             var signatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === SyntaxKind_1.SyntaxKind.current().FunctionType) {
+            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
                 return true;
             }
         }
@@ -85,10 +83,10 @@ var ScopedSymbolTrackingWalker = (function (_super) {
             var prefix = AstUtils_1.AstUtils.isStatic(element)
                 ? node.name.getText() + '.'
                 : 'this.';
-            if (element.kind === SyntaxKind_1.SyntaxKind.current().MethodDeclaration) {
+            if (element.kind === ts.SyntaxKind.MethodDeclaration) {
                 _this.scope.addFunctionSymbol(prefix + element.name.getText());
             }
-            else if (element.kind === SyntaxKind_1.SyntaxKind.current().PropertyDeclaration) {
+            else if (element.kind === ts.SyntaxKind.PropertyDeclaration) {
                 var prop = element;
                 if (AstUtils_1.AstUtils.isDeclarationFunctionType(prop)) {
                     _this.scope.addFunctionSymbol(prefix + element.name.getText());

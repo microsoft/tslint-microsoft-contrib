@@ -1,5 +1,5 @@
 "use strict";
-var JsxAttribute_1 = require("../JsxAttribute");
+var JsxAttribute_1 = require('../JsxAttribute');
 var altString = 'alt';
 function getImplicitRoleForImg(node) {
     var alt = JsxAttribute_1.getJsxAttributesFromJsxElement(node)[altString];

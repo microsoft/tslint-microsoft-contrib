@@ -4,41 +4,43 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-document-domain',
+        type: 'maintainability',
+        description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
+            'validated to ensure that the value is on a list of allowed sites.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
+    };
+    Rule.FAILURE_STRING = 'Forbidden write to document.domain: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-document-domain',
-    type: 'maintainability',
-    description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
-        'validated to ensure that the value is on a list of allowed sites.',
-    options: null,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security'
-};
-Rule.FAILURE_STRING = 'Forbidden write to document.domain: ';
 var NoDocumentDomainRuleWalker = (function (_super) {
     __extends(NoDocumentDomainRuleWalker, _super);
     function NoDocumentDomainRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoDocumentDomainRuleWalker.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '='
-            && node.left.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression
+            && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
             && this.isDocumentDomainProperty(node.left)) {
             var msg = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));

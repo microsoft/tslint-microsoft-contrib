@@ -1,5 +1,5 @@
 "use strict";
-var SyntaxKind_1 = require("./SyntaxKind");
+var ts = require('typescript');
 var ChaiUtils;
 (function (ChaiUtils) {
     function isExpectInvocation(node) {
@@ -13,10 +13,10 @@ var ChaiUtils;
     function getLeftMostCallExpression(node) {
         var leftSide = node.expression;
         while (leftSide != null) {
-            if (leftSide.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return leftSide;
             }
-            else if (leftSide.kind === (SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression)) {
+            else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
                 leftSide = leftSide.expression;
             }
             else {

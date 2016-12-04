@@ -4,11 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseFormatter_1 = require("./utils/BaseFormatter");
+var BaseFormatter_1 = require('./utils/BaseFormatter');
 var Formatter = (function (_super) {
     __extends(Formatter, _super);
     function Formatter() {
-        return _super.call(this, 'no-require-imports', function (failure) {
+        _super.call(this, 'no-require-imports', function (failure) {
             var fileName = failure.getFileName();
             var fileContents = this.readFile(fileName);
             var start = failure.getStartPosition().getPosition();
@@ -26,7 +26,7 @@ var Formatter = (function (_super) {
             var newContent = leftSide + newImport + rightSide;
             this.writeFile(fileName, newContent);
             console.log('Automatically converting require-style import to an ES6 import. Please re-compile and re-lint: ' + fileName);
-        }) || this;
+        });
     }
     return Formatter;
 }(BaseFormatter_1.BaseFormatter));

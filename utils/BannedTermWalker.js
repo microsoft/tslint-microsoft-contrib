@@ -4,21 +4,21 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
-var SyntaxKind_1 = require("./SyntaxKind");
+var ts = require('typescript');
+var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
 var BannedTermWalker = (function (_super) {
     __extends(BannedTermWalker, _super);
     function BannedTermWalker(sourceFile, options, failureString, bannedTerms) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowQuotedProperties = false;
-        _this.failureString = failureString;
-        _this.bannedTerms = bannedTerms;
-        _this.getOptions().forEach(function (opt) {
+        var _this = this;
+        _super.call(this, sourceFile, options);
+        this.allowQuotedProperties = false;
+        this.failureString = failureString;
+        this.bannedTerms = bannedTerms;
+        this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
             }
         });
-        return _this;
     }
     BannedTermWalker.prototype.visitVariableDeclaration = function (node) {
         this.validateNode(node);
@@ -33,10 +33,10 @@ var BannedTermWalker = (function (_super) {
         _super.prototype.visitPropertyDeclaration.call(this, node);
     };
     BannedTermWalker.prototype.visitPropertySignature = function (node) {
-        if (node.kind === SyntaxKind_1.SyntaxKind.current().PropertySignature) {
+        if (node.kind === ts.SyntaxKind.PropertySignature) {
             var signature = node;
             var propertyName = signature.name;
-            if (this.allowQuotedProperties === false || propertyName.kind !== SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+            if (this.allowQuotedProperties === false || propertyName.kind !== ts.SyntaxKind.StringLiteral) {
                 this.validateNode(node);
             }
         }

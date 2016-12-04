@@ -4,36 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-increment-decrement',
+        type: 'maintainability',
+        description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-increment-decrement',
-    type: 'maintainability',
-    description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
 var NoIncrementDecrementWalker = (function (_super) {
     __extends(NoIncrementDecrementWalker, _super);
     function NoIncrementDecrementWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoIncrementDecrementWalker.prototype.visitPostfixUnaryExpression = function (node) {
         this.validateUnaryExpression(node);
@@ -44,10 +46,10 @@ var NoIncrementDecrementWalker = (function (_super) {
         _super.prototype.visitPrefixUnaryExpression.call(this, node);
     };
     NoIncrementDecrementWalker.prototype.validateUnaryExpression = function (node) {
-        if (node.operator === SyntaxKind_1.SyntaxKind.current().PlusPlusToken) {
+        if (node.operator === ts.SyntaxKind.PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
         }
-        else if (node.operator === SyntaxKind_1.SyntaxKind.current().MinusMinusToken) {
+        else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden -- operator'));
         }
     };

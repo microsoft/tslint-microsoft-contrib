@@ -4,48 +4,50 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var AstUtils_1 = require("./utils/AstUtils");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var AstUtils_1 = require('./utils/AstUtils');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unnecessary-bind',
+        type: 'maintainability',
+        description: 'Do not bind `this` as the context for a function literal or lambda expression.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
+    Rule.FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
+    Rule.UNDERSCORE_BINARY_FUNCTION_NAMES = [
+        'all', 'any', 'collect', 'countBy', 'detect', 'each',
+        'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
+        'map', 'max', 'max', 'min', 'partition', 'reject',
+        'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
+    ];
+    Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = [
+        'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
+    ];
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'no-unnecessary-bind',
-    type: 'maintainability',
-    description: 'Do not bind `this` as the context for a function literal or lambda expression.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
-Rule.FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
-Rule.UNDERSCORE_BINARY_FUNCTION_NAMES = [
-    'all', 'any', 'collect', 'countBy', 'detect', 'each',
-    'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
-    'map', 'max', 'max', 'min', 'partition', 'reject',
-    'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
-];
-Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = [
-    'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
-];
 var NoUnnecessaryBindRuleWalker = (function (_super) {
     __extends(NoUnnecessaryBindRuleWalker, _super);
     function NoUnnecessaryBindRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     NoUnnecessaryBindRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
@@ -79,7 +81,7 @@ var TypeScriptFunctionAnalyzer = (function () {
     TypeScriptFunctionAnalyzer.prototype.canHandle = function (node) {
         return !!(AstUtils_1.AstUtils.getFunctionName(node) === 'bind'
             && node.arguments.length === 1
-            && node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression);
+            && node.expression.kind === ts.SyntaxKind.PropertyAccessExpression);
     };
     TypeScriptFunctionAnalyzer.prototype.getContextArgument = function (node) {
         return node.arguments[0];
@@ -140,9 +142,9 @@ var UnderscoreInstanceAnalyzer = (function () {
     function UnderscoreInstanceAnalyzer() {
     }
     UnderscoreInstanceAnalyzer.prototype.canHandle = function (node) {
-        if (node.expression.kind === SyntaxKind_1.SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var propExpression = node.expression;
-            if (propExpression.expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
                 var call = propExpression.expression;
                 return call.expression.getText() === '_';
             }
@@ -178,19 +180,19 @@ var UnderscoreInstanceAnalyzer = (function () {
     return UnderscoreInstanceAnalyzer;
 }());
 function isFunctionLiteral(expression) {
-    if (expression.kind === SyntaxKind_1.SyntaxKind.current().FunctionExpression) {
+    if (expression.kind === ts.SyntaxKind.FunctionExpression) {
         return true;
     }
-    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
         return isFunctionLiteral(expression.expression);
     }
     return false;
 }
 function isArrowFunction(expression) {
-    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ArrowFunction) {
+    if (expression.kind === ts.SyntaxKind.ArrowFunction) {
         return true;
     }
-    if (expression.kind === SyntaxKind_1.SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
         return isArrowFunction(expression.expression);
     }
     return false;

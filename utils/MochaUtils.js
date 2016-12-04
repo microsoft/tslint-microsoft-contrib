@@ -1,7 +1,7 @@
 "use strict";
-var AstUtils_1 = require("./AstUtils");
-var SyntaxKind_1 = require("./SyntaxKind");
-var Utils_1 = require("./Utils");
+var ts = require('typescript');
+var AstUtils_1 = require('./AstUtils');
+var Utils_1 = require('./Utils');
 var MochaUtils;
 (function (MochaUtils) {
     function isMochaTest(node) {
@@ -11,9 +11,9 @@ var MochaUtils;
     }
     MochaUtils.isMochaTest = isMochaTest;
     function isStatementDescribeCall(statement) {
-        if (statement.kind === SyntaxKind_1.SyntaxKind.current().ExpressionStatement) {
+        if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
             var expression = statement.expression;
-            if (expression.kind === SyntaxKind_1.SyntaxKind.current().CallExpression) {
+            if (expression.kind === ts.SyntaxKind.CallExpression) {
                 var call = expression;
                 return isDescribe(call);
             }

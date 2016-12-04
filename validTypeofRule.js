@@ -4,43 +4,45 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require("tslint/lib/lint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'valid-typeof',
+        type: 'maintainability',
+        description: 'Ensures that the results of typeof are compared against a valid string.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+    Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
+    Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'valid-typeof',
-    type: 'maintainability',
-    description: 'Ensures that the results of typeof are compared against a valid string.',
-    options: null,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
-Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
 var ValidTypeofRuleWalker = (function (_super) {
     __extends(ValidTypeofRuleWalker, _super);
     function ValidTypeofRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ValidTypeofRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.left.kind === SyntaxKind_1.SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+        if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(node.right);
         }
-        else if (node.right.kind === SyntaxKind_1.SyntaxKind.current().TypeOfExpression && node.left.kind === SyntaxKind_1.SyntaxKind.current().StringLiteral) {
+        else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(node.left);
         }
         _super.prototype.visitBinaryExpression.call(this, node);

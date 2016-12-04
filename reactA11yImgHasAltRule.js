@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var JsxAttribute_1 = require("./utils/JsxAttribute");
-var TypeGuard_1 = require("./utils/TypeGuard");
+var ts = require('typescript');
+var Lint = require('tslint');
+var JsxAttribute_1 = require('./utils/JsxAttribute');
+var TypeGuard_1 = require('./utils/TypeGuard');
 var ROLE_STRING = 'role';
 var ALT_STRING = 'alt';
 function getFailureStringNoAlt(tagName) {
@@ -25,33 +25,35 @@ exports.getFailureStringNonEmptyAltAndPresentationRole = getFailureStringNonEmpt
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new ImgHasAltWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-img-has-alt',
+        type: 'maintainability',
+        description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+            'For decorative images, using empty alt attribute and role="presentation".',
+        options: 'string[]',
+        optionsDescription: '',
+        optionExamples: ['true', '[true, ["Image"]]'],
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-a11y-img-has-alt',
-    type: 'maintainability',
-    description: 'Enforce that an img element contains the non-empty alt attribute. ' +
-        'For decorative images, using empty alt attribute and role="presentation".',
-    options: 'string[]',
-    optionExamples: ['true', '[true, ["Image"]]'],
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 var ImgHasAltWalker = (function (_super) {
     __extends(ImgHasAltWalker, _super);
     function ImgHasAltWalker() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     ImgHasAltWalker.prototype.visitJsxElement = function (node) {
         this.checkJsxOpeningElement(node.openingElement);

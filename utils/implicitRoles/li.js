@@ -1,5 +1,5 @@
 "use strict";
-var TypeGuard_1 = require("../TypeGuard");
+var TypeGuard_1 = require('../TypeGuard');
 function getImplicitRoleForLi(node) {
     var parentNode = node.parent;
     var parentTagName;

@@ -4,14 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
-var Lint = require("tslint/lib/lint");
-var SyntaxKind_1 = require("./utils/SyntaxKind");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var ts = require('typescript');
+var Lint = require('tslint');
+var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
     }
     Rule.prototype.apply = function (sourceFile) {
         var documentRegistry = ts.createDocumentRegistry();
@@ -28,28 +27,29 @@ var Rule = (function (_super) {
         }
         return null;
     };
+    Rule.metadata = {
+        ruleName: 'react-no-dangerous-html',
+        type: 'maintainability',
+        description: 'Do not use React\'s dangerouslySetInnerHTML API.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-Rule.metadata = {
-    ruleName: 'react-no-dangerous-html',
-    type: 'maintainability',
-    description: 'Do not use React\'s dangerouslySetInnerHTML API.',
-    options: null,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '79, 85, 710'
-};
 var NoDangerousHtmlWalker = (function (_super) {
     __extends(NoDangerousHtmlWalker, _super);
     function NoDangerousHtmlWalker(sourceFile, options, languageServices) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageServices = languageServices;
-        _this.currentMethodName = '<unknown>';
-        return _this;
+        _super.call(this, sourceFile, options);
+        this.languageServices = languageServices;
+        this.currentMethodName = '<unknown>';
     }
     NoDangerousHtmlWalker.prototype.visitMethodDeclaration = function (node) {
         this.currentMethodName = node.name.text;
@@ -59,7 +59,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.visitPropertyAssignment = function (node) {
         _super.prototype.visitPropertyAssignment.call(this, node);
         var keyNode = node.name;
-        if (keyNode.kind === SyntaxKind_1.SyntaxKind.current().Identifier) {
+        if (keyNode.kind === ts.SyntaxKind.Identifier) {
             if (keyNode.text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, keyNode);
             }
@@ -77,7 +77,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.handleJsxOpeningElement = function (node) {
         var _this = this;
         node.attributes.forEach(function (attribute) {
-            if (attribute.kind === SyntaxKind_1.SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 var jsxAttribute = attribute;
                 var attributeName = jsxAttribute.name.text;
                 if (attributeName === 'dangerouslySetInnerHTML') {

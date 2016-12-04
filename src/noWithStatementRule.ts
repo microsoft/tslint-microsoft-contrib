@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -34,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoWithStatementWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().WithStatement) {
+        if (node.kind === ts.SyntaxKind.WithStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);

@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ChaiUtils} from './utils/ChaiUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -48,7 +47,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
-            if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+            if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
@@ -59,12 +58,12 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
             }
 
             const actualValue: ts.Node = ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue.kind === SyntaxKind.current().BinaryExpression) {
+            if (actualValue.kind === ts.SyntaxKind.BinaryExpression) {
                 const expectedValue: ts.Node = ChaiUtils.getFirstExpectationParameter(node);
                 const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
                 const operator: string = binaryExpression.operatorToken.getText();
-                const expectingBooleanKeyword: boolean = expectedValue.kind === SyntaxKind.current().TrueKeyword
-                    || expectedValue.kind === SyntaxKind.current().FalseKeyword;
+                const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
+                    || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
                 if (operator === '===' && expectingBooleanKeyword) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE));

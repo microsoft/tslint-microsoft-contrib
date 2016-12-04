@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -40,6 +39,6 @@ class UseIsnanRuleWalker extends ErrorTolerantWalker {
     }
 
     private isExpressionNaN(node: ts.Node) {
-        return node.kind === SyntaxKind.current().Identifier && node.getText() === 'NaN';
+        return node.kind === ts.SyntaxKind.Identifier && node.getText() === 'NaN';
     }
 }

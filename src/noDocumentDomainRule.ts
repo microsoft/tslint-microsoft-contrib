@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '='
-            && node.left.kind === SyntaxKind.current().PropertyAccessExpression
+            && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
             && this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)) {
             const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));

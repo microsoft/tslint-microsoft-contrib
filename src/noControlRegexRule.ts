@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -55,7 +54,7 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 const arg1: ts.Expression = expression.arguments[0];
-                if (arg1.kind === SyntaxKind.current().StringLiteral) {
+                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     if (/[\x00-\x1f]/.test(regexpText)) {
                         this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING));

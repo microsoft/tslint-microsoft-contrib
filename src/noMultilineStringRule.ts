@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoMultilineStringWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
+        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
             const fullText : string = node.getFullText();
             const firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
             const trimmed : string = firstLine.substring(0, 40).trim();

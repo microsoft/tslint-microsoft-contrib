@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
@@ -70,10 +69,10 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
         /* tslint:enable:no-increment-decrement */
             const parameter: ts.ParameterDeclaration = allParameters[i];
             const argument: ts.Expression = call.arguments[i];
-            if (argument.kind !== SyntaxKind.current().Identifier) {
+            if (argument.kind !== ts.SyntaxKind.Identifier) {
                 return false;
             }
-            if (parameter.name.kind !== SyntaxKind.current().Identifier) {
+            if (parameter.name.kind !== ts.SyntaxKind.Identifier) {
                 return false;
             }
             const argumentName: string = (<ts.Identifier>argument).text;
@@ -91,12 +90,12 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
         if (call == null) {
             return false;
         }
-        if (call.expression.kind !== SyntaxKind.current().PropertyAccessExpression) {
+        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
             return false;
         }
 
         const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>call.expression;
-        if (propAccess.expression.kind !== SyntaxKind.current().SuperKeyword) {
+        if (propAccess.expression.kind !== ts.SyntaxKind.SuperKeyword) {
             return false;
         }
 
@@ -107,9 +106,9 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
 
     private getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression {
         let expression: ts.Expression;
-        if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+        if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
             expression = (<ts.ExpressionStatement>statement).expression;
-        } else if (statement.kind === SyntaxKind.current().ReturnStatement) {
+        } else if (statement.kind === ts.SyntaxKind.ReturnStatement) {
             expression = (<ts.ReturnStatement>statement).expression;
             if (expression == null) {
                 return null; // return statements do not have to have an expression
@@ -118,12 +117,12 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
             return null;
         }
 
-        if (expression.kind !== SyntaxKind.current().CallExpression) {
+        if (expression.kind !== ts.SyntaxKind.CallExpression) {
             return null;
         }
 
         const call: ts.CallExpression = <ts.CallExpression>expression;
-        if (call.expression.kind !== SyntaxKind.current().PropertyAccessExpression) {
+        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
             return null;
         }
         return call;
@@ -131,7 +130,7 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
 
     private getMethodName(node: ts.MethodDeclaration): string {
         const nameNode: ts.Identifier | ts.LiteralExpression | ts.ComputedPropertyName = node.name;
-        if (nameNode.kind === SyntaxKind.current().Identifier) {
+        if (nameNode.kind === ts.SyntaxKind.Identifier) {
             return (<ts.Identifier>nameNode).text;
         }
         return '<unknown>';

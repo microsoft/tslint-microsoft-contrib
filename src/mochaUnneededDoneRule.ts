@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 import {MochaUtils} from './utils/MochaUtils';
 
@@ -72,14 +71,14 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
     }
 
     private isIdentifierInvokedDirectlyInBody(doneIdentifier: ts.Identifier, node: ts.FunctionLikeDeclaration): boolean {
-        if (node.body == null || node.body.kind !== SyntaxKind.current().Block) {
+        if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
             return;
         }
         const block: ts.Block = <ts.Block>node.body;
         return Utils.exists(block.statements, (statement: ts.Statement): boolean => {
-            if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+            if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                 const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                if (expression.kind === SyntaxKind.current().CallExpression) {
+                if (expression.kind === ts.SyntaxKind.CallExpression) {
                     const leftHandSideExpression: ts.Expression = (<ts.CallExpression>expression).expression;
                     return leftHandSideExpression.getText() === doneIdentifier.getText();
                 }
@@ -100,7 +99,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
             return parameter.name.getText() === 'done';
         });
 
-        if (allDones.length === 0 || allDones[0].name.kind !== SyntaxKind.current().Identifier) {
+        if (allDones.length === 0 || allDones[0].name.kind !== ts.SyntaxKind.Identifier) {
             return null;
         }
         return <ts.Identifier>allDones[0].name;

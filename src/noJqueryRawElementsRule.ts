@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
@@ -38,7 +37,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         const functionName: string = AstUtils.getFunctionName(node);
         if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
-            if (firstArg.kind === SyntaxKind.current().StringLiteral) {
+            if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
                 if (this.isComplexHtmlElement(<ts.StringLiteral>firstArg)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText()));
                 }

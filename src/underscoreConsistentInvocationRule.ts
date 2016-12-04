@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -80,9 +79,9 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
     }
 
     private isStaticUnderscoreInstanceInvocation(node: ts.CallExpression) {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
-            if (propExpression.expression.kind === SyntaxKind.current().CallExpression) {
+            if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 const target: string = AstUtils.getFunctionTarget(call);
                 const functionName: string = AstUtils.getFunctionName(call);

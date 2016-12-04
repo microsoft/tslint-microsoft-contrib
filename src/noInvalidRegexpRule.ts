@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -44,7 +43,7 @@ class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 const arg1: ts.Expression = expression.arguments[0];
-                if (arg1.kind === SyntaxKind.current().StringLiteral) {
+                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     try {
                         /* tslint:disable:no-unused-new */

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
@@ -36,11 +35,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class PromiseAnalyzer extends ErrorTolerantWalker {
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
-        if (node.expression.kind === SyntaxKind.current().Identifier
+        if (node.expression.kind === ts.SyntaxKind.Identifier
             && node.expression.getText() === 'Promise'
             && node.arguments != null && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
-            if (firstArg.kind === SyntaxKind.current().ArrowFunction || firstArg.kind === SyntaxKind.current().FunctionExpression) {
+            if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
                 return true;
             }
         }
@@ -55,10 +54,10 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 
         const arg1: ts.ParameterDeclaration = declaration.parameters[0];
         const arg2: ts.ParameterDeclaration = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === SyntaxKind.current().Identifier) {
+        if (arg1 != null && arg1.name.kind === ts.SyntaxKind.Identifier) {
             result.push(<ts.Identifier>declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === SyntaxKind.current().Identifier) {
+        if (arg2 != null && arg2.name.kind === ts.SyntaxKind.Identifier) {
             result.push(<ts.Identifier>declaration.parameters[1].name);
         }
         return result;
@@ -135,7 +134,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === SyntaxKind.current().Identifier) {
+        if (node.expression.kind === ts.SyntaxKind.Identifier) {
             if (this.isCompletionIdentifier(node.expression)) {
                 this.wasCompleted = true;
                 return; // this branch was completed, do not walk any more.

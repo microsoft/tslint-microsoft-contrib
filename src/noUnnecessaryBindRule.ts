@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -80,7 +79,7 @@ class TypeScriptFunctionAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
         return !!(AstUtils.getFunctionName(node) === 'bind'
             && node.arguments.length === 1
-            && node.expression.kind === SyntaxKind.current().PropertyAccessExpression);
+            && node.expression.kind === ts.SyntaxKind.PropertyAccessExpression);
     }
 
     public getContextArgument(node: ts.CallExpression): ts.Expression {
@@ -135,9 +134,9 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
 
 class UnderscoreInstanceAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
-            if (propExpression.expression.kind === SyntaxKind.current().CallExpression) {
+            if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 return call.expression.getText() === '_';
             }
@@ -172,20 +171,20 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
 }
 
 function isFunctionLiteral(expression: ts.Expression): boolean {
-    if (expression.kind === SyntaxKind.current().FunctionExpression) {
+    if (expression.kind === ts.SyntaxKind.FunctionExpression) {
         return true;
     }
-    if (expression.kind === SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
         return isFunctionLiteral((<ts.ParenthesizedExpression>expression).expression);
     }
     return false;
 }
 
 function isArrowFunction(expression: ts.Expression): boolean {
-    if (expression.kind === SyntaxKind.current().ArrowFunction) {
+    if (expression.kind === ts.SyntaxKind.ArrowFunction) {
         return true;
     }
-    if (expression.kind === SyntaxKind.current().ParenthesizedExpression) {
+    if (expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
         return isArrowFunction((<ts.ParenthesizedExpression>expression).expression);
     }
     return false;

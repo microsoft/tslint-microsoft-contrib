@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class UseNamedParameterWalker extends ErrorTolerantWalker {
     protected visitElementAccessExpression(node: ts.ElementAccessExpression): void {
         if (node.argumentExpression != null) {
-            if (node.argumentExpression.kind === SyntaxKind.current().NumericLiteral) {
+            if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     const failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
                     const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);

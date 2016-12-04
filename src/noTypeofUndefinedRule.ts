@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Prefer x == undefined or x === undefined: ';
@@ -45,11 +44,11 @@ class NoTypeofUndefinedRuleWalker extends ErrorTolerantWalker {
     }
 
     private isTypeOfExpression(node: ts.Node): boolean {
-        return node.kind === SyntaxKind.current().TypeOfExpression;
+        return node.kind === ts.SyntaxKind.TypeOfExpression;
     }
 
     private isUndefinedString(node: ts.Node): boolean {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral) {
             if ((<ts.StringLiteral>node).text === 'undefined') {
                 return true;
             }

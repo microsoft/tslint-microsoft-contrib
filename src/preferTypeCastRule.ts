@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
@@ -41,7 +40,7 @@ class PreferTypeCastRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().AsExpression) {
+        if (node.kind === ts.SyntaxKind.AsExpression) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
         }
         super.visitNode(node);

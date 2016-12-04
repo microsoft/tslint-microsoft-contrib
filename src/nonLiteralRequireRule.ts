@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 
@@ -41,14 +40,14 @@ class NonLiteralRequireRuleWalker extends ErrorTolerantWalker {
             && AstUtils.getFunctionTarget(node) == null
             && node.arguments.length > 0) {
 
-            if (node.arguments[0].kind === SyntaxKind.current().ArrayLiteralExpression) {
+            if (node.arguments[0].kind === ts.SyntaxKind.ArrayLiteralExpression) {
                 const arrayExp: ts.ArrayLiteralExpression = <ts.ArrayLiteralExpression>node.arguments[0];
                 arrayExp.elements.forEach((initExpression: ts.Expression): void => {
-                    if (initExpression.kind !== SyntaxKind.current().StringLiteral) {
+                    if (initExpression.kind !== ts.SyntaxKind.StringLiteral) {
                         this.fail(initExpression);
                     }
                 });
-            } else if (node.arguments[0].kind !== SyntaxKind.current().StringLiteral) {
+            } else if (node.arguments[0].kind !== ts.SyntaxKind.StringLiteral) {
                 this.fail(node.arguments[0]);
             }
         }

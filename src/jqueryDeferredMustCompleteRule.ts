@@ -4,7 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -36,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 function isPromiseInstantiation(expression: ts.Expression) : boolean {
-    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
+    if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
         const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
         const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
@@ -54,7 +53,7 @@ function isCompletionFunction(functionName : string) : boolean {
 class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
-            if (node.left.kind === SyntaxKind.current().Identifier) {
+            if (node.left.kind === ts.SyntaxKind.Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
                     const name : ts.Identifier = <ts.Identifier>node.left;
                     this.validateDeferredUsage(node, name);
@@ -138,7 +137,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const prop : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
 
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {

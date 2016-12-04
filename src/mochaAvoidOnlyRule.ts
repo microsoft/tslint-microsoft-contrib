@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {MochaUtils} from './utils/MochaUtils';
 
@@ -45,11 +44,11 @@ class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             if (node.arguments.length === 2) {
-                if (node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
-                    if (node.arguments[1].kind === SyntaxKind.current().FunctionExpression
-                        || node.arguments[1].kind === SyntaxKind.current().ArrowFunction) {
+                if (node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
+                    if (node.arguments[1].kind === ts.SyntaxKind.FunctionExpression
+                        || node.arguments[1].kind === ts.SyntaxKind.ArrowFunction) {
                         if (node.expression.getText() === 'it.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT));
                         } else if (node.expression.getText() === 'specify.only') {

@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -37,7 +36,7 @@ class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
     protected visitSwitchStatement(node: ts.SwitchStatement): void {
         const seenLabels: string[] = [];
         node.caseBlock.clauses.forEach((clauseOrDefault: ts.CaseOrDefaultClause): void => {
-            if (clauseOrDefault.kind === SyntaxKind.current().CaseClause) {
+            if (clauseOrDefault.kind === ts.SyntaxKind.CaseClause) {
                 const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;
                 if (clause.expression != null) {
                     const caseText = clause.expression.getText();

@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 
 import { getJsxAttributesFromJsxElement,
@@ -74,9 +73,9 @@ function isRelAttributeValue(attribute: ts.JsxAttribute): boolean {
         return false;
     }
 
-    if (attribute.initializer.kind === SyntaxKind.current().JsxExpression) {
+    if (attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
         const expression: ts.JsxExpression = <ts.JsxExpression>attribute.initializer;
-        if (expression.expression != null && expression.expression.kind !== SyntaxKind.current().StringLiteral) {
+        if (expression.expression != null && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
             return true; // attribute value is not a string literal, so do not validate
         }
     }

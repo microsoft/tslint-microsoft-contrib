@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -36,10 +35,10 @@ class NoDeleteExpression extends ErrorTolerantWalker {
 
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);
-        if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
+        if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             const deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject != null && deletedObject.kind === SyntaxKind.current().Identifier) {
+            if (deletedObject != null && deletedObject.kind === ts.SyntaxKind.Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

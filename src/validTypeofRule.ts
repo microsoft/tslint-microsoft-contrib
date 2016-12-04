@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -36,9 +35,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ValidTypeofRuleWalker extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.left.kind === SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind.current().StringLiteral) {
+        if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(<ts.StringLiteral>node.right);
-        } else if (node.right.kind === SyntaxKind.current().TypeOfExpression && node.left.kind === SyntaxKind.current().StringLiteral) {
+        } else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(<ts.StringLiteral>node.left);
         }
         super.visitBinaryExpression(node);

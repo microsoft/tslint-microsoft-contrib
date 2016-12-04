@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -39,7 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral) {
             const stringText : string = (<ts.LiteralExpression>node).text;
             if (/.*http:.*/.test(stringText)) {
                 if (!this.isSuppressed(stringText)) {

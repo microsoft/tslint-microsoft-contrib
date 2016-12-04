@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -58,13 +57,13 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
         const name: string = node.name.text;
 
-        if (node.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {
+        if (node.moduleReference.kind === ts.SyntaxKind.ExternalModuleReference) {
             const moduleRef: ts.ExternalModuleReference = <ts.ExternalModuleReference>node.moduleReference;
-            if (moduleRef.expression.kind === SyntaxKind.current().StringLiteral) {
+            if (moduleRef.expression.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>moduleRef.expression).text;
                 this.validateImport(node, name, moduleName);
             }
-        } else if (node.moduleReference.kind === SyntaxKind.current().QualifiedName) {
+        } else if (node.moduleReference.kind === ts.SyntaxKind.QualifiedName) {
             let moduleName = node.moduleReference.getText();
             moduleName = moduleName.replace(/.*\./, ''); // chop off the qualified parts
             this.validateImport(node, name, moduleName);
@@ -75,7 +74,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
         if (node.importClause.name != null) {
             const name: string = node.importClause.name.text;
-            if (node.moduleSpecifier.kind === SyntaxKind.current().StringLiteral) {
+            if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;
                 this.validateImport(node, name, moduleName);
             }

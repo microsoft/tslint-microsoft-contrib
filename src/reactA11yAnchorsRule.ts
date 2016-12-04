@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 import {getImplicitRole} from './utils/getImplicitRole';
 import {
@@ -145,11 +144,11 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         let attributeValue: string;
 
         attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 if (jsxAttribute.name.getText() === attributeName &&
                     jsxAttribute.initializer &&
-                    jsxAttribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                    jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     const literal: ts.StringLiteral = <ts.StringLiteral>jsxAttribute.initializer;
 
                     attributeValue = literal.text;
@@ -162,21 +161,21 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
     private anchorText(root: ts.Node): string {
         let title: string = '';
-        if (root.kind === SyntaxKind.current().JsxElement) {
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             jsxElement.children.forEach((child: ts.JsxChild): void => {
                 title += this.anchorText(child);
             });
-        } else if (root.kind === SyntaxKind.current().JsxText) {
+        } else if (root.kind === ts.SyntaxKind.JsxText) {
             const jsxText: ts.JsxText = <ts.JsxText>root;
             title += jsxText.getText();
-        } else if (root.kind === SyntaxKind.current().StringLiteral) {
+        } else if (root.kind === ts.SyntaxKind.StringLiteral) {
             const literal: ts.StringLiteral = <ts.StringLiteral>root;
             title += literal.text;
-        } else if (root.kind === SyntaxKind.current().JsxExpression) {
+        } else if (root.kind === ts.SyntaxKind.JsxExpression) {
             const expression: ts.JsxExpression = <ts.JsxExpression>root;
             title += this.anchorText(expression.expression);
-        } else if (root.kind !== SyntaxKind.current().JsxSelfClosingElement) {
+        } else if (root.kind !== ts.SyntaxKind.JsxSelfClosingElement) {
             title += '<unknown>';
         }
 
@@ -196,7 +195,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
     private imageAlt(root: ts.Node): string {
         let altText: string = '';
-        if (root.kind === SyntaxKind.current().JsxElement) {
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             altText += this.imageAltAttribute(jsxElement.openingElement);
 
@@ -205,7 +204,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             });
         }
 
-        if (root.kind === SyntaxKind.current().JsxSelfClosingElement) {
+        if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             const jsxSelfClosingElement: ts.JsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
             altText += this.imageAltAttribute(jsxSelfClosingElement);
         }

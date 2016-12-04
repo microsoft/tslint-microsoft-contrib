@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
@@ -43,8 +42,8 @@ class NoVarSelfRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (node.initializer != null && node.initializer.kind === SyntaxKind.current().ThisKeyword) {
-            if (node.name.kind === SyntaxKind.current().Identifier) {
+        if (node.initializer != null && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
+            if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const identifier: ts.Identifier = <ts.Identifier>node.name;
                 if (this.bannedVariableNames.test(identifier.text)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));

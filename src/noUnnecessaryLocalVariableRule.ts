@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary local variable: ';
@@ -54,7 +53,7 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
-        if (node.body != null && node.body.kind === SyntaxKind.current().ModuleBlock) {
+        if (node.body != null && node.body.kind === ts.SyntaxKind.ModuleBlock) {
             this.validateStatementArray((<ts.ModuleBlock>node.body).statements);
         }
         super.visitModuleDeclaration(node);
@@ -80,12 +79,12 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
     }
 
     private tryToGetDeclaredVariableName(statement: ts.Statement): string {
-        if (statement != null && statement.kind === SyntaxKind.current().VariableStatement) {
+        if (statement != null && statement.kind === ts.SyntaxKind.VariableStatement) {
             const variableStatement: ts.VariableStatement = <ts.VariableStatement>statement;
 
             if (variableStatement.declarationList.declarations.length === 1) {
                 const declaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
-                if (declaration.name != null && declaration.name.kind === SyntaxKind.current().Identifier) {
+                if (declaration.name != null && declaration.name.kind === ts.SyntaxKind.Identifier) {
                     return (<ts.Identifier>declaration.name).text;
                 }
             }
@@ -94,9 +93,9 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
     }
 
     private tryToGetReturnedVariableName(statement: ts.Statement): string {
-        if (statement != null && statement.kind === SyntaxKind.current().ReturnStatement) {
+        if (statement != null && statement.kind === ts.SyntaxKind.ReturnStatement) {
             const returnStatement: ts.ReturnStatement = <ts.ReturnStatement>statement;
-            if (returnStatement.expression != null && returnStatement.expression.kind === SyntaxKind.current().Identifier) {
+            if (returnStatement.expression != null && returnStatement.expression.kind === ts.SyntaxKind.Identifier) {
                 return (<ts.Identifier>returnStatement.expression).text;
             }
         }

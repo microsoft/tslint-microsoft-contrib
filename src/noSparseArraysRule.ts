@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -37,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoSparseArraysRuleWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().ArrayLiteralExpression) {
+        if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             if (this.isSparseArray(<ts.ArrayLiteralExpression>node)) {
                 this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
             }
@@ -47,7 +46,7 @@ class NoSparseArraysRuleWalker extends ErrorTolerantWalker {
 
     private isSparseArray(node: ts.ArrayLiteralExpression): boolean {
         return Utils.exists(node.elements, (element: ts.Node): boolean => {
-            return element.kind === SyntaxKind.current().OmittedExpression;
+            return element.kind === ts.SyntaxKind.OmittedExpression;
         });
     }
 }

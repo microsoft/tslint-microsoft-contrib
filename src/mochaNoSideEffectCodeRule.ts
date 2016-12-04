@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {MochaUtils} from './utils/MochaUtils';
 import {Utils} from './utils/Utils';
@@ -58,7 +57,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         if (MochaUtils.isMochaTest(node)) {
             node.statements.forEach((statement: ts.Statement): void => {
                 // validate variable declarations in global scope
-                if (statement.kind === SyntaxKind.current().VariableStatement) {
+                if (statement.kind === ts.SyntaxKind.VariableStatement) {
                     const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
                     declarationList.declarations.forEach((declaration: ts.VariableDeclaration): void => {
                         this.validateExpression(declaration.initializer, declaration);
@@ -115,12 +114,12 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
             return;
         }
         // function expressions are not executed now and will not throw an error
-        if (initializer.kind === SyntaxKind.current().FunctionExpression
-            || initializer.kind === SyntaxKind.current().ArrowFunction) {
+        if (initializer.kind === ts.SyntaxKind.FunctionExpression
+            || initializer.kind === ts.SyntaxKind.ArrowFunction) {
             return;
         }
         // empty arrays and arrays filled with constants are allowed
-        if (initializer.kind === SyntaxKind.current().ArrayLiteralExpression) {
+        if (initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             const arrayLiteral: ts.ArrayLiteralExpression = <ts.ArrayLiteralExpression>initializer;
             arrayLiteral.elements.forEach((expression: ts.Expression): void => {
                 this.validateExpression(expression, parentNode);
@@ -128,29 +127,29 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
             return;
         }
         // template strings are OK (it is too hard to analyze a template string fully)
-        if (initializer.kind === SyntaxKind.current().FirstTemplateToken) {
+        if (initializer.kind === ts.SyntaxKind.FirstTemplateToken) {
             return;
         }
         // type assertions are OK, but check the initializer
-        if (initializer.kind === SyntaxKind.current().TypeAssertionExpression) {
+        if (initializer.kind === ts.SyntaxKind.TypeAssertionExpression) {
             const assertion: ts.TypeAssertion = <ts.TypeAssertion>initializer;
             this.validateExpression(assertion.expression, parentNode);
             return;
         }
         // Property aliasing is OK
-        if (initializer.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (initializer.kind === ts.SyntaxKind.PropertyAccessExpression) {
             return;
         }
         // simple identifiers are OK
-        if (initializer.kind === SyntaxKind.current().Identifier) {
+        if (initializer.kind === ts.SyntaxKind.Identifier) {
             return;
         }
         // a simple object literal can contain many violations
-        if (initializer.kind === SyntaxKind.current().ObjectLiteralExpression) {
+        if (initializer.kind === ts.SyntaxKind.ObjectLiteralExpression) {
             const literal: ts.ObjectLiteralExpression = <ts.ObjectLiteralExpression>initializer;
 
             literal.properties.forEach((element: ts.ObjectLiteralElement): void => {
-                if (element.kind === SyntaxKind.current().PropertyAssignment) {
+                if (element.kind === ts.SyntaxKind.PropertyAssignment) {
                     const assignment: ts.PropertyAssignment = <ts.PropertyAssignment>element;
                     this.validateExpression(assignment.initializer, parentNode);
                 }
@@ -161,12 +160,12 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         if (initializer.getText() === 'moment()') {
             return;
         }
-        if (initializer.kind === SyntaxKind.current().CallExpression
+        if (initializer.kind === ts.SyntaxKind.CallExpression
                 && AstUtils.getFunctionTarget(<ts.CallExpression>initializer) === 'moment()') {
             return;
         }
         // new Date is OK
-        if (initializer.kind === SyntaxKind.current().NewExpression) {
+        if (initializer.kind === ts.SyntaxKind.NewExpression) {
             if (AstUtils.getFunctionName(<ts.NewExpression>initializer) === 'Date') {
                 return;
             }

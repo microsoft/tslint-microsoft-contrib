@@ -38,7 +38,7 @@
     "load-grunt-tasks": "3.2.0",
     "mocha": "2.2.5",
     "time-grunt": "1.2.1",
-    "tslint": "3.14.0",
+    "tslint": "4.0.1",
     "typescript": "2.1.1",
     "underscore": "1.8.3"
   },

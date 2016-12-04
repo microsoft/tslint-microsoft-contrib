@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
@@ -24,6 +24,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When using React components you must be careful to correctly bind the `this` reference ' +
                      'on any methods that you pass off to child components as callbacks.',
         options: null,
+        optionsDescription: "",
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',

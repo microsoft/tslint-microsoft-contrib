@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {SyntaxKind} from './SyntaxKind';
 

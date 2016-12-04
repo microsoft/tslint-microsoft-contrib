@@ -3,7 +3,9 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"target": "es5",
-		"outDir": "dist"
+		"outDir": "dist",
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
 	},
 	"exclude": [
 		".tscache",

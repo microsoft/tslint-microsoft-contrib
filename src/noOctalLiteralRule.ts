@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use octal literals or escaped octal sequences',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -23,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Security'
     };
 
-    public static FAILURE_STRING = 'Octal literals should not be used: ';
+    public static FAILURE_STRING: string = 'Octal literals should not be used: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());

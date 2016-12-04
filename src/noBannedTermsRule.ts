@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use banned terms: caller, callee, eval, arguments.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '676, 242, 116'
     };
 
-    private static FAILURE_STRING = 'Forbidden reference to banned term: ';
+    private static FAILURE_STRING: string = 'Forbidden reference to banned term: ';
     private static BANNED_TERMS : string[] = [ 'caller', 'callee', 'arguments', 'eval' ];
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {

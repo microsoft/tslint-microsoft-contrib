@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
         /* tslint:enable:no-http-string */
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '319'
     };
 
-    public static FAILURE_STRING = 'Forbidden http url in string: ';
+    public static FAILURE_STRING: string = 'Forbidden http url in string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));

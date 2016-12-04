@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not bind `this` as the context for a function literal or lambda expression.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -25,8 +25,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
-    public static FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
+    public static FAILURE_FUNCTION_WITH_BIND: string = 'Binding function literal with \'this\' context. Use lambdas instead';
+    public static FAILURE_ARROW_WITH_BIND: string = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
 
     public static UNDERSCORE_BINARY_FUNCTION_NAMES: string[] = [
         'all', 'any', 'collect', 'countBy', 'detect', 'each',

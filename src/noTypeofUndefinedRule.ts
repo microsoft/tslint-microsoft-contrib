@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
                     'or perhaps x == null if you want to check for either null or undefined.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

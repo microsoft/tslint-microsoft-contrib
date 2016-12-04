@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Use const to declare variables if they are only assigned a value once.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -25,8 +25,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 705, 710'
     };
 
-    public static FAILURE_STRING_FACTORY = (identifier: string) => `Identifier '${identifier}' never appears ` +
-        'on the LHS of an assignment - use const instead of let for its declaration.';
+    public static FAILURE_STRING_FACTORY: (identifier: string) => string =
+        (identifier: string) => `Identifier '${identifier}' never appears ` +
+            'on the LHS of an assignment - use const instead of let for its declaration.';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));

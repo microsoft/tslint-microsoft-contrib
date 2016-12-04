@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',

@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -24,10 +24,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
-    public static FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
-    public static FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
-    public static FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
+    public static FAILURE_STRING_IT: string = 'Do not commit Mocha it.only function call';
+    public static FAILURE_STRING_SPECIFY: string = 'Do not commit Mocha specify.only function call';
+    public static FAILURE_STRING_DESCRIBE: string = 'Do not commit Mocha describe.only function call';
+    public static FAILURE_STRING_CONTEXT: string = 'Do not commit Mocha context.only function call';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));

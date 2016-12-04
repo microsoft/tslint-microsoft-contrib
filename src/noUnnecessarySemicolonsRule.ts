@@ -8,14 +8,14 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
  * Implementation of the no-unnecessary-semicolons rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'unnecessary semi-colon';
+    public static FAILURE_STRING: string = 'unnecessary semi-colon';
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-semicolons',
         type: 'maintainability',
         description: 'Remove unnecessary semicolons',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

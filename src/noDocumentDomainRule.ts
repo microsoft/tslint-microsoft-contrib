@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
                     'validated to ensure that the value is on a list of allowed sites.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Security'
     };
 
-    public static FAILURE_STRING = 'Forbidden write to document.domain: ';
+    public static FAILURE_STRING: string = 'Forbidden write to document.domain: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));

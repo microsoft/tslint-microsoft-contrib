@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

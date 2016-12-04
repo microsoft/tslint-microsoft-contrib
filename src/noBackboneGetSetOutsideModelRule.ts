@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -28,8 +28,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
-    public static SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
+    public static GET_FAILURE_STRING: string = 'Backbone get() called outside of owning model: ';
+    public static SET_FAILURE_STRING: string = 'Backbone set() called outside of owning model: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoBackboneGetSetOutsideModelRuleWalker(sourceFile, this.getOptions()));

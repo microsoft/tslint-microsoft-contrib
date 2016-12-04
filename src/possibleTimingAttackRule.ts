@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

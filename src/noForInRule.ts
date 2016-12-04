@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid use of for-in statements. They can be replaced by Object.keys',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -24,10 +24,11 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_STRING_FACTORY = (initializer: string, expression: string ) => {
-        //tslint:disable-next-line:max-line-length
-        return `Do not use the 'for in' statement: 'for (${initializer} in ${expression})'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.`;
-    }
+    public static FAILURE_STRING_FACTORY: (initializer: string, expression: string) => string =
+        (initializer: string, expression: string ) => {
+            //tslint:disable-next-line:max-line-length
+            return `Do not use the 'for in' statement: 'for (${initializer} in ${expression})'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.`;
+        };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));

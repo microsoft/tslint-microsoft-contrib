@@ -4,7 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-const FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
+const FAILURE_STRING: string = 'Unnecessary method override. A method that only calls super can be removed: ';
 
 /**
  * Implementation of the no-unnecessary-override rule.
@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not write a method that only calls super() on the parent method with the same arguments.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

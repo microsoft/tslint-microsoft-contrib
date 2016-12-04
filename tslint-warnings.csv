@@ -1,6 +1,8 @@
 Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,SDL Level,Resolution,SDL Procedure,CWE,CWE Description
+adjacent-overload-signatures,Enforces function overloads to be consecutive.,TSLINT1DG2LLU,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 align,Enforces vertical alignment.,TSLINTT6VKI6,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+array-type,Requires using either 'T[]' or 'Array<T>' for arrays.,TSLINT11L733J,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 arrow-parens,Requires parentheses around the parameters of arrow function definitions.,TSLINT1SCM8RK,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 chai-prefer-contains-to-index-of,Avoid Chai assertions that invoke indexOf and compare for a -1 result.,TSLINTCSVNDE,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
@@ -10,8 +12,11 @@ class-name,Enforces PascalCased class and interface names.,TSLINT65UF71,tslint,N
 CWE 710 - Coding Standards Violation"
 comment-format,Enforces formatting rules for single-line comments.,TSLINT1T6OE84,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+completed-docs,Enforces documentation for important items be filled out.,TSLINTTVUOIS,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 curly,Enforces braces for `if`/`for`/`do`/`while` statements.,TSLINTT90EOE,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"483, 710","CWE 483 - Incorrect Block Delimitation
 CWE 710 - Coding Standards Violation"
+cyclomatic-complexity,Enforces a threshold of cyclomatic complexity.,TSLINT1F0UAB2,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
+file-header,"Enforces a certain header comment for all files, matched by a regular expression.",TSLINT28UJV,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 forin,Requires a `for ... in` statement to be filtered with an `if` statement.,TSLINTTBFHNF,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 function-name,Applies a naming convention to function names and method names,TSLINTN7VHIV,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
@@ -25,9 +30,9 @@ jquery-deferred-must-complete,"When a JQuery Deferred instance is created, then 
 jsdoc-format,Enforces basic format rules for JSDoc comments.,TSLINTK8SOHC,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 label-position,Only allows labels in sensible locations.,TSLINT1SMBSHV,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,670,"CWE 670 - Always-Incorrect Control Flow Implementation"
-label-undefined,Checks that labels are defined before usage.,TSLINT1BFJ028,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,670,"CWE 670 - Always-Incorrect Control Flow Implementation"
 linebreak-style,Enforces a consistent linebreak style.,TSLINT1QRFV7G,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+max-classes-per-file,A file may not contain more than the specified number of classes,TSLINT1DB5DER,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 max-file-line-count,Requires files to remain under a certain number of lines,TSLINT1RKDRG1,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 max-func-body-length,Avoid long functions.,TSLINT51G41G,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
@@ -55,14 +60,13 @@ no-bitwise,Disallows bitwise operators.,TSLINT1T99MRS,tslint,Non-SDL,Warning,Low
 no-conditional-assignment,Disallows any type of assignment in conditionals.,TSLINT1MA2BM1,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"480, 481, 710","CWE 480 - Use of Incorrect Operator
 CWE 481 - Assigning instead of Comparing
 CWE 710 - Coding Standards Violation"
-no-consecutive-blank-lines,Disallows more than one blank line in a row.,TSLINTQ1NU8A,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
+no-consecutive-blank-lines,Disallows one or more blank lines in a row.,TSLINTQ1NU8A,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 no-console,Bans the use of specified `console` methods.,TSLINTTSFLAM,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 no-constant-condition,Do not use constant expressions in conditions.,TSLINTOVHK81,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 570, 571, 670","CWE 398 - Indicator of Poor Code Quality
 CWE 570 - Expression is Always False
 CWE 571 - Expression is Always True
 CWE 670 - Always-Incorrect Control Flow Implementation"
 no-construct,"Disallows access to the constructors of `String`, `Number`, and `Boolean`.",TSLINT1KDSNSM,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
-no-constructor-vars,Disallows parameter properties.,TSLINTSUN8UK,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 no-control-regex,Do not use control characters in regular expressions,TSLINT17HJQNA,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-cookies,Do not use cookies,TSLINTTRQU0U,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"315, 539, 565, 614","CWE 315 - Cleartext Storage of Sensitive Information in a Cookie
 CWE 539 - Information Exposure Through Persistent Cookies
@@ -83,7 +87,6 @@ no-document-write,Do not use document.write,TSLINTMGIOVQ,tslint,SDL,Error,Critic
 CWE 85 - Doubled Character XSS Manipulations"
 no-duplicate-case,Do not use duplicate case labels in switch statements.,TSLINT3MSPFV,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-no-duplicate-key,Disallows duplicate keys in object literals.,TSLINT8C37DG,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-duplicate-variable,Disallows duplicate variable declarations in the same block scope.,TSLINT6TMGHL,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-empty,Disallows empty blocks.,TSLINTJ99V50,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-empty-interfaces,Do not use empty interfaces.,TSLINT1L2THN7,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
@@ -115,6 +118,7 @@ no-jquery-raw-elements,Do not create HTML elements using JQuery and string conca
 CWE 710 - Coding Standards Violation"
 no-multiline-string,Do not declare multiline strings,TSLINT10K5P9U,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 no-octal-literal,Do not use octal literals or escaped octal sequences,TSLINT1F5BIM0,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
+no-parameter-properties,Disallows parameter properties in class constructors.,TSLINT1FFCD4S,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-regex-spaces,Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule,TSLINT1T5TJ80,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-reserved-keywords,"Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.",TSLINT14J77I2,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-shadowed-variable,Disallows shadowing variable declarations.,TSLINTH3IPT3,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
@@ -155,7 +159,6 @@ no-unnecessary-override,Do not write a method that only calls super() on the par
 CWE 710 - Coding Standards Violation"
 no-unnecessary-semicolons,Remove unnecessary semicolons,TSLINTEL0RJQ,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-no-unreachable,"Disallows unreachable code after `break`, `catch`, `throw`, and `return` statements.",TSLINT1Q60BL7,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-unsafe-finally,"Disallows control flow statements, such as `return`, `continue`, `break` and `throws` in finally blocks.",TSLINT1QMOM2N,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 584, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 584 - Return Inside Finally Block
 CWE 710 - Coding Standards Violation"
@@ -184,6 +187,7 @@ non-literal-require,Detect require includes that are not for string literals,TSL
 CWE 676 - Use of Potentially Dangerous Function"
 object-literal-key-quotes,Enforces consistent object literal property quote style.,TSLINT1HEHPBE,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+object-literal-shorthand,Enforces use of ES6 object literal shorthand when possible.,TSLINT1QKHNQU,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 one-line,Requires the specified tokens to be on the same line as the expression preceding them.,TSLINT1KDV90Q,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 one-variable-per-declaration,Disallows multiple variable definitions in the same declaration statement.,TSLINTSULIR1,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
@@ -197,6 +201,7 @@ CWE 710 - Coding Standards Violation"
 prefer-const,Use const to declare variables if they are only assigned a value once.,TSLINTGOC17R,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 705, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 705 - Incorrect Control Flow Scoping
 CWE 710 - Coding Standards Violation"
+prefer-for-of,Recommends a 'for-of' loop over a standard 'for' loop if the index is only used to access the array being iterated.,TSLINT51MHG7,tslint,,,,,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 promise-must-complete,"When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope.",TSLINT4SIARK,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 quotemark,Requires single or double quotes for string literals.,TSLINTU8MMGA,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
@@ -234,7 +239,7 @@ CWE 710 - Coding Standards Violation"
 switch-default,Require a `default` case in all `switch` statements.,TSLINTKNBMK7,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 474, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 474 - Use of Function with Inconsistent Implementations
 CWE 710 - Coding Standards Violation"
-trailing-comma,"Requires or disallows trailing commas in array and object literals, destructuring assignments and named imports.",TSLINT1R9EG1T,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
+trailing-comma,"Requires or disallows trailing commas in array and object literals, destructuring assignments, function and tuple typings, named imports and function parameters.",TSLINT1R9EG1T,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 triple-equals,Requires `===` and `!==` in place of `==` and `!=`.,TSLINT1A3MGIF,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 typedef,Requires type definitions to exist.,TSLINT1GMMOCC,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
@@ -245,9 +250,6 @@ underscore-consistent-invocation,Enforce a consistent usage of the _ functions,T
 CWE 710 - Coding Standards Violation"
 use-isnan,Enforces use of the `isNaN()` function to check for NaN references instead of a comparison to the `NaN` constant.,TSLINTPUV7LC,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 use-named-parameter,"Do not reference the arguments object by numerical index; instead, use a named parameter.",TSLINTKPEHQG,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
-use-strict,Requires using ECMAScript 5's strict mode.,TSLINT1DI9CPE,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 705, 710","CWE 398 - Indicator of Poor Code Quality
-CWE 705 - Incorrect Control Flow Scoping
-CWE 710 - Coding Standards Violation"
 valid-typeof,Ensures that the results of typeof are compared against a valid string.,TSLINT1IB59P1,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 variable-name,Checks variable names for various errors.,TSLINT1CIV7K3,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"

@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',

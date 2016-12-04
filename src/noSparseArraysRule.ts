@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple ' +
                     'commas being used in an array literal.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_STRING = 'Unexpected comma in middle of array';
+    public static FAILURE_STRING: string = 'Unexpected comma in middle of array';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoSparseArraysRuleWalker(sourceFile, this.getOptions()));

@@ -6,9 +6,11 @@ import {ChaiUtils} from './utils/ChaiUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const BASE_ERROR: string = 'Found chai call with vague failure message. ';
-const FAILURE_STRING = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
+const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
+const FAILURE_STRING_COMPARE_TRUE: string = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
+    'call into the assertion value';
+const FAILURE_STRING_COMPARE_FALSE: string = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
+    'call into the assertion value. ';
 
 /**
  * Implementation of the chai-vague-errors rule.
@@ -20,7 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

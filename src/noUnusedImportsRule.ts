@@ -11,14 +11,14 @@ type Import = ts.ImportEqualsDeclaration | ts.ImportDeclaration;
  * Implementation of the no-unused-import rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'unused import: ';
+    public static FAILURE_STRING: string = 'unused import: ';
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unused-imports',
         type: 'maintainability',
         description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',

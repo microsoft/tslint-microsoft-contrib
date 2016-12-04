@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not delete expressions. Only properties should be deleted',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -23,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Security'
     };
 
-    public static FAILURE_STRING = 'Variables should not be deleted: ';
+    public static FAILURE_STRING: string = 'Variables should not be deleted: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const noDeleteExpression = new NoDeleteExpression(sourceFile, this.getOptions());

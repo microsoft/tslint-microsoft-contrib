@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -109,7 +109,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
 class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
 
     private identifierText: string;
-    private count;
+    private count: number;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, identifier: ts.Identifier) {
         super(sourceFile, options);

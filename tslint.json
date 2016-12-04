@@ -74,7 +74,6 @@
     ],
     "no-constant-condition": true,
     "no-construct": true,
-    "no-constructor-vars": true,
     "no-control-regex": true,
     "no-cookies": true,
     "no-debugger": true,
@@ -191,10 +190,8 @@
     ],
     "typedef": [
       true,
-      "call-signature",
       "parameter",
       "property-declaration",
-      "variable-declaration",
       "member-variable-declaration"
     ],
     "typedef-whitespace": [false],
@@ -217,6 +214,15 @@
     "react-anchor-blank-noopener": true,
     "insecure-random": true,
     "possible-timing-attack": true,
-    "non-literal-require": true
+    "non-literal-require": true,
+    "adjacent-overload-signatures": false,
+    "array-type": false,
+    "completed-docs": false,
+    "cyclomatic-complexity": false,
+    "file-header": false,
+    "max-classes-per-file": false,
+    "no-parameter-properties": false,
+    "object-literal-shorthand": false,
+    "prefer-for-of": false
   }
 }

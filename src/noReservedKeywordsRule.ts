@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398'
     };
 
-    private static FAILURE_STRING = 'Forbidden reference to reserved keyword: ';
+    private static FAILURE_STRING: string = 'Forbidden reference to reserved keyword: ';
     // taken from https://github.com/Microsoft/TypeScript/issues/2536
 
     private static BANNED_TERMS: string[] = [

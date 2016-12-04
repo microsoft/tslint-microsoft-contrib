@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
                     'called on it within all code branches in the scope.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
+    public static FAILURE_STRING: string = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));

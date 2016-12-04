@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'enforces that you use the isNaN() function to check for NaN references instead of a comparison to the NaN constant.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Error',
@@ -23,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Ignored'
     };
 
-    public static FAILURE_STRING = 'Found an invalid comparison for NaN: ';
+    public static FAILURE_STRING: string = 'Found an invalid comparison for NaN: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new UseIsnanRuleWalker(sourceFile, this.getOptions()));

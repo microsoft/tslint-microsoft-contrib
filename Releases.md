@@ -5,7 +5,7 @@
 * The npm packages are pushed to the "releases" branch and tagged with the format "npm-[version]"
 
 # Prepare the tslint-microsoft-contrib master branch
-* Make sure there are 0 closed issues without a milestone. Assign milestone as needed using [this query](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=is%3Aissue+no%3Amilestone+is%3Aclosed)
+* Make sure there are 0 closed issues without a milestone. Assign milestone as needed using [this query](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=no%3Amilestone%20is%3Aclosed%20)
 * Close the milestone
 * Open the next milestone
 * Update the [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes

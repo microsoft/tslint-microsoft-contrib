@@ -8,13 +8,13 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 2.0.13 (Stable)
+Version 2.0.14 (Stable)
 -------------
 The project has been in use for over a year on multiple projects. Please report any bugs or false positives you might find!
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 2.0.14 (In-Development)
+Version 3.0.0 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
 
@@ -32,6 +32,7 @@ Alternately, you can download the files directly from GitHub:
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
+| **>= 4.x** | 3.x |
 | **>= 3.2.x** | 2.x |
 | **3.1.x** | unsupported |
 | **3.0.x** | unsupported |
@@ -134,7 +135,7 @@ Rule Name   | Description | Since
 `possible-timing-attack`        | Avoid timing attacks by not making direct string comparisons to sensitive data. Do not compare against variables named password, secret, api, apiKey, token, auth, pass, or hash. For more info see [Using Node.js Event Loop for Timing Attacks](https://snyk.io/blog/node-js-timing-attack-ccc-ctf/) | 2.0.11
 `prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. Since 2.0.10, this rule can be configured to allow Array type parameters. To ignore type parameters, configure the rule with the values: `[ true, { 'allow-type-parameters': true } ]`| 1.0, 2.0.10
 `prefer-const`                  | Use `const` to declare variables if they are only assigned a value once. | 2.0.6
-`prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer '<string>myVariable' instead of 'myVariable as string'. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the 'as type' casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
+`prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer `<string>myVariable` instead of `myVariable as string`. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the `as type` casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
 `promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). | 1.0
 `react-a11y-anchors`            | For accessibility of your website, anchor element link text should be at least 4 characters long. Links with the same HREF should have the same link text. Links that point to different HREFs should have different link text. Links with images and text content, the alt attribute should be unique to the text content or empty. An an anchor element's href prop value must not be just #. <br/>References:<br/>[WCAG Rule 38: Link text should be as least four 4 characters long](http://oaa-accessibility.org/wcag20/rule/38/)<br/>[WCAG Rule 39: Links with the same HREF should have the same link text](http://oaa-accessibility.org/wcag20/rule/39/)<br/>[WCAG Rule 41: Links that point to different HREFs should have different link text](http://oaa-accessibility.org/wcag20/rule/41/)<br/>[WCAG Rule 43: Links with images and text content, the alt attribute should be unique to the text content or empty](http://oaa-accessibility.org/wcag20/rule/43/)<br/> | 2.0.11
 `react-a11y-aria-unsupported-elements` | For accessibility of your website, enforce that elements that do not support ARIA roles, states, and properties do not have those attributes. | 2.0.11

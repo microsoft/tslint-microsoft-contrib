@@ -98,19 +98,39 @@ var AstUtils;
     }
     AstUtils.dumpTypeInfo = dumpTypeInfo;
     function isPrivate(node) {
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
+        if (ts.NodeFlags.Private != null) {
+            return !!(node.flags & ts.NodeFlags.Private);
+        }
+        else {
+            return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
+        }
     }
     AstUtils.isPrivate = isPrivate;
     function isProtected(node) {
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
+        if (ts.NodeFlags.Protected != null) {
+            return !!(node.flags & ts.NodeFlags.Protected);
+        }
+        else {
+            return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
+        }
     }
     AstUtils.isProtected = isProtected;
     function isPublic(node) {
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
+        if (ts.NodeFlags.Public != null) {
+            return !!(node.flags & ts.NodeFlags.Public);
+        }
+        else {
+            return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
+        }
     }
     AstUtils.isPublic = isPublic;
     function isStatic(node) {
-        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
+        if (ts.NodeFlags.Static != null) {
+            return !!(node.flags & ts.NodeFlags.Static);
+        }
+        else {
+            return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
+        }
     }
     AstUtils.isStatic = isStatic;
     function isBindingPattern(node) {
@@ -143,7 +163,12 @@ var AstUtils;
     }
     AstUtils.isLet = isLet;
     function isExported(node) {
-        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
+        if (ts.NodeFlags.Export != null) {
+            return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
+        }
+        else {
+            return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
+        }
     }
     AstUtils.isExported = isExported;
     function isAssignmentOperator(token) {

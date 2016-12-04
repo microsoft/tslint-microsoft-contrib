@@ -34,5 +34,8 @@
   "analyze": true,
   "scripts": {
     "test": "grunt all"
+  },
+  "peerDependencies": {
+    "tslint": "<4.0.0"
   }
 }

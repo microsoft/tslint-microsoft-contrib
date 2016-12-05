@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use the version of the Function constructor that accepts a string argument to define the body of the function',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '95, 676, 242, 116'
     };
 
-    public static FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
+    public static FAILURE_STRING: string = 'forbidden: Function constructor with string arguments ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const documentRegistry = ts.createDocumentRegistry();

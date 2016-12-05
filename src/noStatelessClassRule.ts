@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -19,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'A stateless class represents a failure in the object oriented design of the system.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -60,7 +59,7 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
 
     private classDeclaresInstanceData(node: ts.ClassDeclaration): boolean {
         return Utils.exists(node.members, (classElement: ts.ClassElement): boolean => {
-            if (classElement.kind === SyntaxKind.current().Constructor) {
+            if (classElement.kind === ts.SyntaxKind.Constructor) {
                 return false;
             }
             if (AstUtils.isStatic(classElement)) {
@@ -72,7 +71,7 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
 
     private classDeclaresConstructorProperties(node: ts.ClassDeclaration): boolean {
         return Utils.exists(node.members, (element: ts.ClassElement): boolean => {
-            if (element.kind === SyntaxKind.current().Constructor) {
+            if (element.kind === ts.SyntaxKind.Constructor) {
                 return this.constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
             }
             return false;
@@ -81,16 +80,16 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
 
     private constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
         return Utils.exists(ctor.parameters, (param: ts.ParameterDeclaration): boolean => {
-            return AstUtils.hasModifier(param.modifiers, SyntaxKind.current().PublicKeyword)
-                || AstUtils.hasModifier(param.modifiers, SyntaxKind.current().PrivateKeyword)
-                || AstUtils.hasModifier(param.modifiers, SyntaxKind.current().ProtectedKeyword)
+            return AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword)
+                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword)
+                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword)
                 || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword);
         });
     }
 
     private classExtendsSomething(node: ts.ClassDeclaration): boolean {
         return Utils.exists(node.heritageClauses, (clause: ts.HeritageClause): boolean => {
-            return clause.token === SyntaxKind.current().ExtendsKeyword;
+            return clause.token === ts.SyntaxKind.ExtendsKeyword;
         });
     }
 }

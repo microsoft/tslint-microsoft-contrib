@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

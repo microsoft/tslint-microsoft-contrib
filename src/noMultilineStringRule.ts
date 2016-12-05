@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -15,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not declare multiline strings',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -26,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '710'
     };
 
-    public static FAILURE_STRING = 'Forbidden Multiline string: ';
+    public static FAILURE_STRING: string = 'Forbidden Multiline string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoMultilineStringWalker(sourceFile, this.getOptions()));
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoMultilineStringWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral) {
+        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
             const fullText : string = node.getFullText();
             const firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
             const trimmed : string = firstLine.substring(0, 40).trim();

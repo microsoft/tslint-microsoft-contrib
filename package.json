@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "2.0.14",
+  "version": "3.0.0",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -34,12 +34,14 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-mocha-test": "0.12.7",
     "grunt-ts": "5.4.0",
-    "grunt-tslint": "3.3.0",
     "load-grunt-tasks": "3.2.0",
     "mocha": "2.2.5",
     "time-grunt": "1.2.1",
-    "tslint": "4.0.1",
-    "typescript": "2.1.1",
+    "tslint": "4.0.2",
+    "typescript": "2.0.10",
     "underscore": "1.8.3"
+  },
+  "peerDependencies": {
+    "tslint": ">=4.0.0"
   }
 }

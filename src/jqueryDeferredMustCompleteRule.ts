@@ -4,7 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -18,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
                     'on it within all code branches in the scope.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -27,7 +26,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
+    public static FAILURE_STRING: string = 'A JQuery deferred was found that appears to not have resolve ' +
+        'or reject invoked on all code paths: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 function isPromiseInstantiation(expression: ts.Expression) : boolean {
-    if (expression != null && expression.kind === SyntaxKind.current().CallExpression) {
+    if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
         const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
         const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
@@ -54,7 +54,7 @@ function isCompletionFunction(functionName : string) : boolean {
 class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
-            if (node.left.kind === SyntaxKind.current().Identifier) {
+            if (node.left.kind === ts.SyntaxKind.Identifier) {
                 if ((<ts.Identifier>node.left).text != null) {
                     const name : ts.Identifier = <ts.Identifier>node.left;
                     this.validateDeferredUsage(node, name);
@@ -138,7 +138,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const prop : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
 
             if (AstUtils.isSameIdentifer(this.deferredIdentifier, prop.expression)) {

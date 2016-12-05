@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -15,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use with statements. Assign the item to a new variable instead',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -25,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_STRING = 'Forbidden with statement';
+    public static FAILURE_STRING: string = 'Forbidden with statement';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));
@@ -34,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoWithStatementWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().WithStatement) {
+        if (node.kind === ts.SyntaxKind.WithStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);

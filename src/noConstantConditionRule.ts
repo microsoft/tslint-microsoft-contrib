@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use constant expressions in conditions.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 570, 571, 670'
     };
 
-    public static FAILURE_STRING = 'Found constant conditional: ';
+    public static FAILURE_STRING: string = 'Found constant conditional: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));

@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use document.write',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -25,8 +25,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '79, 85'
     };
 
-    public static WRITE_FAILURE = 'Forbidden call to document.write';
-    public static WRITELN_FAILURE = 'Forbidden call to document.writeln';
+    public static WRITE_FAILURE: string = 'Forbidden call to document.write';
+    public static WRITELN_FAILURE: string = 'Forbidden call to document.writeln';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions()));

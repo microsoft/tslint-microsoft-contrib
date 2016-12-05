@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use cookies',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '315, 539, 565, 614'
     };
 
-    public static FAILURE_STRING = 'Forbidden call to document.cookie';
+    public static FAILURE_STRING: string = 'Forbidden call to document.cookie';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const documentRegistry = ts.createDocumentRegistry();

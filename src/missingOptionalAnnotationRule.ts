@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         recommendation: 'false,  // now supported by TypeScript compiler'
     };
 
-    public static FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
+    public static FAILURE_STRING: string = 'Argument following optional argument missing optional annotation: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MissingOptionalAnnotationWalker(sourceFile, this.getOptions()));

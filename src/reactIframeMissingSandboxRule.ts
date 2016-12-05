@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 
 const FAILURE_NOT_FOUND: string = 'An iframe element requires a sandbox attribute';
 const FAILURE_INVALID_ENTRY: string = 'An iframe element defines an invalid sandbox attribute: ';
@@ -36,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -74,12 +73,12 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
 
         let sandboxAttributeFound: boolean = false;
         node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 const attributeName = jsxAttribute.name.text;
                 if (attributeName === 'sandbox') {
                     sandboxAttributeFound = true;
-                    if (jsxAttribute.initializer != null && jsxAttribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                    if (jsxAttribute.initializer != null && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                         this.validateSandboxValue(<ts.StringLiteral>jsxAttribute.initializer);
                     }
                 }

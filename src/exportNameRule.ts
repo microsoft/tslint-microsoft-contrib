@@ -4,7 +4,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -18,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'The name of the exported module must match the filename of the source file',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '710'
     };
 
-    public static FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
+    public static FAILURE_STRING: string = 'The exported module or identifier name must match the file name. Found: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
@@ -52,7 +51,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
 
         // look for single export assignment from file first
         const singleExport: ts.Statement[] = node.statements.filter((element: ts.Statement): boolean => {
-            return element.kind === SyntaxKind.current().ExportAssignment;
+            return element.kind === ts.SyntaxKind.ExportAssignment;
         });
         if (singleExport.length === 1) {
             const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>singleExport[0];
@@ -71,7 +70,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         // exports might be hidden inside a namespace
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach((element: ts.Statement): void => {
-                if (element.kind === SyntaxKind.current().ModuleDeclaration) {
+                if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
                     const exportStatements: ts.Statement[] = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element));
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
@@ -81,10 +80,10 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] {
-        if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleDeclaration) {
+        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
-        } else if (moduleDeclaration.body.kind === SyntaxKind.current().ModuleBlock) {
+        } else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
             let exportStatements: ts.Statement[] = [];
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             moduleBlock.statements.forEach((element: ts.Statement): void => {
@@ -96,10 +95,10 @@ export class ExportNameWalker extends ErrorTolerantWalker {
 
     private getExportStatements(element: ts.Statement): ts.Statement[] {
         const exportStatements: ts.Statement[] = [];
-        if (element.kind === SyntaxKind.current().ExportAssignment) {
+        if (element.kind === ts.SyntaxKind.ExportAssignment) {
             const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
             this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
-        } else if (AstUtils.hasModifier(element.modifiers, SyntaxKind.current().ExportKeyword)) {
+        } else if (AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword)) {
             exportStatements.push(element);
         }
         return exportStatements;
@@ -108,11 +107,11 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     private validateExportedElements(exportedElements: ts.Statement[]): void {
         // only validate the exported elements when a single export statement is made
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === SyntaxKind.current().ModuleDeclaration ||
-                exportedElements[0].kind === SyntaxKind.current().ClassDeclaration ||
-                exportedElements[0].kind === SyntaxKind.current().FunctionDeclaration) {
+            if (exportedElements[0].kind === ts.SyntaxKind.ModuleDeclaration ||
+                exportedElements[0].kind === ts.SyntaxKind.ClassDeclaration ||
+                exportedElements[0].kind === ts.SyntaxKind.FunctionDeclaration) {
                 this.validateExport((<any>exportedElements[0]).name.text, exportedElements[0]);
-            } else if (exportedElements[0].kind === SyntaxKind.current().VariableStatement) {
+            } else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 const variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
                 // ignore comma separated variable lists
                 if (variableStatement.declarationList.declarations.length === 1) {
@@ -127,7 +126,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         const regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
-                const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
                 const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
                 this.addFailure(failure);
             }

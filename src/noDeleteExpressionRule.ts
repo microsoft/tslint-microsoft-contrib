@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -15,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not delete expressions. Only properties should be deleted',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -24,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Security'
     };
 
-    public static FAILURE_STRING = 'Variables should not be deleted: ';
+    public static FAILURE_STRING: string = 'Variables should not be deleted: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const noDeleteExpression = new NoDeleteExpression(sourceFile, this.getOptions());
@@ -36,10 +35,10 @@ class NoDeleteExpression extends ErrorTolerantWalker {
 
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);
-        if (node.expression.kind === SyntaxKind.current().DeleteExpression) {
+        if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             const deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject != null && deletedObject.kind === SyntaxKind.current().Identifier) {
+            if (deletedObject != null && deletedObject.kind === ts.SyntaxKind.Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

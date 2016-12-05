@@ -3,7 +3,6 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const PROPS_REGEX = 'props-interface-regex';
@@ -22,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -131,7 +130,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
         }
-        if (node.parent.kind !== SyntaxKind.current().PropertyAccessExpression) {
+        if (node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression) {
             if (referencedPropertyName === 'this.props') {
                 // this props reference has escaped the function
                 this.propNames = [];
@@ -146,8 +145,8 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     protected visitIdentifier(node: ts.Identifier): void {
         if (this.propsAlias != null) {
             if (node.text === this.propsAlias
-                && node.parent.kind !== SyntaxKind.current().PropertyAccessExpression
-                && node.parent.kind !== SyntaxKind.current().Parameter
+                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
+                && node.parent.kind !== ts.SyntaxKind.Parameter
                 && this.isParentNodeSuperCall(node) === false) {
                 // this props reference has escaped the constructor
                 this.propNames = [];
@@ -156,8 +155,8 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         }
         if (this.stateAlias != null) {
             if (node.text === this.stateAlias
-                && node.parent.kind !== SyntaxKind.current().PropertyAccessExpression
-                && node.parent.kind !== SyntaxKind.current().Parameter) {
+                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
+                && node.parent.kind !== ts.SyntaxKind.Parameter) {
                 // this state reference has escaped the constructor
                 this.stateNames = [];
             }
@@ -203,7 +202,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     private isParentNodeSuperCall(node: ts.Node): boolean {
-        if (node.parent != null && node.parent.kind === SyntaxKind.current().CallExpression) {
+        if (node.parent != null && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }

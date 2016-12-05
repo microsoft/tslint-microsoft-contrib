@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. ',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '157, 159, 75, 79, 85, 749, 676'
     };
 
-    public static FAILURE_STRING = 'Forbidden call to ';
+    public static FAILURE_STRING: string = 'Forbidden call to ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDisableAutoSanitizationWalker(sourceFile, this.getOptions()));

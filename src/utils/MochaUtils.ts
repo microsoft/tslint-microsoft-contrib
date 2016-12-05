@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 
 import {AstUtils} from './AstUtils';
-import {SyntaxKind} from './SyntaxKind';
 import {Utils} from './Utils';
 
 /**
@@ -16,9 +15,9 @@ export module MochaUtils {
     }
 
     export function isStatementDescribeCall(statement: ts.Statement): boolean {
-        if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+        if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
             const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-            if (expression.kind === SyntaxKind.current().CallExpression) {
+            if (expression.kind === ts.SyntaxKind.CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>expression;
                 return isDescribe(call);
             }

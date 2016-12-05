@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid an empty line after an opening brace',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '710'
     };
 
-    public static FAILURE_STRING = 'Opening brace cannot be followed by empty line';
+    public static FAILURE_STRING: string = 'Opening brace cannot be followed by empty line';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));

@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'style',
         description: 'Consistently use spaces around the brace characters of JSX attributes.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -63,7 +62,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
     protected visitNode(node: ts.Node): void {
         // This is hacked to visit JSX Expression. See https://github.com/palantir/tslint/pull/1292
         // newer versions of tslint have a public visitJsxExpression but older versions do not
-        if (node.kind === SyntaxKind.current().JsxExpression) {
+        if (node.kind === ts.SyntaxKind.JsxExpression) {
             this.visitJsxExpression(<ts.JsxExpression> node);
             this.walkChildren(node);
         } else {

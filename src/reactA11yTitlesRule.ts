@@ -4,7 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
-import {SyntaxKind} from './utils/SyntaxKind';
 
 const EMPTY_TITLE_FAILURE_STRING: string = 'Title elements must not be empty';
 const LONG_TITLE_FAILURE_STRING: string = 'Title length must not be longer than 60 characters';
@@ -21,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -56,12 +55,12 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(node.getStart(),
                     node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
             } else if (node.children.length === 1) {
-                if (node.children[0].kind === SyntaxKind.current().JsxText) {
+                if (node.children[0].kind === ts.SyntaxKind.JsxText) {
                     const value: ts.JsxText = <ts.JsxText>node.children[0];
                     this.validateTitleText(value.getText(), node);
-                } else if (node.children[0].kind === SyntaxKind.current().JsxExpression) {
+                } else if (node.children[0].kind === ts.SyntaxKind.JsxExpression) {
                     const exp: ts.JsxExpression = <ts.JsxExpression>node.children[0];
-                    if (exp.expression.kind === SyntaxKind.current().StringLiteral) {
+                    if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                         this.validateTitleText((<ts.StringLiteral>exp.expression).text, node);
                     }
                 }

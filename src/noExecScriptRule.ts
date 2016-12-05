@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use the execScript functions',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -26,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '95, 676'
     };
 
-    public static FAILURE_STRING = 'forbidden execScript: ';
+    public static FAILURE_STRING: string = 'forbidden execScript: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));

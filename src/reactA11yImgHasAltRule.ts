@@ -39,7 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Enforce that an img element contains the non-empty alt attribute. ' +
         'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
-        optionsDescription: "",
+        optionsDescription: '',
         optionExamples: ['true', '[true, ["Image"]]'],
         typescriptOnly: true,
         issueClass: 'Non-SDL',

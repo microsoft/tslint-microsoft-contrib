@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -16,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Use const to declare variables if they are only assigned a value once.',
         options: null,
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -26,8 +25,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 705, 710'
     };
 
-    public static FAILURE_STRING_FACTORY = (identifier: string) => `Identifier '${identifier}' never appears ` +
-        'on the LHS of an assignment - use const instead of let for its declaration.';
+    public static FAILURE_STRING_FACTORY: (identifier: string) => string =
+        (identifier: string) => `Identifier '${identifier}' never appears ` +
+            'on the LHS of an assignment - use const instead of let for its declaration.';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));
@@ -73,7 +73,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     public visitModuleDeclaration(node: ts.ModuleDeclaration) {
-        if (node.body.kind === SyntaxKind.current().ModuleBlock) {
+        if (node.body.kind === ts.SyntaxKind.ModuleBlock) {
             // For some reason module blocks are left out of the visit block traversal
             this.visitBlock(<ts.ModuleBlock>node.body);
         }
@@ -101,7 +101,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     private visitAnyStatementList(statements: ts.NodeArray<ts.Statement>) {
         const names: ts.Map<IDeclarationUsages> = <ts.Map<IDeclarationUsages>>{};
         statements.forEach((statement: ts.Statement): void => {
-            if (statement.kind === SyntaxKind.current().VariableStatement) {
+            if (statement.kind === ts.SyntaxKind.VariableStatement) {
                 this.collectLetIdentifiers((<ts.VariableStatement>statement).declarationList, names);
             }
         });
@@ -111,7 +111,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     private visitAnyForStatement(node: ts.ForOfStatement | ts.ForInStatement) {
         const names: ts.Map<IDeclarationUsages> = <ts.Map<IDeclarationUsages>>{};
         if (AstUtils.isLet(node.initializer)) {
-            if (node.initializer.kind === SyntaxKind.current().VariableDeclarationList) {
+            if (node.initializer.kind === ts.SyntaxKind.VariableDeclarationList) {
                 this.collectLetIdentifiers(<ts.VariableDeclarationList>node.initializer, names);
             }
         }
@@ -135,7 +135,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitAnyUnaryExpression(node: ts.PrefixUnaryExpression | ts.PostfixUnaryExpression): void {
-        if (node.operator === SyntaxKind.current().PlusPlusToken || node.operator === SyntaxKind.current().MinusMinusToken) {
+        if (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) {
             this.visitLeftHandSideExpression(node.operand);
         }
     }
@@ -149,11 +149,11 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitLeftHandSideExpression(node: ts.Expression): void {
-        while (node.kind === SyntaxKind.current().ParenthesizedExpression) {
+        while (node.kind === ts.SyntaxKind.ParenthesizedExpression) {
             node = (<ts.ParenthesizedExpression>node).expression;
         }
 
-        if (node.kind === SyntaxKind.current().Identifier) {
+        if (node.kind === ts.SyntaxKind.Identifier) {
             this.markAssignment(<ts.Identifier>node);
         } else if (AstUtils.isBindingLiteralExpression(node)) {
             this.visitBindingLiteralExpression(<ts.ArrayLiteralExpression | ts.ObjectLiteralExpression>node);
@@ -161,18 +161,18 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitBindingLiteralExpression(node: ts.ArrayLiteralExpression | ts.ObjectLiteralExpression): void {
-        if (node.kind === SyntaxKind.current().ObjectLiteralExpression) {
+        if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
             const pattern = <ts.ObjectLiteralExpression>node;
             pattern.properties.forEach((element): void => {
                 const kind = element.kind;
 
-                if (kind === SyntaxKind.current().ShorthandPropertyAssignment) {
+                if (kind === ts.SyntaxKind.ShorthandPropertyAssignment) {
                     this.markAssignment((<ts.ShorthandPropertyAssignment>element).name);
-                } else if (kind === SyntaxKind.current().PropertyAssignment) {
+                } else if (kind === ts.SyntaxKind.PropertyAssignment) {
                     this.visitLeftHandSideExpression((<ts.PropertyAssignment>element).initializer);
                 }
             });
-        } else if (node.kind === SyntaxKind.current().ArrayLiteralExpression) {
+        } else if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             const pattern = <ts.ArrayLiteralExpression>node;
             pattern.elements.forEach((element): void => {
                 this.visitLeftHandSideExpression(element);
@@ -182,9 +182,9 @@ class PreferConstWalker extends ErrorTolerantWalker {
 
     private visitBindingPatternIdentifiers(pattern: ts.BindingPattern): void {
         pattern.elements.forEach((element): void => {
-            if (element.kind === SyntaxKind.current().OmittedExpression) {
+            if (element.kind === ts.SyntaxKind.OmittedExpression) {
                 return;
-            } else if (element.name.kind === SyntaxKind.current().Identifier) {
+            } else if (element.name.kind === ts.SyntaxKind.Identifier) {
                 this.markAssignment(<ts.Identifier>element.name);
             } else {
                 this.visitBindingPatternIdentifiers(<ts.BindingPattern>element.name);
@@ -208,7 +208,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
     private collectNameIdentifiers(declaration: ts.VariableDeclaration,
                                    node: ts.Identifier | ts.BindingPattern,
                                    table: ts.Map<IDeclarationUsages>): void {
-        if (node.kind === SyntaxKind.current().Identifier) {
+        if (node.kind === ts.SyntaxKind.Identifier) {
             table[(<ts.Identifier>node).text] = { declaration, usages: 0 };
         } else {
             this.collectBindingPatternIdentifiers(declaration, <ts.BindingPattern>node, table);
@@ -219,7 +219,7 @@ class PreferConstWalker extends ErrorTolerantWalker {
                                              pattern: ts.BindingPattern,
                                              table: ts.Map<IDeclarationUsages>): void {
         pattern.elements.forEach((element): void => {
-            if (element.kind === SyntaxKind.current().OmittedExpression) {
+            if (element.kind === ts.SyntaxKind.OmittedExpression) {
                 return;
             }
             this.collectNameIdentifiers(value, element.name, table);

@@ -95,6 +95,8 @@ describe('reactA11yAnchorsRule', () : void => {
                 const anchor1 = <a href="someRef1">save</a>;
                 const anchor2 = <a href="someRef2">Delete</a>;
                 const anchor3 = <a href="someRef3"><span>cancel</span></a>;
+                const anchor4 = <a href="someRef4"><img alt="image" /></a>;
+                const anchor5 = <a href="someRef5"><span>ok</span><img alt="done" /></a>;
             `;
 
             TestHelper.assertViolations(ruleName, script, []);
@@ -117,6 +119,8 @@ describe('reactA11yAnchorsRule', () : void => {
                 import React = require('react');
                 const anchor1 = <a href="someRef1">ok</a>;
                 const anchor2 = <a href="someRef2"><span>Go</span></a>;
+                const anchor3 = <a href="someRef3"><img alt="Go" /></a>
+                const anchor4 = <a href="someRef4"><span>ok</span><img alt="go" /></a>
             `;
 
             TestHelper.assertViolations(ruleName, script, [
@@ -131,6 +135,18 @@ describe('reactA11yAnchorsRule', () : void => {
                     "name": "file.tsx",
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 4 }
+                },
+                {
+                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 33, "line": 5 }
+                },
+                {
+                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 33, "line": 6 }
                 }
             ]);
         });
@@ -146,6 +162,18 @@ describe('reactA11yAnchorsRule', () : void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when hrefs, texts and alt texts are all identical', () : void => {
+        const scriptWithAltText : string = `
+            import React = require('react');
+            const anchor1 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
+            const anchor2 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
+            const anchor3 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
+            const anchor4 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
+        `;
+
+        TestHelper.assertViolations(ruleName, scriptWithAltText, [ ]);
     });
 
     it('shoud pass when hrefs undefiend and texts are variant', (): void => {
@@ -167,6 +195,10 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor2 = <a href="someRef2">someTitle2</a>;
             const anchor3 = <a href="someRef3">someTitle3</a>;
             const anchor4 = <a href="someRef4">someTitle4</a>;
+            const anchor5 = <a href="someRef5"><img alt="someAlt1" /><a>;
+            const anchor6 = <a href="someRef6"><img alt="someAlt2" /><a>;
+            const anchor7 = <a href="someRef7"><img alt="someAlt3" /><a>;
+            const anchor8 = <a href="someRef8"><img alt="someAlt4" /><a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -179,6 +211,31 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor2 = <a href="someRef1">someTitle2</a>;
             const anchor3 = <a href="someRef">someTitle3</a>;  // should fail with line 3
             const anchor4 = <a href="someRef1">someTitle4</a>; // should fail with line 4
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 5 }
+            },
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 6 }
+            }
+        ]);
+    });
+
+    it('should fail when identical hrefs have different alt texts', () : void => {
+        const script : string = `
+            import React = require('react');
+            const anchor1 = <a href="someRef"><img alt="someAlt1" /></a>;
+            const anchor2 = <a href="someRef1"><span>someTitle</span><img alt="someAlt2" /></a>;
+            const anchor3 = <a href="someRef"><img alt="someOtherAlt1" /></a>;  // should fail with line 3
+            const anchor4 = <a href="someRef1"><span>someTitle</span><img alt="someOtherAlt2" /></a>; // should fail with line 4
         `;
 
         TestHelper.assertViolations(ruleName, script, [

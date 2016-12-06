@@ -33,7 +33,7 @@ export function getPropName(node: ts.JsxAttribute): string {
  * @example
  * <div attribute={ 'StringLiteral' } />
  */
-export function getStringLiteral(node: ts.JsxAttribute): string {
+export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute): string {
     if (!isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }

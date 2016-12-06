@@ -16,7 +16,7 @@ const ROLE_STRING: string = 'role';
 export const NO_HASH_FAILURE_STRING: string =
     'Do not use # as anchor href.';
 export const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
-    'The text or the alt attribute of image in link should be at least 4 characters long. ' +
+    'Link text or the alt text of image in link should be at least 4 characters long. ' +
     'If you are not using <a> element as anchor, please specify explicit role, e.g. role=\'button\'';
 export const UNIQUE_ALT_FAILURE_STRING: string =
     'Links with images and text content, the alt attribute should be unique to the text content or empty.';
@@ -68,7 +68,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             this.anchorInfoList.forEach((anchorInfo: AnchorInfo): void => {
                 if (current.href &&
                     current.href === anchorInfo.href &&
-                    current.text !== anchorInfo.text &&
+                    (current.text !== anchorInfo.text || current.altText !== anchorInfo.altText) &&
                     !Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
 
                     // Same href - different text...
@@ -79,6 +79,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
                 if (current.href !== anchorInfo.href &&
                     current.text === anchorInfo.text &&
+                    current.altText === anchorInfo.altText &&
                     !Utils.contains(differentHrefSameText, anchorInfo)) {
 
                     // Different href - same text...
@@ -117,6 +118,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             const anchorInfo: AnchorInfo = {
                 href: this.getAttribute(openingElement, 'href'),
                 text: this.anchorText(parent),
+                altText: this.imageAlt(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
@@ -125,15 +127,17 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
 
-            const imageAltText: string = this.imageAlt(parent);
-            if (imageAltText && imageAltText === anchorInfo.text) {
+            if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING));
             }
 
+            const anchorInfoTextLength: number = anchorInfo.text ? anchorInfo.text.length : 0;
+            const anchorImageAltTextLength: number = anchorInfo.altText ? anchorInfo.altText.length : 0;
+
             if (
-                this.imageRole(openingElement) === 'link' &&
-                (!anchorInfo.text || anchorInfo.text.length < 4) &&
-                (!imageAltText || imageAltText.length < 4)
+                this.anchorRole(openingElement) === 'link' &&
+                anchorInfoTextLength < 4 &&
+                anchorImageAltTextLength < 4
             ) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
@@ -143,25 +147,14 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     }
 
     private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): string {
-        const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openingElement.attributes;
-        let attributeValue: string;
-
-        attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
-                const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
-                if (jsxAttribute.name.getText() === attributeName &&
-                    jsxAttribute.initializer &&
-                    jsxAttribute.initializer.kind === SyntaxKind.current().StringLiteral) {
-                    const literal: ts.StringLiteral = <ts.StringLiteral>jsxAttribute.initializer;
-
-                    attributeValue = literal.text;
-                }
-            }
-        });
-
-        return attributeValue;
+        const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
+        const attribute: ts.JsxAttribute = attributes[attributeName];
+        return attribute ? getStringLiteral(attribute) : '';
     }
 
+    /**
+     * Return a string which contains literal text and text in 'alt' attribute.
+     */
     private anchorText(root: ts.Node): string {
         let title: string = '';
         if (root.kind === SyntaxKind.current().JsxElement) {
@@ -185,12 +178,18 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         return title;
     }
 
+    private anchorRole(root: ts.Node): string {
+        const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(root);
+        const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
+
+        // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
+        return roleProp ? getStringLiteral(roleProp) : getImplicitRole(root);
+    }
+
     private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
         if (openingElement.tagName.getText() === 'img') {
             const altAttribute: string = this.getAttribute(openingElement, 'alt');
-            if (altAttribute) {
-                return altAttribute;
-            }
+            return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
 
         return '';
@@ -214,19 +213,12 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
         return altText;
     }
-
-    private imageRole(root: ts.Node): string {
-        const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(root);
-        const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
-
-        // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
-        return roleProp ? getStringLiteral(roleProp) : getImplicitRole(root);
-    }
 }
 
 class AnchorInfo {
     public href: string = '';
     public text: string = '';
+    public altText: string = '';
     public start: number = 0;
     public width: number = 0;
 }

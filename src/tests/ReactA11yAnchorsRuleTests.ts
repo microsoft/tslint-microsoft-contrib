@@ -1,4 +1,11 @@
 import {TestHelper} from './TestHelper';
+import {
+    NO_HASH_FAILURE_STRING,
+    LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+    UNIQUE_ALT_FAILURE_STRING,
+    SAME_HREF_SAME_TEXT_FAILURE_STRING,
+    DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING
+} from '../reactA11yAnchorsRule';
 
 /**
  * Unit tests.
@@ -35,8 +42,7 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
-                    'element as anchor, please specify explicit role, e.g. role=\'button\'',
+                "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
@@ -52,7 +58,7 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use # as anchor href.",
+                "failure": NO_HASH_FAILURE_STRING,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
@@ -68,14 +74,13 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use # as anchor href.",
+                "failure": NO_HASH_FAILURE_STRING,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             },
             {
-                "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
-                    'element as anchor, please specify explicit role, e.g. role=\'button\'',
+                "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
@@ -116,15 +121,13 @@ describe('reactA11yAnchorsRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
-                        'element as anchor, please specify explicit role, e.g. role=\'button\'',
+                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
                     "name": "file.tsx",
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 3 }
                 },
                 {
-                    "failure": 'Link text should be at least 4 characters long. If you are not using <a> ' +
-                        'element as anchor, please specify explicit role, e.g. role=\'button\'',
+                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
                     "name": "file.tsx",
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 4 }
@@ -180,13 +183,13 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Links with the same HREF should have the same link text. First link at character: 29 line: 3",
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
-                "failure": "Links with the same HREF should have the same link text. First link at character: 29 line: 4",
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
@@ -205,7 +208,7 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Links with the same HREF should have the same link text. First link at character: 29 line: 3",
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
@@ -214,7 +217,7 @@ describe('reactA11yAnchorsRule', () : void => {
                 }
             },
             {
-                "failure": "Links with the same HREF should have the same link text. First link at character: 29 line: 3",
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
@@ -223,7 +226,7 @@ describe('reactA11yAnchorsRule', () : void => {
                 }
             },
             {
-                "failure": "Links with the same HREF should have the same link text. First link at character: 29 line: 3",
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
@@ -245,7 +248,7 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Links that point to different HREFs should have different link text. First link at character: 29 line: 3",
+                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
@@ -254,7 +257,7 @@ describe('reactA11yAnchorsRule', () : void => {
                 }
             },
             {
-                "failure": "Links that point to different HREFs should have different link text. First link at character: 29 line: 4",
+                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
@@ -276,19 +279,19 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Links that point to different HREFs should have different link text. First link at character: 29 line: 3",
+                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 4 }
             },
             {
-                "failure": "Links that point to different HREFs should have different link text. First link at character: 29 line: 3",
+                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
-                "failure": "Links that point to different HREFs should have different link text. First link at character: 29 line: 3",
+                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
@@ -322,7 +325,7 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Links with images and text content, the alt attribute should be unique to the text content or empty.",
+                "failure": UNIQUE_ALT_FAILURE_STRING,
                 "name": "file.tsx",
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }

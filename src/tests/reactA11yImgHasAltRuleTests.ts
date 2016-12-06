@@ -48,7 +48,7 @@ describe('reactA11yImgHasAlt', () => {
 
       it('when the img element has non-empty alt value and presentation role when option is enabled', () => {
         const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndPresentationRole.tsx';
-        const ruleOptions: any[] = [true, [], { allowNonEmptyAltWithRolePresentation: true }];
+        const ruleOptions: any[] = [[], { allowNonEmptyAltWithRolePresentation: true }];
         TestHelper.assertNoViolationWithOptions(ruleName, ruleOptions, fileName);
       });
     });
@@ -157,7 +157,7 @@ const d = <img alt={''} /> `;
   });
 
   describe('custom element tests', () => {
-    const options: any[] = [true, ['Picture']]; // tslint:disable-line:no-any
+    const options: any[] = [['Picture']]; // tslint:disable-line:no-any
 
     describe('should pass', () => {
       const fileDirectory: string = 'test-data/a11yImgHasAlt/CustomElementTests/PassingTestInputs/';

@@ -26,7 +26,7 @@ Add more details in alt attribute or specify role attribute to equal 'presentati
 
 export function getFailureStringNonEmptyAltAndPresentationRole(tagName: string): string {
     return `The value of alt attribute in <${tagName}> tag is non-empty and role value is presentation. \
-Remove role='presentation' or specify 'alt' attributeto be empty when role attributes equals 'presentation'.`;
+Remove role='presentation' or specify 'alt' attribute to be empty when role attributes equals 'presentation'.`;
 }
 
 /**
@@ -72,7 +72,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
 
         // The additionalTagNames are specified by tslint config to check not only 'img' tag but also customized tag.
         // @example checking a customized component 'Image' which should require 'alt' attribute.
-        const additionalTagNames: string[] = options.length > 1 ? options[1] : [];
+        const additionalTagNames: string[] = options.length > 0 ? options[0] : [];
 
         // The targetTagNames is the list of tag names we want to check.
         const targetTagNames: string[] = ['img'].concat(additionalTagNames);
@@ -100,8 +100,8 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const roleAttributeValue: string = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const isPresentationRole: boolean = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
-            const allowNonEmptyAltWithRolePresentation: boolean = options.length > 2
-                ? options[2].allowNonEmptyAltWithRolePresentation
+            const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
+                ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;
 
             // <img alt='altValue' role='presentation' />

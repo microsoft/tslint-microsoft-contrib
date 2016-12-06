@@ -13,16 +13,16 @@ import {
 
 const ROLE_STRING: string = 'role';
 
-const NO_HASH_FAILURE_STRING: string =
+export const NO_HASH_FAILURE_STRING: string =
     'Do not use # as anchor href.';
-const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
-    'Link text should be at least 4 characters long. If you are not using <a> ' +
-    'element as anchor, please specify explicit role, e.g. role=\'button\'';
-const UNIQUE_ALT_FAILURE_STRING: string =
+export const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
+    'The text or the alt attribute of image in link should be at least 4 characters long. ' +
+    'If you are not using <a> element as anchor, please specify explicit role, e.g. role=\'button\'';
+export const UNIQUE_ALT_FAILURE_STRING: string =
     'Links with images and text content, the alt attribute should be unique to the text content or empty.';
-const SAME_HREF_SAME_TEXT_FAILURE_STRING: string =
+export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string =
     'Links with the same HREF should have the same link text.';
-const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string =
+export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string =
     'Links that point to different HREFs should have different link text.';
 
 /**
@@ -125,13 +125,17 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
             }
 
-            if (this.imageRole(openingElement) === 'link' && (!anchorInfo.text || anchorInfo.text.length < 4)) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
-            }
-
             const imageAltText: string = this.imageAlt(parent);
             if (imageAltText && imageAltText === anchorInfo.text) {
                 this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING));
+            }
+
+            if (
+                this.imageRole(openingElement) === 'link' &&
+                (!anchorInfo.text || anchorInfo.text.length < 4) &&
+                (!imageAltText || imageAltText.length < 4)
+            ) {
+                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
 
             this.anchorInfoList.push(anchorInfo);

@@ -63,6 +63,17 @@ describe('noUnnecessarySemiColons', () : void => {
         TestHelper.assertNoViolation(ruleName, script);
     });
 
+    it('should pass on short form lambda expression', () : void => {
+        const script : string = `
+            class MyClass {
+                public static myField = () => '';
+                public static FAILURE_STRING_FACTORY: (identifier: string) => string =
+                    (identifier: string) => 'whatever';
+            }
+        `;
+        TestHelper.assertNoViolation(ruleName, script);
+    });
+
     it('should fail on empty for loops with semicolon', () : void => {
         const script : string = `
             for (var i = 0; i < 7; i += 1) {

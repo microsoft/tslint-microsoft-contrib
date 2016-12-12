@@ -181,15 +181,18 @@ class PreferConstWalker extends ErrorTolerantWalker {
     }
 
     private visitBindingPatternIdentifiers(pattern: ts.BindingPattern): void {
-        pattern.elements.forEach((element): void => {
-            if (element.kind === ts.SyntaxKind.OmittedExpression) {
-                return;
-            } else if (element.name.kind === ts.SyntaxKind.Identifier) {
-                this.markAssignment(<ts.Identifier>element.name);
-            } else {
-                this.visitBindingPatternIdentifiers(<ts.BindingPattern>element.name);
-            }
-        });
+        if (pattern.kind === ts.SyntaxKind.ObjectBindingPattern) {
+            const objPattern: ts.ObjectBindingPattern = <ts.ObjectBindingPattern>pattern;
+            objPattern.elements.forEach((element: ts.BindingElement): void => {
+                if ((<any>element).kind === ts.SyntaxKind.OmittedExpression) {
+                    return;
+                } else if ((<ts.Node>element.name).kind === ts.SyntaxKind.Identifier) {
+                    this.markAssignment(<ts.Identifier>element.name);
+                } else {
+                    this.visitBindingPatternIdentifiers(<ts.BindingPattern>element.name);
+                }
+            });
+        }
     }
 
     /* tslint:disable:no-increment-decrement */
@@ -218,11 +221,14 @@ class PreferConstWalker extends ErrorTolerantWalker {
     private collectBindingPatternIdentifiers(value: ts.VariableDeclaration,
                                              pattern: ts.BindingPattern,
                                              table: ts.Map<IDeclarationUsages>): void {
-        pattern.elements.forEach((element): void => {
-            if (element.kind === ts.SyntaxKind.OmittedExpression) {
-                return;
-            }
-            this.collectNameIdentifiers(value, element.name, table);
-        });
+        if (pattern.kind === ts.SyntaxKind.ObjectBindingPattern) {
+            const objPattern: ts.ObjectBindingPattern = <ts.ObjectBindingPattern>pattern;
+            objPattern.elements.forEach((element): void => {
+                if ((<any>element).kind === ts.SyntaxKind.OmittedExpression) {
+                    return;
+                }
+                this.collectNameIdentifiers(value, element.name, table);
+            });
+        }
     }
 }

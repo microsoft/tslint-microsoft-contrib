@@ -4,39 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnnecessaryOverrideRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-unnecessary-override',
-        type: 'maintainability',
-        description: 'Do not write a method that only calls super() on the parent method with the same arguments.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-unnecessary-override',
+    type: 'maintainability',
+    description: 'Do not write a method that only calls super() on the parent method with the same arguments.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398, 710'
+};
 exports.Rule = Rule;
 var NoUnnecessaryOverrideRuleWalker = (function (_super) {
     __extends(NoUnnecessaryOverrideRuleWalker, _super);
     function NoUnnecessaryOverrideRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoUnnecessaryOverrideRuleWalker.prototype.visitMethodDeclaration = function (node) {
         if (node.body != null) {

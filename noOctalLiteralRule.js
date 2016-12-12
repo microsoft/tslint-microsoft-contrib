@@ -4,39 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         var noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
         return this.applyWithWalker(noOctalLiteral);
     };
-    Rule.metadata = {
-        ruleName: 'no-octal-literal',
-        type: 'maintainability',
-        description: 'Do not use octal literals or escaped octal sequences',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security'
-    };
-    Rule.FAILURE_STRING = 'Octal literals should not be used: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-octal-literal',
+    type: 'maintainability',
+    description: 'Do not use octal literals or escaped octal sequences',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security'
+};
+Rule.FAILURE_STRING = 'Octal literals should not be used: ';
 exports.Rule = Rule;
 var NoOctalLiteral = (function (_super) {
     __extends(NoOctalLiteral, _super);
     function NoOctalLiteral() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoOctalLiteral.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.StringLiteral) {

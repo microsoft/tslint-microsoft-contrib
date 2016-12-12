@@ -4,39 +4,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-exec-script',
-        type: 'maintainability',
-        description: 'Do not use the execScript functions',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '95, 676'
-    };
-    Rule.FAILURE_STRING = 'forbidden execScript: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-exec-script',
+    type: 'maintainability',
+    description: 'Do not use the execScript functions',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    commonWeaknessEnumeration: '95, 676'
+};
+Rule.FAILURE_STRING = 'forbidden execScript: ';
 exports.Rule = Rule;
 var NoEvalScriptWalker = (function (_super) {
     __extends(NoEvalScriptWalker, _super);
     function NoEvalScriptWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoEvalScriptWalker.prototype.visitCallExpression = function (node) {
         this.validateExpression(node);

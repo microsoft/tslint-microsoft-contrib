@@ -4,41 +4,42 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-empty-line-after-opening-brace',
-        type: 'maintainability',
-        description: 'Avoid an empty line after an opening brace',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Whitespace',
-        recommendation: 'false,',
-        commonWeaknessEnumeration: '710'
-    };
-    Rule.FAILURE_STRING = 'Opening brace cannot be followed by empty line';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-empty-line-after-opening-brace',
+    type: 'maintainability',
+    description: 'Avoid an empty line after an opening brace',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Whitespace',
+    recommendation: 'false,',
+    commonWeaknessEnumeration: '710'
+};
+Rule.FAILURE_STRING = 'Opening brace cannot be followed by empty line';
 exports.Rule = Rule;
 var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
     __extends(NoEmptyLineAfterOpeningBraceWalker, _super);
     function NoEmptyLineAfterOpeningBraceWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.scanner = ts.createScanner(1, false, 0, sourceFile.text);
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.scanner = ts.createScanner(1, false, 0, sourceFile.text);
+        return _this;
     }
     NoEmptyLineAfterOpeningBraceWalker.prototype.visitSourceFile = function (node) {
         this.scanAllTokens(node);

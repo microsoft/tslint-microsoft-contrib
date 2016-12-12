@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var getImplicitRole_1 = require('./utils/getImplicitRole');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint");
+var getImplicitRole_1 = require("./utils/getImplicitRole");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ARIA_ATTRIBUTES = require('./utils/attributes/ariaSchema.json');
 var ROLES = ROLE_SCHEMA.roles;
@@ -27,34 +27,34 @@ exports.getFailureStringForNoRole = getFailureStringForNoRole;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new A11yRoleSupportsAriaPropsWalker(sourceFile, this.getOptions()))
             : [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-role-supports-aria-props',
-        type: 'maintainability',
-        description: 'Enforce that elements with explicit or implicit roles defined contain ' +
-            'only `aria-*` properties supported by that `role`.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-a11y-role-supports-aria-props',
+    type: 'maintainability',
+    description: 'Enforce that elements with explicit or implicit roles defined contain ' +
+        'only `aria-*` properties supported by that `role`.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 exports.Rule = Rule;
 var A11yRoleSupportsAriaPropsWalker = (function (_super) {
     __extends(A11yRoleSupportsAriaPropsWalker, _super);
     function A11yRoleSupportsAriaPropsWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     A11yRoleSupportsAriaPropsWalker.prototype.visitJsxElement = function (node) {
         this.checkJsxElement(node.openingElement);

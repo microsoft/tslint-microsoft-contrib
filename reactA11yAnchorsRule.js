@@ -4,23 +4,23 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Utils_1 = require('./utils/Utils');
-var getImplicitRole_1 = require('./utils/getImplicitRole');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Utils_1 = require("./utils/Utils");
+var getImplicitRole_1 = require("./utils/getImplicitRole");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_STRING = 'role';
-var NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
-var LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text should be at least 4 characters long. If you are not using <a> ' +
-    'element as anchor, please specify explicit role, e.g. role=\'button\'';
-var UNIQUE_ALT_FAILURE_STRING = 'Links with images and text content, the alt attribute should be unique to the text content or empty.';
-var SAME_HREF_SAME_TEXT_FAILURE_STRING = 'Links with the same HREF should have the same link text.';
-var DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING = 'Links that point to different HREFs should have different link text.';
+exports.NO_HASH_FAILURE_STRING = 'Do not use # as anchor href.';
+exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING = 'Link text or the alt text of image in link should be at least 4 characters long. ' +
+    'If you are not using <a> element as anchor, please specify explicit role, e.g. role=\'button\'';
+exports.UNIQUE_ALT_FAILURE_STRING = 'Links with images and text content, the alt attribute should be unique to the text content or empty.';
+exports.SAME_HREF_SAME_TEXT_FAILURE_STRING = 'Links with the same HREF should have the same link text.';
+exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING = 'Links that point to different HREFs should have different link text.';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -31,47 +31,49 @@ var Rule = (function (_super) {
         }
         return [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-anchors',
-        type: 'functionality',
-        description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-a11y-anchors',
+    type: 'functionality',
+    description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 exports.Rule = Rule;
 var ReactA11yAnchorsRuleWalker = (function (_super) {
     __extends(ReactA11yAnchorsRuleWalker, _super);
     function ReactA11yAnchorsRuleWalker() {
-        _super.apply(this, arguments);
-        this.anchorInfoList = [];
+        var _this = _super.apply(this, arguments) || this;
+        _this.anchorInfoList = [];
+        return _this;
     }
     ReactA11yAnchorsRuleWalker.prototype.validateAllAnchors = function () {
         var _this = this;
         var sameHrefDifferentTexts = [];
         var differentHrefSameText = [];
-        var _loop_1 = function() {
+        var _loop_1 = function () {
             var current = this_1.anchorInfoList.shift();
             this_1.anchorInfoList.forEach(function (anchorInfo) {
                 if (current.href &&
                     current.href === anchorInfo.href &&
-                    current.text !== anchorInfo.text &&
+                    (current.text !== anchorInfo.text || current.altText !== anchorInfo.altText) &&
                     !Utils_1.Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
                     sameHrefDifferentTexts.push(anchorInfo);
-                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current)));
+                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, exports.SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current)));
                 }
                 if (current.href !== anchorInfo.href &&
                     current.text === anchorInfo.text &&
+                    current.altText === anchorInfo.altText &&
                     !Utils_1.Utils.contains(differentHrefSameText, anchorInfo)) {
                     differentHrefSameText.push(anchorInfo);
-                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current)));
+                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current)));
                 }
             });
         };
@@ -99,37 +101,30 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             var anchorInfo = {
                 href: this.getAttribute(openingElement, 'href'),
                 text: this.anchorText(parent),
+                altText: this.imageAlt(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
             if (anchorInfo.href === '#') {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
+                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.NO_HASH_FAILURE_STRING));
             }
-            if (this.imageRole(openingElement) === 'link' && (!anchorInfo.text || anchorInfo.text.length < 4)) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
+            if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
+                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.UNIQUE_ALT_FAILURE_STRING));
             }
-            var imageAltText = this.imageAlt(parent);
-            if (imageAltText && imageAltText === anchorInfo.text) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING));
+            var anchorInfoTextLength = anchorInfo.text ? anchorInfo.text.length : 0;
+            var anchorImageAltTextLength = anchorInfo.altText ? anchorInfo.altText.length : 0;
+            if (this.anchorRole(openingElement) === 'link' &&
+                anchorInfoTextLength < 4 &&
+                anchorImageAltTextLength < 4) {
+                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING));
             }
             this.anchorInfoList.push(anchorInfo);
         }
     };
     ReactA11yAnchorsRuleWalker.prototype.getAttribute = function (openingElement, attributeName) {
-        var attributes = openingElement.attributes;
-        var attributeValue;
-        attributes.forEach(function (attribute) {
-            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
-                var jsxAttribute = attribute;
-                if (jsxAttribute.name.getText() === attributeName &&
-                    jsxAttribute.initializer &&
-                    jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
-                    var literal = jsxAttribute.initializer;
-                    attributeValue = literal.text;
-                }
-            }
-        });
-        return attributeValue;
+        var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(openingElement);
+        var attribute = attributes[attributeName];
+        return attribute ? JsxAttribute_1.getStringLiteral(attribute) : '';
     };
     ReactA11yAnchorsRuleWalker.prototype.anchorText = function (root) {
         var _this = this;
@@ -157,12 +152,15 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         }
         return title;
     };
+    ReactA11yAnchorsRuleWalker.prototype.anchorRole = function (root) {
+        var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(root);
+        var roleProp = attributesInElement[ROLE_STRING];
+        return roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(root);
+    };
     ReactA11yAnchorsRuleWalker.prototype.imageAltAttribute = function (openingElement) {
         if (openingElement.tagName.getText() === 'img') {
             var altAttribute = this.getAttribute(openingElement, 'alt');
-            if (altAttribute) {
-                return altAttribute;
-            }
+            return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
         return '';
     };
@@ -182,17 +180,13 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         }
         return altText;
     };
-    ReactA11yAnchorsRuleWalker.prototype.imageRole = function (root) {
-        var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(root);
-        var roleProp = attributesInElement[ROLE_STRING];
-        return roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(root);
-    };
     return ReactA11yAnchorsRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));
 var AnchorInfo = (function () {
     function AnchorInfo() {
         this.href = '';
         this.text = '';
+        this.altText = '';
         this.start = 0;
         this.width = 0;
     }

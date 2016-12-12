@@ -1,8 +1,8 @@
 "use strict";
-var Lint = require('tslint');
-var fs = require('fs');
-var chai = require('chai');
-var ErrorTolerantWalker_1 = require('../utils/ErrorTolerantWalker');
+var Lint = require("tslint");
+var fs = require("fs");
+var chai = require("chai");
+var ErrorTolerantWalker_1 = require("../utils/ErrorTolerantWalker");
 var TestHelper;
 (function (TestHelper) {
     TestHelper.RULES_DIRECTORY = 'dist/src/';

@@ -1,6 +1,6 @@
 "use strict";
-var ts = require('typescript');
-var TypeGuard_1 = require('./TypeGuard');
+var ts = require("typescript");
+var TypeGuard_1 = require("./TypeGuard");
 function getPropName(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');

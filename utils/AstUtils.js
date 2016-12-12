@@ -1,5 +1,5 @@
 "use strict";
-var ts = require('typescript');
+var ts = require("typescript");
 var AstUtils;
 (function (AstUtils) {
     function getLanguageVariant(node) {

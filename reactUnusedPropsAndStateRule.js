@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Utils_1 = require("./utils/Utils");
 var PROPS_REGEX = 'props-interface-regex';
 var STATE_REGEX = 'state-interface-regex';
 var FAILURE_UNUSED_PROP = 'Unused React property defined in interface: ';
@@ -15,7 +15,7 @@ var FAILURE_UNUSED_STATE = 'Unused React state defined in interface: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -25,41 +25,41 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-unused-props-and-state',
-        type: 'maintainability',
-        description: 'Remove unneeded properties defined in React Props and State interfaces',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-unused-props-and-state',
+    type: 'maintainability',
+    description: 'Remove unneeded properties defined in React Props and State interfaces',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398'
+};
 exports.Rule = Rule;
 var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
     __extends(ReactUnusedPropsAndStateRuleWalker, _super);
     function ReactUnusedPropsAndStateRuleWalker(sourceFile, options) {
-        var _this = this;
-        _super.call(this, sourceFile, options);
-        this.propNames = [];
-        this.propNodes = {};
-        this.stateNames = [];
-        this.stateNodes = {};
-        this.classDeclarations = [];
-        this.propsInterfaceRegex = /^Props$/;
-        this.stateInterfaceRegex = /^State$/;
-        this.getOptions().forEach(function (opt) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.propNames = [];
+        _this.propNodes = {};
+        _this.stateNames = [];
+        _this.stateNodes = {};
+        _this.classDeclarations = [];
+        _this.propsInterfaceRegex = /^Props$/;
+        _this.stateInterfaceRegex = /^State$/;
+        _this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.propsInterfaceRegex = _this.getOptionOrDefault(opt, PROPS_REGEX, _this.propsInterfaceRegex);
                 _this.stateInterfaceRegex = _this.getOptionOrDefault(opt, STATE_REGEX, _this.stateInterfaceRegex);
             }
         });
+        return _this;
     }
     ReactUnusedPropsAndStateRuleWalker.prototype.getOptionOrDefault = function (option, key, defaultValue) {
         try {

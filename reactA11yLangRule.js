@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_MISSING_LANG = 'An html element is missing the lang attribute';
 var FAILURE_WRONG_LANG_CODE = 'Lang attribute does not have a valid value. Found: ';
 var LANGUAGE_CODES = [
@@ -25,7 +25,7 @@ var LANGUAGE_CODES = [
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -35,26 +35,26 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-lang',
-        type: 'functionality',
-        description: 'For accessibility of your website, html elements must have a valid lang attribute.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-a11y-lang',
+    type: 'functionality',
+    description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 exports.Rule = Rule;
 var ReactA11yLangRuleWalker = (function (_super) {
     __extends(ReactA11yLangRuleWalker, _super);
     function ReactA11yLangRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactA11yLangRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
         this.validateOpeningElement(node, node);

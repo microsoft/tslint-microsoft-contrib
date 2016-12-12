@@ -4,16 +4,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
-var AstUtils_1 = require('./AstUtils');
-var Scope_1 = require('./Scope');
+var ts = require("typescript");
+var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
+var AstUtils_1 = require("./AstUtils");
+var Scope_1 = require("./Scope");
 var ScopedSymbolTrackingWalker = (function (_super) {
     __extends(ScopedSymbolTrackingWalker, _super);
     function ScopedSymbolTrackingWalker(sourceFile, options, languageServices) {
-        _super.call(this, sourceFile, options);
-        this.languageServices = languageServices;
-        this.typeChecker = this.languageServices.getProgram().getTypeChecker();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.languageServices = languageServices;
+        _this.typeChecker = _this.languageServices.getProgram().getTypeChecker();
+        return _this;
     }
     ScopedSymbolTrackingWalker.prototype.isExpressionEvaluatingToFunction = function (expression) {
         if (expression.kind === ts.SyntaxKind.ArrowFunction

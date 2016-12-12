@@ -4,10 +4,10 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var ChaiUtils_1 = require('./utils/ChaiUtils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var ChaiUtils_1 = require("./utils/ChaiUtils");
 var BASE_ERROR = 'Found chai call with vague failure message. ';
 var FAILURE_STRING = BASE_ERROR + 'Please add an explicit failure message';
 var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
@@ -17,32 +17,32 @@ var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comp
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ChaiVagueErrorsRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'chai-vague-errors',
-        type: 'maintainability',
-        description: 'Avoid Chai assertions that result in vague errors',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'chai-vague-errors',
+    type: 'maintainability',
+    description: 'Avoid Chai assertions that result in vague errors',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
 exports.Rule = Rule;
 var ChaiVagueErrorsRuleWalker = (function (_super) {
     __extends(ChaiVagueErrorsRuleWalker, _super);
     function ChaiVagueErrorsRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ChaiVagueErrorsRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
         if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {

@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
+var ts = require("typescript");
+var Lint = require("tslint");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ROLES = ROLE_SCHEMA.roles;
 var VALID_ROLES = Object.keys(ROLES).filter(function (role) { return ROLES[role].isAbstract === false; });
@@ -22,33 +22,33 @@ exports.getFailureStringInvalidRole = getFailureStringInvalidRole;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
             : [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-role',
-        type: 'maintainability',
-        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-a11y-role',
+    type: 'maintainability',
+    description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 exports.Rule = Rule;
 var A11yRoleRuleWalker = (function (_super) {
     __extends(A11yRoleRuleWalker, _super);
     function A11yRoleRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     A11yRoleRuleWalker.prototype.visitJsxAttribute = function (node) {
         var name = JsxAttribute_1.getPropName(node);

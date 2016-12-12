@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var ErrorTolerantWalker_1 = require('./ErrorTolerantWalker');
-var AstUtils_1 = require('./AstUtils');
+var ts = require("typescript");
+var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
+var AstUtils_1 = require("./AstUtils");
 var Scope = (function () {
     function Scope(parent) {
         this.symbols = {};
@@ -54,9 +54,10 @@ exports.Scope = Scope;
 var GlobalReferenceCollector = (function (_super) {
     __extends(GlobalReferenceCollector, _super);
     function GlobalReferenceCollector() {
-        _super.apply(this, arguments);
-        this.functionIdentifiers = [];
-        this.nonFunctionIdentifiers = [];
+        var _this = _super.apply(this, arguments) || this;
+        _this.functionIdentifiers = [];
+        _this.nonFunctionIdentifiers = [];
+        return _this;
     }
     GlobalReferenceCollector.prototype.visitModuleDeclaration = function (node) { };
     GlobalReferenceCollector.prototype.visitClassDeclaration = function (node) { };

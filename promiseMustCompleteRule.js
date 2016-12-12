@@ -4,41 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
+var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'promise-must-complete',
-        type: 'maintainability',
-        description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
-            'called on it within all code branches in the scope.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
-    Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'promise-must-complete',
+    type: 'maintainability',
+    description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
+        'called on it within all code branches in the scope.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
+Rule.FAILURE_STRING = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 exports.Rule = Rule;
 var PromiseAnalyzer = (function (_super) {
     __extends(PromiseAnalyzer, _super);
     function PromiseAnalyzer() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     PromiseAnalyzer.prototype.isPromiseDeclaration = function (node) {
         if (node.expression.kind === ts.SyntaxKind.Identifier
@@ -88,12 +88,13 @@ var PromiseAnalyzer = (function (_super) {
 var PromiseCompletionWalker = (function (_super) {
     __extends(PromiseCompletionWalker, _super);
     function PromiseCompletionWalker(sourceFile, options, completionIdentifiers) {
-        _super.call(this, sourceFile, options);
-        this.wasCompleted = false;
-        this.allBranchesCompleted = true;
-        this.hasBranches = false;
-        this.walkerOptions = options;
-        this.completionIdentifiers = completionIdentifiers;
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.wasCompleted = false;
+        _this.allBranchesCompleted = true;
+        _this.hasBranches = false;
+        _this.walkerOptions = options;
+        _this.completionIdentifiers = completionIdentifiers;
+        return _this;
     }
     PromiseCompletionWalker.prototype.visitNode = function (node) {
         _super.prototype.visitNode.call(this, node);

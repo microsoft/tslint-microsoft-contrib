@@ -4,38 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'missing-jsdoc',
-        type: 'maintainability',
-        description: 'All files must have a top level JSDoc comment.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
-    Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'missing-jsdoc',
+    type: 'maintainability',
+    description: 'All files must have a top level JSDoc comment.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
+Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level: ';
 exports.Rule = Rule;
 var MissingJSDocWalker = (function (_super) {
     __extends(MissingJSDocWalker, _super);
     function MissingJSDocWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     MissingJSDocWalker.prototype.visitSourceFile = function (node) {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {

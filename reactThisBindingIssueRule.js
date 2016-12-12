@@ -4,12 +4,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var AstUtils_1 = require('./utils/AstUtils');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Scope_1 = require('./utils/Scope');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var AstUtils_1 = require("./utils/AstUtils");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Scope_1 = require("./utils/Scope");
+var Utils_1 = require("./utils/Utils");
 var FAILURE_ANONYMOUS_LISTENER = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 var FAILURE_DOUBLE_BIND = 'A function is having its \'this\' reference bound twice in the constructor: ';
 var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute without having the \'this\' ' +
@@ -17,7 +17,7 @@ var FAILURE_UNBOUND_LISTENER = 'A class method is passed as a JSX attribute with
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -27,36 +27,36 @@ var Rule = (function (_super) {
             return [];
         }
     };
-    Rule.metadata = {
-        ruleName: 'react-this-binding-issue',
-        type: 'maintainability',
-        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
-            'on any methods that you pass off to child components as callbacks.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-this-binding-issue',
+    type: 'maintainability',
+    description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+        'on any methods that you pass off to child components as callbacks.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
 exports.Rule = Rule;
 var ReactThisBindingIssueRuleWalker = (function (_super) {
     __extends(ReactThisBindingIssueRuleWalker, _super);
     function ReactThisBindingIssueRuleWalker(sourceFile, options) {
-        var _this = this;
-        _super.call(this, sourceFile, options);
-        this.allowAnonymousListeners = false;
-        this.boundListeners = [];
-        this.declaredMethods = [];
-        this.getOptions().forEach(function (opt) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.allowAnonymousListeners = false;
+        _this.boundListeners = [];
+        _this.declaredMethods = [];
+        _this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
             }
         });
+        return _this;
     }
     ReactThisBindingIssueRuleWalker.prototype.visitClassDeclaration = function (node) {
         var _this = this;

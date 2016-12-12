@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var AstUtils_1 = require('./utils/AstUtils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var AstUtils_1 = require("./utils/AstUtils");
 var UNSPECIFIED_BROWSER_VERSION = 'unspecified version';
 var JSDOC_BROWSERSPECIFIC = '@browserspecific';
 var COMMENT_BROWSERSPECIFIC = 'Browser Specific:';
@@ -15,32 +15,33 @@ var FAILURE_VERSION_STRING = 'Unsupported browser version';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnsupportedBrowserCodeRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-unsupported-browser-code',
-        type: 'maintainability',
-        description: 'Avoid writing browser-specific code for unsupported browser versions',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-unsupported-browser-code',
+    type: 'maintainability',
+    description: 'Avoid writing browser-specific code for unsupported browser versions',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity'
+};
 exports.Rule = Rule;
 var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
     __extends(NoUnsupportedBrowserCodeRuleWalker, _super);
     function NoUnsupportedBrowserCodeRuleWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.supportedBrowsers = this.parseSupportedBrowsers();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.supportedBrowsers = _this.parseSupportedBrowsers();
+        return _this;
     }
     NoUnsupportedBrowserCodeRuleWalker.prototype.visitSourceFile = function (node) {
         var _this = this;

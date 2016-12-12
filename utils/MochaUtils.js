@@ -1,7 +1,7 @@
 "use strict";
-var ts = require('typescript');
-var AstUtils_1 = require('./AstUtils');
-var Utils_1 = require('./Utils');
+var ts = require("typescript");
+var AstUtils_1 = require("./AstUtils");
+var Utils_1 = require("./Utils");
 var MochaUtils;
 (function (MochaUtils) {
     function isMochaTest(node) {

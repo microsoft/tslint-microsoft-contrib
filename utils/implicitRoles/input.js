@@ -1,5 +1,5 @@
 "use strict";
-var JsxAttribute_1 = require('../JsxAttribute');
+var JsxAttribute_1 = require("../JsxAttribute");
 var typeString = 'type';
 var listString = 'list';
 function getImplicitRoleForInput(node) {

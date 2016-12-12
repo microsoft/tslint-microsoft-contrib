@@ -4,41 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-http-string',
-        type: 'maintainability',
-        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],',
-        commonWeaknessEnumeration: '319'
-    };
-    Rule.FAILURE_STRING = 'Forbidden http url in string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-http-string',
+    type: 'maintainability',
+    description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Critical',
+    level: 'Mandatory',
+    group: 'Security',
+    recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],',
+    commonWeaknessEnumeration: '319'
+};
+Rule.FAILURE_STRING = 'Forbidden http url in string: ';
 exports.Rule = Rule;
 var NoHttpStringWalker = (function (_super) {
     __extends(NoHttpStringWalker, _super);
     function NoHttpStringWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoHttpStringWalker.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.StringLiteral) {

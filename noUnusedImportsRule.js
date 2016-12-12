@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         var documentRegistry = ts.createDocumentRegistry();
@@ -19,30 +19,31 @@ var Rule = (function (_super) {
         var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
         return this.applyWithWalker(new NoUnusedImportsWalker(sourceFile, this.getOptions(), languageService));
     };
-    Rule.FAILURE_STRING = 'unused import: ';
-    Rule.metadata = {
-        ruleName: 'no-unused-imports',
-        type: 'maintainability',
-        description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Deprecated',
-        recommendation: 'false             // use tslint no-unused-variable rule instead',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.FAILURE_STRING = 'unused import: ';
+Rule.metadata = {
+    ruleName: 'no-unused-imports',
+    type: 'maintainability',
+    description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Deprecated',
+    recommendation: 'false             // use tslint no-unused-variable rule instead',
+    commonWeaknessEnumeration: '398, 710'
+};
 exports.Rule = Rule;
 var NoUnusedImportsWalker = (function (_super) {
     __extends(NoUnusedImportsWalker, _super);
     function NoUnusedImportsWalker(sourceFile, options, languageServices) {
-        _super.call(this, sourceFile, options);
-        this.languageServices = languageServices;
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.languageServices = languageServices;
+        return _this;
     }
     NoUnusedImportsWalker.prototype.visitImportEqualsDeclaration = function (node) {
         if (!AstUtils_1.AstUtils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {

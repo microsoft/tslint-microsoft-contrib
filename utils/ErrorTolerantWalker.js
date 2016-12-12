@@ -4,11 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint');
+var Lint = require("tslint");
 var ErrorTolerantWalker = (function (_super) {
     __extends(ErrorTolerantWalker, _super);
     function ErrorTolerantWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ErrorTolerantWalker.prototype.visitNode = function (node) {
         try {
@@ -31,8 +31,8 @@ var ErrorTolerantWalker = (function (_super) {
         }
         return result;
     };
-    ErrorTolerantWalker.DEBUG = true;
     return ErrorTolerantWalker;
 }(Lint.RuleWalker));
+ErrorTolerantWalker.DEBUG = false;
 exports.ErrorTolerantWalker = ErrorTolerantWalker;
 //# sourceMappingURL=ErrorTolerantWalker.js.map

@@ -4,41 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoBackboneGetSetOutsideModelRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-backbone-get-set-outside-model',
-        type: 'maintainability',
-        description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
-    };
-    Rule.GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
-    Rule.SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-backbone-get-set-outside-model',
+    type: 'maintainability',
+    description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness',
+    commonWeaknessEnumeration: '398, 710'
+};
+Rule.GET_FAILURE_STRING = 'Backbone get() called outside of owning model: ';
+Rule.SET_FAILURE_STRING = 'Backbone set() called outside of owning model: ';
 exports.Rule = Rule;
 var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
     __extends(NoBackboneGetSetOutsideModelRuleWalker, _super);
     function NoBackboneGetSetOutsideModelRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoBackboneGetSetOutsideModelRuleWalker.prototype.visitCallExpression = function (node) {
         if (AstUtils_1.AstUtils.getFunctionTarget(node) !== 'this') {

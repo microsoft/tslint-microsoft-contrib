@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var MATH_FAIL_STRING = 'Math.random produces insecure random numbers. ' +
     'Use crypto.randomBytes() or window.crypto.getRandomValues() instead';
 var NODE_FAIL_STRING = 'crypto.pseudoRandomBytes produces insecure random numbers. ' +
@@ -13,32 +13,32 @@ var NODE_FAIL_STRING = 'crypto.pseudoRandomBytes produces insecure random number
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new InsecureRandomRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'insecure-random',
-        type: 'functionality',
-        description: 'Do not use insecure sources for random bytes',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Security',
-        commonWeaknessEnumeration: '330'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'insecure-random',
+    type: 'functionality',
+    description: 'Do not use insecure sources for random bytes',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'SDL',
+    issueType: 'Error',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Security',
+    commonWeaknessEnumeration: '330'
+};
 exports.Rule = Rule;
 var InsecureRandomRuleWalker = (function (_super) {
     __extends(InsecureRandomRuleWalker, _super);
     function InsecureRandomRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     InsecureRandomRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
         if (node.expression.getText() === 'Math' && node.name.text === 'random') {

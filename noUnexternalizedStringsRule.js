@@ -4,42 +4,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnexternalizedStringsRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-unexternalized-strings',
-        type: 'maintainability',
-        description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Configurable',
-        recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-unexternalized-strings',
+    type: 'maintainability',
+    description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Configurable',
+    recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
+};
 exports.Rule = Rule;
 var NoUnexternalizedStringsRuleWalker = (function (_super) {
     __extends(NoUnexternalizedStringsRuleWalker, _super);
     function NoUnexternalizedStringsRuleWalker(sourceFile, opt) {
-        var _this = this;
-        _super.call(this, sourceFile, opt);
-        this.signatures = Object.create(null);
-        this.ignores = Object.create(null);
-        var options = this.getOptions();
+        var _this = _super.call(this, sourceFile, opt) || this;
+        _this.signatures = Object.create(null);
+        _this.ignores = Object.create(null);
+        var options = _this.getOptions();
         var first = options && options.length > 0 ? options[0] : null;
         if (first) {
             if (Array.isArray(first.signatures)) {
@@ -49,9 +48,10 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
                 first.ignores.forEach(function (ignore) { return _this.ignores[ignore] = true; });
             }
             if (first.messageIndex !== undefined) {
-                this.messageIndex = first.messageIndex;
+                _this.messageIndex = first.messageIndex;
             }
         }
+        return _this;
     }
     NoUnexternalizedStringsRuleWalker.prototype.visitStringLiteral = function (node) {
         this.checkStringLiteral(node);
@@ -104,7 +104,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             node = parent_1;
         }
     };
-    NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
     return NoUnexternalizedStringsRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));
+NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
 //# sourceMappingURL=noUnexternalizedStringsRule.js.map

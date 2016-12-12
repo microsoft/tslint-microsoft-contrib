@@ -4,11 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var AstUtils_1 = require('./utils/AstUtils');
-var JsxAttribute_1 = require('./utils/JsxAttribute');
-var TypeGuard_1 = require('./utils/TypeGuard');
+var ts = require("typescript");
+var Lint = require("tslint");
+var AstUtils_1 = require("./utils/AstUtils");
+var JsxAttribute_1 = require("./utils/JsxAttribute");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var aria = require('./utils/attributes/ariaSchema.json');
 function getFailureString(propName, expectedType, permittedValues) {
     switch (expectedType) {
@@ -30,33 +30,33 @@ exports.getFailureString = getFailureString;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
             ? this.applyWithWalker(new ReactA11yProptypesWalker(sourceFile, this.getOptions()))
             : [];
     };
-    Rule.metadata = {
-        ruleName: 'react-a11y-proptypes',
-        type: 'maintainability',
-        description: 'Enforce ARIA state and property values are valid.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-a11y-proptypes',
+    type: 'maintainability',
+    description: 'Enforce ARIA state and property values are valid.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Accessibility'
+};
 exports.Rule = Rule;
 var ReactA11yProptypesWalker = (function (_super) {
     __extends(ReactA11yProptypesWalker, _super);
     function ReactA11yProptypesWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     ReactA11yProptypesWalker.prototype.visitJsxAttribute = function (node) {
         var propName = JsxAttribute_1.getPropName(node).toLowerCase();

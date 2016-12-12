@@ -4,43 +4,44 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'prefer-const',
-        type: 'maintainability',
-        description: 'Use const to declare variables if they are only assigned a value once.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 705, 710'
-    };
-    Rule.FAILURE_STRING_FACTORY = function (identifier) { return ("Identifier '" + identifier + "' never appears ") +
-        'on the LHS of an assignment - use const instead of let for its declaration.'; };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'prefer-const',
+    type: 'maintainability',
+    description: 'Use const to declare variables if they are only assigned a value once.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 705, 710'
+};
+Rule.FAILURE_STRING_FACTORY = function (identifier) { return "Identifier '" + identifier + "' never appears " +
+    'on the LHS of an assignment - use const instead of let for its declaration.'; };
 exports.Rule = Rule;
 var PreferConstWalker = (function (_super) {
     __extends(PreferConstWalker, _super);
     function PreferConstWalker() {
-        _super.apply(this, arguments);
-        this.inScopeLetDeclarations = [];
-        this.errors = [];
+        var _this = _super.apply(this, arguments) || this;
+        _this.inScopeLetDeclarations = [];
+        _this.errors = [];
+        return _this;
     }
     PreferConstWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
@@ -164,17 +165,20 @@ var PreferConstWalker = (function (_super) {
     };
     PreferConstWalker.prototype.visitBindingPatternIdentifiers = function (pattern) {
         var _this = this;
-        pattern.elements.forEach(function (element) {
-            if (element.kind === ts.SyntaxKind.OmittedExpression) {
-                return;
-            }
-            else if (element.name.kind === ts.SyntaxKind.Identifier) {
-                _this.markAssignment(element.name);
-            }
-            else {
-                _this.visitBindingPatternIdentifiers(element.name);
-            }
-        });
+        if (pattern.kind === ts.SyntaxKind.ObjectBindingPattern) {
+            var objPattern = pattern;
+            objPattern.elements.forEach(function (element) {
+                if (element.kind === ts.SyntaxKind.OmittedExpression) {
+                    return;
+                }
+                else if (element.name.kind === ts.SyntaxKind.Identifier) {
+                    _this.markAssignment(element.name);
+                }
+                else {
+                    _this.visitBindingPatternIdentifiers(element.name);
+                }
+            });
+        }
     };
     PreferConstWalker.prototype.markAssignment = function (identifier) {
         var name = identifier.text;
@@ -196,12 +200,15 @@ var PreferConstWalker = (function (_super) {
     };
     PreferConstWalker.prototype.collectBindingPatternIdentifiers = function (value, pattern, table) {
         var _this = this;
-        pattern.elements.forEach(function (element) {
-            if (element.kind === ts.SyntaxKind.OmittedExpression) {
-                return;
-            }
-            _this.collectNameIdentifiers(value, element.name, table);
-        });
+        if (pattern.kind === ts.SyntaxKind.ObjectBindingPattern) {
+            var objPattern = pattern;
+            objPattern.elements.forEach(function (element) {
+                if (element.kind === ts.SyntaxKind.OmittedExpression) {
+                    return;
+                }
+                _this.collectNameIdentifiers(value, element.name, table);
+            });
+        }
     };
     return PreferConstWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

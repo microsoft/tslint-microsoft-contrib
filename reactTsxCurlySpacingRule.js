@@ -4,31 +4,31 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
+var ts = require("typescript");
+var Lint = require("tslint");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'react-tsx-curly-spacing',
-        type: 'style',
-        description: 'Consistently use spaces around the brace characters of JSX attributes.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Whitespace'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'react-tsx-curly-spacing',
+    type: 'style',
+    description: 'Consistently use spaces around the brace characters of JSX attributes.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Low',
+    level: 'Opportunity for Excellence',
+    group: 'Whitespace'
+};
 exports.Rule = Rule;
 var Spacing;
 (function (Spacing) {
@@ -38,12 +38,13 @@ var Spacing;
 var TsxCurlySpacingWalker = (function (_super) {
     __extends(TsxCurlySpacingWalker, _super);
     function TsxCurlySpacingWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
-        this.allowMultiline = false;
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
+        _this.allowMultiline = false;
         if (options.ruleArguments[1] != null) {
-            this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
+            _this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
         }
+        return _this;
     }
     TsxCurlySpacingWalker.prototype.visitJsxExpression = function (node) {
         var childrenCount = node.getChildCount();

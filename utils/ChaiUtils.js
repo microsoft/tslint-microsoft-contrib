@@ -1,5 +1,5 @@
 "use strict";
-var ts = require('typescript');
+var ts = require("typescript");
 var ChaiUtils;
 (function (ChaiUtils) {
     function isExpectInvocation(node) {

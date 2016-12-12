@@ -4,43 +4,44 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
-var MochaUtils_1 = require('./utils/MochaUtils');
-var Utils_1 = require('./utils/Utils');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
+var MochaUtils_1 = require("./utils/MochaUtils");
+var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaNoSideEffectCodeRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'mocha-no-side-effect-code',
-        type: 'maintainability',
-        description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Moderate',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'mocha-no-side-effect-code',
+    type: 'maintainability',
+    description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Ignored',
+    issueType: 'Warning',
+    severity: 'Moderate',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
 exports.Rule = Rule;
 var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     __extends(MochaNoSideEffectCodeRuleWalker, _super);
     function MochaNoSideEffectCodeRuleWalker(sourceFile, options) {
-        _super.call(this, sourceFile, options);
-        this.isInDescribe = false;
-        this.parseOptions();
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.isInDescribe = false;
+        _this.parseOptions();
+        return _this;
     }
     MochaNoSideEffectCodeRuleWalker.prototype.parseOptions = function () {
         var _this = this;

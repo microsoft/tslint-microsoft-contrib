@@ -4,38 +4,38 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require('typescript');
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
+var ts = require("typescript");
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'no-control-regex',
-        type: 'maintainability',
-        description: 'Do not use control characters in regular expressions',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
-    };
-    Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'no-control-regex',
+    type: 'maintainability',
+    description: 'Do not use control characters in regular expressions',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Correctness'
+};
+Rule.FAILURE_STRING = 'Unexpected control character in regular expression';
 exports.Rule = Rule;
 var NoControlRegexRuleWalker = (function (_super) {
     __extends(NoControlRegexRuleWalker, _super);
     function NoControlRegexRuleWalker() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     NoControlRegexRuleWalker.prototype.visitNewExpression = function (node) {
         this.validateCall(node);

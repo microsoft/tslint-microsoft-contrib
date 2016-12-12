@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Lint = require('tslint');
-var ErrorTolerantWalker_1 = require('./utils/ErrorTolerantWalker');
-var AstUtils_1 = require('./utils/AstUtils');
+var Lint = require("tslint");
+var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var METHOD_REGEX = 'method-regex';
 var PRIVATE_METHOD_REGEX = 'private-method-regex';
 var PROTECTED_METHOD_REGEX = 'protected-method-regex';
@@ -15,39 +15,38 @@ var FUNCTION_REGEX = 'function-regex';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new FunctionNameRuleWalker(sourceFile, this.getOptions()));
     };
-    Rule.metadata = {
-        ruleName: 'function-name',
-        type: 'maintainability',
-        description: 'Applies a naming convention to function names and method names',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
-    };
     return Rule;
 }(Lint.Rules.AbstractRule));
+Rule.metadata = {
+    ruleName: 'function-name',
+    type: 'maintainability',
+    description: 'Applies a naming convention to function names and method names',
+    options: null,
+    optionsDescription: '',
+    typescriptOnly: true,
+    issueClass: 'Non-SDL',
+    issueType: 'Warning',
+    severity: 'Important',
+    level: 'Opportunity for Excellence',
+    group: 'Clarity',
+    commonWeaknessEnumeration: '398, 710'
+};
 exports.Rule = Rule;
 var FunctionNameRuleWalker = (function (_super) {
     __extends(FunctionNameRuleWalker, _super);
     function FunctionNameRuleWalker(sourceFile, options) {
-        var _this = this;
-        _super.call(this, sourceFile, options);
-        this.methodRegex = /^[a-z][\w\d]+$/;
-        this.privateMethodRegex = this.methodRegex;
-        this.protectedMethodRegex = this.privateMethodRegex;
-        this.staticMethodRegex = /^[A-Z_\d]+$/;
-        this.functionRegex = /^[a-z][\w\d]+$/;
-        this.getOptions().forEach(function (opt) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.methodRegex = /^[a-z][\w\d]+$/;
+        _this.privateMethodRegex = _this.methodRegex;
+        _this.protectedMethodRegex = _this.privateMethodRegex;
+        _this.staticMethodRegex = /^[A-Z_\d]+$/;
+        _this.functionRegex = /^[a-z][\w\d]+$/;
+        _this.getOptions().forEach(function (opt) {
             if (typeof (opt) === 'object') {
                 _this.methodRegex = _this.getOptionOrDefault(opt, METHOD_REGEX, _this.methodRegex);
                 _this.privateMethodRegex = _this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, _this.privateMethodRegex);
@@ -56,6 +55,7 @@ var FunctionNameRuleWalker = (function (_super) {
                 _this.functionRegex = _this.getOptionOrDefault(opt, FUNCTION_REGEX, _this.functionRegex);
             }
         });
+        return _this;
     }
     FunctionNameRuleWalker.prototype.visitMethodDeclaration = function (node) {
         var name = node.name.getText();

@@ -27,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING_FACTORY: (identifier: string) => string =
         (identifier: string) => `Identifier '${identifier}' never appears ` +
-            'on the LHS of an assignment - use const instead of let for its declaration.';
+            'on the LHS of an assignment - use const instead of let for its declaration.'
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));

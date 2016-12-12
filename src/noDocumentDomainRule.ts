@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -16,6 +15,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
                     'validated to ensure that the value is on a list of allowed sites.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -23,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Security'
     };
 
-    public static FAILURE_STRING = 'Forbidden write to document.domain: ';
+    public static FAILURE_STRING: string = 'Forbidden write to document.domain: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
@@ -33,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '='
-            && node.left.kind === SyntaxKind.current().PropertyAccessExpression
+            && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
             && this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)) {
             const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));

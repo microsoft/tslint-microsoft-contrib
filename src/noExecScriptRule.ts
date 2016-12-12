@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -16,6 +16,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use the execScript functions',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -24,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '95, 676'
     };
 
-    public static FAILURE_STRING = 'forbidden execScript: ';
+    public static FAILURE_STRING: string = 'forbidden execScript: ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));

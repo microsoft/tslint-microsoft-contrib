@@ -14,7 +14,6 @@ import {
     isFalseKeyword,
     isTrueKeyword
 } from './TypeGuard';
-import {SyntaxKind} from './SyntaxKind';
 
 export function getPropName(node: ts.JsxAttribute): string {
     if (!isJsxAttribute(node)) {
@@ -106,15 +105,15 @@ export function isEmpty(node: ts.JsxAttribute): boolean {
         return true;
     } else if (isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
-    } else if (initializer.kind === SyntaxKind.current().Identifier) {
+    } else if (initializer.kind === ts.SyntaxKind.Identifier) {
         return initializer.getText() === 'undefined';
-    } else if (initializer.kind === SyntaxKind.current().NullKeyword) {
+    } else if (initializer.kind === ts.SyntaxKind.NullKeyword) {
         return true;
     } else if ((<any>initializer).expression != null) {
         const expression: ts.Expression = (<any>initializer).expression;
-        if (expression.kind === SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
-        } else if (expression.kind === SyntaxKind.current().NullKeyword) {
+        } else if (expression.kind === ts.SyntaxKind.NullKeyword) {
             return true;
         }
     }

@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
@@ -15,6 +15,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use constant expressions in conditions.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -23,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 570, 571, 670'
     };
 
-    public static FAILURE_STRING = 'Found constant conditional: ';
+    public static FAILURE_STRING: string = 'Found constant conditional: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -18,6 +17,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
         /* tslint:enable:no-http-string */
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -27,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '319'
     };
 
-    public static FAILURE_STRING = 'Forbidden http url in string: ';
+    public static FAILURE_STRING: string = 'Forbidden http url in string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
@@ -37,7 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral) {
             const stringText : string = (<ts.LiteralExpression>node).text;
             if (/.*http:.*/.test(stringText)) {
                 if (!this.isSuppressed(stringText)) {

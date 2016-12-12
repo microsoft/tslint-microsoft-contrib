@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 
 const FAILURE_MISSING_LANG: string = 'An html element is missing the lang attribute';
 const FAILURE_WRONG_LANG_CODE: string = 'Lang attribute does not have a valid value. Found: ';
@@ -32,6 +31,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Low',
@@ -66,10 +67,10 @@ class ReactA11yLangRuleWalker extends ErrorTolerantWalker {
             let langFound: boolean = false;
 
             attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-                if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+                if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if ((<ts.JsxAttribute>attribute).name.getText() === 'lang') {
                         langFound = true;
-                        if ((<ts.JsxAttribute>attribute).initializer.kind === SyntaxKind.current().StringLiteral) {
+                        if ((<ts.JsxAttribute>attribute).initializer.kind === ts.SyntaxKind.StringLiteral) {
                             const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
                             if ((LANGUAGE_CODES.indexOf(langText)) === -1) {
                                 this.addFailure(this.createFailure(

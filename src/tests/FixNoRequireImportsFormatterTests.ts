@@ -36,7 +36,6 @@ describe('fixPreferConstFormatter', () : void => {
         const input : string = `
 import {BaseFormatter} from './utils/BaseFormatter';
 import TestHelper = require('./TestHelper');
-import {SyntaxKind} from './utils/SyntaxKind';
 `;
 
         const formatter = new FormatterForTesting(input);
@@ -45,34 +44,29 @@ import {SyntaxKind} from './utils/SyntaxKind';
             `
 import {BaseFormatter} from './utils/BaseFormatter';
 import {TestHelper} from './TestHelper';
-import {SyntaxKind} from './utils/SyntaxKind';
 `.trim());
     });
 
     it('should fix imports at start of list', () : void => {
         const input : string = `import TestHelper = require('./TestHelper');
-import {SyntaxKind} from './utils/SyntaxKind';
 `;
 
         const formatter = new FormatterForTesting(input);
         formatter.format(TestHelper.runRule(ruleName, null, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `import {TestHelper} from './TestHelper';
-import {SyntaxKind} from './utils/SyntaxKind';
 `.trim());
     });
 
     it('should fix imports at end of list', () : void => {
-        const input : string = `import {SyntaxKind} from './utils/SyntaxKind';
-import TestHelper = require('./TestHelper');
+        const input : string = `import TestHelper = require('./TestHelper');
 
 console.log(TestHelper);`;
 
         const formatter = new FormatterForTesting(input);
         formatter.format(TestHelper.runRule(ruleName, null, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
-            `import {SyntaxKind} from './utils/SyntaxKind';
-import {TestHelper} from './TestHelper';
+            `import {TestHelper} from './TestHelper';
 
 console.log(TestHelper);`.trim());
     });

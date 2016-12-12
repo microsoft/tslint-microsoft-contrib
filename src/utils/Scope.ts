@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
-import {SyntaxKind} from './SyntaxKind';
 import {AstUtils} from './AstUtils';
 
 /**
@@ -16,18 +15,18 @@ export class Scope {
     }
 
     public addFunctionSymbol(symbolString: string): void {
-        this.symbols[symbolString] = SyntaxKind.current().FunctionType;
+        this.symbols[symbolString] = ts.SyntaxKind.FunctionType;
     }
 
     public addNonFunctionSymbol(symbolString: string): void {
-        this.symbols[symbolString] = SyntaxKind.current().Unknown;
+        this.symbols[symbolString] = ts.SyntaxKind.Unknown;
     }
 
     public isFunctionSymbol(symbolString: string): boolean {
-        if (this.symbols[symbolString] === SyntaxKind.current().FunctionType) {
+        if (this.symbols[symbolString] === ts.SyntaxKind.FunctionType) {
             return true;
         }
-        if (this.symbols[symbolString] === SyntaxKind.current().Unknown) {
+        if (this.symbols[symbolString] === ts.SyntaxKind.Unknown) {
             return false;
         }
         if (this.parent != null) {

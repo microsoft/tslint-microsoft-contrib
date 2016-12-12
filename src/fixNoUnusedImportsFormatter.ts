@@ -1,6 +1,6 @@
 'use strict';
 
-import {RuleFailure, RuleFailurePosition} from 'tslint/lib/language/rule/rule';
+import {RuleFailure, RuleFailurePosition} from 'tslint';
 import {BaseFormatter} from './utils/BaseFormatter';
 
 /**

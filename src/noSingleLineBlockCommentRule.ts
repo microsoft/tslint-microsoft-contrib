@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -17,6 +16,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid single line block comments; use single line comments instead',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Low',
@@ -48,7 +49,7 @@ class NoSingleLineBlockCommentRuleWalker extends Lint.SkippableTokenAwareRuleWal
                 return;
             }
 
-            if (scanner.getToken() === SyntaxKind.current().MultiLineCommentTrivia) {
+            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
                 const commentText: string = scanner.getTokenText();
                 const startPosition: number = scanner.getTokenPos();
 

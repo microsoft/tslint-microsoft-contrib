@@ -321,11 +321,21 @@ module.exports = function(grunt) {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
+            'no-unused-variable': true,
             'no-unexternalized-strings': true,
             'object-literal-key-quotes': true,
             'no-relative-imports': true,
             'no-empty-line-after-opening-brace': true,
-            'no-duplicate-key': true
+            'no-duplicate-key': true,
+            'align': true,
+            'comment-format': true,
+            'interface-name': true,
+            'max-file-line-count': true,
+            'member-ordering': true,
+            'no-inferrable-types': true,
+            'only-arrow-functions': true,
+            'ordered-imports': true,
+            'typedef-whitespace': true
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {
@@ -453,7 +463,7 @@ module.exports = function(grunt) {
         'copy:json',
         'ts',
         'mochaTest',
-        'tslint',
+        //'tslint', // commented out until grunt-tslint supports tslint 4.0
         'validate-documentation',
         'validate-config',
         'validate-debug-mode',

@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use duplicate case labels in switch statements.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -23,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_STRING = 'Duplicate case found in switch statement: ';
+    public static FAILURE_STRING: string = 'Duplicate case found in switch statement: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
@@ -35,7 +36,7 @@ class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
     protected visitSwitchStatement(node: ts.SwitchStatement): void {
         const seenLabels: string[] = [];
         node.caseBlock.clauses.forEach((clauseOrDefault: ts.CaseOrDefaultClause): void => {
-            if (clauseOrDefault.kind === SyntaxKind.current().CaseClause) {
+            if (clauseOrDefault.kind === ts.SyntaxKind.CaseClause) {
                 const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;
                 if (clause.expression != null) {
                     const caseText = clause.expression.getText();

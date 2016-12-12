@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
@@ -103,7 +104,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
 
     private findDescribingParent(node: ts.Node):
             { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } {
-        const kinds = SyntaxKind.current();
+        const kinds = ts.SyntaxKind;
         while ((node.parent != null)) {
             const parent: ts.Node = node.parent;
             const kind = parent.kind;

@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -14,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Deprecated - This rule is now part of the base TSLint product as the rule named \'one-variable-per-declaration\'',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
@@ -23,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '710'
     };
 
-    public static FAILURE_STRING = 'Do not use comma separated variable declarations: ';
+    public static FAILURE_STRING: string = 'Do not use comma separated variable declarations: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoMultipleVarDeclRuleWalker(sourceFile, this.getOptions()));

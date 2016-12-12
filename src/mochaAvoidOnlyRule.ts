@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {MochaUtils} from './utils/MochaUtils';
 
@@ -16,6 +15,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -23,10 +24,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
-    public static FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
-    public static FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
-    public static FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
+    public static FAILURE_STRING_IT: string = 'Do not commit Mocha it.only function call';
+    public static FAILURE_STRING_SPECIFY: string = 'Do not commit Mocha specify.only function call';
+    public static FAILURE_STRING_DESCRIBE: string = 'Do not commit Mocha describe.only function call';
+    public static FAILURE_STRING_CONTEXT: string = 'Do not commit Mocha context.only function call';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
@@ -43,11 +44,11 @@ class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             if (node.arguments.length === 2) {
-                if (node.arguments[0].kind === SyntaxKind.current().StringLiteral) {
-                    if (node.arguments[1].kind === SyntaxKind.current().FunctionExpression
-                        || node.arguments[1].kind === SyntaxKind.current().ArrowFunction) {
+                if (node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
+                    if (node.arguments[1].kind === ts.SyntaxKind.FunctionExpression
+                        || node.arguments[1].kind === ts.SyntaxKind.ArrowFunction) {
                         if (node.expression.getText() === 'it.only') {
                             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT));
                         } else if (node.expression.getText() === 'specify.only') {

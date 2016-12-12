@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Possible timing attack detected. Direct comparison found: ';
@@ -19,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Moderate',
@@ -35,10 +36,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 class PossibleTimingAttackRuleWalker extends ErrorTolerantWalker {
 
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.operatorToken.kind === SyntaxKind.current().EqualsEqualsToken
-            || node.operatorToken.kind === SyntaxKind.current().EqualsEqualsEqualsToken
-            || node.operatorToken.kind === SyntaxKind.current().ExclamationEqualsToken
-            || node.operatorToken.kind === SyntaxKind.current().ExclamationEqualsEqualsToken) {
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken
+            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
 
             if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
                 && node.left.getText() !== 'null' && node.right.getText() !== 'null'

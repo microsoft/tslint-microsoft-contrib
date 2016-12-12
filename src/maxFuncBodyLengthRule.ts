@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
-import {SyntaxKind} from './utils/SyntaxKind';
+import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid long functions.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Moderate',
@@ -134,7 +135,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
         const scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
         Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
-            if (scanner.getToken() === SyntaxKind.current().MultiLineCommentTrivia) {
+            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
                 commentLineCount += scanner.getTokenText().split(/\n/).length;
             }
         });
@@ -182,26 +183,26 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private formatPlaceText (node: ts.FunctionLikeDeclaration) {
         const funcTypeText = this.getFuncTypeText(node.kind);
-        if (node.kind === SyntaxKind.current().MethodDeclaration ||
-            node.kind === SyntaxKind.current().FunctionDeclaration ||
-            node.kind === SyntaxKind.current().FunctionExpression) {
+        if (node.kind === ts.SyntaxKind.MethodDeclaration ||
+            node.kind === ts.SyntaxKind.FunctionDeclaration ||
+            node.kind === ts.SyntaxKind.FunctionExpression) {
             return ` in ${ funcTypeText } ${ (<any>node.name || {text: ''}).text }()`;
-        } else if (node.kind === SyntaxKind.current().Constructor) {
+        } else if (node.kind === ts.SyntaxKind.Constructor) {
             return ` in class ${ this.currentClassName }`;
         }
         return '';
     }
 
     private getFuncTypeText (nodeKind: ts.SyntaxKind) {
-        if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
+        if (nodeKind === ts.SyntaxKind.FunctionDeclaration) {
             return 'function';
-        } else if (nodeKind === SyntaxKind.current().FunctionExpression) {
+        } else if (nodeKind === ts.SyntaxKind.FunctionExpression) {
             return 'function expression';
-        } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
+        } else if (nodeKind === ts.SyntaxKind.MethodDeclaration) {
             return 'method';
-        } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
+        } else if (nodeKind === ts.SyntaxKind.ArrowFunction) {
             return 'arrow function';
-        } else if (nodeKind === SyntaxKind.current().Constructor) {
+        } else if (nodeKind === ts.SyntaxKind.Constructor) {
             return 'constructor';
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);
@@ -211,15 +212,15 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private getMaxLength (nodeKind: ts.SyntaxKind) {
         let result: number;
 
-        if (nodeKind === SyntaxKind.current().FunctionDeclaration) {
+        if (nodeKind === ts.SyntaxKind.FunctionDeclaration) {
             result = this.maxFuncBodyLength;
-        } else if (nodeKind === SyntaxKind.current().FunctionExpression) {
+        } else if (nodeKind === ts.SyntaxKind.FunctionExpression) {
             result = this.maxFuncExpressionBodyLength;
-        } else if (nodeKind === SyntaxKind.current().MethodDeclaration) {
+        } else if (nodeKind === ts.SyntaxKind.MethodDeclaration) {
             result = this.maxMethodBodyLength;
-        } else if (nodeKind === SyntaxKind.current().ArrowFunction) {
+        } else if (nodeKind === ts.SyntaxKind.ArrowFunction) {
             result = this.maxArrowBodyLength;
-        } else if (nodeKind === SyntaxKind.current().Constructor) {
+        } else if (nodeKind === ts.SyntaxKind.Constructor) {
             result = this.maxCtorBodyLength;
         } else {
             throw new Error(`Unsupported node kind: ${ nodeKind }`);

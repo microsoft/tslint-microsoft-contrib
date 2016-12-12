@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Prefer x == undefined or x === undefined: ';
@@ -18,6 +17,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
                     'or perhaps x == null if you want to check for either null or undefined.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',
@@ -43,11 +44,11 @@ class NoTypeofUndefinedRuleWalker extends ErrorTolerantWalker {
     }
 
     private isTypeOfExpression(node: ts.Node): boolean {
-        return node.kind === SyntaxKind.current().TypeOfExpression;
+        return node.kind === ts.SyntaxKind.TypeOfExpression;
     }
 
     private isUndefinedString(node: ts.Node): boolean {
-        if (node.kind === SyntaxKind.current().StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral) {
             if ((<ts.StringLiteral>node).text === 'undefined') {
                 return true;
             }

@@ -14,7 +14,7 @@ The project has been in use for over a year on multiple projects. Please report 
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 3.0.0 (In-Development)
+Version 4.0.0 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
 

@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -20,6 +19,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -37,8 +38,8 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         // look for assignments to property expressions where the
         // left hand side is either innerHTML or outerHTML
-        if (node.operatorToken.kind === SyntaxKind.current().EqualsToken) {
-            if (node.left.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+            if (node.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.left;
                 const propName: string = propAccess.name.text;
                 if (propName === 'innerHTML') {

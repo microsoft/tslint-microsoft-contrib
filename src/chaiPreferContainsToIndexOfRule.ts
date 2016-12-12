@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 import {ChaiUtils} from './utils/ChaiUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -19,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',
@@ -37,7 +38,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (this.isFirstArgumentIndexOfResult(node)) {
-                if (node.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+                if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
                         if (this.isFirstArgumentNegative1(node)) {
                             this.addFailure(
@@ -64,7 +65,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
         const expectCall: ts.CallExpression = ChaiUtils.getLeftMostCallExpression(node);
         if (expectCall.arguments != null && expectCall.arguments.length > 0) {
             const firstArgument: ts.Expression = expectCall.arguments[0];
-            if (firstArgument.kind === SyntaxKind.current().CallExpression) {
+            if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils.getFunctionName(<ts.CallExpression>firstArgument) === 'indexOf') {
                     return true;
                 }

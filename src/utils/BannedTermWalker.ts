@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
-import {SyntaxKind} from './SyntaxKind';
 
 /**
  * Implementation of the banned-term rulesets.
@@ -38,11 +37,11 @@ export class BannedTermWalker extends ErrorTolerantWalker {
     }
 
     protected visitPropertySignature(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().PropertySignature) {
+        if (node.kind === ts.SyntaxKind.PropertySignature) {
             const signature: ts.PropertySignature = <ts.PropertySignature>node;
             const propertyName = signature.name;
             // ignore StringLiteral property names if that option is set
-            if (this.allowQuotedProperties === false || propertyName.kind !== SyntaxKind.current().StringLiteral) {
+            if (this.allowQuotedProperties === false || propertyName.kind !== ts.SyntaxKind.StringLiteral) {
                 this.validateNode(node);
             }
         } else {

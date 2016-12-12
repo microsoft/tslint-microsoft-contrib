@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
-import {SyntaxKind} from './SyntaxKind';
 import {AstUtils} from './AstUtils';
 import {Scope} from './Scope';
 
@@ -22,16 +21,16 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     }
 
     protected isExpressionEvaluatingToFunction(expression : ts.Expression) : boolean {
-        if (expression.kind === SyntaxKind.current().ArrowFunction
-            || expression.kind === SyntaxKind.current().FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction
+            || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true; // arrow function literals and arrow functions are definitely functions
         }
 
-        if (expression.kind === SyntaxKind.current().StringLiteral
-            || expression.kind === SyntaxKind.current().NoSubstitutionTemplateLiteral
-            || expression.kind === SyntaxKind.current().TemplateExpression
-            || expression.kind === SyntaxKind.current().TaggedTemplateExpression
-            || expression.kind === SyntaxKind.current().BinaryExpression) {
+        if (expression.kind === ts.SyntaxKind.StringLiteral
+            || expression.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
+            || expression.kind === ts.SyntaxKind.TemplateExpression
+            || expression.kind === ts.SyntaxKind.TaggedTemplateExpression
+            || expression.kind === ts.SyntaxKind.BinaryExpression) {
             return false; // strings and binary expressions are definitely not functions
         }
 
@@ -40,7 +39,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             return true;
         }
 
-        if (expression.kind === SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             const typeInfo : ts.DefinitionInfo[] = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo != null && typeInfo[0] != null) {
                 if (typeInfo[0].kind === 'function' || typeInfo[0].kind === 'local function') {
@@ -50,7 +49,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             return false;
         }
 
-        if (expression.kind === SyntaxKind.current().CallExpression) {
+        if (expression.kind === ts.SyntaxKind.CallExpression) {
             // calling Function.bind is a special case that makes tslint throw an exception
             if ((<any>expression).expression.name && (<any>expression).expression.name.getText() === 'bind') {
                 return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
@@ -74,7 +73,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         const signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
             const signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === SyntaxKind.current().FunctionType) {
+            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
                 return true; // variables of type function are allowed to be passed as parameters
             }
         }
@@ -102,10 +101,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
                 ? node.name.getText() + '.'
                 : 'this.';
 
-            if (element.kind === SyntaxKind.current().MethodDeclaration) {
+            if (element.kind === ts.SyntaxKind.MethodDeclaration) {
                 // add all declared methods as valid functions
                 this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
-            } else if (element.kind === SyntaxKind.current().PropertyDeclaration) {
+            } else if (element.kind === ts.SyntaxKind.PropertyDeclaration) {
                 const prop: ts.PropertyDeclaration = <ts.PropertyDeclaration>element;
                 // add all declared function properties as valid functions
                 if (AstUtils.isDeclarationFunctionType(prop)) {

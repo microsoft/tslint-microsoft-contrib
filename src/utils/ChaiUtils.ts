@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import {SyntaxKind} from './SyntaxKind';
 
 /**
  * Utility methods for the chai.related rules.
@@ -17,9 +16,9 @@ export module ChaiUtils {
     export function getLeftMostCallExpression(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression {
         let leftSide: ts.Node = node.expression;
         while (leftSide != null) {
-            if (leftSide.kind === SyntaxKind.current().CallExpression) {
+            if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide;
-            } else if (leftSide.kind === (SyntaxKind.current().PropertyAccessExpression)) {
+            } else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
                 leftSide = (<ts.PropertyAccessExpression>leftSide).expression;
             } else {
                 return null; // cannot walk any further left in the property expression

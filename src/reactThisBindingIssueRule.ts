@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Scope} from './utils/Scope';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -24,6 +23,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When using React components you must be careful to correctly bind the `this` reference ' +
                      'on any methods that you pass off to child components as callbacks.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -112,7 +113,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         if (this.scope != null) {
-            if (node.name.kind === SyntaxKind.current().Identifier) {
+            if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const variableName = (<ts.Identifier>node.name).text;
                 if (this.isExpressionAnonymousFunction(node.initializer)) {
                     this.scope.addFunctionSymbol(variableName);
@@ -127,7 +128,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
@@ -141,7 +142,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 }
             } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                if (attribute.initializer.kind === SyntaxKind.current().StringLiteral) {
+                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
@@ -158,9 +159,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (this.allowAnonymousListeners) {
             return false;
         }
-        if (attributeLikeElement.kind === SyntaxKind.current().JsxAttribute) {
+        if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind.current().JsxExpression) {
+            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const expression: ts.Expression = jsxExpression.expression;
                 return this.isExpressionAnonymousFunction(expression);
@@ -175,19 +176,19 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         }
 
         // Arrow functions and Function expressions create new anonymous function instances
-        if (expression.kind === SyntaxKind.current().ArrowFunction
-            || expression.kind === SyntaxKind.current().FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction
+            || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true;
         }
 
-        if (expression.kind === SyntaxKind.current().CallExpression) {
+        if (expression.kind === ts.SyntaxKind.CallExpression) {
             const callExpression = <ts.CallExpression>expression;
             const functionName = AstUtils.getFunctionName(callExpression);
             if (functionName === 'bind') {
                 return true; // bind functions on Function or _ create a new anonymous instance of a function
             }
         }
-        if (expression.kind === SyntaxKind.current().Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier) {
             const symbolText: string = expression.getText();
             return this.scope.isFunctionSymbol(symbolText);
         }
@@ -195,11 +196,11 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     }
 
     private isUnboundListener(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
-        if (attributeLikeElement.kind === SyntaxKind.current().JsxAttribute) {
+        if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === SyntaxKind.current().JsxExpression) {
+            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 const jsxExpression: ts.JsxExpression = attribute.initializer;
-                if (jsxExpression.expression != null && jsxExpression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+                if (jsxExpression.expression != null && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                     if (propAccess.expression.getText() === 'this') {
                         const listenerText: string = propAccess.getText();
@@ -219,17 +220,17 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         const result: string[] = [];
         if (node.body != null && node.body.statements != null) {
             node.body.statements.forEach((statement: ts.Statement): void => {
-                if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     const expressionStatement: ts.ExpressionStatement = <ts.ExpressionStatement>statement;
                     const expression = expressionStatement.expression;
-                    if (expression.kind === SyntaxKind.current().BinaryExpression) {
+                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
                         const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>expression;
                         const operator: ts.Node = binaryExpression.operatorToken;
-                        if (operator.kind === SyntaxKind.current().EqualsToken) {
-                            if (binaryExpression.left.kind === SyntaxKind.current().PropertyAccessExpression) {
+                        if (operator.kind === ts.SyntaxKind.EqualsToken) {
+                            if (binaryExpression.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
                                 const leftPropText: string = binaryExpression.left.getText();
 
-                                if (binaryExpression.right.kind === SyntaxKind.current().CallExpression) {
+                                if (binaryExpression.right.kind === ts.SyntaxKind.CallExpression) {
                                     const callExpression = <ts.CallExpression>binaryExpression.right;
 
                                     if (AstUtils.getFunctionName(callExpression) === 'bind'

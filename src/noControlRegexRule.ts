@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use control characters in regular expressions',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',
@@ -22,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING = 'Unexpected control character in regular expression';
+    public static FAILURE_STRING: string = 'Unexpected control character in regular expression';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
@@ -53,7 +54,7 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 const arg1: ts.Expression = expression.arguments[0];
-                if (arg1.kind === SyntaxKind.current().StringLiteral) {
+                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     if (/[\x00-\x1f]/.test(regexpText)) {
                         this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING));

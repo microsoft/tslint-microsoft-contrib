@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -9,13 +8,15 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
  * Implementation of the no-unnecessary-semicolons rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'unnecessary semi-colon';
+    public static FAILURE_STRING: string = 'unnecessary semi-colon';
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-semicolons',
         type: 'maintainability',
         description: 'Remove unnecessary semicolons',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Moderate',
@@ -32,14 +33,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
-        if (node.kind === SyntaxKind.current().EmptyStatement) {
+        if (node.kind === ts.SyntaxKind.EmptyStatement) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
         }
         super.visitNode(node);
     }
 
     protected visitForStatement(node: ts.ForStatement): void {
-        if (node.statement.kind === SyntaxKind.current().EmptyStatement) {
+        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
             // walk everything but the statement
             if (node.initializer) {
                 this.visitNode(node.initializer);
@@ -56,7 +57,7 @@ class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
     }
 
     protected visitWhileStatement(node: ts.WhileStatement): void {
-        if (node.statement.kind === SyntaxKind.current().EmptyStatement) {
+        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
             // walk the expression but not the empty statement
             this.visitNode(node.expression);
         } else {

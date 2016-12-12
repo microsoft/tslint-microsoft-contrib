@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Ensures that the results of typeof are compared against a valid string.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -22,9 +23,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
+    public static FAILURE_STRING: string = 'Invalid comparison in typeof. Did you mean ';
 
-    public static VALID_TERMS = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
+    public static VALID_TERMS: string[] = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
@@ -34,9 +35,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ValidTypeofRuleWalker extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.left.kind === SyntaxKind.current().TypeOfExpression && node.right.kind === SyntaxKind.current().StringLiteral) {
+        if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(<ts.StringLiteral>node.right);
-        } else if (node.right.kind === SyntaxKind.current().TypeOfExpression && node.left.kind === SyntaxKind.current().StringLiteral) {
+        } else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
             this.validateTypeOf(<ts.StringLiteral>node.left);
         }
         super.visitBinaryExpression(node);

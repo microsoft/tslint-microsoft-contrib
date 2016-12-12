@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {AstUtils} from './utils/AstUtils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const UNSPECIFIED_BROWSER_VERSION: string = 'unspecified version';
@@ -27,6 +26,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid writing browser-specific code for unsupported browser versions',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Low',
@@ -69,9 +70,9 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWal
             }
 
             let regex;
-            if (scanner.getToken() === SyntaxKind.current().MultiLineCommentTrivia) {
+            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
                 regex = new RegExp(`${JSDOC_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
-            } else if (scanner.getToken() === SyntaxKind.current().SingleLineCommentTrivia) {
+            } else if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia) {
                 regex = new RegExp(`${COMMENT_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
             } else {
                 return;

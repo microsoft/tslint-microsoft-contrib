@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -14,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use cookies',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -22,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '315, 539, 565, 614'
     };
 
-    public static FAILURE_STRING = 'Forbidden call to document.cookie';
+    public static FAILURE_STRING: string = 'Forbidden call to document.cookie';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const documentRegistry = ts.createDocumentRegistry();

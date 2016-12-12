@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 
@@ -19,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Moderate',
@@ -39,9 +40,9 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         this.fieldInitializations = {};
         node.members.forEach((member: ts.ClassElement): void => {
-            if (member.kind === SyntaxKind.current().PropertyDeclaration) {
+            if (member.kind === ts.SyntaxKind.PropertyDeclaration) {
                 this.visitPropertyDeclaration(<ts.PropertyDeclaration>member);
-            } else if (member.kind === SyntaxKind.current().Constructor) {
+            } else if (member.kind === ts.SyntaxKind.Constructor) {
                 this.visitConstructorDeclaration(<ts.ConstructorDeclaration>member);
             }
         });
@@ -51,7 +52,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
 
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         const initializer: ts.Expression = node.initializer;
-        if (node.name.kind === SyntaxKind.current().Identifier) {
+        if (node.name.kind === ts.SyntaxKind.Identifier) {
             const fieldName: string = 'this.' + (<ts.Identifier>node.name).getText();
             if (initializer == null) {
                 this.fieldInitializations[fieldName] = undefined;
@@ -70,9 +71,9 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
     protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
         if (node.body != null) {
             node.body.statements.forEach((statement: ts.Statement): void => {
-                if (statement.kind === SyntaxKind.current().ExpressionStatement) {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                    if (expression.kind === SyntaxKind.current().BinaryExpression) {
+                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
                         const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>expression;
 
                         const property: ts.Expression = binaryExpression.left;

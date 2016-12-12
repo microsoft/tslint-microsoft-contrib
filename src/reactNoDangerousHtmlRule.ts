@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -21,6 +20,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use React\'s dangerouslySetInnerHTML API.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -73,7 +74,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         super.visitPropertyAssignment(node);
         const keyNode : ts.DeclarationName = node.name;
 
-        if (keyNode.kind === SyntaxKind.current().Identifier) {
+        if (keyNode.kind === ts.SyntaxKind.Identifier) {
             if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, <ts.Identifier>keyNode);
             }
@@ -93,7 +94,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
 
     private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (attribute.kind === SyntaxKind.current().JsxAttribute) {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 const attributeName = jsxAttribute.name.text;
                 if (attributeName === 'dangerouslySetInnerHTML') {

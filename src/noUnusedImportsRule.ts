@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -12,13 +11,15 @@ type Import = ts.ImportEqualsDeclaration | ts.ImportDeclaration;
  * Implementation of the no-unused-import rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'unused import: ';
+    public static FAILURE_STRING: string = 'unused import: ';
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unused-imports',
         type: 'maintainability',
         description: 'Deprecated - This rule is now covered by TSLint\'s no-unused-variables rule',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
@@ -48,14 +49,14 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
-        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         super.visitImportEqualsDeclaration(node);
     }
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (!AstUtils.hasModifier(node.modifiers, SyntaxKind.current().ExportKeyword)) {
+        if (!AstUtils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
             this.validateReferencesForVariable(node);
         }
         super.visitImportDeclaration(node);
@@ -74,7 +75,7 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
         }
 
         const variableStack: { name: string; position: number; importNode: Import; }[] = [];
-        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
             const name: string = (<ts.ImportEqualsDeclaration>node).name.text;
             const position: number = (<ts.ImportEqualsDeclaration>node).name.getStart();
             variableStack.push({ name: name, position: position, importNode: node });
@@ -86,12 +87,12 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
                     const position: number = importClause.getStart();
                     variableStack.push({ name: name, position: position, importNode: node });
                 } else if (importClause.namedBindings != null) {
-                    if (importClause.namedBindings.kind === SyntaxKind.current().NamespaceImport) {
+                    if (importClause.namedBindings.kind === ts.SyntaxKind.NamespaceImport) {
                         const imports: ts.NamespaceImport = <ts.NamespaceImport>importClause.namedBindings;
                         const name: string = imports.name.text;
                         const position: number = imports.name.getStart();
                         variableStack.push({ name: name, position: position, importNode: node });
-                    } else if (importClause.namedBindings.kind === SyntaxKind.current().NamedImports) {
+                    } else if (importClause.namedBindings.kind === ts.SyntaxKind.NamedImports) {
                         const imports: ts.NamedImports = <ts.NamedImports>importClause.namedBindings;
                         imports.elements.forEach((importSpec: ts.ImportSpecifier): void => {
                             const name: string = importSpec.name.text;
@@ -130,13 +131,13 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
     }
 
     private isReactImport(node: Import): boolean {
-        if (node.kind === SyntaxKind.current().ImportEqualsDeclaration) {
+        if (node.kind === ts.SyntaxKind.ImportEqualsDeclaration) {
             const importDeclaration: ts.ImportEqualsDeclaration = <ts.ImportEqualsDeclaration>node;
-            if (importDeclaration.moduleReference.kind === SyntaxKind.current().ExternalModuleReference) {
+            if (importDeclaration.moduleReference.kind === ts.SyntaxKind.ExternalModuleReference) {
                 const moduleExpression: ts.Expression = (<ts.ExternalModuleReference>importDeclaration.moduleReference).expression;
                 return this.isModuleExpressionReact(moduleExpression);
             }
-        } else if (node.kind === SyntaxKind.current().ImportDeclaration) {
+        } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
             const importDeclaration: ts.ImportDeclaration = <ts.ImportDeclaration>node;
             const moduleExpression: ts.Expression = importDeclaration.moduleSpecifier;
             return this.isModuleExpressionReact(moduleExpression);
@@ -145,7 +146,7 @@ class NoUnusedImportsWalker extends ErrorTolerantWalker {
     }
 
     private isModuleExpressionReact(moduleExpression: ts.Expression): boolean {
-        if (moduleExpression != null && moduleExpression.kind === SyntaxKind.current().StringLiteral) {
+        if (moduleExpression != null && moduleExpression.kind === ts.SyntaxKind.StringLiteral) {
             const moduleName: ts.StringLiteral = <ts.StringLiteral>moduleExpression;
             return /react/i.test(moduleName.text);
         }

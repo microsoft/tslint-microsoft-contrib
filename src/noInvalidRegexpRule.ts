@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 /**
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use invalid regular expression strings in the RegExp constructor.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -42,7 +43,7 @@ class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
         if (expression.expression.getText() === 'RegExp') {
             if (expression.arguments.length > 0) {
                 const arg1: ts.Expression = expression.arguments[0];
-                if (arg1.kind === SyntaxKind.current().StringLiteral) {
+                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     try {
                         /* tslint:disable:no-unused-new */

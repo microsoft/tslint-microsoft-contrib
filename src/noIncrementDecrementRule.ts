@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -15,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Low',
@@ -40,9 +41,9 @@ class NoIncrementDecrementWalker extends ErrorTolerantWalker {
     }
 
     private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
-        if (node.operator === SyntaxKind.current().PlusPlusToken) {
+        if (node.operator === ts.SyntaxKind.PlusPlusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden ++ operator'));
-        } else if (node.operator === SyntaxKind.current().MinusMinusToken) {
+        } else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), 'Forbidden -- operator'));
         }
     }

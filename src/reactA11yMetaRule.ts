@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 
 const FAILURE_STRING: string = 'Do not use http-equiv="refresh"';
 
@@ -17,6 +16,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'functionality',
         description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
@@ -48,7 +49,7 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
         if (openElement.tagName.getText() === 'meta') {
             const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openElement.attributes;
             attributes.forEach((parameter: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-                if (parameter.kind === SyntaxKind.current().JsxAttribute) {
+                if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
                     if (attribute.name.getText() === 'http-equiv') {
                         if (this.isStringLiteral(attribute.initializer, 'refresh')) {
@@ -62,12 +63,12 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
 
     private isStringLiteral(expression: ts.Expression, literal: string): boolean {
         if (expression != null) {
-            if (expression.kind === SyntaxKind.current().StringLiteral) {
+            if (expression.kind === ts.SyntaxKind.StringLiteral) {
                 const value: string = (<ts.StringLiteral>expression).text;
                 return value === literal;
-            } else if (expression.kind === SyntaxKind.current().JsxExpression) {
+            } else if (expression.kind === ts.SyntaxKind.JsxExpression) {
                 const exp: ts.JsxExpression = <ts.JsxExpression>expression;
-                if (exp.expression.kind === SyntaxKind.current().StringLiteral) {
+                if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                     const value: string = (<ts.StringLiteral>exp.expression).text;
                     return value === literal;
                 }

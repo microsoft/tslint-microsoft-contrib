@@ -10,13 +10,13 @@
     "react-a11y-role-supports-aria-props": true,
     "react-a11y-tabindex-no-positive": true,
     "react-a11y-proptypes": true,
-    "align": false,
+    "align": [false],
     "arrow-parens": false,
     "ban": false,
     "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "class-name": true,
-    "comment-format": false,
+    "comment-format": [false],
     "curly": true,
     "eofline": false,
     "export-name": true,
@@ -27,16 +27,15 @@
       true,
       "spaces"
     ],
-    "interface-name": false,
+    "interface-name": [false],
     "jquery-deferred-must-complete": true,
     "jsdoc-format": false,
     "label-position": true,
-    "label-undefined": true,
     "linebreak-style": [
       true,
       "LF"
     ],
-    "max-file-line-count": false,
+    "max-file-line-count": [false],
     "max-func-body-length": [
       true,
       100,
@@ -49,7 +48,7 @@
       140
     ],
     "member-access": true,
-    "member-ordering": false,
+    "member-ordering": [false],
     "missing-jsdoc": true,
     "missing-optional-annotation": true,
     "mocha-avoid-only": true,
@@ -63,7 +62,7 @@
     "no-banned-terms": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": true,
+    "no-consecutive-blank-lines": [true],
     "no-console": [
       true,
       "debug",
@@ -75,7 +74,6 @@
     ],
     "no-constant-condition": true,
     "no-construct": true,
-    "no-constructor-vars": true,
     "no-control-regex": true,
     "no-cookies": true,
     "no-debugger": true,
@@ -102,7 +100,7 @@
       "http://www.examples.com/?.*"
     ],
     "no-increment-decrement": true,
-    "no-inferrable-types": false,
+    "no-inferrable-types": [false],
     "no-inner-html": true,
     "no-internal-module": false,
     "no-invalid-regexp": true,
@@ -137,12 +135,10 @@
     "no-unnecessary-override": true,
     "no-unnecessary-semicolons": true,
     "no-unsupported-browser-code": false,
-    "no-unreachable": true,
     "no-unsafe-finally": true,
     "no-unused-expression": true,
     "no-unused-imports": false,
     "no-unused-new": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": true,
@@ -160,9 +156,9 @@
       "check-else",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": true,
-    "only-arrow-functions": false,
-    "ordered-imports": false,
+    "one-variable-per-declaration": [true],
+    "only-arrow-functions": [false],
+    "ordered-imports": [false],
     "prefer-array-literal": true,
     "prefer-const": true,
     "prefer-type-cast": true,
@@ -179,7 +175,7 @@
     "react-tsx-curly-spacing": true,
     "react-unused-props-and-state": true,
     "restrict-plus-operands": false,
-    "semicolon": true,
+    "semicolon": [true],
     "switch-default": false,
     "trailing-comma": [
       true,
@@ -194,18 +190,14 @@
     ],
     "typedef": [
       true,
-      "callSignature",
-      "indexSignature",
       "parameter",
-      "propertySignature",
-      "variableDeclarator",
-      "memberVariableDeclarator"
+      "property-declaration",
+      "member-variable-declaration"
     ],
-    "typedef-whitespace": false,
+    "typedef-whitespace": [false],
     "underscore-consistent-invocation": true,
     "use-isnan": true,
     "use-named-parameter": true,
-    "use-strict": false,
     "valid-typeof": true,
     "variable-name": true,
     "whitespace": [
@@ -222,6 +214,15 @@
     "react-anchor-blank-noopener": true,
     "insecure-random": true,
     "possible-timing-attack": true,
-    "non-literal-require": true
+    "non-literal-require": true,
+    "adjacent-overload-signatures": false,
+    "array-type": false,
+    "completed-docs": false,
+    "cyclomatic-complexity": false,
+    "file-header": false,
+    "max-classes-per-file": false,
+    "no-parameter-properties": false,
+    "object-literal-shorthand": false,
+    "prefer-for-of": false
   }
 }

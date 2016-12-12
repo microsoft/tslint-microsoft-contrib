@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -14,6 +14,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Error',
         severity: 'Critical',
@@ -21,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         group: 'Correctness'
     };
 
-    public static FAILURE_STRING = 'Spaces in regular expressions are hard to count. Use ';
+    public static FAILURE_STRING: string = 'Spaces in regular expressions are hard to count. Use ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoRegexSpacesRuleWalker(sourceFile, this.getOptions()));

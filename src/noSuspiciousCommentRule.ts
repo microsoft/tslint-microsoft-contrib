@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {AstUtils} from './utils/AstUtils';
 
 const FAILURE_STRING: string = 'Suspicious comment found: ';
@@ -18,6 +17,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Low',
@@ -49,8 +50,8 @@ class NoSuspiciousCommentRuleWalker extends Lint.SkippableTokenAwareRuleWalker {
                 return;
             }
 
-            if (scanner.getToken() === SyntaxKind.current().SingleLineCommentTrivia ||
-                scanner.getToken() === SyntaxKind.current().MultiLineCommentTrivia) {
+            if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia ||
+                scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
                 const commentText: string = scanner.getTokenText();
                 const startPosition: number = scanner.getTokenPos();
 

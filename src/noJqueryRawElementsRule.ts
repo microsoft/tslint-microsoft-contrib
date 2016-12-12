@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
-import {SyntaxKind} from './utils/SyntaxKind';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
@@ -17,6 +16,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
         options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',
@@ -36,7 +37,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         const functionName: string = AstUtils.getFunctionName(node);
         if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
-            if (firstArg.kind === SyntaxKind.current().StringLiteral) {
+            if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
                 if (this.isComplexHtmlElement(<ts.StringLiteral>firstArg)) {
                     this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText()));
                 }

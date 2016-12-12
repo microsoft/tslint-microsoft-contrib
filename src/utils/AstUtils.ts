@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import {SyntaxKind} from './SyntaxKind';
 
 /**
  * General utility class.
@@ -24,7 +23,7 @@ export module AstUtils {
     }
 
     export function getFunctionTarget(expression: ts.CallExpression) : string {
-        if (expression.expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
@@ -53,8 +52,8 @@ export module AstUtils {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
-        if (expression.kind === SyntaxKind.current().Identifier
-            || expression.kind === SyntaxKind.current().PropertyAccessExpression) {
+        if (expression.kind === ts.SyntaxKind.Identifier
+            || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
                 definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
@@ -146,12 +145,12 @@ export module AstUtils {
     }
 
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
-        return node != null && (node.kind === SyntaxKind.current().ArrayBindingPattern ||
-            node.kind === SyntaxKind.current().ObjectBindingPattern);
+        return node != null && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
+            node.kind === ts.SyntaxKind.ObjectBindingPattern);
     }
 
     function walkUpBindingElementsAndPatterns(node: ts.Node): ts.Node {
-        while (node && (node.kind === SyntaxKind.current().BindingElement || isBindingPattern(node))) {
+        while (node && (node.kind === ts.SyntaxKind.BindingElement || isBindingPattern(node))) {
             node = node.parent;
         }
 
@@ -162,18 +161,18 @@ export module AstUtils {
         node = walkUpBindingElementsAndPatterns(node);
 
         let flags = node.flags;
-        if (node.kind === SyntaxKind.current().VariableDeclaration) {
+        if (node.kind === ts.SyntaxKind.VariableDeclaration) {
             node = node.parent;
         }
 
-        if (node && node.kind === SyntaxKind.current().VariableDeclarationList) {
+        if (node && node.kind === ts.SyntaxKind.VariableDeclarationList) {
             /* tslint:disable:no-bitwise */
             flags |= node.flags;
             /* tslint:enable:no-bitwise */
             node = node.parent;
         }
 
-        if (node && node.kind === SyntaxKind.current().VariableStatement) {
+        if (node && node.kind === ts.SyntaxKind.VariableStatement) {
             /* tslint:disable:no-bitwise */
             flags |= node.flags;
             /* tslint:enable:no-bitwise */
@@ -199,18 +198,18 @@ export module AstUtils {
     }
 
     export function isAssignmentOperator(token: ts.SyntaxKind): boolean {
-        return token >= SyntaxKind.current().FirstAssignment && token <= SyntaxKind.current().LastAssignment;
+        return token >= ts.SyntaxKind.FirstAssignment && token <= ts.SyntaxKind.LastAssignment;
     }
 
     export function isBindingLiteralExpression(node: ts.Node): node is (ts.ArrayLiteralExpression | ts.ObjectLiteralExpression) {
         return (!!node) &&
-            (node.kind === SyntaxKind.current().ObjectLiteralExpression || node.kind === SyntaxKind.current().ArrayLiteralExpression);
+            (node.kind === ts.SyntaxKind.ObjectLiteralExpression || node.kind === ts.SyntaxKind.ArrayLiteralExpression);
     }
 
     export function findParentBlock(child: ts.Node) : ts.Node {
         let parent : ts.Node = child.parent;
         while (parent != null) {
-            if (parent.kind === SyntaxKind.current().Block) {
+            if (parent.kind === ts.SyntaxKind.Block) {
                 return parent;
             }
             parent = parent.parent;
@@ -222,7 +221,7 @@ export module AstUtils {
         if (source == null || target == null) {
             return false;
         }
-        if (source.kind === SyntaxKind.current().Identifier && target.kind === SyntaxKind.current().Identifier) {
+        if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
             return source.getText() === target.getText();
         }
         return false;
@@ -231,9 +230,9 @@ export module AstUtils {
     export function getDeclaredMethodNames(node: ts.ClassDeclaration): string[] {
         const result: string[] = [];
         node.members.forEach((classElement: ts.ClassElement): void => {
-            if (classElement.kind === SyntaxKind.current().MethodDeclaration) {
+            if (classElement.kind === ts.SyntaxKind.MethodDeclaration) {
                 const methodDeclaration: ts.MethodDeclaration = <ts.MethodDeclaration>classElement;
-                if (methodDeclaration.name.kind === SyntaxKind.current().Identifier) {
+                if (methodDeclaration.name.kind === ts.SyntaxKind.Identifier) {
                     result.push((<ts.Identifier>methodDeclaration.name).text);
                 }
             }
@@ -246,17 +245,17 @@ export module AstUtils {
             if (node.type.getText() === 'Function') {
                 return true;
             }
-            return node.type.kind === SyntaxKind.current().FunctionType;
+            return node.type.kind === ts.SyntaxKind.FunctionType;
         } else if (node.initializer != null) {
-            return (node.initializer.kind === SyntaxKind.current().ArrowFunction
-            || node.initializer.kind === SyntaxKind.current().FunctionExpression);
+            return (node.initializer.kind === ts.SyntaxKind.ArrowFunction
+            || node.initializer.kind === ts.SyntaxKind.FunctionExpression);
         }
         return false;
     }
 
     export function isUndefined(node: ts.Expression): boolean {
         if (node != null) {
-            if (node.kind === SyntaxKind.current().Identifier) {
+            if (node.kind === ts.SyntaxKind.Identifier) {
                 return node.getText() === 'undefined';
             }
         }
@@ -267,23 +266,23 @@ export module AstUtils {
         if (node == null) {
             return false;
         }
-        return node.kind === SyntaxKind.current().NullKeyword
-            || node.kind === SyntaxKind.current().StringLiteral
-            || node.kind === SyntaxKind.current().FalseKeyword
-            || node.kind === SyntaxKind.current().TrueKeyword
-            || node.kind === SyntaxKind.current().NumericLiteral;
+        return node.kind === ts.SyntaxKind.NullKeyword
+            || node.kind === ts.SyntaxKind.StringLiteral
+            || node.kind === ts.SyntaxKind.FalseKeyword
+            || node.kind === ts.SyntaxKind.TrueKeyword
+            || node.kind === ts.SyntaxKind.NumericLiteral;
     }
 
     export function isConstantExpression(node: ts.Expression): boolean {
 
-        if (node.kind === SyntaxKind.current().BinaryExpression) {
+        if (node.kind === ts.SyntaxKind.BinaryExpression) {
             const expression: ts.BinaryExpression = <ts.BinaryExpression>node;
             const kind: ts.SyntaxKind = expression.operatorToken.kind;
-            if (kind >= SyntaxKind.current().FirstBinaryOperator && kind <= SyntaxKind.current().LastBinaryOperator) {
+            if (kind >= ts.SyntaxKind.FirstBinaryOperator && kind <= ts.SyntaxKind.LastBinaryOperator) {
                 return isConstantExpression(expression.left) && isConstantExpression(expression.right);
             }
         }
-        if (node.kind === SyntaxKind.current().PrefixUnaryExpression || node.kind === SyntaxKind.current().PostfixUnaryExpression) {
+        if (node.kind === ts.SyntaxKind.PrefixUnaryExpression || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
             const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
                 <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
             return isConstantExpression(expression.operand);

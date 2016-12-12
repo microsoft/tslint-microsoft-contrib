@@ -1,4 +1,7 @@
 {
+  "rulesDirectory": [
+    "dist/src"
+  ],
   "rules": {
     "react-a11y-aria-unsupported-elements": true,
     "react-a11y-event-has-role": true,
@@ -216,11 +219,11 @@
     "possible-timing-attack": true,
     "non-literal-require": true,
     "adjacent-overload-signatures": false,
-    "array-type": false,
-    "completed-docs": false,
-    "cyclomatic-complexity": false,
-    "file-header": false,
-    "max-classes-per-file": false,
+    "array-type": [false],
+    "completed-docs": [false],
+    "cyclomatic-complexity": [false],
+    "file-header": [false],
+    "max-classes-per-file": [false],
     "no-parameter-properties": false,
     "object-literal-shorthand": false,
     "prefer-for-of": false

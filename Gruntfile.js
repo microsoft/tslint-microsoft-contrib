@@ -463,7 +463,7 @@ module.exports = function(grunt) {
         'copy:json',
         'ts',
         'mochaTest',
-        //'tslint', // commented out until grunt-tslint supports tslint 4.0
+        'tslint',
         'validate-documentation',
         'validate-config',
         'validate-debug-mode',

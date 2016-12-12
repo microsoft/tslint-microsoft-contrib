@@ -1,3 +1,11 @@
+# 4.0.0 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A3.0.0)
+
+* [#313](https://github.com/Microsoft/tslint-microsoft-contrib/issues/313) Enhancement - tslint 4.0 support
+* [#319](https://github.com/Microsoft/tslint-microsoft-contrib/issues/319) Enhancement - react-a11y-anchors-rule now includes innerimage alt text as its text content
+* [#318](https://github.com/Microsoft/tslint-microsoft-contrib/issues/318) Enhancement - Fix line endings errors in IDE by providing an .editorconfig file
+* [#320](https://github.com/Microsoft/tslint-microsoft-contrib/issues/320) Bug - react-a11y-img-has-alt not working when passing options
+
 # 2.0.14 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A2.0.14)
 

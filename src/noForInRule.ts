@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         (initializer: string, expression: string ) => {
             //tslint:disable-next-line:max-line-length
             return `Do not use the 'for in' statement: 'for (${initializer} in ${expression})'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.`;
-        };
+        }
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));

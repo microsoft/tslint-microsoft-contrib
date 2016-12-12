@@ -335,7 +335,12 @@ module.exports = function(grunt) {
             'no-inferrable-types': true,
             'only-arrow-functions': true,
             'ordered-imports': true,
-            'typedef-whitespace': true
+            'typedef-whitespace': true,
+            'array-type': true,
+            'completed-docs': true,
+            'cyclomatic-complexity': true,
+            'file-header': true,
+            'max-classes-per-file': true
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {

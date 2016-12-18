@@ -178,7 +178,7 @@
     "react-tsx-curly-spacing": true,
     "react-unused-props-and-state": true,
     "restrict-plus-operands": false,
-    "semicolon": [true],
+    "semicolon": [true, "ignore-bound-class-methods"],
     "switch-default": false,
     "trailing-comma": [
       true,

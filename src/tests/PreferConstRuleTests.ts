@@ -13,6 +13,14 @@ describe('preferConstRule', (): void => {
             TestHelper.assertViolations(ruleName, inputScript, []);
         });
 
+        it('should allow a global exported let statement', (): void => {
+            const inputScript: string = `
+                export let value: string;
+            `;
+
+            TestHelper.assertViolations(ruleName, inputScript, []);
+        });
+
         it('should allow a let declaration if the variable is reassigned', (): void => {
             const inputScript: string = `
                 let x = 123;

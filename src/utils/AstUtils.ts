@@ -192,6 +192,15 @@ export module AstUtils {
         if ((<any>ts).NodeFlags.Export != null) {
             return !!(getCombinedNodeFlags(node) & (<any>ts).NodeFlags.Export);
         } else {
+            // typescript 2.1.4 introduces a new edge case for when
+            // top level variables are exported from a source file
+            if (node.kind === ts.SyntaxKind.VariableDeclaration
+                && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
+                && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
+                if (AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
+                    return true;
+                }
+            }
             return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
         }
         /* tslint:enable:no-bitwise */

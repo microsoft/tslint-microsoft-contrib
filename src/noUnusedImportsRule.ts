@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false             // use tslint no-unused-variable rule instead',
+        recommendation: 'false,            // use tslint no-unused-variable rule instead',
         commonWeaknessEnumeration: '398, 710'
     };
 

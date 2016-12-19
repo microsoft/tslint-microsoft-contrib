@@ -411,11 +411,13 @@
     "commonWeaknessEnumeration": "398, 563, 710"
   },
   "no-unused-variable": {
+    "description": "Deprecated - This rule is now enforced by the TypeScript compiler",
     "issueClass": "Non-SDL",
     "issueType": "Warning",
     "severity": "Important",
     "level": "Opportunity for Excellence",
-    "group": "Correctness",
+    "group": "Deprecated",
+    "recommendation": "false,           // now supported by TypeScript 2.0 compiler",
     "commonWeaknessEnumeration": "398, 563, 710"
   },
   "no-use-before-declare": {

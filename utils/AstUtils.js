@@ -166,6 +166,13 @@ var AstUtils;
             return !!(getCombinedNodeFlags(node) & ts.NodeFlags.Export);
         }
         else {
+            if (node.kind === ts.SyntaxKind.VariableDeclaration
+                && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
+                && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
+                if (AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
+                    return true;
+                }
+            }
             return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
         }
     }

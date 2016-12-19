@@ -11,6 +11,10 @@ var Rule = (function (_super) {
     function Rule() {
         return _super.apply(this, arguments) || this;
     }
+    Rule.FAILURE_STRING_FACTORY = function (initializer, expression) {
+        return "Do not use the 'for in' statement: 'for (" + initializer + " in " + expression + ")'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.";
+    };
+    ;
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));
     };
@@ -29,9 +33,6 @@ Rule.metadata = {
     level: 'Opportunity for Excellence',
     group: 'Clarity',
     commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_STRING_FACTORY = function (initializer, expression) {
-    return "Do not use the 'for in' statement: 'for (" + initializer + " in " + expression + ")'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.";
 };
 exports.Rule = Rule;
 var NoForInRuleWalker = (function (_super) {

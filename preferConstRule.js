@@ -13,6 +13,10 @@ var Rule = (function (_super) {
     function Rule() {
         return _super.apply(this, arguments) || this;
     }
+    Rule.FAILURE_STRING_FACTORY = function (identifier) {
+        return "Identifier '" + identifier + "' never appears " +
+            'on the LHS of an assignment - use const instead of let for its declaration.';
+    };
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PreferConstWalker(sourceFile, this.getOptions()));
     };
@@ -32,8 +36,6 @@ Rule.metadata = {
     group: 'Clarity',
     commonWeaknessEnumeration: '398, 705, 710'
 };
-Rule.FAILURE_STRING_FACTORY = function (identifier) { return "Identifier '" + identifier + "' never appears " +
-    'on the LHS of an assignment - use const instead of let for its declaration.'; };
 exports.Rule = Rule;
 var PreferConstWalker = (function (_super) {
     __extends(PreferConstWalker, _super);

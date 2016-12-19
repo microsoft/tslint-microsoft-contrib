@@ -67,7 +67,6 @@ module.exports = {
         "no-unsafe-finally": true,
         "no-unused-expression": true,
         "no-unused-new": true,
-        "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
         "promise-must-complete": true,

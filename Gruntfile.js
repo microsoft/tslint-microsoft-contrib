@@ -394,6 +394,7 @@ module.exports = function(grunt) {
     grunt.registerTask('generate-recommendations', 'A task that generates the recommended_ruleset.js file', function () {
 
         const groupedRows = {};
+        const warnings = [];
 
         getAllRules().forEach(function(ruleFile) {
             const metadata = getMetadataFromFile(ruleFile);
@@ -401,6 +402,9 @@ module.exports = function(grunt) {
             const groupName = getMetadataValue(metadata, 'group');
             if (groupName === 'Ignored') {
                 return;
+            }
+            if (groupName === '') {
+                warnings.push('Could not generate recommendation for rule file: ' + ruleFile);
             }
             if (groupedRows[groupName] == null) {
                 groupedRows[groupName] = [];
@@ -414,6 +418,9 @@ module.exports = function(grunt) {
             groupedRows[groupName].push(`        "${ruleName}": ${recommendation}`);
         });
 
+        if (warnings.length > 0) {
+            grunt.fail.warn('\n' + warnings.join('\n'));
+        }
         _.values(groupedRows).forEach(function (element) { element.sort(); });
 
         let data = grunt.file.read('./templates/recommended_ruleset.js.snippet', {encoding: 'UTF-8'});

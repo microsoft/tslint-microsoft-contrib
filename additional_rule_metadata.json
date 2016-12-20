@@ -9,7 +9,7 @@
     "commonWeaknessEnumeration": "398, 710"
   },
   "arrow-parens": {
-    "issueClass": "Non-SDL",
+    "issueClass": "Ignored",
     "issueType": "Warning",
     "severity": "Low",
     "level": "Opportunity for Excellence",
@@ -363,6 +363,7 @@
   },
   "no-switch-case-fall-through": {
     "issueClass": "Non-SDL",
+    "description": "Deprecated - This rule is now enforced by the TypeScript compiler",
     "issueType": "Warning",
     "severity": "Low",
     "level": "Opportunity for Excellence",
@@ -380,6 +381,7 @@
   },
   "no-unreachable": {
     "issueClass": "Non-SDL",
+    "description": "Deprecated - This rule is now enforced by the TypeScript compiler",
     "issueType": "Error",
     "severity": "Critical",
     "level": "Opportunity for Excellence",
@@ -480,7 +482,7 @@
     "commonWeaknessEnumeration": "710"
   },
   "only-arrow-functions": {
-    "issueClass": "Non-SDL",
+    "issueClass": "Ignored",
     "issueType": "Warning",
     "severity": "Important",
     "level": "Opportunity for Excellence",
@@ -607,5 +609,75 @@
     "group": "Whitespace",
     "recommendation": "[true, \"check-branch\", \"check-decl\", \"check-operator\", \"check-separator\", \"check-type\"],",
     "commonWeaknessEnumeration": "398, 710"
+  },
+  "adjacent-overload-signatures": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "level": "Opportunity for Excellence"
+  },
+  "array-type": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "[true, \"array\"],",
+    "level": "Opportunity for Excellence"
+  },
+  "completed-docs": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "[true, \"classes\"],",
+    "level": "Opportunity for Excellence"
+  },
+  "cyclomatic-complexity": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "level": "Opportunity for Excellence"
+  },
+  "file-header": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // enable this rule only if you are legally required to add a file header",
+    "level": "Opportunity for Excellence"
+  },
+  "max-classes-per-file": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "[true, 3],  // we generally recommend making one public class per file ",
+    "level": "Opportunity for Excellence"
+  },
+  "no-parameter-properties": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "object-literal-shorthand": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // object-literal-shorthand offers an abbreviation not an abstraction",
+    "level": "Opportunity for Excellence"
+  },
+  "prefer-for-of": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
   }
 }

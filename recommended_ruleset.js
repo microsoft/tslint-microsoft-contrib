@@ -84,16 +84,20 @@ module.exports = {
          * Code Clarity. The following rules should be turned on because they make the code
          * generally more clear to the reader.
          */
+        "adjacent-overload-signatures": true,
+        "array-type": [true, "array"],
         "arrow-parens": false, // for simple functions the parens on arrow functions are not needed
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "class-name": true,
         "comment-format": true,
+        "completed-docs": [true, "classes"],
         "export-name": true,
         "function-name": true,
         "import-name": true,
         "interface-name": true,
         "jsdoc-format": true,
+        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file 
         "max-file-line-count": true,
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
@@ -110,6 +114,7 @@ module.exports = {
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
         "no-multiline-string": true, // multiline-strings often introduce unnecessary whitespace into the string literals
         "no-null-keyword": false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value
+        "no-parameter-properties": true,
         "no-relative-imports": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
@@ -127,6 +132,7 @@ module.exports = {
         "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
+        "prefer-for-of": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
         "variable-name": true,
@@ -180,12 +186,15 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         "ban": false,                // only enable this if you have some code pattern that you want to ban
+        "cyclomatic-complexity": true,
+        "file-header": false,  // enable this rule only if you are legally required to add a file header
         "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
         "no-internal-module": false, // only enable this if you are not using internal modules
         "no-mergeable-namespace": false,  // your project may require mergeable namespaces
         "no-namespace": false,       // only enable this if you are not using modules/namespaces
         "no-reference": true,        // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
+        "object-literal-shorthand": false,  // object-literal-shorthand offers an abbreviation not an abstraction
         "prefer-type-cast": true,   // pick either type-cast format and use it consistently
 
         /**

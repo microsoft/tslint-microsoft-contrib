@@ -84,10 +84,17 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private validateImport(node: ts.Node, importedName: string, moduleName: string): void {
         moduleName = moduleName.replace(/.*\//, ''); // chop off the path
+        moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
+    }
+
+    private makeCamelCase(input: string): string {
+        return input.replace(/[-|\.](.)/g, (match: string, group1: string): string => {
+            return group1.toUpperCase();
+        });
     }
 
     private isImportNameValid(importedName: string, moduleName: string): boolean {

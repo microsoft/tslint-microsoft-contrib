@@ -91,6 +91,21 @@ describe('importNameRule', () : void => {
         ]);
     });
 
+    it('should fail import with punctuation', () : void => {
+        const script : string = `
+            import UserSettings from "./user-settings.page";
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": "Misnamed import. Import should be named 'userSettingsPage' but found 'UserSettings'",
+                "name": "file.ts",
+                "ruleName": "import-name",
+                "startPosition": { "character": 13, "line": 2 }
+            }
+        ]);
+    });
+
     it('should pass on differing names when rule is configured with replacements', () : void => {
         const script : string = `
             import Backbone = require('backbone');

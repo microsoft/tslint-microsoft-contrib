@@ -34,7 +34,7 @@ Rule.metadata = {
     severity: 'Low',
     level: 'Opportunity for Excellence',
     group: 'Deprecated',
-    recommendation: 'false             // use tslint no-unused-variable rule instead',
+    recommendation: 'false,            // use tslint no-unused-variable rule instead',
     commonWeaknessEnumeration: '398, 710'
 };
 exports.Rule = Rule;

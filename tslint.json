@@ -65,7 +65,6 @@
     "no-unsafe-finally": true,
     "no-unused-expression": true,
     "no-unused-new": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-with-statement": true,
     "promise-must-complete": true,
@@ -81,16 +80,29 @@
     "use-isnan": true,
     "use-named-parameter": true,
     "valid-typeof": true,
+    "adjacent-overload-signatures": true,
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-parens": false,
     "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "class-name": true,
     "comment-format": true,
+    "completed-docs": [
+      true,
+      "classes"
+    ],
     "export-name": true,
     "function-name": true,
     "import-name": true,
     "interface-name": true,
     "jsdoc-format": true,
+    "max-classes-per-file": [
+      true,
+      3
+    ],
     "max-file-line-count": true,
     "max-func-body-length": [
       true,
@@ -116,6 +128,7 @@
     "no-inferrable-types": false,
     "no-multiline-string": true,
     "no-null-keyword": false,
+    "no-parameter-properties": true,
     "no-relative-imports": true,
     "no-require-imports": true,
     "no-shadowed-variable": true,
@@ -133,6 +146,7 @@
     "ordered-imports": true,
     "prefer-array-literal": true,
     "prefer-const": true,
+    "prefer-for-of": true,
     "typedef": [
       true,
       "callSignature",
@@ -213,19 +227,23 @@
       "check-type"
     ],
     "ban": false,
+    "cyclomatic-complexity": true,
+    "file-header": false,
     "no-angle-bracket-type-assertion": false,
     "no-internal-module": false,
     "no-mergeable-namespace": false,
     "no-namespace": false,
     "no-reference": true,
     "no-unexternalized-strings": false,
+    "object-literal-shorthand": false,
     "prefer-type-cast": true,
     "missing-optional-annotation": false,
     "no-duplicate-parameter-names": false,
     "no-missing-visibility-modifiers": false,
     "no-multiple-var-decl": false,
     "no-switch-case-fall-through": false,
-    "no-unused-imports": false
+    "no-unused-imports": false,
+    "no-unused-variable": false
   },
   "rulesDirectory": "./"
 }

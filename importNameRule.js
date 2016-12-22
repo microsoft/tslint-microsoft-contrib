@@ -82,10 +82,16 @@ var ImportNameRuleWalker = (function (_super) {
     };
     ImportNameRuleWalker.prototype.validateImport = function (node, importedName, moduleName) {
         moduleName = moduleName.replace(/.*\//, '');
+        moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             var message = "Misnamed import. Import should be named '" + moduleName + "' but found '" + importedName + "'";
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
         }
+    };
+    ImportNameRuleWalker.prototype.makeCamelCase = function (input) {
+        return input.replace(/[-|\.](.)/g, function (match, group1) {
+            return group1.toUpperCase();
+        });
     };
     ImportNameRuleWalker.prototype.isImportNameValid = function (importedName, moduleName) {
         var _this = this;

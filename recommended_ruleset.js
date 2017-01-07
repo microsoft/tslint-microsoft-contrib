@@ -53,7 +53,7 @@ module.exports = {
         "no-duplicate-case": true,
         "no-duplicate-variable": true,
         "no-empty": true,
-        "no-for-in-array": true,
+        "no-for-in-array": false,
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
         "no-invalid-this": true,
@@ -73,7 +73,7 @@ module.exports = {
         "radix": true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
-        "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
+        "restrict-plus-operands": false, // the plus operand should really only be used for strings and numbers
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
@@ -205,8 +205,8 @@ module.exports = {
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unused-imports": false,            // use tslint no-unused-variable rule instead
-        "no-unused-variable": false,           // now supported by TypeScript 2.0 compiler
-    }
+        "no-unused-imports": false             // Use the tsc compiler options --noUnusedParameters and --noUnusedLocals instead
+//        "no-unused-variable": true             // Use the tsc compiler options --noUnusedParameters and --noUnusedLocals instead
+   }
 };
 

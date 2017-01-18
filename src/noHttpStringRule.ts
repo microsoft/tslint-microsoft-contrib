@@ -37,18 +37,16 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
-            const stringText : string = (<ts.LiteralExpression>node).text;
-            if (/.*http:.*/.test(stringText)) {
-                if (!this.isSuppressed(stringText)) {
-                    const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                    const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                    this.addFailure(failure);
-                }
+    protected visitStringLiteral(node: ts.StringLiteral): void {
+        const stringText : string = (<ts.LiteralExpression>node).text;
+        if (/.*http:.*/.test(stringText)) {
+            if (!this.isSuppressed(stringText)) {
+                const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                this.addFailure(failure);
             }
         }
-        super.visitNode(node);
+        super.visitStringLiteral(node);
     }
 
     private isSuppressed(stringText: string) : boolean {

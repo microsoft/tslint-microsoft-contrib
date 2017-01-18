@@ -62,6 +62,7 @@ module.exports = {
         "no-sparse-arrays": true,
         "no-stateless-class": true,
         "no-string-literal": true,
+        "no-string-throw": true,
         "no-unnecessary-bind": true,
         "no-unnecessary-override": true,
         "no-unsafe-finally": true,
@@ -69,11 +70,13 @@ module.exports = {
         "no-unused-new": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
+        "promise-function-async": true,
         "promise-must-complete": true,
         "radix": true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
         "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
+        "strict-boolean-expressions": true,
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
@@ -87,6 +90,7 @@ module.exports = {
         "adjacent-overload-signatures": true,
         "array-type": [true, "array"],
         "arrow-parens": false, // for simple functions the parens on arrow functions are not needed
+        "callable-types": true,
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "class-name": true,
@@ -126,6 +130,7 @@ module.exports = {
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
+        "no-void-expression": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
         "only-arrow-functions": false,  // there are many valid reasons to declare a function
@@ -135,6 +140,7 @@ module.exports = {
         "prefer-for-of": true,
         "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
         "underscore-consistent-invocation": true,
+        "unified-signatures": true,
         "variable-name": true,
 
         /**
@@ -163,6 +169,7 @@ module.exports = {
         "align": [true, "parameters", "arguments", "statements"],
         "curly": true,
         "eofline": true,
+        "import-spacing": true,
         "indent": [true, "spaces"],
         "linebreak-style": true,
         "no-consecutive-blank-lines": true,
@@ -188,14 +195,20 @@ module.exports = {
         "ban": false,                // only enable this if you have some code pattern that you want to ban
         "cyclomatic-complexity": true,
         "file-header": false,  // enable this rule only if you are legally required to add a file header
+        "import-blacklist": false,  // enable and configure this as you desire
+        "interface-over-type-literal": false,  // there are plenty of reasons to prefer interfaces
         "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
+        "no-empty-interface": false,  // it is currently better to use the MS version of this rule
+        "no-inferred-empty-object-type": false,  // if the compiler is satisfied then this is probably not an issue
         "no-internal-module": false, // only enable this if you are not using internal modules
+        "no-magic-numbers": false,  // by default it will find too many false positives
         "no-mergeable-namespace": false,  // your project may require mergeable namespaces
         "no-namespace": false,       // only enable this if you are not using modules/namespaces
         "no-reference": true,        // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
         "object-literal-shorthand": false,  // object-literal-shorthand offers an abbreviation not an abstraction
         "prefer-type-cast": true,   // pick either type-cast format and use it consistently
+        "space-before-function-paren": false,   // turn this on if this is really your coding standard
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
@@ -207,6 +220,7 @@ module.exports = {
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "no-unused-imports": false,            // use tslint no-unused-variable rule instead
         "no-unused-variable": false,           // now supported by TypeScript 2.0 compiler
+        "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }
 };
 

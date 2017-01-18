@@ -679,5 +679,126 @@
     "group": "Clarity",
     "recommendation": "true,",
     "level": "Opportunity for Excellence"
+  },
+  "callable-types": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "import-blacklist": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // enable and configure this as you desire",
+    "level": "Opportunity for Excellence"
+  },
+  "import-spacing": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Whitespace",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "interface-over-type-literal": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // there are plenty of reasons to prefer interfaces",
+    "level": "Opportunity for Excellence"
+  },
+  "no-empty-interface": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // it is currently better to use the MS version of this rule",
+    "level": "Opportunity for Excellence"
+  },
+  "no-inferred-empty-object-type": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // if the compiler is satisfied then this is probably not an issue",
+    "level": "Opportunity for Excellence"
+  },
+  "no-magic-numbers": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,  // by default it will find too many false positives",
+    "level": "Opportunity for Excellence"
+  },
+  "no-string-throw": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "High",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-void-expression": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "prefer-const": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence",
+    "commonWeaknessEnumeration": "398, 705, 710"
+  },
+  "promise-function-async": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "space-before-function-paren": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "Low",
+    "group": "Configurable",
+    "recommendation": "false,   // turn this on if this is really your coding standard",
+    "level": "Opportunity for Excellence"
+  },
+  "strict-boolean-expressions": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "typeof-compare": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "severity": "High",
+    "group": "Deprecated",
+    "recommendation": "false,               // the valid-typeof rule is currently superior to this version",
+    "level": "Opportunity for Excellence"
+  },
+  "unified-signatures": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
   }
 }

@@ -28,7 +28,7 @@ class FormatterForTesting extends Formatter {
 /**
  * Unit tests.
  */
-describe('fixPreferConstFormatter', () : void => {
+describe('fixNoRequireImportsFormatter', () : void => {
 
     const ruleName : string = 'no-require-imports';
 

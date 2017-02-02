@@ -40,7 +40,7 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
     protected visitStringLiteral(node: ts.StringLiteral): void {
         const stringText : string = (<ts.LiteralExpression>node).text;
         // tslint:disable no-http-string
-        if (stringText.indexOf('http:') !== -1) {
+        if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
                 const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
                 const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);

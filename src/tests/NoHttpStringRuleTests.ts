@@ -36,6 +36,11 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
+    it('should allow http in middle of string', (): void => {
+        const inputScript: string = 'var x = \'The prototcol may be http:// or https://\'';
+        TestHelper.assertViolations(ruleName, inputScript, []);
+    });
+
     it('should allow https strings in default values', (): void => {
         const inputScript: string = 'function f(x : string = \'https://www.microsoft.com\') {}';
         TestHelper.assertViolations(ruleName, inputScript, []);

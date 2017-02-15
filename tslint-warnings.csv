@@ -177,9 +177,6 @@ CWE 710 - Coding Standards Violation"
 no-unused-new,Disallows unused 'new' expression statements.,TSLINT1ELSO8A,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 563, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 563 - Assignment to Variable without Use ('Unused Variable')
 CWE 710 - Coding Standards Violation"
-no-unused-variable,"Disallows unused imports, variables, functions and private class members.",TSLINT1TQIF8Q,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 563, 710","CWE 398 - Indicator of Poor Code Quality
-CWE 563 - Assignment to Variable without Use ('Unused Variable')
-CWE 710 - Coding Standards Violation"
 no-use-before-declare,Disallows usage of variables before their declaration.,TSLINTUU9UNF,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 456, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 456 - Missing Initialization of a Variable
 CWE 710 - Coding Standards Violation"

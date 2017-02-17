@@ -145,7 +145,7 @@ module.exports = {
         "prefer-const": true,
         "prefer-for-of": true,
         "prefer-method-signature": true,
-        "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
+        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
         "underscore-consistent-invocation": true,
         "unified-signatures": true,
         "variable-name": true,

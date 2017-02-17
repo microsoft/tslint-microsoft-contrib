@@ -801,5 +801,86 @@
     "group": "Clarity",
     "recommendation": "true,",
     "level": "Opportunity for Excellence"
+  },
+  "arrow-return-shorthand": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "group": "Ignored"
+  },
+  "await-promise": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-boolean-literal-compare": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "group": "Ignored"
+  },
+  "no-floating-promises": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-misused-new": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-unbound-method": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "group": "Ignored"
+  },
+  "no-unnecessary-initializer": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-unnecessary-qualifier": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "no-unsafe-any": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Correctness",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "prefer-function-over-method": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "group": "Ignored"
+  },
+  "prefer-method-signature": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "group": "Clarity",
+    "recommendation": "true,",
+    "level": "Opportunity for Excellence"
+  },
+  "strict-type-predicates": {
+    "issueClass": "Ignored",
+    "issueType": "Warning",
+    "group": "Ignored"
   }
 }

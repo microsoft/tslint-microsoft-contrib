@@ -60,12 +60,12 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWal
 
         Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
             const startPos = scanner.getStartPos();
-            if (this.tokensToSkipStartEndMap[startPos] != null) {
+            if ((<any>this).tokensToSkipStartEndMap[startPos] != null) {
                 // tokens to skip are places where the scanner gets confused
                 // about what the token is, without the proper context
                 // (specifically, regex, identifiers, and templates). So skip
                 // those tokens.
-                scanner.setTextPos(this.tokensToSkipStartEndMap[startPos]);
+                scanner.setTextPos((<any>this).tokensToSkipStartEndMap[startPos]);
                 return;
             }
 

@@ -70,7 +70,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
         }
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         this.validate(node);
         super.visitArrowFunction(node);
     }

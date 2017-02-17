@@ -40,7 +40,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         this.validateMochaDoneUsage(node);
         super.visitArrowFunction(node);
     }

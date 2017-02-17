@@ -58,7 +58,7 @@ class SingleFunctionWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         // do not visit inner blocks
     }
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         // do not visit inner blocks
     }
     /* tslint:enable:no-empty */

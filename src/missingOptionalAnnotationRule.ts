@@ -42,7 +42,7 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
         super.visitConstructorDeclaration(node);
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         this.validateParameters(node);
         super.visitArrowFunction(node);
     }

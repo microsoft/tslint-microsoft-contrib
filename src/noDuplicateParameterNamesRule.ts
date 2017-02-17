@@ -42,7 +42,7 @@ class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
         super.visitConstructorDeclaration(node);
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         this.validateParameterNames(node);
         super.visitArrowFunction(node);
     }

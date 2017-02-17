@@ -3,6 +3,18 @@
     "dist/src"
   ],
   "rules": {
+    "arrow-return-shorthand": false,
+    "await-promise": false,
+    "no-boolean-literal-compare": false,
+    "no-floating-promises": false,
+    "no-misused-new": true,
+    "no-unbound-method": false,
+    "no-unnecessary-initializer": true,
+    "no-unnecessary-qualifier": false,
+    "no-unsafe-any": false,
+    "prefer-function-over-method": false,
+    "prefer-method-signature": true,
+    "strict-type-predicates": false,
     "adjacent-overload-signatures": false,
     "align": [
       false

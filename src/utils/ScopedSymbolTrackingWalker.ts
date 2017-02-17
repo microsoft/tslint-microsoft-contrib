@@ -139,7 +139,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         this.scope = this.scope.parent;
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         this.scope = new Scope(this.scope);
         this.scope.addParameters(node.parameters);
         super.visitArrowFunction(node);

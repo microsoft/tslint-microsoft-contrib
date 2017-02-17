@@ -60,7 +60,7 @@ class GlobalReferenceCollector extends ErrorTolerantWalker {
     /* tslint:disable:no-empty */
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void { }   // do not descend into fresh scopes
     protected visitClassDeclaration(node: ts.ClassDeclaration): void { }     // do not descend into fresh scopes
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void { } // do not descend into fresh scopes
+    protected visitArrowFunction(node: ts.ArrowFunction): void { }           // do not descend into fresh scopes
     protected visitFunctionExpression(node: ts.FunctionExpression): void { } // do not descend into fresh scopes
     /* tslint:enable:no-empty */
 

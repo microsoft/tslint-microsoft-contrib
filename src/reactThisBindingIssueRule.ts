@@ -91,7 +91,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         this.scope = null;
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration): void {
+    protected visitArrowFunction(node: ts.ArrowFunction): void {
         if (this.scope != null) {
             this.scope = new Scope(this.scope);
         }

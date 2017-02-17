@@ -145,6 +145,7 @@
     "severity": "Low",
     "level": "Opportunity for Excellence",
     "group": "Clarity",
+    "recommendation": "[true, { \"order\": \"fields-first\" }]",
     "commonWeaknessEnumeration": "398, 710"
   },
   "new-parens": {

@@ -111,7 +111,7 @@ module.exports = {
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
         "member-access": true,
-        "member-ordering": [true, { "order": "fields-first" }]
+        "member-ordering": [true, { "order": "fields-first" }],
         "missing-jsdoc": true,
         "mocha-unneeded-done": true,
         "new-parens": true,

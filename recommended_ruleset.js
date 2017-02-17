@@ -117,7 +117,7 @@ module.exports = {
         "new-parens": true,
         "no-construct": true,
         "no-default-export": true,
-        "no-empty-interfaces": true,
+        "no-empty-interface": true,
         "no-for-in": true,
         "no-function-expression": true,
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
@@ -205,7 +205,6 @@ module.exports = {
         "import-blacklist": false,  // enable and configure this as you desire
         "interface-over-type-literal": false,  // there are plenty of reasons to prefer interfaces
         "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
-        "no-empty-interface": false,  // it is currently better to use the MS version of this rule
         "no-inferred-empty-object-type": false,  // if the compiler is satisfied then this is probably not an issue
         "no-internal-module": false, // only enable this if you are not using internal modules
         "no-magic-numbers": false,  // by default it will find too many false positives
@@ -222,6 +221,7 @@ module.exports = {
          */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
+        "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler

@@ -714,12 +714,12 @@
     "level": "Opportunity for Excellence"
   },
   "no-empty-interface": {
-    "issueClass": "Ignored",
+    "issueClass": "Non-SDL",
     "issueType": "Warning",
-    "severity": "Low",
-    "group": "Configurable",
-    "recommendation": "false,  // it is currently better to use the MS version of this rule",
-    "level": "Opportunity for Excellence"
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
   },
   "no-inferred-empty-object-type": {
     "issueClass": "Ignored",

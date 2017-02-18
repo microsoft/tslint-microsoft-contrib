@@ -226,7 +226,8 @@ module.exports = {
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "no-unused-imports": false,            // use tslint no-unused-variable rule instead
-        "no-unused-variable": false,           // now supported by TypeScript 2.0 compiler
+        // "no-unused-variable": false,        // now supported by TypeScript 2.0 compiler
+                    // loading this rule will be warned even it is false
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }
 };

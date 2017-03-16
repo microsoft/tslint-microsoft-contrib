@@ -23,11 +23,12 @@ Rule.metadata = {
     options: null,
     optionsDescription: '',
     typescriptOnly: true,
-    issueClass: 'Non-SDL',
+    issueClass: 'Ignored',
     issueType: 'Warning',
     severity: 'Moderate',
     level: 'Opportunity for Excellence',
-    group: 'Clarity',
+    group: 'Deprecated',
+    recommendation: 'false, // use tslint no-empty-interface rule instead',
     commonWeaknessEnumeration: '398, 710'
 };
 Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';

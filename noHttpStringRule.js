@@ -4,7 +4,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
@@ -40,18 +39,16 @@ var NoHttpStringWalker = (function (_super) {
     function NoHttpStringWalker() {
         return _super.apply(this, arguments) || this;
     }
-    NoHttpStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
-            var stringText = node.text;
-            if (/.*http:.*/.test(stringText)) {
-                if (!this.isSuppressed(stringText)) {
-                    var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                    var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                    this.addFailure(failure);
-                }
+    NoHttpStringWalker.prototype.visitStringLiteral = function (node) {
+        var stringText = node.text;
+        if (stringText.indexOf('http:') === 0) {
+            if (!this.isSuppressed(stringText)) {
+                var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
+                this.addFailure(failure);
             }
         }
-        _super.prototype.visitNode.call(this, node);
+        _super.prototype.visitStringLiteral.call(this, node);
     };
     NoHttpStringWalker.prototype.isSuppressed = function (stringText) {
         var allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());

@@ -36,6 +36,7 @@ module.exports = {
          * Common Bugs and Correctness. The following rules should be turned on because they find
          * common bug patterns in the code or enforce type safety.
          */
+        "await-promise": true,
         "forin": true,
         "jquery-deferred-must-complete": true,
         "label-position": true,
@@ -53,27 +54,34 @@ module.exports = {
         "no-duplicate-case": true,
         "no-duplicate-variable": true,
         "no-empty": true,
+        "no-floating-promises": true,
         "no-for-in-array": true,
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
         "no-invalid-this": true,
         "no-jquery-raw-elements": true,
+        "no-misused-new": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,
         "no-stateless-class": true,
         "no-string-literal": true,
+        "no-string-throw": true,
         "no-unnecessary-bind": true,
+        "no-unnecessary-initializer": true,
         "no-unnecessary-override": true,
+        "no-unsafe-any": true,
         "no-unsafe-finally": true,
         "no-unused-expression": true,
         "no-unused-new": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
+        "promise-function-async": true,
         "promise-must-complete": true,
         "radix": true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
         "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
+        "strict-boolean-expressions": true,
         "switch-default": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
@@ -87,6 +95,7 @@ module.exports = {
         "adjacent-overload-signatures": true,
         "array-type": [true, "array"],
         "arrow-parens": false, // for simple functions the parens on arrow functions are not needed
+        "callable-types": true,
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "class-name": true,
@@ -102,13 +111,13 @@ module.exports = {
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
         "member-access": true,
-        "member-ordering": true,
+        "member-ordering": [true, { "order": "fields-first" }],
         "missing-jsdoc": true,
         "mocha-unneeded-done": true,
         "new-parens": true,
         "no-construct": true,
         "no-default-export": true,
-        "no-empty-interfaces": true,
+        "no-empty-interface": true,
         "no-for-in": true,
         "no-function-expression": true,
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
@@ -122,10 +131,12 @@ module.exports = {
         "no-typeof-undefined": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
+        "no-unnecessary-qualifier": true,
         "no-unsupported-browser-code": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
+        "no-void-expression": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
         "only-arrow-functions": false,  // there are many valid reasons to declare a function
@@ -133,8 +144,10 @@ module.exports = {
         "prefer-array-literal": true,
         "prefer-const": true,
         "prefer-for-of": true,
-        "typedef": [true, "callSignature", "indexSignature", "parameter", "propertySignature", "variableDeclarator", "memberVariableDeclarator"],
+        "prefer-method-signature": true,
+        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
         "underscore-consistent-invocation": true,
+        "unified-signatures": true,
         "variable-name": true,
 
         /**
@@ -163,6 +176,7 @@ module.exports = {
         "align": [true, "parameters", "arguments", "statements"],
         "curly": true,
         "eofline": true,
+        "import-spacing": true,
         "indent": [true, "spaces"],
         "linebreak-style": true,
         "no-consecutive-blank-lines": true,
@@ -188,25 +202,31 @@ module.exports = {
         "ban": false,                // only enable this if you have some code pattern that you want to ban
         "cyclomatic-complexity": true,
         "file-header": false,  // enable this rule only if you are legally required to add a file header
+        "import-blacklist": false,  // enable and configure this as you desire
+        "interface-over-type-literal": false,  // there are plenty of reasons to prefer interfaces
         "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
+        "no-inferred-empty-object-type": false,  // if the compiler is satisfied then this is probably not an issue
         "no-internal-module": false, // only enable this if you are not using internal modules
+        "no-magic-numbers": false,  // by default it will find too many false positives
         "no-mergeable-namespace": false,  // your project may require mergeable namespaces
         "no-namespace": false,       // only enable this if you are not using modules/namespaces
         "no-reference": true,        // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
         "object-literal-shorthand": false,  // object-literal-shorthand offers an abbreviation not an abstraction
         "prefer-type-cast": true,   // pick either type-cast format and use it consistently
+        "space-before-function-paren": false,   // turn this on if this is really your coding standard
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
          */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
+        "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "no-unused-imports": false,            // use tslint no-unused-variable rule instead
-        "no-unused-variable": false,           // now supported by TypeScript 2.0 compiler
+        "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }
 };
 

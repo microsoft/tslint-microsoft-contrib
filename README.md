@@ -61,7 +61,7 @@ The tslint.json file does not change format when using this package. Just add ou
 
 ##### Which Rules Should I Turn On?
 There certainly are a lot of options! Here are some links to get you started.
-* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. 
+* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options.
 * A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
 * A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
 * And our configuration file with all options is available here: [tslint.json](tslint.json)
@@ -129,6 +129,7 @@ Rule Name   | Description | Since
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unsupported-browser-code`   | Avoid writing browser-specific code for unsupported browser versions. Browser versions are specified in the rule configuration options, eg: `[true, [ "IE 11", "Firefox > 40", "Chrome >= 45" ] ]`. Browser-specific blocks of code can then be designated with a single-line comment, like so: `// Browser specific: IE 10`, or with a jsdoc like this: `@browserspecific chrome 40`. | 2.0.10
 `no-unused-imports`             | Deprecated - This rule is now covered by TSLint's no-unused-variables rule. However, it can still be useful to enable this rule and pair it with the fix-no-unused-imports formatter. | 0.0.1
+`no-useless-files`              | Avoid keeping files around that only contain commented out code, are completely empty, or only contain whitespace characters | 4.0.2
 `no-var-self`                   | Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `non-literal-require`           | Detect `require()` function calls for something that is not a string literal. For security reasons, it is best to only require() string literals. Otherwise, it is perhaps possible for an attacker to somehow change the value and download arbitrary Javascript into your page. | 2.0.14

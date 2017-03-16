@@ -180,6 +180,7 @@ CWE 710 - Coding Standards Violation"
 no-use-before-declare,Disallows usage of variables before their declaration.,TSLINTUU9UNF,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 456, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 456 - Missing Initialization of a Variable
 CWE 710 - Coding Standards Violation"
+no-useless-files,"Locates files that only contain commented out code, whitespace characters, or have no content",TSLINTGOUON3,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-var-keyword,Disallows usage of the `var` keyword.,TSLINT15BQNA,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 705, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 705 - Incorrect Control Flow Scoping
 CWE 710 - Coding Standards Violation"

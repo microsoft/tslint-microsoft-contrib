@@ -285,6 +285,7 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ]
+    ],
+    "no-useless-files": true
   }
 }

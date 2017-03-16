@@ -1,3 +1,20 @@
+# 4.0.1 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A4.0.1)
+
+* [#345](https://github.com/Microsoft/tslint-microsoft-contrib/issues/345) Remove no-unused-variable to suppress tslint warning 
+* [#344](https://github.com/Microsoft/tslint-microsoft-contrib/issues/344) typedef rule - Change recommended parameters so to something meaningful bug
+* [#343](https://github.com/Microsoft/tslint-microsoft-contrib/issues/343) object-literal-key-quotes false positive when linting empty string
+* [#341](https://github.com/Microsoft/tslint-microsoft-contrib/issues/341) Recommended value for member-ordering rule is pointless enhancement
+* [#338](https://github.com/Microsoft/tslint-microsoft-contrib/issues/338) no-http-string rule - false positive when http:// occurs in the middle of a string
+* [#337](https://github.com/Microsoft/tslint-microsoft-contrib/issues/337) Performance - no-http-string should replace regex with indexOf 
+* [#336](https://github.com/Microsoft/tslint-microsoft-contrib/issues/336) no-http-string rule should support very large source files and string input
+* [#333](https://github.com/Microsoft/tslint-microsoft-contrib/issues/333) remove "prefer-const" rule - tslint has same rule with same name so our's is unusable
+* [#332](https://github.com/Microsoft/tslint-microsoft-contrib/issues/332) Performance - no-http-string should use visitStringLiteral not visitNode 
+* [#331](https://github.com/Microsoft/tslint-microsoft-contrib/issues/331) no-http-string's NoHttpStringWalker should use visitStringLiteral
+* [#328](https://github.com/Microsoft/tslint-microsoft-contrib/issues/328) Deprecate no-empty-interfaces - rule is now in TSLint bug
+* [#327](https://github.com/Microsoft/tslint-microsoft-contrib/issues/327) Improve import-name failure message when import filenames contain a dot enhancement
+* [#326](https://github.com/Microsoft/tslint-microsoft-contrib/issues/326) update recommended ruleset with new tslint 4.0 rules
+
 # 4.0.0 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A3.0.0)
 

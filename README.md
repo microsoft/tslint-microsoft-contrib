@@ -8,13 +8,13 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 4.0.0 (Stable)
+Version 4.0.1 (Stable)
 -------------
-The project has been in use for over a year on multiple projects. Please report any bugs or false positives you might find!
+The project has been in use for several years on multiple projects. Please report any bugs or false positives you might find!
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 4.0.1 (In-Development)
+Version 4.0.2 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
 

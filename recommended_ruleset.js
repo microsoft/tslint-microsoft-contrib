@@ -133,6 +133,7 @@ module.exports = {
         "no-unnecessary-local-variable": true,
         "no-unnecessary-qualifier": true,
         "no-unsupported-browser-code": true,
+        "no-useless-files": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,

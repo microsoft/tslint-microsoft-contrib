@@ -200,29 +200,19 @@ module.exports = function(grunt) {
 
         ts: {
             default: {
-                src: [
-                    './src/**/*.ts{,x}'
-                ],
-                outDir: 'dist/src',
-                options: {
-                    module: 'commonjs',
-                    target: 'es5',
-                    declaration: true,
-                    failOnTypeErrors: true,
-                    jsx: 'react'
+                tsconfig: {
+                    tsconfig: './tsconfig.json',
+                    passThrough: true,
+                    updateFiles: true,
+                    overwriteFiles: true
                 }
             },
             'test-data': {
-                src: [
-                    './test-data/**/*.ts{,x}'
-                ],
-                outDir: 'dist/test-data',
-                options: {
-                    module: 'commonjs',
-                    target: 'es5',
-                    declaration: false,
-                    failOnTypeErrors: true,
-                    jsx: 'react'
+                tsconfig: {
+                    tsconfig: './tsconfig.testdata.json',
+                    passThrough: true,
+                    updateFiles: true,
+                    overwriteFiles: true
                 }
             }
         },

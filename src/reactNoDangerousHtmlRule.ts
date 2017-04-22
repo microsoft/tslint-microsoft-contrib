@@ -31,11 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        const documentRegistry = ts.createDocumentRegistry();
-        const languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
-        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-
-        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions(), languageService));
+        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions()));
     }
 
     /**
@@ -55,12 +51,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDangerousHtmlWalker extends ErrorTolerantWalker {
-    private languageServices : ts.LanguageService;
     private currentMethodName : string;
 
-    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, languageServices : ts.LanguageService) {
+    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
         super(sourceFile, options);
-        this.languageServices = languageServices;
         this.currentMethodName = '<unknown>';
     }
 

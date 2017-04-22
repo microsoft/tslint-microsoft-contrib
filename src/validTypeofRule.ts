@@ -118,6 +118,6 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
         }
 
         return matrix[b.length][a.length];
-    };
+    }
     /* tslint:enable:no-increment-decrement */
 }

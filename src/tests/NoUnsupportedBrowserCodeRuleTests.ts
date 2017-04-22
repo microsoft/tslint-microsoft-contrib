@@ -120,7 +120,7 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
+                    "character": 17,
                     "line": 3
                 }
             },
@@ -129,7 +129,7 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
+                    "character": 17,
                     "line": 8
                 }
             },
@@ -138,8 +138,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
-                    "line": 14
+                    "character": 17,
+                    "line": 13
                 }
             },
             {
@@ -147,7 +147,7 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
+                    "character": 17,
                     "line": 20
                 }
             },
@@ -156,8 +156,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
-                    "line": 28
+                    "character": 17,
+                    "line": 25
                 }
             },
             {
@@ -165,8 +165,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
-                    "line": 29
+                    "character": 17,
+                    "line": 25
                 }
             },
             {
@@ -174,8 +174,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
-                    "line": 30
+                    "character": 17,
+                    "line": 25
                 }
             },
             {
@@ -183,8 +183,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
                 "name": "file.ts",
                 "ruleName": "no-unsupported-browser-code",
                 "startPosition": {
-                    "character": 20,
-                    "line": 39
+                    "character": 17,
+                    "line": 36
                 }
             }
         ]);

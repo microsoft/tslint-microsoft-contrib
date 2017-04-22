@@ -14,8 +14,8 @@ export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingW
     public constructor(sourceFile : ts.SourceFile,
                        targetFunctionName : string,
                        options : Lint.IOptions,
-                       languageServices : ts.LanguageService) {
-        super(sourceFile, options, languageServices);
+                       program? : ts.Program) {
+        super(sourceFile, options, program);
         this.targetFunctionName = targetFunctionName;
         this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
     }

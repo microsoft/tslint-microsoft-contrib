@@ -149,7 +149,9 @@
     "no-magic-numbers": false,
     "no-mergeable-namespace": false,
     "no-missing-visibility-modifiers": true,
-    "no-multiline-string": true,
+    "no-multiline-string": {
+      "severity": "warning"
+    },
     "no-multiple-var-decl": true,
     "no-namespace": false,
     "no-null-keyword": false,
@@ -180,7 +182,6 @@
     "no-unsafe-finally": true,
     "no-unsupported-browser-code": false,
     "no-unused-expression": true,
-    "no-unused-new": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": true,

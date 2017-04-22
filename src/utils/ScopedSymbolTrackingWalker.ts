@@ -10,14 +10,15 @@ import {Scope} from './Scope';
  * from the SourceFile then -> Module -> Class -> Function
  */
 export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
-    private languageServices: ts.LanguageService;
-    private typeChecker : ts.TypeChecker;
+    private typeChecker?: ts.TypeChecker;
     private scope: Scope;
 
-    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, languageServices : ts.LanguageService) {
+    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, program? : ts.Program) {
         super(sourceFile, options);
-        this.languageServices = languageServices;
-        this.typeChecker = this.languageServices.getProgram().getTypeChecker();
+
+        if (program) {
+            this.typeChecker = program.getTypeChecker();
+        }
     }
 
     protected isExpressionEvaluatingToFunction(expression : ts.Expression) : boolean {
@@ -39,12 +40,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             return true;
         }
 
-        if (expression.kind === ts.SyntaxKind.Identifier) {
-            const typeInfo : ts.DefinitionInfo[] = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
-            if (typeInfo != null && typeInfo[0] != null) {
-                if (typeInfo[0].kind === 'function' || typeInfo[0].kind === 'local function') {
-                    return true; // variables with type function are OK to pass
-                }
+        if (expression.kind === ts.SyntaxKind.Identifier && this.typeChecker) {
+            const tsSymbol = this.typeChecker.getSymbolAtLocation(expression);
+            if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
+                return true; // variables with type function are OK to pass
             }
             return false;
         }
@@ -57,6 +56,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
 
             try {
                 // seems like another tslint error of some sort
+                if (!this.typeChecker) {
+                    return true;
+                }
+
                 const signature : ts.Signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
                 const expressionType : ts.Type = this.typeChecker.getReturnTypeOfSignature(signature);
                 return this.isFunctionType(expressionType, this.typeChecker);
@@ -64,6 +67,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
             }
+        }
+
+        if (!this.typeChecker) {
+            return true;
         }
 
         return this.isFunctionType(this.typeChecker.getTypeAtLocation(expression), this.typeChecker);

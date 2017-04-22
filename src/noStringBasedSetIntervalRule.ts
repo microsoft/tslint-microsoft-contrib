@@ -7,7 +7,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 /**
  * Implementation of the no-string-based-set-interval rule.
  */
-export class Rule extends Lint.Rules.AbstractRule {
+export class Rule extends Lint.Rules.OptionallyTypedRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-string-based-set-interval',
@@ -25,13 +25,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        const documentRegistry = ts.createDocumentRegistry();
-        const languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
+        return this.applyWithProgram(sourceFile, undefined);
+    }
 
+    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
         const walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
-            sourceFile , 'setInterval', this.getOptions(), languageService
+            sourceFile , 'setInterval', this.getOptions(), program
         );
+
         return this.applyWithWalker(walker);
     }
 }

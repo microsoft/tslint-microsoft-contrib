@@ -7,7 +7,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 /**
  * Implementation of the no-cookies-rule rule.
  */
-export class Rule extends Lint.Rules.AbstractRule {
+export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-cookies',
@@ -26,22 +26,17 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Forbidden call to document.cookie';
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        const documentRegistry = ts.createDocumentRegistry();
-        const languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        const languageService : ts.LanguageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), languageService));
+    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
+        return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), program));
     }
 }
 
 class NoCookiesWalker extends ErrorTolerantWalker {
-    private languageService : ts.LanguageService;
     private typeChecker : ts.TypeChecker;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, languageService : ts.LanguageService) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
         super(sourceFile, options);
-        this.languageService = languageService;
-        this.typeChecker = languageService.getProgram().getTypeChecker();
+        this.typeChecker = program.getTypeChecker();
     }
 
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {

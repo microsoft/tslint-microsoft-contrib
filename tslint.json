@@ -180,7 +180,6 @@
     "no-unsafe-finally": true,
     "no-unsupported-browser-code": false,
     "no-unused-expression": true,
-    "no-unused-imports": false,
     "no-unused-new": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,

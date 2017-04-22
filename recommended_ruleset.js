@@ -106,7 +106,7 @@ module.exports = {
         "import-name": true,
         "interface-name": true,
         "jsdoc-format": true,
-        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file 
+        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
         "max-file-line-count": true,
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
@@ -226,7 +226,6 @@ module.exports = {
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unused-imports": false,            // use tslint no-unused-variable rule instead
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }
 };

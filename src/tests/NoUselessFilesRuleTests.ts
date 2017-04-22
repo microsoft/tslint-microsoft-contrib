@@ -54,9 +54,9 @@ describe('noUselessFilesRule', () : void => {
               }
           }
         */
-        
+
         // here is a single line comment
-        
+
         /* and another
            multline comment */`;
 

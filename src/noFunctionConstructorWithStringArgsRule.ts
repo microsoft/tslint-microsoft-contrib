@@ -28,21 +28,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'forbidden: Function constructor with string arguments ';
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        const documentRegistry = ts.createDocumentRegistry();
-        const languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions(), languageService));
+        return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions()));
     }
 }
 
 class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
-    private languageService: ts.LanguageService;
-    private typeChecker : ts.TypeChecker;
-
-    public constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, languageServices : ts.LanguageService) {
+    public constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
         super(sourceFile, options);
-        this.languageService = languageServices;
-        this.typeChecker = this.languageService.getProgram().getTypeChecker();
     }
 
     protected visitNewExpression(node: ts.NewExpression): void {

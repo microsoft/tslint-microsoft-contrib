@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
+import {forEachTokenWithTrivia} from 'tsutils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Replace block comment with a single-line comment';
@@ -31,43 +31,17 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoSingleLineBlockCommentRuleWalker extends Lint.SkippableTokenAwareRuleWalker {
+class NoSingleLineBlockCommentRuleWalker extends Lint.RuleWalker {
 
     public visitSourceFile(node: ts.SourceFile) {
-        const scanner: ts.Scanner = ts.createScanner(
-            ts.ScriptTarget.ES5,
-            false,  // do not skip comments
-            AstUtils.getLanguageVariant(node),
-            node.text
-        );
-        Lint.scanAllTokens(scanner, (scanner: ts.Scanner): void => {
-            const startPos = scanner.getStartPos();
-            if ((<any>this).tokensToSkipStartEndMap[startPos] != null) {
-                // tokens to skip are places where the scanner gets confused about what the token is, without the proper context
-                // (specifically, regex, identifiers, and templates). So skip those tokens.
-                scanner.setTextPos((<any>this).tokensToSkipStartEndMap[startPos]);
-                return;
-            }
-
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
-                const commentText: string = scanner.getTokenText();
-                const startPosition: number = scanner.getTokenPos();
-
-                if (this.isSingleLineComment(commentText)
-                        && this.isNextTokenOnANewLine(scanner)
-                        && this.isTsLintSuppression(commentText) === false) {
-                    this.addFailure(this.createFailure(startPosition, commentText.length, FAILURE_STRING));
-                }
+        forEachTokenWithTrivia(node, (fullText, tokenSyntaxKind, range) => {
+            const tokenText = fullText.substring(range.pos, range.end);
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
+                           && this.isSingleLineComment(tokenText)
+                           && !this.isTsLintSuppression(tokenText)) {
+                this.addFailure(this.createFailure(range.pos, range.end - range.pos, FAILURE_STRING));
             }
         });
-    }
-
-    private isNextTokenOnANewLine(scanner: ts.Scanner): boolean {
-        return scanner.lookAhead((): boolean => {
-            scanner.scan();  // scan the next token
-            return scanner.hasPrecedingLineBreak(); // if the token is preceded by line break then it was on a new line
-        });
-
     }
 
     private isSingleLineComment(commentText: string): boolean {

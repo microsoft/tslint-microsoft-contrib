@@ -1,12 +1,15 @@
 import * as Lint from 'tslint';
 import * as fs from 'fs';
 import * as chai from 'chai';
+import * as ts from 'typescript';
 import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
 
 /**
  * Test Utilities.
  */
 export module TestHelper {
+
+    let program: ts.Program;
 
     /* tslint:disable:prefer-const */
     /**
@@ -33,46 +36,66 @@ export module TestHelper {
     export interface ExpectedFailure {
         ruleName: string;
         name: string;
-        failure: string;
+        failure?: string;
+        ruleSeverity?: string;
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-    interface RuleConfiguration {
-        rules: {
-            [key: string]: boolean | any[];
-        };
-    }
 
     export function assertNoViolation(ruleName: string,
-                                      inputFileOrScript: string) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, []);
+                                      inputFileOrScript: string,
+                                      useTypeChecker: boolean = false) {
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, [], useTypeChecker);
     }
     export function assertNoViolationWithOptions(ruleName: string,
                                                  options: any[],
-                                                 inputFileOrScript: string) {
-        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, []);
+                                                 inputFileOrScript: string,
+                                                 useTypeChecker: boolean = false) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, [], useTypeChecker);
     }
     export function assertViolationsWithOptions(ruleName: string,
                                                 options: any[],
                                                 inputFileOrScript: string,
-                                                expectedFailures: ExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures);
+                                                expectedFailures: ExpectedFailure[],
+                                                useTypeChecker: boolean = false) {
+        runRuleAndEnforceAssertions(ruleName, options, inputFileOrScript, expectedFailures, useTypeChecker);
     }
     export function assertViolations(ruleName: string,
                                      inputFileOrScript: string,
+                                     expectedFailures: ExpectedFailure[],
+                                     useTypeChecker: boolean = false) {
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, useTypeChecker);
+    }
+    export function assertViolationsWithTypeChecker(ruleName: string,
+                                     inputFileOrScript: string,
                                      expectedFailures: ExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures);
+        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, true);
     }
 
-    export function runRule(ruleName : string, userOptions: string[], inputFileOrScript : string): Lint.LintResult {
-        const configuration: RuleConfiguration = {
-            rules: {}
+    export function runRule(
+        ruleName : string,
+        userOptions: string[],
+        inputFileOrScript : string,
+        useTypeChecker : boolean = false): Lint.LintResult {
+
+        const configuration: Lint.Configuration.IConfigurationFile = {
+            extends: [],
+            jsRules: new Map<string, Partial<Lint.IOptions>>(),
+            linterOptions: {},
+            rules: new Map<string, Partial<Lint.IOptions>>(),
+            rulesDirectory: []
         };
+
         if (userOptions != null && userOptions.length > 0) {
             //options like `[4, 'something', false]` were passed, so prepend `true` to make the array like `[true, 4, 'something', false]`
-            configuration.rules[ruleName] = (<any[]>[true]).concat(userOptions);
+            configuration.rules.set(ruleName, {
+                ruleName,
+                ruleArguments: userOptions
+            });
         } else {
-            configuration.rules[ruleName] = true;
+            configuration.rules.set(ruleName, {
+                ruleName
+            });
         }
 
         const options : Lint.ILinterOptions = {
@@ -85,9 +108,13 @@ export module TestHelper {
         const debug: boolean = ErrorTolerantWalker.DEBUG;
         ErrorTolerantWalker.DEBUG = true; // never fail silently
         let result: Lint.LintResult;
+        if (useTypeChecker) {
+            //program = Lint.Linter.createProgram([ ], './dist/test-data');
+            program = ts.createProgram([inputFileOrScript], { });
+        }
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
-            const linter = new Lint.Linter(options);
+            const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
             linter.lint(inputFileOrScript, contents, configuration);
             result = linter.getResult();
         } else {
@@ -97,7 +124,8 @@ export module TestHelper {
             } else {
                 filename = 'file.ts';
             }
-            const linter = new Lint.Linter(options);
+
+            const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
             linter.lint(filename, inputFileOrScript, configuration);
             result = linter.getResult();
         }
@@ -106,9 +134,9 @@ export module TestHelper {
     }
 
     function runRuleAndEnforceAssertions(ruleName : string, userOptions: string[], inputFileOrScript : string,
-                                         expectedFailures : ExpectedFailure[]) {
+                                         expectedFailures : ExpectedFailure[], useTypeChecker: boolean = false) {
 
-        const lintResult: Lint.LintResult = runRule(ruleName, userOptions, inputFileOrScript);
+        const lintResult: Lint.LintResult = runRule(ruleName, userOptions, inputFileOrScript, useTypeChecker);
         const actualFailures: ExpectedFailure[] = JSON.parse(lintResult.output);
 
         // All the information we need is line and character of start position. For JSON comparison
@@ -125,6 +153,9 @@ export module TestHelper {
         expectedFailures.forEach((expected: ExpectedFailure): void => {
             delete expected.startPosition.position;
             delete expected.endPosition;
+            if (!expected.ruleSeverity) {
+                expected.ruleSeverity = 'ERROR';
+            }
         });
 
         const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, null, 2)}`;

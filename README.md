@@ -32,6 +32,7 @@ Alternately, you can download the files directly from GitHub:
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
+| **>= 5.x** | unsupported |
 | **>= 4.x** | 4.x |
 | **>= 3.2.x** | 2.x |
 | **3.1.x** | unsupported |

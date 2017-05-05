@@ -32,12 +32,12 @@ Alternately, you can download the files directly from GitHub:
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
-| **>= 5.x** | not yet supported |
-| **>= 4.x** | 4.x |
+| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x)|
+| **>= 4.x**   | 4.x (supporting TypeScript 2.1.x) |
 | **>= 3.2.x** | 2.x |
-| **3.1.x** | unsupported |
-| **3.0.x** | unsupported |
-| **2.x**   | 1.x |
+| **3.1.x**    | unsupported |
+| **3.0.x**    | unsupported |
+| **2.x**      | 1.x |
 
 Configuration
 -------------

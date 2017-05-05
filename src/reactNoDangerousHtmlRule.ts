@@ -87,7 +87,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
     }
 
     private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
-        node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+        node.attributes.properties.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 const attributeName = jsxAttribute.name.text;

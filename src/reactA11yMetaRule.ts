@@ -47,8 +47,8 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
 
     private validateOpeningElement(parent: ts.Node, openElement: ts.JsxOpeningLikeElement): void {
         if (openElement.tagName.getText() === 'meta') {
-            const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openElement.attributes;
-            attributes.forEach((parameter: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+            const attributes: ts.JsxAttributes = openElement.attributes;
+            attributes.properties.forEach((parameter: ts.JsxAttributeLike): void => {
                 if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
                     if (attribute.name.getText() === 'http-equiv') {

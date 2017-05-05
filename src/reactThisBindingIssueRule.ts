@@ -125,7 +125,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
-        node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+        node.attributes.properties.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
                 if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {

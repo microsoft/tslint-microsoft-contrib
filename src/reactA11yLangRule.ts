@@ -63,10 +63,10 @@ class ReactA11yLangRuleWalker extends ErrorTolerantWalker {
 
     private validateOpeningElement(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'html') {
-            const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openingElement.attributes;
+            const attributes: ts.JsxAttributes = openingElement.attributes;
             let langFound: boolean = false;
 
-            attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+            attributes.properties.forEach((attribute: ts.JsxAttributeLike): void => {
                 if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if ((<ts.JsxAttribute>attribute).name.getText() === 'lang') {
                         langFound = true;

@@ -39,7 +39,7 @@
     "mocha": "2.2.5",
     "time-grunt": "1.2.1",
     "tslint": "5.1.0",
-    "typescript": "2.1.4",
+    "typescript": "2.3.2",
     "underscore": "1.8.3"
   },
   "peerDependencies": {

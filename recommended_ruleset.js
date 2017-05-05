@@ -40,6 +40,7 @@ module.exports = {
         "forin": true,
         "jquery-deferred-must-complete": true,
         "label-position": true,
+        "match-default-export-name": true,
         "mocha-avoid-only": true,
         "mocha-no-side-effect-code": true,
         "no-any": true,
@@ -52,27 +53,32 @@ module.exports = {
         "no-control-regex": true,
         "no-debugger": true,
         "no-duplicate-case": true,
+        "no-duplicate-super": true,
         "no-duplicate-variable": true,
         "no-empty": true,
         "no-floating-promises": true,
         "no-for-in-array": true,
+        "no-import-side-effect": true,
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
+        "no-invalid-template-strings": true,
         "no-invalid-this": true,
         "no-jquery-raw-elements": true,
         "no-misused-new": true,
+        "no-non-null-assertion": true,
+        "no-reference-import": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,
         "no-stateless-class": true,
         "no-string-literal": true,
         "no-string-throw": true,
         "no-unnecessary-bind": true,
+        "no-unnecessary-callback-wrapper": true,
         "no-unnecessary-initializer": true,
         "no-unnecessary-override": true,
         "no-unsafe-any": true,
         "no-unsafe-finally": true,
         "no-unused-expression": true,
-        "no-unused-new": true,
         "no-use-before-declare": true,
         "no-with-statement": true,
         "promise-function-async": true,
@@ -133,6 +139,7 @@ module.exports = {
         "no-unnecessary-local-variable": true,
         "no-unnecessary-qualifier": true,
         "no-unsupported-browser-code": true,
+        "no-useless-files": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
@@ -145,6 +152,8 @@ module.exports = {
         "prefer-const": true,
         "prefer-for-of": true,
         "prefer-method-signature": true,
+        "prefer-template": true,
+        "return-undefined": false, // this actually affect the readability of the code
         "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
         "underscore-consistent-invocation": true,
         "unified-signatures": true,
@@ -179,6 +188,7 @@ module.exports = {
         "import-spacing": true,
         "indent": [true, "spaces"],
         "linebreak-style": true,
+        "newline-before-return": true,
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
         "no-single-line-block-comment": true,
@@ -200,6 +210,7 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         "ban": false,                // only enable this if you have some code pattern that you want to ban
+        "ban-types": true,
         "cyclomatic-complexity": true,
         "file-header": false,  // enable this rule only if you are legally required to add a file header
         "import-blacklist": false,  // enable and configure this as you desire
@@ -225,7 +236,6 @@ module.exports = {
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-unused-imports": false,            // use tslint no-unused-variable rule instead
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }
 };

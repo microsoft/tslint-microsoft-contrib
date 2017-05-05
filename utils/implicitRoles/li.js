@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var TypeGuard_1 = require("../TypeGuard");
 function getImplicitRoleForLi(node) {
     var parentNode = node.parent;

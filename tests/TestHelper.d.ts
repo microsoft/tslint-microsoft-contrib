@@ -11,13 +11,15 @@ export declare module TestHelper {
     interface ExpectedFailure {
         ruleName: string;
         name: string;
-        failure: string;
+        failure?: string;
+        ruleSeverity?: string;
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
     }
-    function assertNoViolation(ruleName: string, inputFileOrScript: string): void;
-    function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string): void;
-    function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: ExpectedFailure[]): void;
-    function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[]): void;
-    function runRule(ruleName: string, userOptions: string[], inputFileOrScript: string): Lint.LintResult;
+    function assertNoViolation(ruleName: string, inputFileOrScript: string, useTypeChecker?: boolean): void;
+    function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string, useTypeChecker?: boolean): void;
+    function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: ExpectedFailure[], useTypeChecker?: boolean): void;
+    function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[], useTypeChecker?: boolean): void;
+    function assertViolationsWithTypeChecker(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[]): void;
+    function runRule(ruleName: string, userOptions: string[], inputFileOrScript: string, useTypeChecker?: boolean): Lint.LintResult;
 }

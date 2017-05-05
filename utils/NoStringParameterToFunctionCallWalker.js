@@ -1,15 +1,21 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ScopedSymbolTrackingWalker_1 = require("./ScopedSymbolTrackingWalker");
 var AstUtils_1 = require("./AstUtils");
 var NoStringParameterToFunctionCallWalker = (function (_super) {
     __extends(NoStringParameterToFunctionCallWalker, _super);
-    function NoStringParameterToFunctionCallWalker(sourceFile, targetFunctionName, options, languageServices) {
-        var _this = _super.call(this, sourceFile, options, languageServices) || this;
+    function NoStringParameterToFunctionCallWalker(sourceFile, targetFunctionName, options, program) {
+        var _this = _super.call(this, sourceFile, options, program) || this;
         _this.targetFunctionName = targetFunctionName;
         _this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
         return _this;

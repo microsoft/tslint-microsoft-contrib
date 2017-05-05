@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 function isJsxAttribute(node) {
     return node && node.kind === ts.SyntaxKind.JsxAttribute;

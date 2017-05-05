@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var a_1 = require("./a");
 exports.a = a_1.a;
 var area_1 = require("./area");

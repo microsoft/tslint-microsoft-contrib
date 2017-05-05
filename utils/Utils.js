@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Utils;
 (function (Utils) {
     function exists(list, predicate) {

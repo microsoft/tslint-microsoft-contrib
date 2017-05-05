@@ -1,9 +1,15 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
@@ -25,7 +31,7 @@ var LANGUAGE_CODES = [
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
@@ -54,7 +60,7 @@ exports.Rule = Rule;
 var ReactA11yLangRuleWalker = (function (_super) {
     __extends(ReactA11yLangRuleWalker, _super);
     function ReactA11yLangRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ReactA11yLangRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
         this.validateOpeningElement(node, node);
@@ -69,7 +75,7 @@ var ReactA11yLangRuleWalker = (function (_super) {
         if (openingElement.tagName.getText() === 'html') {
             var attributes = openingElement.attributes;
             var langFound_1 = false;
-            attributes.forEach(function (attribute) {
+            attributes.properties.forEach(function (attribute) {
                 if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if (attribute.name.getText() === 'lang') {
                         langFound_1 = true;

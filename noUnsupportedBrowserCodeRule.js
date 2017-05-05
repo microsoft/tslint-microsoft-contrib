@@ -1,12 +1,18 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var AstUtils_1 = require("./utils/AstUtils");
+var tsutils_1 = require("tsutils");
 var UNSPECIFIED_BROWSER_VERSION = 'unspecified version';
 var JSDOC_BROWSERSPECIFIC = '@browserspecific';
 var COMMENT_BROWSERSPECIFIC = 'Browser Specific:';
@@ -15,7 +21,7 @@ var FAILURE_VERSION_STRING = 'Unsupported browser version';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnsupportedBrowserCodeRuleWalker(sourceFile, this.getOptions()));
@@ -45,29 +51,22 @@ var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
     }
     NoUnsupportedBrowserCodeRuleWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
-        var scanner = ts.createScanner(ts.ScriptTarget.ES5, false, AstUtils_1.AstUtils.getLanguageVariant(node), node.text);
-        Lint.scanAllTokens(scanner, function (scanner) {
-            var startPos = scanner.getStartPos();
-            if (_this.tokensToSkipStartEndMap[startPos] != null) {
-                scanner.setTextPos(_this.tokensToSkipStartEndMap[startPos]);
-                return;
-            }
+        tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind, range) {
             var regex;
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
                 regex = new RegExp(JSDOC_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
             }
-            else if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia) {
+            else if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia) {
                 regex = new RegExp(COMMENT_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
             }
             else {
                 return;
             }
             var match;
-            while ((match = regex.exec(scanner.getTokenText()))) {
+            var tokenText = text.substring(range.pos, range.end);
+            while ((match = regex.exec(tokenText))) {
                 var browser = _this.parseBrowserString(match[1]);
-                var startPos_1 = scanner.getTokenPos() + match.index;
-                var length_1 = match[0].length;
-                _this.findUnsupportedBrowserFailures(browser, startPos_1, length_1);
+                _this.findUnsupportedBrowserFailures(browser, range.pos, range.end - range.pos);
             }
         });
     };
@@ -125,5 +124,5 @@ var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
         }
     };
     return NoUnsupportedBrowserCodeRuleWalker;
-}(Lint.SkippableTokenAwareRuleWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noUnsupportedBrowserCodeRule.js.map

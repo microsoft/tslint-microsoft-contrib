@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var JsxAttribute_1 = require("../JsxAttribute");
 var typeString = 'type';
 function getImplicitRoleForMenu(node) {

@@ -1,15 +1,21 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
@@ -35,7 +41,7 @@ exports.Rule = Rule;
 var NoFunctionExpressionRuleWalker = (function (_super) {
     __extends(NoFunctionExpressionRuleWalker, _super);
     function NoFunctionExpressionRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     NoFunctionExpressionRuleWalker.prototype.visitFunctionExpression = function (node) {
         var walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
@@ -52,7 +58,7 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
 var SingleFunctionWalker = (function (_super) {
     __extends(SingleFunctionWalker, _super);
     function SingleFunctionWalker() {
-        var _this = _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isAccessingThis = false;
         return _this;
     }

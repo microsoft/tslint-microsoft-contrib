@@ -8,15 +8,16 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 4.0.0 (Stable)
+Version 4.0.1 (Stable)
 -------------
-The project has been in use for over a year on multiple projects. Please report any bugs or false positives you might find!
+The project has been in use for several years on multiple projects. Please report any bugs or false positives you might find!
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 4.0.1 (In-Development)
+Version 5.0.0 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
+To use the nightly build set your npm version to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`
 
 Installation
 ------------
@@ -32,11 +33,12 @@ Alternately, you can download the files directly from GitHub:
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
-| **>= 4.x** | 4.x |
+| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x)|
+| **>= 4.x**   | 4.x (supporting TypeScript 2.1.x) |
 | **>= 3.2.x** | 2.x |
-| **3.1.x** | unsupported |
-| **3.0.x** | unsupported |
-| **2.x**   | 1.x |
+| **3.1.x**    | unsupported |
+| **3.0.x**    | unsupported |
+| **2.x**      | 1.x |
 
 Configuration
 -------------
@@ -61,7 +63,7 @@ The tslint.json file does not change format when using this package. Just add ou
 
 ##### Which Rules Should I Turn On?
 There certainly are a lot of options! Here are some links to get you started.
-* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. 
+* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you reply on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
 * A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
 * A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
 * And our configuration file with all options is available here: [tslint.json](tslint.json)
@@ -114,7 +116,6 @@ Rule Name   | Description | Since
 `no-relative-imports`           | Do not use relative paths when importing external modules or ES6 import declarations. The advantages of removing all relative paths from imports is that 1) the import name will be consistent across all files and subdirectories so searching for usages is much easier. 2) Moving source files to different folders will not require you to edit your import statements. 3) It will be possible to copy and paste import lines between files regardless of the file location. And 4) version control diffs will be simplified by having overall fewer edits to the import lines.| 2.0.5
 `no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. Since version 2.0.9 this rule accepts a parameter called allow-quoted-properties. If true, interface properties in quotes will be ignored. This can be a useful way to avoid verbose suppress-warning comments for generated d.ts files.| 0.0.1, 2.0.9
 `no-single-line-block-comment`  | Avoid single line block comments and use single line comments instead. Block comments do not nest properly and have no advantages over normal single-line comments| 2.0.10
-`no-sparse-arrays`              | Do not use sparse arrays. Sparse arrays contain empty slots, most frequently due to multiple commas being used in an array literal. Based on the [ESLint no-sparse-arrays](http://eslint.org/docs/rules/no-sparse-arrays) rule | 1.0
 `no-stateless-class`            | A stateless class represents a failure in the object oriented design of the system. A class without state is better modeled as a module or given some state. A stateless class is defined as a class with only static members and no parent class.| 2.0.4
 `no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
 `no-string-based-set-interval`  | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument | 0.0.1
@@ -128,7 +129,7 @@ Rule Name   | Description | Since
 `no-unnecessary-override`       | Do not write a method that only calls super() on the parent method with the same arguments. You can safely remove methods like this and Javascript will correctly dispatch the method to the parent object. | 2.0.4
 `no-unnecessary-semicolons`     | Remove unnecessary semicolons | 0.0.1
 `no-unsupported-browser-code`   | Avoid writing browser-specific code for unsupported browser versions. Browser versions are specified in the rule configuration options, eg: `[true, [ "IE 11", "Firefox > 40", "Chrome >= 45" ] ]`. Browser-specific blocks of code can then be designated with a single-line comment, like so: `// Browser specific: IE 10`, or with a jsdoc like this: `@browserspecific chrome 40`. | 2.0.10
-`no-unused-imports`             | Deprecated - This rule is now covered by TSLint's no-unused-variables rule. However, it can still be useful to enable this rule and pair it with the fix-no-unused-imports formatter. | 0.0.1
+`no-useless-files`              | Avoid keeping files around that only contain commented out code, are completely empty, or only contain whitespace characters | 4.0.2
 `no-var-self`                   | Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `non-literal-require`           | Detect `require()` function calls for something that is not a string literal. For security reasons, it is best to only require() string literals. Otherwise, it is perhaps possible for an attacker to somehow change the value and download arbitrary Javascript into your page. | 2.0.14
@@ -169,7 +170,6 @@ These formatters assume that you use the UTF-8 file encoding. They may not work 
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------
 `fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
-`fix-no-unused-imports` | This formatter automatically fixes any unused imports found by the no-unused-imports rule. | 2.0.8
 `fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
 
 Development

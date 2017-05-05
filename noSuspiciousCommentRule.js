@@ -1,18 +1,24 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var AstUtils_1 = require("./utils/AstUtils");
+var tsutils_1 = require("tsutils");
 var FAILURE_STRING = 'Suspicious comment found: ';
 var SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSuspiciousCommentRuleWalker(sourceFile, this.getOptions()));
@@ -37,22 +43,14 @@ exports.Rule = Rule;
 var NoSuspiciousCommentRuleWalker = (function (_super) {
     __extends(NoSuspiciousCommentRuleWalker, _super);
     function NoSuspiciousCommentRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     NoSuspiciousCommentRuleWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
-        var scanner = ts.createScanner(ts.ScriptTarget.ES5, false, AstUtils_1.AstUtils.getLanguageVariant(node), node.text);
-        Lint.scanAllTokens(scanner, function (scanner) {
-            var startPos = scanner.getStartPos();
-            if (_this.tokensToSkipStartEndMap[startPos] != null) {
-                scanner.setTextPos(_this.tokensToSkipStartEndMap[startPos]);
-                return;
-            }
-            if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia ||
-                scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
-                var commentText = scanner.getTokenText();
-                var startPosition = scanner.getTokenPos();
-                _this.scanCommentForSuspiciousWords(startPosition, commentText);
+        tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind, range) {
+            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia ||
+                tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+                _this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
     };
@@ -74,5 +72,5 @@ var NoSuspiciousCommentRuleWalker = (function (_super) {
         this.addFailure(this.createFailure(startPosition, commentText.length, errorMessage));
     };
     return NoSuspiciousCommentRuleWalker;
-}(Lint.SkippableTokenAwareRuleWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noSuspiciousCommentRule.js.map

@@ -1,25 +1,28 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    Rule.prototype.apply = function (sourceFile) {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), languageService));
+    Rule.prototype.applyWithProgram = function (sourceFile, program) {
+        return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), program));
     };
     return Rule;
-}(Lint.Rules.AbstractRule));
+}(Lint.Rules.TypedRule));
 Rule.metadata = {
     ruleName: 'no-cookies',
     type: 'maintainability',
@@ -38,10 +41,9 @@ Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
 exports.Rule = Rule;
 var NoCookiesWalker = (function (_super) {
     __extends(NoCookiesWalker, _super);
-    function NoCookiesWalker(sourceFile, options, languageService) {
+    function NoCookiesWalker(sourceFile, options, program) {
         var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageService = languageService;
-        _this.typeChecker = languageService.getProgram().getTypeChecker();
+        _this.typeChecker = program.getTypeChecker();
         return _this;
     }
     NoCookiesWalker.prototype.visitPropertyAccessExpression = function (node) {

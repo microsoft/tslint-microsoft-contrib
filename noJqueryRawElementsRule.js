@@ -1,9 +1,15 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var AstUtils_1 = require("./utils/AstUtils");
@@ -12,7 +18,7 @@ var FAILURE_STRING_COMPLEX = 'Replace complex HTML strings with jQuery API: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
@@ -37,7 +43,7 @@ exports.Rule = Rule;
 var NoJqueryRawElementsRuleWalker = (function (_super) {
     __extends(NoJqueryRawElementsRuleWalker, _super);
     function NoJqueryRawElementsRuleWalker() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     NoJqueryRawElementsRuleWalker.prototype.visitCallExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
@@ -83,7 +89,7 @@ var NoJqueryRawElementsRuleWalker = (function (_super) {
 var HtmlLikeStringLiteralFinder = (function (_super) {
     __extends(HtmlLikeStringLiteralFinder, _super);
     function HtmlLikeStringLiteralFinder() {
-        var _this = _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.found = false;
         return _this;
     }

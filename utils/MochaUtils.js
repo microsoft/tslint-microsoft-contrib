@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var AstUtils_1 = require("./AstUtils");
 var Utils_1 = require("./Utils");

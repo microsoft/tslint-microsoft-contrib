@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function getImplicitRoleForH2() {
     return 'heading';
 }

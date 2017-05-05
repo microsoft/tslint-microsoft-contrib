@@ -1,19 +1,26 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
 var AstUtils_1 = require("./AstUtils");
 var Scope_1 = require("./Scope");
 var ScopedSymbolTrackingWalker = (function (_super) {
     __extends(ScopedSymbolTrackingWalker, _super);
-    function ScopedSymbolTrackingWalker(sourceFile, options, languageServices) {
+    function ScopedSymbolTrackingWalker(sourceFile, options, program) {
         var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageServices = languageServices;
-        _this.typeChecker = _this.languageServices.getProgram().getTypeChecker();
+        if (program) {
+            _this.typeChecker = program.getTypeChecker();
+        }
         return _this;
     }
     ScopedSymbolTrackingWalker.prototype.isExpressionEvaluatingToFunction = function (expression) {
@@ -31,12 +38,10 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         if (this.scope.isFunctionSymbol(expression.getText())) {
             return true;
         }
-        if (expression.kind === ts.SyntaxKind.Identifier) {
-            var typeInfo = this.languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
-            if (typeInfo != null && typeInfo[0] != null) {
-                if (typeInfo[0].kind === 'function' || typeInfo[0].kind === 'local function') {
-                    return true;
-                }
+        if (expression.kind === ts.SyntaxKind.Identifier && this.typeChecker) {
+            var tsSymbol = this.typeChecker.getSymbolAtLocation(expression);
+            if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
+                return true;
             }
             return false;
         }
@@ -45,6 +50,9 @@ var ScopedSymbolTrackingWalker = (function (_super) {
                 return true;
             }
             try {
+                if (!this.typeChecker) {
+                    return true;
+                }
                 var signature = this.typeChecker.getResolvedSignature(expression);
                 var expressionType = this.typeChecker.getReturnTypeOfSignature(signature);
                 return this.isFunctionType(expressionType, this.typeChecker);
@@ -52,6 +60,9 @@ var ScopedSymbolTrackingWalker = (function (_super) {
             catch (e) {
                 return false;
             }
+        }
+        if (!this.typeChecker) {
+            return true;
         }
         return this.isFunctionType(this.typeChecker.getTypeAtLocation(expression), this.typeChecker);
     };

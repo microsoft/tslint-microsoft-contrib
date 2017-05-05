@@ -1,22 +1,25 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
-        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions(), languageService));
+        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions()));
     };
     Rule.getExceptions = function (options) {
         if (options.ruleArguments instanceof Array) {
@@ -46,9 +49,8 @@ Rule.metadata = {
 exports.Rule = Rule;
 var NoDangerousHtmlWalker = (function (_super) {
     __extends(NoDangerousHtmlWalker, _super);
-    function NoDangerousHtmlWalker(sourceFile, options, languageServices) {
+    function NoDangerousHtmlWalker(sourceFile, options) {
         var _this = _super.call(this, sourceFile, options) || this;
-        _this.languageServices = languageServices;
         _this.currentMethodName = '<unknown>';
         return _this;
     }
@@ -77,7 +79,7 @@ var NoDangerousHtmlWalker = (function (_super) {
     };
     NoDangerousHtmlWalker.prototype.handleJsxOpeningElement = function (node) {
         var _this = this;
-        node.attributes.forEach(function (attribute) {
+        node.attributes.properties.forEach(function (attribute) {
             if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 var jsxAttribute = attribute;
                 var attributeName = jsxAttribute.name.text;

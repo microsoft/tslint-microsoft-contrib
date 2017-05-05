@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var implicitRoles = require("./implicitRoles");
 var TypeGuard_1 = require("./TypeGuard");
 function getImplicitRole(node) {

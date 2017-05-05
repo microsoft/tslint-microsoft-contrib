@@ -1,26 +1,31 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var ts = require("typescript");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
 var NoStringParameterToFunctionCallWalker_1 = require("./utils/NoStringParameterToFunctionCallWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        var documentRegistry = ts.createDocumentRegistry();
-        var languageServiceHost = Lint.createLanguageServiceHost('file.ts', sourceFile.getFullText());
-        var languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-        var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setInterval', this.getOptions(), languageService);
+        return this.applyWithProgram(sourceFile, undefined);
+    };
+    Rule.prototype.applyWithProgram = function (sourceFile, program) {
+        var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setInterval', this.getOptions(), program);
         return this.applyWithWalker(walker);
     };
     return Rule;
-}(Lint.Rules.AbstractRule));
+}(Lint.Rules.OptionallyTypedRule));
 Rule.metadata = {
     ruleName: 'no-string-based-set-interval',
     type: 'maintainability',

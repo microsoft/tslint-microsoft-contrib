@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var TypeGuard_1 = require("./TypeGuard");
 function getPropName(node) {
@@ -113,13 +114,13 @@ function getAllAttributesFromJsxElement(node) {
         return [];
     }
     else if (TypeGuard_1.isJsxElement(node)) {
-        attributes = node.openingElement.attributes;
+        attributes = node.openingElement.attributes.properties;
     }
     else if (TypeGuard_1.isJsxSelfClosingElement(node)) {
-        attributes = node.attributes;
+        attributes = node.attributes.properties;
     }
     else if (TypeGuard_1.isJsxOpeningElement(node)) {
-        attributes = node.attributes;
+        attributes = node.attributes.properties;
     }
     else {
         throw new Error('The node must be a JsxElement, JsxSelfClosingElement or JsxOpeningElement.');

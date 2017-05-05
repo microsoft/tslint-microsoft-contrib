@@ -1,16 +1,23 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var tsutils_1 = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
-        return _super.apply(this, arguments) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));
@@ -50,16 +57,16 @@ var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
         this.scanner.setTextPos(0);
         var previous;
         var previousPrevious;
-        Lint.scanAllTokens(this.scanner, function (scanner) {
+        tsutils_1.forEachTokenWithTrivia(node, function (_a, tokenSyntaxKind, range) {
             if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
-                scanner.getToken() === ts.SyntaxKind.NewLineTrivia) {
-                var leadingEmptyLineFailure = _this.createFailure(scanner.getStartPos(), 1, Rule.FAILURE_STRING);
+                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
+                var leadingEmptyLineFailure = _this.createFailure(range.pos, 1, Rule.FAILURE_STRING);
                 _this.addFailure(leadingEmptyLineFailure);
             }
-            if (scanner.getToken() !== ts.SyntaxKind.WhitespaceTrivia) {
+            if (tokenSyntaxKind !== ts.SyntaxKind.WhitespaceTrivia) {
                 previousPrevious = previous;
-                previous = scanner.getToken();
+                previous = tokenSyntaxKind;
             }
         });
     };

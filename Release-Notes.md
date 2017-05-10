@@ -1,3 +1,18 @@
+# 5.0.0 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.0)
+
+* [#359](https://github.com/Microsoft/tslint-microsoft-contrib/issues/359) Update TSLint to v5
+* [#354](https://github.com/Microsoft/tslint-microsoft-contrib/issues/354) tslint 5.0.0 contains custom rule breaking changes
+* [#367](https://github.com/Microsoft/tslint-microsoft-contrib/issues/367) Add support for tslint version to 5.1.0  
+* [#369](https://github.com/Microsoft/tslint-microsoft-contrib/issues/369) Support typescript 2.3
+* [#349](https://github.com/Microsoft/tslint-microsoft-contrib/issues/349) New rule: no-useless-files  
+* [#368](https://github.com/Microsoft/tslint-microsoft-contrib/issues/368) Remove deprecated rule 'no-unused-imports'
+* [#364](https://github.com/Microsoft/tslint-microsoft-contrib/issues/364) remove no-sparse-arrays rule
+* [#361](https://github.com/Microsoft/tslint-microsoft-contrib/issues/361) Use TypeScript config files for compilation 
+* [#360](https://github.com/Microsoft/tslint-microsoft-contrib/issues/360) gruntfile and tsconfig are inconsistent
+* [#350](https://github.com/Microsoft/tslint-microsoft-contrib/issues/350) Add AppVeyor configuration  
+* [#348](https://github.com/Microsoft/tslint-microsoft-contrib/issues/348) Fix the new rule snippet to not create an immediately broken file 
+
 # 4.0.1 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A4.0.1)
 

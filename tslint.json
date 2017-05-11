@@ -161,7 +161,7 @@
     "no-regex-spaces": true,
     "no-require-imports": true,
     "no-reserved-keywords": true,
-    "no-shadowed-variable": false,
+    "no-shadowed-variable": true,
     "no-single-line-block-comment": true,
     "no-sparse-arrays": true,
     "no-stateless-class": true,

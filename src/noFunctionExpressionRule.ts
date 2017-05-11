@@ -35,8 +35,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
-        node.getChildren().forEach((node: ts.Node) => {
-            walker.walk(node);
+        node.getChildren().forEach((child: ts.Node) => {
+            walker.walk(child);
         });
         // function expression that access 'this' is allowed
         if (!walker.isAccessingThis) {

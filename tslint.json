@@ -137,6 +137,7 @@
       "http://www.example.com/?.*",
       "http://www.examples.com/?.*"
     ],
+    "no-import-side-effect": true,
     "no-increment-decrement": true,
     "no-inferrable-types": [
       false

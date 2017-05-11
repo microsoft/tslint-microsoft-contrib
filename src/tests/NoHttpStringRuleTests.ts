@@ -19,6 +19,30 @@ describe('noHttpStringRule', (): void => {
         ]);
     });
 
+    it('should ban http template strings in variables', (): void => {
+        const inputScript: string = 'var x = `http://www.examples.com`';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                "failure": "Forbidden http url in string: 'http://www.examples.com'",
+                "name": "file.ts",
+                "ruleName": ruleName,
+                "startPosition": {"character": 9, "line": 1}
+            }
+        ]);
+    });
+
+    it('should ban http multipart template strings in variables', (): void => {
+        const inputScript: string = 'var x = `http://www.${example}.com`';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                "failure": "Forbidden http url in string: 'http://www.'",
+                "name": "file.ts",
+                "ruleName": ruleName,
+                "startPosition": {"character": 9, "line": 1}
+            }
+        ]);
+    });
+
     it('should ban http strings in default values', (): void => {
         const inputScript: string = 'function f(x : string = \'http://www.example.com/whatever\') {}';
         TestHelper.assertViolations(ruleName, inputScript, [

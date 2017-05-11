@@ -38,7 +38,21 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoHttpStringWalker extends ErrorTolerantWalker {
     protected visitStringLiteral(node: ts.StringLiteral): void {
-        const stringText : string = (<ts.LiteralExpression>node).text;
+        this.visitLiteralExpression(node);
+        super.visitStringLiteral(node);
+    }
+
+    protected visitNode(node: ts.Node): void {
+        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
+            this.visitLiteralExpression(<ts.NoSubstitutionTemplateLiteral>node);
+        } else if (node.kind === ts.SyntaxKind.TemplateHead) {
+            this.visitLiteralExpression(<ts.TemplateHead>node);
+        }
+        super.visitNode(node);
+    }
+
+    private visitLiteralExpression(node: ts.LiteralExpression | ts.LiteralLikeNode): void {
+        const stringText : string = node.text;
         // tslint:disable no-http-string
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
@@ -47,7 +61,6 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
                 this.addFailure(failure);
             }
         }
-        super.visitStringLiteral(node);
     }
 
     private isSuppressed(stringText: string) : boolean {

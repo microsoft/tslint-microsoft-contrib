@@ -53,7 +53,7 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
                     const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
                     if (attribute.name.getText() === 'http-equiv') {
                         if (this.isStringLiteral(attribute.initializer, 'refresh')) {
-                            this.addFailure(this.createFailure(parent.getStart(), openElement.getWidth(), FAILURE_STRING));
+                            this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
                         }
                     }
                 }

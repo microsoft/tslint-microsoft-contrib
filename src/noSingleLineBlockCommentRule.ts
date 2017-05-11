@@ -39,7 +39,7 @@ class NoSingleLineBlockCommentRuleWalker extends Lint.RuleWalker {
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
                            && this.isSingleLineComment(tokenText)
                            && !this.isTsLintSuppression(tokenText)) {
-                this.addFailure(this.createFailure(range.pos, range.end - range.pos, FAILURE_STRING));
+                this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });
     }

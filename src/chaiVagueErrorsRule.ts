@@ -41,7 +41,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
             }
         }
         super.visitPropertyAccessExpression(node);
@@ -53,7 +53,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
                 if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
-                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                         }
                     }
                 }
@@ -68,9 +68,9 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
                     || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
                 if (operator === '===' && expectingBooleanKeyword) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
                 } else if (operator === '!==' && expectingBooleanKeyword) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
                 }
             }
         }

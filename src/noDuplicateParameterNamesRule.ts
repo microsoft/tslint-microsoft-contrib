@@ -63,8 +63,8 @@ class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
             const parameterName : string = (<any>parameter.name).text;  // how does one check if the union type is Identifier?
             if (parameterName != null) {
                 if (seenNames[parameterName]) {
-                    this.addFailure(this.createFailure(
-                        parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\''));
+                    this.addFailureAt(
+                        parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\'');
                 } else {
                     seenNames[parameterName] = true;
                 }

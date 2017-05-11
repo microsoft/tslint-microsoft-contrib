@@ -87,7 +87,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
     }
 

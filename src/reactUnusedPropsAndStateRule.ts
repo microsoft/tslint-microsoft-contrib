@@ -86,11 +86,11 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
         this.propNames.forEach((propName: string): void => {
             const typeElement: ts.TypeElement = this.propNodes[propName];
-            this.addFailure(this.createFailure(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName));
+            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
         });
         this.stateNames.forEach((stateName: string): void => {
             const typeElement: ts.TypeElement = this.stateNodes[stateName];
-            this.addFailure(this.createFailure(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName));
+            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
         });
     }
 

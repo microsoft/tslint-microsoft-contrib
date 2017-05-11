@@ -36,7 +36,7 @@ class NoRegexSpacesRuleWalker extends ErrorTolerantWalker {
         const match: RegExpExecArray = /( {2,})+?/.exec(node.getText());
         if (match != null) {
             const replacement: string = '{' + match[0].length + '}';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
         }
 
         super.visitRegularExpressionLiteral(node);

@@ -46,7 +46,7 @@ class NoVarSelfRuleWalker extends Lint.RuleWalker {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const identifier: ts.Identifier = <ts.Identifier>node.name;
                 if (this.bannedVariableNames.test(identifier.text)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
                 }
             }
         }

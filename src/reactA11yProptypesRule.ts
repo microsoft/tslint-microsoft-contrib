@@ -82,9 +82,9 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
 
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
-                this.addFailure(this.createFailure(
+                this.addFailureAt(
                     node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)
-                ));
+                );
             }
             return;
         } else if (this.isComplexType(node.initializer)) {
@@ -92,11 +92,11 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
 
         if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 getFailureString(propName, expectedType, permittedValues)
-            ));
+            );
         }
     }
 

@@ -40,7 +40,7 @@ class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
         });
         // function expression that access 'this' is allowed
         if (!walker.isAccessingThis) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         super.visitFunctionExpression(node);
     }

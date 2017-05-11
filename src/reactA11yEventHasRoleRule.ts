@@ -61,11 +61,11 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
         const hasAriaRole: boolean = !!attributes[ROLE_STRING] || !!getImplicitRole(node);
 
         if (events.length > 0 && !hasAriaRole) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 FAILURE_STRING
-            ));
+            );
         }
     }
 }

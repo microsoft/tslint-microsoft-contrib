@@ -87,7 +87,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             return;
         }
         if (!callInfo || callInfo.argIndex === -1 || !this.signatures[callInfo.callExpression.expression.getText()]) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), `Unexternalized string found: ${node.getText()}`));
+            this.addFailureAt(node.getStart(), node.getWidth(), `Unexternalized string found: ${node.getText()}`);
             return;
         }
         // We have a string that is a direct argument into the localize call.
@@ -95,9 +95,9 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             ? callInfo.callExpression.arguments[this.messageIndex]
             : null;
         if (messageArg && messageArg !== node) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 messageArg.getStart(), messageArg.getWidth(),
-                `Message argument to '${callInfo.callExpression.expression.getText()}' must be a string literal.`));
+                `Message argument to '${callInfo.callExpression.expression.getText()}' must be a string literal.`);
             return;
         }
     }

@@ -49,7 +49,7 @@ class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
                         // tslint:disable-next-line:no-unused-expression
                         new RegExp(regexpText);
                     } catch (e) {
-                        this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), e.message));
+                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), e.message);
                     }
                 }
             }

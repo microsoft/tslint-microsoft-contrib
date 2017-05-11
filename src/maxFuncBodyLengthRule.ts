@@ -170,8 +170,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private addFuncBodyTooLongFailure(node: ts.FunctionLikeDeclaration, length: number) {
-        const failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
-        this.addFailure(failure);
+        this.addFailureAt(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
     }
 
     private formatFailureText (node: ts.FunctionLikeDeclaration, length: number) {

@@ -112,7 +112,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
     }
 
     private reportFailure(start: ts.Node, endNode: ts.Node, failure: string): void {
-        this.addFailure(this.createFailure(start.getStart(), endNode.getStart() - start.getStart(), failure));
+        this.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
     }
 
     private isSpaceBetweenTokens(left: ts.Node, right: ts.Node): boolean {

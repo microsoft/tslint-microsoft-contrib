@@ -35,8 +35,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             const failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         super.visitPropertyDeclaration(node);
     }
@@ -44,8 +43,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             const failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         super.visitMethodDeclaration(node);
     }

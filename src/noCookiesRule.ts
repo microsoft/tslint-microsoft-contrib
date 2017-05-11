@@ -47,12 +47,12 @@ class NoCookiesWalker extends ErrorTolerantWalker {
                 const leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
                 const typeAsString: string = this.typeChecker.typeToString(leftSideType);
                 if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
-                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
                 }
             } catch (e) {
                 // the error thrown seems like a tslint error
                 if (leftSide.getFullText().trim() === 'document') {
-                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
                 }
             }
         }

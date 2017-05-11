@@ -56,8 +56,7 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
 
-                const leadingEmptyLineFailure = this.createFailure(range.pos, 1, Rule.FAILURE_STRING);
-                this.addFailure(leadingEmptyLineFailure);
+                this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
 
             //ignore empty spaces

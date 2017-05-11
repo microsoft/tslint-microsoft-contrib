@@ -37,12 +37,12 @@ class NoRelativeImportsRuleWalker extends ErrorTolerantWalker {
         if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
             const moduleExpression: ts.Expression = (<ts.ExternalModuleReference>node).expression;
             if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText());
             }
         } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
             const moduleExpression: ts.Expression = (<ts.ImportDeclaration>node).moduleSpecifier;
             if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText());
             }
         }
         super.visitNode(node);

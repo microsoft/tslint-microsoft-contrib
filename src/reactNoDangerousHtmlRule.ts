@@ -106,8 +106,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
             const position = parent.getStart();
-            const failure = this.createFailure(position, node.text.length, failureString);
-            this.addFailure(failure);
+            this.addFailureAt(position, node.text.length, failureString);
         }
     }
 

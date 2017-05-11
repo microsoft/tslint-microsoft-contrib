@@ -64,7 +64,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
             // you should never initialize a field to undefined.
             const start: number = initializer.getStart();
             const width: number = initializer.getWidth();
-            this.addFailure(this.createFailure(start, width, FAILURE_UNDEFINED_INIT + node.name.getText()));
+            this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + node.name.getText());
         }
     }
 
@@ -88,7 +88,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                     if (fieldInitValue == null) {
                                         const start: number = property.getStart();
                                         const width: number = property.getWidth();
-                                        this.addFailure(this.createFailure(start, width, FAILURE_UNDEFINED_INIT + property.getText()));
+                                        this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());
                                     }
                                 }
                             } else if (AstUtils.isConstant(binaryExpression.right)) {
@@ -98,7 +98,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                     const start: number = binaryExpression.getStart();
                                     const width: number = binaryExpression.getWidth();
                                     const message: string = FAILURE_UNDEFINED_DUPE + binaryExpression.getText();
-                                    this.addFailure(this.createFailure(start, width, message));
+                                    this.addFailureAt(start, width, message);
                                 }
                             }
                         }

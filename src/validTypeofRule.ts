@@ -47,7 +47,7 @@ class ValidTypeofRuleWalker extends ErrorTolerantWalker {
         if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
             const start: number = node.getStart();
             const width: number = node.getWidth();
-            this.addFailure(this.createFailure(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?'));
+            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?');
         }
     }
 

@@ -64,9 +64,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         );
         const count: number = walker.getReferenceCount(<ts.Block>node.body);
         if (count === 1) {
-            this.addFailure(
-                this.createFailure(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText())
-            );
+            this.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
         }
     }
 

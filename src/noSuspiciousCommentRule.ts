@@ -59,6 +59,6 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
     private foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
         const errorMessage: string = FAILURE_STRING + suspiciousWord;
-        this.addFailure(this.createFailure(startPosition, commentText.length, errorMessage));
+        this.addFailureAt(startPosition, commentText.length, errorMessage);
     }
 }

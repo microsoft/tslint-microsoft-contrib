@@ -57,8 +57,7 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
                 const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
     }

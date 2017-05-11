@@ -74,8 +74,8 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
                     // Same href - different text...
                     sameHrefDifferentTexts.push(anchorInfo);
-                    this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width,
-                        SAME_HREF_SAME_TEXT_FAILURE_STRING + this.firstPosition(current)));
+                    this.addFailureAt(anchorInfo.start, anchorInfo.width,
+                        SAME_HREF_SAME_TEXT_FAILURE_STRING + this.firstPosition(current));
                 }
 
                 if (current.href !== anchorInfo.href &&
@@ -85,8 +85,8 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
                     // Different href - same text...
                     differentHrefSameText.push(anchorInfo);
-                    this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width,
-                        DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + this.firstPosition(current)));
+                    this.addFailureAt(anchorInfo.start, anchorInfo.width,
+                        DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + this.firstPosition(current));
                 }
             });
         }
@@ -125,11 +125,11 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             };
 
             if (anchorInfo.href === '#') {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
             }
 
             if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING);
             }
 
             const anchorInfoTextLength: number = anchorInfo.text ? anchorInfo.text.length : 0;
@@ -140,7 +140,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 anchorInfoTextLength < 4 &&
                 anchorImageAltTextLength < 4
             ) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
 
             this.anchorInfoList.push(anchorInfo);

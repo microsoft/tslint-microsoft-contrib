@@ -36,7 +36,7 @@ class NoDisableAutoSanitizationWalker extends ErrorTolerantWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         const functionName : string = AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName);
         }
         super.visitCallExpression(node);
     }

@@ -37,7 +37,7 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         if (!this.isClassStateful(node)) {
             const className: string = node.name == null ? '<unknown>' : node.name.text;
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + className));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
         }
         super.visitClassDeclaration(node);
     }

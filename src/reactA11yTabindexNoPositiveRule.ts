@@ -46,11 +46,11 @@ class A11yTabindexNoPositiveWalker extends Lint.RuleWalker {
 
         // In case the attribute has no value of empty value.
         if (literalString === '') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         } else if (literalString && literalString !== '-1' && literalString !== '0') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         } else if (isEmpty(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         }
     }
 }

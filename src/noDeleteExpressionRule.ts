@@ -46,7 +46,7 @@ class NoDeleteExpression extends ErrorTolerantWalker {
 
     public addNoDeleteFailure(deletedObject: ts.Node): void {
         const msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-        this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
+        this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
     }
 
 }

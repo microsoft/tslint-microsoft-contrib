@@ -40,6 +40,6 @@ class NoForInRuleWalker extends ErrorTolerantWalker {
         const expression: string = node.expression.getText();
 
         const msg: string = Rule.FAILURE_STRING_FACTORY(initializer, expression);
-        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+        this.addFailureAt(node.getStart(), node.getWidth(), msg);
     }
 }

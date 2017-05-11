@@ -39,9 +39,9 @@ class InsecureRandomRuleWalker extends ErrorTolerantWalker {
 
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (node.expression.getText() === 'Math' &&  node.name.text === 'random') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), MATH_FAIL_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), MATH_FAIL_STRING);
         } else if (node.name.text === 'pseudoRandomBytes') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), NODE_FAIL_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), NODE_FAIL_STRING);
         }
         super.visitPropertyAccessExpression(node);
     }

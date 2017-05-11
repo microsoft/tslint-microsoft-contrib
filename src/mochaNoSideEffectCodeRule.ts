@@ -180,6 +180,6 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         }
         //console.log(ts.SyntaxKind[initializer.kind] + ' ' + initializer.getText());
         const message: string = FAILURE_STRING + Utils.trimTo(parentNode.getText(), 30);
-        this.addFailure(this.createFailure(parentNode.getStart(), parentNode.getWidth(), message));
+        this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
     }
 }

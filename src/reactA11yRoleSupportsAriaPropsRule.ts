@@ -118,11 +118,11 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
 
         if (invalidAttributeNamesInElement.length > 0) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 failureString
-            ));
+            );
         }
     }
 }

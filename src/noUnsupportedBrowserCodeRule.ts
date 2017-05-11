@@ -131,17 +131,17 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
 
     private findUnsupportedBrowserFailures(targetBrowser: BrowserVersion, startPos: number, length: number) {
         if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 startPos,
                 length,
                 `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`
-            ));
+            );
         } else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 startPos,
                 length,
                 `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`
-            ));
+            );
         }
     }
 }

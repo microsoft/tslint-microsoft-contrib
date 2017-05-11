@@ -58,7 +58,7 @@ class NonLiteralRequireRuleWalker extends ErrorTolerantWalker {
         const start: number = expression.getStart();
         const width: number  = expression.getWidth();
         const message: string  = FAILURE_STRING + Utils.trimTo(expression.getText(), 25);
-        this.addFailure(this.createFailure(start, width, message));
+        this.addFailureAt(start, width, message);
 
     }
 }

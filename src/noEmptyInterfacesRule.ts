@@ -37,10 +37,8 @@ class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
         // do we have an empty interface?
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
-            this.addFailure(
-                this.createFailure(
+            this.addFailureAt(
                     node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\''
-                    )
             );
         }
         super.visitInterfaceDeclaration(node);

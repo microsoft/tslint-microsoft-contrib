@@ -62,9 +62,9 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
         if (!altAttribute) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
         } else if (isEmpty(altAttribute) || !getStringLiteral(altAttribute)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
         }
     }
 }

@@ -20,10 +20,10 @@ export class ErrorTolerantWalker extends Lint.RuleWalker {
                     + '\nNode: ' + (node.getFullText ? node.getFullText() : '<unknown>')
                     + '\n' + e;
 
-                this.addFailure(this.createFailure(
+                this.addFailureAt(
                     node.getStart ? node.getStart() : 0,
                     node.getWidth ? node.getWidth() : 0,
-                    msg));
+                    msg);
             }
         }
     }

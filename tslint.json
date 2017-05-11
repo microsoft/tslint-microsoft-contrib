@@ -152,9 +152,7 @@
     "no-magic-numbers": false,
     "no-mergeable-namespace": false,
     "no-missing-visibility-modifiers": true,
-    "no-multiline-string": {
-      "severity": "warning"
-    },
+    "no-multiline-string": [ true ],
     "no-multiple-var-decl": true,
     "no-namespace": false,
     "no-null-keyword": false,

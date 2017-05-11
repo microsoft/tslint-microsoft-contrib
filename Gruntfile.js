@@ -314,14 +314,13 @@ module.exports = function(grunt) {
             'ban-types': true,
             'match-default-export-name': true, // requires type checking
             'newline-before-return': true,
-            'no-multiline-string': true,
             'no-non-null-assertion': true,
             'no-reference-import': true,
             'no-unnecessary-callback-wrapper': true,
             'prefer-template': true,
             'return-undefined': true,
-            'no-unused-variable': true,
-            'no-unexternalized-strings': true,
+            'no-unused-variable': true, // requires type checking
+            'no-unexternalized-strings': true, // this is a VS Code specific rule
             'object-literal-key-quotes': true,
             'no-relative-imports': true,
             'no-empty-line-after-opening-brace': true,

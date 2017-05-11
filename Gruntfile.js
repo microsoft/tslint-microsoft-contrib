@@ -312,9 +312,8 @@ module.exports = function(grunt) {
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
             'ban-types': true,
-            'match-default-export-name': true,
+            'match-default-export-name': true, // requires type checking
             'newline-before-return': true,
-            'no-duplicate-super': true,
             'no-import-side-effect': true,
             'no-invalid-template-strings': true,
             'no-multiline-string': true,

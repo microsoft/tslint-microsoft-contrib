@@ -8,7 +8,6 @@ Rule Name              | From          | Description
 :--------------------- | :------------ | -------------
 `no-eval`                       | tslint        | Do not use the 'eval' function or its functional equivalents.
 `use-strict`                    | tslint        | Always enable strict mode when possible.
-`no-duplicate-key`              | tslint        | Do not duplicate property names in object expressions.
 `no-octal-literal`              | tslint-microsoft-contrib | Do not use octal literals or escaped octal sequences in  strict-mode compatible code.        
 `no-duplicate-parameter-names`  | tslint-microsoft-contrib | Do not duplicate parameter names.
 `no-delete-expression`          | tslint-microsoft-contrib | Do not delete expressions.
@@ -38,9 +37,7 @@ You will want your tslint ruleset defined similarly to this if you'd like to ena
             "no-string-based-set-immediate": true,
             "no-string-based-set-interval": true,
             "no-string-based-set-timeout": true,
-            "no-duplicate-key": true,
-            "no-eval": true,
-            "use-strict": true,
+            "no-eval": true
         }
       }
 
@@ -49,3 +46,7 @@ There are also some other security related rules that are not specifically part 
 * no-http-string – It can cause an http connection without TLS thus allowing a cookie stealing attack
 * no-inner-html	Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function
 * react-no-dangerous-html - Do not use React's dangerouslySetInnerHTML API (because it accepts unsanitized input)
+
+Additionally, some [tsc compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) should be enabled: 
+* --alwaysStrict - Parse in strict mode and emit "use strict" for each source file
+* 

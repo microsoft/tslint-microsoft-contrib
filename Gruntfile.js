@@ -238,6 +238,7 @@ module.exports = function(grunt) {
                         let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
                         tslintJson.rules['no-multiline-string'] = false;
                         tslintJson.rules['quotemark'] = false;
+                        tslintJson.rules['object-literal-key-quotes'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
                         return tslintJson;
                     })()
@@ -316,11 +317,10 @@ module.exports = function(grunt) {
             'newline-before-return': true,
             'no-non-null-assertion': true, // in fact we prefer the opposite rule
             'prefer-template': true,
-            'return-undefined': true,
+            'return-undefined': true, // requires type checking
             'no-unused-variable': true, // requires type checking
             'no-unexternalized-strings': true, // this is a VS Code specific rule
-            'object-literal-key-quotes': true,
-            'no-relative-imports': true,
+            'no-relative-imports': true, // this project uses relative imports
             'no-empty-line-after-opening-brace': true,
             'no-duplicate-key': true,
             'align': true,

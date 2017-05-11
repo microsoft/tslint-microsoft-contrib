@@ -193,7 +193,7 @@
     "no-with-statement": true,
     "non-literal-require": true,
     "object-literal-key-quotes": [
-      false,
+      true,
       "as-needed"
     ],
     "object-literal-shorthand": false,

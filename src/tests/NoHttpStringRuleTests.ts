@@ -32,6 +32,7 @@ describe('noHttpStringRule', (): void => {
     });
 
     it('should ban http multipart template strings in variables', (): void => {
+        // tslint:disable-next-line:no-invalid-template-strings
         const inputScript: string = 'var x = `http://www.${example}.com`';
         TestHelper.assertViolations(ruleName, inputScript, [
             {

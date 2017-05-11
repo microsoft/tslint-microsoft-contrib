@@ -281,6 +281,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
 
         TestHelper.assertViolationsWithTypeChecker(RULE_NAME, inputFile, [
             {
+                // tslint:disable-next-line:no-invalid-template-strings
                 "failure": "Forbidden setTimeout string parameter: `${data}`",
                 "name": inputFile,
                 "ruleName": "no-string-based-set-timeout",
@@ -306,12 +307,14 @@ describe('noStringBasedSetTimeoutRule', () : void => {
                 "startPosition": { "character": 9, "line": 16 }
             },
             {
+                // tslint:disable-next-line:no-invalid-template-strings
                 "failure": "Forbidden setTimeout string parameter: `alert(${alertNum})`",
                 "name": inputFile,
                 "ruleName": "no-string-based-set-timeout",
                 "startPosition": { "character": 9, "line": 19 }
             },
             {
+                // tslint:disable-next-line:no-invalid-template-strings
                 "failure": "Forbidden setTimeout string parameter: `alert(${alertNum})`",
                 "name": inputFile,
                 "ruleName": "no-string-based-set-timeout",

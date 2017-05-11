@@ -146,6 +146,7 @@
     "no-inner-html": true,
     "no-internal-module": false,
     "no-invalid-regexp": true,
+    "no-invalid-template-strings": true,
     "no-invalid-this": true,
     "no-jquery-raw-elements": true,
     "no-magic-numbers": false,

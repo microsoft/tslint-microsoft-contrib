@@ -314,7 +314,6 @@ module.exports = function(grunt) {
             'ban-types': true,
             'match-default-export-name': true, // requires type checking
             'newline-before-return': true,
-            'no-invalid-template-strings': true,
             'no-multiline-string': true,
             'no-non-null-assertion': true,
             'no-reference-import': true,

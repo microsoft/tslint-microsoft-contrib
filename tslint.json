@@ -159,6 +159,7 @@
     "no-octal-literal": true,
     "no-parameter-properties": false,
     "no-reference": true,
+    "no-reference-import": true,
     "no-regex-spaces": true,
     "no-require-imports": true,
     "no-reserved-keywords": true,

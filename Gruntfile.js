@@ -315,7 +315,6 @@ module.exports = function(grunt) {
             'match-default-export-name': true, // requires type checking
             'newline-before-return': true,
             'no-non-null-assertion': true,
-            'no-reference-import': true,
             'no-unnecessary-callback-wrapper': true,
             'prefer-template': true,
             'return-undefined': true,

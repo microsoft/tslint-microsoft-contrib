@@ -321,16 +321,15 @@ module.exports = function(grunt) {
             'no-unused-variable': true,                 // requires type checking
             'no-unexternalized-strings': true,          // this is a VS Code specific rule
             'no-relative-imports': true,                // this project uses relative imports
-            'no-empty-line-after-opening-brace': true,
+            'no-empty-line-after-opening-brace': true,  // too strict
             'align': true,                              // no need
             'comment-format': true,                     // no need
             'interface-name': true,                     // no need
             'max-file-line-count': true,                // no need
             'member-ordering': true,                    // too strict
-            'no-inferrable-types': true,
-            'only-arrow-functions': true,
+            'no-inferrable-types': true,                // we prefer the opposite
             'ordered-imports': true,                    // too difficult to turn on
-            'typedef-whitespace': true,
+            'typedef-whitespace': true,                 // too strict
             'completed-docs': true,                     // no need
             'cyclomatic-complexity': true,              // too strict
             'file-header': true,                        // no need

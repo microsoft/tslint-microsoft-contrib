@@ -316,7 +316,7 @@ module.exports = function(grunt) {
             'match-default-export-name': true, // requires type checking
             'newline-before-return': true,              // kind of a silly rule
             'no-non-null-assertion': true,              // in fact we prefer the opposite rule
-            'prefer-template': true,
+            'prefer-template': true,                    // rule does not handle multi-line strings nicely
             'return-undefined': true,                   // requires type checking
             'no-unused-variable': true,                 // requires type checking
             'no-unexternalized-strings': true,          // this is a VS Code specific rule

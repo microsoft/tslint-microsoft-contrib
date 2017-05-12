@@ -198,9 +198,7 @@
       "check-else",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": [
-      true
-    ],
+    "one-variable-per-declaration": true,
     "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
     "ordered-imports": [
       false
@@ -211,6 +209,7 @@
     "prefer-for-of": false,
     "prefer-function-over-method": false,
     "prefer-method-signature": true,
+    "prefer-template": false,
     "prefer-type-cast": true,
     "strict-type-predicates": false,
     "promise-function-async": false,

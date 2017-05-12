@@ -314,29 +314,27 @@ module.exports = function(grunt) {
         var rulesToSkip = {
             'ban-types': true,
             'match-default-export-name': true, // requires type checking
-            'newline-before-return': true,
-            'no-non-null-assertion': true, // in fact we prefer the opposite rule
+            'newline-before-return': true,              // kind of a silly rule
+            'no-non-null-assertion': true,              // in fact we prefer the opposite rule
             'prefer-template': true,
-            'return-undefined': true, // requires type checking
-            'no-unused-variable': true, // requires type checking
-            'no-unexternalized-strings': true, // this is a VS Code specific rule
-            'no-relative-imports': true, // this project uses relative imports
+            'return-undefined': true,                   // requires type checking
+            'no-unused-variable': true,                 // requires type checking
+            'no-unexternalized-strings': true,          // this is a VS Code specific rule
+            'no-relative-imports': true,                // this project uses relative imports
             'no-empty-line-after-opening-brace': true,
-            'no-duplicate-key': true,
-            'align': true,
-            'comment-format': true,
-            'interface-name': true,
-            'max-file-line-count': true,
-            'member-ordering': true,
+            'align': true,                              // no need
+            'comment-format': true,                     // no need
+            'interface-name': true,                     // no need
+            'max-file-line-count': true,                // no need
+            'member-ordering': true,                    // too strict
             'no-inferrable-types': true,
             'only-arrow-functions': true,
-            'ordered-imports': true,
+            'ordered-imports': true,                    // too difficult to turn on
             'typedef-whitespace': true,
-            'array-type': true,
-            'completed-docs': true,
-            'cyclomatic-complexity': true,
-            'file-header': true,
-            'max-classes-per-file': true
+            'completed-docs': true,                     // no need
+            'cyclomatic-complexity': true,              // too strict
+            'file-header': true,                        // no need
+            'max-classes-per-file': true                // no need
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {

@@ -55,10 +55,10 @@ class SingleFunctionWalker extends ErrorTolerantWalker {
         super.visitNode(node);
     }
     /* tslint:disable:no-empty */
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
+    protected visitFunctionExpression(): void {
         // do not visit inner blocks
     }
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
+    protected visitArrowFunction(): void {
         // do not visit inner blocks
     }
     /* tslint:enable:no-empty */

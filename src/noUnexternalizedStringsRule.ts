@@ -121,5 +121,6 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             }
             node = parent;
         }
+        return null;
     }
 }

@@ -92,7 +92,8 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     private makeCamelCase(input: string): string {
-        return input.replace(/[-|\.](.)/g, (match: string, group1: string): string => {
+        // tslint:disable-next-line:variable-name
+        return input.replace(/[-|\.](.)/g, (_match: string, group1: string): string => {
             return group1.toUpperCase();
         });
     }

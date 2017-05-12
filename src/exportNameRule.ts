@@ -91,6 +91,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             });
             return exportStatements;
         }
+        return null;
     }
 
     private getExportStatements(element: ts.Statement): ts.Statement[] {

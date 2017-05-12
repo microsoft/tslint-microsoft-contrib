@@ -204,7 +204,7 @@ module.exports = function(grunt) {
                     tsconfig: './tsconfig.json',
                     passThrough: true,
                     updateFiles: true,
-                    overwriteFiles: true
+                    overwriteFiles: true,
                 }
             },
             'test-data': {

@@ -80,11 +80,11 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
+    protected visitFunctionDeclaration(): void {
         // never walk into function declarations. new scopes are inherently safe
     }
 
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
+    protected visitClassDeclaration(): void {
         // never walk into class declarations. new scopes are inherently safe
     }
 

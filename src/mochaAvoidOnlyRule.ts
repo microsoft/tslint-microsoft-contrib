@@ -50,13 +50,13 @@ class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
                     if (node.arguments[1].kind === ts.SyntaxKind.FunctionExpression
                         || node.arguments[1].kind === ts.SyntaxKind.ArrowFunction) {
                         if (node.expression.getText() === 'it.only') {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_IT);
+                            this.addFailureAt(node.getStart(),  node.expression.getText().length, Rule.FAILURE_STRING_IT);
                         } else if (node.expression.getText() === 'specify.only') {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_SPECIFY);
+                            this.addFailureAt(node.getStart(),  node.expression.getText().length, Rule.FAILURE_STRING_SPECIFY);
                         } else if (node.expression.getText() === 'describe.only') {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_DESCRIBE);
+                            this.addFailureAt(node.getStart(),  node.expression.getText().length, Rule.FAILURE_STRING_DESCRIBE);
                         } else if (node.expression.getText() === 'context.only') {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_CONTEXT);
+                            this.addFailureAt(node.getStart(),  node.expression.getText().length, Rule.FAILURE_STRING_CONTEXT);
                         }
                     }
                 }

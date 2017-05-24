@@ -69,6 +69,11 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
             }
+        } else if (AstUtils.isProtected(node)) {
+            if (!this.protectedMethodRegex.test(name)) {
+                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
+                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`));
+            }
         } else if (AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),

@@ -1,0 +1,45 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+(function (deps, factory) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === 'function' && define.amd) {
+        define(deps, factory);
+    }
+})(["require", "exports", './utils/SyntaxKind', './utils/ErrorTolerantWalker'], function (require, exports) {
+    var SyntaxKind = require('./utils/SyntaxKind');
+    var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+    var Rule = (function (_super) {
+        __extends(Rule, _super);
+        function Rule() {
+            _super.apply(this, arguments);
+        }
+        Rule.prototype.apply = function (sourceFile) {
+            return this.applyWithWalker(new UseIsnanRuleWalker(sourceFile, this.getOptions()));
+        };
+        Rule.FAILURE_STRING = 'Found an invalid comparison for NaN: ';
+        return Rule;
+    })(Lint.Rules.AbstractRule);
+    exports.Rule = Rule;
+    var UseIsnanRuleWalker = (function (_super) {
+        __extends(UseIsnanRuleWalker, _super);
+        function UseIsnanRuleWalker() {
+            _super.apply(this, arguments);
+        }
+        UseIsnanRuleWalker.prototype.visitBinaryExpression = function (node) {
+            if (this.isExpressionNaN(node.left) || this.isExpressionNaN(node.right)) {
+                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.getText()));
+            }
+            _super.prototype.visitBinaryExpression.call(this, node);
+        };
+        UseIsnanRuleWalker.prototype.isExpressionNaN = function (node) {
+            return node.kind === SyntaxKind.current().Identifier && node.getText() === 'NaN';
+        };
+        return UseIsnanRuleWalker;
+    })(ErrorTolerantWalker);
+});
+//# sourceMappingURL=useIsnanRule.js.map

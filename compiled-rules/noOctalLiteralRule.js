@@ -1,0 +1,52 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+(function (deps, factory) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === 'function' && define.amd) {
+        define(deps, factory);
+    }
+})(["require", "exports", './utils/SyntaxKind', './utils/ErrorTolerantWalker'], function (require, exports) {
+    var SyntaxKind = require('./utils/SyntaxKind');
+    var ErrorTolerantWalker = require('./utils/ErrorTolerantWalker');
+    var Rule = (function (_super) {
+        __extends(Rule, _super);
+        function Rule() {
+            _super.apply(this, arguments);
+        }
+        Rule.prototype.apply = function (sourceFile) {
+            var noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
+            return this.applyWithWalker(noOctalLiteral);
+        };
+        Rule.FAILURE_STRING = 'Octal literals should not be used: ';
+        return Rule;
+    })(Lint.Rules.AbstractRule);
+    exports.Rule = Rule;
+    var NoOctalLiteral = (function (_super) {
+        __extends(NoOctalLiteral, _super);
+        function NoOctalLiteral() {
+            _super.apply(this, arguments);
+        }
+        NoOctalLiteral.prototype.visitNode = function (node) {
+            if (node.kind === SyntaxKind.current().StringLiteral) {
+                this.failOnOctalString(node);
+            }
+            _super.prototype.visitNode.call(this, node);
+        };
+        NoOctalLiteral.prototype.failOnOctalString = function (node) {
+            var match = /("|')(.*(\\-?[0-7]{1,3}(?![0-9])).*("|'))/g.exec(node.getText());
+            if (match) {
+                var octalValue = match[3];
+                var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
+                var width = octalValue.length;
+                this.addFailure(this.createFailure(startOfMatch, width, Rule.FAILURE_STRING + octalValue));
+            }
+        };
+        return NoOctalLiteral;
+    })(ErrorTolerantWalker);
+});
+//# sourceMappingURL=noOctalLiteralRule.js.map

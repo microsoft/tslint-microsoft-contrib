@@ -86,8 +86,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
             var failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
-            var failure = this.createFailure(rootNode.getStart(), rootNode.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(rootNode.getStart(), rootNode.getWidth(), failureString);
         }
     };
     return JQueryDeferredAnalyzer;

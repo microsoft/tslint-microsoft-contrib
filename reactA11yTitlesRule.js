@@ -54,7 +54,7 @@ var ReactA11yTitlesRuleWalker = (function (_super) {
     }
     ReactA11yTitlesRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
         if (node.tagName.getText() === 'title') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_TITLE_FAILURE_STRING);
         }
         _super.prototype.visitJsxSelfClosingElement.call(this, node);
     };
@@ -62,7 +62,7 @@ var ReactA11yTitlesRuleWalker = (function (_super) {
         var openingElement = node.openingElement;
         if (openingElement.tagName.getText() === 'title') {
             if (node.children.length === 0) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
+                this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_TITLE_FAILURE_STRING);
             }
             else if (node.children.length === 1) {
                 if (node.children[0].kind === ts.SyntaxKind.JsxText) {
@@ -81,10 +81,10 @@ var ReactA11yTitlesRuleWalker = (function (_super) {
     };
     ReactA11yTitlesRuleWalker.prototype.validateTitleText = function (text, titleNode) {
         if (text.length > MAX_TITLE_LENGTH) {
-            this.addFailure(this.createFailure(titleNode.getStart(), titleNode.getWidth(), LONG_TITLE_FAILURE_STRING + ': ' + Utils_1.Utils.trimTo(text, 20)));
+            this.addFailureAt(titleNode.getStart(), titleNode.getWidth(), LONG_TITLE_FAILURE_STRING + ': ' + Utils_1.Utils.trimTo(text, 20));
         }
         else if (!(text.indexOf(' ') > 0)) {
-            this.addFailure(this.createFailure(titleNode.getStart(), titleNode.getWidth(), WORD_TITLE_FAILURE_STRING + ': ' + Utils_1.Utils.trimTo(text, 20)));
+            this.addFailureAt(titleNode.getStart(), titleNode.getWidth(), WORD_TITLE_FAILURE_STRING + ': ' + Utils_1.Utils.trimTo(text, 20));
         }
     };
     return ReactA11yTitlesRuleWalker;

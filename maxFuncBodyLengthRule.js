@@ -155,8 +155,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         });
     };
     MaxFunctionBodyLengthRuleWalker.prototype.addFuncBodyTooLongFailure = function (node, length) {
-        var failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
-        this.addFailure(failure);
+        this.addFailureAt(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
     };
     MaxFunctionBodyLengthRuleWalker.prototype.formatFailureText = function (node, length) {
         var funcTypeText = this.getFuncTypeText(node.kind);

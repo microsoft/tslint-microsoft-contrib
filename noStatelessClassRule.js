@@ -49,7 +49,7 @@ var NoStatelessClassRuleWalker = (function (_super) {
     NoStatelessClassRuleWalker.prototype.visitClassDeclaration = function (node) {
         if (!this.isClassStateful(node)) {
             var className = node.name == null ? '<unknown>' : node.name.text;
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + className));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
         }
         _super.prototype.visitClassDeclaration.call(this, node);
     };

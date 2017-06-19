@@ -48,7 +48,7 @@ var NoTypeofUndefinedRuleWalker = (function (_super) {
     NoTypeofUndefinedRuleWalker.prototype.visitBinaryExpression = function (node) {
         if ((this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right))
             || this.isUndefinedString(node.right) && this.isTypeOfExpression(node.left)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
         _super.prototype.visitBinaryExpression.call(this, node);
     };

@@ -74,7 +74,7 @@ var BannedTermWalker = (function (_super) {
             if (node.name.text) {
                 var text = node.name.text;
                 if (this.isBannedTerm(text)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), this.failureString + text));
+                    this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
                 }
             }
         }

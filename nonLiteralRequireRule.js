@@ -69,7 +69,7 @@ var NonLiteralRequireRuleWalker = (function (_super) {
         var start = expression.getStart();
         var width = expression.getWidth();
         var message = FAILURE_STRING + Utils_1.Utils.trimTo(expression.getText(), 25);
-        this.addFailure(this.createFailure(start, width, message));
+        this.addFailureAt(start, width, message);
     };
     return NonLiteralRequireRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

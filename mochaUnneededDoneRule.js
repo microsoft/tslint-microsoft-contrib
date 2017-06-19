@@ -69,12 +69,12 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
         var walker = new IdentifierReferenceCountWalker(this.getSourceFile(), this.getOptions(), doneIdentifier);
         var count = walker.getReferenceCount(node.body);
         if (count === 1) {
-            this.addFailure(this.createFailure(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText()));
+            this.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
         }
     };
     MochaUnneededDoneRuleWalker.prototype.isIdentifierInvokedDirectlyInBody = function (doneIdentifier, node) {
         if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
-            return;
+            return false;
         }
         var block = node.body;
         return Utils_1.Utils.exists(block.statements, function (statement) {

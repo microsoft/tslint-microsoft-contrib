@@ -54,7 +54,7 @@ var PossibleTimingAttackRuleWalker = (function (_super) {
             if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
                 && node.left.getText() !== 'null' && node.right.getText() !== 'null'
                 && node.left.getText() !== 'undefined' && node.right.getText() !== 'undefined') {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20)));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20));
             }
             else {
                 _super.prototype.visitBinaryExpression.call(this, node);

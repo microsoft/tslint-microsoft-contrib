@@ -70,7 +70,7 @@ var NoDuplicateParameterNamesWalker = (function (_super) {
             var parameterName = parameter.name.text;
             if (parameterName != null) {
                 if (seenNames[parameterName]) {
-                    _this.addFailure(_this.createFailure(parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\''));
+                    _this.addFailureAt(parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\'');
                 }
                 else {
                     seenNames[parameterName] = true;

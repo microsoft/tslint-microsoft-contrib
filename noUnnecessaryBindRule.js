@@ -69,10 +69,10 @@ var NoUnnecessaryBindRuleWalker = (function (_super) {
                 }
                 if (contextArgument.getText() === 'this') {
                     if (isArrowFunction(functionArgument)) {
-                        _this.addFailure(_this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND));
+                        _this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
                     }
                     else if (isFunctionLiteral(functionArgument)) {
-                        _this.addFailure(_this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND));
+                        _this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
                     }
                 }
             }

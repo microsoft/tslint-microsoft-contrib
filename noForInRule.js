@@ -49,7 +49,7 @@ var NoForInRuleWalker = (function (_super) {
         var initializer = node.initializer.getText();
         var expression = node.expression.getText();
         var msg = Rule.FAILURE_STRING_FACTORY(initializer, expression);
-        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+        this.addFailureAt(node.getStart(), node.getWidth(), msg);
     };
     return NoForInRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

@@ -65,11 +65,11 @@ var A11yRoleRuleWalker = (function (_super) {
         if (roleValue) {
             var normalizedValues = roleValue.toLowerCase().split(' ');
             if (normalizedValues.some(function (value) { return value && VALID_ROLES.indexOf(value) === -1; })) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue)));
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
             }
         }
         else if (roleValue === '' || JsxAttribute_1.isEmpty(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringUndefinedRole()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
         }
         _super.prototype.visitJsxAttribute.call(this, node);
     };

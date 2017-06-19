@@ -57,7 +57,7 @@ var ValidTypeofRuleWalker = (function (_super) {
         if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
             var start = node.getStart();
             var width = node.getWidth();
-            this.addFailure(this.createFailure(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?'));
+            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?');
         }
     };
     ValidTypeofRuleWalker.prototype.getClosestTerm = function (term) {

@@ -49,8 +49,7 @@ var UseNamedParameterWalker = (function (_super) {
             if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
-                    var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                    this.addFailure(failure);
+                    this.addFailureAt(node.getStart(), node.getWidth(), failureString);
                 }
             }
         }

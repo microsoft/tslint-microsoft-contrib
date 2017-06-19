@@ -46,7 +46,7 @@ var NoRegexSpacesRuleWalker = (function (_super) {
         var match = /( {2,})+?/.exec(node.getText());
         if (match != null) {
             var replacement = '{' + match[0].length + '}';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
         }
         _super.prototype.visitRegularExpressionLiteral.call(this, node);
     };

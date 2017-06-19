@@ -134,7 +134,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                     var start = propAccess.getStart();
                     var widget = propAccess.getWidth();
                     var message = FAILURE_UNBOUND_LISTENER + listenerText;
-                    _this.addFailure(_this.createFailure(start, widget, message));
+                    _this.addFailureAt(start, widget, message);
                 }
             }
             else if (_this.isAttributeAnonymousFunction(attributeLikeElement)) {
@@ -147,7 +147,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                 var start = expression.getStart();
                 var widget = expression.getWidth();
                 var message = FAILURE_ANONYMOUS_LISTENER + Utils_1.Utils.trimTo(expression.getText(), 30);
-                _this.addFailure(_this.createFailure(start, widget, message));
+                _this.addFailureAt(start, widget, message);
             }
         });
     };
@@ -233,7 +233,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                                                 var start = binaryExpression.getStart();
                                                 var width = binaryExpression.getWidth();
                                                 var msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
-                                                _this.addFailure(_this.createFailure(start, width, msg));
+                                                _this.addFailureAt(start, width, msg);
                                             }
                                         }
                                     }

@@ -45,11 +45,11 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
     }
     NoFunctionExpressionRuleWalker.prototype.visitFunctionExpression = function (node) {
         var walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
-        node.getChildren().forEach(function (node) {
-            walker.walk(node);
+        node.getChildren().forEach(function (child) {
+            walker.walk(child);
         });
         if (!walker.isAccessingThis) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         _super.prototype.visitFunctionExpression.call(this, node);
     };
@@ -68,9 +68,9 @@ var SingleFunctionWalker = (function (_super) {
         }
         _super.prototype.visitNode.call(this, node);
     };
-    SingleFunctionWalker.prototype.visitFunctionExpression = function (node) {
+    SingleFunctionWalker.prototype.visitFunctionExpression = function () {
     };
-    SingleFunctionWalker.prototype.visitArrowFunction = function (node) {
+    SingleFunctionWalker.prototype.visitArrowFunction = function () {
     };
     return SingleFunctionWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

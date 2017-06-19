@@ -69,7 +69,7 @@ var NoSuspiciousCommentRuleWalker = (function (_super) {
     };
     NoSuspiciousCommentRuleWalker.prototype.foundSuspiciousComment = function (startPosition, commentText, suspiciousWord) {
         var errorMessage = FAILURE_STRING + suspiciousWord;
-        this.addFailure(this.createFailure(startPosition, commentText.length, errorMessage));
+        this.addFailureAt(startPosition, commentText.length, errorMessage);
     };
     return NoSuspiciousCommentRuleWalker;
 }(Lint.RuleWalker));

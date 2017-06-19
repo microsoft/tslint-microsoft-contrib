@@ -86,11 +86,11 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
         }
         this.propNames.forEach(function (propName) {
             var typeElement = _this.propNodes[propName];
-            _this.addFailure(_this.createFailure(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName));
+            _this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
         });
         this.stateNames.forEach(function (stateName) {
             var typeElement = _this.stateNodes[stateName];
-            _this.addFailure(_this.createFailure(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName));
+            _this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
         });
     };
     ReactUnusedPropsAndStateRuleWalker.prototype.visitClassDeclaration = function (node) {

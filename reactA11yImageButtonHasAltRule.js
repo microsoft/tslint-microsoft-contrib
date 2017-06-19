@@ -68,10 +68,10 @@ var ReactA11yImageButtonHasAltWalker = (function (_super) {
         }
         var altAttribute = attributes[ALT_STRING];
         if (!altAttribute) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
         }
         else if (JsxAttribute_1.isEmpty(altAttribute) || !JsxAttribute_1.getStringLiteral(altAttribute)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
         }
     };
     return ReactA11yImageButtonHasAltWalker;

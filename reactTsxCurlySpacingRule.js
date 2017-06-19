@@ -114,7 +114,7 @@ var TsxCurlySpacingWalker = (function (_super) {
         }
     };
     TsxCurlySpacingWalker.prototype.reportFailure = function (start, endNode, failure) {
-        this.addFailure(this.createFailure(start.getStart(), endNode.getStart() - start.getStart(), failure));
+        this.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
     };
     TsxCurlySpacingWalker.prototype.isSpaceBetweenTokens = function (left, right) {
         var text = this.getSourceFile().getText().slice(left.getEnd(), right.getStart());

@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -35,8 +35,10 @@
   "scripts": {
     "test": "grunt all"
   },
+  "dependencies": {
+    "tsutils": "^1.4.0"
+  },
   "peerDependencies": {
-    "tslint": ">=5.1.0",
-    "tsutils": "1.6.0"
+    "tslint": ">=5.1.0"
   }
 }

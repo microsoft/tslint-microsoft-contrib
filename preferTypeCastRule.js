@@ -52,7 +52,7 @@ var PreferTypeCastRuleWalker = (function (_super) {
     };
     PreferTypeCastRuleWalker.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.AsExpression) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
         _super.prototype.visitNode.call(this, node);
     };

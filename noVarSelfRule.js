@@ -53,7 +53,7 @@ var NoVarSelfRuleWalker = (function (_super) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 var identifier = node.name;
                 if (this.bannedVariableNames.test(identifier.text)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
                 }
             }
         }

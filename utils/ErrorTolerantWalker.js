@@ -26,7 +26,7 @@ var ErrorTolerantWalker = (function (_super) {
                     + '\nWalker: ' + this.getClassName()
                     + '\nNode: ' + (node.getFullText ? node.getFullText() : '<unknown>')
                     + '\n' + e;
-                this.addFailure(this.createFailure(node.getStart ? node.getStart() : 0, node.getWidth ? node.getWidth() : 0, msg));
+                this.addFailureAt(node.getStart ? node.getStart() : 0, node.getWidth ? node.getWidth() : 0, msg);
             }
         }
     };

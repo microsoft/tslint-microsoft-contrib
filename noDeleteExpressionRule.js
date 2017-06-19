@@ -55,7 +55,7 @@ var NoDeleteExpression = (function (_super) {
     };
     NoDeleteExpression.prototype.addNoDeleteFailure = function (deletedObject) {
         var msg = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-        this.addFailure(this.createFailure(deletedObject.getStart(), deletedObject.getWidth(), msg));
+        this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
     };
     return NoDeleteExpression;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

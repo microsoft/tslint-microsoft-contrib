@@ -60,14 +60,14 @@ var NoConstantConditionRuleWalker = (function (_super) {
     NoConstantConditionRuleWalker.prototype.visitIfStatement = function (node) {
         if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
             var message = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         _super.prototype.visitIfStatement.call(this, node);
     };
     NoConstantConditionRuleWalker.prototype.visitConditionalExpression = function (node) {
         if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
             var message = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         _super.prototype.visitConditionalExpression.call(this, node);
     };
@@ -75,7 +75,7 @@ var NoConstantConditionRuleWalker = (function (_super) {
         if (this.checkLoops) {
             if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
                 var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         _super.prototype.visitWhileStatement.call(this, node);
@@ -84,7 +84,7 @@ var NoConstantConditionRuleWalker = (function (_super) {
         if (this.checkLoops) {
             if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
                 var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         _super.prototype.visitDoStatement.call(this, node);
@@ -93,7 +93,7 @@ var NoConstantConditionRuleWalker = (function (_super) {
         if (this.checkLoops && node.condition != null) {
             if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
                 var message = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         _super.prototype.visitForStatement.call(this, node);

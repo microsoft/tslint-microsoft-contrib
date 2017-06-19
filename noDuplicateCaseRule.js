@@ -53,7 +53,7 @@ var NoDuplicateCaseRuleWalker = (function (_super) {
                 if (clause.expression != null) {
                     var caseText = clause.expression.getText();
                     if (seenLabels.indexOf(caseText) > -1) {
-                        _this.addFailure(_this.createFailure(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText));
+                        _this.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
                     }
                     else {
                         seenLabels.push(caseText);

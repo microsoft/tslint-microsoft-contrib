@@ -90,7 +90,7 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
             }
         });
         if (!sandboxAttributeFound) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
         }
     };
     ReactIframeMissingSandboxRuleWalker.prototype.validateSandboxValue = function (node) {
@@ -100,7 +100,7 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
         var allowSameOrigin = false;
         values.forEach(function (attributeValue) {
             if (ALLOWED_VALUES.indexOf(attributeValue) === -1) {
-                _this.addFailure(_this.createFailure(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue));
+                _this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
             }
             if (attributeValue === 'allow-scripts') {
                 allowScripts = true;
@@ -110,7 +110,7 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
             }
         });
         if (allowScripts && allowSameOrigin) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
         }
     };
     return ReactIframeMissingSandboxRuleWalker;

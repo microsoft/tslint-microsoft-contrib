@@ -51,11 +51,11 @@ var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
             var functionName = AstUtils_1.AstUtils.getFunctionName(node);
             if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
                 var msg = Rule.GET_FAILURE_STRING + node.getText();
-                this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
+                this.addFailureAt(node.getStart(), node.getEnd(), msg);
             }
             if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
                 var msg = Rule.SET_FAILURE_STRING + node.getText();
-                this.addFailure(this.createFailure(node.getStart(), node.getEnd(), msg));
+                this.addFailureAt(node.getStart(), node.getEnd(), msg);
             }
         }
         _super.prototype.visitCallExpression.call(this, node);

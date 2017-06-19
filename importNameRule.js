@@ -91,11 +91,11 @@ var ImportNameRuleWalker = (function (_super) {
         moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             var message = "Misnamed import. Import should be named '" + moduleName + "' but found '" + importedName + "'";
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
     };
     ImportNameRuleWalker.prototype.makeCamelCase = function (input) {
-        return input.replace(/[-|\.](.)/g, function (match, group1) {
+        return input.replace(/[-|\.](.)/g, function (_match, group1) {
             return group1.toUpperCase();
         });
     };

@@ -53,7 +53,7 @@ var NoEvalScriptWalker = (function (_super) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'execScript') {
             var msg = Rule.FAILURE_STRING + expression.getFullText().trim();
-            this.addFailure(this.createFailure(expression.getStart(), expression.getWidth(), msg));
+            this.addFailureAt(expression.getStart(), expression.getWidth(), msg);
         }
     };
     return NoEvalScriptWalker;

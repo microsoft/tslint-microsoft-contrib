@@ -10,6 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
@@ -46,15 +47,26 @@ var NoHttpStringWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     NoHttpStringWalker.prototype.visitStringLiteral = function (node) {
+        this.visitLiteralExpression(node);
+        _super.prototype.visitStringLiteral.call(this, node);
+    };
+    NoHttpStringWalker.prototype.visitNode = function (node) {
+        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
+            this.visitLiteralExpression(node);
+        }
+        else if (node.kind === ts.SyntaxKind.TemplateHead) {
+            this.visitLiteralExpression(node);
+        }
+        _super.prototype.visitNode.call(this, node);
+    };
+    NoHttpStringWalker.prototype.visitLiteralExpression = function (node) {
         var stringText = node.text;
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
                 var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
-        _super.prototype.visitStringLiteral.call(this, node);
     };
     NoHttpStringWalker.prototype.isSuppressed = function (stringText) {
         var allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());

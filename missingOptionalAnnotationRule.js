@@ -75,7 +75,7 @@ var MissingOptionalAnnotationWalker = (function (_super) {
             }
             else if (optionalParameterFound && parameter.initializer == null) {
                 var msg = Rule.FAILURE_STRING + parameter.getFullText();
-                _this.addFailure(_this.createFailure(parameter.name.getStart(), parameter.name.getWidth(), msg));
+                _this.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);
             }
         });
     };

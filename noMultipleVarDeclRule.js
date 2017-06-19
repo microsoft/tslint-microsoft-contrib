@@ -46,7 +46,7 @@ var NoMultipleVarDeclRuleWalker = (function (_super) {
     }
     NoMultipleVarDeclRuleWalker.prototype.visitVariableStatement = function (node) {
         if (node.declarationList.declarations.length > 1) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.declarationList.declarations[0].getText() + ','));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.declarationList.declarations[0].getText() + ',');
         }
         _super.prototype.visitVariableStatement.call(this, node);
     };

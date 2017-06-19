@@ -67,21 +67,21 @@ var FunctionNameRuleWalker = (function (_super) {
         var name = node.name.getText();
         if (AstUtils_1.AstUtils.isPrivate(node)) {
             if (!this.privateMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + this.privateMethodRegex + ": " + name));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + this.privateMethodRegex + ": " + name);
             }
         }
         else if (AstUtils_1.AstUtils.isProtected(node)) {
             if (!this.protectedMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Protected method name does not match " + this.protectedMethodRegex + ": " + name));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Protected method name does not match " + this.protectedMethodRegex + ": " + name);
             }
         }
         else if (AstUtils_1.AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Static method name does not match " + this.staticMethodRegex + ": " + name));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Static method name does not match " + this.staticMethodRegex + ": " + name);
             }
         }
         else if (!this.methodRegex.test(name)) {
-            this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Method name does not match " + this.methodRegex + ": " + name));
+            this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Method name does not match " + this.methodRegex + ": " + name);
         }
         _super.prototype.visitMethodDeclaration.call(this, node);
     };
@@ -89,7 +89,7 @@ var FunctionNameRuleWalker = (function (_super) {
         if (node.name != null) {
             var name_1 = node.name.text;
             if (!this.functionRegex.test(name_1)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(), "Function name does not match " + this.functionRegex + ": " + name_1));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Function name does not match " + this.functionRegex + ": " + name_1);
             }
         }
         _super.prototype.visitFunctionDeclaration.call(this, node);

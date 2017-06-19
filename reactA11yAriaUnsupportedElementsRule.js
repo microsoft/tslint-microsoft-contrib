@@ -75,7 +75,7 @@ var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
         var invalidAttributeNames = checkAttributeNames.filter(function (attributeName) { return !!attributes[attributeName]; });
         if (invalidAttributeNames.length > 0) {
             var message = getFailureString(tagName, invalidAttributeNames);
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
     };
     return ReactA11yAriaUnsupportedElementsWalker;

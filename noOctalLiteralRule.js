@@ -56,7 +56,7 @@ var NoOctalLiteral = (function (_super) {
             var octalValue = match[3];
             var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
             var width = octalValue.length;
-            this.addFailure(this.createFailure(startOfMatch, width, Rule.FAILURE_STRING + octalValue));
+            this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
         }
     };
     return NoOctalLiteral;

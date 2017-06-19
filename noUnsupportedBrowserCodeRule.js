@@ -117,10 +117,10 @@ var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
     };
     NoUnsupportedBrowserCodeRuleWalker.prototype.findUnsupportedBrowserFailures = function (targetBrowser, startPos, length) {
         if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailure(this.createFailure(startPos, length, FAILURE_BROWSER_STRING + ": " + targetBrowser.name));
+            this.addFailureAt(startPos, length, FAILURE_BROWSER_STRING + ": " + targetBrowser.name);
         }
         else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailure(this.createFailure(startPos, length, FAILURE_VERSION_STRING + ": " + targetBrowser.name + " " + targetBrowser.version));
+            this.addFailureAt(startPos, length, FAILURE_VERSION_STRING + ": " + targetBrowser.name + " " + targetBrowser.version);
         }
     };
     return NoUnsupportedBrowserCodeRuleWalker;

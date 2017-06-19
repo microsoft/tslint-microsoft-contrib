@@ -49,7 +49,7 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
             var statement = this.getSingleStatement(node.body);
             if (statement != null) {
                 if (this.isSuperCall(node, statement) && this.isMatchingArgumentList(node, statement)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node)));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node));
                 }
             }
         }

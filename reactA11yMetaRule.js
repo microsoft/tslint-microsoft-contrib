@@ -64,7 +64,7 @@ var ReactA11yMetaRuleWalker = (function (_super) {
                     var attribute = parameter;
                     if (attribute.name.getText() === 'http-equiv') {
                         if (_this.isStringLiteral(attribute.initializer, 'refresh')) {
-                            _this.addFailure(_this.createFailure(parent.getStart(), openElement.getWidth(), FAILURE_STRING));
+                            _this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
                         }
                     }
                 }

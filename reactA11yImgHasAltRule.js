@@ -83,7 +83,7 @@ var ImgHasAltWalker = (function (_super) {
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var altAttribute = attributes[ALT_STRING];
         if (!altAttribute) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName)));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
         }
         else {
             var roleAttribute = attributes[ROLE_STRING];
@@ -94,10 +94,10 @@ var ImgHasAltWalker = (function (_super) {
                 ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;
             if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName)));
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
             }
             else if (isEmptyAlt && !isPresentationRole) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName)));
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
             }
         }
     };

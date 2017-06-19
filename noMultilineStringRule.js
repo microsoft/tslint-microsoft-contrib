@@ -50,7 +50,7 @@ var NoMultilineStringWalker = (function (_super) {
             var fullText = node.getFullText();
             var firstLine = fullText.substring(0, fullText.indexOf('\n'));
             var trimmed = firstLine.substring(0, 40).trim();
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...'));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...');
         }
         _super.prototype.visitNode.call(this, node);
     };

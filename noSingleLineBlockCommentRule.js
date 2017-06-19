@@ -51,7 +51,7 @@ var NoSingleLineBlockCommentRuleWalker = (function (_super) {
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
                 && _this.isSingleLineComment(tokenText)
                 && !_this.isTsLintSuppression(tokenText)) {
-                _this.addFailure(_this.createFailure(range.pos, range.end - range.pos, FAILURE_STRING));
+                _this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });
     };

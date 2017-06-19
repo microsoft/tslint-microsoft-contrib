@@ -47,16 +47,14 @@ var MissingVisibilityModifierWalker = (function (_super) {
     MissingVisibilityModifierWalker.prototype.visitPropertyDeclaration = function (node) {
         if (this.isMissingVisibilityModifier(node)) {
             var failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         _super.prototype.visitPropertyDeclaration.call(this, node);
     };
     MissingVisibilityModifierWalker.prototype.visitMethodDeclaration = function (node) {
         if (this.isMissingVisibilityModifier(node)) {
             var failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         _super.prototype.visitMethodDeclaration.call(this, node);
     };

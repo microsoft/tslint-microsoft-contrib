@@ -53,7 +53,7 @@ var NoControlRegexRuleWalker = (function (_super) {
     };
     NoControlRegexRuleWalker.prototype.visitRegularExpressionLiteral = function (node) {
         if (/(\\x[0-1][0-9a-f])/.test(node.getText())) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         _super.prototype.visitRegularExpressionLiteral.call(this, node);
     };
@@ -64,7 +64,7 @@ var NoControlRegexRuleWalker = (function (_super) {
                 if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     var regexpText = arg1.text;
                     if (/[\x00-\x1f]/.test(regexpText)) {
-                        this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING));
+                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
                     }
                 }
             }

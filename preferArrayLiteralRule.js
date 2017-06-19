@@ -56,8 +56,7 @@ var NoGenericArrayWalker = (function (_super) {
         if (this.allowTypeParameters === false) {
             if (node.typeName.text === 'Array') {
                 var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
         _super.prototype.visitTypeReference.call(this, node);
@@ -66,7 +65,7 @@ var NoGenericArrayWalker = (function (_super) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'Array') {
             var failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), failureString));
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         _super.prototype.visitNewExpression.call(this, node);
     };

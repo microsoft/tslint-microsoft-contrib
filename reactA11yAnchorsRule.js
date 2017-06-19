@@ -72,14 +72,14 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
                     (current.text !== anchorInfo.text || current.altText !== anchorInfo.altText) &&
                     !Utils_1.Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
                     sameHrefDifferentTexts.push(anchorInfo);
-                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, exports.SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current)));
+                    _this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current));
                 }
                 if (current.href !== anchorInfo.href &&
                     current.text === anchorInfo.text &&
                     current.altText === anchorInfo.altText &&
                     !Utils_1.Utils.contains(differentHrefSameText, anchorInfo)) {
                     differentHrefSameText.push(anchorInfo);
-                    _this.addFailure(_this.createFailure(anchorInfo.start, anchorInfo.width, exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current)));
+                    _this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current));
                 }
             });
         };
@@ -112,17 +112,17 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
                 width: parent.getWidth()
             };
             if (anchorInfo.href === '#') {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.NO_HASH_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.NO_HASH_FAILURE_STRING);
             }
             if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.UNIQUE_ALT_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.UNIQUE_ALT_FAILURE_STRING);
             }
             var anchorInfoTextLength = anchorInfo.text ? anchorInfo.text.length : 0;
             var anchorImageAltTextLength = anchorInfo.altText ? anchorInfo.altText.length : 0;
             if (this.anchorRole(openingElement) === 'link' &&
                 anchorInfoTextLength < 4 &&
                 anchorImageAltTextLength < 4) {
-                this.addFailure(this.createFailure(anchorInfo.start, anchorInfo.width, exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING));
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
             this.anchorInfoList.push(anchorInfo);
         }

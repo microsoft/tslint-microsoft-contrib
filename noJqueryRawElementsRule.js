@@ -51,14 +51,14 @@ var NoJqueryRawElementsRuleWalker = (function (_super) {
             var firstArg = node.arguments[0];
             if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
                 if (this.isComplexHtmlElement(firstArg)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText());
                 }
             }
             else {
                 var finder = new HtmlLikeStringLiteralFinder(this.getSourceFile(), this.getOptions());
                 finder.walk(node.arguments[0]);
                 if (finder.isFound()) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_MANIPULATION + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_MANIPULATION + node.getText());
                 }
             }
         }

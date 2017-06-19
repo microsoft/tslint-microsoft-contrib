@@ -52,7 +52,7 @@ var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
                 if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
                         if (this.isFirstArgumentNegative1(node)) {
-                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                         }
                     }
                 }

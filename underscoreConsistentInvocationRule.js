@@ -75,10 +75,10 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
     UnderscoreConsistentInvocationRuleWalker.prototype.visitCallExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (this.style === 'instance' && this.isStaticUnderscoreInvocation(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName);
         }
         if (this.style === 'static' && this.isStaticUnderscoreInstanceInvocation(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText()));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText());
         }
         _super.prototype.visitCallExpression.call(this, node);
     };

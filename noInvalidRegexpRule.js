@@ -60,7 +60,7 @@ var NoInvalidRegexpRuleWalker = (function (_super) {
                         new RegExp(regexpText);
                     }
                     catch (e) {
-                        this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), e.message));
+                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), e.message);
                     }
                 }
             }

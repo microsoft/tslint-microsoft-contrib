@@ -46,7 +46,7 @@ var NoWithStatementWalker = (function (_super) {
     }
     NoWithStatementWalker.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.WithStatement) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         _super.prototype.visitNode.call(this, node);
     };

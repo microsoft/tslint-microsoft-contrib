@@ -61,8 +61,7 @@ var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
             if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
-                var leadingEmptyLineFailure = _this.createFailure(range.pos, 1, Rule.FAILURE_STRING);
-                _this.addFailure(leadingEmptyLineFailure);
+                _this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
             if (tokenSyntaxKind !== ts.SyntaxKind.WhitespaceTrivia) {
                 previousPrevious = previous;

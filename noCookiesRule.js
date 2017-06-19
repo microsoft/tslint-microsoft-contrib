@@ -54,12 +54,12 @@ var NoCookiesWalker = (function (_super) {
                 var leftSideType = this.typeChecker.getTypeAtLocation(leftSide);
                 var typeAsString = this.typeChecker.typeToString(leftSideType);
                 if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
-                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
                 }
             }
             catch (e) {
                 if (leftSide.getFullText().trim() === 'document') {
-                    this.addFailure(this.createFailure(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING));
+                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
                 }
             }
         }

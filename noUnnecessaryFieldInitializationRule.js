@@ -75,7 +75,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
         if (AstUtils_1.AstUtils.isUndefined(initializer)) {
             var start = initializer.getStart();
             var width = initializer.getWidth();
-            this.addFailure(this.createFailure(start, width, FAILURE_UNDEFINED_INIT + node.name.getText()));
+            this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + node.name.getText());
         }
     };
     UnnecessaryFieldInitializationRuleWalker.prototype.visitConstructorDeclaration = function (node) {
@@ -95,7 +95,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                                     if (fieldInitValue == null) {
                                         var start = property.getStart();
                                         var width = property.getWidth();
-                                        _this.addFailure(_this.createFailure(start, width, FAILURE_UNDEFINED_INIT + property.getText()));
+                                        _this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());
                                     }
                                 }
                             }
@@ -105,7 +105,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                                     var start = binaryExpression.getStart();
                                     var width = binaryExpression.getWidth();
                                     var message = FAILURE_UNDEFINED_DUPE + binaryExpression.getText();
-                                    _this.addFailure(_this.createFailure(start, width, message));
+                                    _this.addFailureAt(start, width, message);
                                 }
                             }
                         }

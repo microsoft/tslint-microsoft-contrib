@@ -77,7 +77,7 @@ var ReactA11yProptypesWalker = (function (_super) {
         var propValue = JsxAttribute_1.getStringLiteral(node) || String(JsxAttribute_1.getBooleanLiteral(node));
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)));
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
             }
             return;
         }
@@ -85,7 +85,7 @@ var ReactA11yProptypesWalker = (function (_super) {
             return;
         }
         if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
         }
     };
     ReactA11yProptypesWalker.prototype.validityCheck = function (propValueExpression, propValue, expectedType, permittedValues) {

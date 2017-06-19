@@ -49,13 +49,13 @@ var NoRelativeImportsRuleWalker = (function (_super) {
         if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
             var moduleExpression = node.expression;
             if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText());
             }
         }
         else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
             var moduleExpression = node.moduleSpecifier;
             if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText());
             }
         }
         _super.prototype.visitNode.call(this, node);

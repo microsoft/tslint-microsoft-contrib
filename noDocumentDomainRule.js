@@ -49,7 +49,7 @@ var NoDocumentDomainRuleWalker = (function (_super) {
             && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
             && this.isDocumentDomainProperty(node.left)) {
             var msg = Rule.FAILURE_STRING + node.getFullText().trim();
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+            this.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
         _super.prototype.visitBinaryExpression.call(this, node);
     };

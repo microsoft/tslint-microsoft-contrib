@@ -30,7 +30,7 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
         if (functionName === this.targetFunctionName && firstArg != null) {
             if (!this.isExpressionEvaluatingToFunction(firstArg)) {
                 var msg = this.failureString + firstArg.getFullText().trim().substring(0, 40);
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+                this.addFailureAt(node.getStart(), node.getWidth(), msg);
             }
         }
     };

@@ -55,13 +55,13 @@ var A11yTabindexNoPositiveWalker = (function (_super) {
         }
         var literalString = JsxAttribute_1.getNumericLiteral(node) || JsxAttribute_1.getStringLiteral(node);
         if (literalString === '') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         }
         else if (literalString && literalString !== '-1' && literalString !== '0') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         }
         else if (JsxAttribute_1.isEmpty(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
         }
     };
     return A11yTabindexNoPositiveWalker;

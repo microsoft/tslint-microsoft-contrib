@@ -78,14 +78,14 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             return;
         }
         if (!callInfo || callInfo.argIndex === -1 || !this.signatures[callInfo.callExpression.expression.getText()]) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), "Unexternalized string found: " + node.getText()));
+            this.addFailureAt(node.getStart(), node.getWidth(), "Unexternalized string found: " + node.getText());
             return;
         }
         var messageArg = callInfo.argIndex === this.messageIndex
             ? callInfo.callExpression.arguments[this.messageIndex]
             : null;
         if (messageArg && messageArg !== node) {
-            this.addFailure(this.createFailure(messageArg.getStart(), messageArg.getWidth(), "Message argument to '" + callInfo.callExpression.expression.getText() + "' must be a string literal."));
+            this.addFailureAt(messageArg.getStart(), messageArg.getWidth(), "Message argument to '" + callInfo.callExpression.expression.getText() + "' must be a string literal.");
             return;
         }
     };
@@ -109,6 +109,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             }
             node = parent_1;
         }
+        return null;
     };
     return NoUnexternalizedStringsRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

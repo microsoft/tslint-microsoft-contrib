@@ -65,10 +65,10 @@ var GlobalReferenceCollector = (function (_super) {
         _this.nonFunctionIdentifiers = [];
         return _this;
     }
-    GlobalReferenceCollector.prototype.visitModuleDeclaration = function (node) { };
-    GlobalReferenceCollector.prototype.visitClassDeclaration = function (node) { };
-    GlobalReferenceCollector.prototype.visitArrowFunction = function (node) { };
-    GlobalReferenceCollector.prototype.visitFunctionExpression = function (node) { };
+    GlobalReferenceCollector.prototype.visitModuleDeclaration = function () { };
+    GlobalReferenceCollector.prototype.visitClassDeclaration = function () { };
+    GlobalReferenceCollector.prototype.visitArrowFunction = function () { };
+    GlobalReferenceCollector.prototype.visitFunctionExpression = function () { };
     GlobalReferenceCollector.prototype.visitNode = function (node) {
         _super.prototype.visitNode.call(this, node);
     };

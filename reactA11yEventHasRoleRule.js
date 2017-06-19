@@ -68,7 +68,7 @@ var ReactA11yEventHasRoleWalker = (function (_super) {
         var events = TARGET_EVENTS.filter(function (eventName) { return !!attributes[eventName]; });
         var hasAriaRole = !!attributes[ROLE_STRING] || !!getImplicitRole_1.getImplicitRole(node);
         if (events.length > 0 && !hasAriaRole) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
     };
     return ReactA11yEventHasRoleWalker;

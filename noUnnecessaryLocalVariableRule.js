@@ -76,7 +76,7 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         var declaredVariableName = this.tryToGetDeclaredVariableName(nextToLastStatement);
         if (returnedVariableName != null && declaredVariableName != null) {
             if (returnedVariableName === declaredVariableName) {
-                this.addFailure(this.createFailure(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName));
+                this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
             }
         }
     };

@@ -82,9 +82,9 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
             this.validateExpression(node.initializer, node);
         }
     };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitFunctionDeclaration = function (node) {
+    MochaNoSideEffectCodeRuleWalker.prototype.visitFunctionDeclaration = function () {
     };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitClassDeclaration = function (node) {
+    MochaNoSideEffectCodeRuleWalker.prototype.visitClassDeclaration = function () {
     };
     MochaNoSideEffectCodeRuleWalker.prototype.visitCallExpression = function (node) {
         if (MochaUtils_1.MochaUtils.isDescribe(node)) {
@@ -164,7 +164,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
             return;
         }
         var message = FAILURE_STRING + Utils_1.Utils.trimTo(parentNode.getText(), 30);
-        this.addFailure(this.createFailure(parentNode.getStart(), parentNode.getWidth(), message));
+        this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
     };
     return MochaNoSideEffectCodeRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

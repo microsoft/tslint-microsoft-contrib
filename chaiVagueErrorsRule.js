@@ -53,7 +53,7 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
     ChaiVagueErrorsRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
         if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
             }
         }
         _super.prototype.visitPropertyAccessExpression.call(this, node);
@@ -64,7 +64,7 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
                 if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
                     if (node.arguments.length === 1) {
                         if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
-                            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                         }
                     }
                 }
@@ -77,10 +77,10 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
                 var expectingBooleanKeyword = expectedValue.kind === ts.SyntaxKind.TrueKeyword
                     || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
                 if (operator === '===' && expectingBooleanKeyword) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
                 }
                 else if (operator === '!==' && expectingBooleanKeyword) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
                 }
             }
         }

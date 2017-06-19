@@ -55,7 +55,7 @@ var A11yPropsWalker = (function (_super) {
             return;
         }
         if (!ARIA_SCHEMA[name.toLowerCase()]) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureString(name)));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name));
         }
     };
     return A11yPropsWalker;

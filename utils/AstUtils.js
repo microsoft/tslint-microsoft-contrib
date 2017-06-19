@@ -53,18 +53,18 @@ var AstUtils;
             || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
-                definitionInfo.forEach(function (definitionInfo, index) {
+                definitionInfo.forEach(function (info, index) {
                     console.log('\tdefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + definitionInfo.kind);
-                    console.log('\t\tname: ' + definitionInfo.name);
+                    console.log('\t\tkind: ' + info.kind);
+                    console.log('\t\tname: ' + info.name);
                 });
             }
             var typeInfo = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo) {
-                typeInfo.forEach(function (definitionInfo, index) {
+                typeInfo.forEach(function (info, index) {
                     console.log('\ttypeDefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + definitionInfo.kind);
-                    console.log('\t\tname: ' + definitionInfo.name);
+                    console.log('\t\tkind: ' + info.kind);
+                    console.log('\t\tname: ' + info.name);
                 });
             }
             var quickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());

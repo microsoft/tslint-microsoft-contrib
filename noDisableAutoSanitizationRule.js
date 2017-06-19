@@ -47,7 +47,7 @@ var NoDisableAutoSanitizationWalker = (function (_super) {
     NoDisableAutoSanitizationWalker.prototype.visitCallExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName);
         }
         _super.prototype.visitCallExpression.call(this, node);
     };

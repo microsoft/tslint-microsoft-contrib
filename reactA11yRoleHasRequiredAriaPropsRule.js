@@ -87,9 +87,9 @@ var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
         var missingAttributes = requiredAttributeNames
             .filter(function (attributeName) { return attributeNamesInElement.indexOf(attributeName) === -1; });
         if (missingAttributes.length > 0) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), isImplicitRole ?
+            this.addFailureAt(node.getStart(), node.getWidth(), isImplicitRole ?
                 getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes) :
-                getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes)));
+                getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes));
         }
     };
     return A11yRoleHasRequiredAriaPropsWalker;

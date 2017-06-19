@@ -46,7 +46,7 @@ var NoEmptyInterfacesRuleWalker = (function (_super) {
     }
     NoEmptyInterfacesRuleWalker.prototype.visitInterfaceDeclaration = function (node) {
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\''));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\'');
         }
         _super.prototype.visitInterfaceDeclaration.call(this, node);
     };

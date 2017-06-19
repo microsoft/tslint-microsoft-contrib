@@ -53,10 +53,10 @@ var NoInnerHtmlRuleWalker = (function (_super) {
                 var propAccess = node.left;
                 var propName = propAccess.name.text;
                 if (propName === 'innerHTML') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText());
                 }
                 else if (propName === 'outerHTML') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText());
                 }
             }
         }
@@ -66,7 +66,7 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
             }
         }
         _super.prototype.visitCallExpression.call(this, node);

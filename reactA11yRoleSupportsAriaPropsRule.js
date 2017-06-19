@@ -108,7 +108,7 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
             failureString = getFailureStringForNotImplicitRole(normalizedRoles, invalidAttributeNamesInElement);
         }
         if (invalidAttributeNamesInElement.length > 0) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), failureString));
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
     };
     return A11yRoleSupportsAriaPropsWalker;

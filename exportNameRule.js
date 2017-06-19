@@ -93,6 +93,7 @@ var ExportNameWalker = (function (_super) {
             });
             return exportStatements_1;
         }
+        return null;
     };
     ExportNameWalker.prototype.getExportStatements = function (element) {
         var exportStatements = [];
@@ -126,8 +127,7 @@ var ExportNameWalker = (function (_super) {
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
                 var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-                var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
     };

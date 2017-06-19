@@ -51,10 +51,10 @@ var NoDocumentWriteWalker = (function (_super) {
             if (node.arguments.length === 1) {
                 var functionName = AstUtils_1.AstUtils.getFunctionName(node);
                 if (functionName === 'write') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.WRITE_FAILURE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), Rule.WRITE_FAILURE);
                 }
                 else if (functionName === 'writeln') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.WRITELN_FAILURE));
+                    this.addFailureAt(node.getStart(), node.getWidth(), Rule.WRITELN_FAILURE);
                 }
             }
         }

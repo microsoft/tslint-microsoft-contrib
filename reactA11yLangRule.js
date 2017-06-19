@@ -82,14 +82,14 @@ var ReactA11yLangRuleWalker = (function (_super) {
                         if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                             var langText = attribute.initializer.text;
                             if ((LANGUAGE_CODES.indexOf(langText)) === -1) {
-                                _this.addFailure(_this.createFailure(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText));
+                                _this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
                             }
                         }
                     }
                 }
             });
             if (!langFound_1) {
-                this.addFailure(this.createFailure(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG));
+                this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
             }
         }
     };

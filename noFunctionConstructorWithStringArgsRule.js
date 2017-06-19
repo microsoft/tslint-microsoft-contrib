@@ -48,7 +48,7 @@ var NoFunctionConstructorWithStringArgsWalker = (function (_super) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'Function') {
             if (node.arguments.length > 0) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+                this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
             }
         }
         _super.prototype.visitNewExpression.call(this, node);

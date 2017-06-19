@@ -46,8 +46,7 @@ var MissingJSDocWalker = (function (_super) {
     MissingJSDocWalker.prototype.visitSourceFile = function (node) {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
             var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-            var failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
     };
     return MissingJSDocWalker;

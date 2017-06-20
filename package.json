@@ -26,6 +26,9 @@
   "scripts": {
     "test": "grunt all"
   },
+  "dependencies": {
+    "tsutils": "^1.4.0"
+  },
   "devDependencies": {
     "chai": "3.2.0",
     "grunt": "0.4.5",
@@ -43,7 +46,6 @@
     "underscore": "1.8.3"
   },
   "peerDependencies": {
-    "tslint": ">=5.1.0",
-    "tsutils": ">=1.6.0"
+    "tslint": ">=5.1.0"
   }
 }

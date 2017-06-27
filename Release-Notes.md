@@ -1,3 +1,12 @@
+# 5.0.1 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.1)
+* [#373](https://github.com/Microsoft/tslint-microsoft-contrib/issues/373) Fix tsutils peer dependency issue with tslint-microsoft-contrib@5.0.0
+* [#371](https://github.com/Microsoft/tslint-microsoft-contrib/issues/371) relax tsutils peer dependency  
+* [#375](https://github.com/Microsoft/tslint-microsoft-contrib/issues/375) Fix mocha-avoid-only. Only return expression length to stop annoying whole block underlining
+* [#372](https://github.com/Microsoft/tslint-microsoft-contrib/issues/372) Remove the use-isnan rule
+* [#370](https://github.com/Microsoft/tslint-microsoft-contrib/issues/370) Fix no-http-string. Do not ignore template strings
+
+
 # 5.0.0 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.0)
 

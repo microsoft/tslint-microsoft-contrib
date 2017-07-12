@@ -1,3 +1,4 @@
+// tslint:disable:linebreak-style no-multiline-string quotemark object-literal-key-quotes
 import {TestHelper} from './TestHelper';
 
 /**
@@ -43,13 +44,23 @@ describe('importNameRule', () : void => {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 13, "line": 2 },
+                "fix": {
+                    "innerStart": 20,
+                    "innerLength": 9,
+                    "innerText": "App"
+                }
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 3 }
+                "startPosition": { "character": 13, "line": 3 },
+                "fix": {
+                    "innerStart": 67,
+                    "innerLength": 10,
+                    "innerText": "App"
+                }
             }
         ]);
     });
@@ -65,13 +76,23 @@ describe('importNameRule', () : void => {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 13, "line": 2 },
+                "fix": {
+                    "innerStart": 20,
+                    "innerLength": 9,
+                    "innerText": "App"
+                }
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 3 }
+                "startPosition": { "character": 13, "line": 3 },
+                "fix": {
+                    "innerStart": 61,
+                    "innerLength": 10,
+                    "innerText": "App"
+                }
             }
         ]);
     });
@@ -86,7 +107,12 @@ describe('importNameRule', () : void => {
                 "failure": "Misnamed import. Import should be named 'DependencyManager' but found 'Service'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 13, "line": 2 },
+                "fix": {
+                    "innerStart": 20,
+                    "innerLength": 7,
+                    "innerText": "DependencyManager"
+                }
             }
         ]);
     });
@@ -101,7 +127,12 @@ describe('importNameRule', () : void => {
                 "failure": "Misnamed import. Import should be named 'userSettingsPage' but found 'UserSettings'",
                 "name": "file.ts",
                 "ruleName": "import-name",
-                "startPosition": { "character": 13, "line": 2 }
+                "startPosition": { "character": 13, "line": 2 },
+                "fix": {
+                    "innerStart": 20,
+                    "innerLength": 12,
+                    "innerText": "userSettingsPage"
+                }
             }
         ]);
     });

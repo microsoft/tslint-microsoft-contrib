@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'import-name',
         type: 'maintainability',
         description: 'The name of the imported module must match the name of the thing being imported',
+        hasFix: true,
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -82,12 +83,16 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         super.visitImportDeclaration(node);
     }
 
-    private validateImport(node: ts.Node, importedName: string, moduleName: string): void {
+    private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
         moduleName = moduleName.replace(/.*\//, ''); // chop off the path
         moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
+            const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration ?
+                (<ts.ImportEqualsDeclaration>node).name : (<ts.ImportDeclaration>node).importClause.name;
+            const nameNodeStartPos = nameNode.getStart();
+            const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, moduleName);
+            this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
         }
     }
 

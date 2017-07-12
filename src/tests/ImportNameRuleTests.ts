@@ -1,4 +1,3 @@
-// tslint:disable:linebreak-style no-multiline-string quotemark object-literal-key-quotes
 import {TestHelper} from './TestHelper';
 
 /**

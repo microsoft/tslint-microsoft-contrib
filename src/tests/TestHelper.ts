@@ -33,6 +33,11 @@ export module TestHelper {
         line: number;
         position?: number;
     }
+    export interface Fix {
+        innerStart: number;
+        innerLength: number;
+        innerText: string;
+    }
     export interface ExpectedFailure {
         ruleName: string;
         name: string;
@@ -40,6 +45,7 @@ export module TestHelper {
         ruleSeverity?: string;
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
+        fix?: Fix;
     }
 
     export function assertNoViolation(ruleName: string,

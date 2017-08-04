@@ -8,9 +8,18 @@
   },
   "author": "Hamlet D'Arcy",
   "contributors": [
-    { "name": "Bernd Kiefer",   "email": "bernd.kiefer@microsoft.com" },
-    { "name": "Daniel Manesku", "email": "daniel.manesku@microsoft.com" },
-    { "name": "Hamlet D'Arcy",  "email": "hamlet.darcy@microsoft.com" }
+    {
+      "name": "Bernd Kiefer",
+      "email": "bernd.kiefer@microsoft.com"
+    },
+    {
+      "name": "Daniel Manesku",
+      "email": "daniel.manesku@microsoft.com"
+    },
+    {
+      "name": "Hamlet D'Arcy",
+      "email": "hamlet.darcy@microsoft.com"
+    }
   ],
   "bugs": {
     "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
@@ -46,6 +55,7 @@
     "underscore": "1.8.3"
   },
   "peerDependencies": {
-    "tslint": ">=5.1.0"
+    "tslint": ">=5.1.0",
+    "typescript": ">=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev"
   }
 }

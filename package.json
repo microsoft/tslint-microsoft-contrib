@@ -55,6 +55,7 @@
     "underscore": "1.8.3"
   },
   "peerDependencies": {
-    "tslint": ">=5.1.0"
+    "tslint": "^5.1.0",
+    "typescript": "^2.1.0"
   }
 }

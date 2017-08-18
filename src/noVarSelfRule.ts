@@ -25,7 +25,13 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-var-self rule is deprecated. Replace your usage with the TSLint no-this-assignment rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     }
 }

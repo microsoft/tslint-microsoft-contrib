@@ -8,9 +8,18 @@
   },
   "author": "Hamlet D'Arcy",
   "contributors": [
-    { "name": "Bernd Kiefer",   "email": "bernd.kiefer@microsoft.com" },
-    { "name": "Daniel Manesku", "email": "daniel.manesku@microsoft.com" },
-    { "name": "Hamlet D'Arcy",  "email": "hamlet.darcy@microsoft.com" }
+    {
+      "name": "Bernd Kiefer",
+      "email": "bernd.kiefer@microsoft.com"
+    },
+    {
+      "name": "Daniel Manesku",
+      "email": "daniel.manesku@microsoft.com"
+    },
+    {
+      "name": "Hamlet D'Arcy",
+      "email": "hamlet.darcy@microsoft.com"
+    }
   ],
   "bugs": {
     "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
@@ -31,13 +40,13 @@
   },
   "devDependencies": {
     "chai": "3.2.0",
-    "grunt": "0.4.5",
-    "grunt-contrib-clean": "0.6.0",
-    "grunt-contrib-copy": "0.8.0",
-    "grunt-contrib-watch": "0.6.1",
-    "grunt-mocha-test": "0.12.7",
-    "grunt-ts": "5.5.1",
-    "grunt-tslint": "5.0.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "0.13.2",
+    "grunt-ts": "^6.0.0-beta.16",
+    "grunt-tslint": "^5.0.1",
     "load-grunt-tasks": "3.2.0",
     "mocha": "2.2.5",
     "time-grunt": "1.2.1",

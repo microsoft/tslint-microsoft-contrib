@@ -142,10 +142,10 @@ export function getNumericLiteral(node: ts.JsxAttribute): string {
  * It contains JsxAttribute and JsxSpreadAttribute.
  */
 export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.JsxAttributeLike> {
-    let attributes: ts.NodeArray<ts.JsxAttributeLike>;
+    let attributes: ts.NodeArray<ts.JsxAttributeLike> = null;
 
     if (node == null) {
-        return <ts.NodeArray<ts.JsxAttributeLike>>[];
+        return attributes;
     } else if (isJsxElement(node)) {
         attributes = node.openingElement.attributes.properties;
     } else if (isJsxSelfClosingElement(node)) {

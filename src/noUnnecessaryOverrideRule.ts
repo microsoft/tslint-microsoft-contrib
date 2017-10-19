@@ -63,7 +63,7 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
             return false; // different param list lengths means they do not match
         }
 
-        const allParameters: ts.ParameterDeclaration[] = node.parameters;
+        const allParameters: ReadonlyArray<ts.ParameterDeclaration> = node.parameters;
         /* tslint:disable:no-increment-decrement */
         for (let i = 0; i < allParameters.length; i++) {
         /* tslint:enable:no-increment-decrement */

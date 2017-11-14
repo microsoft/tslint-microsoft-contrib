@@ -384,6 +384,18 @@ module.exports = function(grunt) {
 
     });
 
+    grunt.registerTask('generate-rule-metadata', 'A task that generates rule-metadata.json which contains a json array of all rule metadata', function () {
+
+        const allMetadata = []
+
+        getAllRules().forEach(function(ruleFile) {
+            const metadata = getMetadataFromFile(ruleFile)
+            allMetadata.push(metadata)
+        })
+
+        grunt.file.write('rule-metadata.json', JSON.stringify(allMetadata, null, 2), {encoding: 'UTF-8'});
+    });
+
     grunt.registerTask('generate-recommendations', 'A task that generates the recommended_ruleset.js file', function () {
 
         const groupedRows = {};
@@ -476,6 +488,7 @@ module.exports = function(grunt) {
         'generate-recommendations',
         'generate-default-tslint-json',
         'generate-sdl-report',
+        'generate-rule-metadata',
         'create-package-json-for-npm'
     ]);
 

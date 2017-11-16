@@ -166,4 +166,14 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         super.visitSetAccessor(node);
         this.scope = this.scope.parent;
     }
+
+    protected visitVariableDeclaration(node: ts.VariableDeclaration): void  {
+        if (AstUtils.isDeclarationFunctionType(node)) {
+            this.scope.addFunctionSymbol(node.name.getText());
+        } else {
+            this.scope.addNonFunctionSymbol(node.name.getText());
+        }
+        super.visitVariableDeclaration(node);
+    }
+
 }

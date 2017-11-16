@@ -323,4 +323,16 @@ describe('noStringBasedSetTimeoutRule', () : void => {
         ]);
     });
 
+    it('should produce violation for string variable - case 4', () : void => {
+        const inputFile : string = 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutTestInput-case4.ts';
+        TestHelper.assertViolationsWithTypeChecker(RULE_NAME, inputFile, [
+            {
+                ruleName: 'no-string-based-set-timeout',
+                failure: 'Forbidden setTimeout string parameter: typedStringVariable',
+                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutTestInput-case4.ts',
+                startPosition: { line: 9, character: 5 }
+            }
+        ]);
+    });
+
 });

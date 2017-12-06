@@ -46,7 +46,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         'any', 'boolean', 'constructor',
         'declare', 'get', 'module',
         'require', 'number', 'set',
-        'string', 'symbol', 'type',
+        'string', 'symbol',
         'from', 'of'
     ];
 

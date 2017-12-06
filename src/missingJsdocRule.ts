@@ -26,7 +26,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'File missing JSDoc comment at the top-level: ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint file-header rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
     }
 }

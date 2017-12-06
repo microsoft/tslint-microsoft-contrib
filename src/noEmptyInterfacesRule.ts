@@ -27,7 +27,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Do not declare empty interfaces: ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-empty-interfaces rule is deprecated. Replace your usage with the TSLint no-empty-interface rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
     }
 

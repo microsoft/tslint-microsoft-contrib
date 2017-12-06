@@ -28,7 +28,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: promise-must-complete rule is deprecated. Replace your usage with the TSLint no-floating-promises rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
     }
 }

@@ -28,7 +28,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal: ';
     public static CONSTRUCTOR_FAILURE_STRING: string = 'Replace Array constructor with an array literal: ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: prefer-array-literal rule is deprecated. Replace your usage with the TSLint array-type rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoGenericArrayWalker(sourceFile, this.getOptions()));
     }
 }

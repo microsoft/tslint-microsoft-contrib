@@ -41,7 +41,7 @@ class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
                 if (clause.expression != null) {
                     const caseText = clause.expression.getText();
                     if (seenLabels.indexOf(caseText) > -1) {
-                        this.addFailure(this.createFailure(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText));
+                        this.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
                     } else {
                         seenLabels.push(caseText);
                     }

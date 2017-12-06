@@ -58,10 +58,10 @@ class GlobalReferenceCollector extends ErrorTolerantWalker {
     public nonFunctionIdentifiers: string[] = [];
 
     /* tslint:disable:no-empty */
-    protected visitModuleDeclaration(node: ts.ModuleDeclaration): void { }   // do not descend into fresh scopes
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void { }     // do not descend into fresh scopes
-    protected visitArrowFunction(node: ts.ArrowFunction): void { }           // do not descend into fresh scopes
-    protected visitFunctionExpression(node: ts.FunctionExpression): void { } // do not descend into fresh scopes
+    protected visitModuleDeclaration(): void { }   // do not descend into fresh scopes
+    protected visitClassDeclaration(): void { }     // do not descend into fresh scopes
+    protected visitArrowFunction(): void { }           // do not descend into fresh scopes
+    protected visitFunctionExpression(): void { } // do not descend into fresh scopes
     /* tslint:enable:no-empty */
 
     // need to make this public so it can be invoked outside of class

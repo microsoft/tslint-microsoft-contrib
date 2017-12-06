@@ -64,15 +64,13 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         );
         const count: number = walker.getReferenceCount(<ts.Block>node.body);
         if (count === 1) {
-            this.addFailure(
-                this.createFailure(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText())
-            );
+            this.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
         }
     }
 
     private isIdentifierInvokedDirectlyInBody(doneIdentifier: ts.Identifier, node: ts.FunctionLikeDeclaration): boolean {
         if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
-            return;
+            return false;
         }
         const block: ts.Block = <ts.Block>node.body;
         return Utils.exists(block.statements, (statement: ts.Statement): boolean => {

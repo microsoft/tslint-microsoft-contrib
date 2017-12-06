@@ -50,8 +50,7 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
         if (this.allowTypeParameters === false) {
             if ((<ts.Identifier>node.typeName).text === 'Array') {
                 const failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
-                const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
         super.visitTypeReference(node);
@@ -61,7 +60,7 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
         const functionName  = AstUtils.getFunctionName(node);
         if (functionName === 'Array') {
             const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), failureString));
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         super.visitNewExpression(node);
     }

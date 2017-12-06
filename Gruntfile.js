@@ -200,29 +200,19 @@ module.exports = function(grunt) {
 
         ts: {
             default: {
-                src: [
-                    './src/**/*.ts{,x}'
-                ],
-                outDir: 'dist/src',
-                options: {
-                    module: 'commonjs',
-                    target: 'es5',
-                    declaration: true,
-                    failOnTypeErrors: true,
-                    jsx: 'react'
+                tsconfig: {
+                    tsconfig: './tsconfig.json',
+                    passThrough: true,
+                    updateFiles: true,
+                    overwriteFiles: true,
                 }
             },
             'test-data': {
-                src: [
-                    './test-data/**/*.ts{,x}'
-                ],
-                outDir: 'dist/test-data',
-                options: {
-                    module: 'commonjs',
-                    target: 'es5',
-                    declaration: false,
-                    failOnTypeErrors: true,
-                    jsx: 'react'
+                tsconfig: {
+                    tsconfig: './tsconfig.testdata.json',
+                    passThrough: true,
+                    updateFiles: true,
+                    overwriteFiles: true
                 }
             }
         },
@@ -248,6 +238,7 @@ module.exports = function(grunt) {
                         let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
                         tslintJson.rules['no-multiline-string'] = false;
                         tslintJson.rules['quotemark'] = false;
+                        tslintJson.rules['object-literal-key-quotes'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
                         return tslintJson;
                     })()
@@ -321,26 +312,28 @@ module.exports = function(grunt) {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
-            'no-unused-variable': true,
-            'no-unexternalized-strings': true,
-            'object-literal-key-quotes': true,
-            'no-relative-imports': true,
-            'no-empty-line-after-opening-brace': true,
-            'no-duplicate-key': true,
-            'align': true,
-            'comment-format': true,
-            'interface-name': true,
-            'max-file-line-count': true,
-            'member-ordering': true,
-            'no-inferrable-types': true,
-            'only-arrow-functions': true,
-            'ordered-imports': true,
-            'typedef-whitespace': true,
-            'array-type': true,
-            'completed-docs': true,
-            'cyclomatic-complexity': true,
-            'file-header': true,
-            'max-classes-per-file': true
+            'ban-types': true,
+            'match-default-export-name': true, // requires type checking
+            'newline-before-return': true,              // kind of a silly rule
+            'no-non-null-assertion': true,              // in fact we prefer the opposite rule
+            'prefer-template': true,                    // rule does not handle multi-line strings nicely
+            'return-undefined': true,                   // requires type checking
+            'no-unused-variable': true,                 // requires type checking
+            'no-unexternalized-strings': true,          // this is a VS Code specific rule
+            'no-relative-imports': true,                // this project uses relative imports
+            'no-empty-line-after-opening-brace': true,  // too strict
+            'align': true,                              // no need
+            'comment-format': true,                     // no need
+            'interface-name': true,                     // no need
+            'max-file-line-count': true,                // no need
+            'member-ordering': true,                    // too strict
+            'no-inferrable-types': true,                // we prefer the opposite
+            'ordered-imports': true,                    // too difficult to turn on
+            'typedef-whitespace': true,                 // too strict
+            'completed-docs': true,                     // no need
+            'cyclomatic-complexity': true,              // too strict
+            'file-header': true,                        // no need
+            'max-classes-per-file': true                // no need
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {

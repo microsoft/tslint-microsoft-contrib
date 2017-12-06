@@ -63,28 +63,28 @@ class ReactA11yLangRuleWalker extends ErrorTolerantWalker {
 
     private validateOpeningElement(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'html') {
-            const attributes: ts.NodeArray<ts.JsxAttribute | ts.JsxSpreadAttribute> = openingElement.attributes;
+            const attributes: ts.JsxAttributes = openingElement.attributes;
             let langFound: boolean = false;
 
-            attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+            attributes.properties.forEach((attribute: ts.JsxAttributeLike): void => {
                 if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if ((<ts.JsxAttribute>attribute).name.getText() === 'lang') {
                         langFound = true;
                         if ((<ts.JsxAttribute>attribute).initializer.kind === ts.SyntaxKind.StringLiteral) {
                             const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
                             if ((LANGUAGE_CODES.indexOf(langText)) === -1) {
-                                this.addFailure(this.createFailure(
+                                this.addFailureAt(
                                     parent.getStart(),
                                     parent.getWidth(),
                                     FAILURE_WRONG_LANG_CODE + langText
-                                ));
+                                );
                             }
                         }
                     }
                 }
             });
             if (!langFound) {
-                this.addFailure(this.createFailure(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG));
+                this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
             }
         }
     }

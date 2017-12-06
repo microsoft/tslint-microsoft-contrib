@@ -65,10 +65,10 @@ class A11yRoleRuleWalker extends Lint.RuleWalker {
             const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
 
             if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue)));
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
             }
         } else if (roleValue === '' || isEmpty(node)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), getFailureStringUndefinedRole()));
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
         }
 
         super.visitJsxAttribute(node);

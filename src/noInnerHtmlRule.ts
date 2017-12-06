@@ -43,9 +43,9 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.left;
                 const propName: string = propAccess.name.text;
                 if (propName === 'innerHTML') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText());
                 } else if (propName === 'outerHTML') {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText()));
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText());
                 }
             }
         }
@@ -56,7 +56,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText()));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
             }
         }
         super.visitCallExpression(node);

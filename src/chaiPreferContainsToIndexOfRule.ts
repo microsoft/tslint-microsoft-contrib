@@ -41,8 +41,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
                 if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
                         if (this.isFirstArgumentNegative1(node)) {
-                            this.addFailure(
-                                this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING));
+                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                         }
                     }
                 }

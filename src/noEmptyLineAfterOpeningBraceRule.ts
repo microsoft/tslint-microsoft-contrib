@@ -3,6 +3,7 @@ import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import {forEachTokenWithTrivia} from 'tsutils';
 
 /**
  * Implementation of the no-empty-line-after-opening-brace rule.
@@ -50,19 +51,18 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
         let previous: ts.SyntaxKind;
         let previousPrevious: ts.SyntaxKind;
 
-        Lint.scanAllTokens(this.scanner, (scanner: ts.Scanner): void => {
+        forEachTokenWithTrivia(node, ({}, tokenSyntaxKind, range) => {
             if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
-                scanner.getToken() === ts.SyntaxKind.NewLineTrivia) {
+                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
 
-                const leadingEmptyLineFailure = this.createFailure(scanner.getStartPos(), 1, Rule.FAILURE_STRING);
-                this.addFailure(leadingEmptyLineFailure);
+                this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
 
             //ignore empty spaces
-            if (scanner.getToken() !== ts.SyntaxKind.WhitespaceTrivia) {
+            if (tokenSyntaxKind !== ts.SyntaxKind.WhitespaceTrivia) {
                 previousPrevious = previous;
-                previous = scanner.getToken();
+                previous = tokenSyntaxKind;
             }
         });
     }

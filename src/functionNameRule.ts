@@ -61,22 +61,22 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
         const name: string = node.name.getText();
         if (AstUtils.isPrivate(node)) {
             if (!this.privateMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
-                    `Private method name does not match ${this.privateMethodRegex}: ${name}`));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
+                    `Private method name does not match ${this.privateMethodRegex}: ${name}`);
             }
         } else if (AstUtils.isProtected(node)) {
             if (!this.protectedMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
-                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
+                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
             }
         } else if (AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
-                    `Static method name does not match ${this.staticMethodRegex}: ${name}`));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
+                    `Static method name does not match ${this.staticMethodRegex}: ${name}`);
             }
         } else if (!this.methodRegex.test(name)) {
-            this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
-                `Method name does not match ${this.methodRegex}: ${name}`));
+            this.addFailureAt(node.name.getStart(), node.name.getWidth(),
+                `Method name does not match ${this.methodRegex}: ${name}`);
         }
         super.visitMethodDeclaration(node);
     }
@@ -85,8 +85,8 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
         if (node.name != null) {
             const name: string = node.name.text;
             if (!this.functionRegex.test(name)) {
-                this.addFailure(this.createFailure(node.name.getStart(), node.name.getWidth(),
-                    `Function name does not match ${this.functionRegex}: ${name}`));
+                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
+                    `Function name does not match ${this.functionRegex}: ${name}`);
             }
         }
         super.visitFunctionDeclaration(node);

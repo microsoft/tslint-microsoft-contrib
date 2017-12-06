@@ -46,11 +46,10 @@ class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
                 if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     try {
-                        /* tslint:disable:no-unused-new */
+                        // tslint:disable-next-line:no-unused-expression
                         new RegExp(regexpText);
-                        /* tslint:enable:no-unused-new */
                     } catch (e) {
-                        this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), e.message));
+                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), e.message);
                     }
                 }
             }

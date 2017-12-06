@@ -37,7 +37,7 @@ class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
             && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
             && this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)) {
             const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+            this.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
         super.visitBinaryExpression(node);
     }

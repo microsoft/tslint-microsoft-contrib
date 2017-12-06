@@ -42,8 +42,8 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
 
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         if (node.tagName.getText() === 'title') {
-            this.addFailure(this.createFailure(node.getStart(),
-                node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
+            this.addFailureAt(node.getStart(),
+                node.getWidth(), EMPTY_TITLE_FAILURE_STRING);
         }
         super.visitJsxSelfClosingElement(node);
     }
@@ -52,8 +52,8 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
         const openingElement: ts.JsxOpeningElement = node.openingElement;
         if (openingElement.tagName.getText() === 'title') {
             if (node.children.length === 0) {
-                this.addFailure(this.createFailure(node.getStart(),
-                    node.getWidth(), EMPTY_TITLE_FAILURE_STRING));
+                this.addFailureAt(node.getStart(),
+                    node.getWidth(), EMPTY_TITLE_FAILURE_STRING);
             } else if (node.children.length === 1) {
                 if (node.children[0].kind === ts.SyntaxKind.JsxText) {
                     const value: ts.JsxText = <ts.JsxText>node.children[0];
@@ -71,15 +71,15 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
 
     private validateTitleText(text: string, titleNode: ts.Node): void {
         if (text.length > MAX_TITLE_LENGTH) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 titleNode.getStart(),
                 titleNode.getWidth(),
-                LONG_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)));
+                LONG_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20));
         } else if (!(text.indexOf(' ') > 0)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 titleNode.getStart(),
                 titleNode.getWidth(),
-                WORD_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20)));
+                WORD_TITLE_FAILURE_STRING + ': ' + Utils.trimTo(text, 20));
         }
     }
 }

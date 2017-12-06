@@ -44,7 +44,7 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
 
     protected visitRegularExpressionLiteral(node: ts.Node): void {
         if (/(\\x[0-1][0-9a-f])/.test(node.getText())) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         super.visitRegularExpressionLiteral(node);
     }
@@ -57,7 +57,7 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
                 if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                     const regexpText: string = (<ts.StringLiteral>arg1).text;
                     if (/[\x00-\x1f]/.test(regexpText)) {
-                        this.addFailure(this.createFailure(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING));
+                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
                     }
                 }
             }

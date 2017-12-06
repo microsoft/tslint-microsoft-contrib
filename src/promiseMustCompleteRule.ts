@@ -77,8 +77,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
         const blockAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.getOptions(), completionIdentifiers);
         blockAnalyzer.visitNode(block);
         if (!blockAnalyzer.isAlwaysCompleted()) {
-            const failure = this.createFailure(promiseInstantiation.getStart(), promiseInstantiation.getWidth(), Rule.FAILURE_STRING);
-            this.addFailure(failure);
+            this.addFailureAt(promiseInstantiation.getStart(), promiseInstantiation.getWidth(), Rule.FAILURE_STRING);
         }
     }
 }

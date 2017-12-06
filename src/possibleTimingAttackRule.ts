@@ -44,7 +44,7 @@ class PossibleTimingAttackRuleWalker extends ErrorTolerantWalker {
             if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
                 && node.left.getText() !== 'null' && node.right.getText() !== 'null'
                 && node.left.getText() !== 'undefined' && node.right.getText() !== 'undefined') {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + Utils.trimTo(node.getText(), 20)));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils.trimTo(node.getText(), 20));
             } else {
                 super.visitBinaryExpression(node);
             }

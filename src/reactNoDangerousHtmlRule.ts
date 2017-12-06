@@ -31,11 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
-        const documentRegistry = ts.createDocumentRegistry();
-        const languageServiceHost = Lint.createLanguageServiceHost(sourceFile.fileName, sourceFile.getFullText());
-        const languageService = ts.createLanguageService(languageServiceHost, documentRegistry);
-
-        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions(), languageService));
+        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions()));
     }
 
     /**
@@ -55,12 +51,10 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDangerousHtmlWalker extends ErrorTolerantWalker {
-    private languageServices : ts.LanguageService;
     private currentMethodName : string;
 
-    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, languageServices : ts.LanguageService) {
+    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
         super(sourceFile, options);
-        this.languageServices = languageServices;
         this.currentMethodName = '<unknown>';
     }
 
@@ -93,7 +87,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
     }
 
     private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
-        node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+        node.attributes.properties.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 const attributeName = jsxAttribute.name.text;
@@ -112,8 +106,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
             const position = parent.getStart();
-            const failure = this.createFailure(position, node.text.length, failureString);
-            this.addFailure(failure);
+            this.addFailureAt(position, node.text.length, failureString);
         }
     }
 

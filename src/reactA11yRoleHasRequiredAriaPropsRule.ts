@@ -104,13 +104,13 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
             .filter((attributeName: string) => attributeNamesInElement.indexOf(attributeName) === -1);
 
         if (missingAttributes.length > 0) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 isImplicitRole ?
                     getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes) :
                     getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes)
-            ));
+            );
         }
     }
 }

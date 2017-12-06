@@ -14,6 +14,7 @@ describe('noUnexternalizedStringsRule', () : void => {
     });
 
     it('should pass on template expression', () : void => {
+        // tslint:disable-next-line:no-invalid-template-strings
         const script : string = 'let str = `Hello ${var} Worlds`;';
         TestHelper.assertViolationsWithOptions(ruleName, [{ signatures: ['localize', 'nls.localize'], messageIndex: 1 }], script, [ ]);
     });

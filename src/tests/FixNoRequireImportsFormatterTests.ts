@@ -16,11 +16,12 @@ class FormatterForTesting extends Formatter {
         return this.output;
     }
 
-    protected readFile(fileName: string): string {
+    protected readFile(): string {
         return this.input;
     }
 
-    protected writeFile(fileName: string, fileContents: string): void {
+    // tslint:disable-next-line:variable-name
+    protected writeFile(_fileName: string, fileContents: string): void {
         this.output = fileContents;
     }
 }

@@ -72,7 +72,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
         }
 
         let sandboxAttributeFound: boolean = false;
-        node.attributes.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+        node.attributes.properties.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                 const attributeName = jsxAttribute.name.text;
@@ -86,7 +86,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
         });
 
         if (!sandboxAttributeFound) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
         }
     }
 
@@ -96,7 +96,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
         let allowSameOrigin: boolean = false;
         values.forEach((attributeValue: string): void => {
             if (ALLOWED_VALUES.indexOf(attributeValue) === -1) {
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue));
+                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
             }
             if (attributeValue === 'allow-scripts') {
                 allowScripts = true;
@@ -106,7 +106,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
             }
         });
         if (allowScripts && allowSameOrigin) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
         }
     }
 }

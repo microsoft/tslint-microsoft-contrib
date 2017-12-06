@@ -78,7 +78,7 @@ export class BannedTermWalker extends ErrorTolerantWalker {
             if ((<any>node).name.text) {
                 const text : string = (<any>node).name.text;
                 if (this.isBannedTerm(text)) {
-                    this.addFailure(this.createFailure(node.getStart(), node.getWidth(), this.failureString + text));
+                    this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
                 }
             }
         }

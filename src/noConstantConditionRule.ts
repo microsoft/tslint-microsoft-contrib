@@ -56,7 +56,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     protected visitIfStatement(node: ts.IfStatement): void {
         if (AstUtils.isConstantExpression(node.expression)) {
             const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         super.visitIfStatement(node);
     }
@@ -64,7 +64,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     protected visitConditionalExpression(node: ts.ConditionalExpression): void {
         if (AstUtils.isConstantExpression(node.condition)) {
             const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         super.visitConditionalExpression(node);
     }
@@ -73,7 +73,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         if (this.checkLoops) {
             if (AstUtils.isConstantExpression(node.expression)) {
                 const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         super.visitWhileStatement(node);
@@ -83,7 +83,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         if (this.checkLoops) {
             if (AstUtils.isConstantExpression(node.expression)) {
                 const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         super.visitDoStatement(node);
@@ -93,7 +93,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
         if (this.checkLoops && node.condition != null) {
             if (AstUtils.isConstantExpression(node.condition)) {
                 const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
-                this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+                this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
         super.visitForStatement(node);

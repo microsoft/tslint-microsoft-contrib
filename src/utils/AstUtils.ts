@@ -56,19 +56,19 @@ export module AstUtils {
             || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo) {
-                definitionInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
+                definitionInfo.forEach((info : ts.DefinitionInfo, index : number) : void => {
                     console.log('\tdefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + definitionInfo.kind);
-                    console.log('\t\tname: ' + definitionInfo.name);
+                    console.log('\t\tkind: ' + info.kind);
+                    console.log('\t\tname: ' + info.name);
                 });
             }
 
             const typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo) {
-                typeInfo.forEach((definitionInfo : ts.DefinitionInfo, index : number) : void => {
+                typeInfo.forEach((info : ts.DefinitionInfo, index : number) : void => {
                     console.log('\ttypeDefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + definitionInfo.kind);
-                    console.log('\t\tname: ' + definitionInfo.name);
+                    console.log('\t\tkind: ' + info.kind);
+                    console.log('\t\tname: ' + info.name);
                 });
             }
 

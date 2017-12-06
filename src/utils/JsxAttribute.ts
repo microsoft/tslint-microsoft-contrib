@@ -141,17 +141,17 @@ export function getNumericLiteral(node: ts.JsxAttribute): string {
  * Get an array of attributes in the given node.
  * It contains JsxAttribute and JsxSpreadAttribute.
  */
-export function getAllAttributesFromJsxElement(node: ts.Node): (ts.JsxAttribute | ts.JsxSpreadAttribute)[] {
-    let attributes: (ts.JsxAttribute | ts.JsxSpreadAttribute)[];
+export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.JsxAttributeLike> {
+    let attributes: ts.NodeArray<ts.JsxAttributeLike>;
 
     if (node == null) {
-        return [];
+        return <ts.NodeArray<ts.JsxAttributeLike>>[];
     } else if (isJsxElement(node)) {
-        attributes = node.openingElement.attributes;
+        attributes = node.openingElement.attributes.properties;
     } else if (isJsxSelfClosingElement(node)) {
-        attributes = node.attributes;
+        attributes = node.attributes.properties;
     } else if (isJsxOpeningElement(node)) {
-        attributes = node.attributes;
+        attributes = node.attributes.properties;
     } else {
         throw new Error('The node must be a JsxElement, JsxSelfClosingElement or JsxOpeningElement.');
     }

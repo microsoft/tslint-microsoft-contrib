@@ -28,7 +28,7 @@ describe('mochaAvoidOnlyRule', () : void => {
                 describe.only(something, () => {});
                 describe.only('', something);
                 describe.only(something, somethingElse);
-                
+
                 // these are not calls to mocha's context.only
                 context.only();
                 context.only('');

@@ -34,7 +34,7 @@ class NoUnnecessarySemicolonsWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.EmptyStatement) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         super.visitNode(node);
     }

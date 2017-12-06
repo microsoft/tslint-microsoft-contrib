@@ -91,6 +91,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             });
             return exportStatements;
         }
+        return null;
     }
 
     private getExportStatements(element: ts.Statement): ts.Statement[] {
@@ -127,8 +128,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
                 const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
-                const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-                this.addFailure(failure);
+                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
     }

@@ -125,7 +125,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
-        node.attributes.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+        node.attributes.properties.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
                 if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
@@ -138,7 +138,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                     const start: number = propAccess.getStart();
                     const widget: number = propAccess.getWidth();
                     const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
-                    this.addFailure(this.createFailure(start, widget, message));
+                    this.addFailureAt(start, widget, message);
                 }
             } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
@@ -150,7 +150,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 const start: number = expression.getStart();
                 const widget: number = expression.getWidth();
                 const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
-                this.addFailure(this.createFailure(start, widget, message));
+                this.addFailureAt(start, widget, message);
             }
         });
     }
@@ -246,7 +246,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                                                 const start = binaryExpression.getStart();
                                                 const width = binaryExpression.getWidth();
                                                 const msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
-                                                this.addFailure(this.createFailure(start, width, msg));
+                                                this.addFailureAt(start, width, msg);
                                             }
                                         }
                                     }

@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
+import {forEachTokenWithTrivia} from 'tsutils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const UNSPECIFIED_BROWSER_VERSION: string = 'unspecified version';
@@ -40,7 +40,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWalker {
+class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
     private supportedBrowsers: { [key: string]: BrowserVersion };
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -51,41 +51,22 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWal
     protected visitSourceFile(node: ts.SourceFile): void {
         // do not call super.visitSourceFile because we're already scanning the full file below
 
-        const scanner = ts.createScanner(
-            ts.ScriptTarget.ES5,
-            false,
-            AstUtils.getLanguageVariant(node),
-            node.text
-        );
-
-        Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
-            const startPos = scanner.getStartPos();
-            if ((<any>this).tokensToSkipStartEndMap[startPos] != null) {
-                // tokens to skip are places where the scanner gets confused
-                // about what the token is, without the proper context
-                // (specifically, regex, identifiers, and templates). So skip
-                // those tokens.
-                scanner.setTextPos((<any>this).tokensToSkipStartEndMap[startPos]);
-                return;
-            }
-
+        forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
             let regex;
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
                 regex = new RegExp(`${JSDOC_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
-            } else if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia) {
+            } else if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia) {
                 regex = new RegExp(`${COMMENT_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
             } else {
                 return;
             }
 
             let match;
-            /* tslint:disable-next-line:no-conditional-assignment */
-            while ((match = regex.exec(scanner.getTokenText()))) {
+            const tokenText = text.substring(range.pos, range.end);
+            // tslint:disable-next-line:no-conditional-assignment
+            while ((match = regex.exec(tokenText))) {
                 const browser = this.parseBrowserString(match[1]);
-                const startPos = scanner.getTokenPos() + match.index;
-                const length = match[0].length;
-
-                this.findUnsupportedBrowserFailures(browser, startPos, length);
+                this.findUnsupportedBrowserFailures(browser, range.pos, range.end - range.pos);
             }
         });
     }
@@ -150,17 +131,17 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.SkippableTokenAwareRuleWal
 
     private findUnsupportedBrowserFailures(targetBrowser: BrowserVersion, startPos: number, length: number) {
         if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 startPos,
                 length,
                 `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`
-            ));
+            );
         } else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 startPos,
                 length,
                 `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`
-            ));
+            );
         }
     }
 }

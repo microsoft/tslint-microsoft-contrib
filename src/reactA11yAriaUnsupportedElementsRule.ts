@@ -74,7 +74,7 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
 
         if (invalidAttributeNames.length > 0) {
             const message: string = getFailureString(tagName, invalidAttributeNames);
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), message));
+            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
     }
 }

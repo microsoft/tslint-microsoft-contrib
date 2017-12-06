@@ -41,7 +41,7 @@ class PreferTypeCastRuleWalker extends ErrorTolerantWalker {
 
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.AsExpression) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText()));
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
         super.visitNode(node);
     }

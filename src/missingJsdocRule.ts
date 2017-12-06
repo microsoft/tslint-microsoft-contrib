@@ -35,8 +35,7 @@ class MissingJSDocWalker extends ErrorTolerantWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
             const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-            const failure = this.createFailure(node.getStart(), node.getWidth(), failureString);
-            this.addFailure(failure);
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
         // do not continue walking
     }

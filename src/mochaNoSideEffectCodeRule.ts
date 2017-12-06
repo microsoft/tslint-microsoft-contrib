@@ -80,11 +80,11 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
+    protected visitFunctionDeclaration(): void {
         // never walk into function declarations. new scopes are inherently safe
     }
 
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
+    protected visitClassDeclaration(): void {
         // never walk into class declarations. new scopes are inherently safe
     }
 
@@ -180,6 +180,6 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
         }
         //console.log(ts.SyntaxKind[initializer.kind] + ' ' + initializer.getText());
         const message: string = FAILURE_STRING + Utils.trimTo(parentNode.getText(), 30);
-        this.addFailure(this.createFailure(parentNode.getStart(), parentNode.getWidth(), message));
+        this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
     }
 }

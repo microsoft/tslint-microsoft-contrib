@@ -92,11 +92,11 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
         if (!altAttribute) {
-            this.addFailure(this.createFailure(
+            this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 getFailureStringNoAlt(tagName)
-            ));
+            );
         } else {
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue: string = roleAttribute ? getStringLiteral(roleAttribute) : '';
@@ -108,17 +108,17 @@ class ImgHasAltWalker extends Lint.RuleWalker {
 
             // <img alt='altValue' role='presentation' />
             if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation) {
-                this.addFailure(this.createFailure(
+                this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringNonEmptyAltAndPresentationRole(tagName)
-                ));
+                );
             } else if (isEmptyAlt && !isPresentationRole) { // <img alt='' />
-                this.addFailure(this.createFailure(
+                this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringEmptyAltAndNotPresentationRole(tagName)
-                ));
+                );
             }
         }
     }

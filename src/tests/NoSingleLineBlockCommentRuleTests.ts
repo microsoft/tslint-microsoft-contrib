@@ -18,14 +18,6 @@ describe('noSingleLineBlockCommentRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
-    it('should pass on a nested single line comment', () : void => {
-        const script : string = `
-            const something = /* my comment */ 'whatever';
-        `;
-
-        TestHelper.assertViolations(ruleName, script, [ ]);
-    });
-
     it('should pass on tslint suppressions', () : void => {
         const script : string = `
             /* tslint:disable:function-name */

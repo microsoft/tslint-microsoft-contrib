@@ -47,7 +47,7 @@ class NoOctalLiteral extends ErrorTolerantWalker {
             const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
             const width = octalValue.length;
 
-            this.addFailure(this.createFailure(startOfMatch, width, Rule.FAILURE_STRING + octalValue));
+            this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
         }
     }
 }

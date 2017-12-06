@@ -58,9 +58,9 @@ class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
                 }
                 if (contextArgument.getText() === 'this') {
                     if (isArrowFunction(functionArgument)) {
-                        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND));
+                        this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
                     } else if (isFunctionLiteral(functionArgument)) {
-                        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND));
+                        this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
                     }
                 }
             }

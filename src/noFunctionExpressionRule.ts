@@ -35,12 +35,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
-        node.getChildren().forEach((node: ts.Node) => {
-            walker.walk(node);
+        node.getChildren().forEach((child: ts.Node) => {
+            walker.walk(child);
         });
         // function expression that access 'this' is allowed
         if (!walker.isAccessingThis) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         super.visitFunctionExpression(node);
     }
@@ -55,10 +55,10 @@ class SingleFunctionWalker extends ErrorTolerantWalker {
         super.visitNode(node);
     }
     /* tslint:disable:no-empty */
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
+    protected visitFunctionExpression(): void {
         // do not visit inner blocks
     }
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
+    protected visitArrowFunction(): void {
         // do not visit inner blocks
     }
     /* tslint:enable:no-empty */

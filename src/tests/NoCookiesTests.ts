@@ -6,21 +6,8 @@ import {TestHelper} from './TestHelper';
 describe('noCookiesRule', () : void => {
     it('should not produce violations', () : void => {
         const ruleName : string = 'no-cookies';
-        const inputFile : string = `
-interface DocumentLikeAPI {
-    cookie: string;
-}
-
-function documentLikeAPIFunction() : DocumentLikeAPI {
-    return null;
-}
-
-// These usages are OK because they are not on the DOM document
-var document : DocumentLikeAPI = documentLikeAPIFunction();
-document.cookie = '...';
-document.cookie = '...';
-documentLikeAPIFunction().cookie = '...';`;
-        TestHelper.assertViolations(
+        const inputFile : string = 'test-data/NoCookies/NoCookiesPassingTestInput.ts';
+        TestHelper.assertViolationsWithTypeChecker(
             ruleName,
             inputFile,
             [ ]
@@ -30,7 +17,7 @@ documentLikeAPIFunction().cookie = '...';`;
     it('should produce violations', () : void => {
         const ruleName : string = 'no-cookies';
         const inputFile : string = 'test-data/NoCookies/NoCookiesFailingTestInput.ts';
-        TestHelper.assertViolations(
+        TestHelper.assertViolationsWithTypeChecker(
             ruleName,
             inputFile,
             [
@@ -71,7 +58,7 @@ documentLikeAPIFunction().cookie = '...';`;
     it('should not throw error ', () : void => {
         const ruleName : string = 'no-cookies';
         const inputFile : string = 'test-data/NoCookies/NoCookiesTestInput-error.ts';
-        TestHelper.assertViolations(
+        TestHelper.assertViolationsWithTypeChecker(
             ruleName,
             inputFile,
             [

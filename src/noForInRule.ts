@@ -27,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING_FACTORY(initializer: string, expression: string): string {
         //tslint:disable-next-line:max-line-length
         return `Do not use the 'for in' statement: 'for (${initializer} in ${expression})'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.`;
-    };
+    }
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));
@@ -40,6 +40,6 @@ class NoForInRuleWalker extends ErrorTolerantWalker {
         const expression: string = node.expression.getText();
 
         const msg: string = Rule.FAILURE_STRING_FACTORY(initializer, expression);
-        this.addFailure(this.createFailure(node.getStart(), node.getWidth(), msg));
+        this.addFailureAt(node.getStart(), node.getWidth(), msg);
     }
 }

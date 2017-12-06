@@ -881,5 +881,102 @@
     "issueClass": "Ignored",
     "issueType": "Warning",
     "group": "Ignored"
+  },
+  "ban-types": {
+    "issueClass": "Ignored",
+    "issueType": "Error",
+    "severity": "Critical",
+    "level": "Opportunity for Excellence",
+    "group": "Configurable",
+    "commonWeaknessEnumeration": "710"
+  },
+  "match-default-export-name": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "newline-before-return": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Whitespace",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-duplicate-super": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-import-side-effect": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-invalid-template-strings": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-non-null-assertion": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-reference-import": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-sparse-arrays": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-unnecessary-callback-wrapper": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "prefer-template": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "return-undefined": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710",
+    "recommendation": "false, // this actually affect the readability of the code"
   }
 }

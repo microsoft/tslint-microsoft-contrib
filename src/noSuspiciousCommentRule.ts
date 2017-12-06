@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
+import {forEachTokenWithTrivia} from 'tsutils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {AstUtils} from './utils/AstUtils';
 
 const FAILURE_STRING: string = 'Suspicious comment found: ';
 const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
@@ -32,30 +32,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoSuspiciousCommentRuleWalker extends Lint.SkippableTokenAwareRuleWalker {
+class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
     public visitSourceFile(node: ts.SourceFile) {
-        const scanner: ts.Scanner = ts.createScanner(
-            ts.ScriptTarget.ES5,
-            false,  // do not skip comments
-            AstUtils.getLanguageVariant(node),
-            node.text
-        );
-        Lint.scanAllTokens(scanner, (scanner: ts.Scanner): void => {
-            const startPos = scanner.getStartPos();
-            if ((<any>this).tokensToSkipStartEndMap[startPos] != null) {
-                // tokens to skip are places where the scanner gets confused about what the token is, without
-                // the proper context (specifically, regex, identifiers, and templates). So skip those tokens.
-                scanner.setTextPos((<any>this).tokensToSkipStartEndMap[startPos]);
-                return;
-            }
-
-            if (scanner.getToken() === ts.SyntaxKind.SingleLineCommentTrivia ||
-                scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
-                const commentText: string = scanner.getTokenText();
-                const startPosition: number = scanner.getTokenPos();
-
-                this.scanCommentForSuspiciousWords(startPosition, commentText);
+        forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
+            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia ||
+                tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+                this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
     }
@@ -76,6 +59,6 @@ class NoSuspiciousCommentRuleWalker extends Lint.SkippableTokenAwareRuleWalker {
 
     private foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
         const errorMessage: string = FAILURE_STRING + suspiciousWord;
-        this.addFailure(this.createFailure(startPosition, commentText.length, errorMessage));
+        this.addFailureAt(startPosition, commentText.length, errorMessage);
     }
 }

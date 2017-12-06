@@ -3,6 +3,7 @@ import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import {forEachTokenWithTrivia} from 'tsutils';
 
 /**
  * Implementation of the max-func-body-length rule.
@@ -133,10 +134,9 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
             })
             .length;
 
-        const scanner = ts.createScanner(ts.ScriptTarget.ES5, false, ts.LanguageVariant.Standard, node.getText());
-        Lint.scanAllTokens(scanner, (scanner: ts.Scanner) => {
-            if (scanner.getToken() === ts.SyntaxKind.MultiLineCommentTrivia) {
-                commentLineCount += scanner.getTokenText().split(/\n/).length;
+        forEachTokenWithTrivia(node, (text, tokenSyntaxKind) => {
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+                commentLineCount += text.split(/\n/).length;
             }
         });
 
@@ -170,8 +170,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private addFuncBodyTooLongFailure(node: ts.FunctionLikeDeclaration, length: number) {
-        const failure = this.createFailure(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
-        this.addFailure(failure);
+        this.addFailureAt(node.getStart(), node.getWidth(), this.formatFailureText(node, length));
     }
 
     private formatFailureText (node: ts.FunctionLikeDeclaration, length: number) {

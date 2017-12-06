@@ -27,7 +27,14 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: prefer-type-cast rule is deprecated. ' +
+                'Replace your usage with the TSLint no-angle-bracket-type-assertion rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new PreferTypeCastRuleWalker(sourceFile, this.getOptions()));
     }
 }

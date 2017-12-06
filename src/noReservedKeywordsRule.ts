@@ -50,7 +50,13 @@ export class Rule extends Lint.Rules.AbstractRule {
         'from', 'of'
     ];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-reserved-keywords rule is deprecated. Replace your usage with the TSLint variable-name rule.');
+            Rule.isWarningShown = true;
+        }
         const walker: Lint.RuleWalker = new BannedTermWalker(
             sourceFile,
             this.getOptions(),

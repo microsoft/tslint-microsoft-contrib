@@ -161,7 +161,7 @@ export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.J
 
 /**
  * Get a dictionary of JsxAttribute from a JsxElement, JsxSelfClosingElement or JsxOpeningElement.
- * @returns { [propName: string]: ts.JsxAttribute } a dictionary has lowercase keys.
+ * @returns a dictionary with lowercase keys.
  */
 export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: string]: ts.JsxAttribute } {
     const attributesDictionary: { [propName: string]: ts.JsxAttribute } = {};
@@ -179,7 +179,7 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
  * Get first JsxElement whose tagName equals tagName from code.
  * @param code - a string of jsx code.
  * @param exceptTagName - the element's tagName you want to get.
- * @return { ts.JsxElement | ts.JsxSelfClosingElement } - a element.
+ * @return a element.
  */
 export function getJsxElementFromCode(code: string, exceptTagName: string): ts.JsxElement | ts.JsxSelfClosingElement {
     const sourceFile: ts.SourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES2015, true);
@@ -201,7 +201,7 @@ function delintNode(node: ts.Node, tagName: string): ts.JsxElement | ts.JsxSelfC
 
 /**
  * Get ancestor node whose tagName is ancestorTagName for a node.
- * @return { ts.JsxElement } the ancestor node or undefined if the ancestor node is not exist.
+ * @return the ancestor node or undefined if the ancestor node is not exist.
  */
 export function getAncestorNode(node: ts.Node, ancestorTagName: string): ts.JsxElement {
     if (!node) {

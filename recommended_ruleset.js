@@ -54,10 +54,12 @@ module.exports = {
         "no-debugger": true,
         "no-duplicate-case": true,
         "no-duplicate-super": true,
+        "no-duplicate-switch-case": true,
         "no-duplicate-variable": true,
         "no-empty": true,
         "no-floating-promises": true,
         "no-for-in-array": true,
+        "no-implicit-dependencies": true,
         "no-import-side-effect": true,
         "no-increment-decrement": true,
         "no-invalid-regexp": true,
@@ -66,12 +68,15 @@ module.exports = {
         "no-jquery-raw-elements": true,
         "no-misused-new": true,
         "no-non-null-assertion": true,
+        "no-object-literal-type-assertion": true,
+        "no-parameter-reassignment": true,
         "no-reference-import": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,
         "no-stateless-class": true,
         "no-string-literal": true,
         "no-string-throw": true,
+        "no-submodule-imports": true,
         "no-unnecessary-bind": true,
         "no-unnecessary-callback-wrapper": true,
         "no-unnecessary-initializer": true,
@@ -89,6 +94,7 @@ module.exports = {
         "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
         "strict-boolean-expressions": true,
         "switch-default": true,
+        "switch-final-break": true,
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
         "use-named-parameter": true,
@@ -101,6 +107,8 @@ module.exports = {
         "adjacent-overload-signatures": true,
         "array-type": [true, "array"],
         "arrow-parens": false, // for simple functions the parens on arrow functions are not needed
+        "ban-comma-operator": true, // possibly controversial
+        "binary-expression-operand-order": true,
         "callable-types": true,
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
@@ -123,6 +131,7 @@ module.exports = {
         "new-parens": true,
         "no-construct": true,
         "no-default-export": true,
+        "no-duplicate-imports": true,
         "no-empty-interface": true,
         "no-for-in": true,
         "no-function-expression": true,
@@ -130,20 +139,26 @@ module.exports = {
         "no-multiline-string": true, // multiline-strings often introduce unnecessary whitespace into the string literals
         "no-null-keyword": false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value
         "no-parameter-properties": true,
+        "no-redundant-jsdoc": true,
         "no-relative-imports": true,
         "no-require-imports": true,
+        "no-return-await": true,
         "no-shadowed-variable": true,
         "no-suspicious-comment": true,
+        "no-this-assignment": true,
         "no-typeof-undefined": true,
+        "no-unnecessary-class": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
         "no-unnecessary-qualifier": true,
+        "no-unnecessary-type-assertion": true,
         "no-unsupported-browser-code": true,
         "no-useless-files": true,
         "no-var-keyword": true,
         "no-var-requires": true,
         "no-var-self": true,
         "no-void-expression": true,
+        "number-literal-format": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
         "only-arrow-functions": false,  // there are many valid reasons to declare a function
@@ -152,11 +167,13 @@ module.exports = {
         "prefer-const": true,
         "prefer-for-of": true,
         "prefer-method-signature": true,
+        "prefer-object-spread": true,
         "prefer-template": true,
-        "return-undefined": false, // this actually affect the readability of the code
+        "type-literal-delimiter": true,
         "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
         "underscore-consistent-invocation": true,
         "unified-signatures": true,
+        "use-default-type-parameter": true,
         "variable-name": true,
 
         /**
@@ -184,6 +201,7 @@ module.exports = {
          */
         "align": [true, "parameters", "arguments", "statements"],
         "curly": true,
+        "encoding": true,
         "eofline": true,
         "import-spacing": true,
         "indent": [true, "spaces"],
@@ -191,6 +209,7 @@ module.exports = {
         "newline-before-return": true,
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
+        "no-irregular-whitespace": true,
         "no-single-line-block-comment": true,
         "no-trailing-whitespace": true,
         "no-unnecessary-semicolons": true,
@@ -199,6 +218,7 @@ module.exports = {
         "quotemark": [true, "single"],
         "react-tsx-curly-spacing": true,
         "semicolon": [true, "always"],
+        "space-within-parens": true,
         "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
                     // lists results in lists that are easier to reorder and version control diffs that are more clear.
                     // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
@@ -212,6 +232,7 @@ module.exports = {
         "ban": false,                // only enable this if you have some code pattern that you want to ban
         "ban-types": true,
         "cyclomatic-complexity": true,
+        "deprecation": false, // deprecated APIs are sometimes unavoidable
         "file-header": false,  // enable this rule only if you are legally required to add a file header
         "import-blacklist": false,  // enable and configure this as you desire
         "interface-over-type-literal": false,  // there are plenty of reasons to prefer interfaces
@@ -224,7 +245,10 @@ module.exports = {
         "no-reference": true,        // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
         "object-literal-shorthand": false,  // object-literal-shorthand offers an abbreviation not an abstraction
+        "prefer-conditional-expression": false, // unnecessarily strict
+        "prefer-switch": false, // more of a style preference
         "prefer-type-cast": true,   // pick either type-cast format and use it consistently
+        "return-undefined": false, // this actually affect the readability of the code
         "space-before-function-paren": false,   // turn this on if this is really your coding standard
 
         /**

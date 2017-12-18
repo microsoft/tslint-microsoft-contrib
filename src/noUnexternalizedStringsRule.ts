@@ -83,7 +83,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             return;
         }
         const callInfo = info ? info.callInfo : null;
-        if (callInfo  && this.ignores[callInfo.callExpression.expression.getText()]) {
+        if (callInfo && this.ignores[callInfo.callExpression.expression.getText()]) {
             return;
         }
         if (!callInfo || callInfo.argIndex === -1 || !this.signatures[callInfo.callExpression.expression.getText()]) {
@@ -96,7 +96,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             : null;
         if (messageArg && messageArg !== node) {
             this.addFailureAt(
-                messageArg.getStart(), messageArg.getWidth(),
+                node.getStart(), node.getWidth(),
                 `Message argument to '${callInfo.callExpression.expression.getText()}' must be a string literal.`);
             return;
         }

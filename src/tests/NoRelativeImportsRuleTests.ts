@@ -1,3 +1,4 @@
+/* tslint:disable:no-irregular-whitespace */
 import {TestHelper} from './TestHelper';
 
 /**
@@ -71,3 +72,4 @@ describe('noRelativeImportsRule', () : void => {
     });
 
 });
+/* tslint:enable:no-irregular-whitespace */

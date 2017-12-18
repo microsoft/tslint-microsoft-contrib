@@ -7,7 +7,7 @@ export module Utils {
      * Logical 'any' or 'exists' function.
      */
     export function exists<T>(list : ReadonlyArray<T>, predicate: (t: T) => boolean) : boolean {
-        if (list != null ) {
+        if (list != null) {
             for (let i = 0; i < list.length; i++) {
                 const obj : T = list[i];
                 if (predicate(obj)) {

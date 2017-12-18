@@ -219,7 +219,8 @@ module.exports = function(grunt) {
 
         tslint: {
             options: {
-                rulesDirectory: 'dist/src'
+                rulesDirectory: 'dist/src',
+                formatter: 'verbose'
             },
             prod: {
                 options: {
@@ -240,6 +241,7 @@ module.exports = function(grunt) {
                         tslintJson.rules['quotemark'] = false;
                         tslintJson.rules['object-literal-key-quotes'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
+                        tslintJson.rules['no-implicit-dependencies'] = [true, 'dev'];
                         return tslintJson;
                     })()
                 },
@@ -313,8 +315,15 @@ module.exports = function(grunt) {
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
             'ban-types': true,
-            'match-default-export-name': true, // requires type checking
+            'prefer-conditional-expression': true,      // not sure if this is needed
+            'type-literal-delimiter': true,             // not sure if this is needed
+            'no-parameter-reassignment': true,          // turn this on eventually
+            'match-default-export-name': true,          // requires type checking
+            'deprecation': true,                        // requires type checking
+            'no-unnecessary-type-assertion': true,      // requires type checking
+            'use-default-type-parameter': true,         // requires type checking
             'newline-before-return': true,              // kind of a silly rule
+            'prefer-switch': true,                      // no need
             'no-non-null-assertion': true,              // in fact we prefer the opposite rule
             'prefer-template': true,                    // rule does not handle multi-line strings nicely
             'return-undefined': true,                   // requires type checking

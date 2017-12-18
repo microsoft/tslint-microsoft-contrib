@@ -36,7 +36,7 @@
     "test": "grunt all"
   },
   "dependencies": {
-    "tsutils": "2.7.1"
+    "tsutils": "^2.12.1"
   },
   "devDependencies": {
     "chai": "4.1.2",
@@ -50,7 +50,7 @@
     "load-grunt-tasks": "3.2.0",
     "mocha": "4.0.1",
     "time-grunt": "1.2.1",
-    "tslint": "5.1.0",
+    "tslint": "5.8.0",
     "typescript": "2.6.2",
     "underscore": "1.8.3"
   },

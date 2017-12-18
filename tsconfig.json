@@ -20,6 +20,7 @@
     "outDir": "dist/src",
     "removeComments": true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "target": "es5"
   },
   "include": [

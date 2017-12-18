@@ -73,7 +73,6 @@ module.exports = {
         "no-reference-import": true,
         "no-regex-spaces": true,
         "no-sparse-arrays": true,
-        "no-stateless-class": true,
         "no-string-literal": true,
         "no-string-throw": true,
         "no-submodule-imports": true,
@@ -259,6 +258,7 @@ module.exports = {
         "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
+        "no-stateless-class": true,
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
     }

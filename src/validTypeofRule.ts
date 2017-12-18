@@ -27,7 +27,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static VALID_TERMS: string[] = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     }
 

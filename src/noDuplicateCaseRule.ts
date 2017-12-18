@@ -26,7 +26,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Duplicate case found in switch statement: ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-duplicate-case rule is deprecated. Replace your usage with the TSLint no-duplicate-switch-case rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
     }
 

@@ -21,3 +21,4 @@ tslint-microsoft-contrib.iml
 .npm_cache
 
 out.html
+rule-metadata.json

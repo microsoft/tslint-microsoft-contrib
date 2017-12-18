@@ -31,13 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    private static isWarningShown: boolean = false;
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        if (Rule.isWarningShown === false) {
-            console.warn('Warning: function-name rule is deprecated. Replace your usage with the TSLint variable-name rule.');
-            Rule.isWarningShown = true;
-        }
         return this.applyWithWalker(new FunctionNameRuleWalker(sourceFile, this.getOptions()));
     }
 }

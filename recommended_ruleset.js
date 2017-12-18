@@ -52,7 +52,6 @@ module.exports = {
         "no-constant-condition": true,
         "no-control-regex": true,
         "no-debugger": true,
-        "no-duplicate-case": true,
         "no-duplicate-super": true,
         "no-duplicate-switch-case": true,
         "no-duplicate-variable": true,
@@ -97,7 +96,6 @@ module.exports = {
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
         "use-named-parameter": true,
-        "valid-typeof": true,
 
         /**
          * Code Clarity. The following rules should be turned on because they make the code
@@ -155,7 +153,6 @@ module.exports = {
         "no-useless-files": true,
         "no-var-keyword": true,
         "no-var-requires": true,
-        "no-var-self": true,
         "no-void-expression": true,
         "number-literal-format": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
@@ -215,7 +212,6 @@ module.exports = {
         "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "quotemark": [true, "single"],
-        "react-tsx-curly-spacing": true,
         "semicolon": [true, "always"],
         "space-within-parens": true,
         "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
@@ -254,13 +250,17 @@ module.exports = {
          * Deprecated rules.  The following rules are deprecated for various reasons.
          */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
+        "no-duplicate-case": true,
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
         "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-stateless-class": true,
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
+        "no-var-self": true,
+        "react-tsx-curly-spacing": true,
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
+        "valid-typeof": true,
     }
 };
 

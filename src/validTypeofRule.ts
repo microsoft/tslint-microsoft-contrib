@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        group: 'Deprecated'
     };
 
     public static FAILURE_STRING: string = 'Invalid comparison in typeof. Did you mean ';

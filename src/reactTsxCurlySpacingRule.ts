@@ -20,17 +20,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        group: 'Whitespace'
+        group: 'Deprecated'
     };
 
-    private static isWarningShown: boolean = false;
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        if (Rule.isWarningShown === false) {
-            console.warn('Warning: react-tsx-curly-spacing rule is deprecated. ' +
-                'Replace your usage with the tslint-react jsx-curly-spacing rule.');
-            Rule.isWarningShown = true;
-        }
         return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
     }
 }

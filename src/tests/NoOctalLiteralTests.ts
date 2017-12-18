@@ -53,7 +53,7 @@ function demoScriptFail() {
          ]);
      });
 
-    it('should produce violations ', () : void => {
+    it('should produce violations - batch1', () : void => {
          const inputFile : string = `
 /**
  * The following code should have errors:
@@ -68,8 +68,72 @@ function demoScriptFail1() {
     return "Sample text \\-0";
     return "Sample text \\-035";
     return "Sample text \\-235";
-}
+}`;
+         TestHelper.assertViolations(ruleName, inputFile, [
+             {
+                 "failure": "Octal literals should not be used: \\251",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 6 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\254",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 7 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\23",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 8 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\7",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 9 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\0",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 11 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\-0",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 12 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\-035",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 13 }
+             },
+             {
+                 "failure": "Octal literals should not be used: \\-235",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 14 }
+             }
+         ]);
+     });
 
+    it('should produce violations - batch2', () : void => {
+        const inputFile : string = `
+/**
+ * The following code should have errors:
+ */
 function demoScriptFail2() {
     return 'Sample text \\351';
     return 'Sample text \\354 more text';
@@ -80,121 +144,73 @@ function demoScriptFail2() {
     return 'Sample text \\-0';
     return 'Sample text \\-035';
     return 'Sample text \\-235';
-}
-
-`;
-         TestHelper.assertViolations(ruleName, inputFile, [
-             {
-                 "failure": "Octal literals should not be used: \\251",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 6, "character": 25}
-             },
-             {
-                 "failure": "Octal literals should not be used: \\254",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 7, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\23",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 8, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\7",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 9, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\025",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 10, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\0",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 11, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-0",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 12, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-035",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 13, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-235",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 14, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\351",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 18, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\354",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 19, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\33",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 20, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\6",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 21, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\125",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 22, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\0",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 23, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-0",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 24, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-035",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 25, "character": 25 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-235",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "startPosition": { "line": 26, "character": 25 }
-             }
-         ]);
-     });
-
+}`;
+        TestHelper.assertViolations(ruleName, inputFile, [
+            {
+                "failure": "Octal literals should not be used: \\351",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 6 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\354",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 7 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\33",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 8 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\6",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 9 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\125",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 10 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 11 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\-0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 12 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\-035",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 13 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\-235",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 25, "line": 14 }
+            }
+        ]);
+    });
  });
 
 /* tslint:enable:no-octal-literal */

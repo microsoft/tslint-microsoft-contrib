@@ -21,21 +21,21 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoInvalidRegexpRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-invalid-regexp',
+        type: 'maintainability',
+        description: 'Do not use invalid regular expression strings in the RegExp constructor.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-invalid-regexp',
-    type: 'maintainability',
-    description: 'Do not use invalid regular expression strings in the RegExp constructor.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
 exports.Rule = Rule;
 var NoInvalidRegexpRuleWalker = (function (_super) {
     __extends(NoInvalidRegexpRuleWalker, _super);

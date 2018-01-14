@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.applyWithProgram = function (sourceFile, program) {
         return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), program));
     };
+    Rule.metadata = {
+        ruleName: 'no-cookies',
+        type: 'maintainability',
+        description: 'Do not use cookies',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '315, 539, 565, 614'
+    };
+    Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
     return Rule;
 }(Lint.Rules.TypedRule));
-Rule.metadata = {
-    ruleName: 'no-cookies',
-    type: 'maintainability',
-    description: 'Do not use cookies',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '315, 539, 565, 614'
-};
-Rule.FAILURE_STRING = 'Forbidden call to document.cookie';
 exports.Rule = Rule;
 var NoCookiesWalker = (function (_super) {
     __extends(NoCookiesWalker, _super);

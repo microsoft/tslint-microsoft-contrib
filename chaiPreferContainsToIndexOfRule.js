@@ -24,22 +24,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ChaiPreferContainsToIndexOfRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'chai-prefer-contains-to-index-of',
+        type: 'maintainability',
+        description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'chai-prefer-contains-to-index-of',
-    type: 'maintainability',
-    description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
     __extends(ChaiPreferContainsToIndexOfRuleWalker, _super);

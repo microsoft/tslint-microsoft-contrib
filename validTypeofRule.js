@@ -19,25 +19,30 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'valid-typeof',
+        type: 'maintainability',
+        description: 'Ensures that the results of typeof are compared against a valid string.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated'
+    };
+    Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
+    Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'valid-typeof',
-    type: 'maintainability',
-    description: 'Ensures that the results of typeof are compared against a valid string.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
-Rule.VALID_TERMS = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
 exports.Rule = Rule;
 var ValidTypeofRuleWalker = (function (_super) {
     __extends(ValidTypeofRuleWalker, _super);

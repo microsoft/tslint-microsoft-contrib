@@ -19,24 +19,29 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-var-self rule is deprecated. Replace your usage with the TSLint no-this-assignment rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-var-self',
+        type: 'maintainability',
+        description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-var-self',
-    type: 'maintainability',
-    description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var NoVarSelfRuleWalker = (function (_super) {
     __extends(NoVarSelfRuleWalker, _super);

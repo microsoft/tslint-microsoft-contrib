@@ -22,23 +22,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PreferTypeCastRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'prefer-type-cast',
+        type: 'maintainability',
+        description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Configurable',
+        recommendation: 'true,   // pick either type-cast format and use it consistently',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'prefer-type-cast',
-    type: 'maintainability',
-    description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Configurable',
-    recommendation: 'true,   // pick either type-cast format and use it consistently',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var PreferTypeCastRuleWalker = (function (_super) {
     __extends(PreferTypeCastRuleWalker, _super);

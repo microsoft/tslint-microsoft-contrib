@@ -41,22 +41,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UnderscoreConsistentInvocationRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'underscore-consistent-invocation',
+        type: 'maintainability',
+        description: 'Enforce a consistent usage of the _ functions',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'underscore-consistent-invocation',
-    type: 'maintainability',
-    description: 'Enforce a consistent usage of the _ functions',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
     __extends(UnderscoreConsistentInvocationRuleWalker, _super);

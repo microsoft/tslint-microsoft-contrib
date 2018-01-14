@@ -27,21 +27,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new A11yTabindexNoPositiveWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-tabindex-no-positive',
+        type: 'maintainability',
+        description: 'Enforce tabindex value is **not greater than zero**.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-tabindex-no-positive',
-    type: 'maintainability',
-    description: 'Enforce tabindex value is **not greater than zero**.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var A11yTabindexNoPositiveWalker = (function (_super) {
     __extends(A11yTabindexNoPositiveWalker, _super);

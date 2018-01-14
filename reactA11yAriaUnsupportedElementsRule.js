@@ -30,21 +30,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new ReactA11yAriaUnsupportedElementsWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-aria-unsupported-elements',
+        type: 'maintainability',
+        description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-aria-unsupported-elements',
-    type: 'maintainability',
-    description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
     __extends(ReactA11yAriaUnsupportedElementsWalker, _super);

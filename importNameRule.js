@@ -22,22 +22,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ImportNameRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'import-name',
+        type: 'maintainability',
+        description: 'The name of the imported module must match the name of the thing being imported',
+        hasFix: true,
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'import-name',
-    type: 'maintainability',
-    description: 'The name of the imported module must match the name of the thing being imported',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
 exports.Rule = Rule;
 var ImportNameRuleWalker = (function (_super) {
     __extends(ImportNameRuleWalker, _super);
@@ -91,7 +92,11 @@ var ImportNameRuleWalker = (function (_super) {
         moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             var message = "Misnamed import. Import should be named '" + moduleName + "' but found '" + importedName + "'";
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
+            var nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration ?
+                node.name : node.importClause.name;
+            var nameNodeStartPos = nameNode.getStart();
+            var fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, moduleName);
+            this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
         }
     };
     ImportNameRuleWalker.prototype.makeCamelCase = function (input) {

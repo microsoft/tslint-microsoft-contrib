@@ -21,24 +21,24 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoMultilineStringWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-multiline-string',
+        type: 'maintainability',
+        description: 'Do not declare multiline strings',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-multiline-string',
-    type: 'maintainability',
-    description: 'Do not declare multiline strings',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
 exports.Rule = Rule;
 var NoMultilineStringWalker = (function (_super) {
     __extends(NoMultilineStringWalker, _super);

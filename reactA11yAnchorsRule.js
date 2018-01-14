@@ -37,21 +37,21 @@ var Rule = (function (_super) {
         }
         return [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-anchors',
+        type: 'functionality',
+        description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-anchors',
-    type: 'functionality',
-    description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yAnchorsRuleWalker = (function (_super) {
     __extends(ReactA11yAnchorsRuleWalker, _super);

@@ -24,22 +24,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new InsecureRandomRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'insecure-random',
+        type: 'functionality',
+        description: 'Do not use insecure sources for random bytes',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Security',
+        commonWeaknessEnumeration: '330'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'insecure-random',
-    type: 'functionality',
-    description: 'Do not use insecure sources for random bytes',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Security',
-    commonWeaknessEnumeration: '330'
-};
 exports.Rule = Rule;
 var InsecureRandomRuleWalker = (function (_super) {
     __extends(InsecureRandomRuleWalker, _super);

@@ -21,24 +21,24 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-document-write',
+        type: 'maintainability',
+        description: 'Do not use document.write',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85'
+    };
+    Rule.WRITE_FAILURE = 'Forbidden call to document.write';
+    Rule.WRITELN_FAILURE = 'Forbidden call to document.writeln';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-document-write',
-    type: 'maintainability',
-    description: 'Do not use document.write',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '79, 85'
-};
-Rule.WRITE_FAILURE = 'Forbidden call to document.write';
-Rule.WRITELN_FAILURE = 'Forbidden call to document.writeln';
 exports.Rule = Rule;
 var NoDocumentWriteWalker = (function (_super) {
     __extends(NoDocumentWriteWalker, _super);

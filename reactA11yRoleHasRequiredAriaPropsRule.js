@@ -37,21 +37,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new A11yRoleHasRequiredAriaPropsWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-role-has-required-aria-props',
+        type: 'maintainability',
+        description: 'Elements with aria roles must have all required attributes according to the role.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-role-has-required-aria-props',
-    type: 'maintainability',
-    description: 'Elements with aria roles must have all required attributes according to the role.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
     __extends(A11yRoleHasRequiredAriaPropsWalker, _super);

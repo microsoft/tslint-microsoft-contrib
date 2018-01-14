@@ -109,9 +109,9 @@ function getNumericLiteral(node) {
 }
 exports.getNumericLiteral = getNumericLiteral;
 function getAllAttributesFromJsxElement(node) {
-    var attributes;
+    var attributes = null;
     if (node == null) {
-        return [];
+        return attributes;
     }
     else if (TypeGuard_1.isJsxElement(node)) {
         attributes = node.openingElement.attributes.properties;

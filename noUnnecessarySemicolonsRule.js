@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
     };
+    Rule.FAILURE_STRING = 'unnecessary semi-colon';
+    Rule.metadata = {
+        ruleName: 'no-unnecessary-semicolons',
+        type: 'maintainability',
+        description: 'Remove unnecessary semicolons',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.FAILURE_STRING = 'unnecessary semi-colon';
-Rule.metadata = {
-    ruleName: 'no-unnecessary-semicolons',
-    type: 'maintainability',
-    description: 'Remove unnecessary semicolons',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Whitespace',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var NoUnnecessarySemicolonsWalker = (function (_super) {
     __extends(NoUnnecessarySemicolonsWalker, _super);

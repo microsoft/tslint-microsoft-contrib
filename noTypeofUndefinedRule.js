@@ -22,23 +22,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoTypeofUndefinedRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-typeof-undefined',
+        type: 'maintainability',
+        description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
+            'or perhaps x == null if you want to check for either null or undefined.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-typeof-undefined',
-    type: 'maintainability',
-    description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
-        'or perhaps x == null if you want to check for either null or undefined.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
 exports.Rule = Rule;
 var NoTypeofUndefinedRuleWalker = (function (_super) {
     __extends(NoTypeofUndefinedRuleWalker, _super);

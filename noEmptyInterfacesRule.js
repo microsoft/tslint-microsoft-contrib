@@ -18,26 +18,31 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-empty-interfaces rule is deprecated. Replace your usage with the TSLint no-empty-interface rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-empty-interfaces',
+        type: 'maintainability',
+        description: 'Do not use empty interfaces.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false, // use tslint no-empty-interface rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-empty-interfaces',
-    type: 'maintainability',
-    description: 'Do not use empty interfaces.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Deprecated',
-    recommendation: 'false, // use tslint no-empty-interface rule instead',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
 exports.Rule = Rule;
 var NoEmptyInterfacesRuleWalker = (function (_super) {
     __extends(NoEmptyInterfacesRuleWalker, _super);

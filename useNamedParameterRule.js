@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UseNamedParameterWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'use-named-parameter',
+        type: 'maintainability',
+        description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'Use a named parameter instead: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'use-named-parameter',
-    type: 'maintainability',
-    description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'Use a named parameter instead: ';
 exports.Rule = Rule;
 var UseNamedParameterWalker = (function (_super) {
     __extends(UseNamedParameterWalker, _super);

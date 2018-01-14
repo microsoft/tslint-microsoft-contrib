@@ -31,21 +31,21 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-titles',
+        type: 'functionality',
+        description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-titles',
-    type: 'functionality',
-    description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yTitlesRuleWalker = (function (_super) {
     __extends(ReactA11yTitlesRuleWalker, _super);

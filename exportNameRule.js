@@ -32,23 +32,23 @@ var Rule = (function (_super) {
         }
         return null;
     };
+    Rule.metadata = {
+        ruleName: 'export-name',
+        type: 'maintainability',
+        description: 'The name of the exported module must match the filename of the source file',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'export-name',
-    type: 'maintainability',
-    description: 'The name of the exported module must match the filename of the source file',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'The exported module or identifier name must match the file name. Found: ';
 exports.Rule = Rule;
 var ExportNameWalker = (function (_super) {
     __extends(ExportNameWalker, _super);

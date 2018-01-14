@@ -21,23 +21,23 @@ var Rule = (function (_super) {
         var walker = new BannedTermWalker_1.BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
         return this.applyWithWalker(walker);
     };
+    Rule.metadata = {
+        ruleName: 'no-banned-terms',
+        type: 'maintainability',
+        description: 'Do not use banned terms: caller, callee, eval, arguments.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '676, 242, 116'
+    };
+    Rule.FAILURE_STRING = 'Forbidden reference to banned term: ';
+    Rule.BANNED_TERMS = ['caller', 'callee', 'arguments', 'eval'];
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-banned-terms',
-    type: 'maintainability',
-    description: 'Do not use banned terms: caller, callee, eval, arguments.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '676, 242, 116'
-};
-Rule.FAILURE_STRING = 'Forbidden reference to banned term: ';
-Rule.BANNED_TERMS = ['caller', 'callee', 'arguments', 'eval'];
 exports.Rule = Rule;
 //# sourceMappingURL=noBannedTermsRule.js.map

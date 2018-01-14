@@ -23,22 +23,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-jquery-raw-elements',
+        type: 'maintainability',
+        description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-jquery-raw-elements',
-    type: 'maintainability',
-    description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var NoJqueryRawElementsRuleWalker = (function (_super) {
     __extends(NoJqueryRawElementsRuleWalker, _super);

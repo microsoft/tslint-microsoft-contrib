@@ -19,25 +19,31 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-duplicate-case rule is deprecated. ' +
+                'Replace your usage with the TSLint no-duplicate-switch-case rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-duplicate-case',
+        type: 'maintainability',
+        description: 'Do not use duplicate case labels in switch statements.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.FAILURE_STRING = 'Duplicate case found in switch statement: ';
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-duplicate-case',
-    type: 'maintainability',
-    description: 'Do not use duplicate case labels in switch statements.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_STRING = 'Duplicate case found in switch statement: ';
 exports.Rule = Rule;
 var NoDuplicateCaseRuleWalker = (function (_super) {
     __extends(NoDuplicateCaseRuleWalker, _super);

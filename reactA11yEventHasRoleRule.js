@@ -30,21 +30,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new ReactA11yEventHasRoleWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-event-has-role',
+        type: 'maintainability',
+        description: 'Elements with event handlers must have role attribute.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-event-has-role',
-    type: 'maintainability',
-    description: 'Elements with event handlers must have role attribute.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yEventHasRoleWalker = (function (_super) {
     __extends(ReactA11yEventHasRoleWalker, _super);

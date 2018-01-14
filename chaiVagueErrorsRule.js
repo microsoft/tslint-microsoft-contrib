@@ -28,22 +28,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new ChaiVagueErrorsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'chai-vague-errors',
+        type: 'maintainability',
+        description: 'Avoid Chai assertions that result in vague errors',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'chai-vague-errors',
-    type: 'maintainability',
-    description: 'Avoid Chai assertions that result in vague errors',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var ChaiVagueErrorsRuleWalker = (function (_super) {
     __extends(ChaiVagueErrorsRuleWalker, _super);

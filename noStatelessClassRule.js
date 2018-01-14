@@ -22,24 +22,29 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-stateless-class rule is deprecated. Replace your usage with the TSLint no-unnecessary-class rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoStatelessClassRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-stateless-class',
+        type: 'maintainability',
+        description: 'A stateless class represents a failure in the object oriented design of the system.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-stateless-class',
-    type: 'maintainability',
-    description: 'A stateless class represents a failure in the object oriented design of the system.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var NoStatelessClassRuleWalker = (function (_super) {
     __extends(NoStatelessClassRuleWalker, _super);

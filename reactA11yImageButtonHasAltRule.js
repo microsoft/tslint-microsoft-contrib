@@ -27,21 +27,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new ReactA11yImageButtonHasAltWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-image-button-has-alt',
+        type: 'maintainability',
+        description: 'Enforce that inputs element with type="image" must have alt attribute.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-image-button-has-alt',
-    type: 'maintainability',
-    description: 'Enforce that inputs element with type="image" must have alt attribute.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yImageButtonHasAltWalker = (function (_super) {
     __extends(ReactA11yImageButtonHasAltWalker, _super);

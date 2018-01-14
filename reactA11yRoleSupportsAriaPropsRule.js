@@ -40,22 +40,22 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new A11yRoleSupportsAriaPropsWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-role-supports-aria-props',
+        type: 'maintainability',
+        description: 'Enforce that elements with explicit or implicit roles defined contain ' +
+            'only `aria-*` properties supported by that `role`.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-role-supports-aria-props',
-    type: 'maintainability',
-    description: 'Enforce that elements with explicit or implicit roles defined contain ' +
-        'only `aria-*` properties supported by that `role`.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var A11yRoleSupportsAriaPropsWalker = (function (_super) {
     __extends(A11yRoleSupportsAriaPropsWalker, _super);

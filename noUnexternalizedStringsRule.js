@@ -21,22 +21,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnexternalizedStringsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unexternalized-strings',
+        type: 'maintainability',
+        description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Configurable',
+        recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-unexternalized-strings',
-    type: 'maintainability',
-    description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Configurable',
-    recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
-};
 exports.Rule = Rule;
 var NoUnexternalizedStringsRuleWalker = (function (_super) {
     __extends(NoUnexternalizedStringsRuleWalker, _super);
@@ -85,7 +85,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             ? callInfo.callExpression.arguments[this.messageIndex]
             : null;
         if (messageArg && messageArg !== node) {
-            this.addFailureAt(messageArg.getStart(), messageArg.getWidth(), "Message argument to '" + callInfo.callExpression.expression.getText() + "' must be a string literal.");
+            this.addFailureAt(node.getStart(), node.getWidth(), "Message argument to '" + callInfo.callExpression.expression.getText() + "' must be a string literal.");
             return;
         }
     };
@@ -111,7 +111,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
         }
         return null;
     };
+    NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
     return NoUnexternalizedStringsRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));
-NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
 //# sourceMappingURL=noUnexternalizedStringsRule.js.map

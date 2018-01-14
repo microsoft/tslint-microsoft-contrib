@@ -29,22 +29,22 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-anchor-blank-noopener',
+        type: 'functionality',
+        description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '242,676'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-anchor-blank-noopener',
-    type: 'functionality',
-    description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '242,676'
-};
 exports.Rule = Rule;
 var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
     __extends(ReactAnchorBlankNoopenerRuleWalker, _super);

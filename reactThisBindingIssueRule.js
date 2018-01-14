@@ -33,22 +33,22 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-this-binding-issue',
+        type: 'maintainability',
+        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
+            'on any methods that you pass off to child components as callbacks.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-this-binding-issue',
-    type: 'maintainability',
-    description: 'When using React components you must be careful to correctly bind the `this` reference ' +
-        'on any methods that you pass off to child components as callbacks.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
 exports.Rule = Rule;
 var ReactThisBindingIssueRuleWalker = (function (_super) {
     __extends(ReactThisBindingIssueRuleWalker, _super);

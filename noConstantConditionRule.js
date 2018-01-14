@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-constant-condition',
+        type: 'maintainability',
+        description: 'Do not use constant expressions in conditions.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 570, 571, 670'
+    };
+    Rule.FAILURE_STRING = 'Found constant conditional: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-constant-condition',
-    type: 'maintainability',
-    description: 'Do not use constant expressions in conditions.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 570, 571, 670'
-};
-Rule.FAILURE_STRING = 'Found constant conditional: ';
 exports.Rule = Rule;
 var NoConstantConditionRuleWalker = (function (_super) {
     __extends(NoConstantConditionRuleWalker, _super);

@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-with-statement',
+        type: 'maintainability',
+        description: 'Do not use with statements. Assign the item to a new variable instead',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.FAILURE_STRING = 'Forbidden with statement';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-with-statement',
-    type: 'maintainability',
-    description: 'Do not use with statements. Assign the item to a new variable instead',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.FAILURE_STRING = 'Forbidden with statement';
 exports.Rule = Rule;
 var NoWithStatementWalker = (function (_super) {
     __extends(NoWithStatementWalker, _super);

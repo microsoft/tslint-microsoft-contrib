@@ -24,22 +24,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NonLiteralRequireRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'non-literal-require',
+        type: 'functionality',
+        description: 'Detect require includes that are not for string literals',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95,676'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'non-literal-require',
-    type: 'functionality',
-    description: 'Detect require includes that are not for string literals',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '95,676'
-};
 exports.Rule = Rule;
 var NonLiteralRequireRuleWalker = (function (_super) {
     __extends(NonLiteralRequireRuleWalker, _super);

@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MissingVisibilityModifierWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-missing-visibility-modifiers',
+        type: 'maintainability',
+        description: 'Deprecated - This rule is in the TSLint product as `member-access`',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false, // use tslint member-access rule instead',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-missing-visibility-modifiers',
-    type: 'maintainability',
-    description: 'Deprecated - This rule is in the TSLint product as `member-access`',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Deprecated',
-    recommendation: 'false, // use tslint member-access rule instead',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var MissingVisibilityModifierWalker = (function (_super) {
     __extends(MissingVisibilityModifierWalker, _super);

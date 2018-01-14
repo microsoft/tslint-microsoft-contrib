@@ -21,23 +21,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-exec-script',
+        type: 'maintainability',
+        description: 'Do not use the execScript functions',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '95, 676'
+    };
+    Rule.FAILURE_STRING = 'forbidden execScript: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-exec-script',
-    type: 'maintainability',
-    description: 'Do not use the execScript functions',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '95, 676'
-};
-Rule.FAILURE_STRING = 'forbidden execScript: ';
 exports.Rule = Rule;
 var NoEvalScriptWalker = (function (_super) {
     __extends(NoEvalScriptWalker, _super);

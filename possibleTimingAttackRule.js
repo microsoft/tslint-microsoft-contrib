@@ -24,22 +24,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new PossibleTimingAttackRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'possible-timing-attack',
+        type: 'functionality',
+        description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Security',
+        commonWeaknessEnumeration: '710,749'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'possible-timing-attack',
-    type: 'functionality',
-    description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Security',
-    commonWeaknessEnumeration: '710,749'
-};
 exports.Rule = Rule;
 var PossibleTimingAttackRuleWalker = (function (_super) {
     __extends(PossibleTimingAttackRuleWalker, _super);

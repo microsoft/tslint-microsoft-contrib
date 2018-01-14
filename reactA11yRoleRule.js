@@ -35,21 +35,21 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-role',
+        type: 'maintainability',
+        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-role',
-    type: 'maintainability',
-    description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var A11yRoleRuleWalker = (function (_super) {
     __extends(A11yRoleRuleWalker, _super);

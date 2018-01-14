@@ -21,24 +21,24 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoGenericArrayWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'prefer-array-literal',
+        type: 'maintainability',
+        description: 'Use array literal syntax when declaring or instantiating array types.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
+    };
+    Rule.GENERICS_FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
+    Rule.CONSTRUCTOR_FAILURE_STRING = 'Replace Array constructor with an array literal: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'prefer-array-literal',
-    type: 'maintainability',
-    description: 'Use array literal syntax when declaring or instantiating array types.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398, 710'
-};
-Rule.GENERICS_FAILURE_STRING = 'Replace generic-typed Array with array literal: ';
-Rule.CONSTRUCTOR_FAILURE_STRING = 'Replace Array constructor with an array literal: ';
 exports.Rule = Rule;
 var NoGenericArrayWalker = (function (_super) {
     __extends(NoGenericArrayWalker, _super);

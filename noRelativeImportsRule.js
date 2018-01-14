@@ -23,22 +23,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoRelativeImportsRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-relative-imports',
+        type: 'maintainability',
+        description: 'Do not use relative paths when importing external modules or ES6 import declarations',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-relative-imports',
-    type: 'maintainability',
-    description: 'Do not use relative paths when importing external modules or ES6 import declarations',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '710'
-};
 exports.Rule = Rule;
 var NoRelativeImportsRuleWalker = (function (_super) {
     __extends(NoRelativeImportsRuleWalker, _super);

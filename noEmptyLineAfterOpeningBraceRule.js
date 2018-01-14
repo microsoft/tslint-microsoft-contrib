@@ -22,24 +22,24 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-empty-line-after-opening-brace',
+        type: 'maintainability',
+        description: 'Avoid an empty line after an opening brace',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        recommendation: 'false,',
+        commonWeaknessEnumeration: '710'
+    };
+    Rule.FAILURE_STRING = 'Opening brace cannot be followed by empty line';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-empty-line-after-opening-brace',
-    type: 'maintainability',
-    description: 'Avoid an empty line after an opening brace',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Whitespace',
-    recommendation: 'false,',
-    commonWeaknessEnumeration: '710'
-};
-Rule.FAILURE_STRING = 'Opening brace cannot be followed by empty line';
 exports.Rule = Rule;
 var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
     __extends(NoEmptyLineAfterOpeningBraceWalker, _super);

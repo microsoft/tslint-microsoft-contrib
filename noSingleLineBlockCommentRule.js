@@ -22,22 +22,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSingleLineBlockCommentRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-single-line-block-comment',
+        type: 'maintainability',
+        description: 'Avoid single line block comments; use single line comments instead',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        commonWeaknessEnumeration: '710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-single-line-block-comment',
-    type: 'maintainability',
-    description: 'Avoid single line block comments; use single line comments instead',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Whitespace',
-    commonWeaknessEnumeration: '710'
-};
 exports.Rule = Rule;
 var NoSingleLineBlockCommentRuleWalker = (function (_super) {
     __extends(NoSingleLineBlockCommentRuleWalker, _super);

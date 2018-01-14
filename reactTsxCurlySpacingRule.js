@@ -20,21 +20,21 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'react-tsx-curly-spacing',
+        type: 'style',
+        description: 'Consistently use spaces around the brace characters of JSX attributes.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-tsx-curly-spacing',
-    type: 'style',
-    description: 'Consistently use spaces around the brace characters of JSX attributes.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Whitespace'
-};
 exports.Rule = Rule;
 var Spacing;
 (function (Spacing) {

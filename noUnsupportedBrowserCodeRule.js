@@ -26,21 +26,21 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoUnsupportedBrowserCodeRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unsupported-browser-code',
+        type: 'maintainability',
+        description: 'Avoid writing browser-specific code for unsupported browser versions',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-unsupported-browser-code',
-    type: 'maintainability',
-    description: 'Avoid writing browser-specific code for unsupported browser versions',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity'
-};
 exports.Rule = Rule;
 var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
     __extends(NoUnsupportedBrowserCodeRuleWalker, _super);

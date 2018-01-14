@@ -38,23 +38,23 @@ var Rule = (function (_super) {
             ? this.applyWithWalker(new ImgHasAltWalker(sourceFile, this.getOptions()))
             : [];
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-img-has-alt',
+        type: 'maintainability',
+        description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+            'For decorative images, using empty alt attribute and role="presentation".',
+        options: 'string[]',
+        optionsDescription: '',
+        optionExamples: ['true', '[true, ["Image"]]'],
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-img-has-alt',
-    type: 'maintainability',
-    description: 'Enforce that an img element contains the non-empty alt attribute. ' +
-        'For decorative images, using empty alt attribute and role="presentation".',
-    options: 'string[]',
-    optionsDescription: '',
-    optionExamples: ['true', '[true, ["Image"]]'],
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Important',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ImgHasAltWalker = (function (_super) {
     __extends(ImgHasAltWalker, _super);

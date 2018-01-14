@@ -30,21 +30,21 @@ var Rule = (function (_super) {
         }
         return ruleFailures;
     };
+    Rule.metadata = {
+        ruleName: 'no-useless-files',
+        type: 'maintainability',
+        description: 'Locates files that only contain commented out code, whitespace characters, or have no content',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: false,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-useless-files',
-    type: 'maintainability',
-    description: 'Locates files that only contain commented out code, whitespace characters, or have no content',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: false,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '398'
-};
 exports.Rule = Rule;
 //# sourceMappingURL=noUselessFilesRule.js.map

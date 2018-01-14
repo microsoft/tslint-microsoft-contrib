@@ -23,24 +23,24 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'jquery-deferred-must-complete',
+        type: 'maintainability',
+        description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
+            'on it within all code branches in the scope.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+    Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve ' +
+        'or reject invoked on all code paths: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'jquery-deferred-must-complete',
-    type: 'maintainability',
-    description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
-        'on it within all code branches in the scope.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve ' +
-    'or reject invoked on all code paths: ';
 exports.Rule = Rule;
 function isPromiseInstantiation(expression) {
     if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {

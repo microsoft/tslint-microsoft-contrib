@@ -31,22 +31,22 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-unused-props-and-state',
+        type: 'maintainability',
+        description: 'Remove unneeded properties defined in React Props and State interfaces',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-unused-props-and-state',
-    type: 'maintainability',
-    description: 'Remove unneeded properties defined in React Props and State interfaces',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness',
-    commonWeaknessEnumeration: '398'
-};
 exports.Rule = Rule;
 var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
     __extends(ReactUnusedPropsAndStateRuleWalker, _super);

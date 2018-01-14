@@ -8,6 +8,11 @@ export declare module TestHelper {
         line: number;
         position?: number;
     }
+    interface Fix {
+        innerStart: number;
+        innerLength: number;
+        innerText: string;
+    }
     interface ExpectedFailure {
         ruleName: string;
         name: string;
@@ -15,6 +20,7 @@ export declare module TestHelper {
         ruleSeverity?: string;
         endPosition?: FailurePosition;
         startPosition: FailurePosition;
+        fix?: Fix;
     }
     function assertNoViolation(ruleName: string, inputFileOrScript: string, useTypeChecker?: boolean): void;
     function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string, useTypeChecker?: boolean): void;

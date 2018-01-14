@@ -30,22 +30,22 @@ var Rule = (function (_super) {
         }
         return null;
     };
+    Rule.metadata = {
+        ruleName: 'react-no-dangerous-html',
+        type: 'maintainability',
+        description: 'Do not use React\'s dangerouslySetInnerHTML API.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-no-dangerous-html',
-    type: 'maintainability',
-    description: 'Do not use React\'s dangerouslySetInnerHTML API.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Mandatory',
-    group: 'Security',
-    commonWeaknessEnumeration: '79, 85, 710'
-};
 exports.Rule = Rule;
 var NoDangerousHtmlWalker = (function (_super) {
     __extends(NoDangerousHtmlWalker, _super);

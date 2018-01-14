@@ -41,22 +41,22 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-iframe-missing-sandbox',
+        type: 'functionality',
+        description: 'React iframes must specify a sandbox attribute',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Security',
+        commonWeaknessEnumeration: '915'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-iframe-missing-sandbox',
-    type: 'functionality',
-    description: 'React iframes must specify a sandbox attribute',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Security',
-    commonWeaknessEnumeration: '915'
-};
 exports.Rule = Rule;
 var ReactIframeMissingSandboxRuleWalker = (function (_super) {
     __extends(ReactIframeMissingSandboxRuleWalker, _super);

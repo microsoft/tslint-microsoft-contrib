@@ -23,22 +23,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new NoSuspiciousCommentRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-suspicious-comment',
+        type: 'maintainability',
+        description: 'Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '546'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-suspicious-comment',
-    type: 'maintainability',
-    description: 'Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '546'
-};
 exports.Rule = Rule;
 var NoSuspiciousCommentRuleWalker = (function (_super) {
     __extends(NoSuspiciousCommentRuleWalker, _super);

@@ -25,21 +25,21 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaNoSideEffectCodeRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-no-side-effect-code',
+        type: 'maintainability',
+        description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'mocha-no-side-effect-code',
-    type: 'maintainability',
-    description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
 exports.Rule = Rule;
 var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     __extends(MochaNoSideEffectCodeRuleWalker, _super);

@@ -147,6 +147,15 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         _super.prototype.visitSetAccessor.call(this, node);
         this.scope = this.scope.parent;
     };
+    ScopedSymbolTrackingWalker.prototype.visitVariableDeclaration = function (node) {
+        if (AstUtils_1.AstUtils.isDeclarationFunctionType(node)) {
+            this.scope.addFunctionSymbol(node.name.getText());
+        }
+        else {
+            this.scope.addNonFunctionSymbol(node.name.getText());
+        }
+        _super.prototype.visitVariableDeclaration.call(this, node);
+    };
     return ScopedSymbolTrackingWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));
 exports.ScopedSymbolTrackingWalker = ScopedSymbolTrackingWalker;

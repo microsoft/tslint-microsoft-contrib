@@ -24,21 +24,21 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaUnneededDoneRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-unneeded-done',
+        type: 'maintainability',
+        description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'mocha-unneeded-done',
-    type: 'maintainability',
-    description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity'
-};
 exports.Rule = Rule;
 var MochaUnneededDoneRuleWalker = (function (_super) {
     __extends(MochaUnneededDoneRuleWalker, _super);

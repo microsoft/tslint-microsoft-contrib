@@ -27,21 +27,21 @@ var Rule = (function (_super) {
             return [];
         }
     };
+    Rule.metadata = {
+        ruleName: 'react-a11y-meta',
+        type: 'functionality',
+        description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'react-a11y-meta',
-    type: 'functionality',
-    description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Ignored',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Accessibility'
-};
 exports.Rule = Rule;
 var ReactA11yMetaRuleWalker = (function (_super) {
     __extends(ReactA11yMetaRuleWalker, _super);

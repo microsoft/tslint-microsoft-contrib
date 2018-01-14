@@ -22,22 +22,22 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new UnnecessaryLocalVariableRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'no-unnecessary-local-variable',
+        type: 'maintainability',
+        description: 'Do not declare a variable only to return it from the function on the next line.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '563, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'no-unnecessary-local-variable',
-    type: 'maintainability',
-    description: 'Do not declare a variable only to return it from the function on the next line.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Low',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    commonWeaknessEnumeration: '563, 710'
-};
 exports.Rule = Rule;
 var UnnecessaryLocalVariableRuleWalker = (function (_super) {
     __extends(UnnecessaryLocalVariableRuleWalker, _super);

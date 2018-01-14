@@ -22,25 +22,25 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'mocha-avoid-only',
+        type: 'maintainability',
+        description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
+    };
+    Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
+    Rule.FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
+    Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
+    Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'mocha-avoid-only',
-    type: 'maintainability',
-    description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Error',
-    severity: 'Critical',
-    level: 'Opportunity for Excellence',
-    group: 'Correctness'
-};
-Rule.FAILURE_STRING_IT = 'Do not commit Mocha it.only function call';
-Rule.FAILURE_STRING_SPECIFY = 'Do not commit Mocha specify.only function call';
-Rule.FAILURE_STRING_DESCRIBE = 'Do not commit Mocha describe.only function call';
-Rule.FAILURE_STRING_CONTEXT = 'Do not commit Mocha context.only function call';
 exports.Rule = Rule;
 var MochaAvoidOnlyRuleWalker = (function (_super) {
     __extends(MochaAvoidOnlyRuleWalker, _super);

@@ -23,23 +23,23 @@ var Rule = (function (_super) {
     Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(new MaxFunctionBodyLengthRuleWalker(sourceFile, this.getOptions()));
     };
+    Rule.metadata = {
+        ruleName: 'max-func-body-length',
+        type: 'maintainability',
+        description: 'Avoid long functions.',
+        options: null,
+        optionsDescription: '',
+        typescriptOnly: true,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+        commonWeaknessEnumeration: '398, 710'
+    };
     return Rule;
 }(Lint.Rules.AbstractRule));
-Rule.metadata = {
-    ruleName: 'max-func-body-length',
-    type: 'maintainability',
-    description: 'Avoid long functions.',
-    options: null,
-    optionsDescription: '',
-    typescriptOnly: true,
-    issueClass: 'Non-SDL',
-    issueType: 'Warning',
-    severity: 'Moderate',
-    level: 'Opportunity for Excellence',
-    group: 'Clarity',
-    recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
-    commonWeaknessEnumeration: '398, 710'
-};
 exports.Rule = Rule;
 var FUNC_BODY_LENGTH = 'func-body-length';
 var FUNC_EXPRESSION_BODY_LENGTH = 'func-express-body-length';

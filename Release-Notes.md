@@ -1,3 +1,15 @@
+# 5.0.2 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.2)
+* [#402](https://github.com/Microsoft/tslint-microsoft-contrib/issues/402) fix false positive for no-string-based-set-timeout
+* [#406](https://github.com/Microsoft/tslint-microsoft-contrib/issues/406) deprecate no-stateless-class rule in favor of no-unnecessary-class
+* [#382](https://github.com/Microsoft/tslint-microsoft-contrib/issues/382) Deprecate the `no-var-self` rule and replace with no-this-assignment
+* [#401](https://github.com/Microsoft/tslint-microsoft-contrib/issues/401) add grunt rule to generate rule-metadata.json which contains all rule…
+* [#400](https://github.com/Microsoft/tslint-microsoft-contrib/issues/400) Audit rules that have already been added in TSLint
+* [#399](https://github.com/Microsoft/tslint-microsoft-contrib/issues/399) Use ReadonlyArray for node arrays
+* [#391](https://github.com/Microsoft/tslint-microsoft-contrib/issues/391) Upgrade grunt and other library versions in build
+* [#386](https://github.com/Microsoft/tslint-microsoft-contrib/issues/386) Add 'typescript' to peer dependencies
+* [#379](https://github.com/Microsoft/tslint-microsoft-contrib/issues/379) The use-isnan rule is fully removed
+
 # 5.0.1 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.1)
 * [#373](https://github.com/Microsoft/tslint-microsoft-contrib/issues/373) Fix tsutils peer dependency issue with tslint-microsoft-contrib@5.0.0

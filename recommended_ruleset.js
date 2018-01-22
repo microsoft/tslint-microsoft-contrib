@@ -117,7 +117,7 @@ module.exports = {
         "import-name": true,
         "interface-name": true,
         "jsdoc-format": true,
-        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file 
+        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
         "max-file-line-count": true,
         "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
         "max-line-length": [true, 140],
@@ -248,7 +248,7 @@ module.exports = {
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
-         */
+         *
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-case": true,
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
@@ -261,6 +261,7 @@ module.exports = {
         "react-tsx-curly-spacing": true,
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
         "valid-typeof": true,
+        */
     }
 };
 

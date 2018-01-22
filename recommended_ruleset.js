@@ -248,20 +248,19 @@ module.exports = {
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
-         *
+         */
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
-        "no-duplicate-case": true,
+        "no-duplicate-case": false,
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
         "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
-        "no-stateless-class": true,
+        "no-stateless-class": false,
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
-        "no-var-self": true,
-        "react-tsx-curly-spacing": true,
+        "no-var-self": false,
+        "react-tsx-curly-spacing": false,
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
-        "valid-typeof": true,
-        */
+        "valid-typeof": false,
     }
 };
 

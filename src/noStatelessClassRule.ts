@@ -24,6 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
+        recommendation: 'false,',
         group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };

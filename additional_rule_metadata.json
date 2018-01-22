@@ -653,7 +653,7 @@
     "issueType": "Warning",
     "severity": "Low",
     "group": "Clarity",
-    "recommendation": "[true, 3],  // we generally recommend making one public class per file ",
+    "recommendation": "[true, 3],  // we generally recommend making one public class per file",
     "level": "Opportunity for Excellence"
   },
   "no-parameter-properties": {

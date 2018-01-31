@@ -150,7 +150,7 @@ function demoScriptFail1() {
 /**
  * The following code should have errors:
  */
-function demoScriptFail3() {
+function demoScriptFail2() {
     return 'Sample text \\351';
     return 'Sample text \\354 more text';
     return 'Sample text \\33';
@@ -249,7 +249,7 @@ function demoScriptFail3() {
 /**
  * The following code should have errors:
  */
-function demoScriptFail4() {
+function demoScriptFail3() {
     return \`Sample text \\351\`;
     return \`Sample text \\354 more text\`;
     return \`Sample text \\33\`;
@@ -348,7 +348,7 @@ function demoScriptFail4() {
 /**
  * The following code should have errors:
  */
-function demoScriptFail2() {
+function demoScriptFail4() {
     return 'Sample text \\354 \\n more text';
     return 'Sample text \\354 \\t more text';
     return 'Sample text \\354 \\u2028 more text';

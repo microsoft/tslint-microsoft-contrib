@@ -33,14 +33,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoOctalLiteral extends ErrorTolerantWalker {
     public visitNode(node: ts.Node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
             this.failOnOctalString(<ts.LiteralExpression>node);
         }
         super.visitNode(node);
     }
 
     private failOnOctalString(node: ts.LiteralExpression) {
-        const match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9])).*(?:\1)/g.exec(node.getText());
+        const match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9]))(?:.|\n|\t|\u2028|\u2029)*(?:\1)/g.exec(node.getText());
 
         if (match) {
             let octalValue: string = match[2]; // match[2] is the matched octal value.

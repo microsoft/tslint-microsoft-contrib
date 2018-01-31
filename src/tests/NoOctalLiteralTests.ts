@@ -65,7 +65,9 @@ function demoScriptFail1() {
     return "Sample text \\7";
     return "Sample text \\025";
     return "Sample text \\0";
+    return "Sample text \\\\\\0";
     return "Sample text \\-0";
+    return "Sample text \\\\\\-0";
     return "Sample text \\-035";
     return "Sample text \\-235";
 }`;
@@ -106,25 +108,39 @@ function demoScriptFail1() {
                  "startPosition": { "character": 25, "line": 11 }
              },
              {
+                "failure": "Octal literals should not be used: \\0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 27, "line": 12 }
+            },
+            {
                  "failure": "Octal literals should not be used: \\-0",
-                 "name": "file.ts",
-                 "ruleName": "no-octal-literal",
-                 "ruleSeverity": "ERROR",
-                 "startPosition": { "character": 25, "line": 12 }
-             },
-             {
-                 "failure": "Octal literals should not be used: \\-035",
                  "name": "file.ts",
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 13 }
              },
              {
+                "failure": "Octal literals should not be used: \\-0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 27, "line": 14 }
+            },
+            {
+                 "failure": "Octal literals should not be used: \\-035",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 15 }
+             },
+             {
                  "failure": "Octal literals should not be used: \\-235",
                  "name": "file.ts",
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
-                 "startPosition": { "character": 25, "line": 14 }
+                 "startPosition": { "character": 25, "line": 16 }
              }
          ]);
      });
@@ -142,6 +158,8 @@ function demoScriptFail2() {
     return 'Sample text \\125';
     return 'Sample text \\0';
     return 'Sample text \\-0';
+    return 'Sample text \\\\\\0';
+    return 'Sample text \\\\\\-0';
     return 'Sample text \\-035';
     return 'Sample text \\-235';
 }`;
@@ -196,18 +214,32 @@ function demoScriptFail2() {
                 "startPosition": { "character": 25, "line": 12 }
             },
             {
+                "failure": "Octal literals should not be used: \\0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 27, "line": 13 }
+            },
+            {
+                "failure": "Octal literals should not be used: \\-0",
+                "name": "file.ts",
+                "ruleName": "no-octal-literal",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 27, "line": 14 }
+            },
+            {
                 "failure": "Octal literals should not be used: \\-035",
                 "name": "file.ts",
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
-                "startPosition": { "character": 25, "line": 13 }
+                "startPosition": { "character": 25, "line": 15 }
             },
             {
                 "failure": "Octal literals should not be used: \\-235",
                 "name": "file.ts",
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
-                "startPosition": { "character": 25, "line": 14 }
+                "startPosition": { "character": 25, "line": 16 }
             }
         ]);
     });

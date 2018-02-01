@@ -46,6 +46,11 @@ describe('reactA11yImgHasAlt', () => {
         TestHelper.assertNoViolation(ruleName, fileName);
       });
 
+      it('when the img element has non-empty alt value and undefined presentation role', () => {
+          const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndUndefinedPresentationRole.tsx';
+          TestHelper.assertNoViolation(ruleName, fileName);
+      });
+
       it('when the img element has non-empty alt value and presentation role when option is enabled', () => {
         const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndPresentationRole.tsx';
         const ruleOptions: any[] = [[], { allowNonEmptyAltWithRolePresentation: true }];

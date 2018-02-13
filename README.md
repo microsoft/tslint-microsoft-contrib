@@ -8,13 +8,13 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 5.0.2 (Stable)
+Version 5.0.3 (Stable)
 -------------
 The project has been in use for several years on multiple projects. Please report any bugs or false positives you might find!
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 5.0.3 (In-Development)
+Version 5.0.4 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
 To use the nightly build set your npm version to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`
@@ -26,7 +26,7 @@ Installation
 
 Alternately, you can download the files directly from GitHub:
 
-* [5.0.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.0.2)
+* [5.0.3](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.0.3)
 
 #### TSLint and corresponding tslint-microsoft-contrib version
 

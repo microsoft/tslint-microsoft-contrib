@@ -21,6 +21,15 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
     }
 
+    protected getFunctionTargetType(expression: ts.CallExpression) : string {
+        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && this.typeChecker) {
+            const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
+            const targetType: ts.Type = this.typeChecker.getTypeAtLocation(propExp.expression);
+            return this.typeChecker.typeToString(targetType);
+        }
+        return null;
+    }
+
     protected isExpressionEvaluatingToFunction(expression : ts.Expression) : boolean {
         if (expression.kind === ts.SyntaxKind.ArrowFunction
             || expression.kind === ts.SyntaxKind.FunctionExpression) {

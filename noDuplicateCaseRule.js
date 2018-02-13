@@ -37,6 +37,7 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
+        recommendation: 'false,',
         group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };

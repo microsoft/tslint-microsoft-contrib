@@ -293,17 +293,17 @@
     "return-undefined": false,
     "space-before-function-paren": false,
     "missing-optional-annotation": false,
-    "no-duplicate-case": true,
+    "no-duplicate-case": false,
     "no-duplicate-parameter-names": false,
     "no-empty-interfaces": false,
     "no-missing-visibility-modifiers": false,
     "no-multiple-var-decl": false,
-    "no-stateless-class": true,
+    "no-stateless-class": false,
     "no-switch-case-fall-through": false,
-    "no-var-self": true,
-    "react-tsx-curly-spacing": true,
+    "no-var-self": false,
+    "react-tsx-curly-spacing": false,
     "typeof-compare": false,
-    "valid-typeof": true
+    "valid-typeof": false
   },
   "rulesDirectory": "./"
 }

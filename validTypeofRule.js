@@ -36,6 +36,7 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
+        recommendation: 'false,',
         group: 'Deprecated'
     };
     Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';

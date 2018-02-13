@@ -88,7 +88,7 @@ var ImgHasAltWalker = (function (_super) {
         else {
             var roleAttribute = attributes[ROLE_STRING];
             var roleAttributeValue = roleAttribute ? JsxAttribute_1.getStringLiteral(roleAttribute) : '';
-            var isPresentationRole = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
+            var isPresentationRole = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
             var isEmptyAlt = JsxAttribute_1.isEmpty(altAttribute) || JsxAttribute_1.getStringLiteral(altAttribute) === '';
             var allowNonEmptyAltWithRolePresentation = options.length > 1
                 ? options[1].allowNonEmptyAltWithRolePresentation

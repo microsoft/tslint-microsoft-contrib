@@ -31,6 +31,7 @@ var Rule = (function (_super) {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
+        recommendation: 'false,',
         group: 'Deprecated'
     };
     return Rule;

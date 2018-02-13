@@ -1,3 +1,11 @@
+# 5.0.3 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.3)
+* [#390](https://github.com/Microsoft/tslint-microsoft-contrib/issues/390) react-a11y-image-button-has-alt toLowerCase error throws
+* [#414](https://github.com/Microsoft/tslint-microsoft-contrib/issues/414) Remove TypeError in reactA11yImgHasAltRule.ts for undefined role attribute 
+* [#411](https://github.com/Microsoft/tslint-microsoft-contrib/issues/411) Removed default configuration of deprecated rules. 
+* [#405](https://github.com/Microsoft/tslint-microsoft-contrib/issues/405) Deprecated several rules that are now duplicates
+* [#410](https://github.com/Microsoft/tslint-microsoft-contrib/issues/410) Removed default configuration of deprecated rules. 
+
 # 5.0.2 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.2)
 * [#402](https://github.com/Microsoft/tslint-microsoft-contrib/issues/402) fix false positive for no-string-based-set-timeout

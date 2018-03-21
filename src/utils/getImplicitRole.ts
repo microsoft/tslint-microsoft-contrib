@@ -3,7 +3,7 @@ import * as implicitRoles from './implicitRoles';
 import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './TypeGuard';
 
 /**
- * @returns { string } the implicit role or undefined if no corresponding role for a
+ * @returns string of the implicit role or undefined if no corresponding role for a
  * JsxElement, JsxSelfClosingElement or JsxOpeningElement.
  * The implementation is inspired and re-implemented from
  * https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/src/util/getImplicitRole.js

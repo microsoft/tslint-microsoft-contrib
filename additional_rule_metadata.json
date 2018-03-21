@@ -653,7 +653,7 @@
     "issueType": "Warning",
     "severity": "Low",
     "group": "Clarity",
-    "recommendation": "[true, 3],  // we generally recommend making one public class per file ",
+    "recommendation": "[true, 3],  // we generally recommend making one public class per file",
     "level": "Opportunity for Excellence"
   },
   "no-parameter-properties": {
@@ -975,8 +975,204 @@
     "issueType": "Warning",
     "severity": "Important",
     "level": "Opportunity for Excellence",
-    "group": "Clarity",
+    "group": "Configurable",
     "commonWeaknessEnumeration": "710",
     "recommendation": "false, // this actually affect the readability of the code"
+  },
+  "ban-comma-operator": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710",
+    "recommendation": "true, // possibly controversial"
+  },
+  "binary-expression-operand-order": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "deprecation": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Configurable",
+    "commonWeaknessEnumeration": "710",
+    "recommendation": "false, // deprecated APIs are sometimes unavoidable"
+  },
+  "no-duplicate-imports": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-duplicate-switch-case": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-implicit-dependencies": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-irregular-whitespace": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Whitespace",
+    "commonWeaknessEnumeration": "710"
+  },
+  "encoding": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Whitespace",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-object-literal-type-assertion": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-parameter-reassignment": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-redundant-jsdoc": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-return-await": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-submodule-imports": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-this-assignment": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-unnecessary-class": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "no-unnecessary-type-assertion": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "number-literal-format": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "prefer-conditional-expression": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Configurable",
+    "commonWeaknessEnumeration": "710",
+    "recommendation": "false, // unnecessarily strict"
+  },
+  "prefer-object-spread": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "prefer-switch": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Configurable",
+    "commonWeaknessEnumeration": "710",
+    "recommendation": "false, // more of a style preference"
+  },
+  "space-within-parens": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Whitespace",
+    "commonWeaknessEnumeration": "710"
+  },
+  "switch-final-break": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Correctness",
+    "commonWeaknessEnumeration": "710"
+  },
+  "type-literal-delimiter": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
+  },
+  "use-default-type-parameter": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Low",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "710"
   }
 }

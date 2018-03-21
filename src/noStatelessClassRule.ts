@@ -24,11 +24,18 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
-        group: 'Correctness',
+        recommendation: 'false,',
+        group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-stateless-class rule is deprecated. Replace your usage with the TSLint no-unnecessary-class rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new NoStatelessClassRuleWalker(sourceFile, this.getOptions()));
     }
 }

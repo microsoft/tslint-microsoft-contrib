@@ -6,8 +6,8 @@ export module Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
-    export function exists<T>(list : T[], predicate: (t: T) => boolean) : boolean {
-        if (list != null ) {
+    export function exists<T>(list : ReadonlyArray<T>, predicate: (t: T) => boolean) : boolean {
+        if (list != null) {
             for (let i = 0; i < list.length; i++) {
                 const obj : T = list[i];
                 if (predicate(obj)) {
@@ -21,7 +21,7 @@ export module Utils {
     /**
      * A contains function.
      */
-    export function contains<T>(list: T[], element: T): boolean {
+    export function contains<T>(list: ReadonlyArray<T>, element: T): boolean {
         return exists(list, (item: T): boolean => {
             return item === element;
         });
@@ -30,7 +30,7 @@ export module Utils {
     /**
      * A removeAll function.
      */
-    export function removeAll<T>(source: T[], elementsToRemove: T[]): T[] {
+    export function removeAll<T>(source: ReadonlyArray<T>, elementsToRemove: ReadonlyArray<T>): T[] {
         if (source == null || source.length === 0) {
             return [];
         }
@@ -46,7 +46,7 @@ export module Utils {
     /**
      * A remove() function.
      */
-    export function remove<T>(source: T[], elementToRemove: T): T[] {
+    export function remove<T>(source: ReadonlyArray<T>, elementToRemove: T): T[] {
         return removeAll(source, [elementToRemove]);
     }
 

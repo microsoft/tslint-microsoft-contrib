@@ -1,5 +1,5 @@
 import React = require('react');
-
+import _ = require('underscore');
 export class MyComponent extends React.Component<{}, {}> {
 
     private listenerMethod() {}

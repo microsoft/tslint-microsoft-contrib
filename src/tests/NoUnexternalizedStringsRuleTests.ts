@@ -158,10 +158,15 @@ describe('noUnexternalizedStringsRule', () : void => {
                 "failure": "Message argument to 'localize' must be a string literal.",
                 "name": "file.ts",
                 "ruleName": "no-unexternalized-strings",
-                "startPosition": {
-                    "character": 29,
-                    "line": 2
-                }
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 29, "line": 2 }
+            },
+            {
+                "failure": "Message argument to 'localize' must be a string literal.",
+                "name": "file.ts",
+                "ruleName": "no-unexternalized-strings",
+                "ruleSeverity": "ERROR",
+                "startPosition": { "character": 40, "line": 2 }
             }
         ]);
     });

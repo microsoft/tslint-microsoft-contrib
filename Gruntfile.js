@@ -219,7 +219,8 @@ module.exports = function(grunt) {
 
         tslint: {
             options: {
-                rulesDirectory: 'dist/src'
+                rulesDirectory: 'dist/src',
+                formatter: 'verbose'
             },
             prod: {
                 options: {
@@ -240,6 +241,7 @@ module.exports = function(grunt) {
                         tslintJson.rules['quotemark'] = false;
                         tslintJson.rules['object-literal-key-quotes'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
+                        tslintJson.rules['no-implicit-dependencies'] = [true, 'dev'];
                         return tslintJson;
                     })()
                 },
@@ -313,8 +315,15 @@ module.exports = function(grunt) {
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
             'ban-types': true,
-            'match-default-export-name': true, // requires type checking
+            'prefer-conditional-expression': true,      // not sure if this is needed
+            'type-literal-delimiter': true,             // not sure if this is needed
+            'no-parameter-reassignment': true,          // turn this on eventually
+            'match-default-export-name': true,          // requires type checking
+            'deprecation': true,                        // requires type checking
+            'no-unnecessary-type-assertion': true,      // requires type checking
+            'use-default-type-parameter': true,         // requires type checking
             'newline-before-return': true,              // kind of a silly rule
+            'prefer-switch': true,                      // no need
             'no-non-null-assertion': true,              // in fact we prefer the opposite rule
             'prefer-template': true,                    // rule does not handle multi-line strings nicely
             'return-undefined': true,                   // requires type checking
@@ -382,6 +391,18 @@ module.exports = function(grunt) {
         rows.unshift(header);
         grunt.file.write('tslint-warnings.csv', rows.join('\n'), {encoding: 'UTF-8'});
 
+    });
+
+    grunt.registerTask('generate-rule-metadata', 'A task that generates rule-metadata.json which contains a json array of all rule metadata', function () {
+
+        const allMetadata = []
+
+        getAllRules().forEach(function(ruleFile) {
+            const metadata = getMetadataFromFile(ruleFile)
+            allMetadata.push(metadata)
+        })
+
+        grunt.file.write('rule-metadata.json', JSON.stringify(allMetadata, null, 2), {encoding: 'UTF-8'});
     });
 
     grunt.registerTask('generate-recommendations', 'A task that generates the recommended_ruleset.js file', function () {
@@ -476,6 +497,7 @@ module.exports = function(grunt) {
         'generate-recommendations',
         'generate-default-tslint-json',
         'generate-sdl-report',
+        'generate-rule-metadata',
         'create-package-json-for-npm'
     ]);
 

@@ -20,14 +20,21 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        recommendation: 'false,',
+        group: 'Deprecated'
     };
 
     public static FAILURE_STRING: string = 'Invalid comparison in typeof. Did you mean ';
 
     public static VALID_TERMS: string[] = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     }
 

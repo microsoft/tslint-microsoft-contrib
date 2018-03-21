@@ -20,7 +20,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        group: 'Whitespace'
+        recommendation: 'false,',
+        group: 'Deprecated'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

@@ -35,7 +35,7 @@ export class Scope {
         return false;
     }
 
-    public addParameters(parameters: ts.ParameterDeclaration[]): void {
+    public addParameters(parameters: ReadonlyArray<ts.ParameterDeclaration>): void {
         parameters.forEach((parm: ts.ParameterDeclaration): void => {
             if (AstUtils.isDeclarationFunctionType(parm)) {
                 this.addFunctionSymbol(parm.name.getText());

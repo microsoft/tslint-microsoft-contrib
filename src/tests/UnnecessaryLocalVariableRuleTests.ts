@@ -23,6 +23,19 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    // issue #381
+    it('should pass on recursive variables', (): void => {
+        const script : string = `
+            const balls = {
+                foo: 'foo',
+                bar: () => balls.foo
+            };
+            return balls;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should fail on class function', () : void => {
         const script : string = `
             class MyClass {

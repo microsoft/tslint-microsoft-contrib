@@ -33,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
-    private readonly variableUsages = tsutils.collectVariableUsage(this.getSourceFile());
+    private readonly variableUsages: Map<ts.Identifier, tsutils.VariableInfo> = tsutils.collectVariableUsage(this.getSourceFile());
 
     protected visitBlock(node: ts.Block): void {
         this.validateStatementArray(node.statements);

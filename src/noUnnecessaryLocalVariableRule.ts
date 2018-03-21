@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -32,6 +33,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
+    private readonly variableUsages = tsutils.collectVariableUsage(this.getSourceFile());
+
     protected visitBlock(node: ts.Block): void {
         this.validateStatementArray(node.statements);
         super.visitBlock(node);
@@ -53,8 +56,8 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
-        if (node.body != null && node.body.kind === ts.SyntaxKind.ModuleBlock) {
-            this.validateStatementArray((<ts.ModuleBlock>node.body).statements);
+        if (node.body != null && tsutils.isModuleBlock(node.body)) {
+            this.validateStatementArray(node.body.statements);
         }
         super.visitModuleDeclaration(node);
     }
@@ -68,37 +71,46 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
         const nextToLastStatement = statements[statements.length - 2];
 
         const returnedVariableName: string = this.tryToGetReturnedVariableName(lastStatement);
-        const declaredVariableName: string = this.tryToGetDeclaredVariableName(nextToLastStatement);
+        const declaredVariableIdentifier: ts.Identifier | null = this.tryToGetDeclaredVariable(nextToLastStatement);
+        if (declaredVariableIdentifier == null) {
+            return;
+        }
 
-        if (returnedVariableName != null && declaredVariableName != null) {
-            if (returnedVariableName === declaredVariableName) {
-                this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(),
-                    FAILURE_STRING + returnedVariableName);
-            }
+        const declaredVariableName: string = declaredVariableIdentifier.text;
+
+        if (returnedVariableName != null
+            && declaredVariableName != null
+            && returnedVariableName === declaredVariableName
+            && this.variableIsOnlyUsedOnce(declaredVariableIdentifier)) {
+            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(),
+                FAILURE_STRING + returnedVariableName);
         }
     }
 
-    private tryToGetDeclaredVariableName(statement: ts.Statement): string {
-        if (statement != null && statement.kind === ts.SyntaxKind.VariableStatement) {
-            const variableStatement: ts.VariableStatement = <ts.VariableStatement>statement;
-
-            if (variableStatement.declarationList.declarations.length === 1) {
-                const declaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
-                if (declaration.name != null && declaration.name.kind === ts.SyntaxKind.Identifier) {
-                    return (<ts.Identifier>declaration.name).text;
+    private tryToGetDeclaredVariable(statement: ts.Statement): ts.Identifier | null {
+        if (statement != null && tsutils.isVariableStatement(statement)) {
+            if (statement.declarationList.declarations.length === 1) {
+                const declaration: ts.VariableDeclaration = statement.declarationList.declarations[0];
+                if (declaration.name != null && tsutils.isIdentifier(declaration.name)) {
+                    return declaration.name;
                 }
             }
         }
         return null;
     }
 
-    private tryToGetReturnedVariableName(statement: ts.Statement): string {
-        if (statement != null && statement.kind === ts.SyntaxKind.ReturnStatement) {
-            const returnStatement: ts.ReturnStatement = <ts.ReturnStatement>statement;
-            if (returnStatement.expression != null && returnStatement.expression.kind === ts.SyntaxKind.Identifier) {
-                return (<ts.Identifier>returnStatement.expression).text;
+    private tryToGetReturnedVariableName(statement: ts.Statement): string | null {
+        if (statement != null && tsutils.isReturnStatement(statement)) {
+            if (statement.expression != null && tsutils.isIdentifier(statement.expression)) {
+                return statement.expression.text;
             }
         }
         return null;
+    }
+
+    private variableIsOnlyUsedOnce(declaredVariableIdentifier: ts.Identifier) {
+        const usage = this.variableUsages.get(declaredVariableIdentifier);
+
+        return usage !== undefined && usage.uses.length === 1;
     }
 }

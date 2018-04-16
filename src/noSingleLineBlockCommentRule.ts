@@ -34,11 +34,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoSingleLineBlockCommentRuleWalker extends Lint.RuleWalker {
 
     public visitSourceFile(node: ts.SourceFile) {
-        forEachTokenWithTrivia(node, (fullText, tokenSyntaxKind, range) => {
+        forEachTokenWithTrivia(node, (fullText, tokenSyntaxKind, range: ts.TextRange) => {
             const tokenText = fullText.substring(range.pos, range.end);
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
                            && this.isSingleLineComment(tokenText)
-                           && !this.isTsLintSuppression(tokenText)) {
+                            && !this.isTsLintSuppression(tokenText)
+                            && !this.isFollowedByMoreCodeOnSameLine(fullText, range)) {
                 this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });
@@ -51,5 +52,10 @@ class NoSingleLineBlockCommentRuleWalker extends Lint.RuleWalker {
 
     private isTsLintSuppression(commentText: string): boolean {
         return /\/*\s*tslint:(enable|disable):.*/.test(commentText);
+    }
+
+    private isFollowedByMoreCodeOnSameLine(fullText: string, range: ts.TextRange): boolean {
+        const restOfText: string = fullText.substring(range.end);
+        return /^\s*\r?\n/.test(restOfText) === false;
     }
 }

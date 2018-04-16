@@ -17,7 +17,16 @@ describe('noFunctionExpressionRule', (): void => {
 
     it('should pass on generator', (): void => {
         const script: string = `
-            var x = (): void => {
+            var x = function *() {
+            }
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
+    it('should pass on named generator', (): void => {
+        const script: string = `
+            var x = function * namedGenerator() {
             }
         `;
 

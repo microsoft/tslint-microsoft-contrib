@@ -21,7 +21,7 @@ describe('noSingleLineBlockCommentRule', () : void => {
     it('should pass on comment within a JSX block', () : void => {
         const script : string = `
             import React = require('react');
-            const Thing = () => 
+            const Thing = () =>
                 <div>
                 {/* insert some meaningful comment or ignore statement here */}
                 {/* insert some other comment with extra space */ }

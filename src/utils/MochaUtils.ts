@@ -41,8 +41,10 @@ export module MochaUtils {
      */
     export function isLifecycleMethod(call: ts.CallExpression): boolean {
         const functionName: string = AstUtils.getFunctionName(call);
+        const callText: string = call.expression.getText();
         return functionName === 'it' || functionName === 'specify'
             || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
-            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll';
+            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll'
+            || callText === 'it.skip' || callText === 'it.only';
     }
 }

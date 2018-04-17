@@ -62,6 +62,30 @@ describe('mochaNoSideEffectCodeRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on usage of skip/only', () : void => {
+        const script : string = `
+            describe('someTest', (): void => {
+
+                it.skip((): void => {
+                });
+
+                describe.skip((): void => {
+                    it.skip((): void => {
+                    });
+                });
+
+                it.only((): void => {
+                });
+                describe.only((): void => {
+                    it.only((): void => {
+                    });
+                });
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on function declarations', () : void => {
         const script : string = `
             describe('someTest', (): void => {

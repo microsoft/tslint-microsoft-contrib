@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-suspicious-comment',
         type: 'maintainability',
-        description: 'Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO',
+        description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.split(', ')}`,
         options: null,
         optionsDescription: '',
         typescriptOnly: true,

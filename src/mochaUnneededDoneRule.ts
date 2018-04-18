@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'mocha-unneeded-done',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
         options: null,

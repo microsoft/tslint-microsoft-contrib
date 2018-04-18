@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-reserved-keywords',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.',
         options: null,

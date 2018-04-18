@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-delete-expression',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not delete expressions. Only properties should be deleted',
         options: null,

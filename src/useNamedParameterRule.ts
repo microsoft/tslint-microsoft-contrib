@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'use-named-parameter',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
         options: null,

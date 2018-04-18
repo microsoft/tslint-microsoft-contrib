@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-octal-literal',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use octal literals or escaped octal sequences',
         options: null,

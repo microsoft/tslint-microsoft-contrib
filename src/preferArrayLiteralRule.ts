@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-array-literal',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Use array literal syntax when declaring or instantiating array types.',
         options: null,

@@ -85,6 +85,7 @@ export module TestHelper {
         useTypeChecker : boolean = false): Lint.LintResult {
 
         const configuration: Lint.Configuration.IConfigurationFile = {
+            // tslint:disable-next-line:no-reserved-keywords
             extends: [],
             jsRules: new Map<string, Partial<Lint.IOptions>>(),
             linterOptions: {},

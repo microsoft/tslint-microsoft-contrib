@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-relative-imports',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use relative paths when importing external modules or ES6 import declarations',
         options: null,

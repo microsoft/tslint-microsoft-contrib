@@ -16,6 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-inner-html',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
         options: null,

@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'missing-optional-annotation',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
         options: null,

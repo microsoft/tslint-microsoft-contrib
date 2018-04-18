@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-useless-files',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Locates files that only contain commented out code, whitespace characters, or have no content',
         options: null,

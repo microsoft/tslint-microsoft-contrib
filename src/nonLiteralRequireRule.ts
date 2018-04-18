@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'non-literal-require',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'Detect require includes that are not for string literals',
         options: null,

@@ -21,6 +21,7 @@ https://www.w3.org/TR/2014/REC-wai-aria-20140320/states_and_properties#state_pro
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-props',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute.',
         options: null,

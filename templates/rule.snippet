@@ -17,6 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: '%RULE_NAME%',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',    // one of: 'functionality' | 'maintainability' | 'style' | 'typescript'
         description: '... add a meaningful one line description',
         options: null,

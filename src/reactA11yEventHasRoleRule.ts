@@ -19,6 +19,7 @@ const TARGET_EVENTS: string[] = ['click', 'keyup', 'keydown', 'keypress', 'mouse
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-event-has-role',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Elements with event handlers must have role attribute.',
         options: null,

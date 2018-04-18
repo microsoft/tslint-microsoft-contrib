@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'jquery-deferred-must-complete',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
                     'on it within all code branches in the scope.',

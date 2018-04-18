@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'chai-prefer-contains-to-index-of',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
         options: null,

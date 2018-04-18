@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-http-string',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         /* tslint:disable:no-http-string */
         description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',

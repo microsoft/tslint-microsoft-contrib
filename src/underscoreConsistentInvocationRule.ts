@@ -33,6 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'underscore-consistent-invocation',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce a consistent usage of the _ functions',
         options: null,

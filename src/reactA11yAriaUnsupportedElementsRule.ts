@@ -22,6 +22,7 @@ export function getFailureString(tagName: string, ariaAttributeNames: string[]):
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-aria-unsupported-elements',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
         options: null,

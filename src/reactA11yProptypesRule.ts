@@ -45,6 +45,7 @@ export function getFailureString(propName: string, expectedType: string, permitt
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-proptypes',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce ARIA state and property values are valid.',
         options: null,

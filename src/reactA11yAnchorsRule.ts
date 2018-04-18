@@ -31,6 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-anchors',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
         options: null,

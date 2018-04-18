@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-field-initialization',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
         options: null,

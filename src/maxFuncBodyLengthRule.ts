@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'max-func-body-length',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Avoid long functions.',
         options: null,

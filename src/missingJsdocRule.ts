@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'missing-jsdoc',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'All files must have a top level JSDoc comment.',
         options: null,

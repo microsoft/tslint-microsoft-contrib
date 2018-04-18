@@ -19,6 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-this-binding-issue',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'When using React components you must be careful to correctly bind the `this` reference ' +
                      'on any methods that you pass off to child components as callbacks.',

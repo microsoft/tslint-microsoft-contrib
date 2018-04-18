@@ -30,6 +30,7 @@ https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-role',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
         options: null,

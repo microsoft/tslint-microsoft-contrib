@@ -23,6 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unsupported-browser-code',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Avoid writing browser-specific code for unsupported browser versions',
         options: null,

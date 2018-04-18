@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-string-based-set-immediate',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use the version of setImmediate that accepts code as a string argument.',
         options: null,

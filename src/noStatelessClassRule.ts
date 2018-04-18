@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-stateless-class',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'A stateless class represents a failure in the object oriented design of the system.',
         options: null,

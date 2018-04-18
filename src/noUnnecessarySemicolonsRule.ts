@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-semicolons',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Remove unnecessary semicolons',
         options: null,

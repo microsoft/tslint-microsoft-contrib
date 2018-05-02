@@ -34,6 +34,10 @@ export module AstUtils {
         return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
     }
 
+    export function isJQueryExpression(functionTarget: string): boolean {
+        return /^(jquery|[$])/i.test(functionTarget);
+    }
+
     export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
         if (modifiers == null) {
             return false;

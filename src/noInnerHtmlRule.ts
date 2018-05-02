@@ -56,7 +56,10 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
+                const functionTarget = AstUtils.getFunctionTarget(node);
+                if (AstUtils.isJQueryExpression(functionTarget)) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
+                }
             }
         }
         super.visitCallExpression(node);

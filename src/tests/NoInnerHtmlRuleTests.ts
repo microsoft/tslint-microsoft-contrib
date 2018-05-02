@@ -76,4 +76,16 @@ describe('noInnerHtmlRule', () : void => {
         ]);
     });
 
+    it('should pass on non-jQuery HTML method calls', () : void => {
+        const script : string = `
+            var myCustomObject = {
+              html: function (text) {
+                console.log('Called html with ' + text);
+              },
+            };
+            myCustomObject.html('here I am');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
 });

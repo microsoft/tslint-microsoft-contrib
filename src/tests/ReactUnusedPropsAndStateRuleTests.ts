@@ -616,4 +616,24 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             }
         ]);
     });
+
+    it('should pass on SFC component', () : void => {
+        const script : string = `
+            import React = require('react');
+
+            module VideoContainer {
+                export interface Props {
+                    myProp1: boolean;
+                    myProp2: boolean;
+                }
+            }
+            const VideoContainer: React.SFC<VideoContainer.Props> = (props) => {
+                return <span>{props.myProp1}{props.myProp2}</span>;
+            };
+
+            export = VideoContainer;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
 });

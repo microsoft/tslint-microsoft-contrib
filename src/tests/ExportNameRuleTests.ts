@@ -315,6 +315,24 @@ describe('exportNameRule', () : void => {
             ]);
         });
 
+        it('when mis-named function is exported in a separate statement', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script : string = `
+                function Example3a() {}
+                export { Example3a };
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example3a",
+                    "name": "file.ts",
+                    "ruleName": "export-name",
+                    "startPosition": { "character": 17, "line": 3 }
+                }
+
+            ]);
+        });
+
         it('when mis-named let defined variable is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
             const script : string = `

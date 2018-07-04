@@ -19,7 +19,7 @@ module.exports = {
         "no-eval": true,
         "no-exec-script": true,
         "no-function-constructor-with-string-args": true,
-        "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*", "http://localhost:?.*"],
+        "no-http-string": [true, "http://www.example.com/?.*", "http://localhost:?.*"],
         "no-inner-html": true,
         "no-octal-literal": true,
         "no-reserved-keywords": true,

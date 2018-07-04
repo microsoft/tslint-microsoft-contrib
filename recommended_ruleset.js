@@ -48,7 +48,7 @@ module.exports = {
         "no-backbone-get-set-outside-model": true,
         "no-bitwise": true,
         "no-conditional-assignment": true,
-        "no-console": [true, "debug", "info", "log", "time", "timeEnd", "trace"],
+        "no-console": [true, "debug", "error", "info", "log", "time", "timeEnd", "trace"],
         "no-constant-condition": true,
         "no-control-regex": true,
         "no-debugger": true,
@@ -263,4 +263,3 @@ module.exports = {
         "valid-typeof": false,
     }
 };
-

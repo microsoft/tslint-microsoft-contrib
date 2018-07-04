@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Critical',
         level: 'Mandatory',
         group: 'Security',
-        recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"],',
+        recommendation: '[true, "http://www.example.com/?.*", "http://www.examples.com/?.*", "http://localhost:?.*"],',
         commonWeaknessEnumeration: '319'
     };
 

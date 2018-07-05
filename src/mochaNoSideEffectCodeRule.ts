@@ -156,6 +156,11 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
             });
             return;
         }
+        // From https://mochajs.org/, `this.retries(...)`, `this.slow(...)`, and
+        // `this.timeout(...)` are allowed outside tests
+        if (/^this\.(retries|slow|timeout)\(.+\)$/.test(initializer.getText())) {
+            return;
+        }
         // moment() is OK
         if (initializer.getText() === 'moment()') {
             return;

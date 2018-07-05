@@ -138,6 +138,16 @@ describe('exportNameRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
+        it('when single function is named same as the file exported in separate statement', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script : string = `
+                function file() {};
+                export { file };
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
         it('when anonymous Object is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
             const script : string = `

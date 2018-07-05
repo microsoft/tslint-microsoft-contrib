@@ -46,26 +46,43 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+function isExportedDeclaration(element: ts.Statement): boolean {
+    return AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
+}
+
+type ExportStatement = ts.ExportDeclaration | ts.ExportAssignment;
+function isExportStatement(node: ts.Statement): node is ExportStatement {
+  return ts.isExportAssignment(node) || ts.isExportDeclaration(node);
+}
+
+function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
+  if (ts.isExportAssignment(node)) {
+      return [[node.expression.getText(), node.expression]];
+  } else {
+      const symbolAndNodes: [string, ts.Node][] = [];
+      node.exportClause.elements.forEach(e => {
+          symbolAndNodes.push([e.name.getText(), node]);
+      });
+      return symbolAndNodes;
+  }
+}
+
 export class ExportNameWalker extends ErrorTolerantWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
 
         // look for single export assignment from file first
-        const singleExport: ts.Statement[] = node.statements.filter((element: ts.Statement): boolean => {
-            return element.kind === ts.SyntaxKind.ExportAssignment;
-        });
+        const singleExport = node.statements.filter(isExportStatement);
         if (singleExport.length === 1) {
-            const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>singleExport[0];
-            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+            const symbolsAndNodes = getExportsFromStatement(singleExport[0]);
+            if (symbolsAndNodes.length === 1) {
+                this.validateExport(symbolsAndNodes[0][0], symbolsAndNodes[0][1]);
+            }
+
             return; // there is a single export and it is valid, so do not proceed
         }
 
-        let exportedTopLevelElements: ts.Statement[] = [];
-
         // exports are normally declared at the top level
-        node.statements.forEach((element: ts.Statement): void => {
-            const exportStatements: ts.Statement[] = this.getExportStatements(element);
-            exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
-        });
+        let exportedTopLevelElements: ts.Statement[] = node.statements.filter(isExportedDeclaration);
 
         // exports might be hidden inside a namespace
         if (exportedTopLevelElements.length === 0) {
@@ -84,25 +101,10 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
         } else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
-            let exportStatements: ts.Statement[] = [];
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
-            moduleBlock.statements.forEach((element: ts.Statement): void => {
-                exportStatements = exportStatements.concat(this.getExportStatements(element));
-            });
-            return exportStatements;
+            return moduleBlock.statements.filter(isExportedDeclaration);
         }
         return null;
-    }
-
-    private getExportStatements(element: ts.Statement): ts.Statement[] {
-        const exportStatements: ts.Statement[] = [];
-        if (element.kind === ts.SyntaxKind.ExportAssignment) {
-            const exportAssignment: ts.ExportAssignment = <ts.ExportAssignment>element;
-            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
-        } else if (AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword)) {
-            exportStatements.push(element);
-        }
-        return exportStatements;
     }
 
     private validateExportedElements(exportedElements: ts.Statement[]): void {

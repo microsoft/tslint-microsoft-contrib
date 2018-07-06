@@ -35,6 +35,17 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
+
+    private jqueryExpressionRegex: RegExp = /^(jquery|[$])/i;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        const opt = this.getOptions();
+        if (typeof opt[1] === 'object' && opt[1]['jquery-matcher']) {
+            this.jqueryExpressionRegex = new RegExp(opt[1]['jquery-matcher']);
+        }
+    }
+
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         // look for assignments to property expressions where the
         // left hand side is either innerHTML or outerHTML
@@ -57,7 +68,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
-                if (AstUtils.isJQueryExpression(functionTarget)) {
+                if (this.jqueryExpressionRegex.test(functionTarget)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
                 }
             }

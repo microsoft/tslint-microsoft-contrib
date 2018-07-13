@@ -7,7 +7,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_INNER: string = 'Writing a string to the innerHTML property is insecure: ';
 const FAILURE_OUTER: string = 'Writing a string to the outerHTML property is insecure: ';
-const FAILURE_JQUERY: string = 'Using the html() function to write a string to innerHTML is insecure: ';
+const FAILURE_HTML_LIB: string = 'Using the html() function to write a string to innerHTML is insecure: ';
 
 /**
  * Implementation of the no-inner-html rule.
@@ -36,13 +36,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
 
-    private jqueryExpressionRegex: RegExp = /^(jquery|[$])/i;
+    private htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         const opt = this.getOptions();
-        if (typeof opt[1] === 'object' && opt[1]['jquery-matcher']) {
-            this.jqueryExpressionRegex = new RegExp(opt[1]['jquery-matcher']);
+        if (typeof opt[1] === 'object' && opt[1]['html-lib-matcher']) {
+            this.htmlLibExpressionRegex = new RegExp(opt[1]['html-lib-matcher']);
         }
     }
 
@@ -68,8 +68,8 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
-                if (this.jqueryExpressionRegex.test(functionTarget)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
+                if (this.htmlLibExpressionRegex.test(functionTarget)) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
                 }
             }
         }

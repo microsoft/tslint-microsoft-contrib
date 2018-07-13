@@ -95,7 +95,7 @@ describe('noInnerHtmlRule', () : void => {
         beforeEach((): void => {
             options = [ true,
                 {
-                    'jquery-matcher': 'cheerio|[j|J][q|Q]uery'
+                    'html-lib-matcher': 'cheerio|[j|J][q|Q]uery'
                 }
             ];
         });

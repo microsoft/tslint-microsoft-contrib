@@ -19,7 +19,7 @@ module.exports = {
         "no-eval": true,
         "no-exec-script": true,
         "no-function-constructor-with-string-args": true,
-        "no-http-string": [true, "http://www.example.com/?.*", "http://localhost:?.*"],
+        "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*", "http://localhost:?.*"],
         "no-inner-html": true,
         "no-octal-literal": true,
         "no-reserved-keywords": true,
@@ -48,7 +48,7 @@ module.exports = {
         "no-backbone-get-set-outside-model": true,
         "no-bitwise": true,
         "no-conditional-assignment": true,
-        "no-console": [true, "debug", "error", "info", "log", "time", "timeEnd", "trace"],
+        "no-console": [true, "debug", "info", "log", "time", "timeEnd", "trace"],
         "no-constant-condition": true,
         "no-control-regex": true,
         "no-debugger": true,
@@ -263,3 +263,4 @@ module.exports = {
         "valid-typeof": false,
     }
 };
+

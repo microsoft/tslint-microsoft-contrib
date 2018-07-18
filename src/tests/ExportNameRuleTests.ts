@@ -138,6 +138,16 @@ describe('exportNameRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
+        it('when single function is named same as the file exported in separate statement', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script : string = `
+                function file() {};
+                export { file };
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
         it('when anonymous Object is exported', () : void => {
             // TestHelper assumes that all scripts are within file.ts
             const script : string = `
@@ -310,6 +320,24 @@ describe('exportNameRule', () : void => {
                     "name": "file.ts",
                     "ruleName": "export-name",
                     "startPosition": { "character": 17, "line": 2 }
+                }
+
+            ]);
+        });
+
+        it('when mis-named function is exported in a separate statement', () : void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script : string = `
+                function Example3a() {}
+                export { Example3a };
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example3a",
+                    "name": "file.ts",
+                    "ruleName": "export-name",
+                    "startPosition": { "character": 17, "line": 3 }
                 }
 
             ]);

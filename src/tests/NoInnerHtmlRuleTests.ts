@@ -76,4 +76,57 @@ describe('noInnerHtmlRule', () : void => {
         ]);
     });
 
+    it('should pass on non-jQuery HTML method calls', () : void => {
+        const script : string = `
+            var myCustomObject = {
+              html: function (text) {
+                console.log('Called html with ' + text);
+              },
+            };
+            myCustomObject.html('here I am');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    describe('with options', (): void => {
+        let options: any[];
+
+        beforeEach((): void => {
+            options = [ true,
+                {
+                    'html-lib-matcher': 'cheerio|[j|J][q|Q]uery'
+                }
+            ];
+        });
+
+        it('should fail on invoking html(x) with different jQuery matcher', () : void => {
+            const script : string = `
+                cheerio(element).html('whatever');
+            `;
+
+            TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+                {
+                    "failure": "Using the html() function to write a string to innerHTML is insecure: cheerio(element).html('whatever')",
+                    "name": "file.ts",
+                    "ruleName": "no-inner-html",
+                    "startPosition": { "character": 17, "line": 2 }
+                }
+            ]);
+        });
+
+      it('should pass on non-jQuery HTML method calls with options', () : void => {
+          const script : string = `
+              var myCustomObject = {
+                html: function (text) {
+                  console.log('Called html with ' + text);
+                },
+              };
+              myCustomObject.html('here I am');
+          `;
+
+          TestHelper.assertViolationsWithOptions(ruleName, options, script, [ ]);
+      });
+
+    });
 });

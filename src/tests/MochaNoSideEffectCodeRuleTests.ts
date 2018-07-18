@@ -62,6 +62,30 @@ describe('mochaNoSideEffectCodeRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on usage of skip/only', () : void => {
+        const script : string = `
+            describe('someTest', (): void => {
+
+                it.skip((): void => {
+                });
+
+                describe.skip((): void => {
+                    it.skip((): void => {
+                    });
+                });
+
+                it.only((): void => {
+                });
+                describe.only((): void => {
+                    it.only((): void => {
+                    });
+                });
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on function declarations', () : void => {
         const script : string = `
             describe('someTest', (): void => {
@@ -211,6 +235,24 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
             describe('someTest', (): void => {
                 let expect2: Chai.ExpectStatic = chai.expect;
+            });
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when using methods allowed by the Mocha API', () : void => {
+        const script : string = `
+            describe('retries', (): void => {
+                this.retries(42);
+
+                describe('slow', (): void => {
+                    this.slow(2500);
+
+                    describe('timeout', (): void => {
+                        this.timeout(5000);
+                    });
+                });
             });
         `;
 

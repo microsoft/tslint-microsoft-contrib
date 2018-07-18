@@ -33,21 +33,26 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoOctalLiteral extends ErrorTolerantWalker {
     public visitNode(node: ts.Node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
             this.failOnOctalString(<ts.LiteralExpression>node);
         }
         super.visitNode(node);
     }
 
     private failOnOctalString(node: ts.LiteralExpression) {
-        const match = /("|')(.*(\\-?[0-7]{1,3}(?![0-9])).*("|'))/g.exec(node.getText());
+        const match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9]))(?:.|\n|\t|\u2028|\u2029)*(?:\1)/g.exec(node.getText());
 
         if (match) {
-            const octalValue : string = match[3]; // match[3] is the matched octal value.
-            const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
-            const width = octalValue.length;
+            let octalValue: string = match[2]; // match[2] is the matched octal value.
+            const backslashCount: number = octalValue.lastIndexOf('\\') + 1;
+            if (backslashCount % 2 === 1) { // Make sure the string starts with an odd number of backslashes
+                octalValue = octalValue.substr(backslashCount - 1);
 
-            this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+                const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
+                const width = octalValue.length;
+
+                this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+            }
         }
     }
 }

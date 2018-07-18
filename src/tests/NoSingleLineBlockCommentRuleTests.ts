@@ -18,6 +18,27 @@ describe('noSingleLineBlockCommentRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on comment within a JSX block', () : void => {
+        const script : string = `
+            import React = require('react');
+            const Thing = () =>
+                <div>
+                {/* insert some meaningful comment or ignore statement here */}
+                {/* insert some other comment with extra space */ }
+                Foo
+                </div>
+        `;
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when comment is nested inside code', () : void => {
+        const script : string = `
+            const something = 1 + /* whatever */ 3;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
     it('should pass on tslint suppressions', () : void => {
         const script : string = `
             /* tslint:disable:function-name */

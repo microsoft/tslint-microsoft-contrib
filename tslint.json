@@ -91,6 +91,7 @@
     "no-console": [
       true,
       "debug",
+      "error",
       "info",
       "log",
       "time",

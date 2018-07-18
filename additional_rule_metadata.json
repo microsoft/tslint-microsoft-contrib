@@ -211,7 +211,7 @@
     "severity": "Moderate",
     "level": "Opportunity for Excellence",
     "group": "Correctness",
-    "recommendation": "[true, \"debug\", \"info\", \"log\", \"time\", \"timeEnd\", \"trace\"],",
+    "recommendation": "[true, \"debug\", \"info\", \"error\", \"log\", \"time\", \"timeEnd\", \"trace\"],",
     "commonWeaknessEnumeration": "710"
   },
   "no-construct": {

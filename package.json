@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "5.0.4",
+  "version": "5.1.0",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -19,6 +19,10 @@
     {
       "name": "Hamlet D'Arcy",
       "email": "hamlet.darcy@microsoft.com"
+    },
+    {
+      "name": "Josh Goldberg",
+      "email": "joshua.goldberg@microsoft.com"
     }
   ],
   "bugs": {

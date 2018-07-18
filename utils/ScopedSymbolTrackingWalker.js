@@ -23,6 +23,14 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         }
         return _this;
     }
+    ScopedSymbolTrackingWalker.prototype.getFunctionTargetType = function (expression) {
+        if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && this.typeChecker) {
+            var propExp = expression.expression;
+            var targetType = this.typeChecker.getTypeAtLocation(propExp.expression);
+            return this.typeChecker.typeToString(targetType);
+        }
+        return null;
+    };
     ScopedSymbolTrackingWalker.prototype.isExpressionEvaluatingToFunction = function (expression) {
         if (expression.kind === ts.SyntaxKind.ArrowFunction
             || expression.kind === ts.SyntaxKind.FunctionExpression) {

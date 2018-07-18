@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_STRING = 'Unnecessary local variable: ';
 var Rule = (function (_super) {
@@ -42,7 +42,9 @@ exports.Rule = Rule;
 var UnnecessaryLocalVariableRuleWalker = (function (_super) {
     __extends(UnnecessaryLocalVariableRuleWalker, _super);
     function UnnecessaryLocalVariableRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.variableUsages = tsutils.collectVariableUsage(_this.getSourceFile());
+        return _this;
     }
     UnnecessaryLocalVariableRuleWalker.prototype.visitBlock = function (node) {
         this.validateStatementArray(node.statements);
@@ -61,7 +63,7 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         _super.prototype.visitDefaultClause.call(this, node);
     };
     UnnecessaryLocalVariableRuleWalker.prototype.visitModuleDeclaration = function (node) {
-        if (node.body != null && node.body.kind === ts.SyntaxKind.ModuleBlock) {
+        if (node.body != null && tsutils.isModuleBlock(node.body)) {
             this.validateStatementArray(node.body.statements);
         }
         _super.prototype.visitModuleDeclaration.call(this, node);
@@ -73,33 +75,40 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         var lastStatement = statements[statements.length - 1];
         var nextToLastStatement = statements[statements.length - 2];
         var returnedVariableName = this.tryToGetReturnedVariableName(lastStatement);
-        var declaredVariableName = this.tryToGetDeclaredVariableName(nextToLastStatement);
-        if (returnedVariableName != null && declaredVariableName != null) {
-            if (returnedVariableName === declaredVariableName) {
-                this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
-            }
+        var declaredVariableIdentifier = this.tryToGetDeclaredVariable(nextToLastStatement);
+        if (declaredVariableIdentifier == null) {
+            return;
+        }
+        var declaredVariableName = declaredVariableIdentifier.text;
+        if (returnedVariableName != null
+            && declaredVariableName != null
+            && returnedVariableName === declaredVariableName
+            && this.variableIsOnlyUsedOnce(declaredVariableIdentifier)) {
+            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
         }
     };
-    UnnecessaryLocalVariableRuleWalker.prototype.tryToGetDeclaredVariableName = function (statement) {
-        if (statement != null && statement.kind === ts.SyntaxKind.VariableStatement) {
-            var variableStatement = statement;
-            if (variableStatement.declarationList.declarations.length === 1) {
-                var declaration = variableStatement.declarationList.declarations[0];
-                if (declaration.name != null && declaration.name.kind === ts.SyntaxKind.Identifier) {
-                    return declaration.name.text;
+    UnnecessaryLocalVariableRuleWalker.prototype.tryToGetDeclaredVariable = function (statement) {
+        if (statement != null && tsutils.isVariableStatement(statement)) {
+            if (statement.declarationList.declarations.length === 1) {
+                var declaration = statement.declarationList.declarations[0];
+                if (declaration.name != null && tsutils.isIdentifier(declaration.name)) {
+                    return declaration.name;
                 }
             }
         }
         return null;
     };
     UnnecessaryLocalVariableRuleWalker.prototype.tryToGetReturnedVariableName = function (statement) {
-        if (statement != null && statement.kind === ts.SyntaxKind.ReturnStatement) {
-            var returnStatement = statement;
-            if (returnStatement.expression != null && returnStatement.expression.kind === ts.SyntaxKind.Identifier) {
-                return returnStatement.expression.text;
+        if (statement != null && tsutils.isReturnStatement(statement)) {
+            if (statement.expression != null && tsutils.isIdentifier(statement.expression)) {
+                return statement.expression.text;
             }
         }
         return null;
+    };
+    UnnecessaryLocalVariableRuleWalker.prototype.variableIsOnlyUsedOnce = function (declaredVariableIdentifier) {
+        var usage = this.variableUsages.get(declaredVariableIdentifier);
+        return usage !== undefined && usage.uses.length === 1;
     };
     return UnnecessaryLocalVariableRuleWalker;
 }(ErrorTolerantWalker_1.ErrorTolerantWalker));

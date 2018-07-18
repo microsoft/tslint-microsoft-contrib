@@ -50,6 +50,24 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+function isExportedDeclaration(element) {
+    return AstUtils_1.AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
+}
+function isExportStatement(node) {
+    return ts.isExportAssignment(node) || ts.isExportDeclaration(node);
+}
+function getExportsFromStatement(node) {
+    if (ts.isExportAssignment(node)) {
+        return [[node.expression.getText(), node.expression]];
+    }
+    else {
+        var symbolAndNodes_1 = [];
+        node.exportClause.elements.forEach(function (e) {
+            symbolAndNodes_1.push([e.name.getText(), node]);
+        });
+        return symbolAndNodes_1;
+    }
+}
 var ExportNameWalker = (function (_super) {
     __extends(ExportNameWalker, _super);
     function ExportNameWalker() {
@@ -57,19 +75,15 @@ var ExportNameWalker = (function (_super) {
     }
     ExportNameWalker.prototype.visitSourceFile = function (node) {
         var _this = this;
-        var singleExport = node.statements.filter(function (element) {
-            return element.kind === ts.SyntaxKind.ExportAssignment;
-        });
+        var singleExport = node.statements.filter(isExportStatement);
         if (singleExport.length === 1) {
-            var exportAssignment = singleExport[0];
-            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
+            var symbolsAndNodes = getExportsFromStatement(singleExport[0]);
+            if (symbolsAndNodes.length === 1) {
+                this.validateExport(symbolsAndNodes[0][0], symbolsAndNodes[0][1]);
+            }
             return;
         }
-        var exportedTopLevelElements = [];
-        node.statements.forEach(function (element) {
-            var exportStatements = _this.getExportStatements(element);
-            exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
-        });
+        var exportedTopLevelElements = node.statements.filter(isExportedDeclaration);
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach(function (element) {
                 if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
@@ -81,30 +95,14 @@ var ExportNameWalker = (function (_super) {
         this.validateExportedElements(exportedTopLevelElements);
     };
     ExportNameWalker.prototype.getExportStatementsWithinModules = function (moduleDeclaration) {
-        var _this = this;
         if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             return this.getExportStatementsWithinModules(moduleDeclaration.body);
         }
         else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
-            var exportStatements_1 = [];
             var moduleBlock = moduleDeclaration.body;
-            moduleBlock.statements.forEach(function (element) {
-                exportStatements_1 = exportStatements_1.concat(_this.getExportStatements(element));
-            });
-            return exportStatements_1;
+            return moduleBlock.statements.filter(isExportedDeclaration);
         }
         return null;
-    };
-    ExportNameWalker.prototype.getExportStatements = function (element) {
-        var exportStatements = [];
-        if (element.kind === ts.SyntaxKind.ExportAssignment) {
-            var exportAssignment = element;
-            this.validateExport(exportAssignment.expression.getText(), exportAssignment.expression);
-        }
-        else if (AstUtils_1.AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword)) {
-            exportStatements.push(element);
-        }
-        return exportStatements;
     };
     ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
         if (exportedElements.length === 1) {

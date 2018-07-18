@@ -45,18 +45,22 @@ var NoOctalLiteral = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     NoOctalLiteral.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+        if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
             this.failOnOctalString(node);
         }
         _super.prototype.visitNode.call(this, node);
     };
     NoOctalLiteral.prototype.failOnOctalString = function (node) {
-        var match = /("|')(.*(\\-?[0-7]{1,3}(?![0-9])).*("|'))/g.exec(node.getText());
+        var match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9]))(?:.|\n|\t|\u2028|\u2029)*(?:\1)/g.exec(node.getText());
         if (match) {
-            var octalValue = match[3];
-            var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
-            var width = octalValue.length;
-            this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+            var octalValue = match[2];
+            var backslashCount = octalValue.lastIndexOf('\\') + 1;
+            if (backslashCount % 2 === 1) {
+                octalValue = octalValue.substr(backslashCount - 1);
+                var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
+                var width = octalValue.length;
+                this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+            }
         }
     };
     return NoOctalLiteral;

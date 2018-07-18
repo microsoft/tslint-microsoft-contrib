@@ -32,9 +32,11 @@ var MochaUtils;
     MochaUtils.isDescribe = isDescribe;
     function isLifecycleMethod(call) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(call);
+        var callText = call.expression.getText();
         return functionName === 'it' || functionName === 'specify'
             || functionName === 'before' || functionName === 'beforeEach' || functionName === 'beforeAll'
-            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll';
+            || functionName === 'after' || functionName === 'afterEach' || functionName === 'afterAll'
+            || callText === 'it.skip' || callText === 'it.only';
     }
     MochaUtils.isLifecycleMethod = isLifecycleMethod;
 })(MochaUtils = exports.MochaUtils || (exports.MochaUtils = {}));

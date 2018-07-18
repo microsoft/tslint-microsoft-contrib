@@ -26,7 +26,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'no-suspicious-comment',
         type: 'maintainability',
-        description: 'Do not use suspicious comments, such as BUG, HACK, FIXME, LATER, LATER2, TODO',
+        description: "Do not use suspicious comments, such as " + SUSPICIOUS_WORDS.join(', '),
         options: null,
         optionsDescription: '',
         typescriptOnly: true,

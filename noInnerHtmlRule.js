@@ -16,7 +16,7 @@ var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_INNER = 'Writing a string to the innerHTML property is insecure: ';
 var FAILURE_OUTER = 'Writing a string to the outerHTML property is insecure: ';
-var FAILURE_JQUERY = 'Using the html() function to write a string to innerHTML is insecure: ';
+var FAILURE_HTML_LIB = 'Using the html() function to write a string to innerHTML is insecure: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -44,8 +44,14 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var NoInnerHtmlRuleWalker = (function (_super) {
     __extends(NoInnerHtmlRuleWalker, _super);
-    function NoInnerHtmlRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function NoInnerHtmlRuleWalker(sourceFile, options) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.htmlLibExpressionRegex = /^(jquery|[$])/i;
+        var opt = _this.getOptions();
+        if (typeof opt[1] === 'object' && opt[1]['html-lib-matcher']) {
+            _this.htmlLibExpressionRegex = new RegExp(opt[1]['html-lib-matcher']);
+        }
+        return _this;
     }
     NoInnerHtmlRuleWalker.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
@@ -66,7 +72,10 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_JQUERY + node.getText());
+                var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
+                if (this.htmlLibExpressionRegex.test(functionTarget)) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
+                }
             }
         }
         _super.prototype.visitCallExpression.call(this, node);

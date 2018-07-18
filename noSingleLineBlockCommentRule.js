@@ -50,7 +50,8 @@ var NoSingleLineBlockCommentRuleWalker = (function (_super) {
             var tokenText = fullText.substring(range.pos, range.end);
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
                 && _this.isSingleLineComment(tokenText)
-                && !_this.isTsLintSuppression(tokenText)) {
+                && !_this.isTsLintSuppression(tokenText)
+                && !_this.isFollowedByMoreCodeOnSameLine(fullText, range)) {
                 _this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });
@@ -61,6 +62,10 @@ var NoSingleLineBlockCommentRuleWalker = (function (_super) {
     };
     NoSingleLineBlockCommentRuleWalker.prototype.isTsLintSuppression = function (commentText) {
         return /\/*\s*tslint:(enable|disable):.*/.test(commentText);
+    };
+    NoSingleLineBlockCommentRuleWalker.prototype.isFollowedByMoreCodeOnSameLine = function (fullText, range) {
+        var restOfText = fullText.substring(range.end);
+        return /^\s*\r?\n/.test(restOfText) === false;
     };
     return NoSingleLineBlockCommentRuleWalker;
 }(Lint.RuleWalker));

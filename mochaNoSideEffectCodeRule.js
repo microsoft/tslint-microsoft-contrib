@@ -145,6 +145,9 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
             });
             return;
         }
+        if (/^this\.(retries|slow|timeout)\(.+\)$/.test(initializer.getText())) {
+            return;
+        }
         if (initializer.getText() === 'moment()') {
             return;
         }

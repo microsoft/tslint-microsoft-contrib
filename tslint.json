@@ -13,7 +13,7 @@
     "no-http-string": [
       true,
       "http://www.example.com/?.*",
-      "http://www.examples.com/?.*"
+      "http://localhost:?.*"
     ],
     "no-inner-html": true,
     "no-octal-literal": true,
@@ -42,6 +42,7 @@
       true,
       "debug",
       "info",
+      "error",
       "log",
       "time",
       "timeEnd",

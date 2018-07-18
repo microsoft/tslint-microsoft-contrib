@@ -26,8 +26,22 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
     };
     NoStringParameterToFunctionCallWalker.prototype.validateExpression = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+        var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
+        var functionTargetType = this.getFunctionTargetType(node);
         var firstArg = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
+            if (functionTarget) {
+                if (functionTargetType) {
+                    if (!functionTargetType.match(/^(any|Window|Worker)$/)) {
+                        return;
+                    }
+                }
+                else {
+                    if (!functionTarget.match(/^(this|window)$/)) {
+                        return;
+                    }
+                }
+            }
             if (!this.isExpressionEvaluatingToFunction(firstArg)) {
                 var msg = this.failureString + firstArg.getFullText().trim().substring(0, 40);
                 this.addFailureAt(node.getStart(), node.getWidth(), msg);

@@ -8,13 +8,13 @@ tslint-microsoft-contrib
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 5.0.3 (Stable)
+Version 5.1.0 (Stable)
 -------------
 The project has been in use for several years on multiple projects. Please report any bugs or false positives you might find!
 
 See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
 
-Version 5.0.4 (In-Development)
+Version 5.1.1 (In-Development)
 -------------
 The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
 To use the nightly build set your npm version to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`
@@ -26,7 +26,7 @@ Installation
 
 Alternately, you can download the files directly from GitHub:
 
-* [5.0.3](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.0.3)
+* [5.1.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.1.0)
 
 #### TSLint and corresponding tslint-microsoft-contrib version
 
@@ -143,7 +143,7 @@ Rule Name   | Description | Since
 `react-a11y-img-has-alt`        | Enforce that an `img` element contains the `alt` attribute or `role='presentation'` for a decorative image. All images must have `alt` text to convey their purpose and meaning to **screen reader users**. Besides, the `alt` attribute specifies an alternate text for an image, if the image cannot be displayed. This rule accepts as a parameter a string array for tag names other than img to also check. For example, if you use a custom tag named 'Image' then configure the rule with: `[true, ['Image']]`<br/>References:<br/>[Web Content Accessibility Guidelines 1.0](https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent)<br/>[ARIA Presentation Role](https://www.w3.org/TR/wai-aria/roles#presentation)<br/>[WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role](http://oaa-accessibility.org/wcag20/rule/31/) | 2.0.11
 `react-a11y-lang`               | For accessibility of your website, HTML elements must have a lang attribute and the attribute must be a valid language code.<br/>References:<br/>* [H58: Using language attributes to identify changes in the human language](https://www.w3.org/TR/WCAG20-TECHS/H58.html)<br/>* [lang attribute must have a valid value](https://dequeuniversity.com/rules/axe/1.1/valid-lang)<br/>[List of ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) | 2.0.11
 `react-a11y-meta`               | For accessibility of your website, HTML meta elements must not have http-equiv="refresh". | 2.0.11
-`react-a11y-props`              | For accessibility of your website, enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute. This rule will fail if it finds an `aria-*` attribute that is not listed in [WAI-ARIA states and properties](https://www.w3.org/TR/wai-aria/states_and_properties#state_prop_def). | 2.0.11
+`react-a11y-props`              | For accessibility of your website, enforce all `aria-*` attributes are valid. Elements cannot use an invalid `aria-*` attribute. This rule will fail if it finds an `aria-*` attribute that is not listed in [WAI-ARIA states and properties](https://www.w3.org/WAI/PF/aria/states_and_properties#state_prop_values). | 2.0.11
 `react-a11y-proptypes`          | For accessibility of your website, enforce the type of aria state and property values are correct. | 2.0.11
 `react-a11y-role-has-required-aria-props` | For accessibility of your website, elements with aria roles must have all required attributes according to the role. <br/>References:<br/>[ARIA Definition of Roles](https://www.w3.org/TR/wai-aria/roles#role_definitions)<br/>[WCAG Rule 90: Required properties and states should be defined](http://oaa-accessibility.org/wcag20/rule/90/)<br/>[WCAG Rule 91: Required properties and states must not be empty](http://oaa-accessibility.org/wcag20/rule/91/)<br/>| 2.0.11
 `react-a11y-role-supports-aria-props`     | For accessibility of your website, enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`. Many aria attributes (states and properties) can only be used on elements with particular roles. Some elements have implicit roles, such as `<a href='hrefValue' />`, which will be resolved to `role='link'`. A reference for the implicit roles can be found at [Default Implicit ARIA Semantics](https://www.w3.org/TR/html-aria/#sec-strong-native-semantics). <br/>References: <br/>* [ARIA attributes can only be used with certain roles](http://oaa-accessibility.org/wcag20/rule/87/)<br/>* [Check aria properties and states for valid roles and properties](http://oaa-accessibility.org/wcag20/rule/84/)<br/>* [Check that 'ARIA-' attributes are valid properties and states](http://oaa-accessibility.org/wcag20/rule/93/)| 2.0.11

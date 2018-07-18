@@ -48,7 +48,7 @@ var NoFunctionExpressionRuleWalker = (function (_super) {
         node.getChildren().forEach(function (child) {
             walker.walk(child);
         });
-        if (!walker.isAccessingThis) {
+        if (!walker.isAccessingThis && !node.asteriskToken) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         _super.prototype.visitFunctionExpression.call(this, node);

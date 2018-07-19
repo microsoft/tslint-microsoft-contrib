@@ -7,7 +7,7 @@
 * [#412](https://github.com/Microsoft/tslint-microsoft-contrib/pull/412) Fixed several no-octal-literal edge cases
 * [#413](https://github.com/Microsoft/tslint-microsoft-contrib/issues/413) Fixed backslashes in no-octal-literal 
 * [#417](https://github.com/Microsoft/tslint-microsoft-contrib/pull/417) Type-checking for noStringBased rules 
-* [#423](https://github.com/Microsoft/tslint-microsoft-contrib/pull/423) Allowed http://localhost for recommended no-http-string setting
+* [#423](https://github.com/Microsoft/tslint-microsoft-contrib/pull/423) Allowed `http://localhost` for recommended no-http-string setting
 * [#425](https://github.com/Microsoft/tslint-microsoft-contrib/issues/425) Added config setting for `no-inner-html` for which expressions to flag
 * [#427](https://github.com/Microsoft/tslint-microsoft-contrib/pull/427) Added console.error to recommended ruleset for `no-console`
 * [#444](https://github.com/Microsoft/tslint-microsoft-contrib/issues/444) Started flagging `export { ... }` declarations in export-name

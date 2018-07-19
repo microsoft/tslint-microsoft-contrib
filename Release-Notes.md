@@ -1,3 +1,20 @@
+# 5.1.0 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.1.0)
+* [#115](https://github.com/Microsoft/tslint-microsoft-contrib/issues/115) Single line block comments allowed to be nested inside code or JSX
+* [#291](https://github.com/Microsoft/tslint-microsoft-contrib/issues/219) Excluded generators in no-function-expression 
+* [#381](https://github.com/Microsoft/tslint-microsoft-contrib/issues/381) Fixed no-unnecessary-local-variable false positive 
+* [#389](https://github.com/Microsoft/tslint-microsoft-contrib/issues/389) Ignored test inclusions/exclusions for mocha-no-side-effect-code
+* [#412](https://github.com/Microsoft/tslint-microsoft-contrib/pull/412) Fixed several no-octal-literal edge cases
+* [#413](https://github.com/Microsoft/tslint-microsoft-contrib/issues/413) Fixed backslashes in no-octal-literal 
+* [#417](https://github.com/Microsoft/tslint-microsoft-contrib/pull/417) Type-checking for noStringBased rules 
+* [#423](https://github.com/Microsoft/tslint-microsoft-contrib/pull/423) Allowed http://localhost for recommended no-http-string setting
+* [#425](https://github.com/Microsoft/tslint-microsoft-contrib/issues/425) Added config setting for `no-inner-html` for which expressions to flag
+* [#427](https://github.com/Microsoft/tslint-microsoft-contrib/pull/427) Added console.error to recommended ruleset for `no-console`
+* [#444](https://github.com/Microsoft/tslint-microsoft-contrib/issues/444) Started flagging `export { ... }` declarations in export-name
+* [#446](https://github.com/Microsoft/tslint-microsoft-contrib/issues/446) Allowed this.timeout in mocha-no-side-effect-code 
+* [#447](https://github.com/Microsoft/tslint-microsoft-contrib/pull/447) Update broken accessibility link in README.md  
+* [#449](https://github.com/Microsoft/tslint-microsoft-contrib/pull/449) Removed invalid examples.com domain from recommended ruleset
+
 # 5.0.3 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.3)
 * [#390](https://github.com/Microsoft/tslint-microsoft-contrib/issues/390) react-a11y-image-button-has-alt toLowerCase error throws

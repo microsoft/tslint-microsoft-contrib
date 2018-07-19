@@ -1,7 +1,7 @@
 # 5.1.0 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.1.0)
 * [#115](https://github.com/Microsoft/tslint-microsoft-contrib/issues/115) Single line block comments allowed to be nested inside code or JSX
-* [#291](https://github.com/Microsoft/tslint-microsoft-contrib/issues/219) Excluded generators in no-function-expression 
+* [#291](https://github.com/Microsoft/tslint-microsoft-contrib/issues/291) Excluded generators in no-function-expression 
 * [#381](https://github.com/Microsoft/tslint-microsoft-contrib/issues/381) Fixed no-unnecessary-local-variable false positive 
 * [#389](https://github.com/Microsoft/tslint-microsoft-contrib/issues/389) Ignored test inclusions/exclusions for mocha-no-side-effect-code
 * [#412](https://github.com/Microsoft/tslint-microsoft-contrib/pull/412) Fixed several no-octal-literal edge cases

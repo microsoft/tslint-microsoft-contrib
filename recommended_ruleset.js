@@ -133,7 +133,7 @@ module.exports = {
         "no-for-in": true,
         "no-function-expression": true,
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
-        "no-multiline-string": false,
+        "no-multiline-string": true, // multiline-strings often introduce unnecessary whitespace into the string literals
         "no-null-keyword": false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value
         "no-parameter-properties": true,
         "no-redundant-jsdoc": true,

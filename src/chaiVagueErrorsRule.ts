@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ChaiUtils} from './utils/ChaiUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ErrorTolerantWalker } from './utils/ErrorTolerantWalker';
+import { ChaiUtils } from './utils/ChaiUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const BASE_ERROR: string = 'Found chai call with vague failure message. ';
 const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
@@ -41,7 +41,10 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                const expectInvocation: ts.CallExpression = ChaiUtils.getExpectInvocation(node);
+                if (!expectInvocation || expectInvocation.arguments.length !== 2) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                }
             }
         }
         super.visitPropertyAccessExpression(node);

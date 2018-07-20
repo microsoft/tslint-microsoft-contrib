@@ -42,9 +42,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
                 const expectInvocation: ts.CallExpression = ChaiUtils.getExpectInvocation(node);
-                if (expectInvocation && expectInvocation.arguments.length === 2) {
-                    // do nothing
-                } else {
+                if (!expectInvocation || expectInvocation.arguments.length !== 2) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                 }
             }

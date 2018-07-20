@@ -8,10 +8,10 @@ describe('chaiVagueErrorsRule', () : void => {
 
     it('should pass on xxx', () : void => {
         const script : string = `
-            expect(something).to.equal(true, 'message');;
-            expect(something).to.be.equal(false, 'message');;
-            expect(something).to.not.equal(null, 'message');;
-            expect(something).to.not.be.equal(undefined, 'message');;
+            expect(something).to.equal(true, 'message');
+            expect(something).to.be.equal(false, 'message');
+            expect(something).to.not.equal(null, 'message');
+            expect(something).to.not.be.equal(undefined, 'message');
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -19,10 +19,10 @@ describe('chaiVagueErrorsRule', () : void => {
 
     it('should pass on xxx fluent', () : void => {
         const script : string = `
-            expect(something, 'message').to.be.true;;
-            expect(something, 'message').to.be.false;;
-            expect(something, 'message').to.not.be.null;;
-            expect(something, 'message').to.not.be.undefined;;
+            expect(something, 'message').to.be.true;
+            expect(something, 'message').to.be.false;
+            expect(something, 'message').to.not.be.null;
+            expect(something, 'message').to.not.be.undefined;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);

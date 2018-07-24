@@ -285,7 +285,7 @@ describe('maxFuncBodyLengthRule', (): void => {
             options = [true,
                 5, // max length is now 5
                 {
-                    'ignore-parameters-to-function-regex': 'describe'
+                    'ignore-parameters-to-function-regex': '^describe$'
                 }
             ];
         });

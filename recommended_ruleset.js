@@ -119,7 +119,7 @@ module.exports = {
         "jsdoc-format": true,
         "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
         "max-file-line-count": true,
-        "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
+        "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],
         "max-line-length": [true, 140],
         "member-access": true,
         "member-ordering": [true, { "order": "fields-first" }],

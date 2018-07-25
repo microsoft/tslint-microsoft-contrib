@@ -1,6 +1,6 @@
 # Overview
 * The npm package is published by the [Microsoft account](https://www.npmjs.com/~microsoft)
-* [Directions for publishing](https://opensourcehub2.microsoft.com/articles/how-to-publish-npm-package) with the Microsoft Account are available with CORPNET access
+* [Directions for publishing](https://opensourcehub.microsoft.com/articles/how-to-publish-npm-package) with the Microsoft Account are available with CORPNET access
 * Releases are made from the "master" branch and tagged with the format "[version]"
 * The npm packages are pushed to the "releases" branch and tagged with the format "npm-[version]"
 

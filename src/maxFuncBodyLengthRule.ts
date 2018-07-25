@@ -121,7 +121,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
         const sourceFile: ts.SourceFile = this.getSourceFile();
         const startLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
         const endLine: number = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
-        return endLine - startLine;
+        return endLine - startLine + 1;
     }
 
     private calcBodyCommentLength(node: ts.FunctionLikeDeclaration) {

@@ -60,7 +60,7 @@
       true,
       100,
       {
-        "ignore-parameters-to-function-regex": "describe"
+        "ignore-parameters-to-function-regex": "^describe$"
       }
     ],
     "max-line-length": [

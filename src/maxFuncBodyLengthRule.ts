@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],',
         commonWeaknessEnumeration: '398, 710'
     };
 

@@ -285,7 +285,7 @@ describe('maxFuncBodyLengthRule', (): void => {
             options = [true,
                 5, // max length is now 5
                 {
-                    'ignore-parameters-to-function-regex': 'describe'
+                    'ignore-parameters-to-function-regex': '^describe$'
                 }
             ];
         });
@@ -313,6 +313,32 @@ describe('maxFuncBodyLengthRule', (): void => {
                 // line 6
             }); // line 7
             `, []);
+        });
+
+        it('should not ignore calls of functions that are not exactly named "describe"', (): void => {
+            TestHelper.assertViolationsWithOptions(
+                ruleName,
+                options,
+                `
+                    describeThings('something', (): void => {
+                        // line 2
+                        // line 3
+                        // line 4
+                        // line 5
+                    }); // line 6
+                `, [
+                    {
+                        "failure": "Max arrow function body length exceeded - max: 5, actual: 6",
+                        "name": "file.ts",
+                        "ruleName": "max-func-body-length",
+                        "ruleSeverity": "ERROR",
+                        "startPosition": {
+                            "character": 49,
+                            "line": 2
+                        }
+                    }
+                ]
+            );
         });
     });
 });

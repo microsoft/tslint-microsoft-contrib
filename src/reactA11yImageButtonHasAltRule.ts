@@ -6,6 +6,7 @@ import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
+import { isStringLiteral } from './utils/TypeGuard';
 
 const NO_ALT_ATTRIBUTE_FAILURE_STRING: string = 'Inputs element with type="image" must have alt attribute.';
 const EMPTY_ALT_ATTRIBUTE_FAILURE_STRING: string = 'Inputs element with type="image" must have non-empty alt attribute.';
@@ -55,7 +56,7 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const typeAttribute: ts.JsxAttribute = attributes[TYPE_STRING];
 
-        if (!typeAttribute || getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
+        if (!typeAttribute || !isStringLiteral(typeAttribute.initializer) || getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
             return;
         }
 

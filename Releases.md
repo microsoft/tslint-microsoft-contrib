@@ -10,8 +10,8 @@
 * Open the next milestone
 * Update the [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes
 )
-* make sure package.json contains the version you which to publish
-* update README.md to have the correct version numbers and links
+* Make sure package.json and package-lock.json contain the version you which to publish
+* Update README.md to have the correct version numbers and links
 * git pull
 ```
     git pull

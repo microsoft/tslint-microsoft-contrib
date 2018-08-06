@@ -1,4 +1,4 @@
-# 5.2.0 #
+# 5.2.0
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.0)
 * [#207](https://github.com/Microsoft/tslint-microsoft-contrib/issues/207) Checked second expect() messages in chai-vague-errors
 * [#454](https://github.com/Microsoft/tslint-microsoft-contrib/issues/454) Disable no-multiline-string in recommended ruleset
@@ -7,7 +7,7 @@
 * [#475](https://github.com/Microsoft/tslint-microsoft-contrib/issues/475) Added TypeScript@3 as allowed peer dependency
 * [#476](https://github.com/Microsoft/tslint-microsoft-contrib/issues/476) Fixed react-a11y-image-button-has-alt crashes on expression types
 
-# 5.1.0 #
+# 5.1.0
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.1.0)
 * [#115](https://github.com/Microsoft/tslint-microsoft-contrib/issues/115) Single line block comments allowed to be nested inside code or JSX
 * [#291](https://github.com/Microsoft/tslint-microsoft-contrib/issues/291) Excluded generators in no-function-expression 
@@ -24,7 +24,7 @@
 * [#447](https://github.com/Microsoft/tslint-microsoft-contrib/pull/447) Update broken accessibility link in README.md  
 * [#449](https://github.com/Microsoft/tslint-microsoft-contrib/pull/449) Removed invalid examples.com domain from recommended ruleset
 
-# 5.0.3 #
+# 5.0.3
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.3)
 * [#390](https://github.com/Microsoft/tslint-microsoft-contrib/issues/390) react-a11y-image-button-has-alt toLowerCase error throws
 * [#414](https://github.com/Microsoft/tslint-microsoft-contrib/issues/414) Remove TypeError in reactA11yImgHasAltRule.ts for undefined role attribute 
@@ -32,7 +32,7 @@
 * [#405](https://github.com/Microsoft/tslint-microsoft-contrib/issues/405) Deprecated several rules that are now duplicates
 * [#410](https://github.com/Microsoft/tslint-microsoft-contrib/issues/410) Removed default configuration of deprecated rules. 
 
-# 5.0.2 #
+# 5.0.2
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.2)
 * [#402](https://github.com/Microsoft/tslint-microsoft-contrib/issues/402) fix false positive for no-string-based-set-timeout
 * [#406](https://github.com/Microsoft/tslint-microsoft-contrib/issues/406) deprecate no-stateless-class rule in favor of no-unnecessary-class
@@ -44,7 +44,7 @@
 * [#386](https://github.com/Microsoft/tslint-microsoft-contrib/issues/386) Add 'typescript' to peer dependencies
 * [#379](https://github.com/Microsoft/tslint-microsoft-contrib/issues/379) The use-isnan rule is fully removed
 
-# 5.0.1 #
+# 5.0.1
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.1)
 * [#373](https://github.com/Microsoft/tslint-microsoft-contrib/issues/373) Fix tsutils peer dependency issue with tslint-microsoft-contrib@5.0.0
 * [#371](https://github.com/Microsoft/tslint-microsoft-contrib/issues/371) relax tsutils peer dependency  
@@ -53,7 +53,7 @@
 * [#370](https://github.com/Microsoft/tslint-microsoft-contrib/issues/370) Fix no-http-string. Do not ignore template strings
 
 
-# 5.0.0 #
+# 5.0.0
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.0)
 
 * [#359](https://github.com/Microsoft/tslint-microsoft-contrib/issues/359) Update TSLint to v5
@@ -68,7 +68,7 @@
 * [#350](https://github.com/Microsoft/tslint-microsoft-contrib/issues/350) Add AppVeyor configuration  
 * [#348](https://github.com/Microsoft/tslint-microsoft-contrib/issues/348) Fix the new rule snippet to not create an immediately broken file 
 
-# 4.0.1 #
+# 4.0.1
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A4.0.1)
 
 * [#345](https://github.com/Microsoft/tslint-microsoft-contrib/issues/345) Remove no-unused-variable to suppress tslint warning 
@@ -85,7 +85,7 @@
 * [#327](https://github.com/Microsoft/tslint-microsoft-contrib/issues/327) Improve import-name failure message when import filenames contain a dot enhancement
 * [#326](https://github.com/Microsoft/tslint-microsoft-contrib/issues/326) update recommended ruleset with new tslint 4.0 rules
 
-# 4.0.0 #
+# 4.0.0
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A3.0.0)
 
 * [#313](https://github.com/Microsoft/tslint-microsoft-contrib/issues/313) Enhancement - tslint 4.0 support
@@ -93,7 +93,7 @@
 * [#318](https://github.com/Microsoft/tslint-microsoft-contrib/issues/318) Enhancement - Fix line endings errors in IDE by providing an .editorconfig file
 * [#320](https://github.com/Microsoft/tslint-microsoft-contrib/issues/320) Bug - react-a11y-img-has-alt not working when passing options
 
-# 2.0.14 #
+# 2.0.14
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A2.0.14)
 
 * [#302](https://github.com/Microsoft/tslint-microsoft-contrib/issues/302) New Rule - react-tsx-curly-spacing - Port TSX curly spacing rule.
@@ -116,7 +116,7 @@
 * [#295](https://github.com/Microsoft/tslint-microsoft-contrib/issues/295) Bug Fix - update rule: react-a11y-anchors - Do not check if role='button'
 * [#261](https://github.com/Microsoft/tslint-microsoft-contrib/issues/261) Bug Fix - 'this' banned term conflicts with Typescript's function this-types
 
-# 2.0.13 #
+# 2.0.13
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20milestone%3A2.0.13)
 
 * [#268](https://github.com/Microsoft/tslint-microsoft-contrib/issues/268) Make extends tslint.json easier by adding "rulesDirectory": "./".
@@ -126,7 +126,7 @@
 * [#287](https://github.com/Microsoft/tslint-microsoft-contrib/issues/287) aria-role-supports-props: false positive when role is defined by an expression bug
 * [#269](https://github.com/Microsoft/tslint-microsoft-contrib/issues/269) react-a11y-anchors fails on links that contact exactly 4 characters of text bug
 
-# 2.0.11/2.0.12 #
+# 2.0.11/2.0.12
 A big release and a big thank you to all the contributors: 
 From the Suzhou SOX Publishing team
 * Liubin Guo (huge thanks!), Liaoliang Ye, and Evgeniia Firsova
@@ -162,7 +162,7 @@ From the world outside Microsoft!
 * [#234](https://github.com/Microsoft/tslint-microsoft-contrib/issues/234) react-aria rules: update implicit roles, aria schema, and role schema to support ARIA 1.1
 * [#218](https://github.com/Microsoft/tslint-microsoft-contrib/issues/218) Update react-a11y-img-has-alt - If an image has an alt or title attribute, it should not have a presentation role
 
-# 2.0.10 #
+# 2.0.10
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?utf8=%E2%9C%93&q=is%3Aissue%20milestone%3A2.0.10)
 
 * [#189](https://github.com/Microsoft/tslint-microsoft-contrib/issues/189) new security rule: iframe has invalid or missing sandbox attribute
@@ -181,4 +181,3 @@ From the world outside Microsoft!
 * [#110](https://github.com/Microsoft/tslint-microsoft-contrib/issues/110) prefer-array-literal: Error when using Array in a type annotation
 * [#83](https://github.com/Microsoft/tslint-microsoft-contrib/issues/83) enhance chai-vague-error rule
 * [#64](https://github.com/Microsoft/tslint-microsoft-contrib/issues/64) Update development section of the doc
-

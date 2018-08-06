@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+        recommendation: 'false,',
         commonWeaknessEnumeration: '710'
     };
 

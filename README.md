@@ -26,7 +26,7 @@ Installation
 
 Alternately, you can download the files directly from GitHub:
 
-* [5.1.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.1.0)
+* [5.2.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.2.0)
 
 #### TSLint and corresponding tslint-microsoft-contrib version
 

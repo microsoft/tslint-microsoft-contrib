@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",

@@ -47,6 +47,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private stateNames: string[] = [];
     private stateNodes: { [index: string]: ts.TypeElement } = {};
     private classDeclarations: ts.ClassDeclaration[] = [];
+    private sfcDeclarations: ts.FunctionDeclaration[] = [];
     private propsAlias: string;
     private stateAlias: string;
     private propsInterfaceRegex: RegExp = /^Props$/;
@@ -82,6 +83,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         // if no Props or State interface is declared then don't bother scanning the class
         if (this.propNames.length > 0 || this.stateNames.length > 0) {
             this.classDeclarations.forEach(this.walkChildren, this);
+            this.sfcDeclarations.forEach(this.walkChildren, this);
         }
 
         this.propNames.forEach((propName: string): void => {
@@ -101,6 +103,10 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         this.classDeclarations.push(node);
     }
 
+    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
+        this.sfcDeclarations.push(node);
+    }
+
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
         if (this.propsInterfaceRegex.test(node.name.text)) {
             this.propNodes = this.getTypeElementData(node);
@@ -117,6 +123,8 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         const referencedPropertyName: string = node.getText();
         if (/this\.props\..*/.test(referencedPropertyName)) {
             this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(11));
+        } else if (/props\..*/.test(referencedPropertyName)) {
+            this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(6));
         } else if (/this\.state\..*/.test(referencedPropertyName)) {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }

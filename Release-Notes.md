@@ -1,3 +1,12 @@
+# 5.2.0 #
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.0)
+* [#207](https://github.com/Microsoft/tslint-microsoft-contrib/issues/207) Checked second expect() messages in chai-vague-errors
+* [#454](https://github.com/Microsoft/tslint-microsoft-contrib/issues/454) Disable no-multiline-string in recommended ruleset
+* [#465](https://github.com/Microsoft/tslint-microsoft-contrib/issues/465) Avoided matching describe() calls in max-func-body-length
+* [#468](https://github.com/Microsoft/tslint-microsoft-contrib/issues/468) Fixed max-func-body-length off-by-one counts
+* [#475](https://github.com/Microsoft/tslint-microsoft-contrib/issues/475) Added TypeScript@3 as allowed peer dependency
+* [#476](https://github.com/Microsoft/tslint-microsoft-contrib/issues/476) Fixed react-a11y-image-button-has-alt crashes on expression types
+
 # 5.1.0 #
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.1.0)
 * [#115](https://github.com/Microsoft/tslint-microsoft-contrib/issues/115) Single line block comments allowed to be nested inside code or JSX

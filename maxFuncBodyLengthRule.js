@@ -35,7 +35,7 @@ var Rule = (function (_super) {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "describe"}],',
+        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],',
         commonWeaknessEnumeration: '398, 710'
     };
     return Rule;
@@ -113,7 +113,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         var sourceFile = this.getSourceFile();
         var startLine = sourceFile.getLineAndCharacterOfPosition(node.body.pos).line;
         var endLine = sourceFile.getLineAndCharacterOfPosition(node.body.end).line;
-        return endLine - startLine;
+        return endLine - startLine + 1;
     };
     MaxFunctionBodyLengthRuleWalker.prototype.calcBodyCommentLength = function (node) {
         var commentLineCount = 0;

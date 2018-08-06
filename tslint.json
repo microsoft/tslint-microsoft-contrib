@@ -129,7 +129,7 @@
       true,
       100,
       {
-        "ignore-parameters-to-function-regex": "describe"
+        "ignore-parameters-to-function-regex": "^describe$"
       }
     ],
     "max-line-length": [
@@ -153,7 +153,7 @@
     "no-for-in": true,
     "no-function-expression": true,
     "no-inferrable-types": false,
-    "no-multiline-string": true,
+    "no-multiline-string": false,
     "no-null-keyword": false,
     "no-parameter-properties": true,
     "no-redundant-jsdoc": true,

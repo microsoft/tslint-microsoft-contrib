@@ -33,7 +33,7 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: 'true, // multiline-strings often introduce unnecessary whitespace into the string literals',
+        recommendation: 'false,',
         commonWeaknessEnumeration: '710'
     };
     Rule.FAILURE_STRING = 'Forbidden Multiline string: ';

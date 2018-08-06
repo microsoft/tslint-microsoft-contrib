@@ -19,7 +19,7 @@ module.exports = {
         "no-eval": true,
         "no-exec-script": true,
         "no-function-constructor-with-string-args": true,
-        "no-http-string": [true, "http://www.example.com/?.*", "http://www.examples.com/?.*", "http://localhost:?.*"],
+        "no-http-string": [true, "http://www.example.com/?.*", "http://localhost:?.*"],
         "no-inner-html": true,
         "no-octal-literal": true,
         "no-reserved-keywords": true,
@@ -48,7 +48,7 @@ module.exports = {
         "no-backbone-get-set-outside-model": true,
         "no-bitwise": true,
         "no-conditional-assignment": true,
-        "no-console": [true, "debug", "info", "log", "time", "timeEnd", "trace"],
+        "no-console": [true, "debug", "info", "error", "log", "time", "timeEnd", "trace"],
         "no-constant-condition": true,
         "no-control-regex": true,
         "no-debugger": true,
@@ -119,7 +119,7 @@ module.exports = {
         "jsdoc-format": true,
         "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
         "max-file-line-count": true,
-        "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
+        "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],
         "max-line-length": [true, 140],
         "member-access": true,
         "member-ordering": [true, { "order": "fields-first" }],
@@ -133,7 +133,7 @@ module.exports = {
         "no-for-in": true,
         "no-function-expression": true,
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
-        "no-multiline-string": true, // multiline-strings often introduce unnecessary whitespace into the string literals
+        "no-multiline-string": false,
         "no-null-keyword": false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value
         "no-parameter-properties": true,
         "no-redundant-jsdoc": true,

@@ -53,7 +53,10 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
     ChaiVagueErrorsRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
         if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                var expectInvocation = ChaiUtils_1.ChaiUtils.getExpectInvocation(node);
+                if (!expectInvocation || expectInvocation.arguments.length !== 2) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                }
             }
         }
         _super.prototype.visitPropertyAccessExpression.call(this, node);

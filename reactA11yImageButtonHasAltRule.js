@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var NO_ALT_ATTRIBUTE_FAILURE_STRING = 'Inputs element with type="image" must have alt attribute.';
 var EMPTY_ALT_ATTRIBUTE_FAILURE_STRING = 'Inputs element with type="image" must have non-empty alt attribute.';
 var TYPE_STRING = 'type';
@@ -63,7 +64,7 @@ var ReactA11yImageButtonHasAltWalker = (function (_super) {
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var typeAttribute = attributes[TYPE_STRING];
-        if (!typeAttribute || JsxAttribute_1.getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
+        if (!typeAttribute || !TypeGuard_1.isStringLiteral(typeAttribute.initializer) || JsxAttribute_1.getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
             return;
         }
         var altAttribute = attributes[ALT_STRING];

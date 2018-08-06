@@ -11,7 +11,21 @@ var ChaiUtils;
         return /.*\.?expect/.test(callExpression.expression.getText());
     }
     ChaiUtils.isExpectInvocation = isExpectInvocation;
-    function getLeftMostCallExpression(node) {
+    function getExpectInvocation(node) {
+        var callExpression = getLeftMostCallExpression(node, false);
+        if (callExpression == null) {
+            return null;
+        }
+        if (/.*\.?expect/.test(callExpression.expression.getText())) {
+            return callExpression;
+        }
+        else {
+            return null;
+        }
+    }
+    ChaiUtils.getExpectInvocation = getExpectInvocation;
+    function getLeftMostCallExpression(node, checkParent) {
+        if (checkParent === void 0) { checkParent = false; }
         var leftSide = node.expression;
         while (leftSide != null) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
@@ -19,6 +33,9 @@ var ChaiUtils;
             }
             else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
                 leftSide = leftSide.expression;
+            }
+            else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
+                return leftSide.parent;
             }
             else {
                 return null;

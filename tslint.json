@@ -142,7 +142,7 @@
     "no-mergeable-namespace": false,
     "no-missing-visibility-modifiers": false,
     "no-misused-new": true,
-    "no-multiline-string": [ true ],
+    "no-multiline-string": [ false ],
     "no-multiple-var-decl": false,
     "no-namespace": false,
     "no-null-keyword": false,

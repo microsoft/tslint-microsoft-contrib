@@ -237,7 +237,6 @@ module.exports = function(grunt) {
                 options: {
                     configuration: (function() {
                         let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
-                        tslintJson.rules['no-multiline-string'] = false;
                         tslintJson.rules['quotemark'] = false;
                         tslintJson.rules['object-literal-key-quotes'] = false;
                         tslintJson.rules['max-func-body-length'] = false;
@@ -314,35 +313,36 @@ module.exports = function(grunt) {
 
         var tslintConfig = grunt.file.readJSON('tslint.json', { encoding: 'UTF-8' });
         var rulesToSkip = {
-            'ban-types': true,
-            'prefer-conditional-expression': true,      // not sure if this is needed
-            'type-literal-delimiter': true,             // not sure if this is needed
-            'no-parameter-reassignment': true,          // turn this on eventually
-            'match-default-export-name': true,          // requires type checking
-            'deprecation': true,                        // requires type checking
-            'no-unnecessary-type-assertion': true,      // requires type checking
-            'use-default-type-parameter': true,         // requires type checking
-            'newline-before-return': true,              // kind of a silly rule
-            'prefer-switch': true,                      // no need
-            'no-non-null-assertion': true,              // in fact we prefer the opposite rule
-            'prefer-template': true,                    // rule does not handle multi-line strings nicely
-            'return-undefined': true,                   // requires type checking
-            'no-unused-variable': true,                 // requires type checking
-            'no-unexternalized-strings': true,          // this is a VS Code specific rule
-            'no-relative-imports': true,                // this project uses relative imports
-            'no-empty-line-after-opening-brace': true,  // too strict
             'align': true,                              // no need
+            'ban-types': true,
             'comment-format': true,                     // no need
-            'interface-name': true,                     // no need
-            'max-file-line-count': true,                // no need
-            'member-ordering': true,                    // too strict
-            'no-inferrable-types': true,                // we prefer the opposite
-            'ordered-imports': true,                    // too difficult to turn on
-            'typedef-whitespace': true,                 // too strict
             'completed-docs': true,                     // no need
             'cyclomatic-complexity': true,              // too strict
+            'deprecation': true,                        // requires type checking
             'file-header': true,                        // no need
-            'max-classes-per-file': true                // no need
+            'interface-name': true,                     // no need
+            'match-default-export-name': true,          // requires type checking
+            'max-classes-per-file': true,               // no need
+            'max-file-line-count': true,                // no need
+            'member-ordering': true,                    // too strict
+            'newline-before-return': true,              // kind of a silly rule
+            'no-empty-line-after-opening-brace': true,  // too strict
+            'no-inferrable-types': true,                // we prefer the opposite
+            'no-multiline-string': true,                // too strict
+            'no-non-null-assertion': true,              // in fact we prefer the opposite rule
+            'no-parameter-reassignment': true,          // turn this on eventually
+            'no-relative-imports': true,                // this project uses relative imports
+            'no-unexternalized-strings': true,          // this is a VS Code specific rule
+            'no-unnecessary-type-assertion': true,      // requires type checking
+            'no-unused-variable': true,                 // requires type checking
+            'ordered-imports': true,                    // too difficult to turn on
+            'prefer-conditional-expression': true,      // not sure if this is needed
+            'prefer-switch': true,                      // no need
+            'prefer-template': true,                    // rule does not handle multi-line strings nicely
+            'return-undefined': true,                   // requires type checking
+            'type-literal-delimiter': true,             // not sure if this is needed
+            'typedef-whitespace': true,                 // too strict
+            'use-default-type-parameter': true,         // requires type checking
         };
         var errors = [];
         getAllRuleNames().forEach(function(ruleName) {

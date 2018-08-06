@@ -12,19 +12,25 @@
 )
 * Make sure package.json and package-lock.json contain the version you which to publish
 * Update README.md to have the correct version numbers and links
-* git pull
+* Pull any recent git changes:
 ```
     git pull
 ```
-* tag the master branch with the format [version]
+* Tag the master branch with the format [version]
 ```
     git tag 0.0.1
     git push --tags
 ```
 
 # Prepare the tslint-microsoft-contrib releases branch
-* git clone git@github.com:Microsoft/tslint-microsoft-contrib.git tslint-microsoft-contrib-releases
+* Clone the repo again to a new folder:
+```
+git clone https://github.com/Microsoft/tslint-microsoft-contrib tslint-microsoft-contrib-releases
+```
 * Checkout branch releases
+```
+git checkout releases
+```
 * Replace all files with the contents of /dist/build directory created from master
 * Commit and push to remote
 * tag the releases branch with the format npm-[version]

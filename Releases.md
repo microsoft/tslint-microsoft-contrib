@@ -43,6 +43,6 @@ git push --tags
 
 
 # Publish the Package with the Microsoft npmjs Account
-* Follow the steps at https://opensourcehub.microsoft.com/articles/how-to-publish-npm-package
+* Follow the steps at https://docs.opensource.microsoft.com/releasing/build-your-project.html#npm
   * Basically just send the email they want and wait a little while
-  * Include the npmjs.org user ids of all contributors: brndkfr, hamletdrc, dmanesku
+  * Include the npmjs.org user ids of all contributors: brndkfr, hamletdrc, dmanesku, joshuakgoldberg

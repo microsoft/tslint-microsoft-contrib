@@ -38,7 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
      * Exposed for testing.
      */
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions) : Exception[] {
+    public static getExceptions(options : Lint.IOptions): Exception[] | null {
     /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
@@ -111,7 +111,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
     }
 
     private isSuppressed(methodName : string): boolean {
-        const exceptions : Exception[] = Rule.getExceptions(this.getOptions());
+        const exceptions = Rule.getExceptions(this.getOptions());
         if (exceptions == null || exceptions.length === 0) {
             return false; // no file specified means the usage is not suppressed
         }

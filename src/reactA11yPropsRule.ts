@@ -42,8 +42,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class A11yPropsWalker extends Lint.RuleWalker {
     public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name: string = getPropName(node);
-
+        const name = getPropName(node);
         if (!name || !name.match(/^aria-/i)) {
             return;
         }

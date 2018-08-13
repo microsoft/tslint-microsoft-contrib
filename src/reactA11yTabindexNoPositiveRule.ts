@@ -36,13 +36,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class A11yTabindexNoPositiveWalker extends Lint.RuleWalker {
     public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name: string = getPropName(node);
+        const name = getPropName(node);
 
         if (!name || name.toLowerCase() !== 'tabindex') {
             return;
         }
 
-        const literalString: string = getNumericLiteral(node) || getStringLiteral(node);
+        const literalString = getNumericLiteral(node) || getStringLiteral(node);
 
         // In case the attribute has no value of empty value.
         if (literalString === '') {

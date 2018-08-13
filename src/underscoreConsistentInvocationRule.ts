@@ -83,8 +83,8 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
             const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
             if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
-                const target: string = AstUtils.getFunctionTarget(call);
-                const functionName: string = AstUtils.getFunctionName(call);
+                const target = AstUtils.getFunctionTarget(call);
+                const functionName = AstUtils.getFunctionName(call);
                 if (target == null && functionName === '_' && call.arguments.length === 1) {
                     const underscoreFunctionName = AstUtils.getFunctionName(node);
                     return FUNCTION_NAMES.indexOf(underscoreFunctionName) > -1;
@@ -95,7 +95,7 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
     }
 
     private isStaticUnderscoreInvocation(node: ts.CallExpression) {
-        const target: string = AstUtils.getFunctionTarget(node);
+        const target = AstUtils.getFunctionTarget(node);
         if (target !== '_') {
             return false;
         }

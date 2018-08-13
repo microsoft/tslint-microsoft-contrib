@@ -52,8 +52,8 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
 
     public visitJsxExpression(node: ts.JsxExpression): void {
         const childrenCount: number = node.getChildCount();
-        const first: ts.Node = node.getFirstToken(); // '{' sign
-        const last: ts.Node = node.getLastToken(); // '}' sign
+        const first = node.getFirstToken(); // '{' sign
+        const last = node.getLastToken(); // '}' sign
         const second: ts.Node = node.getChildAt(1); // after '{' sign
         const penultimate: ts.Node = node.getChildAt(childrenCount - 2); // before '}' sign
         this.validateBraceSpacing(node, first, second, first);
@@ -71,7 +71,15 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         }
     }
 
-    private validateBraceSpacing(node: ts.Node, first: ts.Node, second: ts.Node, violationRoot: ts.Node): void {
+    private validateBraceSpacing(
+        node: ts.Node,
+        first: ts.Node | undefined,
+        second: ts.Node | undefined,
+        violationRoot: ts.Node | undefined
+    ): void {
+        if (first === undefined || second === undefined || violationRoot === undefined) {
+            return;
+        }
 
         if (this.isMultiline(first, second)) {
             if (!this.allowMultiline) {

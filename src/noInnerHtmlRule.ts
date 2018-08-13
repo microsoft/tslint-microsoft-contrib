@@ -68,7 +68,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
-                if (this.htmlLibExpressionRegex.test(functionTarget)) {
+                if (functionTarget !== null && this.htmlLibExpressionRegex.test(functionTarget)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
                 }
             }

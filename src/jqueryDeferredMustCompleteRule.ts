@@ -40,7 +40,7 @@ function isPromiseInstantiation(expression: ts.Expression) : boolean {
         const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
         const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
-        if (functionName === 'Deferred' && AstUtils.isJQuery(functionTarget)) {
+        if (functionName === 'Deferred' && functionTarget !== null && AstUtils.isJQuery(functionTarget)) {
             return true;
         }
     }
@@ -65,7 +65,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (isPromiseInstantiation(node.initializer)) {
+        if (node.initializer !== undefined && isPromiseInstantiation(node.initializer)) {
             if ((<ts.Identifier>node.name).text != null) {
                 const name : ts.Identifier = <ts.Identifier>node.name;
                 this.validateDeferredUsage(node, name);

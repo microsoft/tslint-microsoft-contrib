@@ -6,7 +6,7 @@ const hrefString: string = 'href';
 /**
  * @Returns the implicit role for an anchor tag.
  */
-function getImplicitRoleForAnchor(node: ts.Node): string {
+function getImplicitRoleForAnchor(node: ts.Node): string | undefined {
     return getJsxAttributesFromJsxElement(node)[hrefString] ? 'link' : undefined;
 }
 

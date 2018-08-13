@@ -60,7 +60,7 @@ class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
                     this.validateTitleText(value.getText(), node);
                 } else if (node.children[0].kind === ts.SyntaxKind.JsxExpression) {
                     const exp: ts.JsxExpression = <ts.JsxExpression>node.children[0];
-                    if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
+                    if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                         this.validateTitleText((<ts.StringLiteral>exp.expression).text, node);
                     }
                 }

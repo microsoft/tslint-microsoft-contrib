@@ -72,7 +72,7 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
     private checkJsxElement(node: ts.JsxOpeningLikeElement): void {
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
-        let roleValue: string;
+        let roleValue: string | undefined;
 
         // Match react custom element whose tag name starts with uppercase character.
         if (node.tagName.getText().match(/^[A-Z].*/)) {
@@ -88,13 +88,13 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
 
         const isImplicitRole: boolean = !roleProp && !!roleValue;
-        const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
-            .filter((role: string) => !!ROLES[role]);
+        const normalizedRoles = (roleValue || '').toLowerCase().split(' ')
+            .filter((role: string) => role in ROLES);
 
         let supportedAttributeNames: string[] = ROLE_SCHEMA.globalSupportedProps;
 
-        normalizedRoles.forEach((role: string) => {
-            supportedAttributeNames = supportedAttributeNames.concat(ROLES[role].additionalSupportedProps || []);
+        normalizedRoles.forEach((role) => {
+            supportedAttributeNames = supportedAttributeNames.concat((<any>ROLES)[role].additionalSupportedProps || []);
         });
 
         const attributeNamesInElement: string[] = Object.keys(attributesInElement)

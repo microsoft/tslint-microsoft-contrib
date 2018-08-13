@@ -5,9 +5,9 @@ const typeString: string = 'type';
 const listString: string = 'list';
 
 /**
- * @Returns the implicit role for an input tag.
+ * @returns the implicit role for an input tag.
  */
-function getImplicitRoleForInput(node: ts.Node): string {
+function getImplicitRoleForInput(node: ts.Node): string | undefined {
     const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
     const typeAttribute: ts.JsxAttribute = attributes[typeString];
 

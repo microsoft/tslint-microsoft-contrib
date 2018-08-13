@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         if (node.body != null) {
-            const statement: ts.Statement = this.getSingleStatement(node.body);
+            const statement = this.getSingleStatement(node.body);
             if (statement != null) {
                 if (this.isSuperCall(node, statement) && this.isMatchingArgumentList(node, statement)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node));
@@ -44,7 +44,7 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
         super.visitMethodDeclaration(node);
     }
 
-    private getSingleStatement(block: ts.Block): ts.Statement {
+    private getSingleStatement(block: ts.Block): ts.Statement | null {
         if (block.statements.length === 1) {
             return block.statements[0];
         }
@@ -52,7 +52,7 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
     }
 
     private isMatchingArgumentList(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
-        const call: ts.CallExpression = this.getCallExpressionFromStatement(statement);
+        const call = this.getCallExpressionFromStatement(statement);
         if (call == null) {
             return false;
         }
@@ -86,7 +86,7 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
     }
 
     private isSuperCall(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
-        const call: ts.CallExpression = this.getCallExpressionFromStatement(statement);
+        const call = this.getCallExpressionFromStatement(statement);
         if (call == null) {
             return false;
         }
@@ -104,8 +104,8 @@ class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
         return methodName === declaredMethodName;
     }
 
-    private getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression {
-        let expression: ts.Expression;
+    private getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression | null {
+        let expression: ts.Expression | undefined;
         if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
             expression = (<ts.ExpressionStatement>statement).expression;
         } else if (statement.kind === ts.SyntaxKind.ReturnStatement) {

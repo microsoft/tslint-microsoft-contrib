@@ -51,14 +51,12 @@ class NoControlRegexRuleWalker extends ErrorTolerantWalker {
 
     /* tslint:disable:no-control-regex */
     private validateCall(expression: ts.CallExpression | ts.NewExpression): void {
-        if (expression.expression.getText() === 'RegExp') {
-            if (expression.arguments.length > 0) {
-                const arg1: ts.Expression = expression.arguments[0];
-                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
-                    const regexpText: string = (<ts.StringLiteral>arg1).text;
-                    if (/[\x00-\x1f]/.test(regexpText)) {
-                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
-                    }
+        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
+            const arg1: ts.Expression = expression.arguments[0];
+            if (arg1.kind === ts.SyntaxKind.StringLiteral) {
+                const regexpText: string = (<ts.StringLiteral>arg1).text;
+                if (/[\x00-\x1f]/.test(regexpText)) {
+                    this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
                 }
             }
         }

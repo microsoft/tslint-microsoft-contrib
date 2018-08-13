@@ -7,10 +7,10 @@ import {AstUtils} from './AstUtils';
  * Tracks nested scope of variables.
  */
 export class Scope {
-    public parent: Scope;
+    public parent: Scope | null;
     private symbols: { [index: string]: number } = {};
 
-    constructor(parent: Scope) {
+    constructor(parent: Scope | null) {
         this.parent = parent;
     }
 

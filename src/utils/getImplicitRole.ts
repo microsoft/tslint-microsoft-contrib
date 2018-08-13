@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as implicitRoles from './implicitRoles';
+import { implicitRoles } from './implicitRoles';
 import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './TypeGuard';
 
 /**
@@ -10,10 +10,12 @@ import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './Ty
  * A reference about implicit role: https://www.w3.org/TR/html-aria/#sec-strong-native-semantics.
  * A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no-corresponding-role.
  */
-export function getImplicitRole(node: ts.Node): string {
-    let tagName: string;
+export function getImplicitRole(node: ts.Node | null | undefined): string | undefined {
+    let tagName: string | undefined;
 
-    if (isJsxElement(node)) {
+    if (node == null) {
+        return undefined;
+    } else if (isJsxElement(node)) {
         tagName = node.openingElement.tagName.getText();
     } else if (isJsxSelfClosingElement(node)) {
         tagName = node.tagName.getText();
@@ -23,5 +25,9 @@ export function getImplicitRole(node: ts.Node): string {
         tagName = undefined;
     }
 
-    return tagName && implicitRoles[tagName] && implicitRoles[tagName](node);
+    if (tagName === undefined || !(tagName in implicitRoles)) {
+        return undefined;
+    }
+
+    return implicitRoles[tagName](node);
 }

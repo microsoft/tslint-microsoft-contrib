@@ -210,6 +210,7 @@
     "prefer-for-of": false,
     "prefer-function-over-method": false,
     "prefer-method-signature": true,
+    "prefer-readonly": true,
     "prefer-template": false,
     "prefer-type-cast": true,
     "strict-type-predicates": false,

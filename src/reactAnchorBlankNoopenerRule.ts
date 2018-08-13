@@ -73,7 +73,7 @@ function isRelAttributeValue(attribute: ts.JsxAttribute): boolean {
         return false;
     }
 
-    if (attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
+    if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
         const expression: ts.JsxExpression = <ts.JsxExpression>attribute.initializer;
         if (expression.expression != null && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
             return true; // attribute value is not a string literal, so do not validate

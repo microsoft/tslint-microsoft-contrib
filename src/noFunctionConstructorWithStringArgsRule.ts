@@ -39,10 +39,8 @@ class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
 
     protected visitNewExpression(node: ts.NewExpression): void {
         const functionName  = AstUtils.getFunctionName(node);
-        if (functionName === 'Function') {
-            if (node.arguments.length > 0) {
-                this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-            }
+        if (functionName === 'Function' && node.arguments !== undefined && node.arguments.length > 0) {
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         super.visitNewExpression(node);
     }

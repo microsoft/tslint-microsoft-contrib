@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
 
-    private fieldInitializations: { [index: string]: string } = {};
+    private fieldInitializations: { [index: string]: string | undefined } = {};
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         this.fieldInitializations = {};
@@ -51,7 +51,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        const initializer: ts.Expression = node.initializer;
+        const initializer = node.initializer;
         if (node.name.kind === ts.SyntaxKind.Identifier) {
             const fieldName: string = 'this.' + (<ts.Identifier>node.name).getText();
             if (initializer == null) {
@@ -60,7 +60,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                 this.fieldInitializations[fieldName] = initializer.getText();
             }
         }
-        if (AstUtils.isUndefined(initializer)) {
+        if (initializer !== undefined && AstUtils.isUndefined(initializer)) {
             // you should never initialize a field to undefined.
             const start: number = initializer.getStart();
             const width: number = initializer.getWidth();
@@ -84,7 +84,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                 // field is being assigned to undefined... create error if the field already has that value
                                 if (Object.keys(this.fieldInitializations).indexOf(propertyName) > -1) {
                                     // make sure the field was declared as undefined
-                                    const fieldInitValue: string = this.fieldInitializations[propertyName];
+                                    const fieldInitValue = this.fieldInitializations[propertyName];
                                     if (fieldInitValue == null) {
                                         const start: number = property.getStart();
                                         const width: number = property.getWidth();
@@ -93,7 +93,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                 }
                             } else if (AstUtils.isConstant(binaryExpression.right)) {
                                 // field is being assigned a constant... create error if the field already has that value
-                                const fieldInitValue: string = this.fieldInitializations[propertyName];
+                                const fieldInitValue = this.fieldInitializations[propertyName];
                                 if (fieldInitValue === binaryExpression.right.getText()) {
                                     const start: number = binaryExpression.getStart();
                                     const width: number = binaryExpression.getWidth();

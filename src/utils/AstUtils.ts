@@ -13,18 +13,18 @@ export module AstUtils {
         }
     }
 
-    export function getFunctionName(node : ts.CallExpression | ts.NewExpression) : string {
+    export function getFunctionName(node: ts.CallExpression | ts.NewExpression): string {
         const expression: ts.Expression = node.expression;
-        let functionName : string = (<any>expression).text;
+        let functionName: string = (<any>expression).text;
         if (functionName === undefined && (<any>expression).name) {
             functionName = (<any>expression).name.text;
         }
         return functionName;
     }
 
-    export function getFunctionTarget(expression: ts.CallExpression) : string {
+    export function getFunctionTarget(expression: ts.CallExpression): string | null {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
+            const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
         return null;
@@ -34,12 +34,12 @@ export module AstUtils {
         return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
     }
 
-    export function hasModifier(modifiers : ts.ModifiersArray, modifierKind : number) : boolean {
+    export function hasModifier(modifiers: ts.ModifiersArray, modifierKind: number): boolean {
         if (modifiers == null) {
             return false;
         }
-        let result : boolean = false;
-        modifiers.forEach((modifier : ts.Node) : void => {
+        let result: boolean = false;
+        modifiers.forEach((modifier: ts.Node): void => {
             if (modifier.kind === modifierKind) {
                 result = true;
             }
@@ -47,44 +47,49 @@ export module AstUtils {
         return result;
     }
 
-    export function dumpTypeInfo(expression : ts.Expression, languageServices: ts.LanguageService, typeChecker : ts.TypeChecker) : void {
+    export function dumpTypeInfo(expression: ts.Expression, languageServices: ts.LanguageService, typeChecker: ts.TypeChecker): void {
         /* tslint:disable:no-console */
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
         if (expression.kind === ts.SyntaxKind.Identifier
             || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            const definitionInfo : ts.DefinitionInfo[] = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
-            if (definitionInfo) {
-                definitionInfo.forEach((info : ts.DefinitionInfo, index : number) : void => {
+            const definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
+            if (definitionInfo !== undefined) {
+                definitionInfo.forEach((info: ts.DefinitionInfo, index: number): void => {
                     console.log('\tdefinitionInfo-' + index);
                     console.log('\t\tkind: ' + info.kind);
                     console.log('\t\tname: ' + info.name);
                 });
             }
 
-            const typeInfo : ts.DefinitionInfo[] = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
-            if (typeInfo) {
-                typeInfo.forEach((info : ts.DefinitionInfo, index : number) : void => {
+            const typeInfo = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
+            if (typeInfo !== undefined) {
+                typeInfo.forEach((info: ts.DefinitionInfo, index: number): void => {
                     console.log('\ttypeDefinitionInfo-' + index);
                     console.log('\t\tkind: ' + info.kind);
                     console.log('\t\tname: ' + info.name);
                 });
             }
 
-            const quickInfo : ts.QuickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
-            console.log('\tquickInfo.kind         = ' + quickInfo.kind);
-            console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
-            console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
-            console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+            const quickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
+            if (quickInfo !== undefined) {
+                console.log('\tquickInfo.kind         = ' + quickInfo.kind);
+                console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
+                console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
 
-            const expressionType : ts.Type = typeChecker.getTypeAtLocation(expression);
-            console.log('\ttypeChecker.typeToString : ' + typeChecker.typeToString(expressionType));
+                if (quickInfo.displayParts !== undefined) {
+                    console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
+                    console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
+                }
+            }
+
+            const expressionType: ts.Type = typeChecker.getTypeAtLocation(expression);
+            console.log('\ttypeChecker.typeToString: ' + typeChecker.typeToString(expressionType));
             console.log('\ttype.flags: ' + expressionType.flags);
             console.log('\ttype.symbol: ' + expressionType.symbol);
 
-            const expressionSymbol : ts.Symbol = typeChecker.getSymbolAtLocation(expression);
+            const expressionSymbol = typeChecker.getSymbolAtLocation(expression);
             if (expressionSymbol == null) {
                 console.log('\tsymbol: ' + expressionSymbol);
             } else {
@@ -93,7 +98,7 @@ export module AstUtils {
                 console.log('\tsymbol.declarations: ' + expressionSymbol.declarations);
             }
 
-            const contextualType : ts.Type = typeChecker.getContextualType(expression);
+            const contextualType = typeChecker.getContextualType(expression);
             if (contextualType == null) {
                 console.log('\tcontextualType: ' + contextualType);
             } else {
@@ -104,7 +109,7 @@ export module AstUtils {
         /* tslint:enable:no-console */
     }
 
-    export function isPrivate(node: ts.Node) : boolean {
+    export function isPrivate(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
         if ((<any>ts).NodeFlags.Private != null) {
             return !!(node.flags & (<any>ts).NodeFlags.Private);
@@ -114,7 +119,7 @@ export module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
-    export function isProtected(node: ts.Node) : boolean {
+    export function isProtected(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
         if ((<any>ts).NodeFlags.Protected != null) {
             return !!(node.flags & (<any>ts).NodeFlags.Protected);
@@ -124,7 +129,7 @@ export module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
-    export function isPublic(node: ts.Node) : boolean {
+    export function isPublic(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
         if ((<any>ts).NodeFlags.Public != null) {
             return !!(node.flags & (<any>ts).NodeFlags.Public);
@@ -134,7 +139,7 @@ export module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
-    export function isStatic(node: ts.Node) : boolean {
+    export function isStatic(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
         if ((<any>ts).NodeFlags.Static != null) {
             return !!(node.flags & (<any>ts).NodeFlags.Static);
@@ -197,7 +202,8 @@ export module AstUtils {
             if (node.kind === ts.SyntaxKind.VariableDeclaration
                 && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
                 && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
-                if (AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
+                if (node.parent.parent.modifiers !== undefined
+                    && AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
                     return true;
                 }
             }
@@ -215,8 +221,8 @@ export module AstUtils {
             (node.kind === ts.SyntaxKind.ObjectLiteralExpression || node.kind === ts.SyntaxKind.ArrayLiteralExpression);
     }
 
-    export function findParentBlock(child: ts.Node) : ts.Node {
-        let parent : ts.Node = child.parent;
+    export function findParentBlock(child: ts.Node): ts.Node {
+        let parent: ts.Node = child.parent;
         while (parent != null) {
             if (parent.kind === ts.SyntaxKind.Block) {
                 return parent;
@@ -226,7 +232,7 @@ export module AstUtils {
         throw new Error('Could not determine parent block of node: ' + child);
     }
 
-    export function isSameIdentifer(source : ts.Node, target: ts.Node) : boolean {
+    export function isSameIdentifer(source: ts.Node, target: ts.Node): boolean {
         if (source == null || target == null) {
             return false;
         }
@@ -262,7 +268,7 @@ export module AstUtils {
         return false;
     }
 
-    export function isUndefined(node: ts.Expression): boolean {
+    export function isUndefined(node: ts.Expression | null | undefined): boolean {
         if (node != null) {
             if (node.kind === ts.SyntaxKind.Identifier) {
                 return node.getText() === 'undefined';
@@ -271,7 +277,7 @@ export module AstUtils {
         return false;
     }
 
-    export function isConstant(node: ts.Expression): boolean {
+    export function isConstant(node: ts.Expression | null | undefined): boolean {
         if (node == null) {
             return false;
         }

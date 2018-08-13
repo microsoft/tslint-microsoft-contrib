@@ -11,7 +11,7 @@ import {Scope} from './Scope';
  */
 export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     private typeChecker?: ts.TypeChecker;
-    private scope: Scope;
+    private scope: Scope | null = null;
 
     constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, program? : ts.Program) {
         super(sourceFile, options);
@@ -21,7 +21,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
     }
 
-    protected getFunctionTargetType(expression: ts.CallExpression) : string {
+    protected getFunctionTargetType(expression: ts.CallExpression): string | null {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && this.typeChecker) {
             const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             const targetType: ts.Type = this.typeChecker.getTypeAtLocation(propExp.expression);
@@ -45,7 +45,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
 
         // is the symbol something we are tracking in scope ourselves?
-        if (this.scope.isFunctionSymbol(expression.getText())) {
+        if (this.scope != null && this.scope.isFunctionSymbol(expression.getText())) {
             return true;
         }
 
@@ -69,9 +69,12 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
                     return true;
                 }
 
-                const signature : ts.Signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
-                const expressionType : ts.Type = this.typeChecker.getReturnTypeOfSignature(signature);
-                return this.isFunctionType(expressionType, this.typeChecker);
+                const signature = this.typeChecker.getResolvedSignature(<ts.CallExpression>expression);
+
+                if (signature !== undefined) {
+                    const expressionType = this.typeChecker.getReturnTypeOfSignature(signature);
+                    return this.isFunctionType(expressionType, this.typeChecker);
+                }
             } catch (e) {
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
@@ -86,10 +89,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     }
 
     private isFunctionType(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
-        const signatures : ts.Signature[] = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
+        const signatures = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
         if (signatures != null && signatures.length > 0) {
-            const signatureDeclaration : ts.SignatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
+            const signatureDeclaration = signatures[0].declaration;
+            if (signatureDeclaration != null && signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
                 return true; // variables of type function are allowed to be passed as parameters
             }
         }
@@ -105,28 +108,28 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
         this.scope = new Scope(this.scope);
-        this.scope.addGlobalScope(node.body, this.getSourceFile(), this.getOptions());
+        this.scope.addGlobalScope(node.body!, this.getSourceFile(), this.getOptions());
         super.visitModuleDeclaration(node);
         this.scope = this.scope.parent;
     }
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        this.scope = new Scope(this.scope);
+        const scope = this.scope = new Scope(this.scope);
         node.members.forEach((element: ts.ClassElement): void => {
-            const prefix: string = AstUtils.isStatic(element)
+            const prefix: string = AstUtils.isStatic(element) && node.name != null
                 ? node.name.getText() + '.'
                 : 'this.';
 
             if (element.kind === ts.SyntaxKind.MethodDeclaration) {
                 // add all declared methods as valid functions
-                this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
+                scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
             } else if (element.kind === ts.SyntaxKind.PropertyDeclaration) {
                 const prop: ts.PropertyDeclaration = <ts.PropertyDeclaration>element;
                 // add all declared function properties as valid functions
                 if (AstUtils.isDeclarationFunctionType(prop)) {
-                    this.scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
+                    scope.addFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
                 } else {
-                    this.scope.addNonFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
+                    scope.addNonFunctionSymbol(prefix + (<ts.MethodDeclaration>element).name.getText());
                 }
             }
         });
@@ -178,9 +181,9 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void  {
         if (AstUtils.isDeclarationFunctionType(node)) {
-            this.scope.addFunctionSymbol(node.name.getText());
+            this.scope!.addFunctionSymbol(node.name.getText());
         } else {
-            this.scope.addNonFunctionSymbol(node.name.getText());
+            this.scope!.addNonFunctionSymbol(node.name.getText());
         }
         super.visitVariableDeclaration(node);
     }

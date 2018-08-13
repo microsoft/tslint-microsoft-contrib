@@ -70,8 +70,8 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
         const lastStatement = statements[statements.length - 1];
         const nextToLastStatement = statements[statements.length - 2];
 
-        const returnedVariableName: string = this.tryToGetReturnedVariableName(lastStatement);
-        const declaredVariableIdentifier: ts.Identifier | null = this.tryToGetDeclaredVariable(nextToLastStatement);
+        const returnedVariableName = this.tryToGetReturnedVariableName(lastStatement);
+        const declaredVariableIdentifier = this.tryToGetDeclaredVariable(nextToLastStatement);
         if (declaredVariableIdentifier == null) {
             return;
         }

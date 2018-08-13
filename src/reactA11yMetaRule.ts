@@ -52,7 +52,7 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
                 if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
                     if (attribute.name.getText() === 'http-equiv') {
-                        if (this.isStringLiteral(attribute.initializer, 'refresh')) {
+                        if (attribute.initializer !== undefined && this.isStringLiteral(attribute.initializer, 'refresh')) {
                             this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
                         }
                     }
@@ -61,14 +61,14 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private isStringLiteral(expression: ts.Expression, literal: string): boolean {
+    private isStringLiteral(expression: ts.Expression, literal: string): boolean | null {
         if (expression != null) {
             if (expression.kind === ts.SyntaxKind.StringLiteral) {
                 const value: string = (<ts.StringLiteral>expression).text;
                 return value === literal;
             } else if (expression.kind === ts.SyntaxKind.JsxExpression) {
                 const exp: ts.JsxExpression = <ts.JsxExpression>expression;
-                if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
+                if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                     const value: string = (<ts.StringLiteral>exp.expression).text;
                     return value === literal;
                 }

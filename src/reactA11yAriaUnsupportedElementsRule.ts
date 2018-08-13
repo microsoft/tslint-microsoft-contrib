@@ -55,12 +55,12 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
     private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (!DOM_SCHEMA[tagName]) {
+        if (!(<any>DOM_SCHEMA)[tagName]) {
             return;
         }
 
-        const supportAria: boolean = DOM_SCHEMA[tagName].supportAria != null
-            ? DOM_SCHEMA[tagName].supportAria
+        const supportAria: boolean = (<any>DOM_SCHEMA)[tagName].supportAria != null
+            ? (<any>DOM_SCHEMA)[tagName].supportAria
             : false;
 
         if (supportAria) {

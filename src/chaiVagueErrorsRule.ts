@@ -41,7 +41,7 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                const expectInvocation: ts.CallExpression = ChaiUtils.getExpectInvocation(node);
+                const expectInvocation = ChaiUtils.getExpectInvocation(node);
                 if (!expectInvocation || expectInvocation.arguments.length !== 2) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
                 }
@@ -62,18 +62,20 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
                 }
             }
 
-            const actualValue: ts.Node = ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue.kind === ts.SyntaxKind.BinaryExpression) {
-                const expectedValue: ts.Node = ChaiUtils.getFirstExpectationParameter(node);
-                const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
-                const operator: string = binaryExpression.operatorToken.getText();
-                const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
-                    || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+            const actualValue = ChaiUtils.getFirstExpectCallParameter(node);
+            if (actualValue !== null && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
+                const expectedValue = ChaiUtils.getFirstExpectationParameter(node);
+                if (expectedValue !== null) {
+                    const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
+                    const operator: string = binaryExpression.operatorToken.getText();
+                    const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
+                        || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
-                if (operator === '===' && expectingBooleanKeyword) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
-                } else if (operator === '!==' && expectingBooleanKeyword) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
+                    if (operator === '===' && expectingBooleanKeyword) {
+                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
+                    } else if (operator === '!==' && expectingBooleanKeyword) {
+                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
+                    }
                 }
             }
         }

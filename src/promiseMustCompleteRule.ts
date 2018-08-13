@@ -64,11 +64,14 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
     }
 
     protected visitNewExpression(node: ts.NewExpression): void {
-        if (this.isPromiseDeclaration(node)) {
+        if (this.isPromiseDeclaration(node) && node.arguments !== undefined) {
             const functionArgument: ts.FunctionLikeDeclaration = <ts.FunctionLikeDeclaration><any>node.arguments[0];
             const functionBody = functionArgument.body;
-            const competionIdentifiers : ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
-            this.validatePromiseUsage(node, functionBody, competionIdentifiers);
+
+            if (functionBody !== undefined) {
+                const competionIdentifiers : ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
+                this.validatePromiseUsage(node, functionBody, competionIdentifiers);
+            }
         }
         super.visitNewExpression(node);
     }

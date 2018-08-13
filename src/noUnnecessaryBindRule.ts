@@ -51,8 +51,8 @@ class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
 
         analyzers.forEach((analyzer: CallAnalyzer): void => {
             if (analyzer.canHandle(node)) {
-                const contextArgument: ts.Expression = analyzer.getContextArgument(node);
-                const functionArgument: ts.Expression = analyzer.getFunctionArgument(node);
+                const contextArgument = analyzer.getContextArgument(node);
+                const functionArgument = analyzer.getFunctionArgument(node);
                 if (contextArgument == null || functionArgument == null) {
                     return;
                 }
@@ -71,8 +71,8 @@ class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
 
 interface CallAnalyzer {
     canHandle(node: ts.CallExpression): boolean;
-    getContextArgument(node: ts.CallExpression): ts.Expression;
-    getFunctionArgument(node: ts.CallExpression): ts.Expression;
+    getContextArgument(node: ts.CallExpression): ts.Expression | null;
+    getFunctionArgument(node: ts.CallExpression): ts.Expression | null;
 }
 
 class TypeScriptFunctionAnalyzer implements CallAnalyzer {
@@ -103,7 +103,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         return isUnderscore;
     }
 
-    public getContextArgument(node: ts.CallExpression): ts.Expression {
+    public getContextArgument(node: ts.CallExpression): ts.Expression | null {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
@@ -117,7 +117,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         return null;
     }
 
-    public getFunctionArgument(node: ts.CallExpression): ts.Expression {
+    public getFunctionArgument(node: ts.CallExpression): ts.Expression | null {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
@@ -144,7 +144,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         return false;
     }
 
-    public getContextArgument(node: ts.CallExpression): ts.Expression {
+    public getContextArgument(node: ts.CallExpression): ts.Expression | null {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
@@ -156,7 +156,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         return null;
     }
 
-    public getFunctionArgument(node: ts.CallExpression): ts.Expression {
+    public getFunctionArgument(node: ts.CallExpression): ts.Expression | null {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];

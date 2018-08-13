@@ -79,10 +79,10 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
 
         // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
-        const roleValue: string = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
+        const roleValue = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
         const isImplicitRole: boolean = !roleProp && !!roleValue;
         const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
-            .filter((role: string) => !!ROLES[role]);
+            .filter((role: string) => !!(<any>ROLES)[role]);
 
         if (normalizedRoles.length === 0) {
             return;
@@ -91,7 +91,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         let requiredAttributeNames: string[] = [];
 
         normalizedRoles.forEach((role: string) => {
-            requiredAttributeNames = requiredAttributeNames.concat(ROLES[role].requiredProps || []);
+            requiredAttributeNames = requiredAttributeNames.concat((<any>ROLES)[role].requiredProps || []);
         });
 
         const attributeNamesInElement: string[] = Object.keys(attributesInElement)

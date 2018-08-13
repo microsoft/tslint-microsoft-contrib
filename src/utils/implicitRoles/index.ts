@@ -1,3 +1,5 @@
+import * as ts from 'typescript';
+
 import { a } from './a';
 import { area } from './area';
 import { article } from './article';
@@ -48,10 +50,14 @@ import { thead } from './thead';
 import { tr } from './tr';
 import { ul } from './ul';
 
+export interface IImplicitRoles {
+    [i: string]: (node: ts.Node) => string | undefined;
+}
+
 /**
  * Export function for getting implicit role based on tag name.
  */
-export {
+export const implicitRoles: IImplicitRoles = {
     a,
     area,
     article,

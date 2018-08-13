@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions) : string[] {
+    public static getExceptions(options : Lint.IOptions): string[] | null {
     /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 function isExportedDeclaration(element: ts.Statement): boolean {
-    return AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
+    return element.modifiers !== undefined && AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
 }
 
 type ExportStatement = ts.ExportDeclaration | ts.ExportAssignment;
@@ -60,7 +60,7 @@ function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
       return [[node.expression.getText(), node.expression]];
   } else {
       const symbolAndNodes: [string, ts.Node][] = [];
-      node.exportClause.elements.forEach(e => {
+      node.exportClause!.elements.forEach(e => {
           symbolAndNodes.push([e.name.getText(), node]);
       });
       return symbolAndNodes;
@@ -88,7 +88,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach((element: ts.Statement): void => {
                 if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
-                    const exportStatements: ts.Statement[] = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element));
+                    const exportStatements = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element)) || [];
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
             });
@@ -96,11 +96,11 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         this.validateExportedElements(exportedTopLevelElements);
     }
 
-    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] {
-        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
+    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | null {
+        if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
-        } else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
+        } else if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleBlock) {
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
@@ -145,9 +145,9 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private isSuppressed(exportedName: string) : boolean {
-        const allExceptions : string[] = Rule.getExceptions(this.getOptions());
+        const allExceptions = Rule.getExceptions(this.getOptions());
 
-        return Utils.exists(allExceptions, (exception: string) : boolean => {
+        return Utils.exists(allExceptions, (exception: string): boolean => {
             return new RegExp(exception).test(exportedName);
         });
     }

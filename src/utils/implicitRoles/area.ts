@@ -6,7 +6,7 @@ const hrefString: string = 'href';
 /**
  * @Returns the implicit role for an area tag.
  */
-function getImplicitRoleForArea(node: ts.Node): string {
+function getImplicitRoleForArea(node: ts.Node): string | undefined {
     return getJsxAttributesFromJsxElement(node)[hrefString] ? 'link' : undefined;
 }
 

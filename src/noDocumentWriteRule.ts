@@ -37,7 +37,7 @@ class NoDocumentWriteWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression) {
 
-        const functionTarget: string = AstUtils.getFunctionTarget(node);
+        const functionTarget = AstUtils.getFunctionTarget(node);
         if (functionTarget === 'document' || functionTarget === 'window.document') {
             if (node.arguments.length === 1) {
                 const functionName: string = AstUtils.getFunctionName(node);

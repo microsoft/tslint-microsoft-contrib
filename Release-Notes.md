@@ -1,3 +1,8 @@
+# 5.2.1
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.1)
+* [#479](https://github.com/Microsoft/tslint-microsoft-contrib/issues/479) Source control improvement: repository forces `\n` endline style on Windows
+* [#485](https://github.com/Microsoft/tslint-microsoft-contrib/issues/485) Adjusted `tsutils` peer dependency to not allow versions that break either TypeScript 2.X or 3.X
+
 # 5.2.0
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.0)
 * [#207](https://github.com/Microsoft/tslint-microsoft-contrib/issues/207) Checked second expect() messages in chai-vague-errors

@@ -1,48 +1,38 @@
+# tslint-microsoft-contrib
+
 [![npm version](https://badge.fury.io/js/tslint-microsoft-contrib.svg)](https://badge.fury.io/js/tslint-microsoft-contrib)
-[![Downloads](http://img.shields.io/npm/dm/tslint-microsoft-contrib.svg)](https://npmjs.org/package/tslint-microsoft-contrib)
+[![Downloads](https://img.shields.io/npm/dm/tslint-microsoft-contrib.svg)](https://npmjs.org/package/tslint-microsoft-contrib)
 [![Build Status](https://travis-ci.org/Microsoft/tslint-microsoft-contrib.svg?branch=master)](https://travis-ci.org/Microsoft/tslint-microsoft-contrib)
 [![Join the chat at https://gitter.im/Microsoft/tslint-microsoft-contrib](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/tslint-microsoft-contrib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-tslint-microsoft-contrib
-======
-
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
-Version 5.2.0 (Stable)
--------------
-The project has been in use on multiple projects. Please report any bugs or false positives you might find!
+## Installation
 
-See our [Release Notes](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Release-Notes) to find the latest new rules.
+```shell
+npm install tslint-microsoft-contrib --save-dev
+```
 
-Version 5.2.1 (In-Development)
--------------
-The [Latest Development Version](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) is available online.
-To use the nightly build set your npm version to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`
+Alternately, you can download the files directly from GitHub: see [npm-5.2.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.2.2).
 
-Installation
-------------
+...or use the [`releases`](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) branch, which is available online.
+You can use that build by setting your npm version of `tslint-microsoft-contrib` to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`.
 
-    npm install tslint-microsoft-contrib
 
-Alternately, you can download the files directly from GitHub:
-
-* [5.2.0](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.2.0)
-
-#### TSLint and corresponding tslint-microsoft-contrib version
+## TSLint and corresponding tslint-microsoft-contrib version
 
 | TSLint version | tslint-microsoft-contrib version |
 | --- | --- |
-| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x)|
+| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x, >=2.4, 3.x)|
 | **>= 4.x**   | 4.x (supporting TypeScript 2.1.x) |
 | **>= 3.2.x** | 2.x |
 | **3.1.x**    | unsupported |
 | **3.0.x**    | unsupported |
 | **2.x**      | 1.x |
 
-Configuration
--------------
+## Configuration
 
-##### Configure your Grunt build task
+### Configure your Grunt build task
 
 Add the new rulesDirectory to your tslint task:
 
@@ -60,15 +50,16 @@ Add the new rulesDirectory to your tslint task:
 
 The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
 
-##### Which Rules Should I Turn On?
+### Which Rules Should I Turn On?
+
 There certainly are a lot of options! Here are some links to get you started.
+
 * Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
 * A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
 * A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
 * And our configuration file with all options is available here: [tslint.json](tslint.json)
 
-Supported Rules
------
+### Supported Rules
 
 Rule Name   | Description | Since
 :---------- | :------------ | -------------
@@ -77,7 +68,7 @@ Rule Name   | Description | Since
 `export-name`                   | The name of the exported module must match the filename of the source file. This is case-sensitive but ignores file extension. Since version 1.0, this rule takes a list of regular expressions as a parameter. Any export name matching that regular expression will be ignored. For example, to allow an exported name like myChartOptions, then configure the rule like this: "export-name": \[true, "myChartOptionsg"\]| 0.0.3
 `function-name`                 | Applies a naming convention to function names and method names. You can configure the naming convention by passing parameters. Please note, the private-method-regex does take precedence over the static-method-regex, so a private static method must match the private-method-regex. The default values are: <br>    [ true, { <br>        "method-regex": "^[a-z][\\w\\d]+$",<br>        "private-method-regex": "^[a-z][\\w\\d]+$",<br>        "protected-method-regex": "^[a-z][\\w\\d]+$",<br>        "static-method-regex": "^[A-Z_\\d]+$",<br>       "function-regex": "^[a-z][\\w\\d]+$"<br>    }<br/>This rule has some overlap with the [tslint variable-name rule](https://palantir.github.io/tslint/rules/variable-name/); however, the rule here is more configurable.] | 2.0.7, 2.0.14
 `import-name`                   | The name of the imported module must match the name of the thing being imported. For example, it is valid to name imported modules the same as the module name: `import Service = require('x/y/z/Service')` and `import Service from 'x/y/z/Service'`. But it is invalid to change the name being imported, such as: `import MyCoolService = require('x/y/z/Service')` and `import MyCoolService from 'x/y/z/Service'`. Since version 2.0.9 it is possible to configure this rule with a list of exceptions. For example, to allow `underscore` to be imported as `_`, add this configuration: `'import-name': [ true, { 'underscore': '_' }]`| 2.0.5
-`insecure-random`               | Do not use insecure sources for random bytes. Use a secure random number generator instead. Bans all uses of Math.random and crypto.pseudoRandomBytes. Better alternatives are crypto.randomBytes and window.crypto.getRandomValues.<br/>References:<br/>* [CWE 330](https://cwe.mitre.org/data/definitions/330.html)<br/>* [MDN Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)<br/>* [Node.js crypto.randomBytes()](http://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback)<br/>* [window.crypto.getRandomValues()](https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues)<br/> | 2.0.11
+`insecure-random`               | Do not use insecure sources for random bytes. Use a secure random number generator instead. Bans all uses of Math.random and crypto.pseudoRandomBytes. Better alternatives are crypto.randomBytes and window.crypto.getRandomValues.<br/>References:<br/>* [CWE 330](https://cwe.mitre.org/data/definitions/330.html)<br/>* [MDN Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)<br/>* [Node.js crypto.randomBytes()](https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback)<br/>* [window.crypto.getRandomValues()](https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues)<br/> | 2.0.11
 `jquery-deferred-must-complete` | When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/26). | 1.0
 `max-func-body-length`          | Avoid long functions. The line count of a function body must not exceed the value configured within this rule's options. <br>You can setup a general max function body length applied for every function/method/arrow function e.g. \[true, 30\] or set different maximum length for every type e.g. \[true, \{ "func-body-length": 10 , "func-expression-body-length": 10 , "arrow-body-length": 5, "method-body-length": 15, "ctor-body-length": 5 \}\]. To specify a function name whose parameters you can ignore for this rule, pass a regular expression as a string(this can be useful for Mocha users to ignore the describe() function). Since version 2.0.9, you can also ignore single- and multi-line comments from the total function length, eg. \[true, \{ "ignore-comments": true \}\] | 2.0.3
 `missing-jsdoc`                 | All files must have a top level [JSDoc](http://usejsdoc.org/) comment. A JSDoc comment starts with /** (not one more or one less asterisk) and a JSDoc at the 'top-level' appears without leading spaces. Trailing spaces are acceptable but not recommended. | 1.0
@@ -87,14 +78,14 @@ Rule Name   | Description | Since
 `mocha-unneeded-done`           | A function declares a MochaDone parameter but only resolves it synchronously in the main function. The MochaDone parameter can be safely removed from the parameter list.| 2.0.10
 `no-backbone-get-set-outside-model` | Avoid using model.get('x') and model.set('x', value) Backbone accessors outside of the owning model. This breaks type safety and you should define getters and setters for your attributes instead.| 1.0
 `no-banned-terms`               | Do not use banned terms: [caller](https://msdn.microsoft.com/library/7t96kt3h(v=vs.94).aspx), [callee](https://msdn.microsoft.com/library/334e1zza(v=vs.94).aspx), [eval](https://msdn.microsoft.com/library/12k71sw7(v=vs.94).aspx), [arguments](https://msdn.microsoft.com/library/he95z461(v=vs.94).aspx). These terms refer to functions or properties that should not be used, so it is best practice to simply avoid them. | 0.0.1
-`no-constant-condition`         | Do not use constant expressions in conditions. Similar to the [ESLint no-constant-condition](http://eslint.org/docs/rules/no-constant-condition) rule. Since version 2.0.14, this rule accepts a parameter called `checkLoops` which defaults to true. If set to false then loops are not checked for conditionals. For example, disable loop checking with `[ true, { 'checkLoops': false } ]` | 1.0, 2.0.14
-`no-control-regex`              | Do not use control characters in regular expressions . Similar to the [ESLint no-control-regex](http://eslint.org/docs/rules/no-control-regex) rule | 1.0
+`no-constant-condition`         | Do not use constant expressions in conditions. Similar to the [ESLint no-constant-condition](https://eslint.org/docs/rules/no-constant-condition) rule. Since version 2.0.14, this rule accepts a parameter called `checkLoops` which defaults to true. If set to false then loops are not checked for conditionals. For example, disable loop checking with `[ true, { 'checkLoops': false } ]` | 1.0, 2.0.14
+`no-control-regex`              | Do not use control characters in regular expressions . Similar to the [ESLint no-control-regex](https://eslint.org/docs/rules/no-control-regex) rule | 1.0
 `no-cookies`                    | Do not use cookies | 0.0.1
 `no-delete-expression`          | Do not delete expressions. Only properties should be deleted | 0.0.2
 `no-disable-auto-sanitization`  | Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. Specifically, do not use the [execUnsafeLocalFunction](https://msdn.microsoft.com/en-us/library/windows/apps/hh767331.aspx) or [setInnerHTMLUnsafe](https://msdn.microsoft.com/en-us/library/windows/apps/br211696.aspx) functions. | 0.0.1
 `no-document-domain`            | Do not write to document.domain. Scripts setting document.domain to any value should be validated to ensure that the value is on a list of allowed sites. Also, if your site deals with PII in any way then document.domain must not be set to a top-level domain (for example, live.com) but only to an appropriate subdomain (for example, billing.live.com). If you are absolutely sure that you want to set document.domain then add a tslint suppression comment for the line. For more information see the [Phase 4 Verification page of the Microsoft SDL](https://msdn.microsoft.com/en-us/library/cc307418.aspx)| 2.0.3
 `no-document-write`             | Do not use document.write | 0.0.1
-`no-duplicate-case`             | Deprecated - This rule can be replaced with TSLint's no-duplicate-switch-case. Do not use duplicate case labels in switch statements. Similar to the [ESLint no-duplicate-case](http://eslint.org/docs/rules/no-duplicate-case.html) rule | 1.0
+`no-duplicate-case`             | Deprecated - This rule can be replaced with TSLint's no-duplicate-switch-case. Do not use duplicate case labels in switch statements. Similar to the [ESLint no-duplicate-case](https://eslint.org/docs/rules/no-duplicate-case.html) rule | 1.0
 `no-duplicate-parameter-names`  | Deprecated - This rule is now enforced by the TypeScript compiler. Do not write functions or methods with duplicate parameter names | 0.0.1
 `no-empty-interfaces`           | Deprecated - This rule can be replaced with TSLint's no-empty-interface. Do not use empty interfaces. They are compile-time only artifacts and they serve no useful purpose | 1.0
 `no-empty-line-after-opening-brace` | Avoid an empty line after an opening brace. | 2.0.6
@@ -105,15 +96,15 @@ Rule Name   | Description | Since
 `no-http-string`                | Do not use strings that start with 'http:'. URL strings should start with 'https:'. Http strings can be a security problem and indicator that your software may suffer from cookie-stealing attacks. Since version 1.0, this rule takes a list of regular expressions as a parameter. Any string matching that regular expression will be ignored. For example, to allow http connections to example.com and examples.com, configure your rule like this: "no-http-string": \[true, "http://www.example.com/?.*", "http://www.examples.com/?.*"\]| 0.0.3
 `no-increment-decrement`        | Avoid use of increment and decrement operators particularly as part of complicated expressions | 0.0.1
 `no-inner-html`                 | Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function. Writing values to innerHTML can expose your website to XSS injection attacks. All strings must be escaped before being rendered to the page.| 2.0.4
-`no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](http://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
+`no-invalid-regexp`             | Do not use invalid regular expression strings in the RegExp constructor. Similar to the [ESLint no-invalid-regexp](https://eslint.org/docs/rules/no-invalid-regexp.html) rule| 1.0
 `no-jquery-raw-elements`        | Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects. Instead use the JQuery element API. | 2.0.8
 `no-missing-visibility-modifiers` | Deprecated - This rule is in the TSLint product as `member-access`. Class members (both fields and methods) should have visibility modifiers specified. THe Principle of Least Visibility guides us to prefer private methods and fields when possible. If a developer forgets to add a modifier then TypeScript assumes the element should be public, which is the wrong default choice. | 1.0
 `no-multiline-string`           | Do not declare multiline strings | 0.0.1
 `no-multiple-var-decl`          | Deprecated - This rule is now part of the base TSLint product as the rule named 'one-variable-per-declaration'. Do not use comma separated variable declarations | 1.0
 `no-octal-literal`              | Do not use octal literals or escaped octal sequences | 0.0.1
-`no-regex-spaces`               | Do not use multiple spaces in a regular expression literal. Similar to the [ESLint no-regex-spaces](http://eslint.org/docs/rules/no-regex-spaces.html) rule | 1.0
+`no-regex-spaces`               | Do not use multiple spaces in a regular expression literal. Similar to the [ESLint no-regex-spaces](https://eslint.org/docs/rules/no-regex-spaces.html) rule | 1.0
 `no-relative-imports`           | Do not use relative paths when importing external modules or ES6 import declarations. The advantages of removing all relative paths from imports is that 1) the import name will be consistent across all files and subdirectories so searching for usages is much easier. 2) Moving source files to different folders will not require you to edit your import statements. 3) It will be possible to copy and paste import lines between files regardless of the file location. And 4) version control diffs will be simplified by having overall fewer edits to the import lines.| 2.0.5
-`no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. Since version 2.0.9 this rule accepts a parameter called allow-quoted-properties. If true, interface properties in quotes will be ignored. This can be a useful way to avoid verbose suppress-warning comments for generated d.ts files. <br/>This rule has some overlap with the [tslint variable-name rule](https://palantir.github.io/tslint/rules/variable-name/), however, the rule here finds more keywords and more usages.| 0.0.1, 2.0.9
+`no-reserved-keywords`          | Do not use reserved keywords as names of local variables, fields, functions, or other identifiers. Since version 2.0.9 this rule accepts a parameter called allow-quoted-properties. If true, interface properties in quotes will be ignored. This can be a useful way to avoid verbose suppress-warning comments for generated d.ts files. <br/>This rule has some overlap with the [tslint variable-name rule](https://palantir.github.io/tslint/rules/variable-name), however, the rule here finds more keywords and more usages.| 0.0.1, 2.0.9
 `no-single-line-block-comment`  | Avoid single line block comments and use single line comments instead. Block comments do not nest properly and have no advantages over normal single-line comments| 2.0.10
 `no-stateless-class`            | Deprecated - This rule can be replaced with TSLint's no-unnecessary-class. A stateless class represents a failure in the object oriented design of the system. A class without state is better modeled as a module or given some state. A stateless class is defined as a class with only static members and no parent class.| 2.0.4
 `no-string-based-set-immediate` | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument | 0.0.1
@@ -132,10 +123,10 @@ Rule Name   | Description | Since
 `no-var-self`                   | Deprecated - This rule can be replaced with TSLint's no-this-assignment. Do not use `var self = this`; instead, manage scope with arrow functions/lambdas. Self variables are a common practice in JavaScript but can be avoided in TypeScript. By default the rule bans any assignments of the `this` reference. If you want to enforce a naming convention or allow some usages then configure the rule with a regex. By default the rule is configured with `(?!)` which matches nothing. You can pass `^self$` to allow variables named self or pass `^(?!self$)` to allow anything other than self, for example| 2.0.8
 `no-with-statement`             | Do not use with statements. Assign the item to a new variable instead | 0.0.1
 `non-literal-require`           | Detect `require()` function calls for something that is not a string literal. For security reasons, it is best to only require() string literals. Otherwise, it is perhaps possible for an attacker to somehow change the value and download arbitrary Javascript into your page. | 2.0.14
-`possible-timing-attack`        | Avoid timing attacks by not making direct string comparisons to sensitive data. Do not compare against variables named password, secret, api, apiKey, token, auth, pass, or hash. For more info see [Using Node.js Event Loop for Timing Attacks](https://snyk.io/blog/node-js-timing-attack-ccc-ctf/) | 2.0.11
-`prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. Since 2.0.10, this rule can be configured to allow Array type parameters. To ignore type parameters, configure the rule with the values: `[ true, { 'allow-type-parameters': true } ]`<br/>This rule has some overlap with the [TSLint array-type rule](https://palantir.github.io/tslint/rules/array-type/), however, the version here catches more instances. | 1.0, 2.0.10
+`possible-timing-attack`        | Avoid timing attacks by not making direct string comparisons to sensitive data. Do not compare against variables named password, secret, api, apiKey, token, auth, pass, or hash. For more info see [Using Node.js Event Loop for Timing Attacks](https://snyk.io/blog/node-js-timing-attack-ccc-ctf) | 2.0.11
+`prefer-array-literal`          | Use array literal syntax when declaring or instantiating array types. For example, prefer the Javascript form of string[] to the TypeScript form Array<string>. Prefer '[]' to 'new Array()'. Prefer '[4, 5]' to 'new Array(4, 5)'. Prefer '[undefined, undefined]' to 'new Array(4)'. Since 2.0.10, this rule can be configured to allow Array type parameters. To ignore type parameters, configure the rule with the values: `[ true, { 'allow-type-parameters': true } ]`<br/>This rule has some overlap with the [TSLint array-type rule](https://palantir.github.io/tslint/rules/array-type), however, the version here catches more instances. | 1.0, 2.0.10
 `prefer-type-cast`              | Prefer the tradition type casts instead of the new 'as-cast' syntax. For example, prefer `<string>myVariable` instead of `myVariable as string`. Rule ignores any file ending in .tsx. If you prefer the opposite and want to see the `as type` casts, then enable the tslint rule named 'no-angle-bracket-type-assertion'| 2.0.4
-`promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). <br/><br/>This rule has some overlap with the [tslint no-floating-promises rule](https://palantir.github.io/tslint/rules/no-floating-promises/), but they are substantially different. | 1.0
+`promise-must-complete`         | When a Promise instance is created, then either the reject() or resolve() parameter must be called on it within all code branches in the scope. For more examples see the [feature request](https://github.com/Microsoft/tslint-microsoft-contrib/issues/34). <br/><br/>This rule has some overlap with the [tslint no-floating-promises rule](https://palantir.github.io/tslint/rules/no-floating-promises), but they are substantially different. | 1.0
 `react-a11y-anchors`            | For accessibility of your website, anchor element link text should be at least 4 characters long. Links with the same HREF should have the same link text. Links that point to different HREFs should have different link text. Links with images and text content, the alt attribute should be unique to the text content or empty. An an anchor element's href prop value must not be just #. <br/>References:<br/>[WCAG Rule 38: Link text should be as least four 4 characters long](http://oaa-accessibility.org/wcag20/rule/38/)<br/>[WCAG Rule 39: Links with the same HREF should have the same link text](http://oaa-accessibility.org/wcag20/rule/39/)<br/>[WCAG Rule 41: Links that point to different HREFs should have different link text](http://oaa-accessibility.org/wcag20/rule/41/)<br/>[WCAG Rule 43: Links with images and text content, the alt attribute should be unique to the text content or empty](http://oaa-accessibility.org/wcag20/rule/43/)<br/> | 2.0.11
 `react-a11y-aria-unsupported-elements` | For accessibility of your website, enforce that elements that do not support ARIA roles, states, and properties do not have those attributes. | 2.0.11
 `react-a11y-event-has-role`     | For accessibility of your website, Elements with event handlers must have explicit role or implicit role.<br/>References:<br/>[WCAG Rule 94](http://oaa-accessibility.org/wcag20/rule/94/)<br/>[Using the button role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role) | 2.0.11
@@ -158,10 +149,9 @@ Rule Name   | Description | Since
 `react-unused-props-and-state`  | Remove unneeded properties defined in React Props and State interfaces. Any interface named Props or State is defined as a React interface. All fields in these interfaces must be referenced. This rule can be configured with regexes to match custom Props and State interface names. <br/><br/>Example for including all interfaces ending with Props or State: <br/>*[ true, { 'props-interface-regex': 'Props$', 'state-interface-regex': 'State$' } ]* | 2.0.10
 `underscore-consistent-invocation` | Enforce a consistent usage of the _ functions. By default, invoking underscore functions should begin with wrapping a variable in an underscore instance: `_(list).map(...)`. An alternative is to prefer using the static methods on the _ variable: `_.map(list, ...)`. The rule accepts single parameter called 'style' which can be the value 'static' or 'instance': `[true, { "style": "static" }]`| 2.0.10
 `use-named-parameter`           | Do not reference the arguments object by numerical index; instead, use a named parameter. This rule is similar to JSLint's [Use a named parameter](https://jslinterrors.com/use-a-named-parameter) rule. | 0.0.3
-`valid-typeof`                  | Deprecated - This rule is now enforced by the TypeScript compiler. Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](http://eslint.org/docs/rules/valid-typeof).| 1.0
+`valid-typeof`                  | Deprecated - This rule is now enforced by the TypeScript compiler. Ensures that the results of typeof are compared against a valid string. This rule aims to prevent errors from likely typos by ensuring that when the result of a typeof operation is compared against a string, that the string is a valid value. Similar to the [valid-typeof ESLint rule](https://eslint.org/docs/rules/valid-typeof).| 1.0
 
-Supported Formatters
------
+### Supported Formatters
 
 These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as \r\n on Windows).
 
@@ -170,8 +160,7 @@ Formatter Name          | Description | Since
 `fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
 `fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
 
-Development
------------
+## Development
 
 To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
 
@@ -181,8 +170,8 @@ To develop tslint-microsoft-contrib simply clone the repository, install depende
     grunt all
     grunt create-rule --rule-name=no-something-or-other
 
-Debug code
------------
+### Debug code
+
 If command fails because of file access permissions, prefix it with sudo.
 
     npm install -g node-inspector
@@ -195,8 +184,7 @@ The `node-debug` command will load Node Inspector in your default browser (works
 
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
-Creating a new Release
-----------------------
+### Creating a new Release
 
 Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases)
 

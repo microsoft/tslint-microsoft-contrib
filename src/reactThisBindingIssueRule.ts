@@ -46,7 +46,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     private allowAnonymousListeners: boolean = false;
     private boundListeners: string[] = [];
     private declaredMethods: string[] = [];
-    private scope: Scope;
+    private scope: Scope | null = null;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -128,10 +128,10 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         node.attributes.properties.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
             if (this.isUnboundListener(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                const jsxExpression = attribute.initializer;
+                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
-                const jsxExpression: ts.JsxExpression = attribute.initializer;
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                 const listenerText: string = propAccess.getText();
                 if (this.declaredMethods.indexOf(listenerText) > -1 && this.boundListeners.indexOf(listenerText) === -1) {
@@ -142,11 +142,16 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 }
             } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
                 const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                const jsxExpression = attribute.initializer;
+                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
                     return;
                 }
-                const jsxExpression: ts.JsxExpression = attribute.initializer;
-                const expression: ts.Expression = jsxExpression.expression;
+
+                const expression = jsxExpression.expression;
+                if (expression === undefined) {
+                    return;
+                }
+
                 const start: number = expression.getStart();
                 const widget: number = expression.getWidth();
                 const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
@@ -162,15 +167,13 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
             if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
-                const jsxExpression: ts.JsxExpression = attribute.initializer;
-                const expression: ts.Expression = jsxExpression.expression;
-                return this.isExpressionAnonymousFunction(expression);
+                return this.isExpressionAnonymousFunction(attribute.initializer.expression);
             }
         }
         return false;
     }
 
-    private isExpressionAnonymousFunction(expression: ts.Expression): boolean {
+    private isExpressionAnonymousFunction(expression: ts.Expression | null | undefined): boolean {
         if (expression == null) {
             return false;
         }
@@ -188,7 +191,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 return true; // bind functions on Function or _ create a new anonymous instance of a function
             }
         }
-        if (expression.kind === ts.SyntaxKind.Identifier) {
+        if (expression.kind === ts.SyntaxKind.Identifier && this.scope != null) {
             const symbolText: string = expression.getText();
             return this.scope.isFunctionSymbol(symbolText);
         }
@@ -199,7 +202,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
             if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
-                const jsxExpression: ts.JsxExpression = attribute.initializer;
+                const jsxExpression = attribute.initializer;
                 if (jsxExpression.expression != null && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                     if (propAccess.expression.getText() === 'this') {
@@ -221,7 +224,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (node.body != null && node.body.statements != null) {
             node.body.statements.forEach((statement: ts.Statement): void => {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
-                    const expressionStatement: ts.ExpressionStatement = <ts.ExpressionStatement>statement;
+                    const expressionStatement = <ts.ExpressionStatement>statement;
                     const expression = expressionStatement.expression;
                     if (expression.kind === ts.SyntaxKind.BinaryExpression) {
                         const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>expression;
@@ -238,7 +241,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                                         && callExpression.arguments.length === 1
                                         && callExpression.arguments[0].getText() === 'this') {
 
-                                        const rightPropText: string = AstUtils.getFunctionTarget(callExpression);
+                                        const rightPropText = AstUtils.getFunctionTarget(callExpression);
                                         if (leftPropText === rightPropText) {
                                             if (result.indexOf(rightPropText) === -1) {
                                                 result.push(rightPropText);

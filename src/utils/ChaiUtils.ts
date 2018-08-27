@@ -6,7 +6,7 @@ import * as ts from 'typescript';
 export module ChaiUtils {
 
     export function isExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): boolean {
-        const callExpression: ts.CallExpression = getLeftMostCallExpression(node);
+        const callExpression = getLeftMostCallExpression(node);
         if (callExpression == null) {
             return false;
         }
@@ -14,8 +14,8 @@ export module ChaiUtils {
         return /.*\.?expect/.test(callExpression.expression.getText());
     }
 
-    export function getExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression {
-        const callExpression: ts.CallExpression = getLeftMostCallExpression(node, false);
+    export function getExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression | null {
+        const callExpression = getLeftMostCallExpression(node, false);
         if (callExpression == null) {
             return null;
         }
@@ -29,7 +29,8 @@ export module ChaiUtils {
 
     export function getLeftMostCallExpression(
         node: ts.PropertyAccessExpression | ts.CallExpression,
-        checkParent: boolean = false): ts.CallExpression {
+        checkParent: boolean = false
+    ): ts.CallExpression | null {
         let leftSide: ts.Node = node.expression;
         while (leftSide != null) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
@@ -45,15 +46,15 @@ export module ChaiUtils {
         return null;
     }
 
-    export function getFirstExpectCallParameter(node: ts.CallExpression): ts.Node {
-        const expectCall: ts.CallExpression = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall.arguments.length > 0) {
+    export function getFirstExpectCallParameter(node: ts.CallExpression): ts.Node | null {
+        const expectCall = ChaiUtils.getLeftMostCallExpression(node);
+        if (expectCall != null && expectCall.arguments.length > 0) {
             return expectCall.arguments[0];
         }
         return null;
     }
 
-    export function getFirstExpectationParameter(node: ts.CallExpression): ts.Node {
+    export function getFirstExpectationParameter(node: ts.CallExpression): ts.Node | null {
         if (node.arguments.length > 0) {
             return node.arguments[0];
         }

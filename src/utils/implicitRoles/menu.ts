@@ -6,11 +6,11 @@ const typeString: string = 'type';
 /**
  * @Returns the implicit role for a menu tag.
  */
-function getImplicitRoleForMenu(node: ts.Node): string {
+function getImplicitRoleForMenu(node: ts.Node): string | undefined {
     const typeAttribute: ts.JsxAttribute = getJsxAttributesFromJsxElement(node)[typeString];
 
     if (typeAttribute) {
-        const value: string = getStringLiteral(typeAttribute) || undefined;
+        const value = getStringLiteral(typeAttribute) || undefined;
 
         return (value && value.toUpperCase() === 'TOOLBAR') ? 'toolbar' : undefined;
     }

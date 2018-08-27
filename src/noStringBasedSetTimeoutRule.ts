@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         return this.applyWithProgram(sourceFile, undefined);
     }
 
-    public applyWithProgram(sourceFile : ts.SourceFile, program : ts.Program): Lint.RuleFailure[] {
+    public applyWithProgram(sourceFile : ts.SourceFile, program : ts.Program | undefined): Lint.RuleFailure[] {
         const walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
             sourceFile , 'setTimeout', this.getOptions(), program
         );

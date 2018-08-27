@@ -47,8 +47,8 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private stateNames: string[] = [];
     private stateNodes: { [index: string]: ts.TypeElement } = {};
     private classDeclarations: ts.ClassDeclaration[] = [];
-    private propsAlias: string;
-    private stateAlias: string;
+    private propsAlias: string | undefined;
+    private stateAlias: string | undefined;
     private propsInterfaceRegex: RegExp = /^Props$/;
     private stateInterfaceRegex: RegExp = /^State$/;
 

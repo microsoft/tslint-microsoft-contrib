@@ -87,6 +87,10 @@ class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
 
     private constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
         return Utils.exists(ctor.parameters, (param: ts.ParameterDeclaration): boolean => {
+            if (param.modifiers === undefined) {
+                return false;
+            }
+
             return AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword)
                 || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword)
                 || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword)

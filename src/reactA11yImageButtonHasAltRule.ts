@@ -56,7 +56,10 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const typeAttribute: ts.JsxAttribute = attributes[TYPE_STRING];
 
-        if (!typeAttribute || !isStringLiteral(typeAttribute.initializer) || getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
+        if (!typeAttribute
+            || typeAttribute.initializer === undefined
+            || !isStringLiteral(typeAttribute.initializer)
+            || getStringLiteral(typeAttribute)!.toLowerCase() !== 'image') {
             return;
         }
 

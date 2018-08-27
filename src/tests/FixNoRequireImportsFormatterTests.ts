@@ -5,7 +5,7 @@ import {Formatter} from '../fixNoRequireImportsFormatter';
 class FormatterForTesting extends Formatter {
 
     private input: string;
-    private output: string;
+    private output!: string;
 
     constructor(input: string) {
         super();

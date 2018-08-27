@@ -31,7 +31,7 @@ export class ErrorTolerantWalker extends Lint.RuleWalker {
     private getClassName(): string {
         // Some versions of IE have the word "function" in the constructor name and
         // have the function body there as well. This rips out and returns the function name.
-        const result: string = this.constructor.toString().match(/function\s+([\w\$]+)\s*\(/)[1] || '';
+        const result: string = this.constructor.toString().match(/function\s+([\w\$]+)\s*\(/)![1] || '';
         if (result == null || result.length === 0) {
             throw new Error('Could not determine class name from input: ' + this.constructor.toString());
         }

@@ -33,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoRegexSpacesRuleWalker extends ErrorTolerantWalker {
     protected visitRegularExpressionLiteral(node: ts.Node): void {
-        const match: RegExpExecArray = /( {2,})+?/.exec(node.getText());
+        const match = /( {2,})+?/.exec(node.getText());
         if (match != null) {
             const replacement: string = '{' + match[0].length + '}';
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);

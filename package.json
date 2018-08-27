@@ -54,8 +54,8 @@
     "load-grunt-tasks": "3.2.0",
     "mocha": "4.0.1",
     "time-grunt": "1.2.1",
-    "tslint": "5.8.0",
-    "typescript": "2.6.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1",
     "underscore": "1.8.3"
   },
   "peerDependencies": {

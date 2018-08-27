@@ -69,7 +69,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
             return false;
         }
 
-        const match: RegExpMatchArray = text.match(/^<[A-Za-z]+\s*>(.*)<\/[A-Za-z]+\s*>$/m);
+        const match = text.match(/^<[A-Za-z]+\s*>(.*)<\/[A-Za-z]+\s*>$/m);
         if (match != null && match[1] != null) {
             const enclosedContent: string = match[1]; // get the stuff inside the tag
             if (enclosedContent.indexOf('<') === -1 && enclosedContent.indexOf('>') === -1) {

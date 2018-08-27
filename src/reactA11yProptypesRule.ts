@@ -66,7 +66,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactA11yProptypesWalker extends Lint.RuleWalker {
     public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const propName: string = getPropName(node).toLowerCase();
+        const propNameNode = getPropName(node);
+        if (propNameNode === undefined) {
+            return;
+        }
+
+        const propName = propNameNode.toLowerCase();
 
         // If there is no aria-* attribute, skip it.
         if (!aria[propName]) {
@@ -101,11 +106,15 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
     }
 
     private validityCheck(
-        propValueExpression: ts.Expression,
+        propValueExpression: ts.Expression | null | undefined,
         propValue: string,
         expectedType: string,
         permittedValues: string[]
     ): boolean {
+        if (propValueExpression == null) {
+            return true;
+        }
+
         switch (expectedType) {
             case 'boolean': return this.isBoolean(propValueExpression);
             case 'tristate': return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
@@ -123,11 +132,11 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
     }
 
-    private isUndefined(node: ts.Expression): boolean {
+    private isUndefined(node: ts.Expression | null | undefined): boolean {
         if (!node) {
             return true;
         } else if (isJsxExpression(node)) {
-            const expression: ts.Expression = node.expression;
+            const expression = node.expression;
             if (!expression) {
                 return true;
             } else if (AstUtils.isUndefined(expression)) {
@@ -144,8 +153,8 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
      * For this case <div prop={ x + 1 } />
      * we can't check the type of atrribute's expression until running time.
      */
-    private isComplexType(node: ts.Expression): boolean {
-        return !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
+    private isComplexType(node: ts.Expression | null | undefined): boolean {
+        return node != null && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
     }
 
     private isBoolean(node: ts.Expression): boolean {
@@ -154,7 +163,10 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
 
             return propValue === 'true' || propValue === 'false';
         } else if (isJsxExpression(node)) {
-            const expression: ts.Expression = node.expression;
+            const expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
 
             if (isStringLiteral(expression)) {
                 const propValue: string = expression.text.toLowerCase();
@@ -172,7 +184,10 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         if (isStringLiteral(node)) {
             return node.text.toLowerCase() === 'mixed';
         } else if (isJsxExpression(node)) {
-            const expression: ts.Expression = node.expression;
+            const expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
 
             return isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
         }
@@ -184,7 +199,10 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         if (isStringLiteral(node)) {
             return !isNaN(Number(node.text));
         } else if (isJsxExpression(node)) {
-            const expression: ts.Expression = node.expression;
+            const expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
 
             if (isStringLiteral(expression)) {
                 return !isNaN(Number(expression.text));
@@ -202,7 +220,10 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
 
             return !isNaN(value) && Math.round(value) === value;
         } else if (isJsxExpression(node)) {
-            const expression: ts.Expression = node.expression;
+            const expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
 
             if (isStringLiteral(expression)) {
                 const value: number = Number(expression.text);
@@ -221,6 +242,6 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
     }
 
     private isString(node: ts.Expression): boolean {
-        return isStringLiteral(node) || (isJsxExpression(node) && isStringLiteral(node.expression));
+        return isStringLiteral(node) || (isJsxExpression(node) && node.expression !== undefined && isStringLiteral(node.expression));
     }
 }

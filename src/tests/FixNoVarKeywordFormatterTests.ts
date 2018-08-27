@@ -2,11 +2,10 @@ import * as chai from 'chai';
 import {TestHelper} from './TestHelper';
 import {Formatter} from '../fixNoVarKeywordFormatter';
 
-/* tslint:disable:no-consecutive-blank-lines */
 class FixNoVarKeywordFormatterForTesting extends Formatter {
 
     private input: string;
-    private output: string;
+    private output!: string;
 
     constructor(input: string) {
         super();
@@ -91,4 +90,3 @@ let foo = bar;
         chai.expect(formatter.getOutput()).to.equal(`\r\n    let foo = bar;\r\n`);
     });
 });
-/* tslint:enable:no-consecutive-blank-lines */

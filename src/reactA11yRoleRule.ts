@@ -14,7 +14,7 @@ const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
 const ROLES: IRole[] = ROLE_SCHEMA.roles;
 
 // The array of non-abstract valid rules.
-const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => ROLES[role].isAbstract === false);
+const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => (<any>ROLES)[role].isAbstract === false);
 
 export function getFailureStringUndefinedRole(): string {
     return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +
@@ -51,20 +51,20 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class A11yRoleRuleWalker extends Lint.RuleWalker {
     public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name: string = getPropName(node);
+        const name = getPropName(node);
 
         if (!name || name.toLowerCase() !== 'role') {
             return;
         }
 
-        const roleValue: string = getStringLiteral(node);
+        const roleValue = getStringLiteral(node);
 
         if (roleValue) {
             // Splitted by space doesn't mean the multiple role definition is correct,
             // just because this rule is not checking if it is using multiple role definition.
             const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
 
-            if (normalizedValues.some(value => value && VALID_ROLES.indexOf(value) === -1)) {
+            if (normalizedValues.some(value => !!(value && VALID_ROLES.indexOf(value) === -1))) {
                 this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
             }
         } else if (roleValue === '' || isEmpty(node)) {

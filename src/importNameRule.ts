@@ -73,8 +73,8 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (node.importClause.name != null) {
-            const name: string = node.importClause.name.text;
+        if (node.importClause!.name != null) {
+            const name: string = node.importClause!.name!.text;
             if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;
                 this.validateImport(node, name, moduleName);
@@ -88,10 +88,11 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         moduleName = this.makeCamelCase(moduleName);
         if (this.isImportNameValid(importedName, moduleName) === false) {
             const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
-            const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration ?
-                (<ts.ImportEqualsDeclaration>node).name : (<ts.ImportDeclaration>node).importClause.name;
-            const nameNodeStartPos = nameNode.getStart();
-            const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, moduleName);
+            const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
+                ? (<ts.ImportEqualsDeclaration>node).name
+                : (<ts.ImportDeclaration>node).importClause!.name;
+            const nameNodeStartPos = nameNode!.getStart();
+            const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, moduleName);
             this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
         }
     }

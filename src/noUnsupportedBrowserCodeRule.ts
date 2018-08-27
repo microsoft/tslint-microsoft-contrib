@@ -77,7 +77,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
         //     #2 looks for an optional comparison operator (>=, <=, etc)
         //     #3 looks for a version number
         const regex = /([a-zA-Z ]*)(>=|<=|<|>)?\s*(\d*)/i;
-        const match = browser.match(regex);
+        const match = browser.match(regex)!;
 
         return {
             name: match[1].trim(),

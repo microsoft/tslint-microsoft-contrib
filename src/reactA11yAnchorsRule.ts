@@ -58,15 +58,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
-    private anchorInfoList: AnchorInfo[] = [];
+    private anchorInfoList: IAnchorInfo[] = [];
 
     public validateAllAnchors(): void {
-        const sameHrefDifferentTexts: AnchorInfo[] = [];
-        const differentHrefSameText: AnchorInfo[] = [];
+        const sameHrefDifferentTexts: IAnchorInfo[] = [];
+        const differentHrefSameText: IAnchorInfo[] = [];
 
         while (this.anchorInfoList.length > 0) {
-            const current: AnchorInfo = this.anchorInfoList.shift();
-            this.anchorInfoList.forEach((anchorInfo: AnchorInfo): void => {
+            const current: IAnchorInfo = this.anchorInfoList.shift()!;
+            this.anchorInfoList.forEach((anchorInfo: IAnchorInfo): void => {
                 if (current.href &&
                     current.href === anchorInfo.href &&
                     (current.text !== anchorInfo.text || current.altText !== anchorInfo.altText) &&
@@ -92,7 +92,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private firstPosition(anchorInfo: AnchorInfo): string {
+    private firstPosition(anchorInfo: IAnchorInfo): string {
         const startPosition: ts.LineAndCharacter =
             this.createFailure(anchorInfo.start, anchorInfo.width, '').getStartPosition().getLineAndCharacter();
 
@@ -116,8 +116,8 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
 
-            const anchorInfo: AnchorInfo = {
-                href: this.getAttribute(openingElement, 'href'),
+            const anchorInfo: IAnchorInfo = {
+                href: this.getAttribute(openingElement, 'href') || '',
                 text: this.anchorText(parent),
                 altText: this.imageAlt(parent),
                 start: parent.getStart(),
@@ -147,7 +147,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): string {
+    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): string | undefined {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
         const attribute: ts.JsxAttribute = attributes[attributeName];
         return attribute ? getStringLiteral(attribute) : '';
@@ -156,9 +156,11 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     /**
      * Return a string which contains literal text and text in 'alt' attribute.
      */
-    private anchorText(root: ts.Node): string {
+    private anchorText(root: ts.Node | undefined): string {
         let title: string = '';
-        if (root.kind === ts.SyntaxKind.JsxElement) {
+        if (root === undefined) {
+            return title;
+        } else if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             jsxElement.children.forEach((child: ts.JsxChild): void => {
                 title += this.anchorText(child);
@@ -179,7 +181,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         return title;
     }
 
-    private anchorRole(root: ts.Node): string {
+    private anchorRole(root: ts.Node): string | undefined {
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(root);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
 
@@ -189,7 +191,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
     private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
         if (openingElement.tagName.getText() === 'img') {
-            const altAttribute: string = this.getAttribute(openingElement, 'alt');
+            const altAttribute = this.getAttribute(openingElement, 'alt');
             return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
 
@@ -216,10 +218,10 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     }
 }
 
-class AnchorInfo {
-    public href: string = '';
-    public text: string = '';
-    public altText: string = '';
-    public start: number = 0;
-    public width: number = 0;
+interface IAnchorInfo {
+    href: string;
+    text: string;
+    altText: string;
+    start: number;
+    width: number;
 }

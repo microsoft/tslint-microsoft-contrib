@@ -101,6 +101,13 @@ function demoScriptFail1() {
                  "startPosition": { "character": 25, "line": 9 }
              },
              {
+                 "failure": "Octal literals should not be used: \\025",
+                 "name": "file.ts",
+                 "ruleName": "no-octal-literal",
+                 "ruleSeverity": "ERROR",
+                 "startPosition": { "character": 25, "line": 10 }
+            },
+            {
                  "failure": "Octal literals should not be used: \\0",
                  "name": "file.ts",
                  "ruleName": "no-octal-literal",

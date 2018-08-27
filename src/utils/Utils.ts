@@ -6,7 +6,7 @@ export module Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
-    export function exists<T>(list : ReadonlyArray<T>, predicate: (t: T) => boolean) : boolean {
+    export function exists<T>(list : ReadonlyArray<T> | null | undefined, predicate: (t: T) => boolean) : boolean {
         if (list != null) {
             for (let i = 0; i < list.length; i++) {
                 const obj : T = list[i];
@@ -21,7 +21,7 @@ export module Utils {
     /**
      * A contains function.
      */
-    export function contains<T>(list: ReadonlyArray<T>, element: T): boolean {
+    export function contains<T>(list: ReadonlyArray<T> | null | undefined, element: T): boolean {
         return exists(list, (item: T): boolean => {
             return item === element;
         });
@@ -30,12 +30,15 @@ export module Utils {
     /**
      * A removeAll function.
      */
-    export function removeAll<T>(source: ReadonlyArray<T>, elementsToRemove: ReadonlyArray<T>): T[] {
+    export function removeAll<T>(
+        source: ReadonlyArray<T> | null | undefined,
+        elementsToRemove: ReadonlyArray<T> | null | undefined
+    ): T[] {
         if (source == null || source.length === 0) {
             return [];
         }
         if (elementsToRemove == null || elementsToRemove.length === 0) {
-            return [].concat(source); // be sure to return a copy of the array
+            return [...source]; // be sure to return a copy of the array
         }
 
         return source.filter((sourceElement: T): boolean => {
@@ -50,7 +53,7 @@ export module Utils {
         return removeAll(source, [elementToRemove]);
     }
 
-    export function trimTo(source: string, maxLength: number): string {
+    export function trimTo(source: string | null | undefined, maxLength: number): string {
         if (source == null) {
             return '';
         }

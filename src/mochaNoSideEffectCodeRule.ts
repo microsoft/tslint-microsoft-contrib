@@ -36,14 +36,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
 
     private isInDescribe: boolean = false;
-    private ignoreRegex: RegExp;
+    private ignoreRegex!: RegExp;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         this.parseOptions();
     }
 
-    private parseOptions () {
+    private parseOptions() {
         this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'object') {
                 if (opt.ignore != null) {
@@ -60,7 +60,9 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
                 if (statement.kind === ts.SyntaxKind.VariableStatement) {
                     const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
                     declarationList.declarations.forEach((declaration: ts.VariableDeclaration): void => {
-                        this.validateExpression(declaration.initializer, declaration);
+                        if (declaration.initializer !== undefined) {
+                            this.validateExpression(declaration.initializer, declaration);
+                        }
                     });
                 }
 
@@ -75,7 +77,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (this.isInDescribe === true) {
+        if (this.isInDescribe === true && node.initializer !== undefined) {
             this.validateExpression(node.initializer, node);
         }
     }

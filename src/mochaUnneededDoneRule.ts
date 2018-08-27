@@ -51,7 +51,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
     }
 
     private validateMochaDoneUsage(node: ts.FunctionLikeDeclaration): void {
-        const doneIdentifier: ts.Identifier = this.maybeGetMochaDoneParameter(node);
+        const doneIdentifier = this.maybeGetMochaDoneParameter(node);
         if (doneIdentifier == null) {
             return;
         }
@@ -86,7 +86,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier {
+    private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | null {
         if (node.parameters.length === 0) {
             return null;
         }
@@ -107,7 +107,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
 class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
 
     private identifierText: string;
-    private count: number;
+    private count!: number;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, identifier: ts.Identifier) {
         super(sourceFile, options);

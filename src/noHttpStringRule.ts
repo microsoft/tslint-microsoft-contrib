@@ -52,8 +52,8 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
     }
 
     private visitLiteralExpression(node: ts.LiteralExpression | ts.LiteralLikeNode): void {
-        const stringText : string = node.text;
-        // tslint:disable no-http-string
+        const stringText: string = node.text;
+        // tslint:disable-next-line no-http-string
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
                 const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
@@ -62,14 +62,14 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
         }
     }
 
-    private isSuppressed(stringText: string) : boolean {
-        const allExceptions : string[] = NoHttpStringWalker.getExceptions(this.getOptions());
-        return Utils.exists(allExceptions, (exception: string) : boolean => {
+    private isSuppressed(stringText: string): boolean {
+        const allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
+        return Utils.exists(allExceptions, (exception: string): boolean => {
             return new RegExp(exception).test(stringText);
         });
     }
 
-    private static getExceptions(options : Lint.IOptions) : string[] {
+    private static getExceptions(options: Lint.IOptions): string[] | null {
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }

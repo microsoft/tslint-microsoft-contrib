@@ -57,6 +57,14 @@
     "group": "Whitespace",
     "commonWeaknessEnumeration": "710"
   },
+  "file-name-casing": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
+  },
   "forin": {
     "issueClass": "Non-SDL",
     "issueType": "Warning",
@@ -156,6 +164,14 @@
     "group": "Clarity",
     "commonWeaknessEnumeration": "710"
   },
+  "newline-per-chained-call": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
+  },
   "no-angle-bracket-type-assertion": {
     "issueClass": "Ignored",
     "issueType": "Warning",
@@ -253,6 +269,14 @@
     "level": "Opportunity for Excellence",
     "group": "Correctness",
     "commonWeaknessEnumeration": "398"
+  },
+  "no-dynamic-delete": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
   },
   "no-empty": {
     "issueClass": "Non-SDL",
@@ -494,6 +518,22 @@
     "issueClass": "Non-SDL",
     "issueType": "Warning",
     "severity": "Important",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
+  },
+  "prefer-readonly": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
+    "level": "Opportunity for Excellence",
+    "group": "Clarity",
+    "commonWeaknessEnumeration": "398, 710"
+  },
+  "prefer-while": {
+    "issueClass": "Non-SDL",
+    "issueType": "Warning",
+    "severity": "Moderate",
     "level": "Opportunity for Excellence",
     "group": "Clarity",
     "commonWeaknessEnumeration": "398, 710"

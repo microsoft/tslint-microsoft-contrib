@@ -40,15 +40,15 @@ const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
 const IGNORE_COMMENTS = 'ignore-comments';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
-    private maxBodyLength: number;
-    private maxFuncBodyLength: number;
-    private maxFuncExpressionBodyLength: number;
-    private maxArrowBodyLength: number;
-    private maxMethodBodyLength: number;
-    private maxCtorBodyLength: number;
-    private ignoreComments: boolean;
-    private currentClassName: string;
-    private ignoreParametersToFunctionRegex: RegExp;
+    private maxBodyLength!: number;
+    private maxFuncBodyLength!: number;
+    private maxFuncExpressionBodyLength!: number;
+    private maxArrowBodyLength!: number;
+    private maxMethodBodyLength!: number;
+    private maxCtorBodyLength!: number;
+    private ignoreComments!: boolean;
+    private currentClassName: string | undefined;
+    private ignoreParametersToFunctionRegex!: RegExp;
     private ignoreNodes: ts.Node[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

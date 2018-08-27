@@ -26,9 +26,9 @@ export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingW
     }
 
     private validateExpression(node : ts.CallExpression) : void {
-        const functionName : string = AstUtils.getFunctionName(node);
-        const functionTarget : string = AstUtils.getFunctionTarget(node);
-        const functionTargetType : string = this.getFunctionTargetType(node);
+        const functionName = AstUtils.getFunctionName(node);
+        const functionTarget = AstUtils.getFunctionTarget(node);
+        const functionTargetType = this.getFunctionTargetType(node);
         const firstArg : ts.Expression = node.arguments[0];
         if (functionName === this.targetFunctionName && firstArg != null) {
             if (functionTarget) {

@@ -4,7 +4,7 @@ import { getAncestorNode } from '../JsxAttribute';
 /**
  * @Returns the implicit role for a header tag.
  */
-function getImplicitRoleForHeader(node: ts.Node): string {
+function getImplicitRoleForHeader(node: ts.Node): string | undefined {
     return getAncestorNode(node, 'article') || getAncestorNode(node, 'section') ? undefined : 'banner';
 }
 

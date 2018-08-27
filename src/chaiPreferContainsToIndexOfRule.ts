@@ -61,8 +61,8 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
     }
 
     private isFirstArgumentIndexOfResult(node: ts.CallExpression): boolean {
-        const expectCall: ts.CallExpression = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall.arguments != null && expectCall.arguments.length > 0) {
+        const expectCall = ChaiUtils.getLeftMostCallExpression(node);
+        if (expectCall !== null && expectCall.arguments != null && expectCall.arguments.length > 0) {
             const firstArgument: ts.Expression = expectCall.arguments[0];
             if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils.getFunctionName(<ts.CallExpression>firstArgument) === 'indexOf') {

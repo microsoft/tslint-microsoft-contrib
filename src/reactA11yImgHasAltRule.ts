@@ -84,7 +84,8 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         }
 
         // If element contains JsxSpreadElement in which there could possibly be alt attribute, don't check it.
-        if (getAllAttributesFromJsxElement(node).some(isJsxSpreadAttribute)) {
+        const nodeAttributes = getAllAttributesFromJsxElement(node);
+        if (nodeAttributes !== null && nodeAttributes.some(isJsxSpreadAttribute)) {
             return;
         }
 
@@ -99,7 +100,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             );
         } else {
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
-            const roleAttributeValue: string = roleAttribute ? getStringLiteral(roleAttribute) : '';
+            const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
             const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1

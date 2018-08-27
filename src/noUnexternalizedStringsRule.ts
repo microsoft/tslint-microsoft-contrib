@@ -43,7 +43,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
     private static SINGLE_QUOTE: string = '\'';
 
     private signatures: Map<boolean>;
-    private messageIndex: number;
+    private messageIndex: number | undefined;
     private ignores: Map<boolean>;
 
     constructor(sourceFile: ts.SourceFile, opt: Lint.IOptions) {
@@ -91,7 +91,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             return;
         }
         // We have a string that is a direct argument into the localize call.
-        const messageArg: ts.Expression = callInfo.argIndex === this.messageIndex
+        const messageArg = callInfo.argIndex === this.messageIndex
             ? callInfo.callExpression.arguments[this.messageIndex]
             : null;
         if (messageArg && messageArg !== node) {
@@ -103,7 +103,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
     }
 
     private findDescribingParent(node: ts.Node):
-            { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } {
+        { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } | null {
         const kinds = ts.SyntaxKind;
         while ((node.parent != null)) {
             const parent: ts.Node = node.parent;

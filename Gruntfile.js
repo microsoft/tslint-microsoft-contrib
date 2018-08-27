@@ -320,12 +320,15 @@ module.exports = function(grunt) {
             'cyclomatic-complexity': true,              // too strict
             'deprecation': true,                        // requires type checking
             'file-header': true,                        // no need
+            'file-name-casing': true,                   // too strict
             'interface-name': true,                     // no need
             'match-default-export-name': true,          // requires type checking
             'max-classes-per-file': true,               // no need
             'max-file-line-count': true,                // no need
             'member-ordering': true,                    // too strict
             'newline-before-return': true,              // kind of a silly rule
+            'newline-per-chained-call': true,           // too strict
+            'no-dynamic-delete': true,                  // too strict
             'no-empty-line-after-opening-brace': true,  // too strict
             'no-inferrable-types': true,                // we prefer the opposite
             'no-multiline-string': true,                // too strict
@@ -339,6 +342,7 @@ module.exports = function(grunt) {
             'prefer-conditional-expression': true,      // not sure if this is needed
             'prefer-switch': true,                      // no need
             'prefer-template': true,                    // rule does not handle multi-line strings nicely
+            'prefer-while': true,                       // not sure if this is needed
             'return-undefined': true,                   // requires type checking
             'type-literal-delimiter': true,             // not sure if this is needed
             'typedef-whitespace': true,                 // too strict

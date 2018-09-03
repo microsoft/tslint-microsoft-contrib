@@ -207,7 +207,7 @@ module.exports = {
         "import-spacing": true,
         "indent": [true, "spaces"],
         "linebreak-style": true,
-        "newline-before-return": true,
+        "newline-before-return": false,
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
         "no-irregular-whitespace": true,
@@ -268,4 +268,3 @@ module.exports = {
         "valid-typeof": false,
     }
 };
-

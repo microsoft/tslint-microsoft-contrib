@@ -17,6 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-titles',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
         options: null,

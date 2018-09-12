@@ -32,6 +32,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-iframe-missing-sandbox',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
         options: null,

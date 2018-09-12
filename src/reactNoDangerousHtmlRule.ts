@@ -17,6 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-no-dangerous-html',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use React\'s dangerouslySetInnerHTML API.',
         options: null,

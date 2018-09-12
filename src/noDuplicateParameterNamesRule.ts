@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-duplicate-parameter-names',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
         options: null,

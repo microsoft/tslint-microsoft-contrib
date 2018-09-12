@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'export-name',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'The name of the exported module must match the filename of the source file',
         options: null,

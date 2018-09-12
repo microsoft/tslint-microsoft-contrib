@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'import-name',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'The name of the imported module must match the name of the thing being imported',
         hasFix: true,

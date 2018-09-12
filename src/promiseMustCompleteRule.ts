@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'promise-must-complete',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
                     'called on it within all code branches in the scope.',

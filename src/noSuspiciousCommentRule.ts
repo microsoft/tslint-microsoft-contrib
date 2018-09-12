@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-suspicious-comment',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.join(', ')}`,
         options: null,

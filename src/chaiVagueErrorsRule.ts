@@ -19,6 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'chai-vague-errors',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
         options: null,

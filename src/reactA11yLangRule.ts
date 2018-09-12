@@ -28,6 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-lang',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
         options: null,

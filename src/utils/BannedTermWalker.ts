@@ -50,6 +50,11 @@ export class BannedTermWalker extends ErrorTolerantWalker {
         super.visitPropertySignature(node);
     }
 
+    protected visitPropertyAssignment(node: ts.PropertyAssignment): void {
+        this.validateNode(node);
+        super.visitPropertyAssignment(node);
+    }
+
     protected visitSetAccessor(node: ts.AccessorDeclaration): void {
         this.validateNode(node);
         super.visitSetAccessor(node);

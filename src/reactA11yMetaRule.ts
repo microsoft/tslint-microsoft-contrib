@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-meta',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
         options: null,

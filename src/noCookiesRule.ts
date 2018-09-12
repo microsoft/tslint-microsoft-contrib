@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-cookies',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not use cookies',
         options: null,

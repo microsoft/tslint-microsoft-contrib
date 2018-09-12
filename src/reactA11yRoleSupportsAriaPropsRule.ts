@@ -38,6 +38,7 @@ A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-role-supports-aria-props',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce that elements with explicit or implicit roles defined contain ' +
         'only `aria-*` properties supported by that `role`.',

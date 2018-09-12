@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-single-line-block-comment',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Avoid single line block comments; use single line comments instead',
         options: null,

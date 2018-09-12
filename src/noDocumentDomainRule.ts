@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-document-domain',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
                     'validated to ensure that the value is on a list of allowed sites.',

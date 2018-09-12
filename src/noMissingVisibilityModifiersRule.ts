@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-missing-visibility-modifiers',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Deprecated - This rule is in the TSLint product as `member-access`',
         options: null,

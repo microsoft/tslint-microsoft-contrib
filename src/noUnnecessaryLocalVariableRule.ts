@@ -14,6 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-local-variable',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not declare a variable only to return it from the function on the next line.',
         options: null,

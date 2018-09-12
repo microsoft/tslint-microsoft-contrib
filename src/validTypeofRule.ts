@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'valid-typeof',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Ensures that the results of typeof are compared against a valid string.',
         options: null,

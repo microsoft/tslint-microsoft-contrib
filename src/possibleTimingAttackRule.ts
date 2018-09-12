@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'possible-timing-attack',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'Avoid timing attacks by not making direct comaprisons to sensitive data',
         options: null,

@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-jquery-raw-elements',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
         options: null,

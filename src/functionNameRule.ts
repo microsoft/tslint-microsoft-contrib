@@ -18,6 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'function-name',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Applies a naming convention to function names and method names',
         options: null,

@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unexternalized-strings',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
         options: null,

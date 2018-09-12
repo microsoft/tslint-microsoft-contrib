@@ -18,6 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-anchor-blank-noopener',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
         options: null,

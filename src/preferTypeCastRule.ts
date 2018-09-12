@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-type-cast',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
         options: null,

@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-tsx-curly-spacing',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'style',
         description: 'Consistently use spaces around the brace characters of JSX attributes.',
         options: null,

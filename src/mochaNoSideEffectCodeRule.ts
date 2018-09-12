@@ -16,6 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'mocha-no-side-effect-code',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
         options: null,

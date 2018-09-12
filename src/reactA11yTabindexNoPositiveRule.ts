@@ -15,6 +15,7 @@ export function getFailureString(): string {
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-tabindex-no-positive',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce tabindex value is **not greater than zero**.',
         options: null,

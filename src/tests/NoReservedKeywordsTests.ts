@@ -204,6 +204,24 @@ describe('noBannedTermsRule', () : void => {
             }
         ]);
     });
+
+    it('should find catch usage in propoperty assignments', () : void => {
+        const script: string = `
+           var x: any = {
+                catch: 'something'
+            }`;
+
+        TestHelper.assertViolations(RULE_NAME,
+            script,
+            [  {
+                "failure": "Forbidden reference to reserved keyword: catch",
+                "name": "file.ts",
+                "ruleName": "no-reserved-keywords",
+                "startPosition": { "character": 17, "line": 3 }
+            }]);
+
+    });
+
     it('should not allow the class reserved word', () : void => {
         const inputFile : string = 'test-data/NoReservedKeywords/NoReservedKeywordsTestInput-class.ts';
         TestHelper.assertViolations(RULE_NAME, inputFile, [

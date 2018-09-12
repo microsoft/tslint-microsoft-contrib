@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-multiple-var-decl',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Deprecated - This rule is now part of the base TSLint product as the rule named \'one-variable-per-declaration\'',
         options: null,

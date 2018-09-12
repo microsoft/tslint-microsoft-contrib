@@ -18,6 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-unused-props-and-state',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
         options: null,

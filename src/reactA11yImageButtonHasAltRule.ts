@@ -16,6 +16,7 @@ const ALT_STRING: string = 'alt';
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-image-button-has-alt',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Enforce that inputs element with type="image" must have alt attribute.',
         options: null,

@@ -17,6 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'insecure-random',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'functionality',
         description: 'Do not use insecure sources for random bytes',
         options: null,

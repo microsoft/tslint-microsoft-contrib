@@ -43,6 +43,7 @@ A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/r
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-role-has-required-aria-props',
+        // tslint:disable-next-line:no-reserved-keywords
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
         options: null,

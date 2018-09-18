@@ -115,12 +115,15 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         const name: string = node.name.getText();
         if (AstUtils.isPrivate(node)) {
-            if (!this.privateMethodRegex.test(name) && this.args.validateStatics !== VALIDATE_PRIVATE_STATICS_AS_STATIC) {
+            if (
+                !this.privateMethodRegex.test(name)
+                && (this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE || this.args.validateStatics === NOT_VALID_ARG)) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Private method name does not match ${this.privateMethodRegex}: ${name}`);
             }
         } else if (AstUtils.isProtected(node)) {
-            if (!this.protectedMethodRegex.test(name) && this.args.validateStatics !== VALIDATE_PRIVATE_STATICS_AS_STATIC) {
+            if (!this.protectedMethodRegex.test(name)
+            && (this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE || this.args.validateStatics === NOT_VALID_ARG)) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
             }

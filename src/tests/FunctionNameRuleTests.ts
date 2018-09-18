@@ -65,6 +65,19 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on correctly private static methods as static with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static BAR() {}
+                private static BAR_1() {}
+                private static MY_BAR() {}
+                private static MY_BAR_1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
+    });
+
     it('should pass on correctly protected static methods as static with option', () : void => {
         const script : string = `
             class MyClass {
@@ -76,6 +89,49 @@ describe('functionNameRule', () : void => {
         `;
 
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
+    });
+
+    it('should pass on correctly private static methods as private with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static bar() {}
+                private static bar1() {}
+                private static myBar() {}
+                private static myBar1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
+    });
+
+    it('should pass on correctly protected static methods as private with option', () : void => {
+        const script : string = `
+            class MyClass {
+                protected static bar() {}
+                protected static bar1() {}
+                protected static myBar() {}
+                protected static myBar1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
+    });
+
+    it('should pass on correctly private or protected static methods as either with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static bar() {}
+                private static bar1() {}
+                private static BAR() {}
+                private static BAR_1() {}
+                protected static myBar() {}
+                protected static myBar1() {}
+                protected static MY_BAR() {}
+                protected static MY_BAR_1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-either'], script);
     });
 
     it('should fail on incorrect public methods', () : void => {

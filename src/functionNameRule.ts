@@ -19,12 +19,13 @@ const NOT_VALID_ARG = 'none';
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
 function parseOptions(ruleArguments: any[]): Options {
+
     if (ruleArguments.length === 0) {
         return {
             validateStatics: NOT_VALID_ARG
         };
     }
-    const staticsValidateOption: string = ruleArguments[0];
+    const staticsValidateOption: string = ruleArguments[1];
     if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
         return {
             validateStatics: staticsValidateOption

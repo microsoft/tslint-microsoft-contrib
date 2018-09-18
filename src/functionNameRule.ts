@@ -11,6 +11,10 @@ const PROTECTED_METHOD_REGEX = 'protected-method-regex';
 const STATIC_METHOD_REGEX = 'static-method-regex';
 const FUNCTION_REGEX = 'function-regex';
 
+const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
+const VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
+const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
+
 /**
  * Implementation of the function-name rule.
  */
@@ -20,8 +24,31 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'function-name',
         type: 'maintainability',
         description: 'Applies a naming convention to function names and method names',
-        options: null,
-        optionsDescription: '',
+        optionsDescription: Lint.Utils.dedent`
+            Function styles should be consistent throughout the code.
+            Users may want functions with multiple descriptors to be validated a certain way.
+            An optional argument specifies validation for private static methods:
+            * \`${VALIDATE_PRIVATE_STATICS_AS_PRIVATE.toString()}\` enforces validation as private.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_STATIC.toString()}\` enforces validation as static.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER.toString()}\` enforces validation as either.
+            `,
+        options: {
+            type: 'array',
+            items: [
+                {
+                    type: 'string',
+                    enum: [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER]
+                }
+            ],
+            minLength: 0,
+            maxLength: 2
+        },
+        optionExamples: [
+            [true, VALIDATE_PRIVATE_STATICS_AS_EITHER],
+            [true, VALIDATE_PRIVATE_STATICS_AS_PRIVATE],
+            [true, VALIDATE_PRIVATE_STATICS_AS_STATIC],
+            [true]
+        ],
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

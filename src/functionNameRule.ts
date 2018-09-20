@@ -54,9 +54,9 @@ export class Rule extends Lint.Rules.AbstractRule {
             Function styles should be consistent throughout the code.
             Users may want functions with multiple descriptors to be validated a certain way.
             An optional argument specifies validation for private static methods:
-            * \`${VALIDATE_PRIVATE_STATICS_AS_PRIVATE.toString()}\` enforces validation as private.
-            * \`${VALIDATE_PRIVATE_STATICS_AS_STATIC.toString()}\` enforces validation as static.
-            * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER.toString()}\` enforces validation as either.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_PRIVATE}\` enforces validation as private.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_STATIC}\` enforces validation as static.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER}\` enforces validation as either.
             `,
         options: {
             type: 'array',

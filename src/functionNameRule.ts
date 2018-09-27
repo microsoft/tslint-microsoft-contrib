@@ -14,7 +14,6 @@ const FUNCTION_REGEX = 'function-regex';
 const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
 const VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
 const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
-const NOT_VALID_ARG = 'none';
 
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
@@ -22,7 +21,7 @@ function parseOptions(ruleArguments: any[]): Options {
 
     if (ruleArguments.length === 0) {
         return {
-            validateStatics: NOT_VALID_ARG
+            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
         };
     }
     const staticsValidateOption: string = ruleArguments[1];
@@ -32,7 +31,7 @@ function parseOptions(ruleArguments: any[]): Options {
         };
     } else {
         return {
-            validateStatics: NOT_VALID_ARG
+            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
         };
     }
 }
@@ -117,13 +116,15 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
         if (AstUtils.isPrivate(node)) {
             if (
                 !this.privateMethodRegex.test(name)
-                && (this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE || this.args.validateStatics === NOT_VALID_ARG)) {
+                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Private method name does not match ${this.privateMethodRegex}: ${name}`);
             }
         } else if (AstUtils.isProtected(node)) {
-            if (!this.protectedMethodRegex.test(name)
-            && (this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE || this.args.validateStatics === NOT_VALID_ARG)) {
+            if (
+                !this.protectedMethodRegex.test(name)
+                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE
+            ) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
             }

@@ -4,7 +4,8 @@ module SetTimeoutSample {
 
     class MyClass {
 
-        private onAnimationEnd(): void {
+        private onAnimationEnd(): Function {
+            return () => {};
         }
 
         private method(): void {

@@ -65,6 +65,75 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on correctly private static methods as static with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static BAR() {}
+                private static BAR_1() {}
+                private static MY_BAR() {}
+                private static MY_BAR_1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
+    });
+
+    it('should pass on correctly protected static methods as static with option', () : void => {
+        const script : string = `
+            class MyClass {
+                protected static BAR() {}
+                protected static BAR_1() {}
+                protected static MY_BAR() {}
+                protected static MY_BAR_1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
+    });
+
+    it('should pass on correctly private static methods as private with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static bar() {}
+                private static bar1() {}
+                private static myBar() {}
+                private static myBar1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
+    });
+
+    it('should pass on correctly protected static methods as private with option', () : void => {
+        const script : string = `
+            class MyClass {
+                protected static bar() {}
+                protected static bar1() {}
+                protected static myBar() {}
+                protected static myBar1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
+    });
+
+    it('should pass on correctly private or protected static methods as either with option', () : void => {
+        const script : string = `
+            class MyClass {
+                private static bar() {}
+                private static bar1() {}
+                private static BAR() {}
+                private static BAR_1() {}
+                protected static myBar() {}
+                protected static myBar1() {}
+                protected static MY_BAR() {}
+                protected static MY_BAR_1() {}
+            }
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-either'], script);
+    });
+
     it('should fail on incorrect public methods', () : void => {
         const script : string = `
             class MyClass {
@@ -78,34 +147,34 @@ describe('functionNameRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 17, "line": 3 }
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 17, line: 3 }
             },
             {
-                "failure": "Method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 17, "line": 4 }
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 17, line: 4 }
             },
             {
-                "failure": "Method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 17, "line": 5 }
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 17, line: 5 }
             },
             {
-                "failure": "Method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 17, "line": 6 }
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 17, line: 6 }
             },
             {
-                "failure": "Method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 17, "line": 7 }
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 17, line: 7 }
             }
         ]);
     });
@@ -123,34 +192,34 @@ describe('functionNameRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Private method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 25, "line": 3 }
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 25, line: 3 }
             },
             {
-                "failure": "Private method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 25, "line": 4 }
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 25, line: 4 }
             },
             {
-                "failure": "Private method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 25, "line": 5 }
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 25, line: 5 }
             },
             {
-                "failure": "Private method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 25, "line": 6 }
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 25, line: 6 }
             },
             {
-                "failure": "Private method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 25, "line": 7 }
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 25, line: 7 }
             }
         ]);
     });
@@ -168,34 +237,34 @@ describe('functionNameRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 27, "line": 3 }
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 3 }
             },
             {
-                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 27, "line": 4 }
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 4 }
             },
             {
-                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 27, "line": 5 }
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 5 }
             },
             {
-                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 27, "line": 6 }
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 6 }
             },
             {
-                "failure": "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 27, "line": 7 }
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 7 }
             }
         ]);
     });
@@ -211,22 +280,22 @@ describe('functionNameRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Static method name does not match /^[A-Z_\\d]+$/: Foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 24, "line": 3 }
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: Foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 24, line: 3 }
             },
             {
-                "failure": "Static method name does not match /^[A-Z_\\d]+$/: _foo",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 24, "line": 4 }
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 24, line: 4 }
             },
             {
-                "failure": "Static method name does not match /^[A-Z_\\d]+$/: _foo2",
-                "name": "file.ts",
-                "ruleName": "function-name",
-                "startPosition": { "character": 24, "line": 5 }
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo2',
+                name: 'file.ts',
+                ruleName: 'function-name',
+                startPosition: { character: 24, line: 5 }
             }
         ]);
     });
@@ -269,28 +338,28 @@ describe('functionNameRule', () : void => {
 
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Function name does not match /^myFunction$/: notMyFunction",
-                    "name": "file.ts",
-                    "ruleName": "function-name",
-                    "startPosition": { "character": 22, "line": 2 }
+                    failure: 'Function name does not match /^myFunction$/: notMyFunction',
+                    name: 'file.ts',
+                    ruleName: 'function-name',
+                    startPosition: { character: 22, line: 2 }
                 },
                 {
-                    "failure": "Method name does not match /^myMethod$/: notMyMethod",
-                    "name": "file.ts",
-                    "ruleName": "function-name",
-                    "startPosition": { "character": 17, "line": 4 }
+                    failure: 'Method name does not match /^myMethod$/: notMyMethod',
+                    name: 'file.ts',
+                    ruleName: 'function-name',
+                    startPosition: { character: 17, line: 4 }
                 },
                 {
-                    "failure": "Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod",
-                    "name": "file.ts",
-                    "ruleName": "function-name",
-                    "startPosition": { "character": 25, "line": 5 }
+                    failure: 'Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod',
+                    name: 'file.ts',
+                    ruleName: 'function-name',
+                    startPosition: { character: 25, line: 5 }
                 },
                 {
-                    "failure": "Static method name does not match /^myStaticMethod$/: notMyStaticMethod",
-                    "name": "file.ts",
-                    "ruleName": "function-name",
-                    "startPosition": { "character": 24, "line": 6 }
+                    failure: 'Static method name does not match /^myStaticMethod$/: notMyStaticMethod',
+                    name: 'file.ts',
+                    ruleName: 'function-name',
+                    startPosition: { character: 24, line: 6 }
                 }
             ]);
         });

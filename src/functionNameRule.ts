@@ -11,6 +11,35 @@ const PROTECTED_METHOD_REGEX = 'protected-method-regex';
 const STATIC_METHOD_REGEX = 'static-method-regex';
 const FUNCTION_REGEX = 'function-regex';
 
+const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
+const VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
+const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
+
+const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
+
+function parseOptions(ruleArguments: any[]): Options {
+
+    if (ruleArguments.length === 0) {
+        return {
+            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
+        };
+    }
+    const staticsValidateOption: string = ruleArguments[1];
+    if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
+        return {
+            validateStatics: staticsValidateOption
+        };
+    } else {
+        return {
+            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
+        };
+    }
+}
+
+interface Options {
+    readonly validateStatics: string;
+}
+
 /**
  * Implementation of the function-name rule.
  */
@@ -20,8 +49,31 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'function-name',
         type: 'maintainability',
         description: 'Applies a naming convention to function names and method names',
-        options: null,
-        optionsDescription: '',
+        optionsDescription: Lint.Utils.dedent`
+            Function styles should be consistent throughout the code.
+            Users may want functions with multiple descriptors to be validated a certain way.
+            An optional argument specifies validation for private static methods:
+            * \`${VALIDATE_PRIVATE_STATICS_AS_PRIVATE}\` enforces validation as private.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_STATIC}\` enforces validation as static.
+            * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER}\` enforces validation as either.
+            `,
+        options: {
+            type: 'array',
+            items: [
+                {
+                    type: 'string',
+                    enum: [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER]
+                }
+            ],
+            minLength: 0,
+            maxLength: 2
+        },
+        optionExamples: [
+            [true, VALIDATE_PRIVATE_STATICS_AS_EITHER],
+            [true, VALIDATE_PRIVATE_STATICS_AS_PRIVATE],
+            [true, VALIDATE_PRIVATE_STATICS_AS_STATIC],
+            [true]
+        ],
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -43,9 +95,11 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
     private protectedMethodRegex: RegExp = this.privateMethodRegex;
     private staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
     private functionRegex: RegExp = /^[a-z][\w\d]+$/;
+    private args: Options;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
+        this.args = parseOptions(options.ruleArguments);
         this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'object') {
                 this.methodRegex = this.getOptionOrDefault(opt, METHOD_REGEX, this.methodRegex);
@@ -60,12 +114,17 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         const name: string = node.name.getText();
         if (AstUtils.isPrivate(node)) {
-            if (!this.privateMethodRegex.test(name)) {
+            if (
+                !this.privateMethodRegex.test(name)
+                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Private method name does not match ${this.privateMethodRegex}: ${name}`);
             }
         } else if (AstUtils.isProtected(node)) {
-            if (!this.protectedMethodRegex.test(name)) {
+            if (
+                !this.protectedMethodRegex.test(name)
+                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE
+            ) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
                     `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
             }

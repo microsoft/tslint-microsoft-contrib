@@ -1,3 +1,12 @@
+// tslint:disable
+
+declare const setImmediate: (...args: any[]) => number;
+
+interface Window {
+    setImmediate: (...args: any[]) => number;
+}
+
+// tslint:enable
 
 var typedStringVariable = 'string variable';
 var functionVariable = () => {};

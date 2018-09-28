@@ -105,7 +105,7 @@ describe('noStringBasedSetTimeoutRule', () : void => {
                 "failure": "Forbidden setTimeout string parameter: this.onAnimationEnd()",
                 "name": "test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutTestInput-error4.ts",
                 "ruleName": "no-string-based-set-timeout",
-                "startPosition": { "line": 11, "character": 13 }
+                "startPosition": { "line": 12, "character": 13 }
             }
         ]);
     });

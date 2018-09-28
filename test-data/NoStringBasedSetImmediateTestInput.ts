@@ -1,3 +1,5 @@
+// tslint:disable-next-line
+declare const setImmediate: Function;
 
 var typedStringVariable = 'string variable';
 var functionVariable = () => {};

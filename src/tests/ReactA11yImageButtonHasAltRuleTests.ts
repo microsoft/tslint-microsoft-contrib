@@ -37,6 +37,16 @@ describe('reactA11yImageButtonHasAlt', (): void => {
 
             TestHelper.assertNoViolation(ruleName, script);
         });
+
+        it("when input element has an expression for its type thats undefined.", (): void => {
+            const script: string = `
+                import React = require('react');
+                const type = undefined;
+                const a = <input type={type} />;
+            `;
+
+            TestHelper.assertNoViolation(ruleName, script);
+        });
     });
 
     describe('should fail', (): void => {

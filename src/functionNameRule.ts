@@ -113,7 +113,9 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         const name: string = node.name.getText();
-        if (AstUtils.isPrivate(node)) {
+        if (AstUtils.hasComputedName(node)) {
+            // allow computed names
+        } else if (AstUtils.isPrivate(node)) {
             if (
                 !this.privateMethodRegex.test(name)
                 && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {

@@ -51,7 +51,7 @@
     "grunt-mocha-test": "0.13.3",
     "grunt-ts": "^6.0.0-beta.16",
     "grunt-tslint": "^5.0.1",
-    "load-grunt-tasks": "3.2.0",
+    "load-grunt-tasks": "^4.0.0",
     "mocha": "4.0.1",
     "time-grunt": "1.2.1",
     "tslint": "^5.11.0",

@@ -26,6 +26,27 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass on functions as symbol properties', (): void => {
+        const script : string = `
+            class MyClass {
+                static [Symbol.staticDefault](): any {}
+                public static [Symbol.staticPublic](): any {}
+                protected static [Symbol.staticProtected](): any {}
+                private static [Symbol.staticPrivate](): any {}
+
+                static [Symbol.methodDefault](): any {}
+                public static [Symbol.methodPublic](): any {}
+                protected static [Symbol.methodProtected](): any {}
+                private static [Symbol.methodPrivate](): any {}
+            }
+
+            const objLiteral = {
+                [Symbol.toStringTag](): string => "hello world"
+            }
+        `;
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
     it('should pass on correctly public static methods', () : void => {
         const script : string = `
             class MyClass {

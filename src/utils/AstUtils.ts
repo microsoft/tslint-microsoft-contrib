@@ -149,6 +149,14 @@ export module AstUtils {
         /* tslint:enable:no-bitwise */
     }
 
+    export function hasComputedName(node: ts.Node & { name?: ts.PropertyName }): boolean {
+        if (!node.name) {
+            return false;
+        }
+
+        return ts.isComputedPropertyName(node.name);
+    }
+
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
         return node != null && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
             node.kind === ts.SyntaxKind.ObjectBindingPattern);

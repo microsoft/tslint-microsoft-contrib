@@ -18,8 +18,8 @@ describe('noRelativeImportsRule', () : void => {
 
     it('should pass on absolute path ES6 imports', () : void => {
         const script : string = `
-            ﻿import OfficeApp from 'OfficeApp';
-            ﻿import OfficeApp from 'common/OfficeApp';
+            import OfficeApp from 'OfficeApp';
+            import OfficeApp from 'common/OfficeApp';
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -33,40 +33,40 @@ describe('noRelativeImportsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "External module is being loaded from a relative path. Please use an absolute path: require('./App')",
-                "name": "file.ts",
-                "ruleName": "no-relative-imports",
-                "startPosition": { "character": 26, "line": 2 }
+                failure: 'External module is being loaded from a relative path. Please use an absolute path: require(\'./App\')',
+                name: 'file.ts',
+                ruleName: 'no-relative-imports',
+                startPosition: { character: 26, line: 2 }
             },
             {
-                "failure": "External module is being loaded from a relative path. Please use an absolute path: require('../common/App')",
-                "name": "file.ts",
-                "ruleName": "no-relative-imports",
-                "startPosition": { "character": 26, "line": 3 }
+                failure: 'External module is being loaded from a relative path. Please use an absolute path: require(\'../common/App\')',
+                name: 'file.ts',
+                ruleName: 'no-relative-imports',
+                startPosition: { character: 26, line: 3 }
             }
         ]);
     });
 
     it('should fail on relative path ES6 import', () : void => {
         const script : string = `
-            ﻿import OfficeApp from './OfficeApp';
-            ﻿import OfficeApp from '../common/OfficeApp';
+            import OfficeApp from './OfficeApp';
+            import OfficeApp from '../common/OfficeApp';
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Imported module is being loaded from a relative path. " +
-                    "Please use an absolute path: import OfficeApp from './OfficeApp';",
-                "name": "file.ts",
-                "ruleName": "no-relative-imports",
-                "startPosition": { "character": 14, "line": 2 }
+                failure: 'Imported module is being loaded from a relative path. ' +
+                    'Please use an absolute path: import OfficeApp from \'./OfficeApp\';',
+                name: 'file.ts',
+                ruleName: 'no-relative-imports',
+                startPosition: { character: 13, line: 2 }
             },
             {
-                "failure": "Imported module is being loaded from a relative path. " +
-                    "Please use an absolute path: import OfficeApp from '../common/OfficeApp';",
-                "name": "file.ts",
-                "ruleName": "no-relative-imports",
-                "startPosition": { "character": 14, "line": 3 }
+                failure: 'Imported module is being loaded from a relative path. ' +
+                    'Please use an absolute path: import OfficeApp from \'../common/OfficeApp\';',
+                name: 'file.ts',
+                ruleName: 'no-relative-imports',
+                startPosition: { character: 13, line: 3 }
             }
         ]);
     });

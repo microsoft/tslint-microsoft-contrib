@@ -1138,7 +1138,7 @@
     "issueType": "Warning",
     "severity": "Moderate",
     "level": "Opportunity for Excellence",
-    "group": "Clarity",
+    "group": "Deprecated",
     "commonWeaknessEnumeration": "710"
   },
   "no-unnecessary-type-assertion": {

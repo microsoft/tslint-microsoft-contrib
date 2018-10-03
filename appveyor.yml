@@ -1,12 +1,14 @@
-# Test against the latest version of this Node.js version
+# Test against a newer version and an older version of Node.js
 environment:
-  nodejs_version: "4"
+  matrix:
+    - nodejs_version: "6"
+    - nodejs_version: "8"
 
 install:
   # Get the latest stable version of Node.js
   - ps: Install-Product node $env:nodejs_version
   - npm install -g grunt-cli
-  - npm install 
+  - npm install
 
 test_script:
   # Output useful info for debugging.

@@ -235,14 +235,7 @@ module.exports = function(grunt) {
             },
             tests: {
                 options: {
-                    configuration: (function() {
-                        let tslintJson = grunt.file.readJSON("tslint.json", { encoding: 'UTF-8' });
-                        tslintJson.rules['quotemark'] = false;
-                        tslintJson.rules['object-literal-key-quotes'] = false;
-                        tslintJson.rules['max-func-body-length'] = false;
-                        tslintJson.rules['no-implicit-dependencies'] = [true, 'dev'];
-                        return tslintJson;
-                    })()
+                    configuration: grunt.file.readJSON("src/tests/tslint.json", { encoding: 'UTF-8' })
                 },
                 files: {
                     src: [

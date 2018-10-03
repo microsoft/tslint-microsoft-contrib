@@ -147,7 +147,6 @@ module.exports = {
         "no-suspicious-comment": true,
         "no-this-assignment": true,
         "no-typeof-undefined": true,
-        "no-unnecessary-class": true,
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
         "no-unnecessary-qualifier": true,
@@ -207,7 +206,7 @@ module.exports = {
         "import-spacing": true,
         "indent": [true, "spaces"],
         "linebreak-style": true,
-        "newline-before-return": false,
+        "newline-before-return": true,
         "no-consecutive-blank-lines": true,
         "no-empty-line-after-opening-brace": false,
         "no-irregular-whitespace": true,
@@ -262,9 +261,11 @@ module.exports = {
         "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
         "no-stateless-class": false,
         "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
+        "no-unnecessary-class": true,
         "no-var-self": false,
         "react-tsx-curly-spacing": false,
         "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
         "valid-typeof": false,
     }
 };
+

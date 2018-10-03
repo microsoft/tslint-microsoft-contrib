@@ -1,0 +1,9 @@
+{
+    "extends": "../../tslint.json",
+    "rules": {
+        "quotemark": false,
+        "object-literal-key-quotes": false,
+        "max-func-body-length": false,
+        "no-implicit-dependencies": [true, "dev"]
+    }
+}

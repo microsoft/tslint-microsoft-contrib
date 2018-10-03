@@ -116,21 +116,21 @@ describe('importNameRule', () : void => {
         ]);
     });
 
-    it('should fail import with punctuation', () : void => {
+    it('should fail import with punctuation and underscore', () : void => {
         const script : string = `
-            import UserSettings from "./user-settings.page";
+            import UserSettings from "./user-settings.detail_view";
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Misnamed import. Import should be named 'userSettingsPage' but found 'UserSettings'",
+                "failure": "Misnamed import. Import should be named 'userSettingsDetailView' but found 'UserSettings'",
                 "name": "file.ts",
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
                     "innerStart": 20,
                     "innerLength": 12,
-                    "innerText": "userSettingsPage"
+                    "innerText": "userSettingsDetailView"
                 }
             }
         ]);

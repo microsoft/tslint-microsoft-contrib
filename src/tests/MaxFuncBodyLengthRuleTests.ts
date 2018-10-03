@@ -65,6 +65,9 @@ describe('maxFuncBodyLengthRule', (): void => {
             return x + 6;                                                       // Line 9
         };                                                                      // Line 10
 
+        // 11-nameless class
+        export default class extends PlusPlus {}
+
         console.log(plusOne(1));                    // 2
         console.log(plusTwo(2));                    // 4
         console.log(plusThree(3));                  // 6

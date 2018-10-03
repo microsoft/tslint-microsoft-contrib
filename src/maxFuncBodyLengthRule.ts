@@ -97,7 +97,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        this.currentClassName = (<any>node.name).text;
+        this.currentClassName = (node.name && node.name.text) || 'default';
         super.visitClassDeclaration(node);
         this.currentClassName = undefined;
     }

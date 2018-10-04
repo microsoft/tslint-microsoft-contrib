@@ -9,9 +9,9 @@ const OPTION_ALLOW_SIBLINGS = 'allow-siblings';
 const FAILURE_STRING_EXT: string = 'External module is being loaded from a relative path. Please use an absolute path: ';
 const FAILURE_STRING_IMPORT: string = 'Imported module is being loaded from a relative path. Please use an absolute path: ';
 const FAILURE_STRING_EXT_SIBLINGS: string =
-    'External module path contains reference for parent directory. Please use an absolute path or sibling files/folders: ';
+    'External module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ';
 const FAILURE_STRING_IMPORT_SIBLINGS: string =
-    'Imported module path contains reference for parent directory. Please use an absolute path or sibling files/folders: ';
+    'Imported module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ';
 
 /**
  * Implementation of the no-relative-imports rule.
@@ -82,8 +82,8 @@ class NoRelativeImportsRuleWalker extends ErrorTolerantWalker {
                 return false;
             }
 
-            // when siblings allowed path cannot contain '..' (reference to parrent directory)
-            if (this.allowSiblings && moduleName.text.indexOf('..') > -1) {
+            // when siblings allowed path cannot start '..' (reference to parrent directory)
+            if (this.allowSiblings && moduleName.text.indexOf('..') === 0) {
                 return false;
             }
         }

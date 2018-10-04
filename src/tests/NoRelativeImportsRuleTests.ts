@@ -127,7 +127,7 @@ describe('noRelativeImportsRule', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [ ]);
         });
 
-        it('should fail only on path with \'..\' in require import when siblings allowed', () : void => {
+        it('should fail only when path starts with \'..\' in require import when siblings allowed', () : void => {
             const script : string = `
                 import App = require('./App');
                 import App = require('./common/App');
@@ -137,23 +137,16 @@ describe('noRelativeImportsRule', () : void => {
 
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    failure: 'External module path contains reference for parent directory. ' +
+                    failure: 'External module path starts with reference to parent directory. ' +
                         'Please use an absolute path or sibling files/folders: require(\'../common/App\')',
                     name: 'file.ts',
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 4 }
-                },
-                {
-                    failure: 'External module path contains reference for parent directory. ' +
-                        'Please use an absolute path or sibling files/folders: require(\'./../common/App\')',
-                    name: 'file.ts',
-                    ruleName: 'no-relative-imports',
-                    startPosition: { character: 30, line: 5 }
                 }
             ]);
         });
 
-        it('should fail only on path with \'..\' in ES6 import when siblings allowed', () : void => {
+        it('should fail only when path starts with \'..\' in ES6 import when siblings allowed', () : void => {
             const script : string = `
                 import OfficeApp from './OfficeApp';
                 import OfficeApp from './common/OfficeApp';
@@ -163,18 +156,11 @@ describe('noRelativeImportsRule', () : void => {
 
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    failure: 'Imported module path contains reference for parent directory. ' +
+                    failure: 'Imported module path starts with reference to parent directory. ' +
                         'Please use an absolute path or sibling files/folders: import OfficeApp from \'../common/OfficeApp\';',
                     name: 'file.ts',
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 4 }
-                },
-                {
-                    failure: 'Imported module path contains reference for parent directory. ' +
-                        'Please use an absolute path or sibling files/folders: import OfficeApp from \'./../common/OfficeApp\';',
-                    name: 'file.ts',
-                    ruleName: 'no-relative-imports',
-                    startPosition: { character: 17, line: 5 }
                 }
             ]);
         });

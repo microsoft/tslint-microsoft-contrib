@@ -1,4 +1,5 @@
 {
+  "22": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
   "75": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)",
   "79": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
   "85": "Doubled Character XSS Manipulations",

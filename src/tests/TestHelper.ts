@@ -128,7 +128,7 @@ export module TestHelper {
             program = ts.createProgram([inputFileOrScript], { });
         }
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
-            /* tslint:disable:non-literal-fs-path */
+            // tslint:disable-next-line non-literal-fs-path
             const contents = fs.readFileSync(inputFileOrScript, FILE_ENCODING);
             const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
             linter.lint(inputFileOrScript, contents, configuration);

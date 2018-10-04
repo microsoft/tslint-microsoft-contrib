@@ -31,10 +31,12 @@ export class BaseFormatter extends Formatters.AbstractFormatter {
     }
 
     protected readFile(fileName: string): string {
+        /* tslint:disable:non-literal-fs-path */
         return fs.readFileSync(fileName, { encoding: 'UTF-8' });
     }
 
     protected writeFile(fileName: string, fileContents: string): void {
+        /* tslint:disable:non-literal-fs-path */
         fs.writeFileSync(fileName, fileContents, { encoding: 'UTF-8' });
     }
 

@@ -186,6 +186,7 @@
     "no-void-expression": false,
     "no-with-statement": true,
     "non-literal-require": true,
+    "non-literal-fs-path": true,
     "object-literal-key-quotes": [
       true,
       "as-needed"

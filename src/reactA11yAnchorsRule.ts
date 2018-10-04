@@ -7,13 +7,16 @@ import {Utils} from './utils/Utils';
 import {getImplicitRole} from './utils/getImplicitRole';
 import {
     getJsxAttributesFromJsxElement,
-    getStringLiteral
+    getStringLiteral,
+    isEmpty
 } from './utils/JsxAttribute';
 
 const ROLE_STRING: string = 'role';
 
 export const NO_HASH_FAILURE_STRING: string =
     'Do not use # as anchor href.';
+export const MISSING_HREF_FAILURE_STRING: string =
+    'Do not leave href undefined or null';
 export const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
     'Link text or the alt text of image in link should be at least 4 characters long. ' +
     'If you are not using <a> element as anchor, please specify explicit role, e.g. role=\'button\'';
@@ -115,14 +118,19 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
     private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
+            const hrefAttribute = this.getAttribute(openingElement, 'href');
 
             const anchorInfo: IAnchorInfo = {
-                href: this.getAttribute(openingElement, 'href') || '',
+                href: hrefAttribute ? getStringLiteral(hrefAttribute) || '' : '',
                 text: this.anchorText(parent),
                 altText: this.imageAlt(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
+
+            if (isEmpty(hrefAttribute)) {
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, MISSING_HREF_FAILURE_STRING);
+            }
 
             if (anchorInfo.href === '#') {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
@@ -147,10 +155,9 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): string | undefined {
+    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): ts.JsxAttribute {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
-        const attribute: ts.JsxAttribute = attributes[attributeName];
-        return attribute ? getStringLiteral(attribute) : '';
+        return attributes[attributeName];
     }
 
     /**
@@ -191,7 +198,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
     private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
         if (openingElement.tagName.getText() === 'img') {
-            const altAttribute = this.getAttribute(openingElement, 'alt');
+            const altAttribute = getStringLiteral(this.getAttribute(openingElement, 'alt'));
             return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
 

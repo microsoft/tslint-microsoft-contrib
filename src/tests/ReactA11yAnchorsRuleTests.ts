@@ -1,5 +1,6 @@
 import {TestHelper} from './TestHelper';
 import {
+    MISSING_HREF_FAILURE_STRING,
     NO_HASH_FAILURE_STRING,
     LINK_TEXT_TOO_SHORT_FAILURE_STRING,
     UNIQUE_ALT_FAILURE_STRING,
@@ -32,6 +33,43 @@ describe('reactA11yAnchorsRule', () : void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should fail on null or undefined function calls', () : void => {
+        const script : string = `
+            import React = require('react');
+            const anchor1 = <a href={null}>someTitle</a>
+            const anchor2 = <a href={undefined}>someTitle</a>
+            const anchor3 = <a href={null} role="button"/>
+            const anchor4 = <a href={undefined} role="button"/>
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 3 }
+            },
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 4 }
+            },
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 5 }
+            },
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 6 }
+            }
+        ]);
     });
 
     it('should fail on self closing anchor without link text', () : void => {
@@ -88,6 +126,36 @@ describe('reactA11yAnchorsRule', () : void => {
         ]);
     });
 
+    it('shoud fail when href is not defined', (): void => {
+        const script : string = `
+            import React = require('react');
+            const anchor1 = <a>someTitle1</a>;
+            const anchor2 = <a />;
+            const anchor3 = <a role="role1" />;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": {"character": 29, "line": 3}
+            },
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": {"character": 29, "line": 4}
+            },
+            {
+                "failure": MISSING_HREF_FAILURE_STRING,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": {"character": 29, "line": 5}
+            }
+        ]);
+    });
+
     describe('Link text should be at least 4 characters long', (): void => {
         it('should pass when length of text equals or larger than 4', () => {
             const script: string = `
@@ -103,12 +171,11 @@ describe('reactA11yAnchorsRule', () : void => {
         });
 
         it('should pass when role is not link and length of text less than 4', () => {
-            // Anchor without 'href' attribute has no corresponding role.
             const script: string = `
                 import React = require('react');
-                const anchor1 = <a role='button'>add</a>;
-                const anchor2 = <a role='button'><span className='iconClass'></span></a>;
-                const anchor3 = <a><img src='someURL' alt='someAlt' /></a>;
+                const anchor1 = <a href='href1' role='button'>add</a>;
+                const anchor2 = <a href='href2' role='button'><span className='iconClass'></span></a>;
+                const anchor3 = <a href='href3'><img src='someURL' alt='someAlt' /></a>;
             `;
 
             TestHelper.assertNoViolation(ruleName, script);
@@ -176,18 +243,6 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, scriptWithAltText, [ ]);
     });
 
-    it('shoud pass when hrefs undefiend and texts are variant', (): void => {
-        const script : string = `
-            import React = require('react');
-            const anchor1 = <a>someTitle1</a>;
-            const anchor2 = <a>someTitle2</a>;
-            const anchor3 = <a>someTitle3</a>;
-            const anchor4 = <a>someTitle4</a>;
-        `;
-
-        TestHelper.assertViolations(ruleName, script, [ ]);
-    });
-
     it('should pass when hrefs and texts both are different', () : void => {
         const script : string = `
             import React = require('react');
@@ -195,10 +250,10 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor2 = <a href="someRef2">someTitle2</a>;
             const anchor3 = <a href="someRef3">someTitle3</a>;
             const anchor4 = <a href="someRef4">someTitle4</a>;
-            const anchor5 = <a href="someRef5"><img alt="someAlt1" /><a>;
-            const anchor6 = <a href="someRef6"><img alt="someAlt2" /><a>;
-            const anchor7 = <a href="someRef7"><img alt="someAlt3" /><a>;
-            const anchor8 = <a href="someRef8"><img alt="someAlt4" /><a>;
+            const anchor5 = <a href="someRef5"><img alt="someAlt1" /></a>;
+            const anchor6 = <a href="someRef6"><img alt="someAlt2" /></a>;
+            const anchor7 = <a href="someRef7"><img alt="someAlt3" /></a>;
+            const anchor8 = <a href="someRef8"><img alt="someAlt4" /></a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);

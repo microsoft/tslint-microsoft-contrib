@@ -43,6 +43,10 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
+    it('should pass on function expression within a .tsx file', (): void => {
+        TestHelper.assertViolations(ruleName, 'test-data/NoFunctionExpressionTests-passing.tsx', [ ]);
+    });
+
     it('should fail on function expression', (): void => {
         const script: string = `
             var x = function() {

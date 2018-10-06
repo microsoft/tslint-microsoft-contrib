@@ -1,5 +1,7 @@
 import {TestHelper} from './TestHelper';
 import {
+    OPTION_IGNORE_CASE,
+    OPTION_IGNORE_WHITESPACE,
     MISSING_HREF_FAILURE_STRING,
     NO_HASH_FAILURE_STRING,
     LINK_TEXT_TOO_SHORT_FAILURE_STRING,
@@ -257,6 +259,30 @@ describe('reactA11yAnchorsRule', () : void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass when identical hrefs have texts with different cases on ignore-case enabled', () : void => {
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2">someTitle2</a>;
+            const anchor3 = <a href="someRef1">SomeTitle1</a>;
+            const anchor4 = <a href="someRef2">sometitle2</a>;
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, OPTION_IGNORE_CASE], script);
+    });
+
+    it('should pass when identical hrefs have texts with different whitespace on ignore-whitespace enabled', () : void => {
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
+            const anchor3 = <a href="someRef1">someTitle1  </a>;
+            const anchor4 = <a href="someRef2"><span>someTitle</span><img alt="  someAlt2" /></a>;
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, OPTION_IGNORE_WHITESPACE], script);
     });
 
     it('should fail when identical hrefs have different texts', () : void => {

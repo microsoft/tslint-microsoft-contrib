@@ -29,6 +29,11 @@ export function getFailureStringNonEmptyAltAndPresentationRole(tagName: string):
 Remove role='presentation' or specify 'alt' attribute to be empty when role attributes equals 'presentation'.`;
 }
 
+export function getFailureStringAltContainsImageWord(tagName: string): string {
+    return `The value of alt attribute in <${tagName}> contains one or more of the following words: photo, image, picture. \
+Screen readers already announce img elements as images.`;
+}
+
 /**
  * Enforces that img elements have alt text.
  */
@@ -99,6 +104,8 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                 getFailureStringNoAlt(tagName)
             );
         } else {
+            const altAttributeValue = getStringLiteral(altAttribute);
+            const hasImageInAlt: boolean = !!String(altAttributeValue).toLowerCase().match(/(\b|[_-])(photo|image|picture)(\b|[_-])/); 
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
@@ -120,6 +127,16 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                     node.getWidth(),
                     getFailureStringEmptyAltAndNotPresentationRole(tagName)
                 );
+            }
+            
+            // Checks for redundant descriptors in image alt, as screen readers already announce images
+            // <img alt='photo_of_dog' /> etc.
+            if (!isEmptyAlt && hasImageInAlt) {
+                this.addFailureAt(
+                    node.getStart(),
+                    node.getWidth(),
+                    getFailureStringAltContainsImageWord(tageName)
+                ); 
             }
         }
     }

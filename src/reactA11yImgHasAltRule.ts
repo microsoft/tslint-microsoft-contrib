@@ -135,7 +135,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                 this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),
-                    getFailureStringAltContainsImageWord(tageName)
+                    getFailureStringAltContainsImageWord(tagName)
                 ); 
             }
         }

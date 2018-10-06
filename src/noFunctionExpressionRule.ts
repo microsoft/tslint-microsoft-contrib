@@ -33,6 +33,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
+    protected visitSourceFile(node: ts.SourceFile): void {
+        if (/.*\.tsx/.test(node.fileName) === false) {
+            super.visitSourceFile(node);
+        }
+    }
+
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
         node.getChildren().forEach((child: ts.Node) => {

@@ -105,7 +105,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             );
         } else {
             const altAttributeValue = getStringLiteral(altAttribute);
-            const hasImageInAlt: boolean = !!String(altAttributeValue).toLowerCase().match(/(\b|[_-])(photo|image|picture)(\b|[_-])/); 
+            const hasImageInAlt: boolean = !!String(altAttributeValue).toLowerCase().match(/(\b|[_-])(photo|image|picture)(\b|[_-])/);
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
@@ -128,7 +128,6 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                     getFailureStringEmptyAltAndNotPresentationRole(tagName)
                 );
             }
-            
             // Checks for redundant descriptors in image alt, as screen readers already announce images
             // <img alt='photo_of_dog' /> etc.
             if (!isEmptyAlt && hasImageInAlt) {
@@ -136,7 +135,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringAltContainsImageWord(tagName)
-                ); 
+                );
             }
         }
     }

@@ -48,7 +48,11 @@ export class Rule extends Lint.Rules.AbstractRule {
             minLength: 0,
             maxLength: 2
         },
-        optionsDescription: '',
+        optionsDescription: Lint.Utils.dedent`
+        Optional arguments to relax the same HREF same link text rule are provided:
+        * \`${OPTION_IGNORE_CASE}\` ignore differences in cases.
+        * \`${OPTION_IGNORE_WHITESPACE}\` ignore differences in leading/trailing whitespace.
+        `,
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

@@ -43,8 +43,20 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on function expression within a .tsx file', (): void => {
-        TestHelper.assertViolations(ruleName, 'test-data/NoFunctionExpressionTests-passing.tsx', [ ]);
+    it('should fail on not generic type function expression and pass generic type function within a .tsx file', (): void => {
+        TestHelper.assertViolations(
+            ruleName,
+            "test-data/NoFunctionExpressionWithInTSX.tsx",
+            [{
+                "failure": "Use arrow function instead of function expression",
+                "name": "test-data/NoFunctionExpressionWithInTSX.tsx",
+                "ruleName": "no-function-expression",
+                "startPosition": {
+                    "character": 28,
+                    "line": 1
+                }
+            }],
+        );
     });
 
     it('should fail on function expression', (): void => {

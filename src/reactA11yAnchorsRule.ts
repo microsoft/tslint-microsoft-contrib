@@ -75,15 +75,25 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
-    private ignoreCase: boolean;
-    private ignoreWhitespace: boolean;
+    private ignoreCase: boolean = false;
+    private ignoreWhitespace: string = '';
     private anchorInfoList: IAnchorInfo[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
+        this.parseOptions();
+    }
 
-        this.ignoreCase = options.ruleArguments.indexOf(OPTION_IGNORE_CASE) > -1;
-        this.ignoreWhitespace = options.ruleArguments.indexOf(OPTION_IGNORE_WHITESPACE) > -1;
+    private parseOptions(): void {
+        this.getOptions().forEach((opt: any) => {
+            if (typeof opt === 'string' && opt === OPTION_IGNORE_CASE) {
+                this.ignoreCase = true;
+            }
+
+            if (typeof opt === 'object') {
+                this.ignoreWhitespace = opt[OPTION_IGNORE_WHITESPACE];
+            }
+        });
     }
 
     public validateAllAnchors(): void {
@@ -130,11 +140,19 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             altText2 = altText2.toLowerCase();
         }
 
-        if (this.ignoreWhitespace) {
+        if (this.ignoreWhitespace === 'trim') {
             text1 = text1.trim();
             text2 = text2.trim();
             altText1 = altText1.trim();
             altText2 = altText2.trim();
+        }
+
+        if (this.ignoreWhitespace === 'all') {
+            const regex: RegExp = /\s/g;
+            text1 = text1.replace(regex, '');
+            text2 = text2.replace(regex, '');
+            altText1 = altText1.replace(regex, '');
+            altText2 = altText2.replace(regex, '');
         }
 
         return text1 === text2 && altText1 === altText2;

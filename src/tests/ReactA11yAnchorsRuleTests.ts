@@ -1,5 +1,7 @@
 import {TestHelper} from './TestHelper';
 import {
+    OPTION_IGNORE_CASE,
+    OPTION_IGNORE_WHITESPACE,
     MISSING_HREF_FAILURE_STRING,
     NO_HASH_FAILURE_STRING,
     LINK_TEXT_TOO_SHORT_FAILURE_STRING,
@@ -259,6 +261,48 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [ ]);
     });
 
+    it('should pass when identical hrefs have texts with different cases on ignore-case', () : void => {
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2">someTitle2</a>;
+            const anchor3 = <a href="someRef1">SomeTitle1</a>;
+            const anchor4 = <a href="someRef2">sometitle2</a>;
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, OPTION_IGNORE_CASE], script);
+    });
+
+    it('should pass when identical hrefs have texts with different leading/trailing whitespace on ignore-whitespace trim', () : void => {
+        const opt : any = {};
+        opt[OPTION_IGNORE_WHITESPACE] = 'trim';
+
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
+            const anchor3 = <a href="someRef1">someTitle1  </a>;
+            const anchor4 = <a href="someRef2"><span>someTitle  </span><img alt="someAlt2" /></a>
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, opt], script);
+    });
+
+    it('should pass when identical hrefs have texts with different whitespace on ignore-whitespace all', () : void => {
+        const opt : any = {};
+        opt[OPTION_IGNORE_WHITESPACE] = 'all';
+
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
+            const anchor3 = <a href="someRef1">s o m e T i t l e 1</a>;
+            const anchor4 = <a href="someRef2"><span>some Title</span><img alt="someAlt2" /></a>
+        `;
+
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, opt], script);
+    });
+
     it('should fail when identical hrefs have different texts', () : void => {
         const script : string = `
             import React = require('react');
@@ -266,6 +310,56 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor2 = <a href="someRef1">someTitle2</a>;
             const anchor3 = <a href="someRef">someTitle3</a>;  // should fail with line 3
             const anchor4 = <a href="someRef1">someTitle4</a>; // should fail with line 4
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 5 }
+            },
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 6 }
+            }
+        ]);
+    });
+
+    it('should fail when identical hrefs have texts with different cases', () : void => {
+        const script : string = `
+            import React = require('react');
+            const anchor1 = <a href="someRef">someTitle1</a>;
+            const anchor2 = <a href="someRef1">someTitle2</a>;
+            const anchor3 = <a href="someRef">SomeTitle1</a>;  // should fail with line 3
+            const anchor4 = <a href="someRef1">sometitle2</a>; // should fail with line 4
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 5 }
+            },
+            {
+                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                "name": "file.tsx",
+                "ruleName": "react-a11y-anchors",
+                "startPosition": { "character": 29, "line": 6 }
+            }
+        ]);
+    });
+
+    it('should fail when identical hrefs have texts with different whitespace', () : void => {
+        const script : string = `
+            import React = require('react);
+            const anchor1 = <a href="someRef1">someTitle1</a>;
+            const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
+            const anchor3 = <a href="someRef1">someTitle1  </a>; // should fail with line 3
+            const anchor4 = <a href="someRef2"><span>some Title</span><img alt="someAlt2" /></a> // should fail with line 4
         `;
 
         TestHelper.assertViolations(ruleName, script, [

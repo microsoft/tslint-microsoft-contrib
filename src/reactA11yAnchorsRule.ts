@@ -11,6 +11,9 @@ import {
     isEmpty
 } from './utils/JsxAttribute';
 
+export const OPTION_IGNORE_CASE: string = 'ignore-case';
+export const OPTION_IGNORE_WHITESPACE: string = 'ignore-whitespace';
+
 const ROLE_STRING: string = 'role';
 
 export const NO_HASH_FAILURE_STRING: string =
@@ -36,8 +39,21 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-anchors',
         type: 'functionality',
         description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
-        options: null,
-        optionsDescription: '',
+        options: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [OPTION_IGNORE_CASE, OPTION_IGNORE_WHITESPACE]
+            },
+            minLength: 0,
+            maxLength: 2
+        },
+        optionsDescription: Lint.Utils.dedent`
+        Optional arguments to relax the same HREF same link text rule are provided:
+        * \`${OPTION_IGNORE_CASE}\` ignore differences in cases.
+        * \`{"${OPTION_IGNORE_WHITESPACE}": "trim"}\` ignore differences only in leading/trailing whitespace.
+        * \`{"${OPTION_IGNORE_WHITESPACE}": "all"}\` ignore differences in all whitespace.
+        `,
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -60,8 +76,26 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
-
+    private ignoreCase: boolean = false;
+    private ignoreWhitespace: string = '';
     private anchorInfoList: IAnchorInfo[] = [];
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        this.parseOptions();
+    }
+
+    private parseOptions(): void {
+        this.getOptions().forEach((opt: any) => {
+            if (typeof opt === 'string' && opt === OPTION_IGNORE_CASE) {
+                this.ignoreCase = true;
+            }
+
+            if (typeof opt === 'object') {
+                this.ignoreWhitespace = opt[OPTION_IGNORE_WHITESPACE];
+            }
+        });
+    }
 
     public validateAllAnchors(): void {
         const sameHrefDifferentTexts: IAnchorInfo[] = [];
@@ -72,7 +106,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
             this.anchorInfoList.forEach((anchorInfo: IAnchorInfo): void => {
                 if (current.href &&
                     current.href === anchorInfo.href &&
-                    (current.text !== anchorInfo.text || current.altText !== anchorInfo.altText) &&
+                    !this.compareAnchorsText(current, anchorInfo) &&
                     !Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
 
                     // Same href - different text...
@@ -82,8 +116,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 }
 
                 if (current.href !== anchorInfo.href &&
-                    current.text === anchorInfo.text &&
-                    current.altText === anchorInfo.altText &&
+                    this.compareAnchorsText(current, anchorInfo) &&
                     !Utils.contains(differentHrefSameText, anchorInfo)) {
 
                     // Different href - same text...
@@ -93,6 +126,37 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 }
             });
         }
+    }
+
+    private compareAnchorsText(anchor1: IAnchorInfo, anchor2: IAnchorInfo): boolean {
+        let text1: string = anchor1.text;
+        let text2: string = anchor2.text;
+        let altText1: string = anchor1.altText;
+        let altText2: string = anchor2.altText;
+
+        if (this.ignoreCase) {
+            text1 = text1.toLowerCase();
+            text2 = text2.toLowerCase();
+            altText1 = altText1.toLowerCase();
+            altText2 = altText2.toLowerCase();
+        }
+
+        if (this.ignoreWhitespace === 'trim') {
+            text1 = text1.trim();
+            text2 = text2.trim();
+            altText1 = altText1.trim();
+            altText2 = altText2.trim();
+        }
+
+        if (this.ignoreWhitespace === 'all') {
+            const regex: RegExp = /\s/g;
+            text1 = text1.replace(regex, '');
+            text2 = text2.replace(regex, '');
+            altText1 = altText1.replace(regex, '');
+            altText2 = altText2.replace(regex, '');
+        }
+
+        return text1 === text2 && altText1 === altText2;
     }
 
     private firstPosition(anchorInfo: IAnchorInfo): string {

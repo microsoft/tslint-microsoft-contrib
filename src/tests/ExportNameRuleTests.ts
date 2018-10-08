@@ -1,40 +1,30 @@
 import {TestHelper} from './TestHelper';
-import {Rule} from '../exportNameRule';
 
 /**
  * Unit tests.
  */
 describe('exportNameRule', () : void => {
     const ruleName : string = 'export-name';
-    const exceptions : string[] = [];
-    let original: any;
-
-    beforeEach(() : void => {
-        original = Rule.getExceptions;
-        Rule.getExceptions = () : any => { return exceptions; };
-    });
-
-    afterEach(() : void => {
-        Rule.getExceptions = original;
-    });
 
     describe('should pass', (): void => {
         it('when export equals assignment matches', () : void => {
-            exceptions.length = 0;
             const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('when export equals assignment matches in tsx file', () : void => {
-            exceptions.length = 0;
             const inputFile : string = 'test-data/ExportName/ExportNameRulePassingTestInput2.tsx';
             TestHelper.assertViolations(ruleName, inputFile, []);
         });
 
         it('for conflicting name when suppressed', () : void => {
-            exceptions.push('ThisIsNot.*NameOfTheFile');
             const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.ts';
-            TestHelper.assertViolations(ruleName, inputFile, [ ]);
+            TestHelper.assertViolationsWithOptions(ruleName, [{ allow: ['ThisIsNot.*NameOfTheFile'] }], inputFile, []);
+        });
+
+        it('for conflicting name when suppressed (old options format)', () : void => {
+            const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.ts';
+            TestHelper.assertViolationsWithOptions(ruleName, ['ThisIsNot.*NameOfTheFile'], inputFile, []);
         });
 
         it('when single module is named same as the file', () : void => {
@@ -240,7 +230,6 @@ describe('exportNameRule', () : void => {
 
     describe('should fail', (): void => {
         it('for conflicting name', () : void => {
-            exceptions.length = 0;
             const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput.ts';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
@@ -254,7 +243,6 @@ describe('exportNameRule', () : void => {
         });
 
         it('for conflicting name in tsx file', () : void => {
-            exceptions.length = 0;
             const inputFile : string = 'test-data/ExportName/ExportNameRuleFailingTestInput2.tsx';
             TestHelper.assertViolations(ruleName, inputFile, [
                 {
@@ -268,7 +256,6 @@ describe('exportNameRule', () : void => {
         });
 
         it('for conflicting name in namespace', () : void => {
-            exceptions.length = 0;
             const inputScript : string = `
                 namespace com.example {
                     export class NotMatching {

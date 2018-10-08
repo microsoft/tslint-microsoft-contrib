@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
+import { AstUtils } from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -37,7 +38,8 @@ class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        if (sourceFile.fileName.endsWith('tsx')) {
+
+        if (AstUtils.getLanguageVariant(sourceFile) === ts.LanguageVariant.JSX) {
             this.allowGenericFunctionExpression = true;
         }
     }

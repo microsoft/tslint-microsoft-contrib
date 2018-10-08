@@ -71,6 +71,16 @@ describe('exportNameRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [ ]);
         });
 
+        it('when export is cased differently and ignore-case is set', (): void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script: string = `
+                export class File {
+                }
+            `;
+
+            TestHelper.assertViolationsWithOptions(ruleName, [{ 'ignore-case': true }], script, []);
+        });
+
         it('when a single namespaced class is named the same as the file', () : void => {
             // TestHelper assumes that all scripts are within file.ts
             const script : string = `
@@ -387,6 +397,23 @@ describe('exportNameRule', () : void => {
                     "name": "file.ts",
                     "ruleName": "export-name",
                     "startPosition": { "character": 28, "line": 2 }
+                }
+            ]);
+        });
+
+        it('when export is cased differently and ignore-case is not set', (): void => {
+            // TestHelper assumes that all scripts are within file.ts
+            const script: string = `
+                export class File {
+                }
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and File",
+                    "name": "file.ts",
+                    "ruleName": "export-name",
+                    "startPosition": { "character": 17, "line": 2 }
                 }
             ]);
         });

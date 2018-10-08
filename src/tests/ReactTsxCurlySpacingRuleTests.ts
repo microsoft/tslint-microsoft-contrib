@@ -21,6 +21,7 @@ describe('reactTsxCurlySpacing', () => {
                 const script: string = `
                     import React = require('react');
                     const a = <Hello name={firstname} />;
+                    const b = <div>{/* comment */}</div>;
                 `;
                 TestHelper.assertViolationsWithOptions(ruleName, [ 'never' ], script, []);
             });

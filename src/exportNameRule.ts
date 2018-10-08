@@ -72,17 +72,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     /* tslint:disable:function-name */
-    public static getIgnoreCase(options: Lint.IOptions): string[] | null {
+    public static getIgnoreCase(options: Lint.IOptions): boolean {
         /* tslint:enable:function-name */
-        if (options.ruleArguments instanceof Array) {
-            return options.ruleArguments[0];
-        }
         if (options instanceof Array) {
             return typeof options[0] === 'object' ?
                 options[0]['ignore-case'] :
                 false;
         }
-        return null;
+        return false;
     }
 }
 

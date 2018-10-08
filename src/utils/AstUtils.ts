@@ -6,7 +6,8 @@ import * as ts from 'typescript';
 export module AstUtils {
 
     export function getLanguageVariant(node: ts.SourceFile): ts.LanguageVariant {
-        if (node.fileName.endsWith('.tsx')) {
+        const fileName: string = node.fileName.toLowerCase();
+        if (fileName.endsWith('.tsx') || fileName.endsWith('.jsx')) {
             return ts.LanguageVariant.JSX;
         } else {
             return ts.LanguageVariant.Standard;

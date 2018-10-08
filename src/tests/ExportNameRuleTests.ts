@@ -234,14 +234,7 @@ describe('exportNameRule', () : void => {
                 }
             `;
 
-            TestHelper.assertViolations(ruleName, script, [
-                {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and File",
-                    "name": "file.ts",
-                    "ruleName": "export-name",
-                    "startPosition": { "character": 17, "line": 2 }
-                }
-            ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
     });
 

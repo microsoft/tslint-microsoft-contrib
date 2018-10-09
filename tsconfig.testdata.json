@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "declaration": true,
+        "experimentalDecorators": true,
         "jsx": "react",
         "module": "commonjs",
         "outDir": "dist/test-data",

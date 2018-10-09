@@ -10,7 +10,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference bound twice in the constructor: ';
 const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
-    'reference bound in the constructor: ';
+    'reference bound: ';
 
 /**
  * Implementation of the react-this-binding-issue rule.
@@ -22,7 +22,21 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'When using React components you must be careful to correctly bind the `this` reference ' +
                      'on any methods that you pass off to child components as callbacks.',
-        options: null,
+        options: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'list',
+                    listType: {
+                        anyOf: [
+                            {type: 'string'}
+                        ]
+                    }
+                }
+            ]
+        },
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -44,6 +58,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private allowAnonymousListeners: boolean = false;
+    private allowedDecorators: string[] = [];
     private boundListeners: string[] = [];
     private declaredMethods: string[] = [];
     private scope: Scope | null = null;
@@ -53,6 +68,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'object') {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
+            }
+            if (typeof opt === 'string') {
+                this.allowedDecorators = this.allowedDecorators.concat(opt);
             }
         });
     }
@@ -86,9 +104,27 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         // reset variable scope when we encounter a method. Start tracking variables that are instantiated
         // in scope so we can make sure new function instances are not passed as JSX attributes
+        if (this.isMethodBoundWithDecorators(node)) {
+            this.boundListeners = this.boundListeners.concat('this.' + node.name.getText());
+        }
         this.scope = new Scope(null);
         super.visitMethodDeclaration(node);
         this.scope = null;
+    }
+
+    private isMethodBoundWithDecorators(node: ts.MethodDeclaration): boolean {
+        if (!(this.allowedDecorators.length > 0 && node.decorators && node.decorators.length > 0)) {
+            return false;
+        }
+        const bindingDecorators = node.decorators.find((decorator) => {
+            if (decorator.kind !== ts.SyntaxKind.Decorator) {
+                return false;
+            }
+            const source = node.getSourceFile();
+            const text = decorator.expression.getText(source);
+            return this.allowedDecorators.indexOf(text) !== -1;
+        });
+        return !!bindingDecorators;
     }
 
     protected visitArrowFunction(node: ts.ArrowFunction): void {

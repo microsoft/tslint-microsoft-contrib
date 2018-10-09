@@ -116,7 +116,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (!(allowedDecorators.length > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
-        const bindingDecorators = node.decorators.find((decorator) => {
+        return node.decorators.some((decorator) => {
             if (decorator.kind !== ts.SyntaxKind.Decorator) {
                 return false;
             }
@@ -124,7 +124,6 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             const text = decorator.expression.getText(source);
             return this.allowedDecorators.indexOf(text) !== -1;
         });
-        return !!bindingDecorators;
     }
 
     protected visitArrowFunction(node: ts.ArrowFunction): void {

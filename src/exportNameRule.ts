@@ -77,9 +77,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         if (options instanceof Array) {
             return typeof options[0] === 'object' ?
                 options[0]['ignore-case'] :
-                false;
+                true;
         }
-        return false;
+        return true;
     }
 }
 

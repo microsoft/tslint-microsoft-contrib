@@ -7,7 +7,8 @@ import {
     LINK_TEXT_TOO_SHORT_FAILURE_STRING,
     UNIQUE_ALT_FAILURE_STRING,
     SAME_HREF_SAME_TEXT_FAILURE_STRING,
-    DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING
+    DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING,
+    ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING
 } from '../reactA11yAnchorsRule';
 
 /**
@@ -537,5 +538,34 @@ describe('reactA11yAnchorsRule', () : void => {
                 "startPosition": { "character": 28, "line": 3 }
             }
         ]);
+    });
+
+    describe('Link with React component as content', () => {
+        it('should pass on valid React component which is not hidden by aria-hidden attribute', () => {
+            const script : string = `
+                import React = require('react');
+                const TextWrapper = () => someTitle;
+                const a = <a href="someRef"><TextWrapper /></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should fail on React component is hidden by aria-hidden attribute', () => {
+            const script : string = `
+                import React = require('react');
+                const TextWrapper = () => someTitle;
+                const a = <a href="someRef"><TextWrapper aria-hidden /></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING,
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 27, "line": 4 }
+                }
+            ]);
+        });
     });
 });

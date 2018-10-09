@@ -12,6 +12,7 @@ const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference
 const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
     'reference bound: ';
 
+const optionExamples: any = [true, {'bind-decorators': ['autobind']}];
 /**
  * Implementation of the react-this-binding-issue rule.
  */
@@ -38,6 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
                 }
             }
         },
+        optionExamples,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -70,7 +72,12 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             if (typeof(opt) === 'object') {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
                 if (opt['bind-decorators']) {
-                    this.allowedDecorators = opt['bind-decorators'];
+                    const allowedDecorators: any[] = opt['bind-decorators'];
+                    if (allowedDecorators.constructor !== Array && allowedDecorators.some((decorator) => typeof decorator !== 'string')) {
+                        throw new Error('one or more members of bind-decorators is invalid, string required.');
+                    }
+                    // tslint:disable-next-line:prefer-type-cast
+                    this.allowedDecorators = allowedDecorators;
                 }
             }
         });

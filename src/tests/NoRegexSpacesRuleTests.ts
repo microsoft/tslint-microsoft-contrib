@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -38,7 +39,7 @@ describe('noRegexSpacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {3}",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-regex-spaces",
                 "startPosition": { "character": 22, "line": 2 }
             }
@@ -53,7 +54,7 @@ describe('noRegexSpacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {2}",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-regex-spaces",
                 "startPosition": { "character": 22, "line": 2 }
             }
@@ -68,7 +69,7 @@ describe('noRegexSpacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Spaces in regular expressions are hard to count. Use {4}",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-regex-spaces",
                 "startPosition": { "character": 22, "line": 2 }
             }

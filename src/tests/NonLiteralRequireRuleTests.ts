@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -47,7 +48,7 @@ describe('nonLiteralRequireRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Non-literal (insecure) parameter passed to require(): moduleName",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "non-literal-require",
                 "startPosition": { "character": 38, "line": 3 }
             }
@@ -67,13 +68,13 @@ describe('nonLiteralRequireRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Non-literal (insecure) parameter passed to require(): somethingElse",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "non-literal-require",
                 "startPosition": { "character": 17, "line": 4 }
             },
             {
                 "failure": "Non-literal (insecure) parameter passed to require(): getModuleName()",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "non-literal-require",
                 "startPosition": { "character": 17, "line": 6 }
             }

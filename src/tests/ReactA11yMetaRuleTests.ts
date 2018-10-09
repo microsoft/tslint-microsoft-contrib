@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -27,7 +28,7 @@ describe('reactA11yMetaRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not use http-equiv=\"refresh\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-a11y-meta",
                 "startPosition": { "character": 23, "line": 4 }
             }
@@ -44,7 +45,7 @@ describe('reactA11yMetaRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not use http-equiv=\"refresh\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-a11y-meta",
                 "startPosition": { "character": 23, "line": 4 }
             }
@@ -61,7 +62,7 @@ describe('reactA11yMetaRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not use http-equiv=\"refresh\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-a11y-meta",
                 "startPosition": { "character": 23, "line": 4 }
             }

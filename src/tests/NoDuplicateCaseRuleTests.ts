@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -39,7 +40,7 @@ describe('noDuplicateCaseRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: 1",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-case",
                 "startPosition": { "character": 17, "line": 5 }
             }
@@ -63,7 +64,7 @@ describe('noDuplicateCaseRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: \"1\"",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-case",
                 "startPosition": { "character": 17, "line": 5 }
             }
@@ -87,7 +88,7 @@ describe('noDuplicateCaseRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Duplicate case found in switch statement: one",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-case",
                 "startPosition": { "character": 17, "line": 5 }
             }

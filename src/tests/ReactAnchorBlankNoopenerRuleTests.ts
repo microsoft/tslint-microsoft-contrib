@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -64,13 +65,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [  {
             "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-            "name": "file.tsx",
+            "name": path.resolve("file.tsx"),
             "ruleName": "react-anchor-blank-noopener",
             "startPosition": { "character": 23, "line": 4 }
         },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }
@@ -88,13 +89,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }
@@ -112,13 +113,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }
@@ -136,13 +137,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }
@@ -160,13 +161,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }
@@ -184,13 +185,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
             }

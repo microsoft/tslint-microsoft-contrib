@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -23,7 +24,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': 'file.ts',
+            'name': path.resolve('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -40,7 +41,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': 'file.ts',
+            'name': path.resolve('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -62,7 +63,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': 'file.ts',
+            'name': path.resolve('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -77,7 +78,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file is empty and should be deleted.',
-            'name': 'file.ts',
+            'name': path.resolve('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -88,7 +89,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file is empty and should be deleted.',
-            'name': 'file.ts',
+            'name': path.resolve('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);

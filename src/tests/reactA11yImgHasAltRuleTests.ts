@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { TestHelper } from './TestHelper';
 import {
   getFailureStringNoAlt,
@@ -97,25 +98,25 @@ const d = <img alt={''} /> `;
           fileName,
           [
             {
-              name: 'file.tsx',
+              name: path.resolve('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 3 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: path.resolve('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 4 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: path.resolve('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: path.resolve('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')

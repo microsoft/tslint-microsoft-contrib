@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -34,7 +35,7 @@ describe('noEmptyInterfacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not declare empty interfaces: 'MyInterface'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-empty-interfaces",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -51,7 +52,7 @@ describe('noEmptyInterfacesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not declare empty interfaces: 'MyInterface'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-empty-interfaces",
                 "startPosition": { "character": 13, "line": 2 }
             }

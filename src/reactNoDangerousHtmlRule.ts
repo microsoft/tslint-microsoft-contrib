@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import * as path from 'path';
 import * as Lint from 'tslint';
 
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
@@ -117,7 +118,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         }
         let found = false;
         exceptions.forEach((exception : Exception) : void => {
-            if (exception.file === this.getSourceFile().fileName) {
+            if (path.resolve(exception.file) === this.getSourceFile().fileName) {
                 if (exception.method === methodName) {
                     if (exception.comment != null) {
                         found = true;

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -44,13 +45,13 @@ class {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Field missing visibility modifier: myField1;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-missing-visibility-modifiers",
                 "startPosition": { "character": 5, "line": 3 }
             },
             {
                 "failure": "Field missing visibility modifier: static myField2;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-missing-visibility-modifiers",
                 "startPosition": { "character": 5, "line": 4 }
             }
@@ -68,13 +69,13 @@ class {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Method missing visibility modifier: myMethod1() {",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-missing-visibility-modifiers",
                 "startPosition": { "character": 5, "line": 3 }
             },
             {
                 "failure": "Method missing visibility modifier: static myMethod2() {}",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-missing-visibility-modifiers",
                 "startPosition": { "character": 5, "line": 5 }
             }

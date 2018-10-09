@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -52,7 +53,7 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Duplicate parameter name: 'duplicateConstructorParameter'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
                     "line": 28,
@@ -61,7 +62,7 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
             },
             {
                 "failure": "Duplicate parameter name: 'duplicateMethodParameter'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
                     "line": 29,
@@ -70,7 +71,7 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
             },
             {
                 "failure": "Duplicate parameter name: 'duplicateArrowFunctionParameter'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
                     "line": 30,
@@ -79,7 +80,7 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
             },
             {
                 "failure": "Duplicate parameter name: 'duplicateFunctionExpParameter'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
                     "line": 31,
@@ -88,7 +89,7 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
             },
             {
                 "failure": "Duplicate parameter name: 'duplicateFunctionParameter'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-duplicate-parameter-names",
                 "startPosition": {
                     "line": 38,

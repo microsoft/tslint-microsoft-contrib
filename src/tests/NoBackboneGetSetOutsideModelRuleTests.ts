@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -38,13 +39,13 @@ describe('noBackboneGetSetOutsideModelRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Backbone get() called outside of owning model: model.get('timestamp')",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-backbone-get-set-outside-model",
                 "startPosition": { "character": 28, "line": 2 }
             },
             {
                 "failure": "Backbone set() called outside of owning model: model.set('modificationdate', datetime)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-backbone-get-set-outside-model",
                 "startPosition": { "character": 13, "line": 3 }
             }

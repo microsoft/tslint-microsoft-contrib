@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -23,7 +24,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: other = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 2 }
             }
@@ -38,7 +39,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: other = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": {"character": 17, "line": 2}
             }
@@ -53,7 +54,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: other = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": {"character": 19, "line": 2}
             }
@@ -69,7 +70,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: self = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 2 }
             }
@@ -86,7 +87,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: self = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -102,7 +103,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Assigning this reference to local variable: that = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -121,7 +122,7 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, [ '^self$' ], script, [
             {
                 "failure": "Assigning this reference to local variable: self = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 5 }
             }
@@ -139,13 +140,13 @@ describe('noVarSelfRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, [ '^(?!self$)' ], script, [
             {
                 "failure": "Assigning this reference to local variable: xself = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 2 }
             },
             {
                 "failure": "Assigning this reference to local variable: selfx = this",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-var-self",
                 "startPosition": { "character": 17, "line": 3 }
             }

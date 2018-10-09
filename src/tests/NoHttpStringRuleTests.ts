@@ -1,4 +1,5 @@
 /* tslint:disable:no-http-string */
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -12,7 +13,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -24,7 +25,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -37,7 +38,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -49,7 +50,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.example.com/whatever'",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 25, "line": 1}
             }
@@ -82,7 +83,7 @@ describe('noHttpStringRule', (): void => {
         const excludeRules = ["http://www\\.allowed\\.com/?"];
         TestHelper.assertViolationsWithOptions(ruleName, excludeRules, inputScript, [{
             "failure": "Forbidden http url in string: 'http://www.notallowed.com'",
-            "name": "file.ts",
+            "name": path.resolve("file.ts"),
             "ruleName": ruleName,
             "startPosition": {
                 "character": 9,

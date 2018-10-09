@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -126,7 +127,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -145,7 +146,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -164,7 +165,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -183,7 +184,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -202,7 +203,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -223,7 +224,7 @@ describe('noUnnecessaryOverrideRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    "name": "file.ts",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "no-unnecessary-override",
                     "startPosition": { "character": 21, "line": 3 }
                 }

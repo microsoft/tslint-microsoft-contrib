@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 /**
  * Unit tests.
@@ -26,14 +27,14 @@ describe('insecureRandomRule', () : void => {
             {
                 "failure": "Math.random produces insecure random numbers. " +
                 "Use crypto.randomBytes() or window.crypto.getRandomValues() instead",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "insecure-random",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Math.random produces insecure random numbers. " +
                 "Use crypto.randomBytes() or window.crypto.getRandomValues() instead",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "insecure-random",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -52,13 +53,13 @@ describe('insecureRandomRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "insecure-random",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "insecure-random",
                 "startPosition": { "character": 23, "line": 5  }
             }

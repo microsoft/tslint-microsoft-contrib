@@ -1,6 +1,7 @@
 import * as Lint from 'tslint';
 import * as fs from 'fs';
 import * as chai from 'chai';
+import * as path from 'path';
 import * as ts from 'typescript';
 import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
 
@@ -136,9 +137,9 @@ export module TestHelper {
         } else {
             let filename: string;
             if (inputFileOrScript.indexOf('import React') > -1) {
-                filename = 'file.tsx';
+                filename = path.resolve('file.tsx');
             } else {
-                filename = 'file.ts';
+                filename = path.resolve('file.ts');
             }
 
             const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);

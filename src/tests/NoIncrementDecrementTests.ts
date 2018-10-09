@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -19,7 +20,7 @@ x--;
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden ++ operator",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 4,
@@ -28,7 +29,7 @@ x--;
             },
             {
                 "failure": "Forbidden -- operator",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 5,
@@ -37,7 +38,7 @@ x--;
             },
             {
                 "failure": "Forbidden ++ operator",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 6,
@@ -46,7 +47,7 @@ x--;
             },
             {
                 "failure": "Forbidden -- operator",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-increment-decrement",
                 "startPosition": {
                     "line": 7,

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -38,7 +39,7 @@ describe('noDeleteExpressionRule', (): void => {
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Variables should not be deleted: variableForDeletion",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-delete-expression",
                 "startPosition": {
                     "line": 6,

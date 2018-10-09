@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -55,13 +56,13 @@ describe('possibleTimingAttackRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Possible timing attack detected. Direct comparison found: password == secret",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 2 }
             },
             {
                 "failure": "Possible timing attack detected. Direct comparison found: secret == api",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -77,13 +78,13 @@ describe('possibleTimingAttackRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Possible timing attack detected. Direct comparison found: api === apiKey",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 2 }
             },
             {
                 "failure": "Possible timing attack detected. Direct comparison found: apiKey === token",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -99,13 +100,13 @@ describe('possibleTimingAttackRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Possible timing attack detected. Direct comparison found: token != hash",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 2 }
             },
             {
                 "failure": "Possible timing attack detected. Direct comparison found: auth != hash",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -121,13 +122,13 @@ describe('possibleTimingAttackRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Possible timing attack detected. Direct comparison found: pass !== hash",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 2 }
             },
             {
                 "failure": "Possible timing attack detected. Direct comparison found: hash !== secret",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "possible-timing-attack",
                 "startPosition": { "character": 23, "line": 3 }
             }

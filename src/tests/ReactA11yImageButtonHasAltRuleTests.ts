@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { TestHelper } from './TestHelper';
 
 /**
@@ -59,13 +60,13 @@ describe('reactA11yImageButtonHasAlt', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: 'Inputs element with type="image" must have alt attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: 'Inputs element with type="image" must have alt attribute.'
@@ -85,31 +86,31 @@ describe('reactA11yImageButtonHasAlt', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: path.resolve('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'

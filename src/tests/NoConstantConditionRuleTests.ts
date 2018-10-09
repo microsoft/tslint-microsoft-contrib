@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -47,13 +48,13 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (false)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (true)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -76,55 +77,55 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0 < 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (0 > 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found constant conditional: if (0 <= 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found constant conditional: if (0 >= 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 5 }
             },
             {
                 "failure": "Found constant conditional: if (0 == 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 6 }
             },
             {
                 "failure": "Found constant conditional: if (0 != 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 7 }
             },
             {
                 "failure": "Found constant conditional: if (0 === 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 8 }
             },
             {
                 "failure": "Found constant conditional: if (0 !== 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 9 }
             },
             {
                 "failure": "Found constant conditional: if (0 >= 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 10 }
             }
@@ -139,7 +140,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0 < 9 < 4 > 2)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -158,31 +159,31 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0 + 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (0 - 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found constant conditional: if (0 * 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found constant conditional: if (0 / 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 5 }
             },
             {
                 "failure": "Found constant conditional: if (0 % 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 6 }
             }
@@ -198,13 +199,13 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0++)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (0--)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -221,19 +222,19 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (++0)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (--0)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found constant conditional: if (!true)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -249,13 +250,13 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0 && 2)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (3 || 9)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -271,13 +272,13 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: if (0)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: if (1)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -293,13 +294,13 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: true ?",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 21, "line": 2 }
             },
             {
                 "failure": "Found constant conditional: false ?",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": { "character": 21, "line": 3 }
             }
@@ -315,7 +316,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: 1 ?",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 21,
@@ -324,7 +325,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: 0 ?",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 21,
@@ -343,7 +344,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: while (false)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -352,7 +353,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: while (true)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -371,7 +372,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: while (0)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -380,7 +381,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: while (1)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -399,7 +400,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: while (true)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -408,7 +409,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: while (false)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -427,7 +428,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: while (1)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -436,7 +437,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: while (0)",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -455,7 +456,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: ;true;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -464,7 +465,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: ;false;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -483,7 +484,7 @@ describe('noConstantConditionRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found constant conditional: ;1;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,
@@ -492,7 +493,7 @@ describe('noConstantConditionRule', () : void => {
             },
             {
                 "failure": "Found constant conditional: ;0;",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-constant-condition",
                 "startPosition": {
                     "character": 13,

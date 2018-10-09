@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -36,7 +37,7 @@ describe('nonLiteralFsPathRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             "failure": "Non-literal (insecure) path passed to fs.existsSync: path",
-            "name": "file.ts",
+            "name": path.resolve("file.ts"),
             "ruleName": "non-literal-fs-path",
             "startPosition": { "character": 27, "line": 5 }
         }]);

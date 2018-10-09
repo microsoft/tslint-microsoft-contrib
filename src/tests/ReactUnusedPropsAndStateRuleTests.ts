@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -448,25 +449,25 @@ describe('reactUnusedPropsAndStateRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unused React property defined in interface: myProp1",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": {"character": 21, "line": 6 }
             },
             {
                 "failure": "Unused React property defined in interface: myProp2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 7 }
             },
             {
                 "failure": "Unused React state defined in interface: myState1",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 10 }
             },
             {
                 "failure": "Unused React state defined in interface: myState2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 11 }
             }
@@ -510,25 +511,25 @@ describe('reactUnusedPropsAndStateRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, options, script, [
             {
                 "failure": "Unused React property defined in interface: myProp1",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": {"character": 21, "line": 6 }
             },
             {
                 "failure": "Unused React property defined in interface: myProp2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 7 }
             },
             {
                 "failure": "Unused React state defined in interface: myState1",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 10 }
             },
             {
                 "failure": "Unused React state defined in interface: myState2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 11 }
             }
@@ -559,13 +560,13 @@ describe('reactUnusedPropsAndStateRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unused React property defined in interface: myProp",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 6 }
             },
             {
                 "failure": "Unused React state defined in interface: myState",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 9 }
             }
@@ -604,13 +605,13 @@ describe('reactUnusedPropsAndStateRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unused React property defined in interface: myProps2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 13 }
             },
             {
                 "failure": "Unused React state defined in interface: myState2",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-unused-props-and-state",
                 "startPosition": { "character": 21, "line": 8 }
             }

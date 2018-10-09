@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -22,7 +23,7 @@ var d = (<any>window).execScript('alert("hello world")');
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "forbidden execScript: execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 2,
@@ -31,7 +32,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: this.execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 3,
@@ -40,7 +41,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: window.execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 4,
@@ -49,7 +50,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: (<any>window).execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 5,
@@ -58,7 +59,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 7,
@@ -67,7 +68,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: this.execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 8,
@@ -76,7 +77,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: window.execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 9,
@@ -85,7 +86,7 @@ var d = (<any>window).execScript('alert("hello world")');
             },
             {
                 "failure": "forbidden execScript: (<any>window).execScript",
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-exec-script",
                 "startPosition": {
                     "line": 10,

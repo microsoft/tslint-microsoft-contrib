@@ -1,6 +1,7 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -49,7 +50,7 @@ describe('noSuspiciousCommentRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             "failure": "Suspicious comment found: TODO",
-            "name": "file.ts",
+            "name": path.resolve("file.ts"),
             "ruleName": "no-suspicious-comment",
             "startPosition": {"character": 13, "line": 2}
         }]);
@@ -74,7 +75,7 @@ describe('noSuspiciousCommentRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [{
                 "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-suspicious-comment",
                 "startPosition": {"character": 17, "line": 2}
             }]);
@@ -87,7 +88,7 @@ describe('noSuspiciousCommentRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [{
                 "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-suspicious-comment",
                 "startPosition": {"character": 17, "line": 2}
             }]);
@@ -100,7 +101,7 @@ describe('noSuspiciousCommentRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [{
                 "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": "file.ts",
+                "name": path.resolve("file.ts"),
                 "ruleName": "no-suspicious-comment",
                 "startPosition": {"character": 17, "line": 2}
             }]);

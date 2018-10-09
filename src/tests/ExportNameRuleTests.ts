@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -274,8 +275,9 @@ describe('exportNameRule', () : void => {
             `;
             TestHelper.assertViolations(ruleName, inputScript, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and NotMatching",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and NotMatching",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -290,8 +292,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example1",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example1",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 17, "line": 2
                     }
@@ -307,8 +310,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example2",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example2",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -323,8 +327,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example3",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example3",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -341,8 +346,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example3a",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example3a",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 17, "line": 3 }
                 }
@@ -358,8 +364,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example4",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example4",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 28, "line": 2 }
                 }
@@ -374,8 +381,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example5",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example5",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 30, "line": 2 }
                 }
@@ -390,8 +398,9 @@ describe('exportNameRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "The exported module or identifier name must match the file name. Found: file.ts and Example6",
-                    "name": "file.ts",
+                    "failure": "The exported module or identifier name must match the file name. Found: " +
+                    path.resolve("file.ts") + " and Example6",
+                    "name": path.resolve("file.ts"),
                     "ruleName": "export-name",
                     "startPosition": { "character": 28, "line": 2 }
                 }

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -83,13 +84,13 @@ describe('reactIframeMissingSandboxRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "An iframe element requires a sandbox attribute",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "An iframe element requires a sandbox attribute",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -108,25 +109,25 @@ describe('reactIframeMissingSandboxRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "An iframe element defines an invalid sandbox attribute: __unknown__",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 3 }
             },
             {
                 "failure": "An iframe element defines an invalid sandbox attribute: __unknown__",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 4 }
             },
             {
                 "failure": "An iframe element defines an invalid sandbox attribute: __unknown__",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": "An iframe element defines an invalid sandbox attribute: __unknown__",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -143,13 +144,13 @@ describe('reactIframeMissingSandboxRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "An iframe element defines a sandbox with both allow-scripts and allow-same-origin",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 3 }
             },
             {
                 "failure": "An iframe element defines a sandbox with both allow-scripts and allow-same-origin",
-                "name": "file.tsx",
+                "name": path.resolve("file.tsx"),
                 "ruleName": "react-iframe-missing-sandbox",
                 "startPosition": { "character": 29, "line": 4 }
             }

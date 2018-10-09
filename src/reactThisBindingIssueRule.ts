@@ -23,19 +23,20 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'When using React components you must be careful to correctly bind the `this` reference ' +
                      'on any methods that you pass off to child components as callbacks.',
         options: {
-            anyOf: [
-                {
+            type: 'object',
+            properties: {
+                'allow-anonymous-listeners': {
                     type: 'boolean'
                 },
-                {
+                'bind-decorators': {
                     type: 'list',
                     listType: {
-                        anyOf: [
-                            {type: 'string'}
-                        ]
+                        anyOf: {
+                            type: 'string'
+                        }
                     }
                 }
-            ]
+            }
         },
         optionsDescription: '',
         typescriptOnly: true,
@@ -68,9 +69,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         this.getOptions().forEach((opt: any) => {
             if (typeof(opt) === 'object') {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
-            }
-            if (typeof opt === 'string') {
-                this.allowedDecorators = this.allowedDecorators.concat(opt);
+                if (opt['bind-decorators']) {
+                    this.allowedDecorators = opt['bind-decorators'];
+                }
             }
         });
     }

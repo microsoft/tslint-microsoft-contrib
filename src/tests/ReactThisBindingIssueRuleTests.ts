@@ -13,7 +13,7 @@ describe('reactThisBindingIssueRule', () : void => {
         TestHelper.assertViolations(ruleName, file, [ ]);
 
         const fileWithDecorator : string = 'test-data/ReactThisBinding/ReactThisBindingIssueWithDecorator-passing.tsx';
-        TestHelper.assertNoViolationWithOptions(ruleName, ["autobind"], fileWithDecorator);
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, {'bind-decorators': ['autobind']}], fileWithDecorator);
     });
 
     it('should fail if decorator is not whitelisted in config', () => {

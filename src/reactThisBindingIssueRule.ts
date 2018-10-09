@@ -104,7 +104,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         // reset variable scope when we encounter a method. Start tracking variables that are instantiated
         // in scope so we can make sure new function instances are not passed as JSX attributes
-        if (this.isMethodBoundWithDecorators(node)) {
+        if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
             this.boundListeners = this.boundListeners.concat('this.' + node.name.getText());
         }
         this.scope = new Scope(null);
@@ -112,8 +112,8 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         this.scope = null;
     }
 
-    private isMethodBoundWithDecorators(node: ts.MethodDeclaration): boolean {
-        if (!(this.allowedDecorators.length > 0 && node.decorators && node.decorators.length > 0)) {
+    private isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: string[]): boolean {
+        if (!(allowedDecorators.length > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
         const bindingDecorators = node.decorators.find((decorator) => {

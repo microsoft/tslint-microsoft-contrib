@@ -74,7 +74,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 if (opt['bind-decorators']) {
                     const allowedDecorators: any[] = opt['bind-decorators'];
                     if (
-                        !Array.isArray(allowedDecorators.constructor)
+                        !Array.isArray(allowedDecorators)
                         || allowedDecorators.some(decorator => typeof decorator !== 'string')
                     ) {
                         throw new Error('one or more members of bind-decorators is invalid, string required.');

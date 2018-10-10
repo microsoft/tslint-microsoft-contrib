@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /* tslint:disable:no-octal-literal */
@@ -29,25 +29,25 @@ function demoScriptFail() {
          TestHelper.assertViolations(ruleName, script, [
              {
                  "failure": "Octal literals should not be used: \\251",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "startPosition": { "character": 26, "line": 6 }
              },
              {
                  "failure": "Octal literals should not be used: \\254",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "startPosition": { "character": 26, "line": 7 }
              },
              {
                  "failure": "Octal literals should not be used: \\351",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "startPosition": { "character": 26, "line": 8 }
              },
              {
                  "failure": "Octal literals should not be used: \\354",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "startPosition": { "character": 26, "line": 9 }
              }
@@ -75,77 +75,77 @@ function demoScriptFail1() {
          TestHelper.assertViolations(ruleName, inputFile, [
              {
                  "failure": "Octal literals should not be used: \\251",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 6 }
              },
              {
                  "failure": "Octal literals should not be used: \\254",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 7 }
              },
              {
                  "failure": "Octal literals should not be used: \\23",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 8 }
              },
              {
                  "failure": "Octal literals should not be used: \\7",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 9 }
              },
              {
                  "failure": "Octal literals should not be used: \\025",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 10 }
             },
             {
                  "failure": "Octal literals should not be used: \\0",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 11 }
              },
              {
                 "failure": "Octal literals should not be used: \\0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 12 }
             },
             {
                  "failure": "Octal literals should not be used: \\-0",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 13 }
              },
              {
                 "failure": "Octal literals should not be used: \\-0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 14 }
             },
             {
                  "failure": "Octal literals should not be used: \\-035",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 15 }
              },
              {
                  "failure": "Octal literals should not be used: \\-235",
-                 "name": path.resolve("file.ts"),
+                 "name": Utils.absolutePath("file.ts"),
                  "ruleName": "no-octal-literal",
                  "ruleSeverity": "ERROR",
                  "startPosition": { "character": 25, "line": 16 }
@@ -174,77 +174,77 @@ function demoScriptFail2() {
         TestHelper.assertViolations(ruleName, inputFile, [
             {
                 "failure": "Octal literals should not be used: \\351",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 6 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 7 }
             },
             {
                 "failure": "Octal literals should not be used: \\33",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 8 }
             },
             {
                 "failure": "Octal literals should not be used: \\6",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 9 }
             },
             {
                 "failure": "Octal literals should not be used: \\125",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 10 }
             },
             {
                 "failure": "Octal literals should not be used: \\0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 11 }
             },
             {
                 "failure": "Octal literals should not be used: \\-0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 12 }
             },
             {
                 "failure": "Octal literals should not be used: \\0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 13 }
             },
             {
                 "failure": "Octal literals should not be used: \\-0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 14 }
             },
             {
                 "failure": "Octal literals should not be used: \\-035",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 15 }
             },
             {
                 "failure": "Octal literals should not be used: \\-235",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 16 }
@@ -273,77 +273,77 @@ function demoScriptFail3() {
         TestHelper.assertViolations(ruleName, inputFile, [
             {
                 "failure": "Octal literals should not be used: \\351",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 6 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 7 }
             },
             {
                 "failure": "Octal literals should not be used: \\33",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 8 }
             },
             {
                 "failure": "Octal literals should not be used: \\6",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 9 }
             },
             {
                 "failure": "Octal literals should not be used: \\125",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 10 }
             },
             {
                 "failure": "Octal literals should not be used: \\0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 11 }
             },
             {
                 "failure": "Octal literals should not be used: \\-0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 12 }
             },
             {
                 "failure": "Octal literals should not be used: \\0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 13 }
             },
             {
                 "failure": "Octal literals should not be used: \\-0",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 27, "line": 14 }
             },
             {
                 "failure": "Octal literals should not be used: \\-035",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 15 }
             },
             {
                 "failure": "Octal literals should not be used: \\-235",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 16 }
@@ -367,35 +367,35 @@ more text\`;
         TestHelper.assertViolations(ruleName, inputFile, [
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 6 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 7 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 8 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 9 }
             },
             {
                 "failure": "Octal literals should not be used: \\354",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-octal-literal",
                 "ruleSeverity": "ERROR",
                 "startPosition": { "character": 25, "line": 10 }

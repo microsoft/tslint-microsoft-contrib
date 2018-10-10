@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -43,7 +43,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -54,7 +54,7 @@ describe('importNameRule', () : void => {
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 3 },
                 "fix": {
@@ -75,7 +75,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -86,7 +86,7 @@ describe('importNameRule', () : void => {
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 3 },
                 "fix": {
@@ -106,7 +106,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'DependencyManager' but found 'Service'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -126,7 +126,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'userSettingsDetailView' but found 'UserSettings'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {

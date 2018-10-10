@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -32,7 +32,7 @@ describe('noEmptyLineAfterOpeningBraceRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 failure: 'Opening brace cannot be followed by empty line',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: ruleName,
                 startPosition: {
                     character: 1,

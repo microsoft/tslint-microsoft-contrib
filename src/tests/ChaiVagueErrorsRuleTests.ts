@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -40,25 +40,25 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 5 }
             }
@@ -75,19 +75,19 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -104,19 +104,19 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -133,19 +133,19 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -162,19 +162,19 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             }
@@ -195,43 +195,43 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 5 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 6 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 7 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 8 }
             }
@@ -250,31 +250,31 @@ describe('chaiVagueErrorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 5 }
             },
             {
                 "failure": "Found chai call with vague failure message. Please add an explicit failure message",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 6 }
             }
@@ -293,28 +293,28 @@ describe('chaiVagueErrorsRule', () : void => {
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict equality comparison from the expect call into the assertion value",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict equality comparison from the expect call into the assertion value",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict inequality comparison from the expect call into the assertion value. ",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict inequality comparison from the expect call into the assertion value. ",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 5 }
             }
@@ -331,14 +331,14 @@ describe('chaiVagueErrorsRule', () : void => {
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict inequality comparison from the expect call into the assertion value. ",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Found chai call with vague failure message. " +
                     "Move the strict equality comparison from the expect call into the assertion value",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-vague-errors",
                 "startPosition": { "character": 13, "line": 3 }
             }

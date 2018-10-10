@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -29,7 +29,7 @@ describe('reactA11yLangRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "An html element is missing the lang attribute",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-lang",
                 "startPosition": { "character": 23, "line": 4 }
             }
@@ -46,7 +46,7 @@ describe('reactA11yLangRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "An html element is missing the lang attribute",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-lang",
                 "startPosition": { "character": 23, "line": 4 }
             }
@@ -64,13 +64,13 @@ describe('reactA11yLangRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Lang attribute does not have a valid value. Found: foo",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-lang",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Lang attribute does not have a valid value. Found: bar",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-lang",
                 "startPosition": { "character": 23, "line": 5 }
             }

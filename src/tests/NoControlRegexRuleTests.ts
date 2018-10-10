@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -30,19 +30,19 @@ describe('noControlRegexRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 28, "line": 2 }
             },
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 39, "line": 3 }
             },
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 35, "line": 4 }
             }
@@ -59,19 +59,19 @@ describe('noControlRegexRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 28, "line": 2 }
             },
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 39, "line": 3 }
             },
             {
                 "failure": "Unexpected control character in regular expression",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-control-regex",
                 "startPosition": { "character": 35, "line": 4 }
             }

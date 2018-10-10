@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import { getFailureStringInvalidRole } from '../reactA11yRoleRule';
 
@@ -108,35 +108,35 @@ const e = <div role={undefined} /> `;
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 6 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 7 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": path.resolve('file.tsx'),
+                "name": Utils.absolutePath('file.tsx'),
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 8 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": path.resolve('file.tsx'),
+                "name": Utils.absolutePath('file.tsx'),
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 9 }
             },
             {
                 "failure": "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
                 "_definitions, or simply remove this attribute",
-                "name": path.resolve('file.tsx'),
+                "name": Utils.absolutePath('file.tsx'),
                 "ruleName": "react-a11y-role",
                 "startPosition": { "character": 16, "line": 10 }
             }

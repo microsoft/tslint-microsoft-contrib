@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -271,7 +271,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -286,7 +286,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -301,7 +301,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -319,7 +319,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -339,7 +339,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -366,7 +366,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -383,7 +383,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -400,7 +400,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -417,7 +417,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -434,7 +434,7 @@ describe('promiseMustCompleteRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "promise-must-complete",
                     "startPosition": { "character": 17, "line": 2 }
                 }

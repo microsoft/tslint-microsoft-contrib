@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import { getFailureString } from '../reactA11yTabindexNoPositiveRule';
 
@@ -43,37 +43,37 @@ const v = <div tabindex={undefined}></div>`;
         [
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 3 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 4 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 5 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 6 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 7 }
             },
             {
                 "failure": "The value of tabindex attribute is invalid or undefined. It must be either -1 or 0.",
-                "name": path.resolve("file.tsx"),
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-tabindex-no-positive",
                 "startPosition": { "character": 16, "line": 8 }
             }
@@ -124,31 +124,31 @@ const e = <div tabindex='+12345678910'></div>      `;
         fileName,
         [
           {
-            name: path.resolve('file.tsx'),
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 16, line: 3 },
             failure: getFailureString()
           },
           {
-            name: path.resolve('file.tsx'),
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 16, line: 4 },
             failure: getFailureString()
           },
           {
-            name: path.resolve('file.tsx'),
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 16, line: 5 },
             failure: getFailureString()
           },
           {
-            name: path.resolve('file.tsx'),
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 16, line: 6 },
             failure: getFailureString()
           },
           {
-            name: path.resolve('file.tsx'),
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 16, line: 7 },
             failure: getFailureString()

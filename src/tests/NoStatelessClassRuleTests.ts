@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -89,7 +89,7 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "A stateless class was found. This indicates a failure in the object model: MyClass",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-stateless-class",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -108,7 +108,7 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "A stateless class was found. This indicates a failure in the object model: MyClass",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-stateless-class",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -124,7 +124,7 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "A stateless class was found. This indicates a failure in the object model: MyClass",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-stateless-class",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -141,7 +141,7 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "A stateless class was found. This indicates a failure in the object model: MyClass",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-stateless-class",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -159,7 +159,7 @@ describe('noStatelessClassRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "A stateless class was found. This indicates a failure in the object model: MyClass",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-stateless-class",
                 "startPosition": { "character": 13, "line": 2 }
             }

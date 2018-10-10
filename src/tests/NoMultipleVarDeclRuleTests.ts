@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -27,12 +27,12 @@ describe('noMultipleVarDeclRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             "failure": "Do not use comma separated variable declarations: x = 1,",
-            "name": path.resolve("file.ts"),
+            "name": Utils.absolutePath("file.ts"),
             "ruleName": "no-multiple-var-decl",
             "startPosition": { "character": 13, "line": 2 }
         }, {
             "failure": "Do not use comma separated variable declarations: x,",
-            "name": path.resolve("file.ts"),
+            "name": Utils.absolutePath("file.ts"),
             "ruleName": "no-multiple-var-decl",
             "startPosition": { "character": 13, "line": 4 }
         }]);

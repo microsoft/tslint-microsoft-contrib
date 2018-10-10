@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -59,7 +59,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace complex HTML strings with jQuery API: $(\"<div><br/></div>\")",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -74,7 +74,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace complex HTML strings with jQuery API: $(\"<input readonly='true' >\")",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -89,7 +89,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace complex HTML strings with jQuery API: $(\"<input readonly >\")",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -104,7 +104,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace HTML string manipulation with jQuery API: $(\"<\" + tagName + \" />\")",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -119,7 +119,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace HTML string manipulation with jQuery API: $(\"<div className='\" + className + \"' >\")",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -134,7 +134,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace HTML string manipulation with jQuery API: $(someTagOpening + content + '>')",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-jquery-raw-elements",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -149,7 +149,7 @@ describe('noJqueryRawElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace HTML string manipulation with jQuery API: jquery('<' + tagName + closingBits)",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-jquery-raw-elements",
                 "startPosition": { "character": 13, "line": 2 }
             }

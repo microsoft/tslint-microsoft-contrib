@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -16,7 +16,7 @@ var x = \`some
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Forbidden Multiline string: `some...",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-multiline-string",
                 "startPosition": {
                     "line": 3,

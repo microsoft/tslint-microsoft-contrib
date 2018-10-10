@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import { getFailureString } from '../reactA11yAriaUnsupportedElementsRule';
 
@@ -40,13 +40,13 @@ describe('reactA11yAriaUnsupportedElementsRule', () => {
             script,
             [
                 {
-                    name: path.resolve('file.tsx'),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 23, line: 4 },
                     failure: getFailureString('base', ['aria-label', 'role'])
                 },
                 {
-                    name: path.resolve('file.tsx'),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 23, line: 5 },
                     failure: getFailureString('base', ['aria-label', 'role'])

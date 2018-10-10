@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -27,7 +27,7 @@ describe('preferTypeCastRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found as-cast instead of a traditional type-cast. Please convert to a type-cast: myVariable as string",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-type-cast",
                 "startPosition": { "character": 28, "line": 2 }
             }

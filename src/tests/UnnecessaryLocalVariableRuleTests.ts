@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -50,7 +50,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 21, "line": 4 }
             }
@@ -73,7 +73,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 25, "line": 5 }
             }
@@ -89,7 +89,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -107,7 +107,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -126,7 +126,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 21, "line": 4 }
             }
@@ -145,7 +145,7 @@ describe('unnecessaryLocalVariableRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unnecessary local variable: x",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-local-variable",
                 "startPosition": { "character": 21, "line": 4 }
             }

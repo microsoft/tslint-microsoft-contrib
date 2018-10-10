@@ -1,5 +1,5 @@
 /* tslint:disable:no-http-string */
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -13,7 +13,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -25,7 +25,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.examples.com'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -38,7 +38,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 9, "line": 1}
             }
@@ -50,7 +50,7 @@ describe('noHttpStringRule', (): void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Forbidden http url in string: 'http://www.example.com/whatever'",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": ruleName,
                 "startPosition": {"character": 25, "line": 1}
             }
@@ -83,7 +83,7 @@ describe('noHttpStringRule', (): void => {
         const excludeRules = ["http://www\\.allowed\\.com/?"];
         TestHelper.assertViolationsWithOptions(ruleName, excludeRules, inputScript, [{
             "failure": "Forbidden http url in string: 'http://www.notallowed.com'",
-            "name": path.resolve("file.ts"),
+            "name": Utils.absolutePath("file.ts"),
             "ruleName": ruleName,
             "startPosition": {
                 "character": 9,

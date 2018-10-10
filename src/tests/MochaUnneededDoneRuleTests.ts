@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -110,31 +110,31 @@ describe('mochaUnneededDoneRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 25, "line": 3 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 24, "line": 7 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: aliasedDone",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 29, "line": 11 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 28, "line": 15 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 28, "line": 19 }
             }
@@ -154,7 +154,7 @@ describe('mochaUnneededDoneRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 33, "line": 3 }
             }
@@ -190,31 +190,31 @@ describe('mochaUnneededDoneRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 33, "line": 3 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: myDone",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 32, "line": 7 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 37, "line": 11 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 36, "line": 15 }
             },
             {
                 "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-unneeded-done",
                 "startPosition": { "character": 36, "line": 19 }
             }

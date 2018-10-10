@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
 /**
@@ -66,25 +66,25 @@ describe('reactTsxCurlySpacing', () => {
                 TestHelper.assertViolations(ruleName, script, [
                     {
                         "failure": "A space is required after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 4 }
                     },
                     {
                         "failure": "A space is required before '}'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 4 }
                     },
                     {
                         "failure": "A space is required before '}'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 5 }
                     },
                     {
                         "failure": "A space is required after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 6 }
                     }
@@ -102,19 +102,19 @@ describe('reactTsxCurlySpacing', () => {
                 TestHelper.assertViolationsWithOptions(ruleName, [ 'never' ], script, [
                     {
                         "failure": "There should be no space after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 3 }
                     },
                     {
                         "failure": "There should be no space before '}'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 4 }
                     },
                     {
                         "failure": "There should be no space after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 43, "line": 5 }
                     }
@@ -134,13 +134,13 @@ describe('reactTsxCurlySpacing', () => {
                 TestHelper.assertViolationsWithOptions(ruleName, [ 'always', { allowMultiline: false } ], script, [
                     {
                         "failure": "There should be no newline after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 33, "line": 3 }
                     },
                     {
                         "failure": "There should be no newline before '}'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 33, "line": 3 }
                     }
@@ -157,13 +157,13 @@ describe('reactTsxCurlySpacing', () => {
                 TestHelper.assertViolationsWithOptions(ruleName, [ 'never' ], script, [
                     {
                         "failure": "There should be no newline after '{'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 33, "line": 3 }
                     },
                     {
                         "failure": "There should be no newline before '}'",
-                        "name": path.resolve("file.tsx"),
+                        "name": Utils.absolutePath("file.tsx"),
                         "ruleName": "react-tsx-curly-spacing",
                         "startPosition": { "character": 33, "line": 3 }
                     }

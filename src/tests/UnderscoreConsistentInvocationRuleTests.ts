@@ -1,7 +1,7 @@
 /* tslint:disable:max-line-length */
 /* tslint:disable:max-func-body-length */
 
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -212,361 +212,361 @@ describe('underscoreConsistentInvocationRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.each",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.forEach",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 3 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.map",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 4 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.collect",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 5 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.reduce",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 6 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.inject",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 7 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.foldl",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 8 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.reduceRight",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 9 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.foldr",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 10 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.find",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 11 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.detect",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 12 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.filter",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 13 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.select",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 14 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.where",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 15 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.findWhere",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 16 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.reject",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 17 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.every",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 18 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.all",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 19 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.some",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 20 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.any",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 21 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.contains",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 22 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.include",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 23 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.invoke",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 24 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.pluck",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 25 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.max",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 26 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.min",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 27 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.sortBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 28 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.groupBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 29 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.indexBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 30 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.countBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 31 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.shuffle",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 32 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.sample",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 33 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.toArray",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 34 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.size",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 35 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.partition",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 36 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.first",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 37 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.head",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 38 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.take",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 39 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.initial",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 40 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.last",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 41 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.rest",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 42 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.tail",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 43 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.drop",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 44 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.compact",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 45 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.flatten",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 46 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.without",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 47 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.union",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 48 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.intersection",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 49 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.difference",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 50 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.uniq",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 51 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.unique",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 52 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.object",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 53 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.zip",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 54 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.unzip",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 55 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.indexOf",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 56 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.findIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 57 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.lastIndexOf",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 58 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.findLastIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 59 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.sortedIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 60 }
             },
             {
                 "failure": "Static invocation of underscore function found. Prefer instance version instead: _.range",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 61 }
             }
@@ -640,361 +640,361 @@ describe('underscoreConsistentInvocationRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, [ true, { style: 'static' } ], script, [
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).each",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 2  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).forEach",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 3  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).map",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 4  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).collect",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 5  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reduce",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 6  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).inject",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 7  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).foldl",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 8  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reduceRight",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 9  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).foldr",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 10  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).find",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 11  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).detect",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 12  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).filter",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 13  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).select",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 14  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).where",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 15  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findWhere",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 16  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reject",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 17  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).every",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 18  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).all",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 19  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).some",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 20  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).any",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 21  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).contains",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 22  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).include",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 23  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).invoke",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 24  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).pluck",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 25  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).max",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 26  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).min",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 27  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sortBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 28  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).groupBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 29  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).indexBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 30  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).countBy",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 31  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).shuffle",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 32  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sample",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 33  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).toArray",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 34  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).size",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 35  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).partition",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 36  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).first",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 37  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).head",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 38  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).take",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 39  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).initial",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 40  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).last",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 41  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).rest",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 42  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).tail",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 43  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).drop",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 44  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).compact",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 45  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).flatten",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 46  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).without",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 47  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).union",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 48  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).intersection",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 49  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).difference",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 50  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).uniq",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 51  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).unique",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 52  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).object",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 53  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).zip",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 54  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).unzip",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 55  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).indexOf",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 56  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 57  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).lastIndexOf",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 58  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findLastIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 59  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sortedIndex",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 60  }
             },
             {
                 "failure": "Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).range",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "underscore-consistent-invocation",
                 "startPosition": { "character": 13, "line": 61  }
             }

@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -24,7 +24,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': path.resolve('file.ts'),
+            'name': Utils.absolutePath('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -41,7 +41,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': path.resolve('file.ts'),
+            'name': Utils.absolutePath('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -63,7 +63,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file only contains comments and should be deleted.',
-            'name': path.resolve('file.ts'),
+            'name': Utils.absolutePath('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -78,7 +78,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file is empty and should be deleted.',
-            'name': path.resolve('file.ts'),
+            'name': Utils.absolutePath('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);
@@ -89,7 +89,7 @@ describe('noUselessFilesRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             'failure': 'This file is empty and should be deleted.',
-            'name': path.resolve('file.ts'),
+            'name': Utils.absolutePath('file.ts'),
             'ruleName': ruleName,
             'startPosition': { 'character': 1, 'line': 1 }
         }]);

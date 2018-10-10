@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -51,7 +51,7 @@ function function3(arg1, arg2?, arg3?) {}`;
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Argument following optional argument missing optional annotation:  others: any",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-optional-annotation",
                 "startPosition": {
                     "character": 40,
@@ -88,61 +88,61 @@ function function3(requiredArg1, optionalArg2?, requiredArg3) {}`;
             [
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 4, "character": 32 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg3",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 5, "character": 46 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 7, "character": 34 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg3",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 8, "character": 48 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 10, "character": 38 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg3",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 11, "character": 52 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 13, "character": 56 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg3",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 14, "character": 70 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg2",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 19, "character": 35 }
                 },
                 {
                     "failure": "Argument following optional argument missing optional annotation:  requiredArg3",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "missing-optional-annotation",
                     "startPosition": { "line": 20, "character": 49 }
                 }

@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -63,25 +63,25 @@ window.document.writeln('...');
         TestHelper.assertViolations(RULE_NAME, script, [
             {
                 "failure": "Forbidden call to document.write",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-write",
                 "startPosition": { "character": 1, "line": 2 }
             },
             {
                 "failure": "Forbidden call to document.writeln",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-write",
                 "startPosition": { "character": 1, "line": 3 }
             },
             {
                 "failure": "Forbidden call to document.write",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-write",
                 "startPosition": { "character": 1, "line": 4 }
             },
             {
                 "failure": "Forbidden call to document.writeln",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-write",
                 "startPosition": { "character": 1, "line": 5 }
             }

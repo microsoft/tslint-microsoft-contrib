@@ -1,6 +1,6 @@
 /* tslint:disable:max-line-length */
 
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -39,7 +39,7 @@ describe('noForInRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not use the 'for in' statement: 'for (name in object)'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-for-in",
                 "startPosition": { "character": 13, "line": 2 }
             }

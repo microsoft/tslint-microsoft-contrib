@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -28,7 +28,7 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace generic-typed Array with array literal: Array<string>",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-array-literal",
                 "startPosition": { "character": 9, "line": 1 }
             }
@@ -40,7 +40,7 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace generic-typed Array with array literal: Array<number>",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-array-literal",
                 "startPosition": { "character": 17, "line": 1 }
             }
@@ -52,7 +52,7 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolationsWithOptions(ruleName, [ true, { 'allow-type-parameters': true } ], inputScript, [
             {
                 "failure": "Replace Array constructor with an array literal: new Array()",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-array-literal",
                 "startPosition": { "character": 1, "line": 1 }
             }
@@ -64,7 +64,7 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace Array constructor with an array literal: new Array(4, 5)",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-array-literal",
                 "startPosition": { "character": 1, "line": 1 }
             }
@@ -76,7 +76,7 @@ describe('preferArrayLiteralRule', () : void => {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Replace Array constructor with an array literal: new Array(4)",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "prefer-array-literal",
                 "startPosition": { "character": 1, "line": 1 }
             }

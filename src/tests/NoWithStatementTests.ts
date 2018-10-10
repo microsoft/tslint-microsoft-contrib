@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -17,7 +17,7 @@ describe('noWithStatementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Forbidden with statement",
-                    "name": path.resolve("file.ts"),
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-with-statement",
                     "startPosition": { "character": 13, "line": 2 }
                 }

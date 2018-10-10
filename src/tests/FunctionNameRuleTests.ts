@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -170,31 +170,31 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 failure: 'Method name does not match /^[a-z][\\w\\d]+$/: Foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 17, line: 3 }
             },
             {
                 failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 17, line: 4 }
             },
             {
                 failure: 'Method name does not match /^[a-z][\\w\\d]+$/: FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 17, line: 5 }
             },
             {
                 failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 17, line: 6 }
             },
             {
                 failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 17, line: 7 }
             }
@@ -215,31 +215,31 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: Foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 25, line: 3 }
             },
             {
                 failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 25, line: 4 }
             },
             {
                 failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 25, line: 5 }
             },
             {
                 failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 25, line: 6 }
             },
             {
                 failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 25, line: 7 }
             }
@@ -260,31 +260,31 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: Foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 27, line: 3 }
             },
             {
                 failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 27, line: 4 }
             },
             {
                 failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 27, line: 5 }
             },
             {
                 failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 27, line: 6 }
             },
             {
                 failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 27, line: 7 }
             }
@@ -303,19 +303,19 @@ describe('functionNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 failure: 'Static method name does not match /^[A-Z_\\d]+$/: Foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 24, line: 3 }
             },
             {
                 failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 24, line: 4 }
             },
             {
                 failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo2',
-                name: path.resolve('file.ts'),
+                name: Utils.absolutePath('file.ts'),
                 ruleName: 'function-name',
                 startPosition: { character: 24, line: 5 }
             }
@@ -361,25 +361,25 @@ describe('functionNameRule', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
                     failure: 'Function name does not match /^myFunction$/: notMyFunction',
-                    name: path.resolve('file.ts'),
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'function-name',
                     startPosition: { character: 22, line: 2 }
                 },
                 {
                     failure: 'Method name does not match /^myMethod$/: notMyMethod',
-                    name: path.resolve('file.ts'),
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'function-name',
                     startPosition: { character: 17, line: 4 }
                 },
                 {
                     failure: 'Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod',
-                    name: path.resolve('file.ts'),
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'function-name',
                     startPosition: { character: 25, line: 5 }
                 },
                 {
                     failure: 'Static method name does not match /^myStaticMethod$/: notMyStaticMethod',
-                    name: path.resolve('file.ts'),
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'function-name',
                     startPosition: { character: 24, line: 6 }
                 }

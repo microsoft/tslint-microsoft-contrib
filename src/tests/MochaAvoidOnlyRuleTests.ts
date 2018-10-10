@@ -1,4 +1,4 @@
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -55,7 +55,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha it.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -74,7 +74,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha specify.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -93,7 +93,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha it.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -110,7 +110,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha describe.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -127,7 +127,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha describe.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -144,7 +144,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha context.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -161,7 +161,7 @@ describe('mochaAvoidOnlyRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Do not commit Mocha context.only function call",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-avoid-only",
                 "startPosition": { "character": 13, "line": 2 }
             }

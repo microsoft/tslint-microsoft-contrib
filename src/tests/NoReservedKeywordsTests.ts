@@ -1,6 +1,6 @@
 /* tslint:disable:max-func-body-length */
 
-import * as path from 'path';
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -4586,7 +4586,7 @@ describe('noBannedTermsRule', () : void => {
             `var require`,
             [  {
                 "failure": "Forbidden reference to reserved keyword: require",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-reserved-keywords",
                 "startPosition": { "character": 5, "line": 1 }
             }]);
@@ -4597,7 +4597,7 @@ describe('noBannedTermsRule', () : void => {
             `var module`,
             [  {
                 "failure": "Forbidden reference to reserved keyword: module",
-                "name": path.resolve("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-reserved-keywords",
                 "startPosition": { "character": 5, "line": 1 }
             }]);

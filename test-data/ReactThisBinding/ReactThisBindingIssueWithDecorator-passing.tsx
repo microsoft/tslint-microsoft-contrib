@@ -21,9 +21,9 @@ export class MyComponent extends BaseClass {
 
     public render() {
         return <div
-            onClick={this.listener1}>
-            onMouseOver={this.listener2}>
-            onMouseDown={this.listener3}>
+            onClick={this.listener1}
+            onMouseOver={this.listener2}
+            onMouseDown={this.listener3}
             onMouseMove={this.notALocalMethod}> // this is not a real method, so it is OK
         </div>;
     }

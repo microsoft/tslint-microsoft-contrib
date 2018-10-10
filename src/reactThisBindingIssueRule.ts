@@ -73,7 +73,10 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
                 if (opt['bind-decorators']) {
                     const allowedDecorators: any[] = opt['bind-decorators'];
-                    if (allowedDecorators.constructor !== Array && allowedDecorators.some((decorator) => typeof decorator !== 'string')) {
+                    if (
+                        !Array.isArray(allowedDecorators.constructor)
+                        || allowedDecorators.some(decorator => typeof decorator !== 'string')
+                    ) {
                         throw new Error('one or more members of bind-decorators is invalid, string required.');
                     }
                     // tslint:disable-next-line:prefer-type-cast

@@ -188,6 +188,7 @@ module.exports = {
         "react-a11y-img-has-alt": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,
+        "react-a11y-no-onchange": true,
         "react-a11y-props": true,
         "react-a11y-proptypes": true,
         "react-a11y-role": true,

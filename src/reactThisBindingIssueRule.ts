@@ -44,8 +44,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private allowAnonymousListeners: boolean = false;
-    private boundListeners: string[] = [];
-    private declaredMethods: string[] = [];
+    private boundListeners: Set<string> = new Set<string>();
+    private declaredMethods: Set<string> = new Set<string>();
     private scope: Scope | null = null;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -59,11 +59,11 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         // reset all state when a class declaration is found because a SourceFile can contain multiple classes
-        this.boundListeners = [];
+        this.boundListeners = new Set<string>();
         // find all method names and prepend 'this.' to it so we can compare array elements to method names easily
-        this.declaredMethods = [];
+        this.declaredMethods = new Set<string>();
         AstUtils.getDeclaredMethodNames(node).forEach((methodName: string): void => {
-            this.declaredMethods.push('this.' + methodName);
+            this.declaredMethods.add('this.' + methodName);
         });
         super.visitClassDeclaration(node);
     }
@@ -134,7 +134,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 }
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                 const listenerText: string = propAccess.getText();
-                if (this.declaredMethods.indexOf(listenerText) > -1 && this.boundListeners.indexOf(listenerText) === -1) {
+                if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
                     const start: number = propAccess.getStart();
                     const widget: number = propAccess.getWidth();
                     const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
@@ -209,7 +209,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                         const listenerText: string = propAccess.getText();
 
                         // an unbound listener is a class method reference that was not bound to 'this' in the constructor
-                        if (this.declaredMethods.indexOf(listenerText) > -1 && this.boundListeners.indexOf(listenerText) === -1) {
+                        if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
                             return true;
                         }
                     }
@@ -219,8 +219,8 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         return false;
     }
 
-    private getSelfBoundListeners(node: ts.ConstructorDeclaration): string[] {
-        const result: string[] = [];
+    private getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
+        const result: Set<string> = new Set<string>();
         if (node.body != null && node.body.statements != null) {
             node.body.statements.forEach((statement: ts.Statement): void => {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
@@ -243,8 +243,8 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
                                         const rightPropText = AstUtils.getFunctionTarget(callExpression);
                                         if (leftPropText === rightPropText) {
-                                            if (result.indexOf(rightPropText) === -1) {
-                                                result.push(rightPropText);
+                                            if (!result.has(rightPropText)) {
+                                                result.add(rightPropText);
                                             } else {
                                                 const start = binaryExpression.getStart();
                                                 const width = binaryExpression.getWidth();

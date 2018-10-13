@@ -1,7 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-
 describe('noWithStatementsRule', () : void => {
     it('should produce violations', () : void => {
         const ruleName : string = 'no-with-statement';

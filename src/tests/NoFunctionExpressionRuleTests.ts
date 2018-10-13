@@ -53,7 +53,7 @@ describe('noFunctionExpressionRule', (): void => {
                     "character": 28,
                     "line": 1
                 }
-            }],
+            }]
         );
     });
 

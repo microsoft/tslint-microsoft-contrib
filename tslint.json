@@ -3,7 +3,10 @@
     "dist/src"
   ],
   "rules": {
-    "array-type": [true, "array"],
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-return-shorthand": false,
     "await-promise": false,
     "adjacent-overload-signatures": false,
@@ -142,7 +145,9 @@
     "no-mergeable-namespace": false,
     "no-missing-visibility-modifiers": false,
     "no-misused-new": true,
-    "no-multiline-string": [ false ],
+    "no-multiline-string": [
+      false
+    ],
     "no-multiple-var-decl": false,
     "no-namespace": false,
     "no-null-keyword": false,
@@ -201,7 +206,11 @@
       "check-whitespace"
     ],
     "one-variable-per-declaration": true,
-    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "only-arrow-functions": [
+      true,
+      "allow-declarations",
+      "allow-named-functions"
+    ],
     "ordered-imports": [
       false
     ],
@@ -309,6 +318,7 @@
     "space-within-parens": true,
     "switch-final-break": true,
     "type-literal-delimiter": false,
-    "use-default-type-parameter": false
+    "use-default-type-parameter": false,
+    "react-a11y-input-elements": true
   }
 }

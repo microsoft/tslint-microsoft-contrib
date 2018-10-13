@@ -478,4 +478,115 @@ describe('mochaNoSideEffectCodeRule', () : void => {
         });
     });
 
+    describe('Array.forEach', (): void => {
+
+        it('should pass on Array.forEach with empty arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should pass on Array.forEach with simple arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [ true, false, 1, 0, 'value', null].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should pass on Array.forEach of simple object arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [
+                        { name: 'alpha', value: 1 },
+                        { name: 'beta', value: 2 },
+                        { name: 'gamma', value: 3 }
+                    ].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should fail on Array.forEach of complex arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [ someCall() ].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): [ someCall() ].forEach((): v...",
+                    "name": "file.ts",
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 21, "line": 3 }
+                }
+            ]);
+        });
+
+        it('should fail on Array.forEach from function call', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    someCall().forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): someCall().forEach((): void ...",
+                    "name": "file.ts",
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 21, "line": 3 }
+                }
+            ]);
+        });
+
+        it('should fail on Array.forEach with side effects in function', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [1, 2, 3].forEach((): void => {
+                        const VIOLATION = new MyClass();
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): VIOLATION = new MyClass()",
+                    "name": "file.ts",
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 31, "line": 4 }
+                }
+            ]);
+        });
+
+    });
+
 });

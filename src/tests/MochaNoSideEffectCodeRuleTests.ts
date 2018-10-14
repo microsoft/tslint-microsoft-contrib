@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -145,7 +146,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                 "Move to before()/beforeEach(): publisher: DTO.Publisher = <...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -163,7 +164,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -181,7 +182,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                 "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -380,28 +381,28 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION1 = this.myMethod()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 3 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION2 = new MyClass()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION3 = true ? false : ...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 27, "line": 11 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION4 = x || 'some value'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 27, "line": 12 }
             }
@@ -423,7 +424,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION1 = new MyClass()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 19, "line": 3 }
             }
@@ -470,7 +471,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 {
                     "failure": "Mocha test contains dangerous variable initialization. " +
                             "Move to before()/beforeEach(): VIOLATION = [ someCall() ]",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "mocha-no-side-effect-code",
                     "startPosition": { "character": 23, "line": 3 }
                 }

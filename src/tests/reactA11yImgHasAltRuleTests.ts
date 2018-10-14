@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import {
   getFailureStringEmptyAltAndNotEmptyTitle,
@@ -110,25 +111,25 @@ const d = <img alt={''} /> `;
           fileName,
           [
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 3 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 4 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')

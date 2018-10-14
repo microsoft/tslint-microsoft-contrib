@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 import {Rule} from '../reactNoDangerousHtmlRule';
 
@@ -36,11 +37,11 @@ describe('reactNoDangerousHtmlRule', () : void => {
             [
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"render\"\n" +
-                        "    of source file file.ts\"\n    Do *NOT* add a suppression for this warning. " +
+                    "    of source file " + Utils.absolutePath("file.ts") + "\"\n    Do *NOT* add a suppression for this warning. " +
                     "If you absolutely must use this API then you need\n    to review the usage with a " +
                     "security expert/QE representative. If they decide that this is an\n    acceptable usage " +
                     "then add the exception to xss_exceptions.json",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": ruleName,
                     "startPosition": { "character": 17, "line": 5 }
                 }
@@ -76,21 +77,21 @@ function someFunction() {
             [
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
-                    "file.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    Utils.absolutePath("file.tsx") + "\"\n    Do *NOT* add a suppression for this warning. " +
                     "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
                     "representative. If they decide that this is an\n    acceptable usage then add the exception " +
                     "to xss_exceptions.json",
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-no-dangerous-html",
                     "startPosition": { "character": 1, "line": 5 }
                 },
                 {
                     "failure": "Invalid call to dangerouslySetInnerHTML in method \"<unknown>\"\n    of source file " +
-                    "file.tsx\"\n    Do *NOT* add a suppression for this warning. " +
+                    Utils.absolutePath("file.tsx") + "\"\n    Do *NOT* add a suppression for this warning. " +
                     "If you absolutely must use this API then you need\n    to review the usage with a security expert/QE " +
                     "representative. If they decide that this is an\n    acceptable usage then add the exception " +
                     "to xss_exceptions.json",
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-no-dangerous-html",
                     "startPosition": { "character": 12, "line": 10 }
                 }

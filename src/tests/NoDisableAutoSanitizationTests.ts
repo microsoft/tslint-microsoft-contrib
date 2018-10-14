@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -14,7 +15,7 @@ describe('noDisableAutoSanitizationRule', () : void => {
                 {
                     "failure": "Forbidden call to execUnsafeLocalFunction",
                     "ruleName": "no-disable-auto-sanitization",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "startPosition": { "line": 1, "character": 14 }
                 }
             ]
@@ -31,7 +32,7 @@ describe('noDisableAutoSanitizationRule', () : void => {
                 {
                     "failure": "Forbidden call to setInnerHTMLUnsafe",
                     "ruleName": "no-disable-auto-sanitization",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "startPosition": { "line": 1, "character": 1 }
                 }
             ]

@@ -40,13 +40,22 @@
     "test": "grunt all",
     "clean": "rimraf dist",
     "copy:json": "cpy \"src/**/*.json\" dist --parents",
+    "copy:package": "cpy \"**/*.js\" \"**/*.json\" \"!tests/**\" \"!references.js\" \"tests/TestHelper.js\" \"tests/TestHelper.d.ts\" ../build --cwd=\"dist/src\" --parents",
+    "copy:meta": "cpy README.md recommended_ruleset.js dist/build  --parents",
     "ts:default": "tsc",
     "ts:test-data": "tsc -p test-data",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\"",
     "lint:rules": "tslint -r dist/src -t verbose -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
     "lint:tests": "tslint -r dist/src -t verbose -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
-    "newtest": "npm-run-all clean copy:json ts:* test:* lint:*"
+    "validate:documentation": "node build-tasks/validate-documentation.js",
+    "validate:config": "node build-tasks/validate-config.js",
+    "generate:recommendations": "node build-tasks/generate-recommendations.js",
+    "generate:default-tslint-json": "node build-tasks/generate-default-tslint-json.js",
+    "generate:sdl-report": "node build-tasks/generate-sdl-report.js",
+    "generate:rule-metadata": "node build-tasks/generate-rule-metadata.js",
+    "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",
+    "newtest": "npm-run-all clean copy:json ts:* test:* lint:* validate:* copy:package copy:meta generate:*"
   },
   "dependencies": {
     "tsutils": "^2.27.2 <2.29.0"
@@ -54,6 +63,7 @@
   "devDependencies": {
     "chai": "4.2.0",
     "cpy-cli": "^2.0.0",
+    "glob": "^7.1.3",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",

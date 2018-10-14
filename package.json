@@ -42,6 +42,7 @@
     "copy:json": "cpy \"src/**/*.json\" dist --parents",
     "ts:default": "tsc",
     "ts:test-data": "tsc -p test-data",
+    "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\"",
     "lint:rules": "tslint -r dist/src -t verbose -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
     "lint:tests": "tslint -r dist/src -t verbose -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",

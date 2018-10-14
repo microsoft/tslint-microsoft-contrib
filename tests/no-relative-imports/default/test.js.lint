@@ -1,0 +1,10 @@
+import OfficeApp from 'OfficeApp';
+import OfficeApp from 'common/OfficeApp';
+import OfficeApp from './OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './OfficeApp';]
+import OfficeApp from './common/OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './common/OfficeApp';]
+import OfficeApp from '../common/OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from '../common/OfficeApp';]
+import OfficeApp from './../common/OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './../common/OfficeApp';]

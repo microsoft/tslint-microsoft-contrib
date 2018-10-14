@@ -13,6 +13,10 @@ import { isJsxSpreadAttribute } from './utils/TypeGuard';
 const ROLE_STRING: string = 'role';
 const ALT_STRING: string = 'alt';
 
+export function getFailureMapAreaNoAlt(): string {
+    return `area elements of image maps must have a non-empty alt attribute`;
+}
+
 export function getFailureStringNoAlt(tagName: string): string {
     return `<${tagName}> elements must have an non-empty alt attribute or \
 use empty alt attribute as well as role='presentation' for decorative/presentational images. \
@@ -79,7 +83,10 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         // The targetTagNames is the list of tag names we want to check.
         const targetTagNames: string[] = ['img'].concat(additionalTagNames);
 
-        if (!tagName || targetTagNames.indexOf(tagName) === -1) {
+        const isArea: boolean = node.tagName.getText() === 'area';
+        const isMapArea: boolean = isArea && node.parentNode.tagName.getText() === 'map';
+
+        if (!tagName || (targetTagNames.indexOf(tagName) === -1 && !isMapArea)) {
             return;
         }
 
@@ -92,7 +99,15 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
-        if (!altAttribute) {
+        const isEmptyAlt: boolean = altAttribute && (isEmpty(altAttribute) || getStringLiteral(altAttribute) === '');
+
+        if (isMapArea && (!altAttribute || isEmptyAlt)) {
+            this.addFailureAt(
+                node.getStart(),
+                node.getWidth(),
+                getFailureMapAreaNoAlt()
+            );
+        } else if (!altAttribute) {
             this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
@@ -102,7 +117,6 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
-            const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
             const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
                 ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;

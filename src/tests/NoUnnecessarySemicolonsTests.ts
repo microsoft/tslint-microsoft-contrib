@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -49,7 +50,7 @@ describe('noUnnecessarySemiColons', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "unnecessary semi-colon",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-semicolons",
                 "startPosition": { "character": 14, "line": 3 }
             }
@@ -82,7 +83,7 @@ describe('noUnnecessarySemiColons', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "unnecessary semi-colon",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-semicolons",
                 "startPosition": { "character": 14, "line": 3 }
             }

@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -57,7 +58,7 @@ describe('noSingleLineBlockCommentRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace block comment with a single-line comment",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-single-line-block-comment",
                 "startPosition": { "character": 43, "line": 2 }
             }
@@ -73,7 +74,7 @@ describe('noSingleLineBlockCommentRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Replace block comment with a single-line comment",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-single-line-block-comment",
                 "startPosition": { "character": 13, "line": 2 }
             }

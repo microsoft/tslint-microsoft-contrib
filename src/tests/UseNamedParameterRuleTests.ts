@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -15,13 +16,13 @@ function add() {
         TestHelper.assertViolations(ruleName, inputScript, [
             {
                 "failure": "Use a named parameter instead: 'arguments[0]'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "use-named-parameter",
                 "startPosition": { "character": 12, "line": 3 }
             },
             {
                 "failure": "Use a named parameter instead: 'arguments[1]'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "use-named-parameter",
                 "startPosition": { "character": 27, "line": 3 }
             }

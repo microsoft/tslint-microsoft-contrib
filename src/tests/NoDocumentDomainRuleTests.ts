@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -28,7 +29,7 @@ describe('noDocumentDomainRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Forbidden write to document.domain: document.domain = 'some value'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-domain",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -43,7 +44,7 @@ describe('noDocumentDomainRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Forbidden write to document.domain: document.domain = someValue",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-domain",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -58,7 +59,7 @@ describe('noDocumentDomainRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Forbidden write to document.domain: window.document.domain = someValue",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-document-domain",
                 "startPosition": { "character": 13, "line": 2 }
             }

@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import {
   getFailureStringForNotImplicitRole,
@@ -95,7 +96,7 @@ const b = <menuitem type='radio' />`;
         fileName,
         [
           {
-            name: 'file.tsx',
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 11, line: 3 },
             failure: getFailureStringForImplicitRole(
@@ -105,7 +106,7 @@ const b = <menuitem type='radio' />`;
             )
           },
           {
-            name: 'file.tsx',
+            name: Utils.absolutePath('file.tsx'),
             ruleName: ruleName,
             startPosition: { character: 11, line: 4 },
             failure: getFailureStringForImplicitRole(

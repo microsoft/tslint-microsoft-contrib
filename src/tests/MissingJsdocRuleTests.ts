@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -32,8 +33,8 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "File missing JSDoc comment at the top-level: file.ts",
-                "name": "file.ts",
+                "failure": "File missing JSDoc comment at the top-level: " + Utils.absolutePath("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-jsdoc",
                 "startPosition": { "character": 1, "line": 2 }
             }
@@ -49,8 +50,8 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "File missing JSDoc comment at the top-level: file.ts",
-                "name": "file.ts",
+                "failure": "File missing JSDoc comment at the top-level: " + Utils.absolutePath("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-jsdoc",
                 "startPosition": { "character": 1, "line": 5 }
             }
@@ -66,8 +67,8 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "File missing JSDoc comment at the top-level: file.ts",
-                "name": "file.ts",
+                "failure": "File missing JSDoc comment at the top-level: " + Utils.absolutePath("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-jsdoc",
                 "startPosition": { "character": 1, "line": 5 }
             }
@@ -83,8 +84,8 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "File missing JSDoc comment at the top-level: file.ts",
-                "name": "file.ts",
+                "failure": "File missing JSDoc comment at the top-level: " + Utils.absolutePath("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-jsdoc",
                 "startPosition": { "character": 1, "line": 5 }
             }
@@ -100,8 +101,8 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "File missing JSDoc comment at the top-level: file.ts",
-                "name": "file.ts",
+                "failure": "File missing JSDoc comment at the top-level: " + Utils.absolutePath("file.ts"),
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "missing-jsdoc",
                 "startPosition": { "character": 5, "line": 5 }
             }

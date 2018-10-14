@@ -11,6 +11,22 @@ describe('reactThisBindingIssueRule', () : void => {
         const file : string = 'test-data/ReactThisBinding/ReactThisBindingIssue-passing.tsx';
 
         TestHelper.assertViolations(ruleName, file, [ ]);
+
+        const fileWithDecorator : string = 'test-data/ReactThisBinding/ReactThisBindingIssueWithDecorator-passing.tsx';
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, {'bind-decorators': ['autobind']}], fileWithDecorator);
+    });
+
+    it('should fail if decorator is not whitelisted in config', () => {
+        const fileWithDecorator : string = 'test-data/ReactThisBinding/ReactThisBindingIssueWithDecorator-passing.tsx';
+        const expectedMsg = `A class method is passed as a JSX attribute without having the 'this' reference bound: `;
+        TestHelper.assertViolationsWithOptions(ruleName, [true], fileWithDecorator, [
+            {
+                ruleName: 'react-this-binding-issue',
+                name: fileWithDecorator,
+                failure: expectedMsg + 'this.listener1',
+                startPosition: {line: 24, character: 22}
+            }
+        ]);
     });
 
     it('should fail on double binding', () : void => {
@@ -32,15 +48,13 @@ describe('reactThisBindingIssueRule', () : void => {
 
         TestHelper.assertViolations(ruleName, file, [
             {
-                "failure": "A class method is passed as a JSX attribute without having the 'this' reference " +
-                "bound in the constructor: this.listener",
+                "failure": "A class method is passed as a JSX attribute without having the 'this' reference bound: this.listener",
                 "name": "test-data/ReactThisBinding/ReactThisBindingIssue-unbound.tsx",
                 "ruleName": "react-this-binding-issue",
                 "startPosition": { "character": 22, "line": 11  }
             },
             {
-                "failure": "A class method is passed as a JSX attribute without having the 'this' reference " +
-                "bound in the constructor: this.listener",
+                "failure": "A class method is passed as a JSX attribute without having the 'this' reference bound: this.listener",
                 "name": "test-data/ReactThisBinding/ReactThisBindingIssue-unbound.tsx",
                 "ruleName": "react-this-binding-issue",
                 "startPosition": { "character": 28, "line": 14 }

@@ -131,7 +131,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             }
             // Checks for redundant descriptors in image alt, as screen readers already announce images
             // <img alt='photo_of_dog' /> etc.
-            if (!isEmptyAlt && redundantWordsFound.length) {
+            if (!isEmptyAlt && redundantWordsFound && redundantWordsFound.length) {
                 this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),

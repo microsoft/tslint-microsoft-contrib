@@ -41,7 +41,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-img-has-alt',
         type: 'maintainability',
-        description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+        description: 'Enforce that an img element contains the non-empty alt attribute, without redundant words, like "photo" or "image," ' +
+        'as screen readers already announce that element is an image. ' +
         'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
         optionsDescription: '',

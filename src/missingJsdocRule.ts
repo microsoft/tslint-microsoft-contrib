@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false'
+        recommendation: 'false,'
     };
 
     public static FAILURE_STRING: string = 'File missing JSDoc comment at the top-level: ';

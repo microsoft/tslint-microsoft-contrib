@@ -6,7 +6,7 @@ import { getApparentJsDoc, getNodeName } from './utils/NodeDocs';
 const defaultUselessWords = ['a', 'an', 'of', 'our', 'the'];
 
 const defaultAliases: { [i: string]: string[] } = {
-    a: ['an', 'our'],
+    a: ['an', 'our']
 };
 
 const failureString = 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.';
@@ -21,6 +21,9 @@ interface Options {
     uselessWords: Set<string>;
 }
 
+/**
+ * Implementation of the informative-docs rule.
+ */
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: Lint.IRuleMetadata = {
         description: 'Enforces that comments do more than just reiterate names of objects.',

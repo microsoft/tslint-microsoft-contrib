@@ -2,6 +2,7 @@ import * as Lint from 'tslint';
 import * as ts from 'typescript';
 
 import { getApparentJsDoc, getNodeName } from './utils/NodeDocs';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const defaultUselessWords = ['a', 'an', 'of', 'our', 'the'];
 
@@ -25,7 +26,7 @@ interface Options {
  * Implementation of the informative-docs rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-    public static metadata: Lint.IRuleMetadata = {
+    public static metadata: ExtendedMetadata = {
         description: 'Enforces that comments do more than just reiterate names of objects.',
         options: null,
         optionsDescription: 'Not configurable.',
@@ -48,6 +49,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             Alternately, if something's name is so descriptive that it doesn't need to be fully documented,
             just leave out documentation altogether.
         `,
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: 'true,',
         ruleName: 'informative-docs',
         type: 'maintainability',
         typescriptOnly: false

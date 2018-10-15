@@ -117,6 +117,7 @@ module.exports = {
         "file-name-casing": true,
         "function-name": true,
         "import-name": true,
+        "informative-docs": true,
         "interface-name": true,
         "jsdoc-format": true,
         "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file

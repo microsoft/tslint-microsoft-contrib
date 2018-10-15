@@ -36,6 +36,7 @@
     "import-blacklist": false,
     "import-name": true,
     "import-spacing": true,
+    "informative-docs": true,
     "indent": [
       true,
       "spaces"

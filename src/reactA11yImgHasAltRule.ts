@@ -90,7 +90,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         const targetTagNames: string[] = ['img'].concat(additionalTagNames);
 
         const isArea: boolean = node.tagName.getText() === 'area';
-        const isMapArea: boolean = isArea && node.parent.tagName.getText() === 'map';
+        const isMapArea: boolean = isArea && node.parent.type === 'map';
 
         if (!tagName || (targetTagNames.indexOf(tagName) === -1 && !isMapArea)) {
             return;

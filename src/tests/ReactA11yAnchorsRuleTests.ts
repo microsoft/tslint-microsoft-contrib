@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 import {
     OPTION_IGNORE_CASE,
@@ -7,7 +8,8 @@ import {
     LINK_TEXT_TOO_SHORT_FAILURE_STRING,
     UNIQUE_ALT_FAILURE_STRING,
     SAME_HREF_SAME_TEXT_FAILURE_STRING,
-    DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING
+    DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING,
+    ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING
 } from '../reactA11yAnchorsRule';
 
 /**
@@ -49,25 +51,25 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 3 }
             },
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 4 }
             },
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -83,7 +85,7 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             }
@@ -99,7 +101,7 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": NO_HASH_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             }
@@ -115,13 +117,13 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": NO_HASH_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             },
             {
                 "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             }
@@ -139,19 +141,19 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {"character": 29, "line": 3}
             },
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {"character": 29, "line": 4}
             },
             {
                 "failure": MISSING_HREF_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {"character": 29, "line": 5}
             }
@@ -195,25 +197,25 @@ describe('reactA11yAnchorsRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 3 }
                 },
                 {
                     "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 4 }
                 },
                 {
                     "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 5 }
                 },
                 {
                     "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 33, "line": 6 }
                 }
@@ -315,13 +317,13 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -340,13 +342,13 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -365,13 +367,13 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -390,13 +392,13 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -415,7 +417,7 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
                     "character": 29,
@@ -424,7 +426,7 @@ describe('reactA11yAnchorsRule', () : void => {
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
                     "character": 29,
@@ -433,7 +435,7 @@ describe('reactA11yAnchorsRule', () : void => {
             },
             {
                 "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
                     "character": 29,
@@ -455,7 +457,7 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
                     "character": 29,
@@ -464,7 +466,7 @@ describe('reactA11yAnchorsRule', () : void => {
             },
             {
                 "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": {
                     "character": 29,
@@ -486,19 +488,19 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 4 }
             },
             {
                 "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 5 }
             },
             {
                 "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 29, "line": 6 }
             }
@@ -532,10 +534,39 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": UNIQUE_ALT_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-anchors",
                 "startPosition": { "character": 28, "line": 3 }
             }
         ]);
+    });
+
+    describe('Link with React component as content', () => {
+        it('should pass on valid React component which is not hidden by aria-hidden attribute', () => {
+            const script : string = `
+                import React = require('react');
+                const TextWrapper = () => someTitle;
+                const a = <a href="someRef"><TextWrapper /></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should fail on React component is hidden by aria-hidden attribute', () => {
+            const script : string = `
+                import React = require('react');
+                const TextWrapper = () => someTitle;
+                const a = <a href="someRef"><TextWrapper aria-hidden /></a>;
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING,
+                    "name": "file.tsx",
+                    "ruleName": "react-a11y-anchors",
+                    "startPosition": { "character": 27, "line": 4 }
+                }
+            ]);
+        });
     });
 });

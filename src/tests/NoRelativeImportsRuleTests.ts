@@ -1,4 +1,5 @@
 /* tslint:disable:no-irregular-whitespace */
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -38,28 +39,28 @@ describe('noRelativeImportsRule', () : void => {
                 {
                     failure: 'External module is being loaded from a relative path. ' +
                         'Please use an absolute path: require(\'./App\')',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 2 }
                 },
                 {
                     failure: 'External module is being loaded from a relative path. ' +
                         'Please use an absolute path: require(\'./common/App\')',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 3 }
                 },
                 {
                     failure: 'External module is being loaded from a relative path. ' +
                         'Please use an absolute path: require(\'../common/App\')',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 4 }
                 },
                 {
                     failure: 'External module is being loaded from a relative path. ' +
                         'Please use an absolute path: require(\'./../common/App\')',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 5 }
                 }
@@ -78,28 +79,28 @@ describe('noRelativeImportsRule', () : void => {
                 {
                     failure: 'Imported module is being loaded from a relative path. ' +
                         'Please use an absolute path: import OfficeApp from \'./OfficeApp\';',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 2 }
                 },
                 {
                     failure: 'Imported module is being loaded from a relative path. ' +
                         'Please use an absolute path: import OfficeApp from \'./common/OfficeApp\';',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 3 }
                 },
                 {
                     failure: 'Imported module is being loaded from a relative path. ' +
                         'Please use an absolute path: import OfficeApp from \'../common/OfficeApp\';',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 4 }
                 },
                 {
                     failure: 'Imported module is being loaded from a relative path. ' +
                         'Please use an absolute path: import OfficeApp from \'./../common/OfficeApp\';',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 5 }
                 }
@@ -139,7 +140,7 @@ describe('noRelativeImportsRule', () : void => {
                 {
                     failure: 'External module path starts with reference to parent directory. ' +
                         'Please use an absolute path or sibling files/folders: require(\'../common/App\')',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 4 }
                 }
@@ -158,7 +159,7 @@ describe('noRelativeImportsRule', () : void => {
                 {
                     failure: 'Imported module path starts with reference to parent directory. ' +
                         'Please use an absolute path or sibling files/folders: import OfficeApp from \'../common/OfficeApp\';',
-                    name: 'file.ts',
+                    name: Utils.absolutePath('file.ts'),
                     ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 4 }
                 }

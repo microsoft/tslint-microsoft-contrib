@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -14,7 +15,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 25, "line": 2 }
                 }]);
@@ -27,7 +28,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 25, "line": 2 }
                 }]);
@@ -40,7 +41,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 25, "line": 2 }
                 }]);
@@ -53,7 +54,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 25, "line": 2 }
                 }]);
@@ -68,7 +69,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -81,7 +82,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -94,7 +95,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -107,7 +108,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -122,7 +123,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -135,7 +136,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -148,7 +149,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -161,7 +162,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -178,13 +179,13 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 3 }
                 },
                 {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 4 }
                 }]);
@@ -199,13 +200,13 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 3 }
                 },
                 {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 4 }
                 }]);
@@ -220,13 +221,13 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 3 }
                 },
                     {
                         "failure": "Forbidden reference to banned term: arguments",
-                        "name": "file.ts",
+                        "name": Utils.absolutePath("file.ts"),
                         "ruleName": "no-banned-terms",
                         "startPosition": { "character": 21, "line": 4 }
                     }]);
@@ -241,13 +242,13 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 3 }
                 },
                 {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 4 }
                 }]);
@@ -262,7 +263,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -275,7 +276,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -288,7 +289,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -301,7 +302,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -316,7 +317,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 28, "line": 2 }
                 }]);
@@ -329,7 +330,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 28, "line": 2 }
                 }]);
@@ -342,7 +343,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 28, "line": 2 }
                 }]);
@@ -355,7 +356,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 28, "line": 2 }
                 }]);
@@ -370,7 +371,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 37, "line": 2 }
                 }]);
@@ -383,7 +384,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 37, "line": 2 }
                 }]);
@@ -396,7 +397,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 37, "line": 2 }
                 }]);
@@ -409,7 +410,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 37, "line": 2 }
                 }]);
@@ -424,7 +425,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 33, "line": 2 }
                 }]);
@@ -437,7 +438,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 33, "line": 2 }
                 }]);
@@ -450,7 +451,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 33, "line": 2 }
                 }]);
@@ -463,7 +464,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 33, "line": 2 }
                 }]);
@@ -476,7 +477,7 @@ describe('noBannedTermsRule', () : void => {
                 `var caller;`,
                 [ {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 5, "line": 1 }
                 }]);
@@ -487,7 +488,7 @@ describe('noBannedTermsRule', () : void => {
                 `var callee;`,
                 [{
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 5, "line": 1 }
                 }]);
@@ -498,7 +499,7 @@ describe('noBannedTermsRule', () : void => {
                 `var arguments`,
                 [ {
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 5, "line": 1 }
                 }]);
@@ -509,7 +510,7 @@ describe('noBannedTermsRule', () : void => {
                 `var eval;`,
                 [  {
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 5, "line": 1 }
                 }]);
@@ -524,7 +525,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [  {
                     "failure": "Forbidden reference to banned term: caller",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -537,7 +538,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [ {
                     "failure": "Forbidden reference to banned term: callee",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -550,7 +551,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: arguments",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);
@@ -563,7 +564,7 @@ describe('noBannedTermsRule', () : void => {
                 }`,
                 [{
                     "failure": "Forbidden reference to banned term: eval",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-banned-terms",
                     "startPosition": { "character": 21, "line": 2 }
                 }]);

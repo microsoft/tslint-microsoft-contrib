@@ -177,6 +177,24 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
                 return;
             }
         }
+        // Array.forEach calls on array literals are OK because they can be used to create parameterized tests.
+        if (initializer.kind === ts.SyntaxKind.CallExpression) {
+            const callExp = <ts.CallExpression>initializer;
+            if (callExp.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+                const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>callExp.expression;
+                if (propExp.expression.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+                    if (propExp.name.getText() === 'forEach') {
+                        // The forEach() call is OK, but check the contents of the array and the parameters
+                        // to the forEach call because they could contain code with side effects.
+                        this.validateExpression(propExp.expression, parentNode);
+                        callExp.arguments.forEach((arg: ts.Expression): void => {
+                            super.visitNode(arg);
+                        });
+                        return;
+                    }
+                }
+            }
+        }
         // ignore anything matching our ignore regex
         if (this.ignoreRegex != null && this.ignoreRegex.test(initializer.getText())) {
             return;

@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
 /**
@@ -46,13 +47,13 @@ describe('reactA11yEventHasRoleRule', () => {
             script,
             [
                 {
-                    name: 'file.tsx',
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 23, line: 4 },
                     failure: 'Elements with event handlers must have role attribute.'
                 },
                 {
-                    name: 'file.tsx',
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 23, line: 5 },
                     failure: 'Elements with event handlers must have role attribute.'

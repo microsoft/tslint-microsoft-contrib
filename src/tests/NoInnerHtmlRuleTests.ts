@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -26,13 +27,13 @@ describe('noInnerHtmlRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Writing a string to the innerHTML property is insecure: element.innerHTML = '<div></div>'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Writing a string to the innerHTML property is insecure: parent.child.innerHTML = '<div></div>'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -48,13 +49,13 @@ describe('noInnerHtmlRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Writing a string to the outerHTML property is insecure: element.outerHTML = '<div></div>'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }
             },
             {
                 "failure": "Writing a string to the outerHTML property is insecure: parent.child.outerHTML = someVariable",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 3 }
             }
@@ -69,7 +70,7 @@ describe('noInnerHtmlRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Using the html() function to write a string to innerHTML is insecure: $(element).html('whatever')",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-inner-html",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -108,7 +109,7 @@ describe('noInnerHtmlRule', () : void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
                     "failure": "Using the html() function to write a string to innerHTML is insecure: cheerio(element).html('whatever')",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-inner-html",
                     "startPosition": { "character": 17, "line": 2 }
                 }

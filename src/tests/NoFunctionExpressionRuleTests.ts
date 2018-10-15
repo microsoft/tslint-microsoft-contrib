@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -70,7 +71,7 @@ describe('noFunctionExpressionRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             "failure": "Use arrow function instead of function expression",
-            "name": "file.ts",
+            "name": Utils.absolutePath("file.ts"),
             "ruleName": "no-function-expression",
             "startPosition": {
                 "character": 21,
@@ -98,13 +99,13 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Use arrow function instead of function expression",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-function-expression",
                 "startPosition": {"character": 29, "line": 6}
             },
             {
                 "failure": "Use arrow function instead of function expression",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-function-expression",
                 "startPosition": {"character": 34, "line": 8}
             }

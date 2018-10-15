@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -271,7 +272,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = $.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": {"character": 21, "line": 3}
                 }
@@ -291,7 +292,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred = $.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": {"character": 17, "line": 4}
                 }
@@ -312,7 +313,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": {"character": 21, "line": 3}
                 }
@@ -335,7 +336,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": {"character": 21, "line": 3}
                 }
@@ -365,7 +366,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -385,7 +386,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": { "character": 21, "line": 3 }
                 }
@@ -405,7 +406,7 @@ describe('jquery-deferred-must-complete', () : void => {
                 {
                     "failure": "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
                                 "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "jquery-deferred-must-complete",
                     "startPosition": { "character": 21, "line": 3 }
                 }

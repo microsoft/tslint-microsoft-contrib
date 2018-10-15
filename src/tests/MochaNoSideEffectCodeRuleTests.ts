@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -145,7 +146,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                 "Move to before()/beforeEach(): publisher: DTO.Publisher = <...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 3 }
             }
@@ -163,7 +164,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -181,7 +182,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                 "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 17, "line": 3 }
             }
@@ -380,28 +381,28 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION1 = this.myMethod()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 3 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION2 = new MyClass()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION3 = true ? false : ...",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 27, "line": 11 }
             },
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION4 = x || 'some value'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 27, "line": 12 }
             }
@@ -423,7 +424,7 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             {
                 "failure": "Mocha test contains dangerous variable initialization. " +
                         "Move to before()/beforeEach(): VIOLATION1 = new MyClass()",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "mocha-no-side-effect-code",
                 "startPosition": { "character": 19, "line": 3 }
             }
@@ -470,12 +471,123 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 {
                     "failure": "Mocha test contains dangerous variable initialization. " +
                             "Move to before()/beforeEach(): VIOLATION = [ someCall() ]",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "mocha-no-side-effect-code",
                     "startPosition": { "character": 23, "line": 3 }
                 }
             ]);
         });
+    });
+
+    describe('Array.forEach', (): void => {
+
+        it('should pass on Array.forEach with empty arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should pass on Array.forEach with simple arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [ true, false, 1, 0, 'value', null].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should pass on Array.forEach of simple object arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [
+                        { name: 'alpha', value: 1 },
+                        { name: 'beta', value: 2 },
+                        { name: 'gamma', value: 3 }
+                    ].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [ ]);
+        });
+
+        it('should fail on Array.forEach of complex arrays', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [ someCall() ].forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): [ someCall() ].forEach((): v...",
+                    "name": Utils.absolutePath("file.ts"),
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 21, "line": 3 }
+                }
+            ]);
+        });
+
+        it('should fail on Array.forEach from function call', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    someCall().forEach((): void => {
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): someCall().forEach((): void ...",
+                    "name": Utils.absolutePath("file.ts"),
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 21, "line": 3 }
+                }
+            ]);
+        });
+
+        it('should fail on Array.forEach with side effects in function', () : void => {
+            const script : string = `
+                describe('something', (): void => {
+                    [1, 2, 3].forEach((): void => {
+                        const VIOLATION = new MyClass();
+                        it('test', (): void => {
+                        });
+                    });
+                });
+            `;
+
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    "failure": "Mocha test contains dangerous variable initialization. " +
+                            "Move to before()/beforeEach(): VIOLATION = new MyClass()",
+                    "name": Utils.absolutePath("file.ts"),
+                    "ruleName": "mocha-no-side-effect-code",
+                    "startPosition": { "character": 31, "line": 4 }
+                }
+            ]);
+        });
+
     });
 
 });

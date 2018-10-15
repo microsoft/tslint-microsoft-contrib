@@ -1,3 +1,5 @@
+import * as path from 'path';
+
 /**
  * Control flow functions.
  */
@@ -61,6 +63,11 @@ export module Utils {
             return source;
         }
         return source.substr(0, maxLength - 2) + '...';
+    }
+
+    export function absolutePath(relativePath: string): string {
+        // Replaces \ with / to match format of ts.SourceFile.fileName on Windows
+        return path.resolve(relativePath).replace(/\\/g, '/');
     }
 }
 /* tslint:enable:no-increment-decrement */

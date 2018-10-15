@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -50,13 +51,13 @@ describe('noTypeofUndefinedRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x === 'undefined'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-typeof-undefined",
                 "startPosition": { "character": 16, "line": 2 }
             },
             {
                 "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' === typeof x",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-typeof-undefined",
                 "startPosition": { "character": 16, "line": 3 }
             }
@@ -72,13 +73,13 @@ describe('noTypeofUndefinedRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x == 'undefined'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-typeof-undefined",
                 "startPosition": { "character": 16, "line": 2 }
             },
             {
                 "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' == typeof x",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-typeof-undefined",
                 "startPosition": { "character": 16, "line": 3 }
             }

@@ -186,23 +186,23 @@ const c = <img alt={''} title='Some image' role='presentation' />;
           fileName,
           [
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 3 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 4 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
-            },
+            }
           ]
         );
       });
@@ -261,23 +261,23 @@ const c = <Picture alt={''} title='Some image' role='presentation' />;
           fileName,
           [
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 7 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
-            },
+            }
           ]
         );
       });

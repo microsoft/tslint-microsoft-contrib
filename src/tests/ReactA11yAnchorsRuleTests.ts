@@ -562,7 +562,7 @@ describe('reactA11yAnchorsRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING,
-                    "name": "file.tsx",
+                    "name": Utils.absolutePath("file.tsx"),
                     "ruleName": "react-a11y-anchors",
                     "startPosition": { "character": 27, "line": 4 }
                 }

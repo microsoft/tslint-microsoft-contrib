@@ -1,11 +1,10 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
  * Unit tests.
  */
 describe('reactA11yNoOnchangeRule', () : void => {
-
-    const fileName : string = 'file.tsx';
     const ruleName : string = 'react-a11y-no-onchange';
     const errorMessage = (tagName: string): string =>
         `onChange event handler should not be used with the <${tagName}>. Please use onBlur instead.`;
@@ -27,7 +26,7 @@ describe('reactA11yNoOnchangeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             failure: errorMessage('select'),
-            name: fileName,
+            name: Utils.absolutePath('file.tsx'),
             ruleName,
             ruleSeverity: "ERROR",
             startPosition: {character: 47, line: 3}
@@ -43,13 +42,13 @@ describe('reactA11yNoOnchangeRule', () : void => {
 
         TestHelper.assertViolationsWithOptions(ruleName, ['Select'], script, [{
             failure: errorMessage('Select'),
-            name: fileName,
+            name: Utils.absolutePath('file.tsx'),
             ruleName,
             ruleSeverity: "ERROR",
             startPosition: {character: 47, line: 3}
         }, {
             failure: errorMessage('select'),
-            name: fileName,
+            name: Utils.absolutePath('file.tsx'),
             ruleName,
             ruleSeverity: 'ERROR',
             startPosition: {

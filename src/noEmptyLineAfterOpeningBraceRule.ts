@@ -5,9 +5,6 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {forEachTokenWithTrivia} from 'tsutils';
 
-/**
- * Implementation of the no-empty-line-after-opening-brace rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

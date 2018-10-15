@@ -8,9 +8,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Found chai call with indexOf that can be converted to .contain assertion: ';
 
-/**
- * Implementation of the chai-prefer-contains-to-index-of rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

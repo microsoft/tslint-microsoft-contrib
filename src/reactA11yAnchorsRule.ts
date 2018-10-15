@@ -32,9 +32,6 @@ export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string =
 export const ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING: string =
     'Link content can not be hidden for screen-readers by using aria-hidden attribute.';
 
-/**
- * Implementation of the react-a11y-anchors rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

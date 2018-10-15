@@ -26,9 +26,6 @@ class FixNoVarKeywordFormatterForTesting extends Formatter {
     }
 }
 
-/**
- * Unit tests.
- */
 describe('fixNoVarKeywordFormatter', () : void => {
 
     const ruleName : string = 'no-var-keyword';

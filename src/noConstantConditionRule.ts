@@ -5,9 +5,6 @@ import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-constant-condition rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

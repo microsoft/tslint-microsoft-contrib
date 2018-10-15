@@ -1,8 +1,5 @@
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noStringBasedSetTimeoutRule', () : void => {
     const RULE_NAME : string = 'no-string-based-set-timeout';
 

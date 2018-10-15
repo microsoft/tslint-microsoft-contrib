@@ -9,9 +9,6 @@ import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 
-/**
- * Implementation of the mocha-no-side-effect-code rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

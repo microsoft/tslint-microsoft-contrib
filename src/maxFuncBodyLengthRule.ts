@@ -5,9 +5,6 @@ import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {forEachTokenWithTrivia} from 'tsutils';
 
-/**
- * Implementation of the max-func-body-length rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

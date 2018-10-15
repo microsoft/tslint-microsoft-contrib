@@ -5,12 +5,6 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-backbone-get-set-outside-model rule.
- *
- * Currently only makes sure that get and set Backbone methods are called
- * on the this reference.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

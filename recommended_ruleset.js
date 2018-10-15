@@ -125,7 +125,6 @@ module.exports = {
         "max-line-length": [true, 140],
         "member-access": true,
         "member-ordering": [true, { "order": "fields-first" }],
-        "missing-jsdoc": true,
         "mocha-unneeded-done": true,
         "new-parens": true,
         "newline-per-chained-call": true,

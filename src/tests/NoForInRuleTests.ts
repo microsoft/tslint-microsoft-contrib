@@ -3,9 +3,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noForInRule', () : void => {
     const ruleName : string = 'no-for-in';
 

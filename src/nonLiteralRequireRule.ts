@@ -8,9 +8,6 @@ import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Non-literal (insecure) parameter passed to require(): ';
 
-/**
- * Implementation of the non-literal-require rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

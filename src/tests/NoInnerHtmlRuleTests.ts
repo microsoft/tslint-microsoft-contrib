@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noInnerHtmlRule', () : void => {
     const ruleName : string = 'no-inner-html';
 

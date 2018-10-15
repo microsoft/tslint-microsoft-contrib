@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('missingOptionalAnnotationRule', () : void => {
     const ruleName : string = 'missing-optional-annotation';
 

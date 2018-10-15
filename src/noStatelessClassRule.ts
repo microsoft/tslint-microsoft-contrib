@@ -8,9 +8,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'A stateless class was found. This indicates a failure in the object model: ';
 
-/**
- * Implementation of the no-stateless-classes rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

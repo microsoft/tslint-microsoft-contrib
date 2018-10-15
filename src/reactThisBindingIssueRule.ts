@@ -13,9 +13,7 @@ const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attr
     'reference bound: ';
 
 const optionExamples: any = [true, {'bind-decorators': ['autobind']}];
-/**
- * Implementation of the react-this-binding-issue rule.
- */
+
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

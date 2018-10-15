@@ -57,9 +57,6 @@ const PATH_PARAMETER_POSITIONS: { [key: string]: number[] } = {
     writeFileSync: [0]
 };
 
-/**
- * Implementation of the non-literal-fs-path rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

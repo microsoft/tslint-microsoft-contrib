@@ -6,9 +6,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Replace block comment with a single-line comment';
 
-/**
- * Implementation of the no-single-line-block-comment rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

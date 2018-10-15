@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('jquery-deferred-must-complete', () : void => {
     const ruleName : string = 'jquery-deferred-must-complete';
 

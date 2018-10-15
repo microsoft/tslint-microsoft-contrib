@@ -1,8 +1,5 @@
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noFunctionConstructorWithStringArgsRule', () : void => {
     const RULE_NAME : string = 'no-function-constructor-with-string-args';
 

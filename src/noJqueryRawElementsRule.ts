@@ -6,9 +6,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
 const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery API: ';
 
-/**
- * Implementation of the no-jquery-raw-elements rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

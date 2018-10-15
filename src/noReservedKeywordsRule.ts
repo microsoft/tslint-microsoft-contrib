@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {BannedTermWalker} from './utils/BannedTermWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-reserved-keywords rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

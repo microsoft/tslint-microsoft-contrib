@@ -1,9 +1,6 @@
 /* tslint:disable:max-func-body-length */
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 /* tslint:disable:no-consecutive-blank-lines */
 describe('noStringBasedSetImmediateRule', () : void => {
     const RULE_NAME : string = 'no-string-based-set-immediate';

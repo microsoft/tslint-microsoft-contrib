@@ -21,9 +21,6 @@ const LANGUAGE_CODES: string[] = [
     'ur', 'uz', 'vi', 'vo', 'wa', 'cy', 'wo', 'xh', 'yi', 'ji', 'yo', 'zu'
 ];
 
-/**
- * Implementation of the react-a11y-lang rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

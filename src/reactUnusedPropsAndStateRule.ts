@@ -11,9 +11,6 @@ const STATE_REGEX = 'state-interface-regex';
 const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
 const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
 
-/**
- * Implementation of the react-unused-props-and-state rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

@@ -1,8 +1,5 @@
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactThisBindingIssueRule', () : void => {
 
     const ruleName : string = 'react-this-binding-issue';

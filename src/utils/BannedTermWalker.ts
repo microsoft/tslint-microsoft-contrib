@@ -2,9 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 
-/**
- * Implementation of the banned-term rulesets.
- */
 export class BannedTermWalker extends ErrorTolerantWalker {
     private failureString : string;
     private bannedTerms: string[];

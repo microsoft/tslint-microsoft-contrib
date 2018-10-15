@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-cookies-rule rule.
- */
 export class Rule extends Lint.Rules.TypedRule {
 
     public static metadata: ExtendedMetadata = {

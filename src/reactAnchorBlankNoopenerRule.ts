@@ -11,9 +11,6 @@ import { getJsxAttributesFromJsxElement,
 
 const FAILURE_STRING: string = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
 
-/**
- * Implementation of the react-anchor-blank-noopener rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

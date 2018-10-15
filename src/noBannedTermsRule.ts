@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {BannedTermWalker} from './utils/BannedTermWalker';
 
-/**
- * Implementation of the no-banned-terms rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

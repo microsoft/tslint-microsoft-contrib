@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactUnusedPropsAndStateRule', () : void => {
 
     const ruleName : string = 'react-unused-props-and-state';

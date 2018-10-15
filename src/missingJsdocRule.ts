@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the missing-jsdoc rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
@@ -16,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
+        issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',

@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noBackboneGetSetOutsideModelRule', () : void => {
     const ruleName : string = 'no-backbone-get-set-outside-model';
 

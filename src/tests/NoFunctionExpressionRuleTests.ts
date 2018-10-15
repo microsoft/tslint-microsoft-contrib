@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noFunctionExpressionRule', (): void => {
     const ruleName: string = 'no-function-expression';
 

@@ -50,7 +50,7 @@ describe('reactNoDangerousHtmlRule', () : void => {
     });
 
     it('should not produce violation when call exists in exception list', () : void => {
-        exceptions.push({ file: 'file.ts', method: 'render', comment: 'this usage is OK' });
+        exceptions.push({ file: Utils.absolutePath('file.tsx'), method: 'render', comment: 'this usage is OK' });
 
         TestHelper.assertViolations(
             ruleName,

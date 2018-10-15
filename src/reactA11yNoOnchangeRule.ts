@@ -13,9 +13,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-no-onchange',
         type: 'functionality',
-        description: 'For accessibility of select menus, onChange event handler should not be used with the select element.',
+        description: 'For accessibility of your website, enforce usage of onBlur over onChange on select menus for accessibility.',
         options: 'string[]',
-        optionsDescription: 'Additional tag name to validate.',
+        optionsDescription: 'Additional tag names to validate.',
         optionExamples: ['true', '[true, ["Select"]]'],
         typescriptOnly: false,
         issueClass: 'Non-SDL',

@@ -7,10 +7,10 @@ import {AstUtils} from './AstUtils';
  * Tracks nested scope of variables.
  */
 export class Scope {
-    public parent: Scope | null;
+    public parent: Scope | undefined;
     private symbols: { [index: string]: number } = {};
 
-    constructor(parent: Scope | null) {
+    constructor(parent: Scope | undefined) {
         this.parent = parent;
     }
 
@@ -29,7 +29,7 @@ export class Scope {
         if (this.symbols[symbolString] === ts.SyntaxKind.Unknown) {
             return false;
         }
-        if (this.parent != null) {
+        if (this.parent !== undefined) {
             return this.parent.isFunctionSymbol(symbolString);
         }
         return false;

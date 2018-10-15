@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-control-regex',
         type: 'maintainability',
         description: 'Do not use control characters in regular expressions',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

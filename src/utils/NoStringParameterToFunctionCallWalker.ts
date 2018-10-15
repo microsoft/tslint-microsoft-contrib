@@ -30,7 +30,7 @@ export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingW
         const functionTarget = AstUtils.getFunctionTarget(node);
         const functionTargetType = this.getFunctionTargetType(node);
         const firstArg : ts.Expression = node.arguments[0];
-        if (functionName === this.targetFunctionName && firstArg != null) {
+        if (functionName === this.targetFunctionName && firstArg !== undefined) {
             if (functionTarget) {
                 if (functionTargetType) {
                     if (!functionTargetType.match(/^(any|Window|Worker)$/)) {

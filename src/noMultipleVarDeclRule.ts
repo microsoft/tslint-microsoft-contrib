@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-multiple-var-decl',
         type: 'maintainability',
         description: 'Deprecated - This rule is now part of the base TSLint product as the rule named \'one-variable-per-declaration\'',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unsupported-browser-code',
         type: 'maintainability',
         description: 'Avoid writing browser-specific code for unsupported browser versions',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

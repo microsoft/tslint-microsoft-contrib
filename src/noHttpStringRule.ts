@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         /* tslint:disable:no-http-string */
         description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
         /* tslint:enable:no-http-string */
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -69,13 +69,13 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
         });
     }
 
-    private static getExceptions(options: Lint.IOptions): string[] | null {
+    private static getExceptions(options: Lint.IOptions): string[] | undefined {
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
             return <string[]><any>options; // MSE version of tslint somehow requires this
         }
-        return null;
+        return undefined;
     }
 }

@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'prefer-array-literal',
         type: 'maintainability',
         description: 'Use array literal syntax when declaring or instantiating array types.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

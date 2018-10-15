@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-aria-unsupported-elements',
         type: 'maintainability',
         description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -59,7 +59,7 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
             return;
         }
 
-        const supportAria: boolean = (<any>DOM_SCHEMA)[tagName].supportAria != null
+        const supportAria: boolean = (<any>DOM_SCHEMA)[tagName].supportAria !== undefined
             ? (<any>DOM_SCHEMA)[tagName].supportAria
             : false;
 

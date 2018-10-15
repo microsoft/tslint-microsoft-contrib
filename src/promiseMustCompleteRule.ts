@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
                     'called on it within all code branches in the scope.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -37,7 +37,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
         if (node.expression.kind === ts.SyntaxKind.Identifier
             && node.expression.getText() === 'Promise'
-            && node.arguments != null && node.arguments.length > 0) {
+            && node.arguments !== undefined && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
             if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
                 return true;
@@ -48,16 +48,16 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 
     private getCompletionIdentifiers(declaration: ts.SignatureDeclaration): ts.Identifier[] {
         const result: ts.Identifier[] = [];
-        if (declaration.parameters == null || declaration.parameters.length === 0) {
+        if (declaration.parameters === undefined || declaration.parameters.length === 0) {
             return result;
         }
 
         const arg1: ts.ParameterDeclaration = declaration.parameters[0];
         const arg2: ts.ParameterDeclaration = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg1 !== undefined && arg1.name.kind === ts.SyntaxKind.Identifier) {
             result.push(<ts.Identifier>declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg2 !== undefined && arg2.name.kind === ts.SyntaxKind.Identifier) {
             result.push(<ts.Identifier>declaration.parameters[1].name);
         }
         return result;
@@ -126,7 +126,7 @@ class PromiseCompletionWalker extends ErrorTolerantWalker {
 
         if (!ifAnalyzer.isAlwaysCompleted()) {
             this.allBranchesCompleted = false;
-        } else if (node.elseStatement != null) {
+        } else if (node.elseStatement !== undefined) {
             elseAnalyzer.visitNode(node.elseStatement);
             if (!elseAnalyzer.isAlwaysCompleted()) {
                 this.allBranchesCompleted = false;

@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'max-func-body-length',
         type: 'maintainability',
         description: 'Avoid long functions.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -115,7 +115,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private calcBodyLength(node: ts.FunctionLikeDeclaration) {
-        if (node.body == null) {
+        if (node.body === undefined) {
             return 0;
         }
         const sourceFile: ts.SourceFile = this.getSourceFile();

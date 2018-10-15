@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-duplicate-case',
         type: 'maintainability',
         description: 'Do not use duplicate case labels in switch statements.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -46,7 +46,7 @@ class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
         node.caseBlock.clauses.forEach((clauseOrDefault: ts.CaseOrDefaultClause): void => {
             if (clauseOrDefault.kind === ts.SyntaxKind.CaseClause) {
                 const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;
-                if (clause.expression != null) {
+                if (clause.expression !== undefined) {
                     const caseText = clause.expression.getText();
                     if (seenLabels.indexOf(caseText) > -1) {
                         this.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);

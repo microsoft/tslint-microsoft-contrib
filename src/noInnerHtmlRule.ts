@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-inner-html',
         type: 'maintainability',
         description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -68,7 +68,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
-                if (functionTarget !== null && this.htmlLibExpressionRegex.test(functionTarget)) {
+                if (functionTarget !== undefined && this.htmlLibExpressionRegex.test(functionTarget)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
                 }
             }

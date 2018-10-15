@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'The name of the imported module must match the name of the thing being imported',
         hasFix: true,
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -73,7 +73,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (node.importClause!.name != null) {
+        if (node.importClause!.name !== undefined) {
             const name: string = node.importClause!.name!.text;
             if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;

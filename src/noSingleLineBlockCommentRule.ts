@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-single-line-block-comment',
         type: 'maintainability',
         description: 'Avoid single line block comments; use single line comments instead',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

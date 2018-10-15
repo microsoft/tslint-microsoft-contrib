@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'use-named-parameter',
         type: 'maintainability',
         description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -33,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class UseNamedParameterWalker extends ErrorTolerantWalker {
     protected visitElementAccessExpression(node: ts.ElementAccessExpression): void {
-        if (node.argumentExpression != null) {
+        if (node.argumentExpression !== undefined) {
             if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
                     const failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';

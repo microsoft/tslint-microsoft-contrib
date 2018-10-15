@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-titles',
         type: 'functionality',
         description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

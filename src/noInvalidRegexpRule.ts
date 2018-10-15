@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-invalid-regexp',
         type: 'maintainability',
         description: 'Do not use invalid regular expression strings in the RegExp constructor.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

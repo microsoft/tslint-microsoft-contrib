@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-exec-script',
         type: 'maintainability',
         description: 'Do not use the execScript functions',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

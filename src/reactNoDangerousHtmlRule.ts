@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-no-dangerous-html',
         type: 'maintainability',
         description: 'Do not use React\'s dangerouslySetInnerHTML API.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -39,7 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
      * Exposed for testing.
      */
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions): Exception[] | null {
+    public static getExceptions(options : Lint.IOptions): Exception[] | undefined {
     /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         if (options instanceof Array) {
             return <Exception[]><any>options; // MSE version of tslint somehow requires this
         }
-        return null;
+        return undefined;
     }
 }
 
@@ -113,14 +113,14 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
 
     private isSuppressed(methodName : string): boolean {
         const exceptions = Rule.getExceptions(this.getOptions());
-        if (exceptions == null || exceptions.length === 0) {
+        if (exceptions === undefined || exceptions.length === 0) {
             return false; // no file specified means the usage is not suppressed
         }
         let found = false;
         exceptions.forEach((exception : Exception) : void => {
             if (Utils.absolutePath(exception.file) === this.getSourceFile().fileName) {
                 if (exception.method === methodName) {
-                    if (exception.comment != null) {
+                    if (exception.comment !== undefined) {
                         found = true;
                     }
                 }

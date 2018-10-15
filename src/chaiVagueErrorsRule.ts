@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'chai-vague-errors',
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -63,9 +63,9 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
             }
 
             const actualValue = ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue !== null && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
+            if (actualValue !== undefined && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
                 const expectedValue = ChaiUtils.getFirstExpectationParameter(node);
-                if (expectedValue !== null) {
+                if (expectedValue !== undefined) {
                     const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
                     const operator: string = binaryExpression.operatorToken.getText();
                     const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword

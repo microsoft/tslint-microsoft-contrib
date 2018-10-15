@@ -23,12 +23,12 @@ export module AstUtils {
         return functionName;
     }
 
-    export function getFunctionTarget(expression: ts.CallExpression): string | null {
+    export function getFunctionTarget(expression: ts.CallExpression): string | undefined {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
-        return null;
+        return undefined;
     }
 
     export function isJQuery(functionTarget: string): boolean {
@@ -36,7 +36,7 @@ export module AstUtils {
     }
 
     export function hasModifier(modifiers: ts.ModifiersArray, modifierKind: number): boolean {
-        if (modifiers == null) {
+        if (modifiers === undefined) {
             return false;
         }
         let result: boolean = false;
@@ -91,7 +91,7 @@ export module AstUtils {
             console.log('\ttype.symbol: ' + expressionType.symbol);
 
             const expressionSymbol = typeChecker.getSymbolAtLocation(expression);
-            if (expressionSymbol == null) {
+            if (expressionSymbol === undefined) {
                 console.log('\tsymbol: ' + expressionSymbol);
             } else {
                 console.log('\tsymbol.flags: ' + expressionSymbol.flags);
@@ -100,7 +100,7 @@ export module AstUtils {
             }
 
             const contextualType = typeChecker.getContextualType(expression);
-            if (contextualType == null) {
+            if (contextualType === undefined) {
                 console.log('\tcontextualType: ' + contextualType);
             } else {
                 console.log('\tcontextualType.flags: ' + contextualType.flags);
@@ -112,7 +112,7 @@ export module AstUtils {
 
     export function isPrivate(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Private != null) {
+        if ((<any>ts).NodeFlags.Private !== undefined) {
             return !!(node.flags & (<any>ts).NodeFlags.Private);
         } else {
             return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Private);
@@ -122,7 +122,7 @@ export module AstUtils {
 
     export function isProtected(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Protected != null) {
+        if ((<any>ts).NodeFlags.Protected !== undefined) {
             return !!(node.flags & (<any>ts).NodeFlags.Protected);
         } else {
             return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Protected);
@@ -132,7 +132,7 @@ export module AstUtils {
 
     export function isPublic(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Public != null) {
+        if ((<any>ts).NodeFlags.Public !== undefined) {
             return !!(node.flags & (<any>ts).NodeFlags.Public);
         } else {
             return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Public);
@@ -142,7 +142,7 @@ export module AstUtils {
 
     export function isStatic(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Static != null) {
+        if ((<any>ts).NodeFlags.Static !== undefined) {
             return !!(node.flags & (<any>ts).NodeFlags.Static);
         } else {
             return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Static);
@@ -159,7 +159,7 @@ export module AstUtils {
     }
 
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
-        return node != null && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
+        return node !== undefined && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
             node.kind === ts.SyntaxKind.ObjectBindingPattern);
     }
 
@@ -203,7 +203,7 @@ export module AstUtils {
 
     export function isExported(node: ts.Node): boolean {
         /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Export != null) {
+        if ((<any>ts).NodeFlags.Export !== undefined) {
             return !!(getCombinedNodeFlags(node) & (<any>ts).NodeFlags.Export);
         } else {
             // typescript 2.1.4 introduces a new edge case for when
@@ -232,7 +232,7 @@ export module AstUtils {
 
     export function findParentBlock(child: ts.Node): ts.Node {
         let parent: ts.Node = child.parent;
-        while (parent != null) {
+        while (parent !== undefined) {
             if (parent.kind === ts.SyntaxKind.Block) {
                 return parent;
             }
@@ -242,7 +242,7 @@ export module AstUtils {
     }
 
     export function isSameIdentifer(source: ts.Node, target: ts.Node): boolean {
-        if (source == null || target == null) {
+        if (source === undefined || target === undefined) {
             return false;
         }
         if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
@@ -265,20 +265,20 @@ export module AstUtils {
     }
 
     export function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
-        if (node.type != null) {
+        if (node.type !== undefined) {
             if (node.type.getText() === 'Function') {
                 return true;
             }
             return node.type.kind === ts.SyntaxKind.FunctionType;
-        } else if (node.initializer != null) {
+        } else if (node.initializer !== undefined) {
             return (node.initializer.kind === ts.SyntaxKind.ArrowFunction
             || node.initializer.kind === ts.SyntaxKind.FunctionExpression);
         }
         return false;
     }
 
-    export function isUndefined(node: ts.Expression | null | undefined): boolean {
-        if (node != null) {
+    export function isUndefined(node: ts.Expression | undefined): boolean {
+        if (node !== undefined) {
             if (node.kind === ts.SyntaxKind.Identifier) {
                 return node.getText() === 'undefined';
             }
@@ -286,8 +286,8 @@ export module AstUtils {
         return false;
     }
 
-    export function isConstant(node: ts.Expression | null | undefined): boolean {
-        if (node == null) {
+    export function isConstant(node: ts.Expression | undefined): boolean {
+        if (node === undefined) {
             return false;
         }
         return node.kind === ts.SyntaxKind.NullKeyword

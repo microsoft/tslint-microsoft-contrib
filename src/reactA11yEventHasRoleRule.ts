@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-event-has-role',
         type: 'maintainability',
         description: 'Elements with event handlers must have role attribute.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

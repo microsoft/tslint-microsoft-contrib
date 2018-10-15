@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-var-self',
         type: 'maintainability',
         description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -43,13 +43,13 @@ class NoVarSelfRuleWalker extends Lint.RuleWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        if (options.ruleArguments != null && options.ruleArguments.length > 0) {
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
             this.bannedVariableNames = new RegExp(options.ruleArguments[0]);
         }
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (node.initializer != null && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
+        if (node.initializer !== undefined && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const identifier: ts.Identifier = <ts.Identifier>node.name;
                 if (this.bannedVariableNames.test(identifier.text)) {

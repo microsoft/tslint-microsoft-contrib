@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'underscore-consistent-invocation',
         type: 'maintainability',
         description: 'Enforce a consistent usage of the _ functions',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -85,7 +85,7 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 const target = AstUtils.getFunctionTarget(call);
                 const functionName = AstUtils.getFunctionName(call);
-                if (target == null && functionName === '_' && call.arguments.length === 1) {
+                if (target === undefined && functionName === '_' && call.arguments.length === 1) {
                     const underscoreFunctionName = AstUtils.getFunctionName(node);
                     return FUNCTION_NAMES.indexOf(underscoreFunctionName) > -1;
                 }

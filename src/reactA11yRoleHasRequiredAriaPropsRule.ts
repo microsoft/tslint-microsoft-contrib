@@ -45,7 +45,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

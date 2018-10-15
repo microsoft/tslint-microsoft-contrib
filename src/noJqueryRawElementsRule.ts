@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-jquery-raw-elements',
         type: 'maintainability',
         description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -70,7 +70,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         }
 
         const match = text.match(/^<[A-Za-z]+\s*>(.*)<\/[A-Za-z]+\s*>$/m);
-        if (match != null && match[1] != null) {
+        if (match !== null && match[1] !== undefined) {
             const enclosedContent: string = match[1]; // get the stuff inside the tag
             if (enclosedContent.indexOf('<') === -1 && enclosedContent.indexOf('>') === -1) {
                 return false; // enclosed content looks like it contains no html elements

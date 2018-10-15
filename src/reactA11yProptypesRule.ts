@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-proptypes',
         type: 'maintainability',
         description: 'Enforce ARIA state and property values are valid.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -78,7 +78,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             return;
         }
 
-        const allowUndefined: boolean = aria[propName].allowUndefined != null
+        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined
             ? aria[propName].allowUndefined
             : false;
         const expectedType: string = aria[propName].type;
@@ -106,12 +106,12 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
     }
 
     private validityCheck(
-        propValueExpression: ts.Expression | null | undefined,
+        propValueExpression: ts.Expression | undefined,
         propValue: string,
         expectedType: string,
         permittedValues: string[]
     ): boolean {
-        if (propValueExpression == null) {
+        if (propValueExpression === undefined) {
             return true;
         }
 
@@ -132,7 +132,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
     }
 
-    private isUndefined(node: ts.Expression | null | undefined): boolean {
+    private isUndefined(node: ts.Expression | undefined): boolean {
         if (!node) {
             return true;
         } else if (isJsxExpression(node)) {
@@ -153,8 +153,8 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
      * For this case <div prop={ x + 1 } />
      * we can't check the type of atrribute's expression until running time.
      */
-    private isComplexType(node: ts.Expression | null | undefined): boolean {
-        return node != null && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
+    private isComplexType(node: ts.Expression | undefined): boolean {
+        return node !== undefined && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
     }
 
     private isBoolean(node: ts.Expression): boolean {

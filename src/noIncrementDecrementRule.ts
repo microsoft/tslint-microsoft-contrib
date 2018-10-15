@@ -51,8 +51,15 @@ class NoIncrementDecrementWalker extends ErrorTolerantWalker {
 
     protected visitForStatement(node: ts.ForStatement): void {
         if (this.allowForLoops) {
-            // If for loops are allowed to contain increment and decrement, only check the body
+            // If for loops are allowed to contain increment and decrement,
+            // check everything except the incrementor
             super.visitNode(node.statement);
+            if (node.initializer) {
+                super.visitNode(node.initializer);
+            }
+            if (node.condition) {
+                super.visitNode(node.condition);
+            }
         } else {
             // Otherwise check the node
             super.visitForStatement(node);

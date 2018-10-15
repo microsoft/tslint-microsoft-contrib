@@ -58,7 +58,7 @@ x--;
             }
         ]);
     });
-    it('allows increments and decrements in loop headers, if allow-for-loops option is specified', (): void => {
+    it('allows increments and decrements in loop incrementor clause, if allow-for-loops option is specified', (): void => {
         const inputFile: string = `
 for(let x=0; x<10; x++) {}
 for(let y=10; y>=0; y--) {}
@@ -109,6 +109,32 @@ for(let x=0; x<10; x+=1) {
                 "startPosition": {
                     "line": 4,
                     "character": 5
+                }
+            }
+        ];
+        TestHelper.assertViolationsWithOptions(RULE_NAME, [true, OPTION_ALLOW_FOR_LOOPS], inputFile, expectedViolations);
+        TestHelper.assertViolations(RULE_NAME, inputFile, expectedViolations);
+    });
+
+    it('forbids increments and decrements in loop initializer and condition, even with allow-for-loops', (): void => {
+        const inputFile: string = `for(let x=++y; x<--y; x+=1) {}`;
+        const expectedViolations: TestHelper.ExpectedFailure[] = [
+            {
+                "failure": "Forbidden ++ operator",
+                "name": Utils.absolutePath("file.ts"),
+                "ruleName": "no-increment-decrement",
+                "startPosition": {
+                    "line": 1,
+                    "character": 11
+                }
+            },
+            {
+                "failure": "Forbidden -- operator",
+                "name": Utils.absolutePath("file.ts"),
+                "ruleName": "no-increment-decrement",
+                "startPosition": {
+                    "line": 1,
+                    "character": 18
                 }
             }
         ];

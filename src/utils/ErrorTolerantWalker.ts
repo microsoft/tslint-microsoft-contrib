@@ -2,8 +2,10 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 /**
- * A base walker class that gracefully handles unexpected errors.
- * Errors are often thrown when the TypeChecker is invoked.
+ * @deprecated
+ * The type checker is stable enough now that we don't need to wrap around it.
+ * You should directly extend Lint.AbstractRule yourself.
+ * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/556
  */
 export class ErrorTolerantWalker extends Lint.RuleWalker {
 

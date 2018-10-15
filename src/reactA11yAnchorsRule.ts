@@ -29,6 +29,8 @@ export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string =
     'Links with the same HREF should have the same link text.';
 export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string =
     'Links that point to different HREFs should have different link text.';
+export const ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING: string =
+    'Link content can not be hidden for screen-readers by using aria-hidden attribute.';
 
 /**
  * Implementation of the react-a11y-anchors rule.
@@ -188,6 +190,7 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
                 href: hrefAttribute ? getStringLiteral(hrefAttribute) || '' : '',
                 text: this.anchorText(parent),
                 altText: this.imageAlt(parent),
+                hasAriaHiddenCount: this.jsxElementAriaHidden(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
@@ -198,6 +201,10 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
             if (anchorInfo.href === '#') {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
+            }
+
+            if (anchorInfo.hasAriaHiddenCount > 0) {
+                this.addFailureAt(anchorInfo.start, anchorInfo.width, ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING);
             }
 
             if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
@@ -227,14 +234,14 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     /**
      * Return a string which contains literal text and text in 'alt' attribute.
      */
-    private anchorText(root: ts.Node | undefined): string {
+    private anchorText(root: ts.Node | undefined, isChild: boolean = false): string {
         let title: string = '';
         if (root === undefined) {
             return title;
         } else if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             jsxElement.children.forEach((child: ts.JsxChild): void => {
-                title += this.anchorText(child);
+                title += this.anchorText(child, true);
             });
         } else if (root.kind === ts.SyntaxKind.JsxText) {
             const jsxText: ts.JsxText = <ts.JsxText>root;
@@ -245,6 +252,11 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
         } else if (root.kind === ts.SyntaxKind.JsxExpression) {
             const expression: ts.JsxExpression = <ts.JsxExpression>root;
             title += this.anchorText(expression.expression);
+        } else if (isChild && root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
+            const jsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
+            if (jsxSelfClosingElement.tagName.getText() !== 'img') {
+                title += '<component>';
+            }
         } else if (root.kind !== ts.SyntaxKind.JsxSelfClosingElement) {
             title += '<unknown>';
         }
@@ -287,12 +299,37 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
 
         return altText;
     }
+
+    private ariaHiddenAttribute(openingElement: ts.JsxOpeningLikeElement): boolean {
+        return this.getAttribute(openingElement, 'aria-hidden') === undefined;
+    }
+
+    private jsxElementAriaHidden(root: ts.Node): number {
+        let hasAriaHiddenCount: number = 0;
+
+        if (root.kind === ts.SyntaxKind.JsxElement) {
+            const jsxElement: ts.JsxElement = <ts.JsxElement>root;
+            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
+
+            jsxElement.children.forEach((child: ts.JsxChild): void => {
+                hasAriaHiddenCount += this.jsxElementAriaHidden(child);
+            });
+        }
+
+        if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
+            const jsxSelfClosingElement: ts.JsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
+            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxSelfClosingElement) ? 0 : 1;
+        }
+
+        return hasAriaHiddenCount;
+    }
 }
 
 interface IAnchorInfo {
     href: string;
     text: string;
     altText: string;
+    hasAriaHiddenCount: number;
     start: number;
     width: number;
 }

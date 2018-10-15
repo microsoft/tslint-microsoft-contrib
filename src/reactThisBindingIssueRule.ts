@@ -61,9 +61,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private allowAnonymousListeners: boolean = false;
-    private allowedDecorators: string[] = [];
-    private boundListeners: string[] = [];
-    private declaredMethods: string[] = [];
+    private allowedDecorators: Set<string> = new Set<string>();
+    private boundListeners: Set<string> = new Set<string>();
+    private declaredMethods: Set<string> = new Set<string>();
     private scope: Scope | null = null;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -80,7 +80,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                         throw new Error('one or more members of bind-decorators is invalid, string required.');
                     }
                     // tslint:disable-next-line:prefer-type-cast
-                    this.allowedDecorators = allowedDecorators;
+                    this.allowedDecorators = new Set<string>(allowedDecorators);
                 }
             }
         });
@@ -88,11 +88,11 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         // reset all state when a class declaration is found because a SourceFile can contain multiple classes
-        this.boundListeners = [];
+        this.boundListeners = new Set<string>();
         // find all method names and prepend 'this.' to it so we can compare array elements to method names easily
-        this.declaredMethods = [];
+        this.declaredMethods = new Set<string>();
         AstUtils.getDeclaredMethodNames(node).forEach((methodName: string): void => {
-            this.declaredMethods.push('this.' + methodName);
+            this.declaredMethods.add('this.' + methodName);
         });
         super.visitClassDeclaration(node);
     }
@@ -116,15 +116,15 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         // reset variable scope when we encounter a method. Start tracking variables that are instantiated
         // in scope so we can make sure new function instances are not passed as JSX attributes
         if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
-            this.boundListeners = this.boundListeners.concat('this.' + node.name.getText());
+            this.boundListeners = this.boundListeners.add('this.' + node.name.getText());
         }
         this.scope = new Scope(null);
         super.visitMethodDeclaration(node);
         this.scope = null;
     }
 
-    private isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: string[]): boolean {
-        if (!(allowedDecorators.length > 0 && node.decorators && node.decorators.length > 0)) {
+    private isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: Set<string>): boolean {
+        if (!(allowedDecorators.size > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
         return node.decorators.some((decorator) => {
@@ -133,7 +133,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
             }
             const source = node.getSourceFile();
             const text = decorator.expression.getText(source);
-            return this.allowedDecorators.indexOf(text) !== -1;
+            return this.allowedDecorators.has(text);
         });
     }
 
@@ -180,7 +180,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 }
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                 const listenerText: string = propAccess.getText();
-                if (this.declaredMethods.indexOf(listenerText) > -1 && this.boundListeners.indexOf(listenerText) === -1) {
+                if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
                     const start: number = propAccess.getStart();
                     const widget: number = propAccess.getWidth();
                     const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
@@ -255,7 +255,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                         const listenerText: string = propAccess.getText();
 
                         // an unbound listener is a class method reference that was not bound to 'this' in the constructor
-                        if (this.declaredMethods.indexOf(listenerText) > -1 && this.boundListeners.indexOf(listenerText) === -1) {
+                        if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
                             return true;
                         }
                     }
@@ -265,8 +265,8 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         return false;
     }
 
-    private getSelfBoundListeners(node: ts.ConstructorDeclaration): string[] {
-        const result: string[] = [];
+    private getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
+        const result: Set<string> = new Set<string>();
         if (node.body != null && node.body.statements != null) {
             node.body.statements.forEach((statement: ts.Statement): void => {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
@@ -289,14 +289,13 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
                                         const rightPropText = AstUtils.getFunctionTarget(callExpression);
                                         if (leftPropText === rightPropText) {
-                                            if (result.indexOf(rightPropText) === -1) {
-                                                result.push(rightPropText);
-                                            } else {
+                                            if (result.has(rightPropText)) {
                                                 const start = binaryExpression.getStart();
                                                 const width = binaryExpression.getWidth();
                                                 const msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
                                                 this.addFailureAt(start, width, msg);
                                             }
+                                            result.add(rightPropText);
                                         }
                                     }
                                 }

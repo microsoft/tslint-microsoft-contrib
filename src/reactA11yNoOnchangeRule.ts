@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-no-onchange',
         type: 'functionality',
-        description: 'For accessibility of your website, enforce usage of onBlur over onChange on select menus for accessibility.',
+        description: 'For accessibility of your website, enforce usage of onBlur over onChange on select menus.',
         options: 'string[]',
         optionsDescription: 'Additional tag names to validate.',
         optionExamples: ['true', '[true, ["Select"]]'],

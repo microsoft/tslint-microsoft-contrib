@@ -253,6 +253,7 @@ module.exports = {
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
          */
+        "missing-jsdoc": false,
         "missing-optional-annotation": false,  // now supported by TypeScript compiler
         "no-duplicate-case": false,
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler

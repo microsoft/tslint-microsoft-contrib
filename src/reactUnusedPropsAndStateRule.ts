@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-unused-props-and-state',
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -64,7 +64,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] != null) {
+            if (option[key] !== undefined) {
                 return new RegExp(option[key]);
             }
         } catch (e) {
@@ -120,12 +120,12 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         } else if (/this\.state\..*/.test(referencedPropertyName)) {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
                 this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
@@ -143,7 +143,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitIdentifier(node: ts.Identifier): void {
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (node.text === this.propsAlias
                 && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
                 && node.parent.kind !== ts.SyntaxKind.Parameter
@@ -153,7 +153,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
             }
 
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (node.text === this.stateAlias
                 && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
                 && node.parent.kind !== ts.SyntaxKind.Parameter) {
@@ -194,7 +194,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
         node.members.forEach((typeElement: ts.TypeElement): void => {
-            if (typeElement.name != null && (<any>typeElement.name).text != null) {
+            if (typeElement.name !== undefined && (<any>typeElement.name).text !== undefined) {
                 result[(<any>typeElement.name).text] = typeElement;
             }
         });
@@ -202,7 +202,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     private isParentNodeSuperCall(node: ts.Node): boolean {
-        if (node.parent != null && node.parent.kind === ts.SyntaxKind.CallExpression) {
+        if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }

@@ -64,7 +64,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     private allowedDecorators: Set<string> = new Set<string>();
     private boundListeners: Set<string> = new Set<string>();
     private declaredMethods: Set<string> = new Set<string>();
-    private scope: Scope | null = null;
+    private scope: Scope | undefined;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -118,9 +118,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
             this.boundListeners = this.boundListeners.add('this.' + node.name.getText());
         }
-        this.scope = new Scope(null);
+        this.scope = new Scope(undefined);
         super.visitMethodDeclaration(node);
-        this.scope = null;
+        this.scope = undefined;
     }
 
     private isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: Set<string>): boolean {
@@ -138,27 +138,27 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitArrowFunction(node: ts.ArrowFunction): void {
-        if (this.scope != null) {
+        if (this.scope !== undefined) {
             this.scope = new Scope(this.scope);
         }
         super.visitArrowFunction(node);
-        if (this.scope != null) {
+        if (this.scope !== undefined) {
             this.scope = this.scope.parent;
         }
     }
 
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        if (this.scope != null) {
+        if (this.scope !== undefined) {
             this.scope = new Scope(this.scope);
         }
         super.visitFunctionExpression(node);
-        if (this.scope != null) {
+        if (this.scope !== undefined) {
             this.scope = this.scope.parent;
         }
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (this.scope != null) {
+        if (this.scope !== undefined) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const variableName = (<ts.Identifier>node.name).text;
                 if (this.isExpressionAnonymousFunction(node.initializer)) {
@@ -212,15 +212,15 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
         }
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
+            if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 return this.isExpressionAnonymousFunction(attribute.initializer.expression);
             }
         }
         return false;
     }
 
-    private isExpressionAnonymousFunction(expression: ts.Expression | null | undefined): boolean {
-        if (expression == null) {
+    private isExpressionAnonymousFunction(expression: ts.Expression | undefined): boolean {
+        if (expression === undefined) {
             return false;
         }
 
@@ -237,7 +237,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                 return true; // bind functions on Function or _ create a new anonymous instance of a function
             }
         }
-        if (expression.kind === ts.SyntaxKind.Identifier && this.scope != null) {
+        if (expression.kind === ts.SyntaxKind.Identifier && this.scope !== undefined) {
             const symbolText: string = expression.getText();
             return this.scope.isFunctionSymbol(symbolText);
         }
@@ -247,9 +247,9 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
     private isUnboundListener(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-            if (attribute.initializer != null && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
+            if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
                 const jsxExpression = attribute.initializer;
-                if (jsxExpression.expression != null && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+                if (jsxExpression.expression !== undefined && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
                     if (propAccess.expression.getText() === 'this') {
                         const listenerText: string = propAccess.getText();
@@ -267,7 +267,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     private getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
         const result: Set<string> = new Set<string>();
-        if (node.body != null && node.body.statements != null) {
+        if (node.body !== undefined && node.body.statements !== undefined) {
             node.body.statements.forEach((statement: ts.Statement): void => {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     const expressionStatement = <ts.ExpressionStatement>statement;
@@ -283,7 +283,7 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
                                     const callExpression = <ts.CallExpression>binaryExpression.right;
 
                                     if (AstUtils.getFunctionName(callExpression) === 'bind'
-                                        && callExpression.arguments != null
+                                        && callExpression.arguments !== undefined
                                         && callExpression.arguments.length === 1
                                         && callExpression.arguments[0].getText() === 'this') {
 

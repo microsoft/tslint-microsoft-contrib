@@ -32,7 +32,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role',
         type: 'maintainability',
         description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

@@ -7,9 +7,9 @@ import * as chai from 'chai';
 describe('Utils', () : void => {
     describe('contains', (): void => {
         it('should handle empty states', (): void => {
+            // tslint:disable-next-line:no-null-keyword
             chai.expect(Utils.contains([], null)).to.equal(false, 'empty array should not contain false');
             chai.expect(Utils.contains([], undefined)).to.equal(false, 'empty array should not contain undefined');
-            chai.expect(Utils.contains(null, null)).to.equal(false, 'null should not contain false');
             chai.expect(Utils.contains(undefined, undefined)).to.equal(false, 'undefined should not contain undefined');
         });
 
@@ -37,9 +37,7 @@ describe('Utils', () : void => {
 
     describe('removeAll', (): void => {
         it('should handle empty states', (): void => {
-            chai.expect(Utils.removeAll([], null)).to.deep.equal([], 'remove null from empty array');
             chai.expect(Utils.removeAll([], undefined)).to.deep.equal([], 'remove undefined from empty array');
-            chai.expect(Utils.removeAll(null, null)).to.deep.equal([], 'remove null from null');
             chai.expect(Utils.removeAll(undefined, undefined)).to.deep.equal([], 'remove undefined from undefined');
         });
 
@@ -72,7 +70,6 @@ describe('Utils', () : void => {
 
     it('should trim strings properly', (): void => {
         chai.expect(Utils.trimTo(undefined, 10)).to.equal('');
-        chai.expect(Utils.trimTo(null, 10)).to.equal('');
         chai.expect(Utils.trimTo('', 10)).to.equal('');
         chai.expect(Utils.trimTo('123456789', 10)).to.equal('123456789');
         chai.expect(Utils.trimTo('1234567890', 10)).to.equal('1234567890');

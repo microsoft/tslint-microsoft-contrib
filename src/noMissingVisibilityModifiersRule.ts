@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-missing-visibility-modifiers',
         type: 'maintainability',
         description: 'Deprecated - This rule is in the TSLint product as `member-access`',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

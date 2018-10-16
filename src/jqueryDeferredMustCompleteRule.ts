@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
                     'on it within all code branches in the scope.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -36,11 +36,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 function isPromiseInstantiation(expression: ts.Expression) : boolean {
-    if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
+    if (expression !== undefined && expression.kind === ts.SyntaxKind.CallExpression) {
         const functionName = AstUtils.getFunctionName(<ts.CallExpression>expression);
         const functionTarget = AstUtils.getFunctionTarget(<ts.CallExpression>expression);
 
-        if (functionName === 'Deferred' && functionTarget !== null && AstUtils.isJQuery(functionTarget)) {
+        if (functionName === 'Deferred' && functionTarget !== undefined && AstUtils.isJQuery(functionTarget)) {
             return true;
         }
     }
@@ -55,7 +55,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === ts.SyntaxKind.Identifier) {
-                if ((<ts.Identifier>node.left).text != null) {
+                if ((<ts.Identifier>node.left).text !== undefined) {
                     const name : ts.Identifier = <ts.Identifier>node.left;
                     this.validateDeferredUsage(node, name);
                 }
@@ -66,7 +66,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         if (node.initializer !== undefined && isPromiseInstantiation(node.initializer)) {
-            if ((<ts.Identifier>node.name).text != null) {
+            if ((<ts.Identifier>node.name).text !== undefined) {
                 const name : ts.Identifier = <ts.Identifier>node.name;
                 this.validateDeferredUsage(node, name);
             }
@@ -127,7 +127,7 @@ class DeferredCompletionWalker extends ErrorTolerantWalker {
 
         if (!ifAnalyzer.isAlwaysCompleted()) {
             this.allBranchesCompleted = false;
-        } else if (node.elseStatement != null) {
+        } else if (node.elseStatement !== undefined) {
             elseAnalyzer.visitNode(node.elseStatement);
             if (!elseAnalyzer.isAlwaysCompleted()) {
                 this.allBranchesCompleted = false;

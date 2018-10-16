@@ -58,7 +58,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions): string[] | null {
+    public static getExceptions(options : Lint.IOptions): string[] | undefined {
     /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
@@ -68,7 +68,7 @@ export class Rule extends Lint.Rules.AbstractRule {
                 options[0].allow :
                 <string[]><any>options; // MSE version of tslint somehow requires this
         }
-        return null;
+        return undefined;
     }
 
     /* tslint:disable:function-name */
@@ -133,7 +133,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         this.validateExportedElements(exportedTopLevelElements);
     }
 
-    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | null {
+    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | undefined {
         if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
@@ -141,7 +141,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
-        return null;
+        return undefined;
     }
 
     private validateExportedElements(exportedElements: ts.Statement[]): void {

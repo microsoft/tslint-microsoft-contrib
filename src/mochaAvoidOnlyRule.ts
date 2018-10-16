@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'mocha-avoid-only',
         type: 'maintainability',
         description: 'Do not invoke Mocha\'s describe.only, it.only or context.only functions.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-constant-condition',
         type: 'maintainability',
         description: 'Do not use constant expressions in conditions.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -90,7 +90,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitForStatement(node: ts.ForStatement): void {
-        if (this.checkLoops && node.condition != null) {
+        if (this.checkLoops && node.condition !== undefined) {
             if (AstUtils.isConstantExpression(node.condition)) {
                 const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailureAt(node.getStart(), node.getWidth(), message);

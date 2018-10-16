@@ -10,10 +10,10 @@ import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './Ty
  * A reference about implicit role: https://www.w3.org/TR/html-aria/#sec-strong-native-semantics.
  * A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no-corresponding-role.
  */
-export function getImplicitRole(node: ts.Node | null | undefined): string | undefined {
+export function getImplicitRole(node: ts.Node | undefined): string | undefined {
     let tagName: string | undefined;
 
-    if (node == null) {
+    if (node === undefined) {
         return undefined;
     } else if (isJsxElement(node)) {
         tagName = node.openingElement.tagName.getText();

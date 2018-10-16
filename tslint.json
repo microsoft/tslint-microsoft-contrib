@@ -3,7 +3,7 @@
     "dist/src"
   ],
   "rules": {
-    "array-type": [true,"array"],
+    "array-type": [true, "array"],
     "arrow-return-shorthand": false,
     "await-promise": false,
     "adjacent-overload-signatures": false,

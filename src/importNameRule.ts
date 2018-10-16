@@ -84,15 +84,15 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
-        moduleName = moduleName.replace(/.*\//, ''); // chop off the path
-        moduleName = this.makeCamelCase(moduleName);
-        if (this.isImportNameValid(importedName, moduleName) === false) {
-            const message: string = `Misnamed import. Import should be named '${moduleName}' but found '${importedName}'`;
+        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        expectedImportedName = this.makeCamelCase(expectedImportedName);
+        if (this.isImportNameValid(importedName, expectedImportedName, moduleName) === false) {
+            const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
             const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
                 ? (<ts.ImportEqualsDeclaration>node).name
                 : (<ts.ImportDeclaration>node).importClause!.name;
             const nameNodeStartPos = nameNode!.getStart();
-            const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, moduleName);
+            const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, expectedImportedName);
             this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
         }
     }
@@ -104,14 +104,22 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isImportNameValid(importedName: string, moduleName: string): boolean {
-        if (moduleName === importedName) {
+    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string): boolean {
+        if (expectedImportedName === importedName) {
             return true;
         }
 
+        // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
+        // to import-name rule.
+        // Example: for below import statement
+        // `import cgi from 'fs-util/cgi-common'`
+        // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
+        const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
         return Utils.exists(Object.keys(this.replacements), (replacementKey: string): boolean => {
-            if (new RegExp(replacementKey).test(moduleName)) {
-                return importedName === this.replacements[replacementKey];
+            for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
+                if (replacementKey === allowedReplacementKeys[index]) {
+                    return importedName === this.replacements[replacementKey];
+                }
             }
             return false;
         });

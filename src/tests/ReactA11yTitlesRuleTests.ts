@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -27,7 +28,7 @@ describe('reactA11yTitlesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Title elements must not be empty",
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-titles",
                 "startPosition": { "character": 27, "line": 4 }
             }
@@ -44,7 +45,7 @@ describe('reactA11yTitlesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Title elements must not be empty",
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-titles",
                 "startPosition": { "character": 27, "line": 4 }
             }
@@ -62,7 +63,7 @@ describe('reactA11yTitlesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Title length must not be longer than 60 characters: test aaaaaaaaaaaaa...",
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-titles",
                 "startPosition": {
                     "character": 27,
@@ -92,7 +93,7 @@ describe('reactA11yTitlesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Title must contain more than one word: test",
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-titles",
                 "startPosition": {"character": 27, "line": 4
                 }
@@ -110,7 +111,7 @@ describe('reactA11yTitlesRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Title must contain more than one word: test",
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-titles",
                 "startPosition": {"character": 27, "line": 4
                 }

@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -19,6 +20,7 @@ describe('importNameRule', () : void => {
         const script : string = `
             import App from 'App';
             import App from 'x/y/z/App';
+            import graphqlTag from 'graphql-tag'
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -41,7 +43,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -52,7 +54,7 @@ describe('importNameRule', () : void => {
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 3 },
                 "fix": {
@@ -73,7 +75,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -84,7 +86,7 @@ describe('importNameRule', () : void => {
             },
             {
                 "failure": "Misnamed import. Import should be named 'App' but found 'MyCoolApp2'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 3 },
                 "fix": {
@@ -104,7 +106,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'DependencyManager' but found 'Service'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -124,7 +126,7 @@ describe('importNameRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Misnamed import. Import should be named 'userSettingsDetailView' but found 'UserSettings'",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "import-name",
                 "startPosition": { "character": 13, "line": 2 },
                 "fix": {
@@ -152,4 +154,18 @@ describe('importNameRule', () : void => {
         }];
         TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
     });
+
+    it('should pass on differing names when rule is configured with replacements for ES6', () : void => {
+        const script : string = `
+        import pkg from 'fs/package-name',
+        import abc from 'abc-tag',
+        import pqr from 'my-module'
+        `;
+        const options: any[] = [ true, {
+            'fs/package-name': 'pkg',
+            'abc-tag': 'abc',
+            'myModule': 'pqr'
+        }];
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+    })
 });

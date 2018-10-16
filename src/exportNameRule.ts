@@ -7,6 +7,7 @@ import {Utils} from './utils/Utils';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
+export const OPTION_IGNORE_CASE: string = 'ignore-case';
 /**
  * Implementation of the export-name rule.
  */
@@ -16,7 +17,30 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'export-name',
         type: 'maintainability',
         description: 'The name of the exported module must match the filename of the source file',
-        options: null,
+        options: {
+            type: 'list',
+            listType: {
+                anyOf: [
+                    {
+                        type: 'string'
+                    },
+                    {
+                        type: 'object',
+                        properties: {
+                            'ignore-case': {
+                                type: 'boolean'
+                            },
+                            allow: {
+                                type: 'array',
+                                items: {
+                                    type: 'string'
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -40,9 +64,22 @@ export class Rule extends Lint.Rules.AbstractRule {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return <string[]><any>options; // MSE version of tslint somehow requires this
+            return typeof options[0] === 'object' ?
+                options[0].allow :
+                <string[]><any>options; // MSE version of tslint somehow requires this
         }
         return null;
+    }
+
+    /* tslint:disable:function-name */
+    public static getIgnoreCase(options: Lint.IOptions): boolean {
+        /* tslint:enable:function-name */
+        if (options instanceof Array) {
+            return typeof options[0] === 'object' ?
+                options[0]['ignore-case'] :
+                true;
+        }
+        return true;
     }
 }
 
@@ -126,7 +163,8 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     }
 
     private validateExport(exportedName: string, node: ts.Node): void {
-        const regex : RegExp = new RegExp(exportedName + '\..*'); // filename must be exported name plus any extension
+        const flags = Rule.getIgnoreCase(this.getOptions()) ? 'i' : '';
+        const regex : RegExp = new RegExp(exportedName + '\..*', flags); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
                 const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;

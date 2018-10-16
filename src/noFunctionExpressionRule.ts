@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
+import { AstUtils } from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -33,27 +34,49 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
+    private allowGenericFunctionExpression: boolean = false;
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+
+        if (AstUtils.getLanguageVariant(sourceFile) === ts.LanguageVariant.JSX) {
+            this.allowGenericFunctionExpression = true;
+        }
+    }
+
     protected visitFunctionExpression(node: ts.FunctionExpression): void {
         const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
         node.getChildren().forEach((child: ts.Node) => {
             walker.walk(child);
         });
+
+        const isGenericFunctionInTSX = this.allowGenericFunctionExpression && walker.isGenericFunction;
         // function expression that access 'this' is allowed
-        if (!walker.isAccessingThis && !node.asteriskToken) {
+        if (!walker.isAccessingThis && !node.asteriskToken
+            // generic function expression in .tsx file is allowed
+            && !isGenericFunctionInTSX) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
+
         super.visitFunctionExpression(node);
     }
 }
 
 class SingleFunctionWalker extends ErrorTolerantWalker {
     public isAccessingThis: boolean = false;
+    public isGenericFunction: boolean = false;
     protected visitNode(node: ts.Node): void {
         if (node.getText() === 'this') {
             this.isAccessingThis = true;
         }
         super.visitNode(node);
     }
+
+    protected visitTypeReference(node: ts.TypeReferenceNode): void {
+        this.isGenericFunction = true;
+        super.visitTypeReference(node);
+    }
+
     /* tslint:disable:no-empty */
     protected visitFunctionExpression(): void {
         // do not visit inner blocks

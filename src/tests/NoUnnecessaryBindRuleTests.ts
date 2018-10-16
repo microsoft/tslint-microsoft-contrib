@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -120,7 +121,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 13, "line": 2 }
                 }
@@ -135,7 +136,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 13, "line": 2 }
                 }
@@ -150,7 +151,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -165,7 +166,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -179,7 +180,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -193,7 +194,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2                     }
                 }
@@ -208,7 +209,7 @@ describe('noUnnecessaryBindRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [  {
                 "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-unnecessary-bind",
                 "startPosition": { "character": 17, "line": 2 }
             }
@@ -224,7 +225,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -240,7 +241,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -256,7 +257,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -272,7 +273,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -288,7 +289,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -304,7 +305,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -320,7 +321,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -335,7 +336,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding function literal with 'this' context. Use lambdas instead",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }
@@ -350,7 +351,7 @@ describe('noUnnecessaryBindRule', () : void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     "failure": "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    "name": "file.ts",
+                    "name": Utils.absolutePath("file.ts"),
                     "ruleName": "no-unnecessary-bind",
                     "startPosition": { "character": 17, "line": 2 }
                 }

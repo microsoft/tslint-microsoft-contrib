@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
+import { AstUtils } from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -34,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class PreferTypeCastRuleWalker extends ErrorTolerantWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
-        if (/.*\.tsx/.test(node.fileName) === false) {
+        if (AstUtils.getLanguageVariant(node) === ts.LanguageVariant.Standard) {
             super.visitSourceFile(node);
         }
     }

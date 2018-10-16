@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -43,6 +44,22 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
+    it('should fail on not generic type function expression and pass generic type function within a .tsx file', (): void => {
+        TestHelper.assertViolations(
+            ruleName,
+            "test-data/NoFunctionExpressionWithInTSX.tsx",
+            [{
+                "failure": "Use arrow function instead of function expression",
+                "name": "test-data/NoFunctionExpressionWithInTSX.tsx",
+                "ruleName": "no-function-expression",
+                "startPosition": {
+                    "character": 28,
+                    "line": 1
+                }
+            }],
+        );
+    });
+
     it('should fail on function expression', (): void => {
         const script: string = `
             var x = function() {
@@ -54,7 +71,7 @@ describe('noFunctionExpressionRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, [{
             "failure": "Use arrow function instead of function expression",
-            "name": "file.ts",
+            "name": Utils.absolutePath("file.ts"),
             "ruleName": "no-function-expression",
             "startPosition": {
                 "character": 21,
@@ -82,13 +99,13 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Use arrow function instead of function expression",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-function-expression",
                 "startPosition": {"character": 29, "line": 6}
             },
             {
                 "failure": "Use arrow function instead of function expression",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-function-expression",
                 "startPosition": {"character": 34, "line": 8}
             }

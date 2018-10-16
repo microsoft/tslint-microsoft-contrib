@@ -12,6 +12,7 @@ import { isJsxSpreadAttribute } from './utils/TypeGuard';
 
 const ROLE_STRING: string = 'role';
 const ALT_STRING: string = 'alt';
+const TITLE_STRING: string = 'title';
 
 export function getFailureStringNoAlt(tagName: string): string {
     return `<${tagName}> elements must have an non-empty alt attribute or \
@@ -32,6 +33,11 @@ Remove role='presentation' or specify 'alt' attribute to be empty when role attr
 export function getFailureStringAltContainsImageWord(tagName: string, redundantWordFound: string): string {
     return `The value of alt attribute in <${tagName}> contains this redundant word: "${redundantWordFound}" \
 Screen readers already announce img elements as images.`;
+}
+
+export function getFailureStringEmptyAltAndNotEmptyTitle(tagName: string): string {
+    return `The value of alt attribute in <${tagName}> tag is empty and the role is presentation, but the value of \
+its title attribute is not empty. Remove the title attribute.`;
 }
 
 /**
@@ -110,24 +116,32 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const redundantWordsFound = String(altAttributeValue).toLowerCase().match(/(\b|[_-])(photo|image|picture)(\b|[_-])/);
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
+            const titleAttribute: ts.JsxAttribute = attributes[TITLE_STRING];
             const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
+            const isEmptyTitle: boolean = isEmpty(titleAttribute) || getStringLiteral(titleAttribute) === '';
             const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
                 ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;
 
             // <img alt='altValue' role='presentation' />
-            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation) {
+            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
                 this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringNonEmptyAltAndPresentationRole(tagName)
                 );
-            } else if (isEmptyAlt && !isPresentationRole) { // <img alt='' />
+            } else if (isEmptyAlt && !isPresentationRole && !titleAttribute) { // <img alt='' />
                 this.addFailureAt(
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringEmptyAltAndNotPresentationRole(tagName)
+                );
+            } else if (isEmptyAlt && titleAttribute && !isEmptyTitle) {
+                this.addFailureAt(
+                    node.getStart(),
+                    node.getWidth(),
+                    getFailureStringEmptyAltAndNotEmptyTitle(tagName)
                 );
             }
             // Checks for redundant descriptors in image alt, as screen readers already announce images

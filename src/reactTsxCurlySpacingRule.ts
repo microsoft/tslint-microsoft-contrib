@@ -52,12 +52,15 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
 
     public visitJsxExpression(node: ts.JsxExpression): void {
         const childrenCount: number = node.getChildCount();
-        const first = node.getFirstToken(); // '{' sign
-        const last = node.getLastToken(); // '}' sign
-        const second: ts.Node = node.getChildAt(1); // after '{' sign
-        const penultimate: ts.Node = node.getChildAt(childrenCount - 2); // before '}' sign
-        this.validateBraceSpacing(node, first, second, first);
-        this.validateBraceSpacing(node, penultimate, last, last);
+
+        if (childrenCount > 2) {// not empty code block (eg. only comments)
+            const first = node.getFirstToken(); // '{' sign
+            const last = node.getLastToken(); // '}' sign
+            const second: ts.Node = node.getChildAt(1); // after '{' sign
+            const penultimate: ts.Node = node.getChildAt(childrenCount - 2); // before '}' sign
+            this.validateBraceSpacing(node, first, second, first);
+            this.validateBraceSpacing(node, penultimate, last, last);
+        }
     }
 
     protected visitNode(node: ts.Node): void {

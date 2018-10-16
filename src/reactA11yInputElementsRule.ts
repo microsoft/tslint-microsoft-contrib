@@ -42,13 +42,14 @@ class ReactA11yInputElementsRuleWalker extends ErrorTolerantWalker {
 
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         const tagName = node.tagName.getText();
-        const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
 
         if (tagName === 'input') {
+            const attributes = getJsxAttributesFromJsxElement(node);
             if (isEmpty(attributes.value) && isEmpty(attributes.placeholder)) {
                 this.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
             }
         } else if (tagName === 'textarea') {
+            const attributes = getJsxAttributesFromJsxElement(node);
             if (isEmpty(attributes.placeholder)) {
                 this.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);
             }

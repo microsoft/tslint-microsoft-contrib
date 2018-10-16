@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-input-elements',
         type: 'functionality',
         description: 'For accessibility of your website, HTML input boxes and text areas must include default, place-holding characters.',
-        options: null,
+        options: undefined,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

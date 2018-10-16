@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 import {
     MISSING_PLACEHOLDER_INPUT_FAILURE_STRING,
@@ -34,22 +35,21 @@ describe('reactA11yInputElementsRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": MISSING_PLACEHOLDER_INPUT_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-input-elements",
                 "startPosition": { "character": 23, "line": 3 }
             },
             {
                 "failure": MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-input-elements",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
                 "failure": MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING,
-                "name": "file.tsx",
+                "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-a11y-input-elements",
-                "startPosition": { "character": 23, "line": 5 }
-            }
+                "startPosition": { "character": 23, "line": 5 }}
         ]);
     });
 

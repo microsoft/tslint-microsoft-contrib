@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -25,7 +26,7 @@ describe('noInvalidRegexpRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Invalid regular expression: /\\/: \\ at end of pattern",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-invalid-regexp",
                 "startPosition": { "character": 24, "line": 2 }
             }
@@ -40,7 +41,7 @@ describe('noInvalidRegexpRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Invalid regular expression: /[/: Unterminated character class",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-invalid-regexp",
                 "startPosition": { "character": 20, "line": 2 }
             }

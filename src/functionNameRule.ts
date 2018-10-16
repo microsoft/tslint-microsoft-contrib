@@ -143,7 +143,7 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        if (node.name != null) {
+        if (node.name !== undefined) {
             const name: string = node.name.text;
             if (!this.functionRegex.test(name)) {
                 this.addFailureAt(node.name.getStart(), node.name.getWidth(),
@@ -155,7 +155,7 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
 
     private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] != null) {
+            if (option[key] !== undefined) {
                 return new RegExp(option[key]);
             }
         } catch (e) {

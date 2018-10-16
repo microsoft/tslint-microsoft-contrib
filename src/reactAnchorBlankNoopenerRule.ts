@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-anchor-blank-noopener',
         type: 'functionality',
         description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -61,7 +61,7 @@ class ReactAnchorBlankNoopenerRuleWalker extends ErrorTolerantWalker {
             const target: ts.JsxAttribute = allAttributes['target'];
             const rel: ts.JsxAttribute = allAttributes['rel'];
             /* tslint:enable:no-string-literal */
-            if (target != null && getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
+            if (target !== undefined && getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
                 this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), FAILURE_STRING);
             }
         }
@@ -75,13 +75,13 @@ function isRelAttributeValue(attribute: ts.JsxAttribute): boolean {
 
     if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
         const expression: ts.JsxExpression = <ts.JsxExpression>attribute.initializer;
-        if (expression.expression != null && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
+        if (expression.expression !== undefined && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
             return true; // attribute value is not a string literal, so do not validate
         }
     }
 
     const stringValue = getStringLiteral(attribute);
-    if (stringValue == null || stringValue.length === 0) {
+    if (stringValue === undefined || stringValue.length === 0) {
         return false;
     }
 

@@ -41,7 +41,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce that elements with explicit or implicit roles defined contain ' +
         'only `aria-*` properties supported by that `role`.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -78,9 +78,9 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         if (node.tagName.getText().match(/^[A-Z].*/)) {
             return;
         }
-        if (roleProp != null) {
+        if (roleProp !== undefined) {
             roleValue = getStringLiteral(roleProp);
-            if (!isEmpty(roleProp) && roleValue == null) { // Do NOT check if can't retrieve the right role.
+            if (!isEmpty(roleProp) && roleValue === undefined) { // Do NOT check if can't retrieve the right role.
                 return;
             }
         } else {

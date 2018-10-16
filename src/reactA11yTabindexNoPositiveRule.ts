@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-tabindex-no-positive',
         type: 'maintainability',
         description: 'Enforce tabindex value is **not greater than zero**.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

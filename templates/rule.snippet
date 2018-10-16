@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: '%RULE_NAME%',
         type: 'maintainability',    // one of: 'functionality' | 'maintainability' | 'style' | 'typescript'
         description: '... add a meaningful one line description',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         optionExamples: [],         //Remove this property if the rule has no options
         typescriptOnly: false,

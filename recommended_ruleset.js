@@ -138,7 +138,7 @@ module.exports = {
         "no-function-expression": true,
         "no-inferrable-types": false, // turn no-inferrable-types off in order to make the code consistent in its use of type decorations
         "no-multiline-string": false,
-        "no-null-keyword": false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value
+        "no-null-keyword": true,
         "no-parameter-properties": true,
         "no-redundant-jsdoc": true,
         "no-relative-imports": true,
@@ -189,6 +189,7 @@ module.exports = {
         "react-a11y-input-elements": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,
+        "react-a11y-no-onchange": true,
         "react-a11y-props": true,
         "react-a11y-proptypes": true,
         "react-a11y-role": true,

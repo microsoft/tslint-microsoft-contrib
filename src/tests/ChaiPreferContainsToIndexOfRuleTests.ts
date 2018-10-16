@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -33,7 +34,7 @@ describe('chaiPreferContainsToIndexOfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with indexOf that can be converted to .contain assertion: ",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-prefer-contains-to-index-of",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -48,7 +49,7 @@ describe('chaiPreferContainsToIndexOfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with indexOf that can be converted to .contain assertion: ",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-prefer-contains-to-index-of",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -63,7 +64,7 @@ describe('chaiPreferContainsToIndexOfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with indexOf that can be converted to .contain assertion: ",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-prefer-contains-to-index-of",
                 "startPosition": { "character": 13, "line": 2 }
             }
@@ -78,7 +79,7 @@ describe('chaiPreferContainsToIndexOfRule', () : void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 "failure": "Found chai call with indexOf that can be converted to .contain assertion: ",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "chai-prefer-contains-to-index-of",
                 "startPosition": { "character": 13, "line": 2 }
             }

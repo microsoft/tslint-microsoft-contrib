@@ -1,8 +1,10 @@
+import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import {
+  getFailureStringEmptyAltAndNotEmptyTitle,
+  getFailureStringEmptyAltAndNotPresentationRole,
   getFailureStringNoAlt,
-  getFailureStringNonEmptyAltAndPresentationRole,
-  getFailureStringEmptyAltAndNotPresentationRole
+  getFailureStringNonEmptyAltAndPresentationRole
 } from '../reactA11yImgHasAltRule';
 
 /**
@@ -56,6 +58,18 @@ describe('reactA11yImgHasAlt', () => {
         const ruleOptions: any[] = [[], { allowNonEmptyAltWithRolePresentation: true }];
         TestHelper.assertNoViolationWithOptions(ruleName, ruleOptions, fileName);
       });
+
+      it('when the img element has empty alt value, empty title, and presentation role', () => {
+        const fileName: string = `
+            import React = require('react');
+
+            const a = <img role='presentation' alt title/>;
+            const b = <img role='presentation' alt='' title=''/>;
+            const c = <img role='button presentation' alt={ undefined } title={ undefined }/>;
+            const d = <img role={'presentation button'} alt={''} title={''}/>;
+        `;
+        TestHelper.assertNoViolation(ruleName, fileName);
+      });
     });
 
     describe('should fail', () => {
@@ -97,25 +111,25 @@ const d = <img alt={''} /> `;
           fileName,
           [
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 3 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 4 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
             },
             {
-              name: 'file.tsx',
+              name: Utils.absolutePath('file.tsx'),
               ruleName: ruleName,
               startPosition: { character: 11, line: 6 },
               failure: getFailureStringEmptyAltAndNotPresentationRole('img')
@@ -158,6 +172,40 @@ const d = <img alt={''} /> `;
           ]
         );
       });
+
+      it('when the img tag has empty attribute alt but not-empty attribute title', () => {
+        const fileName: string = `import React = require('react');
+
+const a = <img alt='' title='Some image' role='presentation' />;
+const b = <img alt title='Some image' role='presentation' />;
+const c = <img alt={''} title='Some image' role='presentation' />;
+`;
+
+        TestHelper.assertViolations(
+          ruleName,
+          fileName,
+          [
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 3 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 4 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 5 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
+            }
+          ]
+        );
+      });
     });
   });
 
@@ -196,6 +244,43 @@ const d = <img alt={''} /> `;
 
     describe('should fail', () => {
       const fileDirectory: string = 'test-data/a11yImgHasAlt/CustomElementTests/FailingTestInputs/';
+
+      it('when the custom element has empty attribute alt but not-empty attribute title', () => {
+        const fileName: string = `import React = require('react');
+
+let Picture;
+
+const a = <Picture alt='' title='Some image' role='presentation' />;
+const b = <Picture alt title='Some image' role='presentation' />;
+const c = <Picture alt={''} title='Some image' role='presentation' />;
+`;
+
+        TestHelper.assertViolationsWithOptions(
+          ruleName,
+          options,
+          fileName,
+          [
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 5 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 6 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 11, line: 7 },
+              failure: getFailureStringEmptyAltAndNotEmptyTitle('Picture')
+            }
+          ]
+        );
+      });
 
       it('when custom element or img has no alt prop', () => {
         const fileName: string = fileDirectory + 'CustomElementHasNoAltProp.tsx';

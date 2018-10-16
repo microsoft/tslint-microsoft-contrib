@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-duplicate-parameter-names',
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -61,7 +61,7 @@ class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
         const seenNames : {[index: string]: boolean} = {};
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
             const parameterName : string = (<any>parameter.name).text;  // how does one check if the union type is Identifier?
-            if (parameterName != null) {
+            if (parameterName !== undefined) {
                 if (seenNames[parameterName]) {
                     this.addFailureAt(
                         parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + '\'' + parameterName + '\'');

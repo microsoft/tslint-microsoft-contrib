@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         ruleName: 'no-string-based-set-timeout',
         type: 'maintainability',
         description: 'Do not use the version of setTimeout that accepts code as a string argument.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

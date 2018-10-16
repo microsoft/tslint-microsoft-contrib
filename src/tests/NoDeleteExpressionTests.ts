@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
 /**
@@ -38,7 +39,7 @@ describe('noDeleteExpressionRule', (): void => {
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
                 "failure": "Variables should not be deleted: variableForDeletion",
-                "name": "file.ts",
+                "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-delete-expression",
                 "startPosition": {
                     "line": 6,

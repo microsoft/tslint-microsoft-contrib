@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-useless-files',
         type: 'maintainability',
         description: 'Locates files that only contain commented out code, whitespace characters, or have no content',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: false,
         issueClass: 'Non-SDL',

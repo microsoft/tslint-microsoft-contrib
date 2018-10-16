@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         /* tslint:disable:no-http-string */
         description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
         /* tslint:enable:no-http-string */
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

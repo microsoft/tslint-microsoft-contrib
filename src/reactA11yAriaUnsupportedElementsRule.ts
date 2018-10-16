@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-aria-unsupported-elements',
         type: 'maintainability',
         description: 'Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

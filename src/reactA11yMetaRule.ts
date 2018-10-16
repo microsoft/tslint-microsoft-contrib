@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-meta',
         type: 'functionality',
         description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

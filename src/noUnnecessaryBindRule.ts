@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-bind',
         type: 'maintainability',
         description: 'Do not bind `this` as the context for a function literal or lambda expression.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

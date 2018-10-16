@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-duplicate-parameter-names',
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

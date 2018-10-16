@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-reserved-keywords',
         type: 'maintainability',
         description: 'Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

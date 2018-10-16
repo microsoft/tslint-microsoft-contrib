@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-backbone-get-set-outside-model',
         type: 'maintainability',
         description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

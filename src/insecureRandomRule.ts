@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'insecure-random',
         type: 'functionality',
         description: 'Do not use insecure sources for random bytes',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unexternalized-strings',
         type: 'maintainability',
         description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

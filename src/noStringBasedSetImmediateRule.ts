@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         ruleName: 'no-string-based-set-immediate',
         type: 'maintainability',
         description: 'Do not use the version of setImmediate that accepts code as a string argument.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

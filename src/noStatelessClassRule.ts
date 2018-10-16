@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-stateless-class',
         type: 'maintainability',
         description: 'A stateless class represents a failure in the object oriented design of the system.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

@@ -41,7 +41,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce that elements with explicit or implicit roles defined contain ' +
         'only `aria-*` properties supported by that `role`.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

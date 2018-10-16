@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
                     'called on it within all code branches in the scope.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

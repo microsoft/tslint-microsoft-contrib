@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-image-button-has-alt',
         type: 'maintainability',
         description: 'Enforce that inputs element with type="image" must have alt attribute.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

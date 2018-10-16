@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-anchor-blank-noopener',
         type: 'functionality',
         description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

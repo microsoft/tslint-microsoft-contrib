@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
                     'on it within all code branches in the scope.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

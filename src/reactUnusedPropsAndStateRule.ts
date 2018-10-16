@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-unused-props-and-state',
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

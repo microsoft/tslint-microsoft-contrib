@@ -47,7 +47,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-proptypes',
         type: 'maintainability',
         description: 'Enforce ARIA state and property values are valid.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

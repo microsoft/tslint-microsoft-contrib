@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'mocha-no-side-effect-code',
         type: 'maintainability',
         description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

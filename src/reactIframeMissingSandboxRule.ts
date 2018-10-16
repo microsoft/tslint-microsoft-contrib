@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-iframe-missing-sandbox',
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

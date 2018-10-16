@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'prefer-type-cast',
         type: 'maintainability',
         description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

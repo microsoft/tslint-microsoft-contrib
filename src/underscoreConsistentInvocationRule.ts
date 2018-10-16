@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'underscore-consistent-invocation',
         type: 'maintainability',
         description: 'Enforce a consistent usage of the _ functions',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-local-variable',
         type: 'maintainability',
         description: 'Do not declare a variable only to return it from the function on the next line.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

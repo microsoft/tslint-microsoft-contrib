@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'non-literal-require',
         type: 'functionality',
         description: 'Detect require includes that are not for string literals',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

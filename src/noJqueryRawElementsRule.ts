@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-jquery-raw-elements',
         type: 'maintainability',
         description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

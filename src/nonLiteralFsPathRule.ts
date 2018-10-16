@@ -66,7 +66,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'non-literal-fs-path',
         type: 'functionality',
         description: 'Detect calls to fs functions with a non literal filepath',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

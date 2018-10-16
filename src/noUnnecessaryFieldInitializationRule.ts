@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-field-initialization',
         type: 'maintainability',
         description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

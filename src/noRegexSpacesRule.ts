@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-regex-spaces',
         type: 'maintainability',
         description: 'Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

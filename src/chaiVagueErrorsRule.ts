@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'chai-vague-errors',
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

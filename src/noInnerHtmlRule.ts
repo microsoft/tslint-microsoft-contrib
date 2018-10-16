@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-inner-html',
         type: 'maintainability',
         description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

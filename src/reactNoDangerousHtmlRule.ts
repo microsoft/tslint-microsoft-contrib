@@ -20,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-no-dangerous-html',
         type: 'maintainability',
         description: 'Do not use React\'s dangerouslySetInnerHTML API.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

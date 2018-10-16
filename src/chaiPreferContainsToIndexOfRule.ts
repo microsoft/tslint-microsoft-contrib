@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'chai-prefer-contains-to-index-of',
         type: 'maintainability',
         description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
-        options: undefined,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

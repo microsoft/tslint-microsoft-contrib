@@ -134,6 +134,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             return true;
         }
 
+        return this.checkReplacementsExist(importedName, expectedImportedName, moduleName);
+    }
+
+    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string) {
         // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
         // to import-name rule.
         // Example: for below import statement

@@ -134,7 +134,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
         let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
         expectedImportedName = this.makeCamelCase(expectedImportedName);
-        if (this.isImportNameValid(importedName, expectedImportedName, moduleName) === false) {
+        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
             const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
             const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
                 ? (<ts.ImportEqualsDeclaration>node).name
@@ -152,7 +152,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string): boolean {
+    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string, node: any): boolean {
         if (expectedImportedName === importedName) {
             return true;
         }
@@ -164,6 +164,11 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
         const isIgnoredModuleExist = this.checkIgnoredListExists(moduleName, this.option.ignoredList);
         if (isIgnoredModuleExist) {
+            return true;
+        }
+
+        const ignoreThisExternalModule = this.checkIgnoreExternalModule(moduleName, node, this.option.config);
+        if (ignoreThisExternalModule) {
             return true;
         }
 
@@ -190,5 +195,20 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
         return ignoredList.includes(moduleName);
+    }
+
+    private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
+        if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
+            let ignoreThisExternalModule = false;
+            for (const [key, value] of node.parent.resolvedModules) {
+                if (key === moduleName && value.isExternalLibraryImport === true) {
+                    ignoreThisExternalModule = true;
+                    break;
+                }
+            }
+            return ignoreThisExternalModule;
+        }
+
+        return false;
     }
 }

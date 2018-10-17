@@ -68,6 +68,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             if (index === 2 && Array.isArray(opt)) {
                 result.ignoredList = this.extractIgnoredList(opt);
             }
+
+            if (index === 3 && typeof(opt) === 'object') {
+                result.config = this.extractConfig(opt);
+            }
         });
 
         return result;
@@ -86,6 +90,17 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private extractIgnoredList(opt: IgnoredList): IgnoredList {
         return opt.filter((moduleName: string) => typeof moduleName === 'string');
+    }
+
+    private extractConfig(opt: Config): Config {
+        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
+        return Object.keys(opt).reduce((accum: Config, key: string) => {
+            if (configKeyLlist.includes(<ConfigKey>key)) {
+                accum[<ConfigKey>key] = opt[<ConfigKey>key];
+                return accum;
+            }
+            return accum;
+        }, { ignoreExternalModule: true });
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {

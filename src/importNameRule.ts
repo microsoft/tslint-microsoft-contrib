@@ -31,25 +31,50 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+type Replacement = { [index: string]: string; };
+type IgnoredList = string[];
+type ConfigKey = 'ignoreExternalModule';
+type Config = { [index in ConfigKey]: boolean; };
+
+type Option = {
+    replacements: Replacement
+    ignoredList: IgnoredList
+    config: Config
+};
+
 class ImportNameRuleWalker extends ErrorTolerantWalker {
 
-    private replacements: { [index: string]: string; };
+    private option: Option;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.replacements = this.extractOptions();
+        this.option = this.extractOptions();
     }
 
-    private extractOptions(): { [index: string]: string; } {
-        const result : { [index: string]: string; } = {};
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
-                Object.keys(opt).forEach((key: string): void => {
-                    const value: any = opt[key];
-                    if (typeof value === 'string') {
-                        result[key] = value;
-                    }
-                });
+    private extractOptions(): Option {
+        const result : Option = {
+            replacements: {},
+            ignoredList: [],
+            config: {
+                ignoreExternalModule: true
+            }
+        };
+
+        this.getOptions().forEach((opt: any, index: number) => {
+            if (index === 1 && typeof(opt) === 'object') {
+                result.replacements = this.extractReplacements(opt);
+            }
+        });
+
+        return result;
+    }
+
+    private extractReplacements(opt: Replacement): Replacement {
+        const result: Replacement = {};
+        Object.keys(opt).forEach((key: string): void => {
+            const value: any = opt[key];
+            if (typeof value === 'string') {
+                result[key] = value;
             }
         });
         return result;
@@ -109,16 +134,20 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             return true;
         }
 
+        return this.checkReplacementsExist(importedName, expectedImportedName, moduleName);
+    }
+
+    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string) {
         // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
         // to import-name rule.
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
         const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
-        return Utils.exists(Object.keys(this.replacements), (replacementKey: string): boolean => {
+        return Utils.exists(Object.keys(this.option.replacements), (replacementKey: string): boolean => {
             for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
                 if (replacementKey === allowedReplacementKeys[index]) {
-                    return importedName === this.replacements[replacementKey];
+                    return importedName === this.option.replacements[replacementKey];
                 }
             }
             return false;

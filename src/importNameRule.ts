@@ -31,28 +31,76 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+type Replacement = { [index: string]: string; };
+type IgnoredList = string[];
+type ConfigKey = 'ignoreExternalModule';
+type Config = { [index in ConfigKey]: boolean; };
+
+type Option = {
+    replacements: Replacement
+    ignoredList: IgnoredList
+    config: Config
+};
+
 class ImportNameRuleWalker extends ErrorTolerantWalker {
 
-    private replacements: { [index: string]: string; };
+    private option: Option;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.replacements = this.extractOptions();
+        this.option = this.extractOptions();
     }
 
-    private extractOptions(): { [index: string]: string; } {
-        const result : { [index: string]: string; } = {};
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
-                Object.keys(opt).forEach((key: string): void => {
-                    const value: any = opt[key];
-                    if (typeof value === 'string') {
-                        result[key] = value;
-                    }
-                });
+    private extractOptions(): Option {
+        const result : Option = {
+            replacements: {},
+            ignoredList: [],
+            config: {
+                ignoreExternalModule: true
+            }
+        };
+
+        this.getOptions().forEach((opt: any, index: number) => {
+            if (index === 1 && typeof(opt) === 'object') {
+                result.replacements = this.extractReplacements(opt);
+            }
+
+            if (index === 2 && Array.isArray(opt)) {
+                result.ignoredList = this.extractIgnoredList(opt);
+            }
+
+            if (index === 3 && typeof(opt) === 'object') {
+                result.config = this.extractConfig(opt);
+            }
+        });
+
+        return result;
+    }
+
+    private extractReplacements(opt: Replacement): Replacement {
+        const result: Replacement = {};
+        Object.keys(opt).forEach((key: string): void => {
+            const value: any = opt[key];
+            if (typeof value === 'string') {
+                result[key] = value;
             }
         });
         return result;
+    }
+
+    private extractIgnoredList(opt: IgnoredList): IgnoredList {
+        return opt.filter((moduleName: string) => typeof moduleName === 'string');
+    }
+
+    private extractConfig(opt: Config): Config {
+        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
+        return Object.keys(opt).reduce((accum: Config, key: string) => {
+            if (configKeyLlist.includes(<ConfigKey>key)) {
+                accum[<ConfigKey>key] = opt[<ConfigKey>key];
+                return accum;
+            }
+            return accum;
+        }, { ignoreExternalModule: true });
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
@@ -86,7 +134,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
         let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
         expectedImportedName = this.makeCamelCase(expectedImportedName);
-        if (this.isImportNameValid(importedName, expectedImportedName, moduleName) === false) {
+        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
             const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
             const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
                 ? (<ts.ImportEqualsDeclaration>node).name
@@ -104,24 +152,63 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string): boolean {
+    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string, node: any): boolean {
         if (expectedImportedName === importedName) {
             return true;
         }
 
+        const isReplacementsExist = this.checkReplacementsExist(importedName, expectedImportedName, moduleName, this.option.replacements);
+        if (isReplacementsExist) {
+            return true;
+        }
+
+        const isIgnoredModuleExist = this.checkIgnoredListExists(moduleName, this.option.ignoredList);
+        if (isIgnoredModuleExist) {
+            return true;
+        }
+
+        const ignoreThisExternalModule = this.checkIgnoreExternalModule(moduleName, node, this.option.config);
+        if (ignoreThisExternalModule) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string, replacements: Replacement)
+        : boolean {
         // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
         // to import-name rule.
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
         const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
-        return Utils.exists(Object.keys(this.replacements), (replacementKey: string): boolean => {
+        return Utils.exists(Object.keys(replacements), (replacementKey: string): boolean => {
             for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
                 if (replacementKey === allowedReplacementKeys[index]) {
-                    return importedName === this.replacements[replacementKey];
+                    return importedName === replacements[replacementKey];
                 }
             }
             return false;
         });
+    }
+
+    private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
+        return ignoredList.includes(moduleName);
+    }
+
+    private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
+        if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
+            let ignoreThisExternalModule = false;
+            for (const [key, value] of node.parent.resolvedModules) {
+                if (key === moduleName && value.isExternalLibraryImport === true) {
+                    ignoreThisExternalModule = true;
+                    break;
+                }
+            }
+            return ignoreThisExternalModule;
+        }
+
+        return false;
     }
 }

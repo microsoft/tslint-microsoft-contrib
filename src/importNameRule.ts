@@ -64,6 +64,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             if (index === 1 && typeof(opt) === 'object') {
                 result.replacements = this.extractReplacements(opt);
             }
+
+            if (index === 2 && Array.isArray(opt)) {
+                result.ignoredList = this.extractIgnoredList(opt);
+            }
         });
 
         return result;
@@ -78,6 +82,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             }
         });
         return result;
+    }
+
+    private extractIgnoredList(opt: IgnoredList): IgnoredList {
+        return opt.filter((moduleName: string) => typeof moduleName === 'string');
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
@@ -134,23 +142,38 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             return true;
         }
 
-        return this.checkReplacementsExist(importedName, expectedImportedName, moduleName);
+        const isReplacementsExist = this.checkReplacementsExist(importedName, expectedImportedName, moduleName, this.option.replacements);
+        if (isReplacementsExist) {
+            return true;
+        }
+
+        const isIgnoredModuleExist = this.checkIgnoredListExists(moduleName, this.option.ignoredList);
+        if (isIgnoredModuleExist) {
+            return true;
+        }
+
+        return false;
     }
 
-    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string) {
+    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string, replacements: Replacement)
+        : boolean {
         // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
         // to import-name rule.
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
         const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
-        return Utils.exists(Object.keys(this.option.replacements), (replacementKey: string): boolean => {
+        return Utils.exists(Object.keys(replacements), (replacementKey: string): boolean => {
             for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
                 if (replacementKey === allowedReplacementKeys[index]) {
-                    return importedName === this.option.replacements[replacementKey];
+                    return importedName === replacements[replacementKey];
                 }
             }
             return false;
         });
+    }
+
+    private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
+        return ignoredList.includes(moduleName);
     }
 }

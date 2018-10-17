@@ -200,15 +200,13 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
         if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
             let ignoreThisExternalModule = false;
-            for (const [key, value] of node.parent.resolvedModules) {
+            node.parent.resolvedModules.forEach((value: any, key: string) => {
                 if (key === moduleName && value.isExternalLibraryImport === true) {
                     ignoreThisExternalModule = true;
-                    break;
                 }
-            }
+            });
             return ignoreThisExternalModule;
         }
-
         return false;
     }
 }

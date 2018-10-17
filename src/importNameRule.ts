@@ -68,6 +68,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             if (index === 2 && Array.isArray(opt)) {
                 result.ignoredList = this.extractIgnoredList(opt);
             }
+
+            if (index === 3 && typeof(opt) === 'object') {
+                result.config = this.extractConfig(opt);
+            }
         });
 
         return result;
@@ -86,6 +90,17 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private extractIgnoredList(opt: IgnoredList): IgnoredList {
         return opt.filter((moduleName: string) => typeof moduleName === 'string');
+    }
+
+    private extractConfig(opt: Config): Config {
+        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
+        return Object.keys(opt).reduce((accum: Config, key: string) => {
+            if (configKeyLlist.includes(<ConfigKey>key)) {
+                accum[<ConfigKey>key] = opt[<ConfigKey>key];
+                return accum;
+            }
+            return accum;
+        }, { ignoreExternalModule: true });
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
@@ -119,7 +134,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
         let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
         expectedImportedName = this.makeCamelCase(expectedImportedName);
-        if (this.isImportNameValid(importedName, expectedImportedName, moduleName) === false) {
+        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
             const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
             const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
                 ? (<ts.ImportEqualsDeclaration>node).name
@@ -137,7 +152,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string): boolean {
+    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string, node: any): boolean {
         if (expectedImportedName === importedName) {
             return true;
         }
@@ -149,6 +164,11 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
         const isIgnoredModuleExist = this.checkIgnoredListExists(moduleName, this.option.ignoredList);
         if (isIgnoredModuleExist) {
+            return true;
+        }
+
+        const ignoreThisExternalModule = this.checkIgnoreExternalModule(moduleName, node, this.option.config);
+        if (ignoreThisExternalModule) {
             return true;
         }
 
@@ -175,5 +195,20 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
         return ignoredList.includes(moduleName);
+    }
+
+    private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
+        if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
+            let ignoreThisExternalModule = false;
+            for (const [key, value] of node.parent.resolvedModules) {
+                if (key === moduleName && value.isExternalLibraryImport === true) {
+                    ignoreThisExternalModule = true;
+                    break;
+                }
+            }
+            return ignoreThisExternalModule;
+        }
+
+        return false;
     }
 }

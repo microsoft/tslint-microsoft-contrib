@@ -64,6 +64,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             if (index === 1 && typeof(opt) === 'object') {
                 result.replacements = this.extractReplacements(opt);
             }
+
+            if (index === 2 && Array.isArray(opt)) {
+                result.ignoredList = this.extractIgnoredList(opt);
+            }
         });
 
         return result;
@@ -78,6 +82,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             }
         });
         return result;
+    }
+
+    private extractIgnoredList(opt: IgnoredList): IgnoredList {
+        return opt.filter((moduleName: string) => typeof moduleName === 'string');
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {

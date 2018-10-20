@@ -3,6 +3,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {AstUtils} from './AstUtils';
 import {Scope} from './Scope';
+import { isNamed } from './TypeGuard';
 
 /**
  * This exists so that you can try to tell the types of variables
@@ -57,9 +58,9 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             return false;
         }
 
-        if (expression.kind === ts.SyntaxKind.CallExpression) {
+        if (ts.isCallExpression(expression)) {
             // calling Function.bind is a special case that makes tslint throw an exception
-            if ((<any>expression).expression.name && (<any>expression).expression.name.getText() === 'bind') {
+            if (isNamed(expression.expression) && expression.expression.name.getText() === 'bind') {
                 return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
             }
 

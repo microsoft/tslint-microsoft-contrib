@@ -40,7 +40,7 @@ import TestHelper = require('./TestHelper');
 `;
 
         const formatter = new FormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `
 import {BaseFormatter} from './utils/BaseFormatter';
@@ -53,7 +53,7 @@ import {TestHelper} from './TestHelper';
 `;
 
         const formatter = new FormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `import {TestHelper} from './TestHelper';
 `.trim());
@@ -65,7 +65,7 @@ import {TestHelper} from './TestHelper';
 console.log(TestHelper);`;
 
         const formatter = new FormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `import {TestHelper} from './TestHelper';
 
@@ -80,7 +80,7 @@ import TestHelper = require(
 `;
 
         const formatter = new FormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `
 import {TestHelper} from

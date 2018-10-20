@@ -9,7 +9,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { IDom } from './utils/attributes/IDom';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const DOM_SCHEMA: IDom[] = require('./utils/attributes/domSchema.json');
+const DOM_SCHEMA: { [key: string]: IDom } = require('./utils/attributes/domSchema.json');
 const FAILURE_STRING: string = 'Elements with event handlers must have role attribute.';
 const ROLE_STRING: string = 'role';
 const TARGET_EVENTS: string[] = ['click', 'keyup', 'keydown', 'keypress', 'mousedown', 'mouseup',
@@ -52,7 +52,7 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
     private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (!(<any>DOM_SCHEMA)[tagName]) {
+        if (!DOM_SCHEMA[tagName]) {
             return;
         }
 

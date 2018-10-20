@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 /**
  * Implementation of the prefer-array-literal rule.
@@ -39,8 +40,8 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.allowTypeParameters = opt['allow-type-parameters'] === true;
             }
         });

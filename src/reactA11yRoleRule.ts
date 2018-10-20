@@ -11,10 +11,10 @@ import { IRole, IRoleSchema } from './utils/attributes/IRole';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
-const ROLES: IRole[] = ROLE_SCHEMA.roles;
+const ROLES: { [key: string]: IRole } = ROLE_SCHEMA.roles;
 
 // The array of non-abstract valid rules.
-const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => (<any>ROLES)[role].isAbstract === false);
+const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => ROLES[role].isAbstract === false);
 
 export function getFailureStringUndefinedRole(): string {
     return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +

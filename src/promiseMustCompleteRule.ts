@@ -65,7 +65,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
 
     protected visitNewExpression(node: ts.NewExpression): void {
         if (this.isPromiseDeclaration(node) && node.arguments !== undefined) {
-            const functionArgument: ts.FunctionLikeDeclaration = <ts.FunctionLikeDeclaration><any>node.arguments[0];
+            const functionArgument: ts.FunctionLikeDeclaration = <ts.FunctionLikeDeclaration>node.arguments[0];
             const functionBody = functionArgument.body;
 
             if (functionBody !== undefined) {

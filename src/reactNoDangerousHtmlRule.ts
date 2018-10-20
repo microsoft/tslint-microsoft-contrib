@@ -45,7 +45,7 @@ export class Rule extends Lint.Rules.AbstractRule {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return <Exception[]><any>options; // MSE version of tslint somehow requires this
+            return options;
         }
         return undefined;
     }
@@ -60,7 +60,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
     }
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.currentMethodName = (<any>node.name).text;
+        this.currentMethodName = node.name.getText();
         super.visitMethodDeclaration(node);
         this.currentMethodName = '<unknown>';
     }
@@ -70,7 +70,7 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         const keyNode : ts.DeclarationName = node.name;
 
         if (keyNode.kind === ts.SyntaxKind.Identifier) {
-            if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
+            if (keyNode.text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, <ts.Identifier>keyNode);
             }
         }

@@ -324,7 +324,7 @@ describe('functionNameRule', () : void => {
 
     describe('reading options', (): void => {
 
-        let options: any[];
+        let options: [boolean, object];
 
         beforeEach((): void => {
             options = [ true,

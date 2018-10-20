@@ -74,7 +74,7 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return <string[]><any>options; // MSE version of tslint somehow requires this
+            return options;
         }
         return undefined;
     }

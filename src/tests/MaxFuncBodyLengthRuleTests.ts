@@ -5,7 +5,7 @@ import { TestHelper } from './TestHelper';
  * Unit tests.
  */
 describe('maxFuncBodyLengthRule', (): void => {
-    let options: any;
+    let options: [boolean, number | object, object?];
     const script: string = `
         // https://github.com/Microsoft/tslint-microsoft-contrib/issues/468#issuecomment-407456317
 

@@ -55,7 +55,8 @@
     "generate:sdl-report": "node build-tasks/generate-sdl-report.js",
     "generate:rule-metadata": "node build-tasks/generate-rule-metadata.js",
     "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",
-    "newtest": "npm-run-all clean copy:json ts:* test:* lint:* validate:* copy:package copy:meta generate:*"
+    "newtest": "npm-run-all clean copy:json ts:* test:* lint:* validate:* copy:package copy:meta generate:*",
+    "create-rule": "node build-tasks/create-rule.js"
   },
   "dependencies": {
     "tsutils": "^2.27.2 <2.29.0"

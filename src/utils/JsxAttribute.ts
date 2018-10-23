@@ -112,8 +112,8 @@ export function isEmpty(node: ts.JsxAttribute): boolean {
         return true;
     } else if (isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
-    } else if ((<any>initializer).expression !== undefined) {
-        const expression: ts.Expression = (<any>initializer).expression;
+    } else if (initializer.expression !== undefined) {
+        const expression: ts.Expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
         } else if (expression.kind === ts.SyntaxKind.NullKeyword) {

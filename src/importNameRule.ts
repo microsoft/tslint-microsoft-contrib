@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 /**
  * Implementation of the import-name rule.
@@ -34,7 +35,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 type Replacement = { [index: string]: string; };
 type IgnoredList = string[];
 type ConfigKey = 'ignoreExternalModule';
-type Config = { [index in ConfigKey]: boolean; };
+type Config = { [index in ConfigKey]: unknown; };
+
+//
+interface RuntimeSourceFile extends ts.SourceFile {
+    resolvedModules: Map<string, ts.ResolvedModuleFull>;
+}
+interface RuntimeNode extends ts.Node {
+    parent: RuntimeSourceFile;
+}
 
 type Option = {
     replacements: Replacement
@@ -60,8 +69,8 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
             }
         };
 
-        this.getOptions().forEach((opt: any, index: number) => {
-            if (index === 1 && typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown, index: number) => {
+            if (index === 1 && isObject(opt)) {
                 result.replacements = this.extractReplacements(opt);
             }
 
@@ -69,7 +78,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
                 result.ignoredList = this.extractIgnoredList(opt);
             }
 
-            if (index === 3 && typeof(opt) === 'object') {
+            if (index === 3 && isObject(opt)) {
                 result.config = this.extractConfig(opt);
             }
         });
@@ -77,14 +86,16 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         return result;
     }
 
-    private extractReplacements(opt: Replacement): Replacement {
+    private extractReplacements(opt: Replacement | unknown): Replacement {
         const result: Replacement = {};
-        Object.keys(opt).forEach((key: string): void => {
-            const value: any = opt[key];
-            if (typeof value === 'string') {
-                result[key] = value;
-            }
-        });
+        if (isObject(opt)) {
+            Object.keys(opt).forEach((key: string): void => {
+                const value: unknown = opt[key];
+                if (typeof value === 'string') {
+                    result[key] = value;
+                }
+            });
+        }
         return result;
     }
 
@@ -92,15 +103,19 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         return opt.filter((moduleName: string) => typeof moduleName === 'string');
     }
 
-    private extractConfig(opt: Config): Config {
+    private extractConfig(opt: unknown): Config {
+        const result: Config = { ignoreExternalModule: true };
         const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
-        return Object.keys(opt).reduce((accum: Config, key: string) => {
-            if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
-                accum[<ConfigKey>key] = opt[<ConfigKey>key];
+        if (isObject(opt)) {
+            return Object.keys(opt).reduce((accum: Config, key: string) => {
+                if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
+                    accum[<ConfigKey>key] = opt[key];
+                    return accum;
+                }
                 return accum;
-            }
-            return accum;
-        }, { ignoreExternalModule: true });
+            }, { ignoreExternalModule: true });
+        }
+        return result;
     }
 
     protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
@@ -152,7 +167,8 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
-    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string, node: any): boolean {
+    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string,
+        node: ts.ImportEqualsDeclaration | ts.ImportDeclaration): boolean {
         if (expectedImportedName === importedName) {
             return true;
         }
@@ -199,10 +215,11 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     // Ignore NPM installed modules by checking its module path at runtime
-    private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
-        if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
+    private checkIgnoreExternalModule(moduleName: string, node: unknown, opt: Config): boolean {
+        const runtimeNode: RuntimeNode = <RuntimeNode>node;
+        if (opt.ignoreExternalModule === true && runtimeNode.parent !== undefined && runtimeNode.parent.resolvedModules !== undefined) {
             let ignoreThisExternalModule = false;
-            node.parent.resolvedModules.forEach((value: any, key: string) => {
+            runtimeNode.parent.resolvedModules.forEach((value: ts.ResolvedModuleFull, key: string) => {
                 if (key === moduleName && value.isExternalLibraryImport === true) {
                     ignoreThisExternalModule = true;
                 }

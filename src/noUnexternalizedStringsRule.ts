@@ -54,8 +54,8 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         this.ignores = Object.create(null);
         /* tslint:enable:no-null-keyword */
 
-        const options: any[] = this.getOptions();
-        const first: UnexternalizedStringsOptions = options && options.length > 0 ? options[0] : undefined;
+        const options: unknown = this.getOptions();
+        const first: UnexternalizedStringsOptions = options && Array.isArray(options) && options.length > 0 ? options[0] : undefined;
         if (first) {
             if (Array.isArray(first.signatures)) {
                 first.signatures.forEach((signature: string) => this.signatures[signature] = true);
@@ -114,7 +114,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
             const kind = parent.kind;
             if (kind === kinds.CallExpression) {
                 const callExpression = <ts.CallExpression>parent;
-                return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<any>node) }};
+                return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<ts.Expression>node) }};
             } else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
                 return { ignoreUsage: true };
             } else if (kind === kinds.VariableDeclaration || kind === kinds.FunctionDeclaration || kind === kinds.PropertyDeclaration

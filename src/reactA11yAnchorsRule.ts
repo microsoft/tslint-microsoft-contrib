@@ -10,6 +10,7 @@ import {
     getStringLiteral,
     isEmpty
 } from './utils/JsxAttribute';
+import { isObject } from './utils/TypeGuard';
 
 export const OPTION_IGNORE_CASE: string = 'ignore-case';
 export const OPTION_IGNORE_WHITESPACE: string = 'ignore-whitespace';
@@ -88,13 +89,13 @@ class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
     }
 
     private parseOptions(): void {
-        this.getOptions().forEach((opt: any) => {
+        this.getOptions().forEach((opt: unknown) => {
             if (typeof opt === 'string' && opt === OPTION_IGNORE_CASE) {
                 this.ignoreCase = true;
             }
 
-            if (typeof opt === 'object') {
-                this.ignoreWhitespace = opt[OPTION_IGNORE_WHITESPACE];
+            if (isObject(opt)) {
+                this.ignoreWhitespace = <string>opt[OPTION_IGNORE_WHITESPACE];
             }
         });
     }

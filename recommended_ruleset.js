@@ -117,6 +117,7 @@ module.exports = {
         "file-name-casing": true,
         "function-name": true,
         "import-name": true,
+        "informative-docs": true,
         "interface-name": true,
         "jsdoc-format": true,
         "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
@@ -186,6 +187,7 @@ module.exports = {
         "react-a11y-event-has-role": true,
         "react-a11y-image-button-has-alt": true,
         "react-a11y-img-has-alt": true,
+        "react-a11y-input-elements": true,
         "react-a11y-lang": true,
         "react-a11y-meta": true,
         "react-a11y-no-onchange": true,

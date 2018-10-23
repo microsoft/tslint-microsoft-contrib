@@ -4,6 +4,7 @@ import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {forEachTokenWithTrivia} from 'tsutils';
+import { isObject } from './utils/TypeGuard';
 
 /**
  * Implementation of the max-func-body-length rule.
@@ -148,20 +149,20 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     private parseOptions () {
-        this.getOptions().forEach((opt: any) => {
+        this.getOptions().forEach((opt: unknown) => {
             if (typeof(opt) === 'number') {
                 this.maxBodyLength = opt;
                 return;
             }
 
-            if (typeof(opt) === 'object') {
-                this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
-                this.maxFuncExpressionBodyLength = opt[FUNC_EXPRESSION_BODY_LENGTH];
-                this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
-                this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
-                this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
-                this.ignoreComments = opt[IGNORE_COMMENTS];
-                const regex: string = opt[IGNORE_PARAMETERS_TO_FUNCTION];
+            if (isObject(opt)) {
+                this.maxFuncBodyLength = <number>opt[FUNC_BODY_LENGTH];
+                this.maxFuncExpressionBodyLength = <number>opt[FUNC_EXPRESSION_BODY_LENGTH];
+                this.maxArrowBodyLength = <number>opt[ARROW_BODY_LENGTH];
+                this.maxMethodBodyLength = <number>opt[METHOD_BODY_LENGTH];
+                this.maxCtorBodyLength = <number>opt[CTOR_BODY_LENGTH];
+                this.ignoreComments = !!opt[IGNORE_COMMENTS];
+                const regex: string = <string>opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     this.ignoreParametersToFunctionRegex = new RegExp(regex);
                 }
@@ -182,10 +183,10 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private formatPlaceText (node: ts.FunctionLikeDeclaration) {
         const funcTypeText = this.getFuncTypeText(node.kind);
-        if (node.kind === ts.SyntaxKind.MethodDeclaration ||
-            node.kind === ts.SyntaxKind.FunctionDeclaration ||
-            node.kind === ts.SyntaxKind.FunctionExpression) {
-            return ` in ${ funcTypeText } ${ (<any>node.name || {text: ''}).text }()`;
+        if (ts.isMethodDeclaration(node) ||
+            ts.isFunctionDeclaration(node) ||
+            ts.isFunctionExpression(node)) {
+            return ` in ${ funcTypeText } ${ node.name ? node.name.getText() : '' }()`;
         } else if (node.kind === ts.SyntaxKind.Constructor) {
             return ` in class ${ this.currentClassName }`;
         }

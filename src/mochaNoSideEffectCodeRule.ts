@@ -6,6 +6,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 import {MochaUtils} from './utils/MochaUtils';
 import {Utils} from './utils/Utils';
+import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 
@@ -44,9 +45,9 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     private parseOptions() {
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
-                if (opt.ignore !== undefined) {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
+                if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
                     this.ignoreRegex = new RegExp(opt.ignore);
                 }
             }

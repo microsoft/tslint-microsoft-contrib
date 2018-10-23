@@ -10,8 +10,8 @@ import { IDom } from './utils/attributes/IDom';
 import { IAria } from './utils/attributes/IAria';
 
 // tslint:disable:no-require-imports no-var-requires
-const DOM_SCHEMA: IDom[] = require('./utils/attributes/domSchema.json');
-const ARIA_SCHEMA: IAria[] = require('./utils/attributes/ariaSchema.json');
+const DOM_SCHEMA: { [key: string]: IDom } = require('./utils/attributes/domSchema.json');
+const ARIA_SCHEMA: { [key: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 // tslint:enable:no-require-imports no-var-requires
 
 export function getFailureString(tagName: string, ariaAttributeNames: string[]): string {
@@ -55,12 +55,12 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
     private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (!(<any>DOM_SCHEMA)[tagName]) {
+        if (!DOM_SCHEMA[tagName]) {
             return;
         }
 
-        const supportAria: boolean = (<any>DOM_SCHEMA)[tagName].supportAria !== undefined
-            ? (<any>DOM_SCHEMA)[tagName].supportAria
+        const supportAria: boolean = DOM_SCHEMA[tagName].supportAria !== undefined
+            ? DOM_SCHEMA[tagName].supportAria
             : false;
 
         if (supportAria) {

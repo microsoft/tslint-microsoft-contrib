@@ -54,11 +54,11 @@ export module TestHelper {
         inputFileOrScript: string,
         useTypeChecker: boolean = false
     ) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, [], useTypeChecker);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, [], useTypeChecker);
     }
     export function assertNoViolationWithOptions(
         ruleName: string,
-        options: any[],
+        options: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         useTypeChecker: boolean = false
     ) {
@@ -66,7 +66,7 @@ export module TestHelper {
     }
     export function assertViolationsWithOptions(
         ruleName: string,
-        options: any[],
+        options: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
@@ -79,18 +79,18 @@ export module TestHelper {
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
     ) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, useTypeChecker);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, useTypeChecker);
     }
     export function assertViolationsWithTypeChecker(
         ruleName: string,
         inputFileOrScript: string,
         expectedFailures: ExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, true);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, true);
     }
 
     export function runRule(
         ruleName: string,
-        userOptions: string[] | null,
+        userOptions: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript : string,
         useTypeChecker : boolean = false
     ): Lint.LintResult {
@@ -102,7 +102,7 @@ export module TestHelper {
             rulesDirectory: []
         };
 
-        if (userOptions != null && userOptions.length > 0) {
+        if (userOptions !== undefined && userOptions.length > 0) {
             //options like `[4, 'something', false]` were passed, so prepend `true` to make the array like `[true, 4, 'something', false]`
             configuration.rules.set(ruleName, {
                 ruleName,
@@ -152,7 +152,7 @@ export module TestHelper {
 
     function runRuleAndEnforceAssertions(
         ruleName: string,
-        userOptions: string[] | null,
+        userOptions: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
@@ -179,7 +179,7 @@ export module TestHelper {
             }
         });
 
-        const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, null, 2)}`;
+        const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, undefined, 2)}`;
 
         chai.assert.equal(actualFailures.length, expectedFailures.length, errorMessage);
 

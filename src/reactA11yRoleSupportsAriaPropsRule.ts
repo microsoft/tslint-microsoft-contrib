@@ -16,7 +16,7 @@ const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
 const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 // tslint:enable:no-require-imports no-var-requires
 
-const ROLES: IRole[] = ROLE_SCHEMA.roles;
+const ROLES: { [key: string]: IRole } = ROLE_SCHEMA.roles;
 const ROLE_STRING: string = 'role';
 
 export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], invalidPropNames: string[]): string {
@@ -94,7 +94,7 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         let supportedAttributeNames: string[] = ROLE_SCHEMA.globalSupportedProps;
 
         normalizedRoles.forEach((role) => {
-            supportedAttributeNames = supportedAttributeNames.concat((<any>ROLES)[role].additionalSupportedProps || []);
+            supportedAttributeNames = supportedAttributeNames.concat(ROLES[role].additionalSupportedProps || []);
         });
 
         const attributeNamesInElement: string[] = Object.keys(attributesInElement)

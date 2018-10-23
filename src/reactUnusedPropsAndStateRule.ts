@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const PROPS_REGEX = 'props-interface-regex';
 const STATE_REGEX = 'state-interface-regex';
@@ -54,18 +55,19 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, this.propsInterfaceRegex);
                 this.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, this.stateInterfaceRegex);
             }
         });
     }
 
-    private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
+    private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] !== undefined) {
-                return new RegExp(option[key]);
+            const value: unknown = option[key];
+            if (value !== undefined && typeof value === 'string') {
+                return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
@@ -194,8 +196,11 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
         node.members.forEach((typeElement: ts.TypeElement): void => {
-            if (typeElement.name !== undefined && (<any>typeElement.name).text !== undefined) {
-                result[(<any>typeElement.name).text] = typeElement;
+            if (typeElement.name !== undefined) {
+                const text = typeElement.name.getText();
+                if (text !== undefined) {
+                    result[text] = typeElement;
+                }
             }
         });
         return result;

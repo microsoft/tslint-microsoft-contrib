@@ -36,6 +36,7 @@
     "import-blacklist": false,
     "import-name": true,
     "import-spacing": true,
+    "informative-docs": true,
     "indent": [
       true,
       "spaces"
@@ -78,7 +79,7 @@
     "mocha-unneeded-done": true,
     "new-parens": true,
     "no-angle-bracket-type-assertion": false,
-    "no-any": false,
+    "no-any": true,
     "no-arg": true,
     "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
@@ -310,6 +311,7 @@
     "space-within-parens": true,
     "switch-final-break": true,
     "type-literal-delimiter": false,
-    "use-default-type-parameter": false
+    "use-default-type-parameter": false,
+    "react-a11y-input-elements": true
   }
 }

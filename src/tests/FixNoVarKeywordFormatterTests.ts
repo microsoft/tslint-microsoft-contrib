@@ -39,7 +39,7 @@ var foo = bar;
 `;
 
         const formatter = new FixNoVarKeywordFormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput()).to.equal(
             `
 let foo = bar;
@@ -51,7 +51,7 @@ let foo = bar;
 `;
 
         const formatter = new FixNoVarKeywordFormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput()).to.equal(
             `let foo = bar;
 `);
@@ -65,7 +65,7 @@ var foo = bar;
 `;
 
         const formatter = new FixNoVarKeywordFormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput()).to.equal(
             `
 
@@ -78,7 +78,7 @@ let foo = bar;
         const input : string = `\r\nvar foo = bar;\r\n`;
 
         const formatter = new FixNoVarKeywordFormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput()).to.equal(`\r\nlet foo = bar;\r\n`);
     });
 
@@ -86,7 +86,7 @@ let foo = bar;
         const input : string = `\r\n    var foo = bar;\r\n`;
 
         const formatter = new FixNoVarKeywordFormatterForTesting(input);
-        formatter.format(TestHelper.runRule(ruleName, null, input).failures);
+        formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput()).to.equal(`\r\n    let foo = bar;\r\n`);
     });
 });

@@ -15,6 +15,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         hasFix: true,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
+        optionExamples: [
+            [true],
+            [true, { moduleName: 'yourModuleName' }],
+            [true, { moduleName: 'yourModuleName' }, ['module1', 'module2']],
+            [true, { moduleName: 'yourModuleName' }, ['module1', 'module2'], { ignoreExternalModule: false }]
+        ],
         typescriptOnly: true,
         issueClass: 'Ignored',
         issueType: 'Warning',

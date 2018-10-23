@@ -36,6 +36,7 @@
     "import-blacklist": false,
     "import-name": true,
     "import-spacing": true,
+    "informative-docs": true,
     "indent": [
       true,
       "spaces"
@@ -78,7 +79,7 @@
     "mocha-unneeded-done": true,
     "new-parens": true,
     "no-angle-bracket-type-assertion": false,
-    "no-any": false,
+    "no-any": true,
     "no-arg": true,
     "no-backbone-get-set-outside-model": true,
     "no-banned-terms": true,
@@ -145,7 +146,7 @@
     "no-multiline-string": [ false ],
     "no-multiple-var-decl": false,
     "no-namespace": false,
-    "no-null-keyword": false,
+    "no-null-keyword": true,
     "no-octal-literal": true,
     "no-parameter-properties": false,
     "no-reference": true,
@@ -229,6 +230,7 @@
     "react-a11y-img-has-alt": true,
     "react-a11y-lang": true,
     "react-a11y-meta": true,
+    "react-a11y-no-onchange": true,
     "react-a11y-props": true,
     "react-a11y-proptypes": true,
     "react-a11y-role": true,
@@ -309,6 +311,7 @@
     "space-within-parens": true,
     "switch-final-break": true,
     "type-literal-delimiter": false,
-    "use-default-type-parameter": false
+    "use-default-type-parameter": false,
+    "react-a11y-input-elements": true
   }
 }

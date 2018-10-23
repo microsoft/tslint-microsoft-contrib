@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'non-literal-require',
         type: 'functionality',
         description: 'Detect require includes that are not for string literals',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -34,7 +34,7 @@ class NonLiteralRequireRuleWalker extends ErrorTolerantWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionName(node) === 'require'
-            && AstUtils.getFunctionTarget(node) == null
+            && AstUtils.getFunctionTarget(node) === undefined
             && node.arguments.length > 0) {
 
             if (node.arguments[0].kind === ts.SyntaxKind.ArrayLiteralExpression) {

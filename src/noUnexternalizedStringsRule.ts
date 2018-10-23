@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unexternalized-strings',
         type: 'maintainability',
         description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -45,10 +45,14 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, opt: Lint.IOptions) {
         super(sourceFile, opt);
+
+        /* tslint:disable:no-null-keyword */
         this.signatures = Object.create(null);
         this.ignores = Object.create(null);
-        const options: any[] = this.getOptions();
-        const first: UnexternalizedStringsOptions = options && options.length > 0 ? options[0] : null;
+        /* tslint:enable:no-null-keyword */
+
+        const options: unknown = this.getOptions();
+        const first: UnexternalizedStringsOptions = options && Array.isArray(options) && options.length > 0 ? options[0] : undefined;
         if (first) {
             if (Array.isArray(first.signatures)) {
                 first.signatures.forEach((signature: string) => this.signatures[signature] = true);
@@ -79,7 +83,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         if (info && info.ignoreUsage) {
             return;
         }
-        const callInfo = info ? info.callInfo : null;
+        const callInfo = info ? info.callInfo : undefined;
         if (callInfo && this.ignores[callInfo.callExpression.expression.getText()]) {
             return;
         }
@@ -90,7 +94,7 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
         // We have a string that is a direct argument into the localize call.
         const messageArg = callInfo.argIndex === this.messageIndex
             ? callInfo.callExpression.arguments[this.messageIndex]
-            : null;
+            : undefined;
         if (messageArg && messageArg !== node) {
             this.addFailureAt(
                 node.getStart(), node.getWidth(),
@@ -100,24 +104,24 @@ class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
     }
 
     private findDescribingParent(node: ts.Node):
-        { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } | null {
+        { callInfo?:  { callExpression: ts.CallExpression, argIndex: number }, ignoreUsage?: boolean; } | undefined {
         const kinds = ts.SyntaxKind;
-        while ((node.parent != null)) {
+        while ((node.parent !== undefined)) {
             const parent: ts.Node = node.parent;
             const kind = parent.kind;
             if (kind === kinds.CallExpression) {
                 const callExpression = <ts.CallExpression>parent;
-                return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<any>node) }};
+                return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(<ts.Expression>node) }};
             } else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
                 return { ignoreUsage: true };
             } else if (kind === kinds.VariableDeclaration || kind === kinds.FunctionDeclaration || kind === kinds.PropertyDeclaration
                 || kind === kinds.MethodDeclaration || kind === kinds.VariableDeclarationList || kind === kinds.InterfaceDeclaration
                 || kind === kinds.ClassDeclaration || kind === kinds.EnumDeclaration || kind === kinds.ModuleDeclaration
                 || kind === kinds.TypeAliasDeclaration || kind === kinds.SourceFile) {
-                    return null;
+                    return undefined;
             }
             node = parent;
         }
-        return null;
+        return undefined;
     }
 }

@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-octal-literal',
         type: 'maintainability',
         description: 'Do not use octal literals or escaped octal sequences',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

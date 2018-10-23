@@ -9,8 +9,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'missing-jsdoc',
         type: 'maintainability',
-        description: 'Deprecated - This rule can be replaced with TSLint\'s file-header. All files must have a top level JSDoc comment.',
-        options: null,
+        description: 'All files must have a top level JSDoc comment.',
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',

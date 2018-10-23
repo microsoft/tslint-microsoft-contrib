@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'chai-prefer-contains-to-index-of',
         type: 'maintainability',
         description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -48,7 +48,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
     }
 
     private isFirstArgumentNegative1(node: ts.CallExpression): boolean {
-        if (node.arguments != null && node.arguments.length > 0) {
+        if (node.arguments !== undefined && node.arguments.length > 0) {
             const firstArgument: ts.Expression = node.arguments[0];
             if (firstArgument.getText() === '-1') {
                 return true;
@@ -59,7 +59,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
 
     private isFirstArgumentIndexOfResult(node: ts.CallExpression): boolean {
         const expectCall = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall !== null && expectCall.arguments != null && expectCall.arguments.length > 0) {
+        if (expectCall !== undefined && expectCall.arguments !== undefined && expectCall.arguments.length > 0) {
             const firstArgument: ts.Expression = expectCall.arguments[0];
             if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils.getFunctionName(<ts.CallExpression>firstArgument) === 'indexOf') {

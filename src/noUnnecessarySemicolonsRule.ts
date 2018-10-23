@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-semicolons',
         type: 'maintainability',
         description: 'Remove unnecessary semicolons',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

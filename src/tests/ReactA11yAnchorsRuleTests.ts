@@ -273,7 +273,7 @@ describe('reactA11yAnchorsRule', () : void => {
     });
 
     it('should pass when identical hrefs have texts with different leading/trailing whitespace on ignore-whitespace trim', () : void => {
-        const opt : any = {};
+        const opt : { [key: string]: string } = {};
         opt[OPTION_IGNORE_WHITESPACE] = 'trim';
 
         const script : string = `
@@ -288,7 +288,7 @@ describe('reactA11yAnchorsRule', () : void => {
     });
 
     it('should pass when identical hrefs have texts with different whitespace on ignore-whitespace all', () : void => {
-        const opt : any = {};
+        const opt : { [key: string]: string } = {};
         opt[OPTION_IGNORE_WHITESPACE] = 'all';
 
         const script : string = `

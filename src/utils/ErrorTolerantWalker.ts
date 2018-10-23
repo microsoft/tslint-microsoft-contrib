@@ -2,8 +2,10 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 /**
- * A base walker class that gracefully handles unexpected errors.
- * Errors are often thrown when the TypeChecker is invoked.
+ * @deprecated
+ * The type checker is stable enough now that we don't need to wrap around it.
+ * You should directly extend Lint.AbstractRule yourself.
+ * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/556
  */
 export class ErrorTolerantWalker extends Lint.RuleWalker {
 
@@ -32,7 +34,7 @@ export class ErrorTolerantWalker extends Lint.RuleWalker {
         // Some versions of IE have the word "function" in the constructor name and
         // have the function body there as well. This rips out and returns the function name.
         const result: string = this.constructor.toString().match(/function\s+([\w\$]+)\s*\(/)![1] || '';
-        if (result == null || result.length === 0) {
+        if (result.length === 0) {
             throw new Error('Could not determine class name from input: ' + this.constructor.toString());
         }
         return result;

@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STATIC_FOUND: string = 'Static invocation of underscore function found. Prefer instance version instead: ';
 const FAILURE_INSTANCE_FOUND: string = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
@@ -32,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'underscore-consistent-invocation',
         type: 'maintainability',
         description: 'Enforce a consistent usage of the _ functions',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -54,8 +55,8 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 if (opt.style === 'static') {
                     this.style = 'static';
                 }
@@ -82,7 +83,7 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 const target = AstUtils.getFunctionTarget(call);
                 const functionName = AstUtils.getFunctionName(call);
-                if (target == null && functionName === '_' && call.arguments.length === 1) {
+                if (target === undefined && functionName === '_' && call.arguments.length === 1) {
                     const underscoreFunctionName = AstUtils.getFunctionName(node);
                     return FUNCTION_NAMES.indexOf(underscoreFunctionName) > -1;
                 }

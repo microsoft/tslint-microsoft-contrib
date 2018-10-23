@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-empty-interfaces',
         type: 'maintainability',
         description: 'Do not use empty interfaces.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -48,11 +48,11 @@ class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
     }
 
     private isInterfaceEmpty(node: ts.InterfaceDeclaration): boolean {
-        return node.members == null || node.members.length === 0;
+        return node.members === undefined || node.members.length === 0;
     }
 
     private hasMultipleParents(node: ts.InterfaceDeclaration): boolean {
-        if (node.heritageClauses == null || node.heritageClauses.length === 0) {
+        if (node.heritageClauses === undefined || node.heritageClauses.length === 0) {
             return false;
         }
         return node.heritageClauses[0].types.length >= 2;

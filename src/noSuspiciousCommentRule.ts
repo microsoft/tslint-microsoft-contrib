@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-suspicious-comment',
         type: 'maintainability',
         description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.join(', ')}`,
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

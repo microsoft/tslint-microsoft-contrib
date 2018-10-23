@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -11,7 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-constant-condition',
         type: 'maintainability',
         description: 'Do not use constant expressions in conditions.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -40,8 +41,8 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     private extractBoolean(keyName: string): boolean {
         let result : boolean = true;
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 if (opt[keyName] === false || opt[keyName] === 'false') {
                     result = false;
                 }
@@ -87,7 +88,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitForStatement(node: ts.ForStatement): void {
-        if (this.checkLoops && node.condition != null) {
+        if (this.checkLoops && node.condition !== undefined) {
             if (AstUtils.isConstantExpression(node.condition)) {
                 const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailureAt(node.getStart(), node.getWidth(), message);

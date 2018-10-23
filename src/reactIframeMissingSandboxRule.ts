@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-iframe-missing-sandbox',
         type: 'functionality',
         description: 'React iframes must specify a sandbox attribute',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -75,7 +75,7 @@ class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
                 const attributeName = jsxAttribute.name.text;
                 if (attributeName === 'sandbox') {
                     sandboxAttributeFound = true;
-                    if (jsxAttribute.initializer != null && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                    if (jsxAttribute.initializer !== undefined && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                         this.validateSandboxValue(<ts.StringLiteral>jsxAttribute.initializer);
                     }
                 }

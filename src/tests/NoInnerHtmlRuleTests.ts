@@ -88,7 +88,7 @@ describe('noInnerHtmlRule', () : void => {
     });
 
     describe('with options', (): void => {
-        let options: any[];
+        let options: [boolean, object];
 
         beforeEach((): void => {
             options = [ true,

@@ -6,6 +6,7 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 import {MochaUtils} from './utils/MochaUtils';
 import {Utils} from './utils/Utils';
+import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 
@@ -15,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'mocha-no-side-effect-code',
         type: 'maintainability',
         description: 'All test logic in a Mocha test case should be within Mocha lifecycle method.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -41,9 +42,9 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     private parseOptions() {
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
-                if (opt.ignore != null) {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
+                if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
                     this.ignoreRegex = new RegExp(opt.ignore);
                 }
             }
@@ -105,7 +106,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
     }
 
     private validateExpression(initializer: ts.Expression, parentNode: ts.Node): void {
-        if (initializer == null) {
+        if (initializer === undefined) {
             return;
         }
         // constants cannot throw errors in the test runner
@@ -193,7 +194,7 @@ class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
             }
         }
         // ignore anything matching our ignore regex
-        if (this.ignoreRegex != null && this.ignoreRegex.test(initializer.getText())) {
+        if (this.ignoreRegex !== undefined && this.ignoreRegex.test(initializer.getText())) {
             return;
         }
 

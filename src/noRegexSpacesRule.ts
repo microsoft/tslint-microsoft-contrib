@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-regex-spaces',
         type: 'maintainability',
         description: 'Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoRegexSpacesRuleWalker extends ErrorTolerantWalker {
     protected visitRegularExpressionLiteral(node: ts.Node): void {
         const match = /( {2,})+?/.exec(node.getText());
-        if (match != null) {
+        if (match !== null) {
             const replacement: string = '{' + match[0].length + '}';
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
         }

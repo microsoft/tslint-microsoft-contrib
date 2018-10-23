@@ -7,32 +7,32 @@ export module ChaiUtils {
 
     export function isExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): boolean {
         const callExpression = getLeftMostCallExpression(node);
-        if (callExpression == null) {
+        if (callExpression === undefined) {
             return false;
         }
 
         return /.*\.?expect/.test(callExpression.expression.getText());
     }
 
-    export function getExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression | null {
+    export function getExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): ts.CallExpression | undefined {
         const callExpression = getLeftMostCallExpression(node, false);
-        if (callExpression == null) {
-            return null;
+        if (callExpression === undefined) {
+            return undefined;
         }
 
         if (/.*\.?expect/.test(callExpression.expression.getText())) {
             return callExpression;
         } else {
-            return null;
+            return undefined;
         }
     }
 
     export function getLeftMostCallExpression(
         node: ts.PropertyAccessExpression | ts.CallExpression,
         checkParent: boolean = false
-    ): ts.CallExpression | null {
+    ): ts.CallExpression | undefined {
         let leftSide: ts.Node = node.expression;
-        while (leftSide != null) {
+        while (leftSide !== undefined) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide;
             } else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
@@ -40,25 +40,25 @@ export module ChaiUtils {
             } else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide.parent;
             } else {
-                return null; // cannot walk any further left in the property expression
+                return undefined; // cannot walk any further left in the property expression
             }
         }
-        return null;
+        return undefined;
     }
 
-    export function getFirstExpectCallParameter(node: ts.CallExpression): ts.Node | null {
+    export function getFirstExpectCallParameter(node: ts.CallExpression): ts.Node | undefined {
         const expectCall = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall != null && expectCall.arguments.length > 0) {
+        if (expectCall !== undefined && expectCall.arguments.length > 0) {
             return expectCall.arguments[0];
         }
-        return null;
+        return undefined;
     }
 
-    export function getFirstExpectationParameter(node: ts.CallExpression): ts.Node | null {
+    export function getFirstExpectationParameter(node: ts.CallExpression): ts.Node | undefined {
         if (node.arguments.length > 0) {
             return node.arguments[0];
         }
-        return null;
+        return undefined;
     }
 
     export function isEqualsInvocation(propExpression: ts.PropertyAccessExpression): boolean {

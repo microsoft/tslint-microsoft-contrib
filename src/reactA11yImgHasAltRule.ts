@@ -91,7 +91,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
 
         // If element contains JsxSpreadElement in which there could possibly be alt attribute, don't check it.
         const nodeAttributes = getAllAttributesFromJsxElement(node);
-        if (nodeAttributes !== null && nodeAttributes.some(isJsxSpreadAttribute)) {
+        if (nodeAttributes !== undefined && nodeAttributes.some(isJsxSpreadAttribute)) {
             return;
         }
 

@@ -22,7 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unsupported-browser-code',
         type: 'maintainability',
         description: 'Avoid writing browser-specific code for unsupported browser versions',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -86,7 +86,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
     private parseSupportedBrowsers(): { [key: string]: BrowserVersion } {
         const result: { [key: string]: BrowserVersion } = {};
 
-        this.getOptions().forEach((option: any) => {
+        this.getOptions().forEach((option: unknown) => {
             if (option instanceof Array) {
                 option.forEach((browserString: string) => {
                     const browser = this.parseBrowserString(browserString);

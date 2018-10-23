@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-document-write',
         type: 'maintainability',
         description: 'Do not use document.write',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

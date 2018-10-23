@@ -32,7 +32,7 @@ describe('noConstantConditionRule', () : void => {
                 doSomething();
             } while (true)`;
 
-        const options: any[] = [ true, { 'checkLoops': false } ];
+        const options = [ true, { 'checkLoops': false } ];
         TestHelper.assertViolationsWithOptions(ruleName, options, script, [ ]);
     });
 

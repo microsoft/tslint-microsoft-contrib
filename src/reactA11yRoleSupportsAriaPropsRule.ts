@@ -16,7 +16,7 @@ const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
 const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 // tslint:enable:no-require-imports no-var-requires
 
-const ROLES: IRole[] = ROLE_SCHEMA.roles;
+const ROLES: { [key: string]: IRole } = ROLE_SCHEMA.roles;
 const ROLE_STRING: string = 'role';
 
 export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], invalidPropNames: string[]): string {
@@ -41,7 +41,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Enforce that elements with explicit or implicit roles defined contain ' +
         'only `aria-*` properties supported by that `role`.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -78,9 +78,9 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         if (node.tagName.getText().match(/^[A-Z].*/)) {
             return;
         }
-        if (roleProp != null) {
+        if (roleProp !== undefined) {
             roleValue = getStringLiteral(roleProp);
-            if (!isEmpty(roleProp) && roleValue == null) { // Do NOT check if can't retrieve the right role.
+            if (!isEmpty(roleProp) && roleValue === undefined) { // Do NOT check if can't retrieve the right role.
                 return;
             }
         } else {
@@ -94,7 +94,7 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         let supportedAttributeNames: string[] = ROLE_SCHEMA.globalSupportedProps;
 
         normalizedRoles.forEach((role) => {
-            supportedAttributeNames = supportedAttributeNames.concat((<any>ROLES)[role].additionalSupportedProps || []);
+            supportedAttributeNames = supportedAttributeNames.concat(ROLES[role].additionalSupportedProps || []);
         });
 
         const attributeNamesInElement: string[] = Object.keys(attributesInElement)

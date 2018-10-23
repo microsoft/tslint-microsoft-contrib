@@ -13,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-tsx-curly-spacing',
         type: 'style',
         description: 'Consistently use spaces around the brace characters of JSX attributes.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -45,7 +45,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
         // default value is to not allow multiline
         this.allowMultiline = false;
-        if (options.ruleArguments[1] != null) {
+        if (options.ruleArguments[1] !== undefined) {
             this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
         }
     }

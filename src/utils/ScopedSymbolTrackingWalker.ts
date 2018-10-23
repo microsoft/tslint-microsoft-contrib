@@ -3,6 +3,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {AstUtils} from './AstUtils';
 import {Scope} from './Scope';
+import { isNamed } from './TypeGuard';
 
 /**
  * This exists so that you can try to tell the types of variables
@@ -11,7 +12,7 @@ import {Scope} from './Scope';
  */
 export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     private typeChecker?: ts.TypeChecker;
-    private scope: Scope | null = null;
+    private scope: Scope | undefined;
 
     constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, program? : ts.Program) {
         super(sourceFile, options);
@@ -21,13 +22,13 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
     }
 
-    protected getFunctionTargetType(expression: ts.CallExpression): string | null {
+    protected getFunctionTargetType(expression: ts.CallExpression): string | undefined {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && this.typeChecker) {
             const propExp : ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             const targetType: ts.Type = this.typeChecker.getTypeAtLocation(propExp.expression);
             return this.typeChecker.typeToString(targetType);
         }
-        return null;
+        return undefined;
     }
 
     protected isExpressionEvaluatingToFunction(expression : ts.Expression) : boolean {
@@ -45,7 +46,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
         }
 
         // is the symbol something we are tracking in scope ourselves?
-        if (this.scope != null && this.scope.isFunctionSymbol(expression.getText())) {
+        if (this.scope !== undefined && this.scope.isFunctionSymbol(expression.getText())) {
             return true;
         }
 
@@ -57,9 +58,9 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
             return false;
         }
 
-        if (expression.kind === ts.SyntaxKind.CallExpression) {
+        if (ts.isCallExpression(expression)) {
             // calling Function.bind is a special case that makes tslint throw an exception
-            if ((<any>expression).expression.name && (<any>expression).expression.name.getText() === 'bind') {
+            if (isNamed(expression.expression) && expression.expression.name.getText() === 'bind') {
                 return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
             }
 
@@ -90,9 +91,9 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
 
     private isFunctionType(expressionType : ts.Type, typeChecker : ts.TypeChecker) : boolean {
         const signatures = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
-        if (signatures != null && signatures.length > 0) {
+        if (signatures !== undefined && signatures.length > 0) {
             const signatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration != null && signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
+            if (signatureDeclaration !== undefined && signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
                 return true; // variables of type function are allowed to be passed as parameters
             }
         }
@@ -100,10 +101,10 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     }
 
     protected visitSourceFile(node: ts.SourceFile): void {
-        this.scope = new Scope(null);
+        this.scope = new Scope(undefined);
         this.scope.addGlobalScope(node, node, this.getOptions());
         super.visitSourceFile(node);
-        this.scope = null;
+        this.scope = undefined;
     }
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
@@ -116,7 +117,7 @@ export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         const scope = this.scope = new Scope(this.scope);
         node.members.forEach((element: ts.ClassElement): void => {
-            const prefix: string = AstUtils.isStatic(element) && node.name != null
+            const prefix: string = AstUtils.isStatic(element) && node.name !== undefined
                 ? node.name.getText() + '.'
                 : 'this.';
 

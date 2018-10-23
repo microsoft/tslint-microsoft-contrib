@@ -27,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-lang',
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-missing-visibility-modifiers',
         type: 'maintainability',
         description: 'Deprecated - This rule is in the TSLint product as `member-access`',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -45,7 +45,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
         super.visitMethodDeclaration(node);
     }
 
-    private isMissingVisibilityModifier(node: ts.Node) : boolean {
+    private isMissingVisibilityModifier(node: ts.Declaration) : boolean {
         return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
     }
 

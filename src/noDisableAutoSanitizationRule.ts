@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-disable-auto-sanitization',
         type: 'maintainability',
         description: 'Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. ',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

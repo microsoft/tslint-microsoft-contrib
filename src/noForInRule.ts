@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-for-in',
         type: 'maintainability',
         description: 'Avoid use of for-in statements. They can be replaced by Object.keys',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',

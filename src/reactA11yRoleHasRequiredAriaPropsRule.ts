@@ -16,7 +16,7 @@ import { IAria } from './utils/attributes/IAria';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const ROLES_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
-const ROLES: IRole[] = ROLES_SCHEMA.roles;
+const ROLES: { [key: string]: IRole } = ROLES_SCHEMA.roles;
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
@@ -45,7 +45,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -82,7 +82,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         const roleValue = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
         const isImplicitRole: boolean = !roleProp && !!roleValue;
         const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
-            .filter((role: string) => !!(<any>ROLES)[role]);
+            .filter((role: string) => !!ROLES[role]);
 
         if (normalizedRoles.length === 0) {
             return;
@@ -91,7 +91,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         let requiredAttributeNames: string[] = [];
 
         normalizedRoles.forEach((role: string) => {
-            requiredAttributeNames = requiredAttributeNames.concat((<any>ROLES)[role].requiredProps || []);
+            requiredAttributeNames = requiredAttributeNames.concat(ROLES[role].requiredProps || []);
         });
 
         const attributeNamesInElement: string[] = Object.keys(attributesInElement)

@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-field-initialization',
         type: 'maintainability',
         description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -51,7 +51,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
         const initializer = node.initializer;
         if (node.name.kind === ts.SyntaxKind.Identifier) {
             const fieldName: string = 'this.' + (<ts.Identifier>node.name).getText();
-            if (initializer == null) {
+            if (initializer === undefined) {
                 this.fieldInitializations[fieldName] = undefined;
             } else if (AstUtils.isConstant(initializer)) {
                 this.fieldInitializations[fieldName] = initializer.getText();
@@ -66,7 +66,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-        if (node.body != null) {
+        if (node.body !== undefined) {
             node.body.statements.forEach((statement: ts.Statement): void => {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
@@ -82,7 +82,7 @@ class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
                                 if (Object.keys(this.fieldInitializations).indexOf(propertyName) > -1) {
                                     // make sure the field was declared as undefined
                                     const fieldInitValue = this.fieldInitializations[propertyName];
-                                    if (fieldInitValue == null) {
+                                    if (fieldInitValue === undefined) {
                                         const start: number = property.getStart();
                                         const width: number = property.getWidth();
                                         this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());

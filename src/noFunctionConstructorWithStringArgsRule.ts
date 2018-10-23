@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-function-constructor-with-string-args',
         type: 'maintainability',
         description: 'Do not use the version of the Function constructor that accepts a string argument to define the body of the function',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

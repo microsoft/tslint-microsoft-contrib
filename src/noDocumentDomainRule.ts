@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
                     'validated to ensure that the value is on a list of allowed sites.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

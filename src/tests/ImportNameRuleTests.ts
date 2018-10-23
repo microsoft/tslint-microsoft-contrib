@@ -143,7 +143,7 @@ describe('importNameRule', () : void => {
             import baseChartOptions = require('common/component/chart/options/BaseChartOptions');
         `;
 
-        const options: any[] = [ true, {
+        const options = [ true, {
             'backbone': 'Backbone',
             'react': 'React',
             'is-plain-object': 'isPlainObject',
@@ -158,7 +158,7 @@ describe('importNameRule', () : void => {
         import abc from 'abc-tag',
         import pqr from 'my-module'
         `;
-        const options: any[] = [ true, {
+        const options = [ true, {
             'fs/package-name': 'pkg',
             'abc-tag': 'abc',
             'myModule': 'pqr'

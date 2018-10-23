@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'missing-optional-annotation',
         type: 'maintainability',
         description: 'Deprecated - This rule is now enforced by the TypeScript compiler',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -56,13 +56,13 @@ class MissingOptionalAnnotationWalker extends ErrorTolerantWalker {
 
     private validateParameters(node : ts.SignatureDeclaration) {
         let optionalParameterFound = false;
-        if (node.parameters == null) {
+        if (node.parameters === undefined) {
             return;
         }
         node.parameters.forEach((parameter : ts.ParameterDeclaration) : void => {
-            if (parameter.questionToken != null || parameter.initializer != null) {
+            if (parameter.questionToken !== undefined || parameter.initializer !== undefined) {
                 optionalParameterFound = true;
-            } else if (optionalParameterFound && parameter.initializer == null) {
+            } else if (optionalParameterFound && parameter.initializer === undefined) {
                 // we found a non-optional parameter that comes *after* an optional parameter
                 const msg = Rule.FAILURE_STRING + parameter.getFullText();
                 this.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);

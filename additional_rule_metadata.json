@@ -350,7 +350,7 @@
     "severity": "Important",
     "level": "Opportunity for Excellence",
     "group": "Clarity",
-    "recommendation": "false, // turn no-null-keyword off and use undefined to mean not initialized and null to mean without a value",
+    "recommendation": "true,",
     "commonWeaknessEnumeration": "710"
   },
   "no-reference": {

@@ -11,7 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-unnecessary-bind',
         type: 'maintainability',
         description: 'Do not bind `this` as the context for a function literal or lambda expression.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -50,7 +50,7 @@ class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
             if (analyzer.canHandle(node)) {
                 const contextArgument = analyzer.getContextArgument(node);
                 const functionArgument = analyzer.getFunctionArgument(node);
-                if (contextArgument == null || functionArgument == null) {
+                if (contextArgument === undefined || functionArgument === undefined) {
                     return;
                 }
                 if (contextArgument.getText() === 'this') {
@@ -68,8 +68,8 @@ class NoUnnecessaryBindRuleWalker extends ErrorTolerantWalker {
 
 interface CallAnalyzer {
     canHandle(node: ts.CallExpression): boolean;
-    getContextArgument(node: ts.CallExpression): ts.Expression | null;
-    getFunctionArgument(node: ts.CallExpression): ts.Expression | null;
+    getContextArgument(node: ts.CallExpression): ts.Expression | undefined;
+    getFunctionArgument(node: ts.CallExpression): ts.Expression | undefined;
 }
 
 class TypeScriptFunctionAnalyzer implements CallAnalyzer {
@@ -100,7 +100,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         return isUnderscore;
     }
 
-    public getContextArgument(node: ts.CallExpression): ts.Expression | null {
+    public getContextArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
@@ -111,10 +111,10 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         } else if (functionName === 'bind') {
             return node.arguments[1];
         }
-        return null;
+        return undefined;
     }
 
-    public getFunctionArgument(node: ts.CallExpression): ts.Expression | null {
+    public getFunctionArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
@@ -125,7 +125,7 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         } else if (functionName === 'bind') {
             return node.arguments[0];
         }
-        return null;
+        return undefined;
     }
 }
 
@@ -141,7 +141,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         return false;
     }
 
-    public getContextArgument(node: ts.CallExpression): ts.Expression | null {
+    public getContextArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
@@ -150,10 +150,10 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         } else if (functionName === 'sortedIndex') {
             return node.arguments[2];
         }
-        return null;
+        return undefined;
     }
 
-    public getFunctionArgument(node: ts.CallExpression): ts.Expression | null {
+    public getFunctionArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
@@ -162,7 +162,7 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         } else if (functionName === 'sortedIndex') {
             return node.arguments[1];
         }
-        return null;
+        return undefined;
     }
 
 }

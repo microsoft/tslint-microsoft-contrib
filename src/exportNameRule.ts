@@ -56,17 +56,15 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions): string[] | null {
+    public static getExceptions(options : Lint.IOptions): string[] | undefined {
     /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return typeof options[0] === 'object' ?
-                options[0].allow :
-                <string[]><any>options; // MSE version of tslint somehow requires this
+            return typeof options[0] === 'object' ? options[0].allow : options;
         }
-        return null;
+        return undefined;
     }
 
     /* tslint:disable:function-name */
@@ -131,7 +129,7 @@ export class ExportNameWalker extends ErrorTolerantWalker {
         this.validateExportedElements(exportedTopLevelElements);
     }
 
-    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | null {
+    private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | undefined {
         if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
@@ -139,22 +137,25 @@ export class ExportNameWalker extends ErrorTolerantWalker {
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
-        return null;
+        return undefined;
     }
 
     private validateExportedElements(exportedElements: ts.Statement[]): void {
         // only validate the exported elements when a single export statement is made
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === ts.SyntaxKind.ModuleDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.ClassDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.FunctionDeclaration) {
-                this.validateExport((<any>exportedElements[0]).name.text, exportedElements[0]);
+            const element = exportedElements[0];
+            if (ts.isModuleDeclaration(element) ||
+                ts.isClassDeclaration(element) ||
+                ts.isFunctionDeclaration(element)) {
+                if (element.name !== undefined) {
+                    this.validateExport(element.name!.text, exportedElements[0]);
+                }
             } else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 const variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
                 // ignore comma separated variable lists
                 if (variableStatement.declarationList.declarations.length === 1) {
                     const variableDeclaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
-                    this.validateExport((<any>variableDeclaration.name).text, variableDeclaration);
+                    this.validateExport(variableDeclaration.name.getText(), variableDeclaration);
                 }
             }
         }

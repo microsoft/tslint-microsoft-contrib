@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const PROPS_REGEX = 'props-interface-regex';
 const STATE_REGEX = 'state-interface-regex';
@@ -17,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-unused-props-and-state',
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -51,18 +52,19 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, this.propsInterfaceRegex);
                 this.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, this.stateInterfaceRegex);
             }
         });
     }
 
-    private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
+    private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] != null) {
-                return new RegExp(option[key]);
+            const value: unknown = option[key];
+            if (value !== undefined && typeof value === 'string') {
+                return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
@@ -117,12 +119,12 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         } else if (/this\.state\..*/.test(referencedPropertyName)) {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
                 this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
@@ -140,7 +142,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitIdentifier(node: ts.Identifier): void {
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (node.text === this.propsAlias
                 && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
                 && node.parent.kind !== ts.SyntaxKind.Parameter
@@ -150,7 +152,7 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
             }
 
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (node.text === this.stateAlias
                 && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
                 && node.parent.kind !== ts.SyntaxKind.Parameter) {
@@ -191,15 +193,18 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
         node.members.forEach((typeElement: ts.TypeElement): void => {
-            if (typeElement.name != null && (<any>typeElement.name).text != null) {
-                result[(<any>typeElement.name).text] = typeElement;
+            if (typeElement.name !== undefined) {
+                const text = typeElement.name.getText();
+                if (text !== undefined) {
+                    result[text] = typeElement;
+                }
             }
         });
         return result;
     }
 
     private isParentNodeSuperCall(node: ts.Node): boolean {
-        if (node.parent != null && node.parent.kind === ts.SyntaxKind.CallExpression) {
+        if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }

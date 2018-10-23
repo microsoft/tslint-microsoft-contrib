@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-delete-expression',
         type: 'maintainability',
         description: 'Do not delete expressions. Only properties should be deleted',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -35,7 +35,7 @@ class NoDeleteExpression extends ErrorTolerantWalker {
         if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             const deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject != null && deletedObject.kind === ts.SyntaxKind.Identifier) {
+            if (deletedObject !== undefined && deletedObject.kind === ts.SyntaxKind.Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }

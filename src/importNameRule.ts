@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -12,7 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description: 'The name of the imported module must match the name of the thing being imported',
         hasFix: true,
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -39,10 +40,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private extractOptions(): { [index: string]: string; } {
         const result : { [index: string]: string; } = {};
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 Object.keys(opt).forEach((key: string): void => {
-                    const value: any = opt[key];
+                    const value: unknown = opt[key];
                     if (typeof value === 'string') {
                         result[key] = value;
                     }
@@ -70,7 +71,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (node.importClause!.name != null) {
+        if (node.importClause!.name !== undefined) {
             const name: string = node.importClause!.name!.text;
             if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;

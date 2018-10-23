@@ -14,7 +14,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-stateless-class',
         type: 'maintainability',
         description: 'A stateless class represents a failure in the object oriented design of the system.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -40,7 +40,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         if (!this.isClassStateful(node)) {
-            const className: string = node.name == null ? '<unknown>' : node.name.text;
+            const className: string = node.name === undefined ? '<unknown>' : node.name.text;
             this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
         }
         super.visitClassDeclaration(node);

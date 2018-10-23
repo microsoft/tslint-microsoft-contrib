@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.TypedRule {
         ruleName: 'no-cookies',
         type: 'maintainability',
         description: 'Do not use cookies',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',

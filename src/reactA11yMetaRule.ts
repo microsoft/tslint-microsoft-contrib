@@ -12,7 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-meta',
         type: 'functionality',
         description: 'For accessibility of your website, HTML meta elements must not have http-equiv="refresh".',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -58,8 +58,8 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
         }
     }
 
-    private isStringLiteral(expression: ts.Expression, literal: string): boolean | null {
-        if (expression != null) {
+    private isStringLiteral(expression: ts.Expression, literal: string): boolean | undefined {
+        if (expression !== undefined) {
             if (expression.kind === ts.SyntaxKind.StringLiteral) {
                 const value: string = (<ts.StringLiteral>expression).text;
                 return value === literal;
@@ -71,6 +71,6 @@ class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
                 }
             }
         }
-        return null;
+        return undefined;
     }
 }

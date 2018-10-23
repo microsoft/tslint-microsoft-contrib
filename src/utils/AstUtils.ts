@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { isNamed } from './TypeGuard';
 
 /**
  * General utility class.
@@ -16,19 +17,21 @@ export module AstUtils {
 
     export function getFunctionName(node: ts.CallExpression | ts.NewExpression): string {
         const expression: ts.Expression = node.expression;
-        let functionName: string = (<any>expression).text;
-        if (functionName === undefined && (<any>expression).name) {
-            functionName = (<any>expression).name.text;
+        if ('text' in expression) {
+            return <string>(<{ text: unknown }>expression).text;
         }
-        return functionName;
+        if (isNamed(expression)) {
+            return expression.name.getText();
+        }
+        return '';
     }
 
-    export function getFunctionTarget(expression: ts.CallExpression): string | null {
+    export function getFunctionTarget(expression: ts.CallExpression): string | undefined {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();
         }
-        return null;
+        return undefined;
     }
 
     export function isJQuery(functionTarget: string): boolean {
@@ -36,7 +39,7 @@ export module AstUtils {
     }
 
     export function hasModifier(modifiers: ts.ModifiersArray, modifierKind: number): boolean {
-        if (modifiers == null) {
+        if (modifiers === undefined) {
             return false;
         }
         let result: boolean = false;
@@ -91,7 +94,7 @@ export module AstUtils {
             console.log('\ttype.symbol: ' + expressionType.symbol);
 
             const expressionSymbol = typeChecker.getSymbolAtLocation(expression);
-            if (expressionSymbol == null) {
+            if (expressionSymbol === undefined) {
                 console.log('\tsymbol: ' + expressionSymbol);
             } else {
                 console.log('\tsymbol.flags: ' + expressionSymbol.flags);
@@ -100,7 +103,7 @@ export module AstUtils {
             }
 
             const contextualType = typeChecker.getContextualType(expression);
-            if (contextualType == null) {
+            if (contextualType === undefined) {
                 console.log('\tcontextualType: ' + contextualType);
             } else {
                 console.log('\tcontextualType.flags: ' + contextualType.flags);
@@ -110,44 +113,24 @@ export module AstUtils {
         /* tslint:enable:no-console */
     }
 
-    export function isPrivate(node: ts.Node): boolean {
-        /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Private != null) {
-            return !!(node.flags & (<any>ts).NodeFlags.Private);
-        } else {
-            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Private);
-        }
-        /* tslint:enable:no-bitwise */
+    export function isPrivate(node: ts.Declaration): boolean {
+        // tslint:disable-next-line:no-bitwise
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private);
     }
 
-    export function isProtected(node: ts.Node): boolean {
-        /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Protected != null) {
-            return !!(node.flags & (<any>ts).NodeFlags.Protected);
-        } else {
-            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Protected);
-        }
-        /* tslint:enable:no-bitwise */
+    export function isProtected(node: ts.Declaration): boolean {
+        // tslint:disable-next-line:no-bitwise
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Protected);
     }
 
-    export function isPublic(node: ts.Node): boolean {
-        /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Public != null) {
-            return !!(node.flags & (<any>ts).NodeFlags.Public);
-        } else {
-            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Public);
-        }
-        /* tslint:enable:no-bitwise */
+    export function isPublic(node: ts.Declaration): boolean {
+        // tslint:disable-next-line:no-bitwise
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Public);
     }
 
-    export function isStatic(node: ts.Node): boolean {
-        /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Static != null) {
-            return !!(node.flags & (<any>ts).NodeFlags.Static);
-        } else {
-            return !!((<any>ts).getCombinedModifierFlags(node) & (<any>ts).ModifierFlags.Static);
-        }
-        /* tslint:enable:no-bitwise */
+    export function isStatic(node: ts.Declaration): boolean {
+        // tslint:disable-next-line:no-bitwise
+        return !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static);
     }
 
     export function hasComputedName(node: ts.Node & { name?: ts.PropertyName }): boolean {
@@ -159,7 +142,7 @@ export module AstUtils {
     }
 
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
-        return node != null && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
+        return node !== undefined && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
             node.kind === ts.SyntaxKind.ObjectBindingPattern);
     }
 
@@ -202,23 +185,18 @@ export module AstUtils {
     }
 
     export function isExported(node: ts.Node): boolean {
-        /* tslint:disable:no-bitwise */
-        if ((<any>ts).NodeFlags.Export != null) {
-            return !!(getCombinedNodeFlags(node) & (<any>ts).NodeFlags.Export);
-        } else {
-            // typescript 2.1.4 introduces a new edge case for when
-            // top level variables are exported from a source file
-            if (node.kind === ts.SyntaxKind.VariableDeclaration
-                && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
-                && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
-                if (node.parent.parent.modifiers !== undefined
-                    && AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
-                    return true;
-                }
+        // typescript 2.1.4 introduces a new edge case for when
+        // top level variables are exported from a source file
+        if (node.kind === ts.SyntaxKind.VariableDeclaration
+            && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
+            && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
+            if (node.parent.parent.modifiers !== undefined
+                && AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
+                return true;
             }
-            return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
         }
-        /* tslint:enable:no-bitwise */
+        // tslint:disable-next-line:no-bitwise
+        return !!(getCombinedNodeFlags(node) & ts.NodeFlags.ExportContext);
     }
 
     export function isAssignmentOperator(token: ts.SyntaxKind): boolean {
@@ -232,7 +210,7 @@ export module AstUtils {
 
     export function findParentBlock(child: ts.Node): ts.Node {
         let parent: ts.Node = child.parent;
-        while (parent != null) {
+        while (parent !== undefined) {
             if (parent.kind === ts.SyntaxKind.Block) {
                 return parent;
             }
@@ -242,7 +220,7 @@ export module AstUtils {
     }
 
     export function isSameIdentifer(source: ts.Node, target: ts.Node): boolean {
-        if (source == null || target == null) {
+        if (source === undefined || target === undefined) {
             return false;
         }
         if (source.kind === ts.SyntaxKind.Identifier && target.kind === ts.SyntaxKind.Identifier) {
@@ -265,20 +243,20 @@ export module AstUtils {
     }
 
     export function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
-        if (node.type != null) {
+        if (node.type !== undefined) {
             if (node.type.getText() === 'Function') {
                 return true;
             }
             return node.type.kind === ts.SyntaxKind.FunctionType;
-        } else if (node.initializer != null) {
+        } else if (node.initializer !== undefined) {
             return (node.initializer.kind === ts.SyntaxKind.ArrowFunction
             || node.initializer.kind === ts.SyntaxKind.FunctionExpression);
         }
         return false;
     }
 
-    export function isUndefined(node: ts.Expression | null | undefined): boolean {
-        if (node != null) {
+    export function isUndefined(node: ts.Expression | undefined): boolean {
+        if (node !== undefined) {
             if (node.kind === ts.SyntaxKind.Identifier) {
                 return node.getText() === 'undefined';
             }
@@ -286,8 +264,8 @@ export module AstUtils {
         return false;
     }
 
-    export function isConstant(node: ts.Expression | null | undefined): boolean {
-        if (node == null) {
+    export function isConstant(node: ts.Expression | undefined): boolean {
+        if (node === undefined) {
             return false;
         }
         return node.kind === ts.SyntaxKind.NullKeyword

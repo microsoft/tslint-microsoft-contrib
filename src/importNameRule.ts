@@ -95,7 +95,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     private extractConfig(opt: Config): Config {
         const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
         return Object.keys(opt).reduce((accum: Config, key: string) => {
-            if (configKeyLlist.includes(<ConfigKey>key)) {
+            if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
                 accum[<ConfigKey>key] = opt[<ConfigKey>key];
                 return accum;
             }
@@ -194,7 +194,7 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
     }
 
     private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
-        return ignoredList.includes(moduleName);
+        return ignoredList.filter((ignoredModule: string) => ignoredModule === moduleName).length >= 1;
     }
 
     private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {

@@ -9,14 +9,14 @@ import { getJsxAttributesFromJsxElement,
     getStringLiteral,
     isEmpty } from './utils/JsxAttribute';
 
-const FAILURE_STRING: string = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
+const FAILURE_STRING: string = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-anchor-blank-noopener',
         type: 'functionality',
-        description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
+        description: 'Anchor tags with target="_blank" should also include rel="noreferrer"',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
@@ -83,5 +83,5 @@ function isRelAttributeValue(attribute: ts.JsxAttribute): boolean {
     }
 
     const relValues: string[] = stringValue.split(/\s+/);
-    return Utils.contains(relValues, 'noreferrer') && Utils.contains(relValues, 'noopener');
+    return Utils.contains(relValues, 'noreferrer');
 }

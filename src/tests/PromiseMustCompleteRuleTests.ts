@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('promiseMustCompleteRule', () : void => {
     const ruleName : string = 'promise-must-complete';
 

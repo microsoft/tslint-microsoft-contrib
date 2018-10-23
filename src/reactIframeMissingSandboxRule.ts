@@ -25,9 +25,6 @@ const ALLOWED_VALUES: string[] = [
     'allow-top-navigation'
 ];
 
-/**
- * Implementation of the react-iframe-missing-sandbox rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

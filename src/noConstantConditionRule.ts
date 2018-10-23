@@ -6,9 +6,6 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
-/**
- * Implementation of the no-constant-condition rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

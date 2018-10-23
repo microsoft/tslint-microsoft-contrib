@@ -7,9 +7,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 const FAILURE_STRING: string = 'Suspicious comment found: ';
 const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
 
-/**
- * Implementation of the no-suspicious-comment rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

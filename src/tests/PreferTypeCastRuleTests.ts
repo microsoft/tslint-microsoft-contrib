@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('preferTypeCastRule', () : void => {
     const ruleName : string = 'prefer-type-cast';
 

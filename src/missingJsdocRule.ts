@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the missing-jsdoc rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
@@ -16,17 +13,24 @@ export class Rule extends Lint.Rules.AbstractRule {
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
+        issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
+        group: 'Deprecated',
+        recommendation: 'false,'
     };
 
     public static FAILURE_STRING: string = 'File missing JSDoc comment at the top-level: ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: missing-jsdoc rule is deprecated. ' +
+                'Replace your usage with the TSLint missing-jsdoc rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
     }
 }

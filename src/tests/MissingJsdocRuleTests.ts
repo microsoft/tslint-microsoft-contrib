@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('missing-jsdoc', () : void => {
     const ruleName : string = 'missing-jsdoc';
 

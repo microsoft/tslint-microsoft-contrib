@@ -16,9 +16,6 @@ interface BrowserVersion {
     version: number | string;
 }
 
-/**
- * Implementation of the no-unsupported-browser-code rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

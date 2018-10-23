@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('possibleTimingAttackRule', () : void => {
 
     const ruleName : string = 'possible-timing-attack';

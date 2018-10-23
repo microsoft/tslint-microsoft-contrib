@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noTypeofUndefinedRule', () : void => {
 
     const ruleName : string = 'no-typeof-undefined';

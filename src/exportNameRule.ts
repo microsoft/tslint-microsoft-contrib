@@ -8,9 +8,7 @@ import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export const OPTION_IGNORE_CASE: string = 'ignore-case';
-/**
- * Implementation of the export-name rule.
- */
+
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

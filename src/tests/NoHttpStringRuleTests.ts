@@ -2,9 +2,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noHttpStringRule', (): void => {
     const ruleName: string = 'no-http-string';
 

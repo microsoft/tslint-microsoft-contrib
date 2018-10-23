@@ -10,9 +10,6 @@ const LONG_TITLE_FAILURE_STRING: string = 'Title length must not be longer than 
 const WORD_TITLE_FAILURE_STRING: string = 'Title must contain more than one word';
 const MAX_TITLE_LENGTH: number = 60;
 
-/**
- * Implementation of the react-a11y-titles rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

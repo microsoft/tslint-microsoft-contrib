@@ -1,8 +1,5 @@
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noCookiesRule', () : void => {
     it('should not produce violations', () : void => {
         const ruleName : string = 'no-cookies';

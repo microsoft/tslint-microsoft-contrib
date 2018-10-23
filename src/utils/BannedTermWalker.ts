@@ -3,9 +3,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import { isObject, isNamed } from './TypeGuard';
 
-/**
- * Implementation of the banned-term rulesets.
- */
 export class BannedTermWalker extends ErrorTolerantWalker {
     private failureString : string;
     private bannedTerms: string[];

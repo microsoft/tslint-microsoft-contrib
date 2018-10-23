@@ -4,9 +4,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noSuspiciousCommentRule', (): void => {
 
     const ruleName: string = 'no-suspicious-comment';

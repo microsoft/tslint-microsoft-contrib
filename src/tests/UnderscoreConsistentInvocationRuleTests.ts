@@ -4,9 +4,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('underscoreConsistentInvocationRule', () : void => {
 
     const ruleName : string = 'underscore-consistent-invocation';

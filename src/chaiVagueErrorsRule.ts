@@ -12,9 +12,6 @@ const FAILURE_STRING_COMPARE_TRUE: string = BASE_ERROR + 'Move the strict equali
 const FAILURE_STRING_COMPARE_FALSE: string = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
     'call into the assertion value. ';
 
-/**
- * Implementation of the chai-vague-errors rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

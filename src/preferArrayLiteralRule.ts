@@ -6,9 +6,6 @@ import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
-/**
- * Implementation of the prefer-array-literal rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

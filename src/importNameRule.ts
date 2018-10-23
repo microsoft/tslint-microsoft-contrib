@@ -17,9 +17,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         optionsDescription: '',
         optionExamples: [
             [true],
-            [true, { moduleName: 'yourModuleName' }],
-            [true, { moduleName: 'yourModuleName' }, ['module1', 'module2']],
-            [true, { moduleName: 'yourModuleName' }, ['module1', 'module2'], { ignoreExternalModule: false }]
+            [true, { moduleName: 'importedName' }],
+            [true, { moduleName: 'importedName' }, ['moduleName1', 'moduleName2']],
+            [true, { moduleName: 'importedName' }, ['moduleName1', 'moduleName2'], { ignoreExternalModule: false }]
         ],
         typescriptOnly: true,
         issueClass: 'Ignored',

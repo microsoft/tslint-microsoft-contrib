@@ -89,7 +89,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
     private parseSupportedBrowsers(): { [key: string]: BrowserVersion } {
         const result: { [key: string]: BrowserVersion } = {};
 
-        this.getOptions().forEach((option: any) => {
+        this.getOptions().forEach((option: unknown) => {
             if (option instanceof Array) {
                 option.forEach((browserString: string) => {
                     const browser = this.parseBrowserString(browserString);

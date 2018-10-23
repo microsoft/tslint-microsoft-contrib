@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {AstUtils} from './utils/AstUtils';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 /**
  * Implementation of the no-constant-condition rule.
@@ -43,8 +44,8 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
 
     private extractBoolean(keyName: string): boolean {
         let result : boolean = true;
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 if (opt[keyName] === false || opt[keyName] === 'false') {
                     result = false;
                 }

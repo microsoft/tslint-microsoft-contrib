@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './ErrorTolerantWalker';
+import { isObject, isNamed } from './TypeGuard';
 
 /**
  * Implementation of the banned-term rulesets.
@@ -14,8 +15,8 @@ export class BannedTermWalker extends ErrorTolerantWalker {
         super(sourceFile, options);
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
             }
         });
@@ -74,9 +75,9 @@ export class BannedTermWalker extends ErrorTolerantWalker {
     }
 
     private validateNode(node: ts.Node) : void {
-        if ((<any>node).name) {
-            if ((<any>node).name.text) {
-                const text : string = (<any>node).name.text;
+        if (isNamed(node)) {
+            const text: string = node.name.getText();
+            if (text !== undefined) {
                 if (this.isBannedTerm(text)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
                 }

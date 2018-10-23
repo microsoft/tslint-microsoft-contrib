@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const METHOD_REGEX = 'method-regex';
 const PRIVATE_METHOD_REGEX = 'private-method-regex';
@@ -17,14 +18,14 @@ const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
 
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
-function parseOptions(ruleArguments: any[]): Options {
+function parseOptions(ruleArguments: unknown[]): Options {
 
     if (ruleArguments.length === 0) {
         return {
             validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
         };
     }
-    const staticsValidateOption: string = ruleArguments[1];
+    const staticsValidateOption: string = <string>ruleArguments[1];
     if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
         return {
             validateStatics: staticsValidateOption
@@ -100,8 +101,8 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         this.args = parseOptions(options.ruleArguments);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.methodRegex = this.getOptionOrDefault(opt, METHOD_REGEX, this.methodRegex);
                 this.privateMethodRegex = this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, this.privateMethodRegex);
                 this.protectedMethodRegex = this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, this.protectedMethodRegex);
@@ -153,10 +154,11 @@ class FunctionNameRuleWalker extends ErrorTolerantWalker {
         super.visitFunctionDeclaration(node);
     }
 
-    private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
+    private getOptionOrDefault(option: {[key: string]: unknown}, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] !== undefined) {
-                return new RegExp(option[key]);
+            const value = option[key];
+            if (value !== undefined && (typeof value === 'string' || value instanceof RegExp)) {
+                return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */

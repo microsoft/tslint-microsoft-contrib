@@ -64,9 +64,7 @@ export class Rule extends Lint.Rules.AbstractRule {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return typeof options[0] === 'object' ?
-                options[0].allow :
-                <string[]><any>options; // MSE version of tslint somehow requires this
+            return typeof options[0] === 'object' ? options[0].allow : options;
         }
         return undefined;
     }
@@ -147,16 +145,19 @@ export class ExportNameWalker extends ErrorTolerantWalker {
     private validateExportedElements(exportedElements: ts.Statement[]): void {
         // only validate the exported elements when a single export statement is made
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === ts.SyntaxKind.ModuleDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.ClassDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.FunctionDeclaration) {
-                this.validateExport((<any>exportedElements[0]).name.text, exportedElements[0]);
+            const element = exportedElements[0];
+            if (ts.isModuleDeclaration(element) ||
+                ts.isClassDeclaration(element) ||
+                ts.isFunctionDeclaration(element)) {
+                if (element.name !== undefined) {
+                    this.validateExport(element.name!.text, exportedElements[0]);
+                }
             } else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 const variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];
                 // ignore comma separated variable lists
                 if (variableStatement.declarationList.declarations.length === 1) {
                     const variableDeclaration: ts.VariableDeclaration = variableStatement.declarationList.declarations[0];
-                    this.validateExport((<any>variableDeclaration.name).text, variableDeclaration);
+                    this.validateExport(variableDeclaration.name.getText(), variableDeclaration);
                 }
             }
         }

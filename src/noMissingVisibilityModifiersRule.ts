@@ -48,7 +48,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
         super.visitMethodDeclaration(node);
     }
 
-    private isMissingVisibilityModifier(node: ts.Node) : boolean {
+    private isMissingVisibilityModifier(node: ts.Declaration) : boolean {
         return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
     }
 

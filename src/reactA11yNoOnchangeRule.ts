@@ -45,9 +45,9 @@ class ReactA11yNoOnchangeRuleWalker extends ErrorTolerantWalker {
 
     private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement) {
         const tagName: string = node.tagName.getText();
-        const options: any[] = this.getOptions();
+        const options: unknown = this.getOptions();
 
-        const additionalTagNames: string[] = options.length > 0 ? options[0] : [];
+        const additionalTagNames: string[] = Array.isArray(options) && options.length > 0 ? options[0] : [];
 
         const targetTagNames: string[] = ['select', ...additionalTagNames];
 

@@ -6,13 +6,13 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Scope} from './utils/Scope';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference bound twice in the constructor: ';
 const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
     'reference bound: ';
 
-const optionExamples: any = [true, {'bind-decorators': ['autobind']}];
 /**
  * Implementation of the react-this-binding-issue rule.
  */
@@ -39,7 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
                 }
             }
         },
-        optionExamples,
+        optionExamples: [true, [true, { 'bind-decorators': ['autobind'] }]],
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -68,11 +68,11 @@ class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
                 if (opt['bind-decorators']) {
-                    const allowedDecorators: any[] = opt['bind-decorators'];
+                    const allowedDecorators: unknown = opt['bind-decorators'];
                     if (
                         !Array.isArray(allowedDecorators)
                         || allowedDecorators.some(decorator => typeof decorator !== 'string')

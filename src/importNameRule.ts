@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 /**
  * Implementation of the import-name rule.
@@ -42,10 +43,10 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
 
     private extractOptions(): { [index: string]: string; } {
         const result : { [index: string]: string; } = {};
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 Object.keys(opt).forEach((key: string): void => {
-                    const value: any = opt[key];
+                    const value: unknown = opt[key];
                     if (typeof value === 'string') {
                         result[key] = value;
                     }

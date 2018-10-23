@@ -193,10 +193,12 @@ class ImportNameRuleWalker extends ErrorTolerantWalker {
         });
     }
 
+    // Ignore array of strings that comes from third argument.
     private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
         return ignoredList.filter((ignoredModule: string) => ignoredModule === moduleName).length >= 1;
     }
 
+    // Ignore NPM installed modules by checking its module path at runtime
     private checkIgnoreExternalModule(moduleName: string, node: any, opt: Config): boolean {
         if (opt.ignoreExternalModule && node.parent !== undefined && node.parent.resolvedModules !== undefined) {
             let ignoreThisExternalModule = false;

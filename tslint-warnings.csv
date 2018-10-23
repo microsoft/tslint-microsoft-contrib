@@ -268,7 +268,7 @@ react-a11y-role-has-required-aria-props,Elements with aria roles must have all r
 react-a11y-role-supports-aria-props,Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.,TSLINT1IFADTQ,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 react-a11y-tabindex-no-positive,Enforce tabindex value is **not greater than zero**.,TSLINTEO7FKT,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 react-a11y-titles,"For accessibility of your website, HTML title elements must be concise and non-empty.",TSLINT1506S53,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
-react-anchor-blank-noopener,Anchor tags with target="_blank" should also include rel="noopener noreferrer",TSLINT1GKPCB4,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"242,676","CWE 242 - Use of Inherently Dangerous Function
+react-anchor-blank-noopener,Anchor tags with target="_blank" should also include rel="noreferrer",TSLINT1GKPCB4,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"242,676","CWE 242 - Use of Inherently Dangerous Function
 CWE 676 - Use of Potentially Dangerous Function"
 react-iframe-missing-sandbox,React iframes must specify a sandbox attribute,TSLINTU1H6V4,tslint,SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,915,"CWE 915 - Improperly Controlled Modification of Dynamically-Determined Object Attributes"
 react-no-dangerous-html,Do not use React's dangerouslySetInnerHTML API.,TSLINTPH7BOD,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"79, 85, 710","CWE 79 - Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
@@ -287,7 +287,7 @@ return-undefined,Prefer `return;` in void functions and `return undefined;` in v
 semicolon,Enforces consistent semicolon usage at the end of every statement.,TSLINT1L591RI,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 space-within-parens,Enforces spaces within parentheses or disallow them.  Empty parentheses () are always allowed.,TSLINT1E89MLR,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
-strict-boolean-expressions,"Restricts the types allowed in boolean expressions. By default only booleans are allowed. 
+strict-boolean-expressions,"Restricts the types allowed in boolean expressions. By default only booleans are allowed.
 The following nodes are checked:
 
 * Arguments to the `!`, `&&`, and `||` operators

@@ -8,7 +8,7 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
 
     const ruleName : string = 'react-anchor-blank-noopener';
 
-    it('should pass on blank anchor with noopener and noreferrer', () : void => {
+    it('should pass on blank anchor with noreferrer', () : void => {
         const script : string = `
             import React = require('react');
 
@@ -25,6 +25,8 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
 
             const k = <a target={ something() } rel="noreferrer noopener whatever"/>;
             const l = <a target="_blank" rel={ something() }/>;
+
+            const m = <a target="_blank" rel="noreferrer"/>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -64,13 +66,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, [  {
-            "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+            "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
             "name": Utils.absolutePath("file.tsx"),
             "ruleName": "react-anchor-blank-noopener",
             "startPosition": { "character": 23, "line": 4 }
         },
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
@@ -88,13 +90,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
@@ -112,13 +114,13 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
             },
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 5 }
@@ -126,74 +128,53 @@ describe('reactAnchorBlankNoopenerRule', () : void => {
         ]);
     });
 
-    it('should fail on rel with only one term', () : void => {
+    it('should fail on rel with only noopener', () : void => {
         const script : string = `
             import React = require('react');
 
-            const a = <a target="_blank" rel="noreferrer" >link</a>;
-            const b = <a target={"_blank"} rel={"noopener"} >link</a>;
+            const a = <a target={"_blank"} rel={"noopener"} >link</a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
-            },
-            {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-anchor-blank-noopener",
-                "startPosition": { "character": 23, "line": 5 }
             }
         ]);
     });
 
-    it('should fail on rel with only one term but other terms as well', () : void => {
+    it('should fail on rel with only noopener but other terms as well', () : void => {
         const script : string = `
             import React = require('react');
 
-            const a = <a target="_blank" rel="noreferrer whatever" >link</a>;
-            const b = <a target={"_blank"} rel={"whatever noopener"} >link</a>;
+            const a = <a target={"_blank"} rel={"whatever noopener"} >link</a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
-            },
-            {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-anchor-blank-noopener",
-                "startPosition": { "character": 23, "line": 5 }
             }
         ]);
     });
 
-    it('should fail on rel with only one term but other terms as well - self closing', () : void => {
+    it('should fail on rel with only noopener but other terms as well - self closing', () : void => {
         const script : string = `
             import React = require('react');
 
-            const a = <a target="_blank" rel="noreferrer whatever" />;
-            const b = <a target={"_blank"} rel={"whatever noopener"} />;
+            const a = <a target={"_blank"} rel={"whatever noopener"} />;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
+                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noreferrer\"",
                 "name": Utils.absolutePath("file.tsx"),
                 "ruleName": "react-anchor-blank-noopener",
                 "startPosition": { "character": 23, "line": 4 }
-            },
-            {
-                "failure": "Anchor tags with target=\"_blank\" should also include rel=\"noopener noreferrer\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-anchor-blank-noopener",
-                "startPosition": { "character": 23, "line": 5 }
             }
         ]);
     });

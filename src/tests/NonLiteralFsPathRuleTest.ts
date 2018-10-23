@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('nonLiteralFsPathRule', (): void => {
     const ruleName: string = 'non-literal-fs-path';
 

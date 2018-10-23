@@ -2,9 +2,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noRelativeImportsRule', () : void => {
     const ruleName : string = 'no-relative-imports';
 

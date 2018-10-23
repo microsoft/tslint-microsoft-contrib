@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-unnecessary-semicolons rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'unnecessary semi-colon';
 

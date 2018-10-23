@@ -13,11 +13,7 @@ const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference
 const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
     'reference bound: ';
 
-/**
- * Implementation of the react-this-binding-issue rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-this-binding-issue',
         type: 'maintainability',

@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import * as chai from 'chai';
 
-/**
- * Unit tests.
- */
 describe('Utils', () : void => {
     describe('contains', (): void => {
         it('should handle empty states', (): void => {

@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('preferArrayLiteralRule', () : void => {
     const ruleName : string = 'prefer-array-literal';
 

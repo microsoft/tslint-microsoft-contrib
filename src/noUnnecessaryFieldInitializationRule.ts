@@ -8,9 +8,6 @@ import {AstUtils} from './utils/AstUtils';
 const FAILURE_UNDEFINED_INIT: string = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
 const FAILURE_UNDEFINED_DUPE: string = 'Unnecessary field initialization. Field value already initialized in declaration: ';
 
-/**
- * Implementation of the no-unnecessary-field-initialization rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

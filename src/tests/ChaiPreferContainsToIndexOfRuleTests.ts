@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('chaiPreferContainsToIndexOfRule', () : void => {
 
     const ruleName : string = 'chai-prefer-contains-to-index-of';

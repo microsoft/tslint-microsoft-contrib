@@ -3,9 +3,6 @@ import {TestHelper} from './TestHelper';
 
 /* tslint:disable:no-octal-literal */
 /* tslint:disable:max-func-body-length */
-/**
- * Unit tests.
- */
 describe('noOctalLiteralRule', () : void => {
      const ruleName : string = 'no-octal-literal';
 

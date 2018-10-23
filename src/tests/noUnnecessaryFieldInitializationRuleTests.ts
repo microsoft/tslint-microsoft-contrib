@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('unnecessaryFieldInitializationRule', () : void => {
 
     const ruleName : string = 'no-unnecessary-field-initialization';

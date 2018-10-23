@@ -7,9 +7,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary local variable: ';
 
-/**
- * Implementation of the no-unnecessary-local-variable rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

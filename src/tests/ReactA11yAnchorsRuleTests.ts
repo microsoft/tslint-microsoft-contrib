@@ -12,9 +12,6 @@ import {
     ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING
 } from '../reactA11yAnchorsRule';
 
-/**
- * Unit tests.
- */
 describe('reactA11yAnchorsRule', () : void => {
 
     const ruleName : string = 'react-a11y-anchors';

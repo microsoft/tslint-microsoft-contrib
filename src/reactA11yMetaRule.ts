@@ -6,9 +6,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Do not use http-equiv="refresh"';
 
-/**
- * Implementation of the react-a11y-meta rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

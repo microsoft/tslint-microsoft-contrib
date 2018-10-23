@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactIframeMissingSandboxRule', () : void => {
 
     const ruleName : string = 'react-iframe-missing-sandbox';

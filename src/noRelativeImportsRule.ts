@@ -13,9 +13,6 @@ const FAILURE_STRING_EXT_SIBLINGS: string =
 const FAILURE_STRING_IMPORT_SIBLINGS: string =
     'Imported module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ';
 
-/**
- * Implementation of the no-relative-imports rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

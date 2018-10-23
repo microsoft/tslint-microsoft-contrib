@@ -1,8 +1,5 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
-/**
- * Unit tests.
- */
 describe('insecureRandomRule', () : void => {
 
     const ruleName : string = 'insecure-random';

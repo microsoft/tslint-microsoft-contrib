@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('nonLiteralRequireRule', () : void => {
 
     const ruleName : string = 'non-literal-require';

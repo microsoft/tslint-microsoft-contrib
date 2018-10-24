@@ -481,7 +481,6 @@ module.exports = function(grunt) {
         'tslint',
         'validate-documentation',
         'validate-config',
-        'validate-debug-mode',
         'copy:package',
         'generate-recommendations',
         'generate-default-tslint-json',

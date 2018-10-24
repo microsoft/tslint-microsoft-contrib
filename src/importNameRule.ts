@@ -6,9 +6,6 @@ import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
-/**
- * Implementation of the import-name rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

@@ -10,9 +10,6 @@ const MATH_FAIL_STRING: string = 'Math.random produces insecure random numbers. 
 const NODE_FAIL_STRING: string = 'crypto.pseudoRandomBytes produces insecure random numbers. ' +
     'Use crypto.randomBytes() instead';
 
-/**
- * Implementation of the insecure-random rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

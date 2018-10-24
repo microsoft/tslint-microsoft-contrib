@@ -2,9 +2,6 @@
 /* tslint:disable:no-consecutive-blank-lines */
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noStringBasedSetIntervalRule', () : void => {
     const RULE_NAME : string = 'no-string-based-set-interval';
 

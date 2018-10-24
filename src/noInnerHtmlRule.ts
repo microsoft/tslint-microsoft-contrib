@@ -9,9 +9,6 @@ const FAILURE_INNER: string = 'Writing a string to the innerHTML property is ins
 const FAILURE_OUTER: string = 'Writing a string to the outerHTML property is insecure: ';
 const FAILURE_HTML_LIB: string = 'Using the html() function to write a string to innerHTML is insecure: ';
 
-/**
- * Implementation of the no-inner-html rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

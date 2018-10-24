@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactAnchorBlankNoopenerRule', () : void => {
 
     const ruleName : string = 'react-anchor-blank-noopener';

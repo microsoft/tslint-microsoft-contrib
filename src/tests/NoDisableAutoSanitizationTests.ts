@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noDisableAutoSanitizationRule', () : void => {
     it('should produce violation for execUnsafeLocalFunction', () : void => {
         const ruleName : string = 'no-disable-auto-sanitization';

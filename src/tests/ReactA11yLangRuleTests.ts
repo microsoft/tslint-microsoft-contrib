@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactA11yLangRule', () : void => {
 
     const ruleName : string = 'react-a11y-lang';

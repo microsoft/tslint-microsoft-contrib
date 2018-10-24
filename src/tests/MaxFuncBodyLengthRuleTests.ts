@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('maxFuncBodyLengthRule', (): void => {
     let options: [boolean, number | object, object?];
     const script: string = `

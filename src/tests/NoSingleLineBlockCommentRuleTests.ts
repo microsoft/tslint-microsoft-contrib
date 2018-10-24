@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noSingleLineBlockCommentRule', () : void => {
 
     const ruleName : string = 'no-single-line-block-comment';

@@ -41,9 +41,6 @@ interface Options {
     readonly validateStatics: string;
 }
 
-/**
- * Implementation of the function-name rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

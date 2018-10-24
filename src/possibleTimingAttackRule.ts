@@ -8,9 +8,6 @@ import {Utils} from './utils/Utils';
 const FAILURE_STRING: string = 'Possible timing attack detected. Direct comparison found: ';
 const SENSITIVE_VAR_NAME: RegExp = /^(password|secret|api|apiKey|token|auth|pass|hash)$/im;
 
-/**
- * Implementation of the possible-timing-attack rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

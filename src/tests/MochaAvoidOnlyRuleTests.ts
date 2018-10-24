@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('mochaAvoidOnlyRule', () : void => {
     const ruleName : string = 'mocha-avoid-only';
 

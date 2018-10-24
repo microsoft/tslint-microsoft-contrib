@@ -4,9 +4,6 @@ import * as Lint from 'tslint';
 import {NoStringParameterToFunctionCallWalker} from './utils/NoStringParameterToFunctionCallWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-string-based-set-interval rule.
- */
 export class Rule extends Lint.Rules.OptionallyTypedRule {
 
     public static metadata: ExtendedMetadata = {

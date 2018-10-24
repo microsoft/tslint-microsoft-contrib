@@ -6,9 +6,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 import {AstUtils} from './utils/AstUtils';
 
-/**
- * Implementation of the no-exec-script rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

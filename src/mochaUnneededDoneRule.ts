@@ -8,9 +8,6 @@ import {MochaUtils} from './utils/MochaUtils';
 
 const FAILURE_STRING: string = 'Unneeded Mocha Done. Parameter can be safely removed: ';
 
-/**
- * Implementation of the mocha-unneeded-done rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

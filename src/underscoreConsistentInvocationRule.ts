@@ -27,9 +27,6 @@ const FUNCTION_NAMES: string[] = [
     'lastIndexOf', 'findLastIndex', 'sortedIndex', 'range'
 ];
 
-/**
- * Implementation of the underscore-consistent-invocation rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

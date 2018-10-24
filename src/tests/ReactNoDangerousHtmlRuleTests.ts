@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('reactNoDangerousHtmlRule', () : void => {
     const ruleName : string = 'react-no-dangerous-html';
 

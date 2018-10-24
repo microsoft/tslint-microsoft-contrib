@@ -5,9 +5,6 @@ import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {MochaUtils} from './utils/MochaUtils';
 
-/**
- * Implementation of the mocha-avoid-only rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

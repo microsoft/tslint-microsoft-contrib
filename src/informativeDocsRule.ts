@@ -28,7 +28,7 @@ interface Options {
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         description: 'Enforces that comments do more than just reiterate names of objects.',
-        options: null,
+        options: undefined,
         optionsDescription: 'Not configurable.',
         optionExamples: [
             true,
@@ -65,10 +65,10 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-function parseOptions(ruleArguments: any[]): Options {
+function parseOptions(ruleArguments: unknown[]): Options {
     const rawOptions: RawOptions = ruleArguments.length === 0
         ? {}
-        : ruleArguments[0];
+        : <RawOptions>ruleArguments[0];
 
     return {
         aliases: parseAliasesOption(

@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noUnnecessaryOverrideRule', () : void => {
     const ruleName : string = 'no-unnecessary-override';
 

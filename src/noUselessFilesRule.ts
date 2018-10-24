@@ -6,9 +6,6 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
 const FAILURE_STRING_EMPTY: string = 'This file is empty and should be deleted.';
 const FAILURE_STRING_COMMENTS: string = 'This file only contains comments and should be deleted.';
 
-/**
- * Implementation of the no-useless-files rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {

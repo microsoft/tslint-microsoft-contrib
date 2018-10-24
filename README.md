@@ -198,6 +198,7 @@ There certainly are a lot of options! Here are some links to get you started.
       <code>missing-jsdoc</code>
       </td>
       <td>
+        Deprecated - This rule can be replaced with TSLint's <code>file-header</code> rule.
         All files must have a top level [JSDoc](http://usejsdoc.org/) comment.
         A JSDoc comment starts with /** (not one more or one less asterisk) and a JSDoc at the 'top-level' appears without leading spaces.
         Trailing spaces are acceptable but not recommended

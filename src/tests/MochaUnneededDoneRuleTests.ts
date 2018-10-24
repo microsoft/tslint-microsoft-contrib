@@ -1,9 +1,6 @@
 import {Utils} from '../utils/Utils';
 import {TestHelper} from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('mochaUnneededDoneRule', () : void => {
 
     const ruleName : string = 'mocha-unneeded-done';

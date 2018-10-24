@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class PromiseAnalyzer extends ErrorTolerantWalker {
+class PromiseAnalyzer extends Lint.RuleWalker {
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
         if (node.expression.kind === ts.SyntaxKind.Identifier
             && node.expression.getText() === 'Promise'
@@ -82,7 +81,7 @@ class PromiseAnalyzer extends ErrorTolerantWalker {
     }
 }
 
-class PromiseCompletionWalker extends ErrorTolerantWalker {
+class PromiseCompletionWalker extends Lint.RuleWalker {
     private completionIdentifiers: ts.Identifier[];
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true

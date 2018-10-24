@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -36,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class NoEmptyInterfacesRuleWalker extends ErrorTolerantWalker {
+class NoEmptyInterfacesRuleWalker extends Lint.RuleWalker {
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
         // do we have an empty interface?
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {

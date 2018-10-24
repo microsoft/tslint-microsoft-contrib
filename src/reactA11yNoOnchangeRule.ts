@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {getJsxAttributesFromJsxElement} from './utils/JsxAttribute';
 
@@ -32,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactA11yNoOnchangeRuleWalker extends ErrorTolerantWalker {
+class ReactA11yNoOnchangeRuleWalker extends Lint.RuleWalker {
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         this.checkJsxOpeningElement(node);
         super.visitJsxSelfClosingElement(node);

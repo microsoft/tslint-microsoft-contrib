@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDuplicateParameterNamesWalker extends ErrorTolerantWalker {
+class NoDuplicateParameterNamesWalker extends Lint.RuleWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.validateParameterNames(node);
         super.visitMethodDeclaration(node);

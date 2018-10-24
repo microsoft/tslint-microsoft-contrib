@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
@@ -31,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoGenericArrayWalker extends ErrorTolerantWalker {
+class NoGenericArrayWalker extends Lint.RuleWalker {
 
     private allowTypeParameters: boolean = false;
 

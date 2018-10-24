@@ -271,14 +271,6 @@ module.exports = function(grunt) {
         grunt.file.write('dist/build/package.json', JSON.stringify(basePackageJson, null, 2), { encoding: 'UTF-8' });
     });
 
-    grunt.registerTask('validate-debug-mode', 'A task that makes sure ErrorTolerantWalker.DEBUG is false', function () {
-        // DON'T MAKE A RELEASE IN DEBUG MODE
-        var fileText = grunt.file.read('src/utils/ErrorTolerantWalker.ts', { encoding: 'UTF-8' });
-        if (fileText.indexOf('DEBUG: boolean = false') === -1) {
-            grunt.fail.warn('ErrorTolerantWalker.DEBUG is turned on. Turn off debugging to make a release');
-        }
-    });
-
     grunt.registerTask('validate-documentation', 'A task that validates that all rules defined in src are documented in README.md\n' +
         'and validates that the package.json version is the same version defined in README.md', function () {
 

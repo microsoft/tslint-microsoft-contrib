@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_NOT_FOUND: string = 'An iframe element requires a sandbox attribute';
@@ -51,7 +50,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactIframeMissingSandboxRuleWalker extends ErrorTolerantWalker {
+class ReactIframeMissingSandboxRuleWalker extends Lint.RuleWalker {
 
     protected visitJsxElement(node: ts.JsxElement): void {
         this.handleJsxOpeningElement(node.openingElement);

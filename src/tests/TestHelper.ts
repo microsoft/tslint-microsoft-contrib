@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as chai from 'chai';
 import {Utils} from '../utils/Utils';
 import * as ts from 'typescript';
-import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
 
 /**
  * Test Utilities.
@@ -121,8 +120,6 @@ export module TestHelper {
             formattersDirectory: FORMATTER_DIRECTORY
         };
 
-        const debug: boolean = ErrorTolerantWalker.DEBUG;
-        ErrorTolerantWalker.DEBUG = true; // never fail silently
         let result: Lint.LintResult;
         if (useTypeChecker) {
             //program = Lint.Linter.createProgram([ ], './dist/test-data');
@@ -146,7 +143,6 @@ export module TestHelper {
             linter.lint(filename, inputFileOrScript, configuration);
             result = linter.getResult();
         }
-        ErrorTolerantWalker.DEBUG = debug;
         return result;
     }
 

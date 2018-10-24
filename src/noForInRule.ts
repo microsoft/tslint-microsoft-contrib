@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -31,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoForInRuleWalker extends ErrorTolerantWalker {
+class NoForInRuleWalker extends Lint.RuleWalker {
     protected visitForInStatement(node: ts.ForInStatement): void {
         const initializer: string = node.initializer.getText();
         const expression: string = node.expression.getText();

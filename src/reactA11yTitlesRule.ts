@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
 
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactA11yTitlesRuleWalker extends ErrorTolerantWalker {
+class ReactA11yTitlesRuleWalker extends Lint.RuleWalker {
 
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         if (node.tagName.getText() === 'title') {

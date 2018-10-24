@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {AstUtils} from './AstUtils';
 
 /**
@@ -53,7 +52,7 @@ export class Scope {
     }
 }
 
-class GlobalReferenceCollector extends ErrorTolerantWalker {
+class GlobalReferenceCollector extends Lint.RuleWalker {
     public functionIdentifiers: string[] = [];
     public nonFunctionIdentifiers: string[] = [];
 

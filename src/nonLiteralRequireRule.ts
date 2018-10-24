@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NonLiteralRequireRuleWalker extends ErrorTolerantWalker {
+class NonLiteralRequireRuleWalker extends Lint.RuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionName(node) === 'require'

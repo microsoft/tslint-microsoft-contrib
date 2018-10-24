@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import {AstUtils} from './AstUtils';
 import {Scope} from './Scope';
 import { isNamed } from './TypeGuard';
@@ -10,7 +9,7 @@ import { isNamed } from './TypeGuard';
  * and identifiers in the current scope. It builds the current scope
  * from the SourceFile then -> Module -> Class -> Function
  */
-export class ScopedSymbolTrackingWalker extends ErrorTolerantWalker {
+export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
     private typeChecker?: ts.TypeChecker;
     private scope: Scope | undefined;
 

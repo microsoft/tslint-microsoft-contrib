@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoBackboneGetSetOutsideModelRuleWalker extends ErrorTolerantWalker {
+class NoBackboneGetSetOutsideModelRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionTarget(node) !== 'this') {
             const functionName: string = AstUtils.getFunctionName(node);

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -36,7 +35,7 @@ interface UnexternalizedStringsOptions {
     ignores?: string[];
 }
 
-class NoUnexternalizedStringsRuleWalker extends ErrorTolerantWalker {
+class NoUnexternalizedStringsRuleWalker extends Lint.RuleWalker {
     private static SINGLE_QUOTE: string = '\'';
 
     private signatures: Map<boolean>;

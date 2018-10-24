@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
@@ -38,7 +37,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
+class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
 
     private propNames: string[] = [];
     private propNodes: { [index: string]: ts.TypeElement } = {};

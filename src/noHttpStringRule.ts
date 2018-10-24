@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -33,7 +32,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class NoHttpStringWalker extends ErrorTolerantWalker {
+class NoHttpStringWalker extends Lint.RuleWalker {
     protected visitStringLiteral(node: ts.StringLiteral): void {
         this.visitLiteralExpression(node);
         super.visitStringLiteral(node);

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
@@ -86,7 +85,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class FunctionNameRuleWalker extends ErrorTolerantWalker {
+class FunctionNameRuleWalker extends Lint.RuleWalker {
 
     private methodRegex: RegExp = /^[a-z][\w\d]+$/;
     private privateMethodRegex: RegExp = this.methodRegex;

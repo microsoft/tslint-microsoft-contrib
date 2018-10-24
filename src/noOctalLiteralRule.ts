@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoOctalLiteral extends ErrorTolerantWalker {
+class NoOctalLiteral extends Lint.RuleWalker {
     public visitNode(node: ts.Node) {
         if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
             this.failOnOctalString(<ts.LiteralExpression>node);

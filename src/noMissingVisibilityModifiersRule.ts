@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
+class MissingVisibilityModifierWalker extends Lint.RuleWalker {
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             const failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);

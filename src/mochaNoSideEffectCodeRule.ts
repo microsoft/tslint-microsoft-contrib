@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 import {MochaUtils} from './utils/MochaUtils';
@@ -31,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MochaNoSideEffectCodeRuleWalker extends ErrorTolerantWalker {
+class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
 
     private isInDescribe: boolean = false;
     private ignoreRegex!: RegExp;

@@ -2,7 +2,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -100,7 +99,7 @@ function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
   }
 }
 
-export class ExportNameWalker extends ErrorTolerantWalker {
+export class ExportNameWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
 
         // look for single export assignment from file first

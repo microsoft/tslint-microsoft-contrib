@@ -14,7 +14,7 @@ export class Formatter extends BaseFormatter {
 
     constructor() {
         if (!warnedForDeprecation) {
-            console.warn('The fix-no-var-keyword formatter is deprecated. Use --fix instead.');
+            console.warn('The fix-no-require-imports formatter is deprecated. Use --fix instead.');
             warnedForDeprecation = true;
         }
 

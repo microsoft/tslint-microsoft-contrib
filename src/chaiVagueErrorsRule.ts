@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import { ErrorTolerantWalker } from './utils/ErrorTolerantWalker';
 import { ChaiUtils } from './utils/ChaiUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -34,7 +33,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
+class ChaiVagueErrorsRuleWalker extends Lint.RuleWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_MISSING_LANG: string = 'An html element is missing the lang attribute';
@@ -46,7 +45,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactA11yLangRuleWalker extends ErrorTolerantWalker {
+class ReactA11yLangRuleWalker extends Lint.RuleWalker {
 
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         this.validateOpeningElement(node, node);

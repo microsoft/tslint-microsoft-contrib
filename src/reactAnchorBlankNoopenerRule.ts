@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
 
@@ -37,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactAnchorBlankNoopenerRuleWalker extends ErrorTolerantWalker {
+class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
 
     protected visitJsxElement(node: ts.JsxElement): void {
         const openingElement: ts.JsxOpeningElement = node.openingElement;

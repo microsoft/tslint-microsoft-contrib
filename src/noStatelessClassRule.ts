@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -37,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoStatelessClassRuleWalker extends ErrorTolerantWalker {
+class NoStatelessClassRuleWalker extends Lint.RuleWalker {
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
         if (!this.isClassStateful(node)) {
             const className: string = node.name === undefined ? '<unknown>' : node.name.text;

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.TypedRule {
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.TypedRule {
     }
 }
 
-class NoCookiesWalker extends ErrorTolerantWalker {
+class NoCookiesWalker extends Lint.RuleWalker {
     private typeChecker : ts.TypeChecker;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {

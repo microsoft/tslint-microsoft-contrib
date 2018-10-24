@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -29,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoFunctionConstructorWithStringArgsWalker extends ErrorTolerantWalker {
+class NoFunctionConstructorWithStringArgsWalker extends Lint.RuleWalker {
     public constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
         super(sourceFile, options);
     }

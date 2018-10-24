@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
 
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class PossibleTimingAttackRuleWalker extends ErrorTolerantWalker {
+class PossibleTimingAttackRuleWalker extends Lint.RuleWalker {
 
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken

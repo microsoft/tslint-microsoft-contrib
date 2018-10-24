@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary method override. A method that only calls super can be removed: ';
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoUnnecessaryOverrideRuleWalker extends ErrorTolerantWalker {
+class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         if (node.body !== undefined) {
             const statement = this.getSingleStatement(node.body);

@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { AstUtils } from './utils/AstUtils';
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
+class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
     private allowGenericFunctionExpression: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -59,7 +58,7 @@ class NoFunctionExpressionRuleWalker extends ErrorTolerantWalker {
     }
 }
 
-class SingleFunctionWalker extends ErrorTolerantWalker {
+class SingleFunctionWalker extends Lint.RuleWalker {
     public isAccessingThis: boolean = false;
     public isGenericFunction: boolean = false;
     protected visitNode(node: ts.Node): void {

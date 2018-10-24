@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 
@@ -79,7 +78,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NonLiteralFsPathRuleWalker extends ErrorTolerantWalker {
+class NonLiteralFsPathRuleWalker extends Lint.RuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionTarget(node) === 'fs'

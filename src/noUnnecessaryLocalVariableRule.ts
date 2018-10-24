@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import * as tsutils from 'tsutils';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary local variable: ';
@@ -29,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
+class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
     private readonly variableUsages: Map<ts.Identifier, tsutils.VariableInfo> = tsutils.collectVariableUsage(this.getSourceFile());
 
     protected visitBlock(node: ts.Block): void {

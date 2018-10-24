@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class NoMultipleVarDeclRuleWalker extends ErrorTolerantWalker {
+class NoMultipleVarDeclRuleWalker extends Lint.RuleWalker {
     protected visitVariableStatement(node: ts.VariableStatement): void {
         if (node.declarationList.declarations.length > 1) {
             this.addFailureAt(node.getStart(), node.getWidth(),

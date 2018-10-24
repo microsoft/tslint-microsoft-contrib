@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -37,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class NoDuplicateCaseRuleWalker extends ErrorTolerantWalker {
+class NoDuplicateCaseRuleWalker extends Lint.RuleWalker {
     protected visitSwitchStatement(node: ts.SwitchStatement): void {
         const seenLabels: string[] = [];
         node.caseBlock.clauses.forEach((clauseOrDefault: ts.CaseOrDefaultClause): void => {

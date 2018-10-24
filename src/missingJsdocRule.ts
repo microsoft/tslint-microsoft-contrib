@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -35,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MissingJSDocWalker extends ErrorTolerantWalker {
+class MissingJSDocWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
             const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;

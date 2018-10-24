@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
@@ -31,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
+class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
 
     private htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 

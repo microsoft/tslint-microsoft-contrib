@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import {Utils} from './utils/Utils';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export interface Exception {
@@ -48,7 +47,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDangerousHtmlWalker extends ErrorTolerantWalker {
+class NoDangerousHtmlWalker extends Lint.RuleWalker {
     private currentMethodName : string;
 
     constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {

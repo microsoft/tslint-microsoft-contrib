@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
@@ -55,7 +54,7 @@ type Option = {
     config: Config
 };
 
-class ImportNameRuleWalker extends ErrorTolerantWalker {
+class ImportNameRuleWalker extends Lint.RuleWalker {
 
     private option: Option;
 

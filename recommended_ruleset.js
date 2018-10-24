@@ -272,4 +272,3 @@ module.exports = {
         "valid-typeof": false,
     }
 };
-

@@ -49,10 +49,8 @@ function validateAguments() {
 function createImplementationFile() {
     const walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
 
-    const ruleTemplateText = common.readFile('templates/rule.snippet');
-    const ruleSource = ruleTemplateText
-        .replace(/%RULE_NAME%/gm, ruleName)
-        .replace(/%WALKER_NAME%/gm, walkerName);
+    const ruleTemplate = require('./templates/rule.template');
+    const ruleSource = ruleTemplate({ruleName, walkerName});
 
     common.writeFile(sourceFileName, ruleSource);
 }

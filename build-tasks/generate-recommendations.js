@@ -34,13 +34,7 @@ if (warnings.length > 0) {
 }
 Object.keys(groupedRows).forEach(groupName => groupedRows[groupName].sort());
 
-let data = common.readFile('templates/recommended_ruleset.js.snippet');
-data = data.replace('%security_rules%',       groupedRows.Security.join('\n'));
-data = data.replace('%correctness_rules%',    groupedRows.Correctness.join('\n'));
-data = data.replace('%clarity_rules%',        groupedRows.Clarity.join('\n'));
-data = data.replace('%whitespace_rules%',     groupedRows.Whitespace.join('\n'));
-data = data.replace('%configurable_rules%',   groupedRows.Configurable.join('\n'));
-data = data.replace('%deprecated_rules%',     groupedRows.Deprecated.join('\n'));
-data = data.replace('%accessibilityy_rules%', groupedRows.Accessibility.join('\n'));
+const recommendedTemplate = require('./templates/recommended_ruleset.template');
+const data = recommendedTemplate(groupedRows);
 
 common.writeFile('recommended_ruleset.js', data);

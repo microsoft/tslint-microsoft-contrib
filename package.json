@@ -38,6 +38,7 @@
   "analyze": true,
   "scripts": {
     "test": "npm-run-all clean copy:json ts:* test:* lint:* validate:* copy:package copy:meta generate:*",
+    "start": "tsc --watch",
     "clean": "rimraf dist",
     "copy:json": "cpy \"src/**/*.json\" dist --parents",
     "copy:package": "cpy \"**/*.js\" \"**/*.json\" \"!tests/**\" \"!references.js\" \"tests/TestHelper.js\" \"tests/TestHelper.d.ts\" ../build --cwd=\"dist/src\" --parents",

@@ -166,27 +166,56 @@ Formatter Name          | Description | Since
 
 ## Development
 
-To develop tslint-microsoft-contrib simply clone the repository, install dependencies and run grunt:
+To develop `tslint-microsoft-contrib` simply clone the repository, install dependencies and run `npm test`:
 
     git clone git@github.com:Microsoft/tslint-microsoft-contrib.git --config core.autocrlf=input --config core.eol=lf
     cd tslint-microsoft-contrib
     npm install
-    grunt all
-    grunt create-rule --rule-name=no-something-or-other
+    npm test
+
+You can create new rule from template with `create-rule` script:
+
+    npm run create-rule -- --rule-name=no-something-or-other
+
+> NOTE: `--` is required before script arguments.
+
+This script will create file for rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
+
+More information about writing rule tests can be found in [TSLint doccumentation](https://palantir.github.io/tslint/develop/testing-rules/)
+
 
 ### Debug code
 
-If command fails because of file access permissions, prefix it with sudo.
+**VS Code**
 
-    npm install -g node-inspector
+This repo provides pre-configured launch tasks for VS Code debugging rules and tests.
 
-Then run:
+* Pick `Run Mocha Tests` to debug rules which have Mocha unit tests inside `src/tests` folder.
 
-    node-debug grunt mochaTest
+* Pick `Run TSLint Tests` to debug rules that have tests in TSLint format inside `tests` folder.
 
-The `node-debug` command will load Node Inspector in your default browser (works in Chrome and Opera only).
+**Node.js**
+
+Starting from Node.js v6.3 has built-in debugger that can be used with Chrom DevTools. For earlier versions use [`node-inspector`](https://www.npmjs.com/package/node-inspector) package.
+
+To debug rules that have Mocha tests use:
+
+    node --inspect-brk ./node_modules/mocha/bin/_mocha --no-timeouts --colors "dist/src/tests/**/*.js"
+
+To debug rules that have tests in TSLint format use:
+
+    node --inspect-brk ./node_modules/tslint/bin/tslint --test -r dist/src "tests/**"
+
+
+Then open [chrome://inspect/](chrome://inspect/), click on `inspect` link for proper target in Remote Target section and add `tslint-microsoft-contrib` folder to Workspace (in Sources tab).
 
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
+
+You can use `npm start` watcher that will rebuild TS files from `src` before launching debug commands.
+
+> NOTE: Run `npm test` before `npm start` to copy all required files to `dist` folder.
+
+> NOTE: If breakpoins are not hit you can try to use `inlineSourceMaps` instead of `sourceMaps` in `tsconfig.json`
 
 ### Creating a new Release
 

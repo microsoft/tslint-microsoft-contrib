@@ -4,7 +4,4 @@ node_js:
   - '6'
   - '8'
 
-before_script:
-  - npm install -g grunt-cli
-
 sudo: false

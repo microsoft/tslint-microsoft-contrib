@@ -2,14 +2,15 @@
  * Generates the recommended_ruleset.js file.
  */
 
-const common = require('./common');
+const { writeFile } = require('./common/files');
+const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
 const groupedRows = {};
 const warnings = [];
 
-common.getAllRules().forEach(ruleFile => {
-    const metadata = common.getMetadataFromFile(ruleFile);
+getAllRules().forEach(ruleFile => {
+    const metadata = getMetadataFromFile(ruleFile);
 
-    const groupName = common.getMetadataValue(metadata, 'group');
+    const groupName = getMetadataValue(metadata, 'group');
     if (groupName === 'Ignored') {
         return;
     }
@@ -20,11 +21,11 @@ common.getAllRules().forEach(ruleFile => {
         groupedRows[groupName] = [];
     }
 
-    let recommendation = common.getMetadataValue(metadata, 'recommendation', true, true);
+    let recommendation = getMetadataValue(metadata, 'recommendation', true, true);
     if (recommendation === '') {
         recommendation = 'true,';
     }
-    const ruleName = common.getMetadataValue(metadata, 'ruleName');
+    const ruleName = getMetadataValue(metadata, 'ruleName');
     groupedRows[groupName].push(`        "${ruleName}": ${recommendation}`);
 });
 
@@ -37,4 +38,4 @@ Object.keys(groupedRows).forEach(groupName => groupedRows[groupName].sort());
 const recommendedTemplate = require('./templates/recommended_ruleset.template');
 const data = recommendedTemplate(groupedRows);
 
-common.writeFile('recommended_ruleset.js', data);
+writeFile('recommended_ruleset.js', data);

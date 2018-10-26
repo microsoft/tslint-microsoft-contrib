@@ -2,9 +2,10 @@
  * Makes sure all the rules in the project are defined to run during the build.
  */
 
-const common = require('./common');
+const { readJSON } = require('./common/files');
+const { getAllRuleNames } = require('./common/meta');
 
-const tslintConfig = common.readJSON('tslint.json');
+const tslintConfig = readJSON('tslint.json');
 
 const rulesToSkip = new Set([
     'align',                              // no need
@@ -44,7 +45,7 @@ const rulesToSkip = new Set([
 ]);
 
 const errors = [];
-common.getAllRuleNames().forEach(ruleName => {
+getAllRuleNames().forEach(ruleName => {
     if (rulesToSkip.has(ruleName)) {
         return;
     }

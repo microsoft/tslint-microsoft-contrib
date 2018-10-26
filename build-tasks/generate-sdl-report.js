@@ -2,37 +2,52 @@
  * Generates an SDL report in csv format.
  */
 
-const common = require('./common');
+const { readJSON, writeFile } = require('./common/files');
+const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
+const allCweDescriptions = readJSON('cwe_descriptions.json');
 const rows = [];
 const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
 const procedure = 'TSLint Procedure';
 const header = 'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
     'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
 
-common.getAllRules().forEach(ruleFile => {
-    const metadata = common.getMetadataFromFile(ruleFile);
+getAllRules().forEach(ruleFile => {
+    const metadata = getMetadataFromFile(ruleFile);
 
-    const issueClass = common.getMetadataValue(metadata, 'issueClass');
+    const issueClass = getMetadataValue(metadata, 'issueClass');
     if (issueClass === 'Ignored') {
         return;
     }
-    const ruleName = common.getMetadataValue(metadata, 'ruleName');
+    const ruleName = getMetadataValue(metadata, 'ruleName');
     const errorId = 'TSLINT' + getHash(ruleName);
-    const issueType = common.getMetadataValue(metadata, 'issueType');
-    const severity = common.getMetadataValue(metadata, 'severity');
-    const level = common.getMetadataValue(metadata, 'level');
-    const description = common.getMetadataValue(metadata, 'description');
-    const cwe = common.getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
+    const issueType = getMetadataValue(metadata, 'issueType');
+    const severity = getMetadataValue(metadata, 'severity');
+    const level = getMetadataValue(metadata, 'level');
+    const description = getMetadataValue(metadata, 'description');
+    const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
     const cweDescription = createCweDescription(metadata);
 
-    const row = `${ruleName},${description},${errorId},tslint,${issueClass},${issueType},${severity},${level},${resolution},${procedure},${cwe},${cweDescription}`;
+    const row = [
+        ruleName,
+        description,
+        errorId,
+        'tslint',
+        issueClass,
+        issueType,
+        severity,
+        level,
+        resolution,
+        procedure,
+        cwe,
+        cweDescription
+    ].join(',');
     rows.push(row);
 });
 
 rows.sort();
 rows.unshift(header);
 
-common.writeFile('tslint-warnings.csv', rows.join('\n'));
+writeFile('tslint-warnings.csv', rows.join('\n'));
 
 function getHash(input) {
     // initialized with a prime number
@@ -47,9 +62,7 @@ function getHash(input) {
 }
 
 function createCweDescription(metadata) {
-    const allCweDescriptions = common.readJSON('cwe_descriptions.json');
-
-    const cwe = common.getMetadataValue(metadata, 'commonWeaknessEnumeration', true, true);
+    const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, true);
     if (cwe === '') {
         return '';
     }
@@ -68,7 +81,7 @@ function createCweDescription(metadata) {
         result = result + `CWE ${cweNumber} - ${description}`;
     });
     if (result !== '') {
-        return '"' + result + '"';
+        return `"${result}"`;
     }
     return result;
 }

@@ -2,9 +2,9 @@
  * Creates a package.json file for the npm module
  */
 
-const common = require('./common');
+const { readJSON, writeFile } = require('./common/files');
 
-const basePackageJson = common.readJSON('package.json');
+const basePackageJson = readJSON('package.json');
 delete basePackageJson.devDependencies;
 
-common.writeFile('dist/build/package.json', JSON.stringify(basePackageJson, undefined, 2));
+writeFile('dist/build/package.json', JSON.stringify(basePackageJson, undefined, 2));

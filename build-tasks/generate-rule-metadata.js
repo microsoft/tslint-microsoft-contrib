@@ -2,12 +2,13 @@
  * Generates rule-metadata.json which contains a json array of all rule metadata.
  */
 
-const common = require('./common');
+const { writeFile } = require('./common/files');
+const { getAllRules, getMetadataFromFile } = require('./common/meta');
 const allMetadata = [];
 
-common.getAllRules().forEach(ruleFile => {
-    const metadata = common.getMetadataFromFile(ruleFile);
+getAllRules().forEach(ruleFile => {
+    const metadata = getMetadataFromFile(ruleFile);
     allMetadata.push(metadata);
 });
 
-common.writeFile('rule-metadata.json', JSON.stringify(allMetadata, undefined, 2));
+writeFile('rule-metadata.json', JSON.stringify(allMetadata, undefined, 2));

@@ -3,19 +3,20 @@
  * and validates that the package.json version is the same version defined in README.md.
  */
 
-const common = require('./common');
+const { readFile, readJSON } = require('./common/files');
+const { getAllFormatterNames, getAllRuleNames } = require('./common/meta');
 
-const readmeText = common.readFile('README.md');
-const packageJson = common.readJSON('package.json');
+const readmeText = readFile('README.md');
+const packageJson = readJSON('package.json');
 const validationErrors = [];
 
-common.getAllRuleNames({ skipTsLintRules: true }).forEach(ruleName => {
+getAllRuleNames({ skipTsLintRules: true }).forEach(ruleName => {
     if (readmeText.indexOf(ruleName) === -1) {
         validationErrors.push('A rule was found that is not documented in README.md: ' + ruleName);
     }
 });
 
-common.getAllFormatterNames().forEach(formatterName => {
+getAllFormatterNames().forEach(formatterName => {
     if (readmeText.indexOf(formatterName) === -1) {
         validationErrors.push('A formatter was found that is not documented in README.md: ' + formatterName);
         validationFailed = true;

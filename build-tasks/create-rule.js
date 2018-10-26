@@ -1,4 +1,4 @@
-const common = require('./common');
+const { readJSON, writeFile } = require('./common/files');
 const fs = require('fs');
 
 const ruleName = getRuleName();
@@ -52,7 +52,7 @@ function createImplementationFile() {
     const ruleTemplate = require('./templates/rule.template');
     const ruleSource = ruleTemplate({ruleName, walkerName});
 
-    common.writeFile(sourceFileName, ruleSource);
+    writeFile(sourceFileName, ruleSource);
 }
 
 function createTestFiles() {
@@ -65,14 +65,14 @@ function createTestFiles() {
 
     fs.mkdirSync(testsFolder);
 
-    common.writeFile(testFile, testContent);
-    common.writeFile(lintFile, JSON.stringify(tslintContent, undefined, 2));
+    writeFile(testFile, testContent);
+    writeFile(lintFile, JSON.stringify(tslintContent, undefined, 2));
 }
 
 function addToConfig() {
-    const currentRuleset = common.readJSON('tslint.json');
+    const currentRuleset = readJSON('tslint.json');
 
     currentRuleset.rules[ruleName] = true;
 
-    common.writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 2));
+    writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 2));
 }

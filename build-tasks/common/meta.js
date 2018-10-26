@@ -1,33 +1,6 @@
 const path = require('path');
-const fs = require('fs');
 const glob = require('glob');
-
-function readFile(fileName) {
-    try {
-        return fs.readFileSync(String(fileName), {encoding: 'utf8'});
-    } catch (e) {
-        console.error(`Unable to read file: ${String(fileName)}. Error code: ${e.code}`);
-        process.exit(1);
-    }
-}
-
-function writeFile(fileName, data) {
-    try {
-        return fs.writeFileSync(String(fileName), data, {encoding: 'utf8'});
-    } catch (e) {
-        console.error(`Unable to write file: ${String(fileName)}. Error code: ${e.code}`);
-        process.exit(1);
-    }
-}
-
-function readJSON(fileName) {
-    try {
-        return JSON.parse(readFile(fileName));
-    } catch (e) {
-        console.error(`Unable to parse JSON file: ${String(fileName)}.`, e);
-        process.exit(1);
-    }
-}
+const {readJSON} = require('./files');
 
 function getAllRules() {
     const contribRules = glob.sync('dist/build/*Rule.js');
@@ -130,11 +103,8 @@ function getAllFormatterNames() {
 }
 
 module.exports = {
-    readFile,
-    readJSON,
-    writeFile,
-    getAllRuleNames,
     getAllFormatterNames,
+    getAllRuleNames,
     getAllRules,
     getMetadataFromFile,
     getMetadataValue

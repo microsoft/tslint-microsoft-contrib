@@ -135,9 +135,10 @@ There certainly are a lot of options! Here are some links to get you started.
         <code>import-name</code>
       </td>
       <td>
-        The name of the imported module must match the name of the thing being imported.
+        The name of the imported module must match the name of the thing being imported. For special characters (<code>-</code>, <code>.</code>, <code>_</code>) remove them and make the following character uppercase.
         For example, it is valid to name imported modules the same as the module name: <code>import Service = require('x/y/z/Service')</code> and <code>import Service from 'x/y/z/Service'</code>.
         But it is invalid to change the name being imported, such as: <code>import MyCoolService = require('x/y/z/Service')</code> and <code>import MyCoolService from 'x/y/z/Service'</code>.
+        When containing special characters such as <code>import $$ from 'my-awesome_library';</code> the corresponding configuration would look like <code>'import-name': [true, { 'myAwesomeLibrary': '$$' }]</code>.
         Since version 2.0.9 it is possible to configure this rule with a list of exceptions.
         For example, to allow <code>underscore</code> to be imported as <code>_</code>, add this configuration: <code>'import-name': [ true, { 'underscore': '_' }]</code>
       </td>

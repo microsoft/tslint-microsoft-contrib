@@ -2,6 +2,7 @@
  * Generates the recommended_ruleset.js file.
  */
 
+const { red } = require('chalk');
 const { writeFile } = require('./common/files');
 const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
 const groupedRows = {};
@@ -26,11 +27,11 @@ getAllRules().forEach(ruleFile => {
         recommendation = 'true,';
     }
     const ruleName = getMetadataValue(metadata, 'ruleName');
-    groupedRows[groupName].push(`        "${ruleName}": ${recommendation}`);
+    groupedRows[groupName].push(`        "${ ruleName }": ${ recommendation }`);
 });
 
 if (warnings.length > 0) {
-    console.warn('\n' + warnings.join('\n'));
+    console.log('\n' + red(warnings.join('\n')));
     process.exit(1);
 }
 Object.keys(groupedRows).forEach(groupName => groupedRows[groupName].sort());

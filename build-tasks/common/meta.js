@@ -1,6 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const {readJSON} = require('./files');
+const { readJSON } = require('./files');
 
 function getAllRules() {
     const contribRules = glob.sync('dist/build/*Rule.js');
@@ -13,8 +13,8 @@ function getMetadataFromFile(ruleFile) {
     const moduleName = path.resolve(ruleFile.replace(/\.js$/, ''));
     const module = require(moduleName);
     if (module.Rule.metadata === undefined) {
-        console.warn('No metadata found for ' + moduleName);
-        return;
+        console.log(red('No metadata found for ' + moduleName));
+        process.exit(1);
     }
     return module.Rule.metadata;
 }
@@ -27,7 +27,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
     if (value === undefined) {
         if (additionalMetadata[metadata.ruleName] === undefined) {
             if (allowEmpty === false) {
-                console.warn(`Could not read metadata for rule ${metadata.ruleName} from additional_rule_metadata.json`);
+                console.log(red(`Could not read metadata for rule ${ metadata.ruleName } from additional_rule_metadata.json`));
                 process.exit(1);
             } else {
                 return '';
@@ -36,7 +36,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
         value = additionalMetadata[metadata.ruleName][name];
         if (value === undefined) {
             if (allowEmpty === false) {
-                console.warn(`Could not read attribute ${name} of rule ${metadata.ruleName}`);
+                console.log(red(`Could not read attribute ${ name } of rule ${ metadata.ruleName }`));
                 process.exit(1);
             }
             return '';

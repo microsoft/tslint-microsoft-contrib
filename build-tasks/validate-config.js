@@ -2,6 +2,7 @@
  * Makes sure all the rules in the project are defined to run during the build.
  */
 
+const { yellowBright } = require('chalk');
 const { readJSON } = require('./common/files');
 const { getAllRuleNames } = require('./common/meta');
 
@@ -57,6 +58,6 @@ getAllRuleNames().forEach(ruleName => {
 });
 
 if (errors.length > 0) {
-    console.warn(errors.join('\n'));
+    console.log(yellowBright(errors.join('\n')));
     process.exit(1);
 }

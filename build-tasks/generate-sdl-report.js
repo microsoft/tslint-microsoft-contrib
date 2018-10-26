@@ -2,6 +2,7 @@
  * Generates an SDL report in csv format.
  */
 
+const { red } = require('chalk');
 const { readJSON, writeFile } = require('./common/files');
 const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
 const allCweDescriptions = readJSON('cwe_descriptions.json');
@@ -72,16 +73,16 @@ function createCweDescription(metadata) {
         cweNumber = cweNumber.trim();
         const description = allCweDescriptions[cweNumber];
         if (description === undefined) {
-            console.warn(`Cannot find description of ${cweNumber} for rule ${metadata.ruleName} in cwe_descriptions.json`);
+            console.log(red(`Cannot find description of ${ cweNumber } for rule ${ metadata.ruleName } in cwe_descriptions.json`));
             process.exit(1);
         }
         if (result !== '') {
             result = result + '\n';
         }
-        result = result + `CWE ${cweNumber} - ${description}`;
+        result = result + `CWE ${ cweNumber } - ${ description }`;
     });
     if (result !== '') {
-        return `"${result}"`;
+        return `"${ result }"`;
     }
     return result;
 }

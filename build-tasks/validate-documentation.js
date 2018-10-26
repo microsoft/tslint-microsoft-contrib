@@ -3,6 +3,7 @@
  * and validates that the package.json version is the same version defined in README.md.
  */
 
+const { yellowBright } = require('chalk');
 const { readFile, readJSON } = require('./common/files');
 const { getAllFormatterNames, getAllRuleNames } = require('./common/meta');
 
@@ -30,6 +31,6 @@ if (readmeText.indexOf('[npm-' + packageJson.version + ']') === -1) {
 }
 
 if (validationErrors.length > 0) {
-    console.warn(validationErrors.join('\n'));
+    console.log(yellowBright(validationErrors.join('\n')));
     process.exit(1);
 }

@@ -1,7 +1,9 @@
-const { readJSON, writeFile } = require('./common/files');
 const fs = require('fs');
+const { red } = require('chalk');
+const { readJSON, writeFile } = require('./common/files');
 
 const ruleName = getRuleName();
+validateAguments();
 
 const ruleFile = camelCase(ruleName) + 'Rule';
 const sourceFileName = 'src/' + ruleFile + '.ts';
@@ -9,7 +11,6 @@ const testsFolder = 'tests/' + ruleName;
 const testFile = testsFolder + '/test.ts.lint';
 const lintFile = testsFolder + '/tslint.json';
 
-validateAguments();
 createImplementationFile();
 createTestFiles();
 addToConfig();
@@ -36,12 +37,12 @@ function validateAguments() {
     const USAGE_EXAMPLE = '\nUsage example:\nnpm run create-rule -- --rule-name=no-something-or-other\n';
 
     if (!ruleName) {
-        console.log('--rule-name parameter is required.' + USAGE_EXAMPLE);
+        console.log(red('--rule-name parameter is required.' + USAGE_EXAMPLE));
         process.exit(1);
     }
 
     if (!/^[a-z0-9]+(\-[a-z0-9]+)*$/.test(ruleName)) {
-        console.log('Rule name should consist of lowercase letters and numbers separated with "-" character.' + USAGE_EXAMPLE);
+        console.log(red('Rule name should consist of lowercase letters and numbers separated with "-" character.' + USAGE_EXAMPLE));
         process.exit(1);
     }
 }

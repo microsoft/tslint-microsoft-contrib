@@ -34,21 +34,23 @@ You can use that build by setting your npm version of `tslint-microsoft-contrib`
 
 ### Configure your Grunt build task
 
-Add the new rulesDirectory to your tslint task:
+Add the new `rulesDirectory` to your `tslint` task:
 
-    grunt.initConfig({
-      tslint: {
-        options: {
-          rulesDirectory: 'node_modules/tslint-microsoft-contrib',
-          configuration: grunt.file.readJSON("tslint.json")
-        },
-        files: {
-          src: ['src/file1.ts', 'src/file2.ts']
-        }
-      }
-    })
+```js
+grunt.initConfig({
+  tslint: {
+    options: {
+      rulesDirectory: 'node_modules/tslint-microsoft-contrib',
+      configuration: grunt.file.readJSON("tslint.json")
+    },
+    files: {
+      src: ['src/file1.ts', 'src/file2.ts']
+    }
+  }
+})
+```
 
-The tslint.json file does not change format when using this package. Just add our rule definitions to your existing tslint.json file.
+The `tslint.json` file does not change format when using this package. Just add our rule definitions to your existing `tslint.json` file.
 
 ### Which Rules Should I Turn On?
 
@@ -157,7 +159,7 @@ Rule Name   | Description | Since
 
 ### Supported Formatters
 
-These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as \r\n on Windows).
+These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as `\r\n` on Windows).
 
 Formatter Name          | Description | Since
 :----------             | :------------ | -------------
@@ -168,14 +170,18 @@ Formatter Name          | Description | Since
 
 To develop `tslint-microsoft-contrib` simply clone the repository, install dependencies and run `npm test`:
 
-    git clone git@github.com:Microsoft/tslint-microsoft-contrib.git --config core.autocrlf=input --config core.eol=lf
-    cd tslint-microsoft-contrib
-    npm install
-    npm test
+```shell
+git clone git@github.com:Microsoft/tslint-microsoft-contrib.git --config core.autocrlf=input --config core.eol=lf
+cd tslint-microsoft-contrib
+npm install
+npm test
+```
 
 You can create new rule from template with `create-rule` script:
 
-    npm run create-rule -- --rule-name=no-something-or-other
+```shell
+npm run create-rule -- --rule-name=no-something-or-other
+```
 
 > NOTE: `--` is required before script arguments.
 
@@ -200,12 +206,15 @@ Starting from Node.js v6.3 has built-in debugger that can be used with Chrom Dev
 
 To debug rules that have Mocha tests use:
 
-    node --inspect-brk ./node_modules/mocha/bin/_mocha --no-timeouts --colors "dist/src/tests/**/*.js"
+```shell
+node --inspect-brk ./node_modules/mocha/bin/_mocha --no-timeouts --colors "dist/src/tests/**/*.js"
+```
 
 To debug rules that have tests in TSLint format use:
 
-    node --inspect-brk ./node_modules/tslint/bin/tslint --test -r dist/src "tests/**"
-
+```shell
+node --inspect-brk ./node_modules/tslint/bin/tslint --test -r dist/src "tests/**"
+```
 
 Then open [chrome://inspect/](chrome://inspect/), click on `inspect` link for proper target in Remote Target section and add `tslint-microsoft-contrib` folder to Workspace (in Sources tab).
 
@@ -215,7 +224,7 @@ You can use `npm start` watcher that will rebuild TS files from `src` before lau
 
 > NOTE: Run `npm test` before `npm start` to copy all required files to `dist` folder.
 
-> NOTE: If breakpoins are not hit you can try to use `inlineSourceMaps` instead of `sourceMaps` in `tsconfig.json`
+> NOTE: If breakpoints are not hit you can try to use `inlineSourceMaps` instead of `sourceMaps` in `tsconfig.json`
 
 ### Creating a new Release
 

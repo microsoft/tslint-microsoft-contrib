@@ -4,7 +4,8 @@ import {
   getFailureStringEmptyAltAndNotEmptyTitle,
   getFailureStringEmptyAltAndNotPresentationRole,
   getFailureStringNoAlt,
-  getFailureStringNonEmptyAltAndPresentationRole
+  getFailureStringNonEmptyAltAndPresentationRole,
+  getFailureStringAltIsImageFileName
 } from '../reactA11yImgHasAltRule';
 
 /**
@@ -202,6 +203,38 @@ const c = <img alt={''} title='Some image' role='presentation' />;
               ruleName: ruleName,
               startPosition: { character: 11, line: 5 },
               failure: getFailureStringEmptyAltAndNotEmptyTitle('img')
+            }
+          ]
+        );
+      });
+      it('when the img element has non-empty alt value but it\'s an image filename', () => {
+        const fileName: string = `import React = require('react');
+        const a = <img alt='altvalue.gif' />;
+        const b = <img alt='altvalue.jpeg' />;
+        const c = <img alt={'altvalue.png'} />;
+        `;
+
+        TestHelper.assertViolations(
+          ruleName,
+          fileName,
+          [
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 19, line: 2 },
+              failure: getFailureStringAltIsImageFileName('img')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 19, line: 3 },
+              failure: getFailureStringAltIsImageFileName('img')
+            },
+            {
+              name: Utils.absolutePath('file.tsx'),
+              ruleName: ruleName,
+              startPosition: { character: 19, line: 4 },
+              failure: getFailureStringAltIsImageFileName('img')
             }
           ]
         );

@@ -52,9 +52,8 @@
     "start": "tsc --watch",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\"",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
-    "test": "npm-run-all clean copy:json tsc:* test:* lint:* validate:* copy:package copy:meta generate:*",
+    "test": "npm-run-all clean copy:json tsc:src test:* lint:* validate:* copy:package copy:meta generate:*",
     "tsc:src": "tsc",
-    "tsc:test-data": "tsc -p test-data",
     "validate:config": "node build-tasks/validate-config.js",
     "validate:documentation": "node build-tasks/validate-documentation.js"
   },

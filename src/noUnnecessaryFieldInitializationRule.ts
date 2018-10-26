@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {AstUtils} from './utils/AstUtils';
 
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class UnnecessaryFieldInitializationRuleWalker extends ErrorTolerantWalker {
+class UnnecessaryFieldInitializationRuleWalker extends Lint.RuleWalker {
 
     private fieldInitializations: { [index: string]: string | undefined } = {};
 

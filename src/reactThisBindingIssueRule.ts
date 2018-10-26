@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {AstUtils} from './utils/AstUtils';
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {Scope} from './utils/Scope';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -54,7 +53,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactThisBindingIssueRuleWalker extends ErrorTolerantWalker {
+class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
 
     private allowAnonymousListeners: boolean = false;
     private allowedDecorators: Set<string> = new Set<string>();

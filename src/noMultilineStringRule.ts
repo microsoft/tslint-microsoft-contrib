@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -29,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoMultilineStringWalker extends ErrorTolerantWalker {
+class NoMultilineStringWalker extends Lint.RuleWalker {
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
             const fullText : string = node.getFullText();

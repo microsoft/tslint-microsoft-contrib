@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const OPTION_ALLOW_SIBLINGS = 'allow-siblings';
@@ -44,7 +43,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoRelativeImportsRuleWalker extends ErrorTolerantWalker {
+class NoRelativeImportsRuleWalker extends Lint.RuleWalker {
     private allowSiblings: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

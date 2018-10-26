@@ -102,6 +102,9 @@ There certainly are a lot of options! Here are some links to get you started.
         It can be configured to be case-insensitive or to allow names matching a regex.
         For example, to allow names that differ only in case and an exported name like myChartOptions, then configure the rule like this: <code>"export-name": [true, { "ignore-case": true, "allow": ["myChartOptions"] }]</code>.
         You can also just give a list of allowed names, like <code>"export-name": [true, "myChartOptions"]</code>.
+        <br />
+         Note that the name of the package is the expected camelCase name of the package.
+         For example, to allow <code>request-promise-native</code> to be imported as <code>request</code>, add this configuration: <code>'import-name': [true, { 'requestPromiseNative': 'request'}]</code>.
       </td>
       <td>0.0.3</td>
     </tr>
@@ -136,7 +139,8 @@ There certainly are a lot of options! Here are some links to get you started.
         For example, it is valid to name imported modules the same as the module name: <code>import Service = require('x/y/z/Service')</code> and <code>import Service from 'x/y/z/Service'</code>.
         But it is invalid to change the name being imported, such as: <code>import MyCoolService = require('x/y/z/Service')</code> and <code>import MyCoolService from 'x/y/z/Service'</code>.
         Since version 2.0.9 it is possible to configure this rule with a list of exceptions.
-        For example, to allow <code>underscore</code> to be imported as <code>_</code>, add this configuration: <code>'import-name': [ true, { 'underscore': '_' }]</code></td>
+        For example, to allow <code>underscore</code> to be imported as <code>_</code>, add this configuration: <code>'import-name': [ true, { 'underscore': '_' }]</code>
+      </td>
       <td>2.0.5</td>
     </tr>
     <tr>
@@ -1038,9 +1042,13 @@ There certainly are a lot of options! Here are some links to get you started.
         <code>react-anchor-blank-noopener</code>
       </td>
       <td>
-        For security reasons, anchor tags with target="_blank" should also include rel="noopener noreferrer".
-        In order to restrict the behavior window.opener access, the original page needs to add a rel="noopener" attribute to any link that has target="_blank".
-        However, Firefox does not support that tag, so you should actually use rel="noopener noreferrer" for full coverage.
+        For security reasons, anchor tags with <code>target="_blank"</code> should also include <code>rel="noreferrer"</code>.
+        In order to restrict the behavior <code>window.opener</code> access, the original page needs to add a <code>rel="noopener"</code> attribute to any link that has <code>target="_blank"</code>.
+        However, Firefox does not support that tag, so you should actually use <code>rel="noopener noreferrer"</code> for full coverage.
+        <br />
+        By default, the rule considers the use of <code>rel="noreferrer"</code> as sufficient.
+        The option <code>'force-rel-redundancy'</code> can be passed to require <code>rel="noopener noreferrer"</code>.
+        <br />
         For more info see: <a href="https://dev.to/ben/the-targetblank-vulnerability-by-example">The target="_blank" vulnerability by example</a>.
       </td>
       <td>2.0.11</td>

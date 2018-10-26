@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Prefer x == undefined or x === undefined: ';
@@ -29,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoTypeofUndefinedRuleWalker extends ErrorTolerantWalker {
+class NoTypeofUndefinedRuleWalker extends Lint.RuleWalker {
 
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if ((this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right))

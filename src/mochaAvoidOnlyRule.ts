@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {MochaUtils} from './utils/MochaUtils';
 
@@ -32,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 }
 
-class MochaAvoidOnlyRuleWalker extends ErrorTolerantWalker {
+class MochaAvoidOnlyRuleWalker extends Lint.RuleWalker {
 
     protected visitSourceFile(node: ts.SourceFile): void {
         if (MochaUtils.isMochaTest(node)) {

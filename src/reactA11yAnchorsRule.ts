@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
 import {getImplicitRole} from './utils/getImplicitRole';
@@ -75,7 +74,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactA11yAnchorsRuleWalker extends ErrorTolerantWalker {
+class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     private ignoreCase: boolean = false;
     private ignoreWhitespace: string = '';
     private anchorInfoList: IAnchorInfo[] = [];

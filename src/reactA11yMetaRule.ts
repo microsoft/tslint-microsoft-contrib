@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Do not use http-equiv="refresh"';
@@ -31,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactA11yMetaRuleWalker extends ErrorTolerantWalker {
+class ReactA11yMetaRuleWalker extends Lint.RuleWalker {
 
     protected visitJsxElement(node: ts.JsxElement): void {
         this.validateOpeningElement(node, node.openingElement);

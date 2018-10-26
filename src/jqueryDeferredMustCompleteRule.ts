@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {AstUtils} from './utils/AstUtils';
 import {Utils} from './utils/Utils';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -48,7 +47,7 @@ function isCompletionFunction(functionName : string) : boolean {
     return /^(resolve|reject)$/.test(functionName);
 }
 
-class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
+class JQueryDeferredAnalyzer extends Lint.RuleWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === ts.SyntaxKind.Identifier) {
@@ -83,7 +82,7 @@ class JQueryDeferredAnalyzer extends ErrorTolerantWalker {
 
 }
 
-class DeferredCompletionWalker extends ErrorTolerantWalker {
+class DeferredCompletionWalker extends Lint.RuleWalker {
     private deferredIdentifier : ts.Identifier;
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true

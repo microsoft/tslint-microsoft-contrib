@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
+class NoDocumentDomainRuleWalker extends Lint.RuleWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
         if (node.operatorToken.getText() === '='
             && node.left.kind === ts.SyntaxKind.PropertyAccessExpression

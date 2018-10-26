@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 
 const MATH_FAIL_STRING: string = 'Math.random produces insecure random numbers. ' +
@@ -32,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class InsecureRandomRuleWalker extends ErrorTolerantWalker {
+class InsecureRandomRuleWalker extends Lint.RuleWalker {
 
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (node.expression.getText() === 'Math' &&  node.name.text === 'random') {

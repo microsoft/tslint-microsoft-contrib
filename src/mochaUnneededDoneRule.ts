@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {Utils} from './utils/Utils';
 import {MochaUtils} from './utils/MochaUtils';
@@ -29,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
+class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
 
     protected visitSourceFile(node: ts.SourceFile): void {
         if (MochaUtils.isMochaTest(node)) {
@@ -101,7 +100,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
     }
 }
 
-class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
+class IdentifierReferenceCountWalker extends Lint.RuleWalker {
 
     private identifierText: string;
     private count!: number;

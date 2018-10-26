@@ -164,5 +164,82 @@ describe('importNameRule', () : void => {
             'myModule': 'pqr'
         }];
         TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
-    })
+    });
+
+    it('should pass on ignoring modules from ignoredList(string[] from third argument)', () : void => {
+        const script : string = `
+        import pkg from 'fs/package-name',
+        import abc from 'abc-tag',
+        import pqr from 'my-module'
+        import what from 'what-module'
+        import Up from 'up-module'
+        `;
+        const options: any[] = [ true, {
+            'fs/package-name': 'pkg',
+            'abc-tag': 'abc',
+            'myModule': 'pqr'
+        }, ['what-module', 'up-module']];
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+    });
+
+    it('should pass on ignoring third argument value other than string[]', () : void => {
+        const script : string = `
+        import pkg from 'fs/package-name',
+        import abc from 'abc-tag',
+        import pqr from 'my-module'
+        import what from 'what-module'
+        import Up from 'up-module'
+        `;
+        const options: any[] = [ true, {
+            'fs/package-name': 'pkg',
+            'abc-tag': 'abc',
+            'myModule': 'pqr'
+        }, [123, { 'whatever': 'object' }]];
+        TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+            {
+                "failure": "Misnamed import. Import should be named 'whatModule' but found 'what'",
+                "name": Utils.absolutePath("file.ts"),
+                "ruleName": "import-name",
+                "startPosition": { "character": 9, "line": 5 },
+                "fix": {
+                    "innerStart": 130,
+                    "innerLength": 4,
+                    "innerText": "whatModule"
+                }
+            },
+            {
+                "failure": "Misnamed import. Import should be named 'upModule' but found 'Up'",
+                "name": Utils.absolutePath("file.ts"),
+                "ruleName": "import-name",
+                "startPosition": { "character": 9, "line": 6 },
+                "fix": {
+                    "innerStart": 169,
+                    "innerLength": 2,
+                    "innerText": "upModule"
+                }
+            }
+        ]);
+    });
+
+    it('should pass on index path modules', () => {
+        const script = `
+            import AnyName = require('.');
+            import AnyName = require('..');
+            import AnyName = require('./');
+            import AnyName = require('../');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass on index path ES6 modules', () => {
+        const script = `
+            import AnyName from '.';
+            import AnyName from '..';
+            import AnyName from './';
+            import AnyName from '../';
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
 });

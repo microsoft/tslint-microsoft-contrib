@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
 import {forEachTokenWithTrivia} from 'tsutils';
 
@@ -30,7 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
+class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
     private scanner: ts.Scanner;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {ErrorTolerantWalker} from './ErrorTolerantWalker';
 import { isObject, isNamed } from './TypeGuard';
 
-export class BannedTermWalker extends ErrorTolerantWalker {
+export class BannedTermWalker extends Lint.RuleWalker {
     private failureString : string;
     private bannedTerms: string[];
     private allowQuotedProperties: boolean = false;

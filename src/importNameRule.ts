@@ -151,6 +151,9 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
 
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
         let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
+            return;
+        }
         expectedImportedName = this.makeCamelCase(expectedImportedName);
         if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
             const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;

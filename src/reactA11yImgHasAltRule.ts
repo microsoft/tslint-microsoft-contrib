@@ -13,6 +13,7 @@ import { isJsxSpreadAttribute } from './utils/TypeGuard';
 const ROLE_STRING: string = 'role';
 const ALT_STRING: string = 'alt';
 const TITLE_STRING: string = 'title';
+const IMAGE_FILENAME_REGEX: RegExp = new RegExp('^.*\\.(jpg|bmp|jpeg|jfif|gif|png|tif|tiff)$', 'i');
 
 export function getFailureStringNoAlt(tagName: string): string {
     return `<${tagName}> elements must have an non-empty alt attribute or \
@@ -35,6 +36,10 @@ export function getFailureStringEmptyAltAndNotEmptyTitle(tagName: string): strin
 its title attribute is not empty. Remove the title attribute.`;
 }
 
+export function getFailureStringAltIsImageFileName(tagName: string): string {
+    return `The value of alt attribute in <${tagName}> tag is an image file name. Give meaningful value to the alt attribute `;
+}
+
 /**
  * Enforces that img elements have alt text.
  */
@@ -43,7 +48,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-img-has-alt',
         type: 'maintainability',
         description: 'Enforce that an img element contains the non-empty alt attribute. ' +
-        'For decorative images, using empty alt attribute and role="presentation".',
+            'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
         optionsDescription: '',
         optionExamples: ['true', '[true, ["Image"]]'],
@@ -114,7 +119,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
                 ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;
-
+            const isAltImageFileName: boolean = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(getStringLiteral(altAttribute) || '');
             // <img alt='altValue' role='presentation' />
             if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
                 this.addFailureAt(
@@ -133,6 +138,12 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                     node.getStart(),
                     node.getWidth(),
                     getFailureStringEmptyAltAndNotEmptyTitle(tagName)
+                );
+            } else if (isAltImageFileName) {
+                this.addFailureAt(
+                    node.getStart(),
+                    node.getWidth(),
+                    getFailureStringAltIsImageFileName(tagName)
                 );
             }
         }

@@ -13,6 +13,7 @@ import { isJsxSpreadAttribute } from './utils/TypeGuard';
 const ROLE_STRING: string = 'role';
 const ALT_STRING: string = 'alt';
 const TITLE_STRING: string = 'title';
+const IMAGE_FILENAME_REGEX: RegExp = new RegExp('^.*\\.(jpg|bmp|jpeg|jfif|gif|png|tif|tiff)$', 'i');
 
 export function getFailureStringNoAlt(tagName: string): string {
     return `<${tagName}> elements must have an non-empty alt attribute or \
@@ -118,8 +119,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
                 ? options[1].allowNonEmptyAltWithRolePresentation
                 : false;
-            const imageFileNameRegex: RegExp = new RegExp('^.*\\.(jpg|bmp|jpeg|jfif|gif|png|tif|tiff)$', 'i');
-            const isAltImageFileName: boolean = !isEmptyAlt && imageFileNameRegex.test(getStringLiteral(altAttribute) || '');
+            const isAltImageFileName: boolean = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(getStringLiteral(altAttribute) || '');
             // <img alt='altValue' role='presentation' />
             if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
                 this.addFailureAt(

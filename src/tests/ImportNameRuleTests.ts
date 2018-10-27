@@ -220,4 +220,30 @@ describe('importNameRule', () : void => {
             }
         ]);
     });
+
+    it('should pass on index path modules', () => {
+        const script = `
+            import AnyName = require('.');
+            import AnyName = require('..');
+            import AnyName = require('./');
+            import AnyName = require('../');
+            import AnyName = require('../path/./..');
+            import AnyName = require('../../..');
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
+
+    it('should pass on index path ES6 modules', () => {
+        const script = `
+            import AnyName from '.';
+            import AnyName from '..';
+            import AnyName from './';
+            import AnyName from '../';
+            import AnyName from '../path/./..';
+            import AnyName from '../../..';
+        `;
+
+        TestHelper.assertViolations(ruleName, script, [ ]);
+    });
 });

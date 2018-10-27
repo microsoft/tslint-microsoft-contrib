@@ -3,14 +3,21 @@
 import {RuleFailure} from 'tslint';
 import {BaseFormatter} from './utils/BaseFormatter';
 
+let warnedForDeprecation = false;
+
 /**
- * Formatter that fixes your unused imports.
+ * Formatter that fixes your var keywords.
  */
 /* tslint:disable:export-name */
 export class Formatter extends BaseFormatter {
 /* tslint:enable:export-name */
 
     constructor() {
+        if (!warnedForDeprecation) {
+            console.warn('The fix-no-var-keyword formatter is deprecated. Use --fix instead.');
+            warnedForDeprecation = true;
+        }
+
         super('no-var-keyword', function (this: Formatter, failure: RuleFailure): void {
             const fileName: string = failure.getFileName();
             const fileContents: string = this.readFile(fileName);

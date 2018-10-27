@@ -227,6 +227,7 @@ describe('importNameRule', () : void => {
             import AnyName = require('..');
             import AnyName = require('./');
             import AnyName = require('../');
+            import AnyName = require('../path/./..');
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);
@@ -238,6 +239,7 @@ describe('importNameRule', () : void => {
             import AnyName from '..';
             import AnyName from './';
             import AnyName from '../';
+            import AnyName from '../path/./..';
         `;
 
         TestHelper.assertViolations(ruleName, script, [ ]);

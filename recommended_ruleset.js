@@ -192,6 +192,7 @@ module.exports = {
         "react-a11y-no-onchange": true,
         "react-a11y-props": true,
         "react-a11y-proptypes": true,
+        "react-a11y-required": true,
         "react-a11y-role": true,
         "react-a11y-role-has-required-aria-props": true,
         "react-a11y-role-supports-aria-props": true,

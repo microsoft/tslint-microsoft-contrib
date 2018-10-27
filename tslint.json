@@ -312,6 +312,7 @@
     "switch-final-break": true,
     "type-literal-delimiter": false,
     "use-default-type-parameter": false,
-    "react-a11y-input-elements": true
+    "react-a11y-input-elements": true,
+    "react-a11y-required": true
   }
 }

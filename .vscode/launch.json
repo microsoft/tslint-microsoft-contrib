@@ -4,14 +4,26 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Run Tests",
-            "program": "${workspaceFolder}/node_modules/.bin/grunt",
+            "name": "Run Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
-                "mochaTest"
-            ],
-            "outFiles": [
-                "${workspaceFolder}/dist/src/**/*.js"
+                "--no-timeouts",
+                "--colors",
+                "${workspaceFolder}/dist/src/tests/**/*.js"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run TSLint Tests",
+            "program": "${workspaceFolder}/node_modules/tslint/bin/tslint",
+            "args": [
+                "--test",
+                "-r",
+                "dist/src",
+                "tests/**"
+            ],
+            "outputCapture": "std"
         }
     ]
 }

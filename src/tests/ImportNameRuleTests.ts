@@ -174,7 +174,7 @@ describe('importNameRule', () : void => {
         import what from 'what-module'
         import Up from 'up-module'
         `;
-        const options: any[] = [ true, {
+        const options = [ true, {
             'fs/package-name': 'pkg',
             'abc-tag': 'abc',
             'myModule': 'pqr'
@@ -190,7 +190,7 @@ describe('importNameRule', () : void => {
         import what from 'what-module'
         import Up from 'up-module'
         `;
-        const options: any[] = [ true, {
+        const options = [ true, {
             'fs/package-name': 'pkg',
             'abc-tag': 'abc',
             'myModule': 'pqr'

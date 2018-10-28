@@ -1,4 +1,5 @@
-import * as ts from 'typescript';
+module.exports = ({ruleName, walkerName}) =>
+`import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -12,7 +13,7 @@ const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error 
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: ExtendedMetadata = {
-        ruleName: '%RULE_NAME%',
+        ruleName: '${ruleName}',
         type: 'maintainability',    // one of: 'functionality' | 'maintainability' | 'style' | 'typescript'
         description: '... add a meaningful one line description',
         options: null, // tslint:disable-line:no-null-keyword
@@ -32,10 +33,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class %WALKER_NAME% extends Lint.RuleWalker {
+class ${walkerName} extends Lint.RuleWalker {
 
     protected visitNode(node: ts.Node): void {
         console.log(ts.SyntaxKind[node.kind] + ' ' + node.getText());
         super.visitNode(node);
     }
 }
+`;

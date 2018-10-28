@@ -958,6 +958,20 @@ There certainly are a lot of options! Here are some links to get you started.
     </tr>
     <tr>
       <td>
+        <code>react-a11y-required</code>
+      </td>
+      <td>
+        For accessibility of your website, enforce that required input elements have aria-required set to true.
+        <br/>
+        References:
+        <ul>
+          <li><a href="http://www.clarissapeterson.com/2012/11/html5-accessibility/">Acessibility in HTML5</a></li>
+        </ul>
+      </td>
+      <td>5.2.11</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-role-has-required-aria-props</code>
       </td>
       <td>

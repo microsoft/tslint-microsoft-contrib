@@ -5,13 +5,13 @@
 
 const { yellowBright } = require('chalk');
 const { readFile, readJSON } = require('./common/files');
-const { getAllFormatterNames, getAllRuleNames } = require('./common/meta');
+const { getAllFormatterNames, getContribRuleNames } = require('./common/meta');
 
 const readmeText = readFile('README.md');
 const packageJson = readJSON('package.json');
 const validationErrors = [];
 
-getAllRuleNames({ skipTsLintRules: true }).forEach(ruleName => {
+getContribRuleNames().forEach(ruleName => {
     if (readmeText.indexOf(ruleName) === -1) {
         validationErrors.push('A rule was found that is not documented in README.md: ' + ruleName);
     }

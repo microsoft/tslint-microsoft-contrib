@@ -1233,8 +1233,7 @@ npm run create-rule -- --rule-name=no-something-or-other
 
 This script will create file for rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
 
-More information about writing rule tests can be found in [TSLint doccumentation](https://palantir.github.io/tslint/develop/testing-rules/)
-
+More information about writing rule tests can be found in [TSLint documentation](https://palantir.github.io/tslint/develop/testing-rules/).
 
 Please also see our [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -1245,7 +1244,6 @@ Please also see our [Code of Conduct](CODE_OF_CONDUCT.md).
 This repo provides pre-configured launch tasks for VS Code debugging rules and tests.
 
 * Pick `Run Mocha Tests` to debug rules which have Mocha unit tests inside `src/tests` folder.
-
 * Pick `Run TSLint Tests` to debug rules that have tests in TSLint format inside `tests` folder.
 
 **Node.js**
@@ -1276,4 +1274,4 @@ You can use `npm start` watcher that will rebuild TS files from `src` before lau
 
 ### Creating a new Release
 
-Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases)
+Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases).

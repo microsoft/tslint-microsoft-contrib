@@ -51,7 +51,7 @@
     "lint:tests": "tslint -p tsconfig.json -r dist/src -t verbose -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
     "start": "tsc --watch",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\"",
-    "test:rules": "tslint -r dist/src --test \"tests/**\"",
+    "test:rules": "tslint -r dist/src --test \"tests/**\" --timeout 5000",
     "test": "npm-run-all clean copy:json tsc:src test:* lint:* validate:* copy:package copy:meta generate:*",
     "tsc:src": "tsc",
     "validate:config": "node build-tasks/validate-config.js",

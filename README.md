@@ -13,11 +13,8 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 npm install tslint-microsoft-contrib --save-dev
 ```
 
-Alternately, you can download the files directly from GitHub: see [npm-5.2.2](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.2.2).
-
-...or use the [`releases`](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) branch, which is available online.
+Alternately, use the [`releases`](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) branch, which is available online.
 You can use that build by setting your npm version of `tslint-microsoft-contrib` to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`.
-
 
 ## TSLint and corresponding tslint-microsoft-contrib version
 
@@ -1238,7 +1235,7 @@ More information about writing rule tests can be found in [TSLint doccumentation
 
 Please also see our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-### Debug code
+### Debug Code
 
 **VS Code**
 

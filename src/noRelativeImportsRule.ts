@@ -44,7 +44,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoRelativeImportsRuleWalker extends Lint.RuleWalker {
-    private allowSiblings: boolean;
+    private readonly allowSiblings: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

@@ -43,7 +43,7 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
     private propNodes: { [index: string]: ts.TypeElement } = {};
     private stateNames: string[] = [];
     private stateNodes: { [index: string]: ts.TypeElement } = {};
-    private classDeclarations: ts.ClassDeclaration[] = [];
+    private readonly classDeclarations: ts.ClassDeclaration[] = [];
     private propsAlias: string | undefined;
     private stateAlias: string | undefined;
     private propsInterfaceRegex: RegExp = /^Props$/;

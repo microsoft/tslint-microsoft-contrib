@@ -92,7 +92,7 @@ class FunctionNameRuleWalker extends Lint.RuleWalker {
     private protectedMethodRegex: RegExp = this.privateMethodRegex;
     private staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
     private functionRegex: RegExp = /^[a-z][\w\d]+$/;
-    private args: Options;
+    private readonly args: Options;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

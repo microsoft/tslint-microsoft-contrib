@@ -31,7 +31,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoConstantConditionRuleWalker extends Lint.RuleWalker {
 
-    private checkLoops: boolean;
+    private readonly checkLoops: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

@@ -49,8 +49,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
 
-    private forceRelRedundancy: boolean = false;
-    private failureString: string = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
+    private readonly forceRelRedundancy: boolean = false;
+    private readonly failureString: string = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

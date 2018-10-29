@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoVarSelfRuleWalker extends Lint.RuleWalker {
 
-    private bannedVariableNames: RegExp = /.*/; // default is to ban everything
+    private readonly bannedVariableNames: RegExp = /.*/; // default is to ban everything
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

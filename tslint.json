@@ -207,10 +207,15 @@
 
     // tslint-microsoft-contrib rules disabled
     "missing-jsdoc": false,
+    "no-duplicate-case": false,
+    "no-empty-interfaces": false,
     "no-empty-line-after-opening-brace": false,
     "no-multiline-string": false,
     "no-relative-imports": false,
+    "no-stateless-class": false,
     "no-unexternalized-strings": false,
-    "react-tsx-curly-spacing": false
+    "no-var-self": false,
+    "react-tsx-curly-spacing": false,
+    "valid-typeof": false
   }
 }

@@ -49,14 +49,15 @@
     "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",
     "lint:rules": "tslint -p tsconfig.json -t stylish -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
     "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
-    "start": "tsc --watch",
+    "start": "npm-run-all clean copy:json watch:src",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* lint:* validate:* copy:package copy:meta generate:*",
     "tsc:src": "tsc",
     "validate:config": "node build-tasks/validate-config.js",
     "validate:documentation": "node build-tasks/validate-documentation.js",
-    "watch:run-tests": "node build-tasks/watch-run-tests.js"
+    "watch:run-tests": "node build-tasks/watch-run-tests.js",
+    "watch:src": "tsc --watch"
   },
   "dependencies": {
     "tsutils": "^2.27.2 <2.29.0"

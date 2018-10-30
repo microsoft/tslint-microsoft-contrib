@@ -10,7 +10,7 @@ import { isNamed } from './TypeGuard';
  * from the SourceFile then -> Module -> Class -> Function
  */
 export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
-    private typeChecker?: ts.TypeChecker;
+    private readonly typeChecker?: ts.TypeChecker;
     private scope: Scope | undefined;
 
     constructor(sourceFile : ts.SourceFile, options : Lint.IOptions, program? : ts.Program) {

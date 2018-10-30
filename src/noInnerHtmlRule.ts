@@ -32,7 +32,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
 
-    private htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
+    private readonly htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

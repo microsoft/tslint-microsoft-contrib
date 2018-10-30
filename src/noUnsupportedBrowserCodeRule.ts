@@ -38,7 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
-    private supportedBrowsers: { [key: string]: BrowserVersion };
+    private readonly supportedBrowsers: { [key: string]: BrowserVersion };
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

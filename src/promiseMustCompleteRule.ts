@@ -82,11 +82,11 @@ class PromiseAnalyzer extends Lint.RuleWalker {
 }
 
 class PromiseCompletionWalker extends Lint.RuleWalker {
-    private completionIdentifiers: ts.Identifier[];
+    private readonly completionIdentifiers: ts.Identifier[];
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true
     private hasBranches : boolean = false;
-    private walkerOptions: Lint.IOptions;
+    private readonly walkerOptions: Lint.IOptions;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, completionIdentifiers: ts.Identifier[]) {
         super(sourceFile, options);

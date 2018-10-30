@@ -7,7 +7,7 @@ import {AstUtils} from './AstUtils';
  */
 export class Scope {
     public parent: Scope | undefined;
-    private symbols: { [index: string]: number } = {};
+    private readonly symbols: { [index: string]: number } = {};
 
     constructor(parent: Scope | undefined) {
         this.parent = parent;

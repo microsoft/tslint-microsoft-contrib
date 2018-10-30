@@ -8,8 +8,8 @@ import {AstUtils} from './AstUtils';
  * A walker that creates failures whenever it detects a string parameter is being passed to a certain constructor. .
  */
 export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingWalker {
-    private failureString : string;
-    private targetFunctionName : string;
+    private readonly failureString : string;
+    private readonly targetFunctionName : string;
 
     public constructor(sourceFile : ts.SourceFile,
                        targetFunctionName : string,

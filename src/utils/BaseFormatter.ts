@@ -8,8 +8,8 @@ import {Formatters, RuleFailure} from 'tslint';
  */
 export class BaseFormatter extends Formatters.AbstractFormatter {
 
-    private ruleName: string;
-    private applyFix: (this: BaseFormatter, failure: RuleFailure) => void;
+    private readonly ruleName: string;
+    private readonly applyFix: (this: BaseFormatter, failure: RuleFailure) => void;
 
     constructor(ruleName: string, applyFix: (this: BaseFormatter, failure: RuleFailure) => void) {
         super();

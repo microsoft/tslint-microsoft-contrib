@@ -21,8 +21,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '676, 242, 116'
     };
 
-    private static FAILURE_STRING: string = 'Forbidden reference to banned term: ';
-    private static BANNED_TERMS : string[] = [ 'caller', 'callee', 'arguments', 'eval' ];
+    private static readonly FAILURE_STRING: string = 'Forbidden reference to banned term: ';
+    private static readonly BANNED_TERMS : string[] = [ 'caller', 'callee', 'arguments', 'eval' ];
 
     public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
         const walker : Lint.RuleWalker = new BannedTermWalker(

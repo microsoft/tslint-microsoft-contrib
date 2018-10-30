@@ -21,10 +21,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398'
     };
 
-    private static FAILURE_STRING: string = 'Forbidden reference to reserved keyword: ';
+    private static readonly FAILURE_STRING: string = 'Forbidden reference to reserved keyword: ';
     // taken from https://github.com/Microsoft/TypeScript/issues/2536
 
-    private static BANNED_TERMS: string[] = [
+    private static readonly BANNED_TERMS: string[] = [
         // reserved keywords
         'break', 'case', 'catch', 'class',
         'const', 'continue', 'debugger', 'default',

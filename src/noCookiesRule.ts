@@ -28,7 +28,7 @@ export class Rule extends Lint.Rules.TypedRule {
 }
 
 class NoCookiesWalker extends Lint.RuleWalker {
-    private typeChecker : ts.TypeChecker;
+    private readonly typeChecker : ts.TypeChecker;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
         super(sourceFile, options);

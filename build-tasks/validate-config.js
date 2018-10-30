@@ -13,7 +13,7 @@ function ruleIsEnabled(value) {
         return false;
     }
 
-    if (typeof value === "boolean") {
+    if (typeof value === 'boolean') {
         return value;
     }
 
@@ -21,17 +21,17 @@ function ruleIsEnabled(value) {
 }
 
 const disabledRules = new Set([
-    "missing-jsdoc",
-    "no-duplicate-case",
-    "no-empty-interfaces",
-    "no-empty-line-after-opening-brace",
-    "no-multiline-string",
-    "no-relative-imports",
-    "no-stateless-class",
-    "no-unexternalized-strings",
-    "no-var-self",
-    "react-tsx-curly-spacing",
-    "valid-typeof",
+    'missing-jsdoc',
+    'no-duplicate-case',
+    'no-empty-interfaces',
+    'no-empty-line-after-opening-brace',
+    'no-multiline-string',
+    'no-relative-imports',
+    'no-stateless-class',
+    'no-unexternalized-strings',
+    'no-var-self',
+    'react-tsx-curly-spacing',
+    'valid-typeof'
 ]);
 
 const errors = [];

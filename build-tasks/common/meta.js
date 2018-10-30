@@ -65,7 +65,7 @@ function kebabCase(input) {
     }, '');
 }
 
-function getAllRuleNames(options = { skipTsLintRules: false }) {
+function getContribRuleNames() {
     const convertToRuleNames = filename => {
         filename = filename
             .replace(/Rule\..*/, '')  // file extension plus Rule suffix
@@ -74,17 +74,9 @@ function getAllRuleNames(options = { skipTsLintRules: false }) {
         return kebabCase(filename);
     };
 
-    const contribRules = glob.sync('src/*Rule.ts').map(convertToRuleNames);
-
-    let baseRules = [];
-    if (!options.skipTsLintRules) {
-        baseRules = glob.sync('node_modules/tslint/lib/rules/*Rule.js').map(convertToRuleNames);
-    }
-
-    const allRules = baseRules.concat(contribRules);
-    allRules.sort();
-
-    return allRules;
+    return glob.sync('src/*Rule.ts')
+        .map(convertToRuleNames)
+        .sort();
 }
 
 function getAllFormatterNames() {
@@ -104,7 +96,7 @@ function getAllFormatterNames() {
 
 module.exports = {
     getAllFormatterNames,
-    getAllRuleNames,
+    getContribRuleNames,
     getAllRules,
     getMetadataFromFile,
     getMetadataValue

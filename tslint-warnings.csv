@@ -286,7 +286,7 @@ return-undefined,Prefer `return;` in void functions and `return undefined;` in v
 semicolon,Enforces consistent semicolon usage at the end of every statement.,TSLINT1L591RI,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
 space-within-parens,Enforces spaces within parentheses or disallow them.  Empty parentheses () are always allowed.,TSLINT1E89MLR,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
-strict-boolean-expressions,"Restricts the types allowed in boolean expressions. By default only booleans are allowed.
+strict-boolean-expressions,"Restricts the types allowed in boolean expressions. By default only booleans are allowed. 
 The following nodes are checked:
 
 * Arguments to the `!`, `&&`, and `||` operators

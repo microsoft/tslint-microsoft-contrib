@@ -47,8 +47,8 @@
     "generate:sdl-report": "node build-tasks/generate-sdl-report.js",
     "generate:rule-metadata": "node build-tasks/generate-rule-metadata.js",
     "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",
-    "lint:rules": "tslint -p tsconfig.json -r dist/src -t verbose -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
-    "lint:tests": "tslint -p tsconfig.json -r dist/src -t verbose -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
+    "lint:rules": "tslint -p tsconfig.json -t stylish -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
+    "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
     "start": "tsc --watch",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
@@ -71,6 +71,7 @@
     "mocha": "5.2.0",
     "npm-run-all": "^4.1.3",
     "rimraf": "^2.6.2",
+    "strip-json-comments": "^2.0.1",
     "tslint": "^5.11.0",
     "typescript": "3.1.1",
     "underscore": "1.9.1"

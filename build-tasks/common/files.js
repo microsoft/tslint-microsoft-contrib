@@ -1,5 +1,6 @@
-const fs = require('fs');
 const { red } = require('chalk');
+const fs = require('fs');
+const stripJsonComments = require("strip-json-comments");
 
 function readFile(fileName) {
     try {
@@ -28,8 +29,18 @@ function readJSON(fileName) {
     }
 }
 
+function readJSONWithComments(fileName) {
+    try {
+        return JSON.parse(stripJsonComments(readFile(fileName)));
+    } catch (e) {
+        console.log(red(`Unable to parse commented JSON file: ${ fileName }. \n ${ e }`));
+        process.exit(1);
+    }
+}
+
 module.exports = {
     readFile,
     readJSON,
+    readJSONWithComments,
     writeFile
 };

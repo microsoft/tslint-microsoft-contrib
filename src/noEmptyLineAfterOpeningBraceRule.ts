@@ -30,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
-    private scanner: ts.Scanner;
+    private readonly scanner: ts.Scanner;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

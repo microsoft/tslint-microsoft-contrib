@@ -36,11 +36,11 @@ interface UnexternalizedStringsOptions {
 }
 
 class NoUnexternalizedStringsRuleWalker extends Lint.RuleWalker {
-    private static SINGLE_QUOTE: string = '\'';
+    private static readonly SINGLE_QUOTE: string = '\'';
 
-    private signatures: Map<boolean>;
-    private messageIndex: number | undefined;
-    private ignores: Map<boolean>;
+    private readonly signatures: Map<boolean>;
+    private readonly messageIndex: number | undefined;
+    private readonly ignores: Map<boolean>;
 
     constructor(sourceFile: ts.SourceFile, opt: Lint.IOptions) {
         super(sourceFile, opt);

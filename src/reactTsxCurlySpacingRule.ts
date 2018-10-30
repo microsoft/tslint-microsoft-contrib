@@ -36,8 +36,8 @@ enum Spacing {
 
 class TsxCurlySpacingWalker extends Lint.RuleWalker {
 
-    private spacing: Spacing;
-    private allowMultiline: boolean;
+    private readonly spacing: Spacing;
+    private readonly allowMultiline: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

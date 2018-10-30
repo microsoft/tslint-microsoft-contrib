@@ -4,7 +4,7 @@ import {Formatter} from '../fixNoRequireImportsFormatter';
 
 class FormatterForTesting extends Formatter {
 
-    private input: string;
+    private readonly input: string;
     private output!: string;
 
     constructor(input: string) {

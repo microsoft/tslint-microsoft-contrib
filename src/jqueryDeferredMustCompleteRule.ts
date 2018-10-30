@@ -83,11 +83,11 @@ class JQueryDeferredAnalyzer extends Lint.RuleWalker {
 }
 
 class DeferredCompletionWalker extends Lint.RuleWalker {
-    private deferredIdentifier : ts.Identifier;
+    private readonly deferredIdentifier : ts.Identifier;
     private wasCompleted : boolean = false;
     private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true
     private hasBranches : boolean = false;
-    private walkerOptions: Lint.IOptions;
+    private readonly walkerOptions: Lint.IOptions;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, deferredIdentifier : ts.Identifier) {
         super(sourceFile, options);

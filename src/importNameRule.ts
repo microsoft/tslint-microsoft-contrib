@@ -56,7 +56,7 @@ type Option = {
 
 class ImportNameRuleWalker extends Lint.RuleWalker {
 
-    private option: Option;
+    private readonly option: Option;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

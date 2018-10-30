@@ -102,7 +102,7 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
 
 class IdentifierReferenceCountWalker extends Lint.RuleWalker {
 
-    private identifierText: string;
+    private readonly identifierText: string;
     private count!: number;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, identifier: ts.Identifier) {

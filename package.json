@@ -1,6 +1,6 @@
 {
   "name": "tslint-microsoft-contrib",
-  "version": "5.2.2",
+  "version": "5.2.1",
   "description": "TSLint Rules for Microsoft",
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
     "lint:rules": "tslint -p tsconfig.json -t stylish -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
     "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
     "start": "tsc --watch",
-    "test:mocha": "mocha \"dist/src/tests/**/*.js\"",
+    "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* lint:* validate:* copy:package copy:meta generate:*",
     "tsc:src": "tsc",
@@ -61,6 +61,9 @@
     "tsutils": "^2.27.2 <2.29.0"
   },
   "devDependencies": {
+    "@types/chai": "4.1.7",
+    "@types/mocha": "5.2.5",
+    "@types/node": "^10.12.0",
     "chai": "4.2.0",
     "chalk": "^2.4.1",
     "cpy-cli": "^2.0.0",

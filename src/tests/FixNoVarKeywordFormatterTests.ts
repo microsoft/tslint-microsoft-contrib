@@ -4,7 +4,7 @@ import {Formatter} from '../fixNoVarKeywordFormatter';
 
 class FixNoVarKeywordFormatterForTesting extends Formatter {
 
-    private input: string;
+    private readonly input: string;
     private output!: string;
 
     constructor(input: string) {

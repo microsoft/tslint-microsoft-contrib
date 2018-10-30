@@ -67,7 +67,6 @@
     "no-unsafe-any": false,
     "prefer-for-of": false,
     "prefer-function-over-method": false,
-    "prefer-readonly": false,
     "restrict-plus-operands": false,
     "strict-boolean-expressions": false,
     "strict-type-predicates": false,

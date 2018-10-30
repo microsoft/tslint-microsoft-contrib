@@ -30,7 +30,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
-    private allowGenericFunctionExpression: boolean = false;
+    private readonly allowGenericFunctionExpression: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

@@ -77,7 +77,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     private ignoreCase: boolean = false;
     private ignoreWhitespace: string = '';
-    private anchorInfoList: IAnchorInfo[] = [];
+    private readonly anchorInfoList: IAnchorInfo[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

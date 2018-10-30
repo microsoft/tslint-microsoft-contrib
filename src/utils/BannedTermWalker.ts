@@ -3,8 +3,8 @@ import * as Lint from 'tslint';
 import { isObject, isNamed } from './TypeGuard';
 
 export class BannedTermWalker extends Lint.RuleWalker {
-    private failureString : string;
-    private bannedTerms: string[];
+    private readonly failureString : string;
+    private readonly bannedTerms: string[];
     private allowQuotedProperties: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString : string, bannedTerms: string[]) {

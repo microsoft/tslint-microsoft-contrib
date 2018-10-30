@@ -1237,6 +1237,18 @@ More information about writing rule tests can be found in [TSLint documentation]
 
 Please also see our [Code of Conduct](CODE_OF_CONDUCT.md).
 
+### Watchers
+
+Two npm scripts can be used to watch files and simplify testing and linting with constant changes.
+
+Use `npm start` to start watcher that will rebuild rules and Mocha tests.
+
+> NOTE: Run `npm test` before `npm start` to copy all required files to `dist` folder.
+
+Use `npm run watch:run-tests` that will re-run tests (both Mocha and TSLint) and lint code when: files changed in `tests`, `test-data` or `npm start` compiled rules or tests code.
+
+> NOTE: It is recommended to wait when `npm start` will finish initial compilation before starting `npm run watch:run-tests` (in separate terminal).
+
 ### Debug code
 
 **VS Code**
@@ -1267,8 +1279,6 @@ Then open [chrome://inspect/](chrome://inspect/), click on `inspect` link for pr
 Set a breakpoint somewhere in your code and resume execution. Your breakpoint should be hit.
 
 You can use `npm start` watcher that will rebuild TS files from `src` before launching debug commands.
-
-> NOTE: Run `npm test` before `npm start` to copy all required files to `dist` folder.
 
 > NOTE: If breakpoints are not hit you can try to use `inlineSourceMaps` instead of `sourceMaps` in `tsconfig.json`
 

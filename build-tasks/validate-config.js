@@ -8,11 +8,29 @@ const { getContribRuleNames } = require('./common/meta');
 
 const tslintConfig = readJSONWithComments('tslint.json');
 
+function ruleIsEnabled(value) {
+    if (value === undefined) {
+        return false;
+    }
+
+    if (typeof value === "boolean") {
+        return value;
+    }
+
+    return value[0];
+}
+
 const disabledRules = new Set([
+    "missing-jsdoc",
     "no-duplicate-case",
     "no-empty-interfaces",
+    "no-empty-line-after-opening-brace",
+    "no-multiline-string",
+    "no-relative-imports",
     "no-stateless-class",
+    "no-unexternalized-strings",
     "no-var-self",
+    "react-tsx-curly-spacing",
     "valid-typeof",
 ]);
 
@@ -22,10 +40,8 @@ getContribRuleNames().forEach(ruleName => {
         return;
     }
 
-    if (tslintConfig.rules[ruleName] !== true && tslintConfig.rules[ruleName] !== false) {
-        if (tslintConfig.rules[ruleName] === undefined || tslintConfig.rules[ruleName][0] !== true) {
-            errors.push('A tslint-microsoft-contrib rule was found that is not enabled on the project: ' + ruleName);
-        }
+    if (!ruleIsEnabled(tslintConfig.rules[ruleName])) {
+        errors.push('A tslint-microsoft-contrib rule was found that is not enabled on the project: ' + ruleName);
     }
 });
 

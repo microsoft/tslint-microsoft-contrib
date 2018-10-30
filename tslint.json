@@ -197,7 +197,6 @@
     "react-iframe-missing-sandbox": true,
     "react-no-dangerous-html": true,
     "react-this-binding-issue": true,
-    "react-tsx-curly-spacing": false,
     "react-unused-props-and-state": true,
     "space-within-parens": true,
     "switch-final-break": true,
@@ -211,6 +210,7 @@
     "no-empty-line-after-opening-brace": false,
     "no-multiline-string": false,
     "no-relative-imports": false,
-    "no-unexternalized-strings": false
+    "no-unexternalized-strings": false,
+    "react-tsx-curly-spacing": false
   }
 }

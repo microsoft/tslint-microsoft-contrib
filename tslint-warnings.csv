@@ -20,6 +20,7 @@ curly,Enforces braces for `if`/`for`/`do`/`while` statements.,TSLINTT90EOE,tslin
 CWE 710 - Coding Standards Violation"
 cyclomatic-complexity,Enforces a threshold of cyclomatic complexity.,TSLINT1F0UAB2,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 deprecation,Warns when deprecated APIs are used.,TSLINTJ5MPVL,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
+detect-unsafe-regex,Checks for safe regular expressions,TSLINT1VJAOHL,tslint,Non-SDL,Error,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,624,"CWE 624 - Regular Expression Denial of Service"
 encoding,Enforces UTF-8 file encoding.,TSLINT1D4H7JI,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 file-name-casing,Enforces a consistent file naming convention,TSLINTGCPLQ3,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"

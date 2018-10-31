@@ -204,6 +204,7 @@
     "underscore-consistent-invocation": true,
     "use-default-type-parameter": false,
     "use-named-parameter": true,
+    "detect-unsafe-regex": true,
 
     // tslint-microsoft-contrib rules disabled
     "missing-jsdoc": false,

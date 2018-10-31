@@ -272,7 +272,8 @@ export module AstUtils {
             || node.kind === ts.SyntaxKind.StringLiteral
             || node.kind === ts.SyntaxKind.FalseKeyword
             || node.kind === ts.SyntaxKind.TrueKeyword
-            || node.kind === ts.SyntaxKind.NumericLiteral;
+            || node.kind === ts.SyntaxKind.NumericLiteral
+            || node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral;
     }
 
     export function isConstantExpression(node: ts.Expression): boolean {

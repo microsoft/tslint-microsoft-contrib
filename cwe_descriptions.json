@@ -32,6 +32,7 @@
   "584": "Return Inside Finally Block",
   "597": "Use of Wrong Operator in String Comparison",
   "614": "Sensitive Cookie in HTTPS Session Without 'Secure' Attribute",
+  "624": "Regular Expression Denial of Service",
   "670": "Always-Incorrect Control Flow Implementation",
   "676": "Use of Potentially Dangerous Function",
   "694": "Use of Multiple Resources with Duplicate Identifier",

@@ -96,6 +96,17 @@ There certainly are a lot of options! Here are some links to get you started.
     </tr>
     <tr>
       <td>
+        <code>detect-unsafe-regex</code>
+      </td>
+      <td>
+        Avoid construting regular expressions form non-literal patterns.
+        This is to prevent <a href="https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS">patterns with exponential runtime</a> (ReDoS) from untrusted input.
+        Litteral patterns are also checked with <a href="https://github.com/substack/safe-regex">(safe-regex)</a> for the same issues
+      </td>
+      <td>5.2.2</td>
+    </tr>
+    <tr>
+      <td>
         <code>export-name</code>
       </td>
       <td>

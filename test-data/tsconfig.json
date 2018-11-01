@@ -9,5 +9,5 @@
         "sourceMap": true,
         "target": "es5"
     },
-    "include": [ "." ]
+    "include": ["."]
 }

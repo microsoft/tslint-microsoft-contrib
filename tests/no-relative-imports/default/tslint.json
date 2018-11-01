@@ -1,8 +1,8 @@
 {
-  "rules": {
-    "no-relative-imports": true
-  },
-  "jsRules": {
-    "no-relative-imports": true
-  }
+    "rules": {
+        "no-relative-imports": true
+    },
+    "jsRules": {
+        "no-relative-imports": true
+    }
 }

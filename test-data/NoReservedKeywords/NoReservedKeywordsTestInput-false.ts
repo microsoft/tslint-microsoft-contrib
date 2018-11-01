@@ -1,4 +1,3 @@
-
 class SampleFalse3 {
     // class variables
     private false;
@@ -8,12 +7,13 @@ class SampleFalse3 {
 class SampleFalse4 {
     private var;
     set false(value) {}
-    get false() { return this.var;}
+    get false() {
+        return this.var;
+    }
 }
 
-
 class SampleFalse5 {
-    false() {}       // class methods
+    false() {} // class methods
 }
 
 // interface declarations

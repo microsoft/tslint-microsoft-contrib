@@ -1,4 +1,3 @@
-
 class SampleReturn3 {
     // class variables
     private return;
@@ -8,12 +7,13 @@ class SampleReturn3 {
 class SampleReturn4 {
     private var;
     set return(value) {}
-    get return() { return this.var;}
+    get return() {
+        return this.var;
+    }
 }
 
-
 class SampleReturn5 {
-    return() {}       // class methods
+    return() {} // class methods
 }
 
 // interface declarations

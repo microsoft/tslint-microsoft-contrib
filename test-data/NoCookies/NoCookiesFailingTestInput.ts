@@ -1,14 +1,12 @@
-
-function documentFunction() : Document {
+function documentFunction(): Document {
     return window.document;
 }
 
+document.cookie = "...";
+this.document.cookie = "...";
+window.document.cookie = "...";
 
-document.cookie = '...';
-this.document.cookie = '...';
-window.document.cookie = '...';
-
-documentFunction().cookie = '...';
+documentFunction().cookie = "...";
 
 var doc = document;
-doc.cookie = '...';
+doc.cookie = "...";

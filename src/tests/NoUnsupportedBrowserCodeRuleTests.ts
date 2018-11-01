@@ -1,21 +1,14 @@
 /* tslint:disable:max-func-body-length */
 
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('noUnsupportedBrowserCodeRule', () : void => {
+describe("noUnsupportedBrowserCodeRule", (): void => {
+    const ruleName: string = "no-unsupported-browser-code";
+    const options = [true, ["Mobile IE 10", "IE >= 10", "Chrome > 45", "Firefox", "Mobile Safari < 10"]];
 
-    const ruleName : string = 'no-unsupported-browser-code';
-    const options = [true, [
-        'Mobile IE 10',
-        'IE >= 10',
-        'Chrome > 45',
-        'Firefox',
-        'Mobile Safari < 10'
-    ]];
-
-    it('should pass on matching supported browsers', () : void => {
-        const script : string = `
+    it("should pass on matching supported browsers", (): void => {
+        const script: string = `
             class Test {
                 // Browser Specific: Chrome 49
                 sayHey() {
@@ -65,8 +58,8 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, options, script);
     });
 
-    it('should fail on matching unsupported browsers', () : void => {
-        const script : string = `
+    it("should fail on matching unsupported browsers", (): void => {
+        const script: string = `
             class Test {
                 // Browser Specific: Netscape 2
                 sayHey() {
@@ -114,75 +107,75 @@ describe('noUnsupportedBrowserCodeRule', () : void => {
 
         TestHelper.assertViolationsWithOptions(ruleName, options, script, [
             {
-                "failure": "Unsupported browser: Netscape",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 3
+                failure: "Unsupported browser: Netscape",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 3
                 }
             },
             {
-                "failure": "Unsupported browser version: Chrome unspecified version",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 8
+                failure: "Unsupported browser version: Chrome unspecified version",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 8
                 }
             },
             {
-                "failure": "Unsupported browser version: IE 8",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 13
+                failure: "Unsupported browser version: IE 8",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 13
                 }
             },
             {
-                "failure": "Unsupported browser: aquaman",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 20
+                failure: "Unsupported browser: aquaman",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 20
                 }
             },
             {
-                "failure": "Unsupported browser version: mobile safari 10",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 25
+                failure: "Unsupported browser version: mobile safari 10",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 25
                 }
             },
             {
-                "failure": "Unsupported browser version: IE 8",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 25
+                failure: "Unsupported browser version: IE 8",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 25
                 }
             },
             {
-                "failure": "Unsupported browser version: IE unspecified version",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 25
+                failure: "Unsupported browser version: IE unspecified version",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 25
                 }
             },
             {
-                "failure": "Unsupported browser version: mobile ie 9",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unsupported-browser-code",
-                "startPosition": {
-                    "character": 17,
-                    "line": 36
+                failure: "Unsupported browser version: mobile ie 9",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-unsupported-browser-code",
+                startPosition: {
+                    character: 17,
+                    line: 36
                 }
             }
         ]);

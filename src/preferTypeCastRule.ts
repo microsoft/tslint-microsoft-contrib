@@ -1,27 +1,26 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import { AstUtils } from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const FAILURE_STRING: string = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
+const FAILURE_STRING: string = "Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'prefer-type-cast',
-        type: 'maintainability',
-        description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
+        ruleName: "prefer-type-cast",
+        type: "maintainability",
+        description: "Prefer the tradition type casts instead of the new 'as-cast' syntax",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Configurable',
-        recommendation: 'true,   // pick either type-cast format and use it consistently',
-        commonWeaknessEnumeration: '398, 710'
+        issueClass: "Ignored",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        group: "Configurable",
+        recommendation: "true,   // pick either type-cast format and use it consistently",
+        commonWeaknessEnumeration: "398, 710"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

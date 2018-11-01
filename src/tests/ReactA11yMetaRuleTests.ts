@@ -1,22 +1,21 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('reactA11yMetaRule', () : void => {
+describe("reactA11yMetaRule", (): void => {
+    const ruleName: string = "react-a11y-meta";
 
-    const ruleName : string = 'react-a11y-meta';
-
-    it('should pass on meta tags without refresh', () : void => {
-        const script : string = `
+    it("should pass on meta tags without refresh", (): void => {
+        const script: string = `
             import React = require('react');
 
             const x = <meta http-equiv="not_refresh" />
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on meta tags with refresh - self closing', () : void => {
-        const script : string = `
+    it("should fail on meta tags with refresh - self closing", (): void => {
+        const script: string = `
             import React = require('react');
 
             const x = <meta http-equiv="refresh" />
@@ -24,16 +23,16 @@ describe('reactA11yMetaRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use http-equiv=\"refresh\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-meta",
-                "startPosition": { "character": 23, "line": 4 }
+                failure: 'Do not use http-equiv="refresh"',
+                name: Utils.absolutePath("file.tsx"),
+                ruleName: "react-a11y-meta",
+                startPosition: { character: 23, line: 4 }
             }
         ]);
     });
 
-    it('should fail on meta tags with refresh', () : void => {
-        const script : string = `
+    it("should fail on meta tags with refresh", (): void => {
+        const script: string = `
             import React = require('react');
 
             const x = <meta http-equiv="refresh" ></meta>
@@ -41,16 +40,16 @@ describe('reactA11yMetaRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use http-equiv=\"refresh\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-meta",
-                "startPosition": { "character": 23, "line": 4 }
+                failure: 'Do not use http-equiv="refresh"',
+                name: Utils.absolutePath("file.tsx"),
+                ruleName: "react-a11y-meta",
+                startPosition: { character: 23, line: 4 }
             }
         ]);
     });
 
-    it('should fail on meta tags with refresh - self-closing', () : void => {
-        const script : string = `
+    it("should fail on meta tags with refresh - self-closing", (): void => {
+        const script: string = `
             import React = require('react');
 
             const x = <meta http-equiv={"refresh"} />
@@ -58,12 +57,11 @@ describe('reactA11yMetaRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Do not use http-equiv=\"refresh\"",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-meta",
-                "startPosition": { "character": 23, "line": 4 }
+                failure: 'Do not use http-equiv="refresh"',
+                name: Utils.absolutePath("file.tsx"),
+                ruleName: "react-a11y-meta",
+                startPosition: { character: 23, line: 4 }
             }
         ]);
     });
-
 });

@@ -1,4 +1,3 @@
-
 class SampleDo3 {
     // class variables
     private do;
@@ -8,13 +7,13 @@ class SampleDo3 {
 class SampleDo4 {
     private var;
     set do(value) {}
-    get do() { return this.var;}
+    get do() {
+        return this.var;
+    }
 }
 
-
 class SampleDo5 {
-    do() {}       // class methods
-
+    do() {} // class methods
 }
 
 // interface declarations

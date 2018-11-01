@@ -1,2 +1,2 @@
-var data = 'alert(1)';
+var data = "alert(1)";
 window.setTimeout(`${data}`, 200);

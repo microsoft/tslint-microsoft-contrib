@@ -1,10 +1,10 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('noDeleteExpressionRule', (): void => {
-    const RULE_NAME: string = 'no-delete-expression';
+describe("noDeleteExpressionRule", (): void => {
+    const RULE_NAME: string = "no-delete-expression";
 
-    it('should not produce violations', (): void => {
+    it("should not produce violations", (): void => {
         const script: string = `
             var x = {
                 myProperty: 'sometext'
@@ -18,14 +18,14 @@ describe('noDeleteExpressionRule', (): void => {
         TestHelper.assertViolations(RULE_NAME, script, []);
     });
 
-    it('should not fail when using subelement notation', (): void => {
+    it("should not fail when using subelement notation", (): void => {
         const script: string = `
             delete rights[name];
         `;
         TestHelper.assertViolations(RULE_NAME, script, []);
     });
 
-    it('should produce violations ', (): void => {
+    it("should produce violations ", (): void => {
         const inputFile: string = `
             var something: int = 22;
 
@@ -35,15 +35,14 @@ describe('noDeleteExpressionRule', (): void => {
             } `;
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Variables should not be deleted: variableForDeletion",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-delete-expression",
-                "startPosition": {
-                    "line": 6,
-                    "character": 24
+                failure: "Variables should not be deleted: variableForDeletion",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-delete-expression",
+                startPosition: {
+                    line: 6,
+                    character: 24
                 }
             }
         ]);
     });
-
 });

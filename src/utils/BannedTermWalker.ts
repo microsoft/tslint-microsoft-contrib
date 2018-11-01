@@ -1,19 +1,19 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
-import { isObject, isNamed } from './TypeGuard';
+import * as ts from "typescript";
+import * as Lint from "tslint";
+import { isObject, isNamed } from "./TypeGuard";
 
 export class BannedTermWalker extends Lint.RuleWalker {
-    private readonly failureString : string;
+    private readonly failureString: string;
     private readonly bannedTerms: string[];
     private allowQuotedProperties: boolean = false;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString : string, bannedTerms: string[]) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString: string, bannedTerms: string[]) {
         super(sourceFile, options);
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
         this.getOptions().forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
+                this.allowQuotedProperties = opt["allow-quoted-properties"] === true;
             }
         });
     }
@@ -64,13 +64,13 @@ export class BannedTermWalker extends Lint.RuleWalker {
 
     protected visitParameterDeclaration(node: ts.ParameterDeclaration): void {
         // typescript 2.0 introduces function level 'this' types
-        if (node.name.getText() !== 'this') {
+        if (node.name.getText() !== "this") {
             this.validateNode(node);
         }
         super.visitParameterDeclaration(node);
     }
 
-    private validateNode(node: ts.Node) : void {
+    private validateNode(node: ts.Node): void {
         if (isNamed(node)) {
             const text: string = node.name.getText();
             if (text !== undefined) {
@@ -81,8 +81,7 @@ export class BannedTermWalker extends Lint.RuleWalker {
         }
     }
 
-    private isBannedTerm(text : string) : boolean {
+    private isBannedTerm(text: string): boolean {
         return this.bannedTerms.indexOf(text) !== -1;
     }
-
 }

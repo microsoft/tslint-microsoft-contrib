@@ -1,31 +1,30 @@
-import * as Lint from 'tslint';
-import * as fs from 'fs';
-import * as chai from 'chai';
-import {Utils} from '../utils/Utils';
-import * as ts from 'typescript';
+import * as Lint from "tslint";
+import * as fs from "fs";
+import * as chai from "chai";
+import { Utils } from "../utils/Utils";
+import * as ts from "typescript";
 
 /**
  * Test Utilities.
  */
-export module TestHelper {
-
+export namespace TestHelper {
     let program: ts.Program;
 
     /* tslint:disable:prefer-const */
     /**
      * This setting must point to your rule .js files. 3rd party libraries may reuse this class and change value.
      */
-    export let RULES_DIRECTORY: string = 'dist/src/';
+    export let RULES_DIRECTORY: string = "dist/src/";
 
     /**
      * This setting must point to your formatter .js files. 3rd party libraries may reuse this class and change value.
      */
-    export let FORMATTER_DIRECTORY: string = 'customFormatters/';
+    export let FORMATTER_DIRECTORY: string = "customFormatters/";
 
     /**
      * You must specify an encoding for file read/writes. 3rd party libraries may reuse this class and change value.
      */
-    export let FILE_ENCODING: string = 'utf8';
+    export let FILE_ENCODING: string = "utf8";
     /* tslint:enable:prefer-const */
 
     export interface FailurePosition {
@@ -48,11 +47,7 @@ export module TestHelper {
         fix?: Fix;
     }
 
-    export function assertNoViolation(
-        ruleName: string,
-        inputFileOrScript: string,
-        useTypeChecker: boolean = false
-    ) {
+    export function assertNoViolation(ruleName: string, inputFileOrScript: string, useTypeChecker: boolean = false) {
         runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, [], useTypeChecker);
     }
     export function assertNoViolationWithOptions(
@@ -80,18 +75,15 @@ export module TestHelper {
     ) {
         runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, useTypeChecker);
     }
-    export function assertViolationsWithTypeChecker(
-        ruleName: string,
-        inputFileOrScript: string,
-        expectedFailures: ExpectedFailure[]) {
+    export function assertViolationsWithTypeChecker(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[]) {
         runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, true);
     }
 
     export function runRule(
         ruleName: string,
         userOptions: any[] | undefined, // tslint:disable-line:no-any
-        inputFileOrScript : string,
-        useTypeChecker : boolean = false
+        inputFileOrScript: string,
+        useTypeChecker: boolean = false
     ): Lint.LintResult {
         const configuration: Lint.Configuration.IConfigurationFile = {
             extends: [],
@@ -113,8 +105,8 @@ export module TestHelper {
             });
         }
 
-        const options : Lint.ILinterOptions = {
-            formatter: 'json',
+        const options: Lint.ILinterOptions = {
+            formatter: "json",
             fix: false,
             rulesDirectory: RULES_DIRECTORY,
             formattersDirectory: FORMATTER_DIRECTORY
@@ -123,7 +115,7 @@ export module TestHelper {
         let result: Lint.LintResult;
         if (useTypeChecker) {
             //program = Lint.Linter.createProgram([ ], './dist/test-data');
-            program = ts.createProgram([inputFileOrScript], { });
+            program = ts.createProgram([inputFileOrScript], {});
         }
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             // tslint:disable-next-line non-literal-fs-path
@@ -133,10 +125,10 @@ export module TestHelper {
             result = linter.getResult();
         } else {
             let filename: string;
-            if (inputFileOrScript.indexOf('import React') > -1) {
-                filename = Utils.absolutePath('file.tsx');
+            if (inputFileOrScript.indexOf("import React") > -1) {
+                filename = Utils.absolutePath("file.tsx");
             } else {
-                filename = Utils.absolutePath('file.ts');
+                filename = Utils.absolutePath("file.ts");
             }
 
             const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
@@ -159,29 +151,35 @@ export module TestHelper {
         // All the information we need is line and character of start position. For JSON comparison
         // to work, we will delete the information that we are not interested in from both actual and
         // expected failures.
-        actualFailures.forEach((actual: ExpectedFailure): void => {
-            delete actual.startPosition.position;
-            delete actual.endPosition;
-            // Editors start counting lines and characters from 1, but tslint does it from 0.
-            // To make thing easier to debug, align to editor values.
-            actual.startPosition.line = actual.startPosition.line + 1;
-            actual.startPosition.character = actual.startPosition.character + 1;
-        });
-        expectedFailures.forEach((expected: ExpectedFailure): void => {
-            delete expected.startPosition.position;
-            delete expected.endPosition;
-            if (!expected.ruleSeverity) {
-                expected.ruleSeverity = 'ERROR';
+        actualFailures.forEach(
+            (actual: ExpectedFailure): void => {
+                delete actual.startPosition.position;
+                delete actual.endPosition;
+                // Editors start counting lines and characters from 1, but tslint does it from 0.
+                // To make thing easier to debug, align to editor values.
+                actual.startPosition.line = actual.startPosition.line + 1;
+                actual.startPosition.character = actual.startPosition.character + 1;
             }
-        });
+        );
+        expectedFailures.forEach(
+            (expected: ExpectedFailure): void => {
+                delete expected.startPosition.position;
+                delete expected.endPosition;
+                if (!expected.ruleSeverity) {
+                    expected.ruleSeverity = "ERROR";
+                }
+            }
+        );
 
         const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, undefined, 2)}`;
 
         chai.assert.equal(actualFailures.length, expectedFailures.length, errorMessage);
 
-        expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
-            const actual = actualFailures[index];
-            chai.assert.deepEqual(actual, expected);
-        });
+        expectedFailures.forEach(
+            (expected: ExpectedFailure, index: number): void => {
+                const actual = actualFailures[index];
+                chai.assert.deepEqual(actual, expected);
+            }
+        );
     }
 }

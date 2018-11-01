@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import * as ts from "typescript";
+import * as Lint from "tslint";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
 /**
  * TSX curly spacing rule.
@@ -8,20 +8,19 @@ import {ExtendedMetadata} from './utils/ExtendedMetadata';
  * Allows you to specify how spacing works around JSX Expressions.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'react-tsx-curly-spacing',
-        type: 'style',
-        description: 'Consistently use spaces around the brace characters of JSX attributes.',
+        ruleName: "react-tsx-curly-spacing",
+        type: "style",
+        description: "Consistently use spaces around the brace characters of JSX attributes.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        recommendation: 'false,',
-        group: 'Deprecated'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        recommendation: "false,",
+        group: "Deprecated"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -35,14 +34,13 @@ enum Spacing {
 }
 
 class TsxCurlySpacingWalker extends Lint.RuleWalker {
-
     private readonly spacing: Spacing;
     private readonly allowMultiline: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         // default value is always
-        this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
+        this.spacing = options.ruleArguments[0] === "never" ? Spacing.never : Spacing.always;
         // default value is to not allow multiline
         this.allowMultiline = false;
         if (options.ruleArguments[1] !== undefined) {
@@ -53,7 +51,8 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
     public visitJsxExpression(node: ts.JsxExpression): void {
         const childrenCount: number = node.getChildCount();
 
-        if (childrenCount > 2) {// not empty code block (eg. only comments)
+        if (childrenCount > 2) {
+            // not empty code block (eg. only comments)
             const first = node.getFirstToken(); // '{' sign
             const last = node.getLastToken(); // '}' sign
             const second: ts.Node = node.getChildAt(1); // after '{' sign
@@ -67,7 +66,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         // This is hacked to visit JSX Expression. See https://github.com/palantir/tslint/pull/1292
         // newer versions of tslint have a public visitJsxExpression but older versions do not
         if (node.kind === ts.SyntaxKind.JsxExpression) {
-            this.visitJsxExpression(<ts.JsxExpression> node);
+            this.visitJsxExpression(<ts.JsxExpression>node);
             this.walkChildren(node);
         } else {
             super.visitNode(node);
@@ -92,7 +91,8 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
             if (!this.isSpaceBetweenTokens(first, second)) {
                 this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
             }
-        } else { // never space
+        } else {
+            // never space
             if (this.isSpaceBetweenTokens(first, second)) {
                 this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
             }
@@ -129,8 +129,10 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
 
     private isSpaceBetweenTokens(left: ts.Node, right: ts.Node): boolean {
         // Inspired from https://github.com/eslint/eslint/blob/master/lib/util/source-code.js#L296
-        const text: string = this.getSourceFile().getText().slice(left.getEnd(), right.getStart());
-        return /\s/.test(text.replace(/\/\*.*?\*\//g, ''));
+        const text: string = this.getSourceFile()
+            .getText()
+            .slice(left.getEnd(), right.getStart());
+        return /\s/.test(text.replace(/\/\*.*?\*\//g, ""));
     }
 
     private isMultiline(left: ts.Node, right: ts.Node): boolean {

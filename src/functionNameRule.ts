@@ -1,24 +1,23 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import { isObject } from './utils/TypeGuard';
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { isObject } from "./utils/TypeGuard";
 
-const METHOD_REGEX = 'method-regex';
-const PRIVATE_METHOD_REGEX = 'private-method-regex';
-const PROTECTED_METHOD_REGEX = 'protected-method-regex';
-const STATIC_METHOD_REGEX = 'static-method-regex';
-const FUNCTION_REGEX = 'function-regex';
+const METHOD_REGEX = "method-regex";
+const PRIVATE_METHOD_REGEX = "private-method-regex";
+const PROTECTED_METHOD_REGEX = "protected-method-regex";
+const STATIC_METHOD_REGEX = "static-method-regex";
+const FUNCTION_REGEX = "function-regex";
 
-const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
-const VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
-const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
+const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = "validate-private-statics-as-private";
+const VALIDATE_PRIVATE_STATICS_AS_STATIC = "validate-private-statics-as-static";
+const VALIDATE_PRIVATE_STATICS_AS_EITHER = "validate-private-statics-as-either";
 
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
 function parseOptions(ruleArguments: unknown[]): Options {
-
     if (ruleArguments.length === 0) {
         return {
             validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
@@ -41,11 +40,10 @@ interface Options {
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'function-name',
-        type: 'maintainability',
-        description: 'Applies a naming convention to function names and method names',
+        ruleName: "function-name",
+        type: "maintainability",
+        description: "Applies a naming convention to function names and method names",
         optionsDescription: Lint.Utils.dedent`
             Function styles should be consistent throughout the code.
             Users may want functions with multiple descriptors to be validated a certain way.
@@ -55,10 +53,10 @@ export class Rule extends Lint.Rules.AbstractRule {
             * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER}\` enforces validation as either.
             `,
         options: {
-            type: 'array',
+            type: "array",
             items: [
                 {
-                    type: 'string',
+                    type: "string",
                     enum: [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER]
                 }
             ],
@@ -72,12 +70,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             [true]
         ],
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Important",
+        level: "Opportunity for Excellence",
+        group: "Clarity",
+        commonWeaknessEnumeration: "398, 710"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -86,7 +84,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class FunctionNameRuleWalker extends Lint.RuleWalker {
-
     private methodRegex: RegExp = /^[a-z][\w\d]+$/;
     private privateMethodRegex: RegExp = this.methodRegex;
     private protectedMethodRegex: RegExp = this.privateMethodRegex;
@@ -113,28 +110,31 @@ class FunctionNameRuleWalker extends Lint.RuleWalker {
         if (AstUtils.hasComputedName(node)) {
             // allow computed names
         } else if (AstUtils.isPrivate(node)) {
-            if (
-                !this.privateMethodRegex.test(name)
-                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
-                    `Private method name does not match ${this.privateMethodRegex}: ${name}`);
+            if (!this.privateMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                this.addFailureAt(
+                    node.name.getStart(),
+                    node.name.getWidth(),
+                    `Private method name does not match ${this.privateMethodRegex}: ${name}`
+                );
             }
         } else if (AstUtils.isProtected(node)) {
-            if (
-                !this.protectedMethodRegex.test(name)
-                && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE
-            ) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
-                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`);
+            if (!this.protectedMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                this.addFailureAt(
+                    node.name.getStart(),
+                    node.name.getWidth(),
+                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`
+                );
             }
         } else if (AstUtils.isStatic(node)) {
             if (!this.staticMethodRegex.test(name)) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
-                    `Static method name does not match ${this.staticMethodRegex}: ${name}`);
+                this.addFailureAt(
+                    node.name.getStart(),
+                    node.name.getWidth(),
+                    `Static method name does not match ${this.staticMethodRegex}: ${name}`
+                );
             }
         } else if (!this.methodRegex.test(name)) {
-            this.addFailureAt(node.name.getStart(), node.name.getWidth(),
-                `Method name does not match ${this.methodRegex}: ${name}`);
+            this.addFailureAt(node.name.getStart(), node.name.getWidth(), `Method name does not match ${this.methodRegex}: ${name}`);
         }
         super.visitMethodDeclaration(node);
     }
@@ -143,22 +143,25 @@ class FunctionNameRuleWalker extends Lint.RuleWalker {
         if (node.name !== undefined) {
             const name: string = node.name.text;
             if (!this.functionRegex.test(name)) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(),
-                    `Function name does not match ${this.functionRegex}: ${name}`);
+                this.addFailureAt(
+                    node.name.getStart(),
+                    node.name.getWidth(),
+                    `Function name does not match ${this.functionRegex}: ${name}`
+                );
             }
         }
         super.visitFunctionDeclaration(node);
     }
 
-    private getOptionOrDefault(option: {[key: string]: unknown}, key: string, defaultValue: RegExp): RegExp {
+    private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
             const value = option[key];
-            if (value !== undefined && (typeof value === 'string' || value instanceof RegExp)) {
+            if (value !== undefined && (typeof value === "string" || value instanceof RegExp)) {
                 return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
-            console.error('Could not read ' + key + ' within function-name configuration');
+            console.error("Could not read " + key + " within function-name configuration");
             /* tslint:enable:no-console */
         }
         return defaultValue;

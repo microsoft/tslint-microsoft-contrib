@@ -1,32 +1,30 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import { AstUtils } from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-function-expression',
-        type: 'maintainability',
-        description: 'Do not use function expressions; use arrow functions (lambdas) instead.',
+        ruleName: "no-function-expression",
+        type: "maintainability",
+        description: "Do not use function expressions; use arrow functions (lambdas) instead.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Important",
+        level: "Opportunity for Excellence",
+        group: "Clarity",
+        commonWeaknessEnumeration: "398, 710"
     };
 
-    public static FAILURE_STRING: string = 'Use arrow function instead of function expression';
+    public static FAILURE_STRING: string = "Use arrow function instead of function expression";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
@@ -48,9 +46,12 @@ class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
 
         const isGenericFunctionInTSX = this.allowGenericFunctionExpression && walker.isGenericFunction;
         // function expression that access 'this' is allowed
-        if (!walker.isAccessingThis && !node.asteriskToken
+        if (
+            !walker.isAccessingThis &&
+            !node.asteriskToken &&
             // generic function expression in .tsx file is allowed
-            && !isGenericFunctionInTSX) {
+            !isGenericFunctionInTSX
+        ) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
 
@@ -62,7 +63,7 @@ class SingleFunctionWalker extends Lint.RuleWalker {
     public isAccessingThis: boolean = false;
     public isGenericFunction: boolean = false;
     protected visitNode(node: ts.Node): void {
-        if (node.getText() === 'this') {
+        if (node.getText() === "this") {
             this.isAccessingThis = true;
         }
         super.visitNode(node);

@@ -1,20 +1,19 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('mochaNoSideEffectCodeRule', () : void => {
+describe("mochaNoSideEffectCodeRule", (): void => {
+    const ruleName: string = "mocha-no-side-effect-code";
 
-    const ruleName : string = 'mocha-no-side-effect-code';
-
-    it('should pass on not a mocha test', () : void => {
-        const script : string = `
+    it("should pass on not a mocha test", (): void => {
+        const script: string = `
             var blah = foo;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on most simple case', () : void => {
-        const script : string = `
+    it("should pass on most simple case", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 const CONST1 = 'one';
                 const CONST2 = 2;
@@ -57,11 +56,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on usage of skip/only', () : void => {
-        const script : string = `
+    it("should pass on usage of skip/only", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
 
                 it.skip((): void => {
@@ -81,11 +80,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on function declarations', () : void => {
-        const script : string = `
+    it("should pass on function declarations", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
 
                 function doSomething() {
@@ -94,11 +93,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on multiline string', () : void => {
-        const script : string = `
+    it("should pass on multiline string", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
 
                 const CONST1 = \`some
@@ -108,32 +107,32 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on simple cast', () : void => {
-        const script : string = `
+    it("should pass on simple cast", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 const publisher: DTO.Publisher = <any>{ '@class': 'Publisher' };
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on describe.skip', () : void => {
-        const script : string = `
+    it("should pass on describe.skip", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 describe.skip('someTest', (): void => {
                 });
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on complex cast', () : void => {
-        const script : string = `
+    it("should fail on complex cast", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 const publisher: DTO.Publisher = <any>doSomething();
             });
@@ -141,17 +140,18 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                "Move to before()/beforeEach(): publisher: DTO.Publisher = <...",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 23, "line": 3 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): publisher: DTO.Publisher = <...",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 23, line: 3 }
             }
         ]);
     });
 
-    it('should fail on function calls', () : void => {
-        const script : string = `
+    it("should fail on function calls", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 expect(convertedTags).to.deep.equal(tags);
             });
@@ -159,17 +159,18 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 17, "line": 3 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 17, line: 3 }
             }
         ]);
     });
 
-    it('should fail on context', () : void => {
-        const script : string = `
+    it("should fail on context", (): void => {
+        const script: string = `
             context('someTest', (): void => {
                 expect(convertedTags).to.deep.equal(tags);
             });
@@ -177,17 +178,18 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 17, "line": 3 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): expect(convertedTags).to.dee...",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 17, line: 3 }
             }
         ]);
     });
 
-    it('should pass on correct scoping', () : void => {
-        const script : string = `
+    it("should pass on correct scoping", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 const CONST1 = 'one';
                 const CONST2 = 2;
@@ -224,11 +226,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on variable aliasing', () : void => {
-        const script : string = `
+    it("should pass on variable aliasing", (): void => {
+        const script: string = `
             let expect: Chai.ExpectStatic = chai.expect;
 
             describe('someTest', (): void => {
@@ -236,11 +238,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when using methods allowed by the Mocha API', () : void => {
-        const script : string = `
+    it("should pass when using methods allowed by the Mocha API", (): void => {
+        const script: string = `
             describe('retries', (): void => {
                 this.retries(42);
 
@@ -254,11 +256,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on date creation', () : void => {
-        const script : string = `
+    it("should pass on date creation", (): void => {
+        const script: string = `
             let date = moment();
             let firstActiveDay: Moment = moment().subtract(2, 'years');
             let date2 = new Date(123123123);
@@ -266,11 +268,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on simple JSON structures', () : void => {
-        const script : string = `
+    it("should pass on simple JSON structures", (): void => {
+        const script: string = `
             let onDaySelected: (newDate: Moment) => void = (newDate: Moment) => {
                 return;
             };
@@ -283,11 +285,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on complex JSON structures', () : void => {
-        const script : string = `
+    it("should pass on complex JSON structures", (): void => {
+        const script: string = `
             let searchItems: DTO.SearchItem[] = [
                 {'id': '4', 'name': 'All Search Topics', owner: undefined, ownerName: '', createdDate: undefined},
                 {'id': '66', 'name': 'Products', 'parentId': '4', owner: undefined, ownerName: '', createdDate: undefined},
@@ -301,11 +303,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass string concatenation', () : void => {
-        const script : string = `
+    it("should pass string concatenation", (): void => {
+        const script: string = `
             const SMALL_IMAGE: string = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+' +
                 'AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAASdAAAEnQB3mYfeAAAAE9JREFUCB0BRAC7/wAAAAAAAAAAAAAAAAAAA' +
                 'AAAAAAAAAD/H1f/AAAA/wAAAAAAAAAAAAAAAP///Vf/AAAAAAAAAAAAAAAAAAAAAAAAAAAA/GsHxbcKPckAAAAASUVORK5CYII=';
@@ -315,11 +317,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             describe('someTest', (): void => { });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass configured factory methods', () : void => {
-        const script : string = `
+    it("should pass configured factory methods", (): void => {
+        const script: string = `
             const x = RestDataFactory.createSocialProfile()
 
             describe('someTest', (): void => {
@@ -327,11 +329,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolationsWithOptions(ruleName, [true, { ignore: '^RestDataFactory\\.create.*' }], script, [ ]);
+        TestHelper.assertViolationsWithOptions(ruleName, [true, { ignore: "^RestDataFactory\\.create.*" }], script, []);
     });
 
-    it('should pass newly declared classes', () : void => {
-        const script : string = `
+    it("should pass newly declared classes", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
 
                 class MockModel extends Backbone.Model {
@@ -350,11 +352,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on describe', () : void => {
-        const script : string = `
+    it("should fail on describe", (): void => {
+        const script: string = `
             describe('someTest', (): void => {
                 const VIOLATION1 = this.myMethod();
                 const VIOLATION2 = new MyClass();
@@ -376,38 +378,41 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): VIOLATION1 = this.myMethod()",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 23, "line": 3 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): VIOLATION1 = this.myMethod()",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 23, line: 3 }
             },
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): VIOLATION2 = new MyClass()",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 23, "line": 4 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " + "Move to before()/beforeEach(): VIOLATION2 = new MyClass()",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 23, line: 4 }
             },
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): VIOLATION3 = true ? false : ...",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 27, "line": 11 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): VIOLATION3 = true ? false : ...",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 27, line: 11 }
             },
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): VIOLATION4 = x || 'some value'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 27, "line": 12 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " +
+                    "Move to before()/beforeEach(): VIOLATION4 = x || 'some value'",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 27, line: 12 }
             }
         ]);
     });
 
-    it('should fail on global scope', () : void => {
-        const script : string = `
+    it("should fail on global scope", (): void => {
+        const script: string = `
 
             const VIOLATION1 = new MyClass();
 
@@ -419,30 +424,29 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Mocha test contains dangerous variable initialization. " +
-                        "Move to before()/beforeEach(): VIOLATION1 = new MyClass()",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-no-side-effect-code",
-                "startPosition": { "character": 19, "line": 3 }
+                failure:
+                    "Mocha test contains dangerous variable initialization. " + "Move to before()/beforeEach(): VIOLATION1 = new MyClass()",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "mocha-no-side-effect-code",
+                startPosition: { character: 19, line: 3 }
             }
         ]);
     });
 
-    describe('arrays', (): void => {
-
-        it('should pass on empty and simple arrays', () : void => {
-            const script : string = `
+    describe("arrays", (): void => {
+        it("should pass on empty and simple arrays", (): void => {
+            const script: string = `
             describe('someTest', (): void => {
                 const CONST1 = [];
                 const CONST2 = [ true, false, 1, 0, 'value', null];
             });
         `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should pass on nested simple arrays', () : void => {
-            const script : string = `
+        it("should pass on nested simple arrays", (): void => {
+            const script: string = `
             describe('someTest', (): void => {
                 const options = [true, [
                     'Mobile IE 10',
@@ -454,11 +458,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
             });
         `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should fail on complex arrays', () : void => {
-            const script : string = `
+        it("should fail on complex arrays", (): void => {
+            const script: string = `
             describe('someTest', (): void => {
                 const VIOLATION = [ someCall() ];
             });
@@ -466,20 +470,20 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "Mocha test contains dangerous variable initialization. " +
-                            "Move to before()/beforeEach(): VIOLATION = [ someCall() ]",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "mocha-no-side-effect-code",
-                    "startPosition": { "character": 23, "line": 3 }
+                    failure:
+                        "Mocha test contains dangerous variable initialization. " +
+                        "Move to before()/beforeEach(): VIOLATION = [ someCall() ]",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "mocha-no-side-effect-code",
+                    startPosition: { character: 23, line: 3 }
                 }
             ]);
         });
     });
 
-    describe('Array.forEach', (): void => {
-
-        it('should pass on Array.forEach with empty arrays', () : void => {
-            const script : string = `
+    describe("Array.forEach", (): void => {
+        it("should pass on Array.forEach with empty arrays", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     [].forEach((): void => {
                         it('test', (): void => {
@@ -488,11 +492,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 });
             `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should pass on Array.forEach with simple arrays', () : void => {
-            const script : string = `
+        it("should pass on Array.forEach with simple arrays", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     [ true, false, 1, 0, 'value', null].forEach((): void => {
                         it('test', (): void => {
@@ -501,11 +505,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 });
             `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should pass on Array.forEach of simple object arrays', () : void => {
-            const script : string = `
+        it("should pass on Array.forEach of simple object arrays", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     [
                         { name: 'alpha', value: 1 },
@@ -518,11 +522,11 @@ describe('mochaNoSideEffectCodeRule', () : void => {
                 });
             `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it('should fail on Array.forEach of complex arrays', () : void => {
-            const script : string = `
+        it("should fail on Array.forEach of complex arrays", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     [ someCall() ].forEach((): void => {
                         it('test', (): void => {
@@ -533,17 +537,18 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "Mocha test contains dangerous variable initialization. " +
-                            "Move to before()/beforeEach(): [ someCall() ].forEach((): v...",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "mocha-no-side-effect-code",
-                    "startPosition": { "character": 21, "line": 3 }
+                    failure:
+                        "Mocha test contains dangerous variable initialization. " +
+                        "Move to before()/beforeEach(): [ someCall() ].forEach((): v...",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "mocha-no-side-effect-code",
+                    startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it('should fail on Array.forEach from function call', () : void => {
-            const script : string = `
+        it("should fail on Array.forEach from function call", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     someCall().forEach((): void => {
                         it('test', (): void => {
@@ -554,17 +559,18 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "Mocha test contains dangerous variable initialization. " +
-                            "Move to before()/beforeEach(): someCall().forEach((): void ...",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "mocha-no-side-effect-code",
-                    "startPosition": { "character": 21, "line": 3 }
+                    failure:
+                        "Mocha test contains dangerous variable initialization. " +
+                        "Move to before()/beforeEach(): someCall().forEach((): void ...",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "mocha-no-side-effect-code",
+                    startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it('should fail on Array.forEach with side effects in function', () : void => {
-            const script : string = `
+        it("should fail on Array.forEach with side effects in function", (): void => {
+            const script: string = `
                 describe('something', (): void => {
                     [1, 2, 3].forEach((): void => {
                         const VIOLATION = new MyClass();
@@ -576,15 +582,14 @@ describe('mochaNoSideEffectCodeRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": "Mocha test contains dangerous variable initialization. " +
-                            "Move to before()/beforeEach(): VIOLATION = new MyClass()",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "mocha-no-side-effect-code",
-                    "startPosition": { "character": 31, "line": 4 }
+                    failure:
+                        "Mocha test contains dangerous variable initialization. " +
+                        "Move to before()/beforeEach(): VIOLATION = new MyClass()",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "mocha-no-side-effect-code",
+                    startPosition: { character: 31, line: 4 }
                 }
             ]);
         });
-
     });
-
 });

@@ -1,5 +1,5 @@
-module.exports = ({ruleName, walkerName}) =>
-`import * as ts from 'typescript';
+module.exports = ({ ruleName, walkerName }) =>
+    `import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';

@@ -1,35 +1,33 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { Utils } from "./utils/Utils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-http-string',
-        type: 'maintainability',
+        ruleName: "no-http-string",
+        type: "maintainability",
         /* tslint:disable:no-http-string */
-        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+        description: "Do not use strings that start with 'http:'. URL strings should start with 'https:'. ",
         /* tslint:enable:no-http-string */
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
+        issueClass: "SDL",
+        issueType: "Error",
+        severity: "Critical",
+        level: "Mandatory",
+        group: "Security",
         recommendation: '[true, "http://www.example.com/?.*", "http://localhost:?.*"],',
-        commonWeaknessEnumeration: '319'
+        commonWeaknessEnumeration: "319"
     };
 
-    public static FAILURE_STRING: string = 'Forbidden http url in string: ';
+    public static FAILURE_STRING: string = "Forbidden http url in string: ";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class NoHttpStringWalker extends Lint.RuleWalker {
@@ -50,9 +48,9 @@ class NoHttpStringWalker extends Lint.RuleWalker {
     private visitLiteralExpression(node: ts.LiteralExpression | ts.LiteralLikeNode): void {
         const stringText: string = node.text;
         // tslint:disable-next-line no-http-string
-        if (stringText.indexOf('http:') === 0) {
+        if (stringText.indexOf("http:") === 0) {
             if (!this.isSuppressed(stringText)) {
-                const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                const failureString = Rule.FAILURE_STRING + "'" + stringText + "'";
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
@@ -60,9 +58,12 @@ class NoHttpStringWalker extends Lint.RuleWalker {
 
     private isSuppressed(stringText: string): boolean {
         const allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
-        return Utils.exists(allExceptions, (exception: string): boolean => {
-            return new RegExp(exception).test(stringText);
-        });
+        return Utils.exists(
+            allExceptions,
+            (exception: string): boolean => {
+                return new RegExp(exception).test(stringText);
+            }
+        );
     }
 
     private static getExceptions(options: Lint.IOptions): string[] | undefined {

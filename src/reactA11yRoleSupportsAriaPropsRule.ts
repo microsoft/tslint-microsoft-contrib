@@ -2,30 +2,30 @@
  * Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role
  */
 
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getImplicitRole } from './utils/getImplicitRole';
-import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
-import { IRole, IRoleSchema } from './utils/attributes/IRole';
-import { IAria } from './utils/attributes/IAria';
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { getImplicitRole } from "./utils/getImplicitRole";
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from "./utils/JsxAttribute";
+import { IRole, IRoleSchema } from "./utils/attributes/IRole";
+import { IAria } from "./utils/attributes/IAria";
 
 // tslint:disable:no-require-imports no-var-requires
-const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
-const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
+const ROLE_SCHEMA: IRoleSchema = require("./utils/attributes/roleSchema.json");
+const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require("./utils/attributes/ariaSchema.json");
 // tslint:enable:no-require-imports no-var-requires
 
 const ROLES: { [key: string]: IRole } = ROLE_SCHEMA.roles;
-const ROLE_STRING: string = 'role';
+const ROLE_STRING: string = "role";
 
 export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], invalidPropNames: string[]): string {
-    return `Attribute(s) ${invalidPropNames.join(', ')} are not supported by role(s) ${roleNamesInElement.join(', ')}. \
+    return `Attribute(s) ${invalidPropNames.join(", ")} are not supported by role(s) ${roleNamesInElement.join(", ")}. \
 You are using incorrect role or incorrect aria-* attribute`;
 }
 
 export function getFailureStringForImplicitRole(tagName: string, roleName: string, invalidPropNames: string[]): string {
-    return `Attribute(s) ${invalidPropNames.join(', ')} not supported \
+    return `Attribute(s) ${invalidPropNames.join(", ")} not supported \
 by role ${roleName} which is implicitly set by the HTML tag ${tagName}.`;
 }
 
@@ -37,18 +37,18 @@ A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: 'react-a11y-role-supports-aria-props',
-        type: 'maintainability',
-        description: 'Enforce that elements with explicit or implicit roles defined contain ' +
-        'only `aria-*` properties supported by that `role`.',
+        ruleName: "react-a11y-role-supports-aria-props",
+        type: "maintainability",
+        description:
+            "Enforce that elements with explicit or implicit roles defined contain " + "only `aria-*` properties supported by that `role`.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Important",
+        level: "Opportunity for Excellence",
+        group: "Accessibility"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -80,7 +80,8 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
         if (roleProp !== undefined) {
             roleValue = getStringLiteral(roleProp);
-            if (!isEmpty(roleProp) && roleValue === undefined) { // Do NOT check if can't retrieve the right role.
+            if (!isEmpty(roleProp) && roleValue === undefined) {
+                // Do NOT check if can't retrieve the right role.
                 return;
             }
         } else {
@@ -88,41 +89,37 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
 
         const isImplicitRole: boolean = !roleProp && !!roleValue;
-        const normalizedRoles = (roleValue || '').toLowerCase().split(' ')
+        const normalizedRoles = (roleValue || "")
+            .toLowerCase()
+            .split(" ")
             .filter((role: string) => role in ROLES);
 
         let supportedAttributeNames: string[] = ROLE_SCHEMA.globalSupportedProps;
 
-        normalizedRoles.forEach((role) => {
+        normalizedRoles.forEach(role => {
             supportedAttributeNames = supportedAttributeNames.concat(ROLES[role].additionalSupportedProps || []);
         });
 
-        const attributeNamesInElement: string[] = Object.keys(attributesInElement)
-            .filter((attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]);
+        const attributeNamesInElement: string[] = Object.keys(attributesInElement).filter(
+            (attributeName: string) => !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]
+        );
 
         // Get the list of not-supported aria-* attributes in current element.
-        const invalidAttributeNamesInElement: string[] = attributeNamesInElement
-            .filter((attributeName: string) => supportedAttributeNames.indexOf(attributeName) === -1);
+        const invalidAttributeNamesInElement: string[] = attributeNamesInElement.filter(
+            (attributeName: string) => supportedAttributeNames.indexOf(attributeName) === -1
+        );
         let failureString: string;
 
         if (normalizedRoles.length === 0) {
             failureString = getFailureStringForNoRole(node.tagName.getText(), invalidAttributeNamesInElement);
         } else if (isImplicitRole) {
-            failureString = getFailureStringForImplicitRole(
-                node.tagName.getText(),
-                normalizedRoles[0],
-                invalidAttributeNamesInElement
-            );
+            failureString = getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], invalidAttributeNamesInElement);
         } else {
             failureString = getFailureStringForNotImplicitRole(normalizedRoles, invalidAttributeNamesInElement);
         }
 
         if (invalidAttributeNamesInElement.length > 0) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                failureString
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
     }
 }

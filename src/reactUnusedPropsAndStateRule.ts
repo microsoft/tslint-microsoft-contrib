@@ -1,31 +1,30 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import { isObject } from './utils/TypeGuard';
+import { Utils } from "./utils/Utils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { isObject } from "./utils/TypeGuard";
 
-const PROPS_REGEX = 'props-interface-regex';
-const STATE_REGEX = 'state-interface-regex';
+const PROPS_REGEX = "props-interface-regex";
+const STATE_REGEX = "state-interface-regex";
 
-const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
-const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
+const FAILURE_UNUSED_PROP: string = "Unused React property defined in interface: ";
+const FAILURE_UNUSED_STATE: string = "Unused React state defined in interface: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'react-unused-props-and-state',
-        type: 'maintainability',
-        description: 'Remove unneeded properties defined in React Props and State interfaces',
+        ruleName: "react-unused-props-and-state",
+        type: "maintainability",
+        description: "Remove unneeded properties defined in React Props and State interfaces",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        group: "Correctness",
+        commonWeaknessEnumeration: "398"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -38,7 +37,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
-
     private propNames: string[] = [];
     private propNodes: { [index: string]: ts.TypeElement } = {};
     private stateNames: string[] = [];
@@ -62,19 +60,18 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
     private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
             const value: unknown = option[key];
-            if (value !== undefined && typeof value === 'string') {
+            if (value !== undefined && typeof value === "string") {
                 return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
-            console.error('Could not read ' + key + ' within react-unused-props-and-state-name configuration');
+            console.error("Could not read " + key + " within react-unused-props-and-state-name configuration");
             /* tslint:enable:no-console */
         }
         return defaultValue;
     }
 
     protected visitSourceFile(node: ts.SourceFile): void {
-
         super.visitSourceFile(node);
 
         // if no Props or State interface is declared then don't bother scanning the class
@@ -82,14 +79,18 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
             this.classDeclarations.forEach(this.walkChildren, this);
         }
 
-        this.propNames.forEach((propName: string): void => {
-            const typeElement: ts.TypeElement = this.propNodes[propName];
-            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
-        });
-        this.stateNames.forEach((stateName: string): void => {
-            const typeElement: ts.TypeElement = this.stateNodes[stateName];
-            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
-        });
+        this.propNames.forEach(
+            (propName: string): void => {
+                const typeElement: ts.TypeElement = this.propNodes[propName];
+                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
+            }
+        );
+        this.stateNames.forEach(
+            (stateName: string): void => {
+                const typeElement: ts.TypeElement = this.stateNodes[stateName];
+                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
+            }
+        );
     }
 
     /**
@@ -119,20 +120,20 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
         if (this.propsAlias !== undefined) {
-            if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
+            if (new RegExp(this.propsAlias + "\\..*").test(referencedPropertyName)) {
                 this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
         if (this.stateAlias !== undefined) {
-            if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
+            if (new RegExp(this.stateAlias + "\\..*").test(referencedPropertyName)) {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
         }
         if (node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression) {
-            if (referencedPropertyName === 'this.props') {
+            if (referencedPropertyName === "this.props") {
                 // this props reference has escaped the function
                 this.propNames = [];
-            } else if (referencedPropertyName === 'this.state') {
+            } else if (referencedPropertyName === "this.state") {
                 // this state reference has escaped the function
                 this.stateNames = [];
             }
@@ -142,23 +143,25 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
 
     protected visitIdentifier(node: ts.Identifier): void {
         if (this.propsAlias !== undefined) {
-            if (node.text === this.propsAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter
-                && this.isParentNodeSuperCall(node) === false) {
+            if (
+                node.text === this.propsAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter &&
+                this.isParentNodeSuperCall(node) === false
+            ) {
                 // this props reference has escaped the constructor
                 this.propNames = [];
             }
-
         }
         if (this.stateAlias !== undefined) {
-            if (node.text === this.stateAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter) {
+            if (
+                node.text === this.stateAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter
+            ) {
                 // this state reference has escaped the constructor
                 this.stateNames = [];
             }
-
         }
         super.visitIdentifier(node);
     }
@@ -176,12 +179,13 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         const methodName: string = (<ts.Identifier>node.name).text;
-        if (/componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-                && node.parameters.length > 0) {
+        if (
+            /componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) &&
+            node.parameters.length > 0
+        ) {
             this.propsAlias = (<ts.Identifier>node.parameters[0].name).text;
         }
-        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-                && node.parameters.length > 1) {
+        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) && node.parameters.length > 1) {
             this.stateAlias = (<ts.Identifier>node.parameters[1].name).text;
         }
         super.visitMethodDeclaration(node);
@@ -191,21 +195,23 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
 
     private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
-        node.members.forEach((typeElement: ts.TypeElement): void => {
-            if (typeElement.name !== undefined) {
-                const text = typeElement.name.getText();
-                if (text !== undefined) {
-                    result[text] = typeElement;
+        node.members.forEach(
+            (typeElement: ts.TypeElement): void => {
+                if (typeElement.name !== undefined) {
+                    const text = typeElement.name.getText();
+                    if (text !== undefined) {
+                        result[text] = typeElement;
+                    }
                 }
             }
-        });
+        );
         return result;
     }
 
     private isParentNodeSuperCall(node: ts.Node): boolean {
         if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
-            return call.expression.getText() === 'super';
+            return call.expression.getText() === "super";
         }
         return false;
     }

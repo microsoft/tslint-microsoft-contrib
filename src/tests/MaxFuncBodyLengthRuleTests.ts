@@ -1,7 +1,7 @@
-import {Utils} from '../utils/Utils';
-import { TestHelper } from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('maxFuncBodyLengthRule', (): void => {
+describe("maxFuncBodyLengthRule", (): void => {
     let options: [boolean, number | object, object?];
     const script: string = `
         // https://github.com/Microsoft/tslint-microsoft-contrib/issues/468#issuecomment-407456317
@@ -74,171 +74,175 @@ describe('maxFuncBodyLengthRule', (): void => {
         console.log(plusSix(6));                    // 12
         `;
 
-    const ruleName: string = 'max-func-body-length';
+    const ruleName: string = "max-func-body-length";
 
-    describe('when functions do not exceed general option value and syntax kind wise options are not used', () => {
-        it('should not fail', (): void => {
+    describe("when functions do not exceed general option value and syntax kind wise options are not used", () => {
+        it("should not fail", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
     });
 
-    describe('when general option is used and functions lengths exceed its value', () => {
+    describe("when general option is used and functions lengths exceed its value", () => {
         beforeEach(() => {
             options = [true, 0];
         });
 
-        it('should fail', (): void => {
+        it("should fail", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max arrow function body length exceeded - max: 0, actual: 1",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 48,
-                        "line": 5
+                    failure: "Max arrow function body length exceeded - max: 0, actual: 1",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 48,
+                        line: 5
                     }
                 },
                 {
-                    "failure": "Max arrow function body length exceeded - max: 0, actual: 3",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 48,
-                        "line": 8
+                    failure: "Max arrow function body length exceeded - max: 0, actual: 3",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 48,
+                        line: 8
                     }
                 },
                 {
-                    "failure": "Max function body length exceeded in function plusThree() - max: 0, actual: 5",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 9,
-                        "line": 13
+                    failure: "Max function body length exceeded in function plusThree() - max: 0, actual: 5",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 9,
+                        line: 13
                     }
                 },
                 {
-                    "failure": "Max function expression body length exceeded in function expression () - max: 0, actual: 7",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 49,
-                        "line": 20
+                    failure: "Max function expression body length exceeded in function expression () - max: 0, actual: 7",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 49,
+                        line: 20
                     }
                 },
                 {
-                    "failure": "Max constructor body length exceeded in class PlusPlus - max: 0, actual: 4",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 13,
-                        "line": 32
+                    failure: "Max constructor body length exceeded in class PlusPlus - max: 0, actual: 4",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 13,
+                        line: 32
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded in method plusFive() - max: 0, actual: 9",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 13,
-                        "line": 38
+                    failure: "Max method body length exceeded in method plusFive() - max: 0, actual: 9",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 13,
+                        line: 38
                     }
                 },
                 {
-                    "failure": "Max function expression body length exceeded in function expression () - max: 0, actual: 10",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 48,
-                        "line": 50
+                    failure: "Max function expression body length exceeded in function expression () - max: 0, actual: 10",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 48,
+                        line: 50
                     }
                 }
             ]);
         });
     });
 
-    describe('when syntax kind wise options are used and functions lengths exceed their value', () => {
+    describe("when syntax kind wise options are used and functions lengths exceed their value", () => {
         beforeEach(() => {
-            options = [true,
+            options = [
+                true,
                 {
-                    'arrow-body-length': 2,
-                    'ctor-body-length': 3,
-                    'func-body-length': 4,
-                    'func-express-body-length': 7,
-                    'method-body-length': 8
+                    "arrow-body-length": 2,
+                    "ctor-body-length": 3,
+                    "func-body-length": 4,
+                    "func-express-body-length": 7,
+                    "method-body-length": 8
                 }
             ];
         });
 
-        it('should fail', (): void => {
+        it("should fail", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    "failure": "Max arrow function body length exceeded - max: 2, actual: 3",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 48,
-                        "line": 8
+                    failure: "Max arrow function body length exceeded - max: 2, actual: 3",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 48,
+                        line: 8
                     }
                 },
                 {
-                    "failure": "Max function body length exceeded in function plusThree() - max: 4, actual: 5",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 9,
-                        "line": 13
+                    failure: "Max function body length exceeded in function plusThree() - max: 4, actual: 5",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 9,
+                        line: 13
                     }
                 },
                 {
-                    "failure": "Max constructor body length exceeded in class PlusPlus - max: 3, actual: 4",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 13,
-                        "line": 32
+                    failure: "Max constructor body length exceeded in class PlusPlus - max: 3, actual: 4",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 13,
+                        line: 32
                     }
                 },
                 {
-                    "failure": "Max method body length exceeded in method plusFive() - max: 8, actual: 9",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 13,
-                        "line": 38
+                    failure: "Max method body length exceeded in method plusFive() - max: 8, actual: 9",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 13,
+                        line: 38
                     }
                 },
                 {
-                    "failure": "Max function expression body length exceeded in function expression () - max: 7, actual: 10",
-                    "name": Utils.absolutePath("file.ts"),
-                    "ruleName": "max-func-body-length",
-                    "ruleSeverity": "ERROR",
-                    "startPosition": {
-                        "character": 48,
-                        "line": 50
+                    failure: "Max function expression body length exceeded in function expression () - max: 7, actual: 10",
+                    name: Utils.absolutePath("file.ts"),
+                    ruleName: "max-func-body-length",
+                    ruleSeverity: "ERROR",
+                    startPosition: {
+                        character: 48,
+                        line: 50
                     }
                 }
             ]);
         });
     });
 
-    describe('when ignoring comments option is used and function lengths exceed their value', () => {
+    describe("when ignoring comments option is used and function lengths exceed their value", () => {
         beforeEach(() => {
-            options = [true, 3, { 'ignore-comments': true }];
+            options = [true, 3, { "ignore-comments": true }];
         });
 
-        it('should not fail due to single- or multi- line comments', (): void => {
-            TestHelper.assertNoViolationWithOptions(ruleName, options, `
+        it("should not fail due to single- or multi- line comments", (): void => {
+            TestHelper.assertNoViolationWithOptions(
+                ruleName,
+                options,
+                `
                 function sum(a,b) {
                     /**
                      * add both a and b together
@@ -257,42 +261,52 @@ describe('maxFuncBodyLengthRule', (): void => {
                     // the user as well.
                     return a - b;
                 }
-            `);
+            `
+            );
         });
 
-        it('should fail due to lines with mixed code and comments', (): void => {
-            TestHelper.assertViolationsWithOptions(ruleName, options, `
+        it("should fail due to lines with mixed code and comments", (): void => {
+            TestHelper.assertViolationsWithOptions(
+                ruleName,
+                options,
+                `
                 function sum(a,b) {
                     let sum = a; // start with a
                     sum += b; // now add b
                     return sum; // return the result
                 }
-            `, [
+            `,
+                [
                     {
-                        "failure": "Max function body length exceeded in function sum() - max: 3, actual: 5",
-                        "name": Utils.absolutePath("file.ts"),
-                        "ruleName": "max-func-body-length",
-                        "startPosition": {
-                            "character": 17,
-                            "line": 2
+                        failure: "Max function body length exceeded in function sum() - max: 3, actual: 5",
+                        name: Utils.absolutePath("file.ts"),
+                        ruleName: "max-func-body-length",
+                        startPosition: {
+                            character: 17,
+                            line: 2
                         }
                     }
-                ]);
+                ]
+            );
         });
     });
 
-    describe('when using mocha describe blocks', () => {
+    describe("when using mocha describe blocks", () => {
         beforeEach(() => {
-            options = [true,
+            options = [
+                true,
                 5, // max length is now 5
                 {
-                    'ignore-parameters-to-function-regex': '^describe$'
+                    "ignore-parameters-to-function-regex": "^describe$"
                 }
             ];
         });
 
-        it('should be able to ignore describe calls', (): void => {
-            TestHelper.assertViolationsWithOptions(ruleName, options, `
+        it("should be able to ignore describe calls", (): void => {
+            TestHelper.assertViolationsWithOptions(
+                ruleName,
+                options,
+                `
             describe('something', (): void => {
                 // line 2
                 // line 3
@@ -313,7 +327,9 @@ describe('maxFuncBodyLengthRule', (): void => {
                 // line 5
                 // line 6
             }); // line 7
-            `, []);
+            `,
+                []
+            );
         });
 
         it('should not ignore calls of functions that are not exactly named "describe"', (): void => {
@@ -327,15 +343,16 @@ describe('maxFuncBodyLengthRule', (): void => {
                         // line 4
                         // line 5
                     }); // line 6
-                `, [
+                `,
+                [
                     {
-                        "failure": "Max arrow function body length exceeded - max: 5, actual: 6",
-                        "name": Utils.absolutePath("file.ts"),
-                        "ruleName": "max-func-body-length",
-                        "ruleSeverity": "ERROR",
-                        "startPosition": {
-                            "character": 49,
-                            "line": 2
+                        failure: "Max arrow function body length exceeded - max: 5, actual: 6",
+                        name: Utils.absolutePath("file.ts"),
+                        ruleName: "max-func-body-length",
+                        ruleSeverity: "ERROR",
+                        startPosition: {
+                            character: 49,
+                            line: 2
                         }
                     }
                 ]

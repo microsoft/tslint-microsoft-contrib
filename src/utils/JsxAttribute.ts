@@ -2,7 +2,7 @@
  * @JsxAttribute utilities for react rules.
  */
 
-import * as ts from 'typescript';
+import * as ts from "typescript";
 import {
     isJsxAttribute,
     isJsxExpression,
@@ -13,16 +13,14 @@ import {
     isJsxOpeningElement,
     isFalseKeyword,
     isTrueKeyword
-} from './TypeGuard';
+} from "./TypeGuard";
 
 export function getPropName(node: ts.JsxAttribute): string | undefined {
     if (!isJsxAttribute(node)) {
-        throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+        throw new Error("The node must be a JsxAttribute collected by the AST parser.");
     }
 
-    return node.name
-        ? node.name.text
-        : undefined;
+    return node.name ? node.name.text : undefined;
 }
 
 /**
@@ -34,20 +32,23 @@ export function getPropName(node: ts.JsxAttribute): string | undefined {
  */
 export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute): string | undefined {
     if (!isJsxAttribute(node)) {
-        throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+        throw new Error("The node must be a JsxAttribute collected by the AST parser.");
     }
 
     const initializer = node === undefined ? undefined : node.initializer;
 
-    if (!initializer) { // <tag attribute/>
-        return '';
-    } else if (isStringLiteral(initializer)) { // <tag attribute='value' />
+    if (!initializer) {
+        // <tag attribute/>
+        return "";
+    } else if (isStringLiteral(initializer)) {
+        // <tag attribute='value' />
         return initializer.text.trim();
-    } else if (isJsxExpression(initializer) && initializer.expression !== undefined
-        && isStringLiteral(initializer.expression)) { // <tag attribute={'value'} />
+    } else if (isJsxExpression(initializer) && initializer.expression !== undefined && isStringLiteral(initializer.expression)) {
+        // <tag attribute={'value'} />
         return (<ts.StringLiteral>initializer.expression).text;
-    } else if (isJsxExpression(initializer) && !initializer.expression) { // <tag attribute={} />
-        return '';
+    } else if (isJsxExpression(initializer) && !initializer.expression) {
+        // <tag attribute={} />
+        return "";
     } else {
         return undefined;
     }
@@ -64,7 +65,7 @@ export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute):
  */
 export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
     if (!isJsxAttribute(node)) {
-        throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+        throw new Error("The node must be a JsxAttribute collected by the AST parser.");
     }
 
     const initializer = node === undefined ? undefined : node.initializer;
@@ -73,9 +74,9 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
     }
 
     const getBooleanFromString: (value: string) => boolean | undefined = (value: string) => {
-        if (value.toLowerCase() === 'true') {
+        if (value.toLowerCase() === "true") {
             return true;
-        } else if (value.toLowerCase() === 'false') {
+        } else if (value.toLowerCase() === "false") {
             return false;
         } else {
             return undefined;
@@ -111,11 +112,11 @@ export function isEmpty(node: ts.JsxAttribute): boolean {
     if (initializer === undefined) {
         return true;
     } else if (isStringLiteral(initializer)) {
-        return initializer.text.trim() === '';
+        return initializer.text.trim() === "";
     } else if (initializer.expression !== undefined) {
         const expression: ts.Expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
-            return expression.getText() === 'undefined';
+            return expression.getText() === "undefined";
         } else if (expression.kind === ts.SyntaxKind.NullKeyword) {
             return true;
         }
@@ -130,7 +131,7 @@ export function isEmpty(node: ts.JsxAttribute): boolean {
  */
 export function getNumericLiteral(node: ts.JsxAttribute): string | undefined {
     if (!isJsxAttribute(node)) {
-        throw new Error('The node must be a JsxAttribute collected by the AST parser.');
+        throw new Error("The node must be a JsxAttribute collected by the AST parser.");
     }
 
     const initializer = node === undefined ? undefined : node.initializer;
@@ -160,7 +161,7 @@ export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.J
     } else if (isJsxOpeningElement(node)) {
         attributes = node.attributes.properties;
     } else {
-        throw new Error('The node must be a JsxElement, JsxSelfClosingElement or JsxOpeningElement.');
+        throw new Error("The node must be a JsxElement, JsxSelfClosingElement or JsxOpeningElement.");
     }
 
     return attributes;
@@ -175,7 +176,7 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
     const attributes = getAllAttributesFromJsxElement(node);
 
     if (attributes !== undefined) {
-        attributes.forEach((attr) => {
+        attributes.forEach(attr => {
             if (!isJsxAttribute(attr)) {
                 return;
             }
@@ -197,7 +198,7 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
  * @return a element.
  */
 export function getJsxElementFromCode(code: string, exceptTagName: string): ts.JsxElement | ts.JsxSelfClosingElement | undefined {
-    const sourceFile: ts.SourceFile = ts.createSourceFile('test.tsx', code, ts.ScriptTarget.ES2015, true);
+    const sourceFile: ts.SourceFile = ts.createSourceFile("test.tsx", code, ts.ScriptTarget.ES2015, true);
 
     return delintNode(sourceFile, exceptTagName);
 }

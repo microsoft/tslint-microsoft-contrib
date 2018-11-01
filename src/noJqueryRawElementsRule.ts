@@ -1,26 +1,25 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import * as ts from "typescript";
+import * as Lint from "tslint";
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
-const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery API: ';
+const FAILURE_STRING_MANIPULATION: string = "Replace HTML string manipulation with jQuery API: ";
+const FAILURE_STRING_COMPLEX: string = "Replace complex HTML strings with jQuery API: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-jquery-raw-elements',
-        type: 'maintainability',
-        description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
+        ruleName: "no-jquery-raw-elements",
+        type: "maintainability",
+        description: "Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 710'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Important",
+        level: "Opportunity for Excellence",
+        group: "Correctness",
+        commonWeaknessEnumeration: "398, 710"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -30,7 +29,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-
         const functionName: string = AstUtils.getFunctionName(node);
         if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
@@ -69,7 +67,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         const match = text.match(/^<[A-Za-z]+\s*>(.*)<\/[A-Za-z]+\s*>$/m);
         if (match !== null && match[1] !== undefined) {
             const enclosedContent: string = match[1]; // get the stuff inside the tag
-            if (enclosedContent.indexOf('<') === -1 && enclosedContent.indexOf('>') === -1) {
+            if (enclosedContent.indexOf("<") === -1 && enclosedContent.indexOf(">") === -1) {
                 return false; // enclosed content looks like it contains no html elements
             }
         }
@@ -78,7 +76,6 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
 }
 
 class HtmlLikeStringLiteralFinder extends Lint.RuleWalker {
-
     private found: boolean = false;
 
     public isFound(): boolean {
@@ -86,7 +83,7 @@ class HtmlLikeStringLiteralFinder extends Lint.RuleWalker {
     }
 
     protected visitStringLiteral(node: ts.StringLiteral): void {
-        if (node.text.indexOf('<') > -1 || node.text.indexOf('>') > -1) {
+        if (node.text.indexOf("<") > -1 || node.text.indexOf(">") > -1) {
             this.found = true;
         } else {
             super.visitStringLiteral(node);

@@ -1,5 +1,3 @@
-
-
 class SampleBreak3 {
     // class variables
     private break;
@@ -9,12 +7,13 @@ class SampleBreak3 {
 class SampleBreak4 {
     private var;
     set break(value) {}
-    get break() { return this.var;}
+    get break() {
+        return this.var;
+    }
 }
 
-
 class SampleBreak5 {
-    break() {}       // class methods
+    break() {} // class methods
 }
 
 // interface declarations

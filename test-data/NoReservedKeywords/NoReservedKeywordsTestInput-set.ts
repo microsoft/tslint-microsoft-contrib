@@ -1,21 +1,17 @@
-
 // module names
-module WrapperSet {
-    module set {
-
+namespace WrapperSet {
+    namespace set {
         // class names
-        class set {
-
-        }
+        class set {}
     }
 }
 
-module SampleSet1 {
+namespace SampleSet1 {
     // module variables
     var set;
 }
 
-module SampleSet2 {
+namespace SampleSet2 {
     // module function
     function set() {}
 }
@@ -29,15 +25,15 @@ class SampleSet3 {
 class SampleSet4 {
     private var;
     set set(value) {}
-    get set() { return this.var;}
+    get set() {
+        return this.var;
+    }
 }
 
-
 class SampleSet5 {
-    set() {}       // class methods
-    method(set) {}  // method parameters
-    private func = (set) => {}; // arrow function parameters
-
+    set() {} // class methods
+    method(set) {} // method parameters
+    private func = set => {}; // arrow function parameters
 }
 
 // interface declarations

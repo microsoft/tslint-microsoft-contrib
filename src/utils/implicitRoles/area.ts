@@ -1,13 +1,13 @@
-import * as ts from 'typescript';
-import { getJsxAttributesFromJsxElement } from '../JsxAttribute';
+import * as ts from "typescript";
+import { getJsxAttributesFromJsxElement } from "../JsxAttribute";
 
-const hrefString: string = 'href';
+const hrefString: string = "href";
 
 /**
  * @Returns the implicit role for an area tag.
  */
 function getImplicitRoleForArea(node: ts.Node): string | undefined {
-    return getJsxAttributesFromJsxElement(node)[hrefString] ? 'link' : undefined;
+    return getJsxAttributesFromJsxElement(node)[hrefString] ? "link" : undefined;
 }
 
 export { getImplicitRoleForArea as area };

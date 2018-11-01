@@ -1,10 +1,9 @@
-import * as ts from 'typescript';
+import * as ts from "typescript";
 
 /**
  * Utility methods for the chai.related rules.
  */
-export module ChaiUtils {
-
+export namespace ChaiUtils {
     export function isExpectInvocation(node: ts.PropertyAccessExpression | ts.CallExpression): boolean {
         const callExpression = getLeftMostCallExpression(node);
         if (callExpression === undefined) {
@@ -35,7 +34,7 @@ export module ChaiUtils {
         while (leftSide !== undefined) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide;
-            } else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
+            } else if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 leftSide = (<ts.PropertyAccessExpression>leftSide).expression;
             } else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide.parent;

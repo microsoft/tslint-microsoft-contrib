@@ -1,28 +1,28 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {AstUtils} from './utils/AstUtils';
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from "./utils/AstUtils";
+import { Utils } from "./utils/Utils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'promise-must-complete',
-        type: 'maintainability',
-        description: 'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
-                    'called on it within all code branches in the scope.',
+        ruleName: "promise-must-complete",
+        type: "maintainability",
+        description:
+            "When a Promise instance is created, then either the reject() or resolve() parameter must be " +
+            "called on it within all code branches in the scope.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        issueClass: "Non-SDL",
+        issueType: "Error",
+        severity: "Critical",
+        level: "Opportunity for Excellence",
+        group: "Correctness"
     };
 
-    public static FAILURE_STRING: string = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
+    public static FAILURE_STRING: string = "A Promise was found that appears to not have resolve or reject invoked on all code paths";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
@@ -31,9 +31,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class PromiseAnalyzer extends Lint.RuleWalker {
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
-        if (node.expression.kind === ts.SyntaxKind.Identifier
-            && node.expression.getText() === 'Promise'
-            && node.arguments !== undefined && node.arguments.length > 0) {
+        if (
+            node.expression.kind === ts.SyntaxKind.Identifier &&
+            node.expression.getText() === "Promise" &&
+            node.arguments !== undefined &&
+            node.arguments.length > 0
+        ) {
             const firstArg: ts.Expression = node.arguments[0];
             if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
                 return true;
@@ -65,14 +68,14 @@ class PromiseAnalyzer extends Lint.RuleWalker {
             const functionBody = functionArgument.body;
 
             if (functionBody !== undefined) {
-                const competionIdentifiers : ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
+                const competionIdentifiers: ts.Identifier[] = this.getCompletionIdentifiers(functionArgument);
                 this.validatePromiseUsage(node, functionBody, competionIdentifiers);
             }
         }
         super.visitNewExpression(node);
     }
 
-    private validatePromiseUsage(promiseInstantiation: ts.NewExpression, block: ts.Node, completionIdentifiers: ts.Identifier[]) : void {
+    private validatePromiseUsage(promiseInstantiation: ts.NewExpression, block: ts.Node, completionIdentifiers: ts.Identifier[]): void {
         const blockAnalyzer = new PromiseCompletionWalker(this.getSourceFile(), this.getOptions(), completionIdentifiers);
         blockAnalyzer.visitNode(block);
         if (!blockAnalyzer.isAlwaysCompleted()) {
@@ -83,9 +86,9 @@ class PromiseAnalyzer extends Lint.RuleWalker {
 
 class PromiseCompletionWalker extends Lint.RuleWalker {
     private readonly completionIdentifiers: ts.Identifier[];
-    private wasCompleted : boolean = false;
-    private allBranchesCompleted : boolean = true; // by default, there are no branches, so this is true
-    private hasBranches : boolean = false;
+    private wasCompleted: boolean = false;
+    private allBranchesCompleted: boolean = true; // by default, there are no branches, so this is true
+    private hasBranches: boolean = false;
     private readonly walkerOptions: Lint.IOptions;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, completionIdentifiers: ts.Identifier[]) {
@@ -101,7 +104,7 @@ class PromiseCompletionWalker extends Lint.RuleWalker {
     }
     /* tslint:enable:no-unnecessary-override */
 
-    public isAlwaysCompleted() : boolean {
+    public isAlwaysCompleted(): boolean {
         if (this.wasCompleted) {
             return true; // if the main code path completed then it doesn't matter what the child branches did
         }
@@ -139,9 +142,12 @@ class PromiseCompletionWalker extends Lint.RuleWalker {
             }
         }
 
-        const referenceEscaped : boolean = Utils.exists(node.arguments, (argument: ts.Expression) : boolean => {
-            return this.isCompletionIdentifier(argument);
-        });
+        const referenceEscaped: boolean = Utils.exists(
+            node.arguments,
+            (argument: ts.Expression): boolean => {
+                return this.isCompletionIdentifier(argument);
+            }
+        );
         if (referenceEscaped) {
             this.wasCompleted = true;
             return; // this branch was completed, do not walk any more.
@@ -171,23 +177,30 @@ class PromiseCompletionWalker extends Lint.RuleWalker {
 
     private getNonShadowedCompletionIdentifiers(declaration: ts.FunctionLikeDeclaration): ts.Identifier[] {
         const result: ts.Identifier[] = [];
-        this.completionIdentifiers.forEach((identifier: ts.Identifier): void => {
-            // if this identifier is not shadowed, then add it to result
-            const isShadowed: boolean = Utils.exists(declaration.parameters, (parameter: ts.ParameterDeclaration): boolean => {
-                return AstUtils.isSameIdentifer(identifier, parameter.name);
-            });
-            if (!isShadowed) {
-                result.push(identifier);
+        this.completionIdentifiers.forEach(
+            (identifier: ts.Identifier): void => {
+                // if this identifier is not shadowed, then add it to result
+                const isShadowed: boolean = Utils.exists(
+                    declaration.parameters,
+                    (parameter: ts.ParameterDeclaration): boolean => {
+                        return AstUtils.isSameIdentifer(identifier, parameter.name);
+                    }
+                );
+                if (!isShadowed) {
+                    result.push(identifier);
+                }
             }
-        });
+        );
 
         return result;
     }
 
     private isCompletionIdentifier(sourceIdentifier: ts.Node): boolean {
-        return Utils.exists(this.completionIdentifiers, (identifier: ts.Identifier): boolean => {
-            return AstUtils.isSameIdentifer(sourceIdentifier, identifier);
-        });
-
+        return Utils.exists(
+            this.completionIdentifiers,
+            (identifier: ts.Identifier): boolean => {
+                return AstUtils.isSameIdentifer(sourceIdentifier, identifier);
+            }
+        );
     }
 }

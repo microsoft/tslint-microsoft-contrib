@@ -1,15 +1,14 @@
-
 // module names
-module static {
+namespace static {
 
 }
 
-module SampleStatic1 {
+namespace SampleStatic1 {
     // module variables
     var static;
 }
 
-module SampleStatic2 {
+namespace SampleStatic2 {
     // module function
     function static() {}
 }
@@ -23,12 +22,13 @@ class SampleStatic3 {
 class SampleStatic4 {
     private var;
     set static(value) {}
-    get static() { return this.var;}
+    get static() {
+        return this.var;
+    }
 }
 
-
 class SampleStatic5 {
-    static() {}       // class methods
+    static() {} // class methods
 }
 
 // interface declarations

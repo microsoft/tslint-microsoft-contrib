@@ -2,8 +2,8 @@
  * Generates rule-metadata.json which contains a json array of all rule metadata.
  */
 
-const { writeFile } = require('./common/files');
-const { getAllRules, getMetadataFromFile } = require('./common/meta');
+const { writeFile } = require("./common/files");
+const { getAllRules, getMetadataFromFile } = require("./common/meta");
 const allMetadata = [];
 
 getAllRules().forEach(ruleFile => {
@@ -11,4 +11,4 @@ getAllRules().forEach(ruleFile => {
     allMetadata.push(metadata);
 });
 
-writeFile('rule-metadata.json', JSON.stringify(allMetadata, undefined, 2));
+writeFile("rule-metadata.json", JSON.stringify(allMetadata, undefined, 2));

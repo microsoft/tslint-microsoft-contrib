@@ -1,21 +1,17 @@
-
 // module names
-module WrapperGet {
-    module get {
-
+namespace WrapperGet {
+    namespace get {
         // class names
-        class get {
-
-        }
+        class get {}
     }
 }
 
-module SampleGet1 {
+namespace SampleGet1 {
     // module variables
     var get;
 }
 
-module SampleGet2 {
+namespace SampleGet2 {
     // module function
     function get() {}
 }
@@ -29,15 +25,15 @@ class SampleGet3 {
 class SampleGet4 {
     private var;
     set get(value) {}
-    get get() { return this.var;}
+    get get() {
+        return this.var;
+    }
 }
 
-
 class SampleGet5 {
-    get() {}       // class methods
-    method(get) {}  // method parameters
-    private func = (get) => {}; // arrow function parameters
-
+    get() {} // class methods
+    method(get) {} // method parameters
+    private func = get => {}; // arrow function parameters
 }
 
 // interface declarations

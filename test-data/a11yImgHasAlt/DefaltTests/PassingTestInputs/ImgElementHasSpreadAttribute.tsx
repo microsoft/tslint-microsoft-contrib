@@ -1,5 +1,5 @@
-import React = require('react');
+import React = require("react");
 
 let spreadAttributes;
-const a = <img { ...this.props } />
-const b = <img { ...spreadAttributes } alt=''/>
+const a = <img {...this.props} />;
+const b = <img {...spreadAttributes} alt="" />;

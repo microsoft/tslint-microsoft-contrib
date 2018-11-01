@@ -1,11 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('noMissingVisibilityModifiers', () : void => {
-    const ruleName : string = 'no-missing-visibility-modifiers';
+describe("noMissingVisibilityModifiers", (): void => {
+    const ruleName: string = "no-missing-visibility-modifiers";
 
-    it('should allow field modifiers', () : void => {
-        const inputScript : string = `
+    it("should allow field modifiers", (): void => {
+        const inputScript: string = `
 class {
     private myField1;
     protected myField2;
@@ -18,8 +18,8 @@ class {
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
-    it('should allow method modifiers', () : void => {
-        const inputScript : string = `
+    it("should allow method modifiers", (): void => {
+        const inputScript: string = `
 class {
     private myMethod1() {};
     protected myMethod2() {};
@@ -32,8 +32,8 @@ class {
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
-    it('should not allow missing field modifiers', () : void => {
-        const inputScript : string = `
+    it("should not allow missing field modifiers", (): void => {
+        const inputScript: string = `
 class {
     myField1;
     static myField2;
@@ -41,22 +41,22 @@ class {
 
         TestHelper.assertViolations(ruleName, inputScript, [
             {
-                "failure": "Field missing visibility modifier: myField1;",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-missing-visibility-modifiers",
-                "startPosition": { "character": 5, "line": 3 }
+                failure: "Field missing visibility modifier: myField1;",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-missing-visibility-modifiers",
+                startPosition: { character: 5, line: 3 }
             },
             {
-                "failure": "Field missing visibility modifier: static myField2;",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-missing-visibility-modifiers",
-                "startPosition": { "character": 5, "line": 4 }
+                failure: "Field missing visibility modifier: static myField2;",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-missing-visibility-modifiers",
+                startPosition: { character: 5, line: 4 }
             }
         ]);
     });
 
-    it('should not allow missing method modifiers', () : void => {
-        const inputScript : string = `
+    it("should not allow missing method modifiers", (): void => {
+        const inputScript: string = `
 class {
     myMethod1() {
     };
@@ -65,18 +65,17 @@ class {
 
         TestHelper.assertViolations(ruleName, inputScript, [
             {
-                "failure": "Method missing visibility modifier: myMethod1() {",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-missing-visibility-modifiers",
-                "startPosition": { "character": 5, "line": 3 }
+                failure: "Method missing visibility modifier: myMethod1() {",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-missing-visibility-modifiers",
+                startPosition: { character: 5, line: 3 }
             },
             {
-                "failure": "Method missing visibility modifier: static myMethod2() {}",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-missing-visibility-modifiers",
-                "startPosition": { "character": 5, "line": 5 }
+                failure: "Method missing visibility modifier: static myMethod2() {}",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-missing-visibility-modifiers",
+                startPosition: { character: 5, line: 5 }
             }
         ]);
     });
-
 });

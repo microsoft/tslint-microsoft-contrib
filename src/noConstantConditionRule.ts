@@ -1,28 +1,27 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import { isObject } from './utils/TypeGuard';
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { isObject } from "./utils/TypeGuard";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-constant-condition',
-        type: 'maintainability',
-        description: 'Do not use constant expressions in conditions.',
+        ruleName: "no-constant-condition",
+        type: "maintainability",
+        description: "Do not use constant expressions in conditions.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Opportunity for Excellence',
-        group: 'Correctness',
-        commonWeaknessEnumeration: '398, 570, 571, 670'
+        issueClass: "Non-SDL",
+        issueType: "Error",
+        severity: "Critical",
+        level: "Opportunity for Excellence",
+        group: "Correctness",
+        commonWeaknessEnumeration: "398, 570, 571, 670"
     };
 
-    public static FAILURE_STRING: string = 'Found constant conditional: ';
+    public static FAILURE_STRING: string = "Found constant conditional: ";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));
@@ -30,19 +29,18 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoConstantConditionRuleWalker extends Lint.RuleWalker {
-
     private readonly checkLoops: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.checkLoops = this.extractBoolean('checkLoops');
+        this.checkLoops = this.extractBoolean("checkLoops");
     }
 
     private extractBoolean(keyName: string): boolean {
-        let result : boolean = true;
+        let result: boolean = true;
         this.getOptions().forEach((opt: unknown) => {
             if (isObject(opt)) {
-                if (opt[keyName] === false || opt[keyName] === 'false') {
+                if (opt[keyName] === false || opt[keyName] === "false") {
                     result = false;
                 }
             }
@@ -52,7 +50,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
 
     protected visitIfStatement(node: ts.IfStatement): void {
         if (AstUtils.isConstantExpression(node.expression)) {
-            const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
+            const message: string = Rule.FAILURE_STRING + "if (" + node.expression.getText() + ")";
             this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         super.visitIfStatement(node);
@@ -60,7 +58,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
 
     protected visitConditionalExpression(node: ts.ConditionalExpression): void {
         if (AstUtils.isConstantExpression(node.condition)) {
-            const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
+            const message: string = Rule.FAILURE_STRING + node.condition.getText() + " ?";
             this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
         super.visitConditionalExpression(node);
@@ -69,7 +67,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
     protected visitWhileStatement(node: ts.WhileStatement): void {
         if (this.checkLoops) {
             if (AstUtils.isConstantExpression(node.expression)) {
-                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                const message: string = Rule.FAILURE_STRING + "while (" + node.expression.getText() + ")";
                 this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
@@ -79,7 +77,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
     protected visitDoStatement(node: ts.DoStatement): void {
         if (this.checkLoops) {
             if (AstUtils.isConstantExpression(node.expression)) {
-                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                const message: string = Rule.FAILURE_STRING + "while (" + node.expression.getText() + ")";
                 this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }
@@ -89,7 +87,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
     protected visitForStatement(node: ts.ForStatement): void {
         if (this.checkLoops && node.condition !== undefined) {
             if (AstUtils.isConstantExpression(node.condition)) {
-                const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
+                const message: string = Rule.FAILURE_STRING + ";" + node.condition.getText() + ";";
                 this.addFailureAt(node.getStart(), node.getWidth(), message);
             }
         }

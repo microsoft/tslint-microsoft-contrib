@@ -1,39 +1,177 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const FAILURE_MISSING_LANG: string = 'An html element is missing the lang attribute';
-const FAILURE_WRONG_LANG_CODE: string = 'Lang attribute does not have a valid value. Found: ';
+const FAILURE_MISSING_LANG: string = "An html element is missing the lang attribute";
+const FAILURE_WRONG_LANG_CODE: string = "Lang attribute does not have a valid value. Found: ";
 
 const LANGUAGE_CODES: string[] = [
-    'ab', 'aa', 'af', 'sq', 'am', 'ar', 'an', 'hy', 'as', 'ay', 'az', 'ba', 'eu', 'bn',
-    'dz', 'bh', 'bi', 'br', 'bg', 'my', 'be', 'km', 'ca', 'zh', 'zh-Hans', 'zh-Hant',
-    'co', 'hr', 'cs', 'da', 'nl', 'en', 'eo', 'et', 'fo', 'fa', 'fj', 'fi', 'fr', 'fy',
-    'gl', 'gd', 'gv', 'ka', 'de', 'el', 'kl', 'gn', 'gu', 'ht', 'ha', 'he', 'iw', 'hi',
-    'hu', 'is', 'io', 'id', 'in', 'ia', 'ie', 'iu', 'ik', 'ga', 'it', 'ja', 'jv', 'kn',
-    'ks', 'kk', 'rw', 'ky', 'rn', 'ko', 'ku', 'lo', 'la', 'lv', 'li', 'ln', 'lt', 'mk',
-    'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mo', 'mn', 'na', 'ne', 'no', 'oc', 'or', 'om',
-    'ps', 'pl', 'pt', 'pa', 'qu', 'rm', 'ro', 'ru', 'sm', 'sg', 'sa', 'sr', 'sh', 'st',
-    'tn', 'sn', 'ii', 'sd', 'si', 'ss', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tl',
-    'tg', 'ta', 'tt', 'te', 'th', 'bo', 'ti', 'to', 'ts', 'tr', 'tk', 'tw', 'ug', 'uk',
-    'ur', 'uz', 'vi', 'vo', 'wa', 'cy', 'wo', 'xh', 'yi', 'ji', 'yo', 'zu'
+    "ab",
+    "aa",
+    "af",
+    "sq",
+    "am",
+    "ar",
+    "an",
+    "hy",
+    "as",
+    "ay",
+    "az",
+    "ba",
+    "eu",
+    "bn",
+    "dz",
+    "bh",
+    "bi",
+    "br",
+    "bg",
+    "my",
+    "be",
+    "km",
+    "ca",
+    "zh",
+    "zh-Hans",
+    "zh-Hant",
+    "co",
+    "hr",
+    "cs",
+    "da",
+    "nl",
+    "en",
+    "eo",
+    "et",
+    "fo",
+    "fa",
+    "fj",
+    "fi",
+    "fr",
+    "fy",
+    "gl",
+    "gd",
+    "gv",
+    "ka",
+    "de",
+    "el",
+    "kl",
+    "gn",
+    "gu",
+    "ht",
+    "ha",
+    "he",
+    "iw",
+    "hi",
+    "hu",
+    "is",
+    "io",
+    "id",
+    "in",
+    "ia",
+    "ie",
+    "iu",
+    "ik",
+    "ga",
+    "it",
+    "ja",
+    "jv",
+    "kn",
+    "ks",
+    "kk",
+    "rw",
+    "ky",
+    "rn",
+    "ko",
+    "ku",
+    "lo",
+    "la",
+    "lv",
+    "li",
+    "ln",
+    "lt",
+    "mk",
+    "mg",
+    "ms",
+    "ml",
+    "mt",
+    "mi",
+    "mr",
+    "mo",
+    "mn",
+    "na",
+    "ne",
+    "no",
+    "oc",
+    "or",
+    "om",
+    "ps",
+    "pl",
+    "pt",
+    "pa",
+    "qu",
+    "rm",
+    "ro",
+    "ru",
+    "sm",
+    "sg",
+    "sa",
+    "sr",
+    "sh",
+    "st",
+    "tn",
+    "sn",
+    "ii",
+    "sd",
+    "si",
+    "ss",
+    "sk",
+    "sl",
+    "so",
+    "es",
+    "su",
+    "sw",
+    "sv",
+    "tl",
+    "tg",
+    "ta",
+    "tt",
+    "te",
+    "th",
+    "bo",
+    "ti",
+    "to",
+    "ts",
+    "tr",
+    "tk",
+    "tw",
+    "ug",
+    "uk",
+    "ur",
+    "uz",
+    "vi",
+    "vo",
+    "wa",
+    "cy",
+    "wo",
+    "xh",
+    "yi",
+    "ji",
+    "yo",
+    "zu"
 ];
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'react-a11y-lang',
-        type: 'functionality',
-        description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+        ruleName: "react-a11y-lang",
+        type: "functionality",
+        description: "For accessibility of your website, html elements must have a valid lang attribute.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Accessibility'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        group: "Accessibility"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -46,7 +184,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yLangRuleWalker extends Lint.RuleWalker {
-
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         this.validateOpeningElement(node, node);
         super.visitJsxSelfClosingElement(node);
@@ -58,27 +195,25 @@ class ReactA11yLangRuleWalker extends Lint.RuleWalker {
     }
 
     private validateOpeningElement(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
-        if (openingElement.tagName.getText() === 'html') {
+        if (openingElement.tagName.getText() === "html") {
             const attributes: ts.JsxAttributes = openingElement.attributes;
             let langFound: boolean = false;
 
-            attributes.properties.forEach((attribute: ts.JsxAttributeLike): void => {
-                if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
-                    if (attribute.name.getText() === 'lang') {
-                        langFound = true;
-                        if (attribute.initializer!.kind === ts.SyntaxKind.StringLiteral) {
-                            const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
-                            if ((LANGUAGE_CODES.indexOf(langText)) === -1) {
-                                this.addFailureAt(
-                                    parent.getStart(),
-                                    parent.getWidth(),
-                                    FAILURE_WRONG_LANG_CODE + langText
-                                );
+            attributes.properties.forEach(
+                (attribute: ts.JsxAttributeLike): void => {
+                    if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
+                        if (attribute.name.getText() === "lang") {
+                            langFound = true;
+                            if (attribute.initializer!.kind === ts.SyntaxKind.StringLiteral) {
+                                const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
+                                if (LANGUAGE_CODES.indexOf(langText) === -1) {
+                                    this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
+                                }
                             }
                         }
                     }
                 }
-            });
+            );
             if (!langFound) {
                 this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
             }

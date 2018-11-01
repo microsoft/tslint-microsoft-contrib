@@ -1,12 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('noTypeofUndefinedRule', () : void => {
+describe("noTypeofUndefinedRule", (): void => {
+    const ruleName: string = "no-typeof-undefined";
 
-    const ruleName : string = 'no-typeof-undefined';
-
-    it('should pass on normal comparisons', () : void => {
-        const script : string = `
+    it("should pass on normal comparisons", (): void => {
+        const script: string = `
             if(x === undefined) {}
             if(x == undefined) {}
             if(x === null) {}
@@ -19,11 +18,11 @@ describe('noTypeofUndefinedRule', () : void => {
             if(typeof x == 'object') {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on normal comparisons - yoda style', () : void => {
-        const script : string = `
+    it("should pass on normal comparisons - yoda style", (): void => {
+        const script: string = `
             if(undefined === x) {}
             if(undefined == x) {}
             if(null === x) {}
@@ -36,51 +35,50 @@ describe('noTypeofUndefinedRule', () : void => {
             if('object' == typeof) {}
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on typeof strict comparison', () : void => {
-        const script : string = `
+    it("should fail on typeof strict comparison", (): void => {
+        const script: string = `
             if(typeof x === 'undefined') {}
             if('undefined' === typeof x) {}
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x === 'undefined'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-typeof-undefined",
-                "startPosition": { "character": 16, "line": 2 }
+                failure: "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x === 'undefined'",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-typeof-undefined",
+                startPosition: { character: 16, line: 2 }
             },
             {
-                "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' === typeof x",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-typeof-undefined",
-                "startPosition": { "character": 16, "line": 3 }
+                failure: "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' === typeof x",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-typeof-undefined",
+                startPosition: { character: 16, line: 3 }
             }
         ]);
     });
 
-    it('should fail on typeof weak comparison', () : void => {
-        const script : string = `
+    it("should fail on typeof weak comparison", (): void => {
+        const script: string = `
             if(typeof x == 'undefined') {}
             if('undefined' == typeof x) {}
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x == 'undefined'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-typeof-undefined",
-                "startPosition": { "character": 16, "line": 2 }
+                failure: "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: typeof x == 'undefined'",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-typeof-undefined",
+                startPosition: { character: 16, line: 2 }
             },
             {
-                "failure": "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' == typeof x",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-typeof-undefined",
-                "startPosition": { "character": 16, "line": 3 }
+                failure: "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: 'undefined' == typeof x",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-typeof-undefined",
+                startPosition: { character: 16, line: 3 }
             }
         ]);
     });
-
 });

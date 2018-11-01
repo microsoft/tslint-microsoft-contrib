@@ -1,15 +1,14 @@
-
 // module names
-module interface {
+namespace interface {
 
 }
 
-module SampleInterface1 {
+namespace SampleInterface1 {
     // module variables
     var interface;
 }
 
-module SampleInterface2 {
+namespace SampleInterface2 {
     // module function
     function interface() {}
 }
@@ -23,12 +22,13 @@ class SampleInterface3 {
 class SampleInterface4 {
     private var;
     set interface(value) {}
-    get interface() { return this.var;}
+    get interface() {
+        return this.var;
+    }
 }
 
-
 class SampleInterface5 {
-    interface() {}       // class methods
+    interface() {} // class methods
 }
 
 // interface declarations

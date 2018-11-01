@@ -1,10 +1,10 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from "../utils/Utils";
+import { TestHelper } from "./TestHelper";
 
-describe('noFunctionExpressionRule', (): void => {
-    const ruleName: string = 'no-function-expression';
+describe("noFunctionExpressionRule", (): void => {
+    const ruleName: string = "no-function-expression";
 
-    it('should pass on arrow function', (): void => {
+    it("should pass on arrow function", (): void => {
         const script: string = `
             var x = (): void => {
             }
@@ -13,7 +13,7 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on generator', (): void => {
+    it("should pass on generator", (): void => {
         const script: string = `
             var x = function *() {
             }
@@ -22,7 +22,7 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on named generator', (): void => {
+    it("should pass on named generator", (): void => {
         const script: string = `
             var x = function * namedGenerator() {
             }
@@ -31,7 +31,7 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on function with this', (): void => {
+    it("should pass on function with this", (): void => {
         const script: string = `
             var x = function() {
                 this.accessBoundProperty;
@@ -41,23 +41,21 @@ describe('noFunctionExpressionRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on not generic type function expression and pass generic type function within a .tsx file', (): void => {
-        TestHelper.assertViolations(
-            ruleName,
-            "test-data/NoFunctionExpressionWithInTSX.tsx",
-            [{
-                "failure": "Use arrow function instead of function expression",
-                "name": "test-data/NoFunctionExpressionWithInTSX.tsx",
-                "ruleName": "no-function-expression",
-                "startPosition": {
-                    "character": 28,
-                    "line": 1
+    it("should fail on not generic type function expression and pass generic type function within a .tsx file", (): void => {
+        TestHelper.assertViolations(ruleName, "test-data/NoFunctionExpressionWithInTSX.tsx", [
+            {
+                failure: "Use arrow function instead of function expression",
+                name: "test-data/NoFunctionExpressionWithInTSX.tsx",
+                ruleName: "no-function-expression",
+                startPosition: {
+                    character: 28,
+                    line: 1
                 }
-            }]
-        );
+            }
+        ]);
     });
 
-    it('should fail on function expression', (): void => {
+    it("should fail on function expression", (): void => {
         const script: string = `
             var x = function() {
                 var y = function() {
@@ -66,18 +64,20 @@ describe('noFunctionExpressionRule', (): void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [{
-            "failure": "Use arrow function instead of function expression",
-            "name": Utils.absolutePath("file.ts"),
-            "ruleName": "no-function-expression",
-            "startPosition": {
-                "character": 21,
-                "line": 2
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                failure: "Use arrow function instead of function expression",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-function-expression",
+                startPosition: {
+                    character: 21,
+                    line: 2
+                }
             }
-        }]);
+        ]);
     });
 
-    it('should fail on nested function expression', (): void => {
+    it("should fail on nested function expression", (): void => {
         const script: string = `
             var x = function() {
                 this.someReference;
@@ -95,16 +95,16 @@ describe('noFunctionExpressionRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Use arrow function instead of function expression",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-function-expression",
-                "startPosition": {"character": 29, "line": 6}
+                failure: "Use arrow function instead of function expression",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-function-expression",
+                startPosition: { character: 29, line: 6 }
             },
             {
-                "failure": "Use arrow function instead of function expression",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-function-expression",
-                "startPosition": {"character": 34, "line": 8}
+                failure: "Use arrow function instead of function expression",
+                name: Utils.absolutePath("file.ts"),
+                ruleName: "no-function-expression",
+                startPosition: { character: 34, line: 8 }
             }
         ]);
     });

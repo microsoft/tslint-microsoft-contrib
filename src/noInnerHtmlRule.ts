@@ -1,28 +1,27 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const FAILURE_INNER: string = 'Writing a string to the innerHTML property is insecure: ';
-const FAILURE_OUTER: string = 'Writing a string to the outerHTML property is insecure: ';
-const FAILURE_HTML_LIB: string = 'Using the html() function to write a string to innerHTML is insecure: ';
+const FAILURE_INNER: string = "Writing a string to the innerHTML property is insecure: ";
+const FAILURE_OUTER: string = "Writing a string to the outerHTML property is insecure: ";
+const FAILURE_HTML_LIB: string = "Using the html() function to write a string to innerHTML is insecure: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-inner-html',
-        type: 'maintainability',
-        description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
+        ruleName: "no-inner-html",
+        type: "maintainability",
+        description: "Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'SDL',
-        issueType: 'Error',
-        severity: 'Critical',
-        level: 'Mandatory',
-        group: 'Security',
-        commonWeaknessEnumeration: '79, 85, 710'
+        issueClass: "SDL",
+        issueType: "Error",
+        severity: "Critical",
+        level: "Mandatory",
+        group: "Security",
+        commonWeaknessEnumeration: "79, 85, 710"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -31,14 +30,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
-
     private readonly htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         const opt = this.getOptions();
-        if (typeof opt[1] === 'object' && opt[1]['html-lib-matcher']) {
-            this.htmlLibExpressionRegex = new RegExp(opt[1]['html-lib-matcher']);
+        if (typeof opt[1] === "object" && opt[1]["html-lib-matcher"]) {
+            this.htmlLibExpressionRegex = new RegExp(opt[1]["html-lib-matcher"]);
         }
     }
 
@@ -49,9 +47,9 @@ class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
             if (node.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.left;
                 const propName: string = propAccess.name.text;
-                if (propName === 'innerHTML') {
+                if (propName === "innerHTML") {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText());
-                } else if (propName === 'outerHTML') {
+                } else if (propName === "outerHTML") {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText());
                 }
             }
@@ -61,7 +59,7 @@ class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
 
     protected visitCallExpression(node: ts.CallExpression): void {
         const functionName = AstUtils.getFunctionName(node);
-        if (functionName === 'html') {
+        if (functionName === "html") {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
                 if (functionTarget !== undefined && this.htmlLibExpressionRegex.test(functionTarget)) {

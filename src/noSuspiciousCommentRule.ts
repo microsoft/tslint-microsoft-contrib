@@ -1,27 +1,26 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {forEachTokenWithTrivia} from 'tsutils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from "tsutils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const FAILURE_STRING: string = 'Suspicious comment found: ';
-const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
+const FAILURE_STRING: string = "Suspicious comment found: ";
+const SUSPICIOUS_WORDS = ["BUG", "HACK", "FIXME", "LATER", "LATER2", "TODO"];
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-suspicious-comment',
-        type: 'maintainability',
-        description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.join(', ')}`,
+        ruleName: "no-suspicious-comment",
+        type: "maintainability",
+        description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.join(", ")}`,
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '546'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        group: "Clarity",
+        commonWeaknessEnumeration: "546"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -30,11 +29,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
-
     public visitSourceFile(node: ts.SourceFile) {
         forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
-            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia ||
-                tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia || tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
                 this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
@@ -47,8 +44,8 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
     }
 
     private scanCommentForSuspiciousWord(suspiciousWord: string, commentText: string, startPosition: number) {
-        const regexExactCaseNoColon = new RegExp('\\b' + suspiciousWord + '\\b');
-        const regexCaseInsensistiveWithColon = new RegExp('\\b' + suspiciousWord + '\\b\:', 'i');
+        const regexExactCaseNoColon = new RegExp("\\b" + suspiciousWord + "\\b");
+        const regexCaseInsensistiveWithColon = new RegExp("\\b" + suspiciousWord + "\\b:", "i");
         if (regexExactCaseNoColon.test(commentText) || regexCaseInsensistiveWithColon.test(commentText)) {
             this.foundSuspiciousComment(startPosition, commentText, suspiciousWord);
         }

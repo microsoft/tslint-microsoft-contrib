@@ -1,15 +1,14 @@
-
 // module names
-module private {
+namespace private {
 
 }
 
-module SamplePrivate1 {
+namespace SamplePrivate1 {
     // module variables
     var private;
 }
 
-module SamplePrivate2 {
+namespace SamplePrivate2 {
     // module function
     function private() {}
 }
@@ -23,12 +22,13 @@ class SamplePrivate3 {
 class SamplePrivate4 {
     private var;
     set private(value) {}
-    get private() { return this.var;}
+    get private() {
+        return this.var;
+    }
 }
 
-
 class SamplePrivate5 {
-    private() {}       // class methods
+    private() {} // class methods
 }
 
 // interface declarations

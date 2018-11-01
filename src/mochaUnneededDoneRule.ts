@@ -1,26 +1,25 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {Utils} from './utils/Utils';
-import {MochaUtils} from './utils/MochaUtils';
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { Utils } from "./utils/Utils";
+import { MochaUtils } from "./utils/MochaUtils";
 
-const FAILURE_STRING: string = 'Unneeded Mocha Done. Parameter can be safely removed: ';
+const FAILURE_STRING: string = "Unneeded Mocha Done. Parameter can be safely removed: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'mocha-unneeded-done',
-        type: 'maintainability',
-        description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
+        ruleName: "mocha-unneeded-done",
+        type: "maintainability",
+        description: "A function declares a MochaDone parameter but only resolves it synchronously in the main function.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Ignored',
-        issueType: 'Warning',
-        severity: 'Low',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity'
+        issueClass: "Ignored",
+        issueType: "Warning",
+        severity: "Low",
+        level: "Opportunity for Excellence",
+        group: "Clarity"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -29,7 +28,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
-
     protected visitSourceFile(node: ts.SourceFile): void {
         if (MochaUtils.isMochaTest(node)) {
             super.visitSourceFile(node);
@@ -56,7 +54,9 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
         }
 
         const walker: IdentifierReferenceCountWalker = new IdentifierReferenceCountWalker(
-            this.getSourceFile(), this.getOptions(), doneIdentifier
+            this.getSourceFile(),
+            this.getOptions(),
+            doneIdentifier
         );
         const count: number = walker.getReferenceCount(<ts.Block>node.body);
         if (count === 1) {
@@ -69,29 +69,34 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
             return false;
         }
         const block: ts.Block = <ts.Block>node.body;
-        return Utils.exists(block.statements, (statement: ts.Statement): boolean => {
-            if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
-                const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                if (expression.kind === ts.SyntaxKind.CallExpression) {
-                    const leftHandSideExpression: ts.Expression = (<ts.CallExpression>expression).expression;
-                    return leftHandSideExpression.getText() === doneIdentifier.getText();
+        return Utils.exists(
+            block.statements,
+            (statement: ts.Statement): boolean => {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
+                    const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
+                    if (expression.kind === ts.SyntaxKind.CallExpression) {
+                        const leftHandSideExpression: ts.Expression = (<ts.CallExpression>expression).expression;
+                        return leftHandSideExpression.getText() === doneIdentifier.getText();
+                    }
                 }
-            }
 
-            return false;
-        });
+                return false;
+            }
+        );
     }
 
     private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | undefined {
         if (node.parameters.length === 0) {
             return undefined;
         }
-        const allDones: ts.ParameterDeclaration[] = node.parameters.filter((parameter: ts.ParameterDeclaration): boolean => {
-            if (parameter.type !== undefined && parameter.type.getText() === 'MochaDone') {
-                return true;
+        const allDones: ts.ParameterDeclaration[] = node.parameters.filter(
+            (parameter: ts.ParameterDeclaration): boolean => {
+                if (parameter.type !== undefined && parameter.type.getText() === "MochaDone") {
+                    return true;
+                }
+                return parameter.name.getText() === "done";
             }
-            return parameter.name.getText() === 'done';
-        });
+        );
 
         if (allDones.length === 0 || allDones[0].name.kind !== ts.SyntaxKind.Identifier) {
             return undefined;
@@ -101,7 +106,6 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
 }
 
 class IdentifierReferenceCountWalker extends Lint.RuleWalker {
-
     private readonly identifierText: string;
     private count!: number;
 
@@ -112,9 +116,11 @@ class IdentifierReferenceCountWalker extends Lint.RuleWalker {
 
     public getReferenceCount(body: ts.Block): number {
         this.count = 0;
-        body.statements.forEach((statement: ts.Statement): void => {
-            this.walk(statement);
-        });
+        body.statements.forEach(
+            (statement: ts.Statement): void => {
+                this.walk(statement);
+            }
+        );
         return this.count;
     }
 

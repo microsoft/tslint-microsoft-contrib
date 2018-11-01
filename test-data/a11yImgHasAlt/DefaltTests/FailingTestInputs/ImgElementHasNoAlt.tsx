@@ -1,4 +1,4 @@
-import React = require('react');
+import React = require("react");
 
-const a = <img />
-const b = <img notAlt='notAltValue' />
+const a = <img />;
+const b = <img notAlt="notAltValue" />;

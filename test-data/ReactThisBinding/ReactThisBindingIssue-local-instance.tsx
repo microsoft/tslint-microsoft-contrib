@@ -1,7 +1,6 @@
-import React = require('react');
-import _ = require('underscore');
+import React = require("react");
+import _ = require("underscore");
 export class MyComponent extends React.Component<{}, {}> {
-
     private listenerMethod() {}
 
     public render() {
@@ -10,11 +9,6 @@ export class MyComponent extends React.Component<{}, {}> {
         const listener3 = _.bind(this.listenerMethod, this);
         const listener4 = this.listenerMethod.bind(this);
 
-        return <div
-            onClick={listener1}
-            onMouseOver={listener2}
-            onMouseDown={listener3}
-            onMouseOut={listener4}>
-        </div>;
+        return <div onClick={listener1} onMouseOver={listener2} onMouseDown={listener3} onMouseOut={listener4} />;
     }
 }

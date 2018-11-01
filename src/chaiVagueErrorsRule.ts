@@ -1,31 +1,30 @@
-import * as ts from 'typescript';
-import * as Lint from 'tslint';
+import * as ts from "typescript";
+import * as Lint from "tslint";
 
-import { ChaiUtils } from './utils/ChaiUtils';
-import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { ChaiUtils } from "./utils/ChaiUtils";
+import { ExtendedMetadata } from "./utils/ExtendedMetadata";
 
-const BASE_ERROR: string = 'Found chai call with vague failure message. ';
-const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE: string = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
-    'call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE: string = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
-    'call into the assertion value. ';
+const BASE_ERROR: string = "Found chai call with vague failure message. ";
+const FAILURE_STRING: string = BASE_ERROR + "Please add an explicit failure message";
+const FAILURE_STRING_COMPARE_TRUE: string =
+    BASE_ERROR + "Move the strict equality comparison from the expect " + "call into the assertion value";
+const FAILURE_STRING_COMPARE_FALSE: string =
+    BASE_ERROR + "Move the strict inequality comparison from the expect " + "call into the assertion value. ";
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
-        ruleName: 'chai-vague-errors',
-        type: 'maintainability',
-        description: 'Avoid Chai assertions that result in vague errors',
+        ruleName: "chai-vague-errors",
+        type: "maintainability",
+        description: "Avoid Chai assertions that result in vague errors",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        optionsDescription: "",
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
-        issueType: 'Warning',
-        severity: 'Important',
-        level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
+        issueClass: "Non-SDL",
+        issueType: "Warning",
+        severity: "Important",
+        level: "Opportunity for Excellence",
+        group: "Clarity",
+        commonWeaknessEnumeration: "398, 710"
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -64,12 +63,12 @@ class ChaiVagueErrorsRuleWalker extends Lint.RuleWalker {
                 if (expectedValue !== undefined) {
                     const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
                     const operator: string = binaryExpression.operatorToken.getText();
-                    const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
-                        || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+                    const expectingBooleanKeyword: boolean =
+                        expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
-                    if (operator === '===' && expectingBooleanKeyword) {
+                    if (operator === "===" && expectingBooleanKeyword) {
                         this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
-                    } else if (operator === '!==' && expectingBooleanKeyword) {
+                    } else if (operator === "!==" && expectingBooleanKeyword) {
                         this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
                     }
                 }

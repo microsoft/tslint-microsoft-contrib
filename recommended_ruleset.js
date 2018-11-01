@@ -3,8 +3,7 @@
  * This file is exported in the npm/nuget package as ./tslint.json.
  */
 module.exports = {
-    "rules": {
-
+    rules: {
         /**
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
@@ -38,7 +37,7 @@ module.exports = {
          * common bug patterns in the code or enforce type safety.
          */
         "await-promise": true,
-        "forin": true,
+        forin: true,
         "jquery-deferred-must-complete": true,
         "label-position": true,
         "match-default-export-name": true,
@@ -87,7 +86,7 @@ module.exports = {
         "no-with-statement": true,
         "promise-function-async": true,
         "promise-must-complete": true,
-        "radix": true,
+        radix: true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
         "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
@@ -120,12 +119,12 @@ module.exports = {
         "informative-docs": true,
         "interface-name": true,
         "jsdoc-format": true,
-        "max-classes-per-file": [true, 3],  // we generally recommend making one public class per file
+        "max-classes-per-file": [true, 3], // we generally recommend making one public class per file
         "max-file-line-count": true,
-        "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],
+        "max-func-body-length": [true, 100, { "ignore-parameters-to-function-regex": "^describe$" }],
         "max-line-length": [true, 140],
         "member-access": true,
-        "member-ordering": [true, { "order": "fields-first" }],
+        "member-ordering": [true, { order: "fields-first" }],
         "mocha-unneeded-done": true,
         "new-parens": true,
         "newline-per-chained-call": true,
@@ -160,7 +159,7 @@ module.exports = {
         "number-literal-format": true,
         "object-literal-sort-keys": false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         "one-variable-per-declaration": true,
-        "only-arrow-functions": false,  // there are many valid reasons to declare a function
+        "only-arrow-functions": false, // there are many valid reasons to declare a function
         "ordered-imports": true,
         "prefer-array-literal": true,
         "prefer-const": true,
@@ -171,7 +170,16 @@ module.exports = {
         "prefer-template": true,
         "prefer-while": true,
         "type-literal-delimiter": true,
-        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
+        typedef: [
+            true,
+            "call-signature",
+            "arrow-call-signature",
+            "parameter",
+            "arrow-parameter",
+            "property-declaration",
+            "variable-declaration",
+            "member-variable-declaration"
+        ],
         "underscore-consistent-invocation": true,
         "unified-signatures": true,
         "use-default-type-parameter": true,
@@ -203,12 +211,12 @@ module.exports = {
          * Whitespace related rules. The only recommended whitespace strategy is to pick a single format and
          * be consistent.
          */
-        "align": [true, "parameters", "arguments", "statements"],
-        "curly": true,
-        "encoding": true,
-        "eofline": true,
+        align: [true, "parameters", "arguments", "statements"],
+        curly: true,
+        encoding: true,
+        eofline: true,
         "import-spacing": true,
-        "indent": [true, "spaces"],
+        indent: [true, "spaces"],
         "linebreak-style": true,
         "newline-before-return": true,
         "no-consecutive-blank-lines": true,
@@ -219,57 +227,57 @@ module.exports = {
         "no-unnecessary-semicolons": true,
         "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
-        "quotemark": [true, "single"],
-        "semicolon": [true, "always"],
+        quotemark: [true, "single"],
+        semicolon: [true, "always"],
         "space-within-parens": true,
-        "trailing-comma": [true, {"singleline": "never", "multiline": "never"}], // forcing trailing commas for multi-line
-                    // lists results in lists that are easier to reorder and version control diffs that are more clear.
-                    // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
-                    // internal MS JavaScript coding standard does discourage it.
+        "trailing-comma": [true, { singleline: "never", multiline: "never" }], // forcing trailing commas for multi-line
+        // lists results in lists that are easier to reorder and version control diffs that are more clear.
+        // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
+        // internal MS JavaScript coding standard does discourage it.
         "typedef-whitespace": false,
-        "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
+        whitespace: [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
 
         /**
          * Controversial/Configurable rules.
          */
-        "ban": false,                // only enable this if you have some code pattern that you want to ban
+        ban: false, // only enable this if you have some code pattern that you want to ban
         "ban-types": true,
         "cyclomatic-complexity": true,
-        "deprecation": false, // deprecated APIs are sometimes unavoidable
-        "file-header": false,  // enable this rule only if you are legally required to add a file header
-        "import-blacklist": false,  // enable and configure this as you desire
-        "interface-over-type-literal": false,  // there are plenty of reasons to prefer interfaces
-        "no-angle-bracket-type-assertion": false,  // pick either type-cast format and use it consistently
-        "no-inferred-empty-object-type": false,  // if the compiler is satisfied then this is probably not an issue
+        deprecation: false, // deprecated APIs are sometimes unavoidable
+        "file-header": false, // enable this rule only if you are legally required to add a file header
+        "import-blacklist": false, // enable and configure this as you desire
+        "interface-over-type-literal": false, // there are plenty of reasons to prefer interfaces
+        "no-angle-bracket-type-assertion": false, // pick either type-cast format and use it consistently
+        "no-inferred-empty-object-type": false, // if the compiler is satisfied then this is probably not an issue
         "no-internal-module": false, // only enable this if you are not using internal modules
-        "no-magic-numbers": false,  // by default it will find too many false positives
-        "no-mergeable-namespace": false,  // your project may require mergeable namespaces
-        "no-namespace": false,       // only enable this if you are not using modules/namespaces
-        "no-reference": true,        // in general you should use a module system and not /// reference imports
+        "no-magic-numbers": false, // by default it will find too many false positives
+        "no-mergeable-namespace": false, // your project may require mergeable namespaces
+        "no-namespace": false, // only enable this if you are not using modules/namespaces
+        "no-reference": true, // in general you should use a module system and not /// reference imports
         "no-unexternalized-strings": false, // the VS Code team has a specific localization process that this rule enforces
-        "object-literal-shorthand": false,  // object-literal-shorthand offers an abbreviation not an abstraction
+        "object-literal-shorthand": false, // object-literal-shorthand offers an abbreviation not an abstraction
         "prefer-conditional-expression": false, // unnecessarily strict
         "prefer-switch": false, // more of a style preference
-        "prefer-type-cast": true,   // pick either type-cast format and use it consistently
+        "prefer-type-cast": true, // pick either type-cast format and use it consistently
         "return-undefined": false, // this actually affect the readability of the code
-        "space-before-function-paren": false,   // turn this on if this is really your coding standard
+        "space-before-function-paren": false, // turn this on if this is really your coding standard
 
         /**
          * Deprecated rules.  The following rules are deprecated for various reasons.
          */
         "missing-jsdoc": false,
-        "missing-optional-annotation": false,  // now supported by TypeScript compiler
+        "missing-optional-annotation": false, // now supported by TypeScript compiler
         "no-duplicate-case": false,
         "no-duplicate-parameter-names": false, // now supported by TypeScript compiler
         "no-empty-interfaces": false, // use tslint no-empty-interface rule instead
         "no-missing-visibility-modifiers": false, // use tslint member-access rule instead
-        "no-multiple-var-decl": false,         // use tslint one-variable-per-declaration rule instead
+        "no-multiple-var-decl": false, // use tslint one-variable-per-declaration rule instead
         "no-stateless-class": false,
-        "no-switch-case-fall-through": false,  // now supported by TypeScript compiler
+        "no-switch-case-fall-through": false, // now supported by TypeScript compiler
         "no-unnecessary-class": true,
         "no-var-self": false,
         "react-tsx-curly-spacing": false,
-        "typeof-compare": false,               // the valid-typeof rule is currently superior to this version
-        "valid-typeof": false,
+        "typeof-compare": false, // the valid-typeof rule is currently superior to this version
+        "valid-typeof": false
     }
 };

@@ -3,3 +3,7 @@ dist/
 
 # Discard definition files
 *.d.ts
+
+# NPM files
+package.json
+package-lock.json

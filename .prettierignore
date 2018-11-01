@@ -1,0 +1,5 @@
+# Discard build directory
+dist/
+
+# Discard definition files
+*.d.ts

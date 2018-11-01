@@ -55,6 +55,7 @@
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* lint:* validate:* copy:package copy:meta generate:*",
     "tsc:src": "tsc",
+    "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "validate:config": "node build-tasks/validate-config.js",
     "validate:documentation": "node build-tasks/validate-documentation.js",
     "watch:run-tests": "node build-tasks/watch-run-tests.js",
@@ -78,6 +79,7 @@
     "rimraf": "^2.6.2",
     "strip-json-comments": "^2.0.1",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
     "typescript": "3.1.1",
     "underscore": "1.9.1"
   },

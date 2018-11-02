@@ -24,12 +24,6 @@ getAllFormatterNames().forEach(formatterName => {
     }
 });
 
-if (readmeText.indexOf('[npm-' + packageJson.version + ']') === -1) {
-    validationErrors.push('Version not documented in README.md correctly.\n' +
-    'package.json declares: ' + packageJson.version + '\n' +
-    'README.md declares something different.');
-}
-
 if (validationErrors.length > 0) {
     console.log(yellowBright(validationErrors.join('\n')));
     process.exit(1);

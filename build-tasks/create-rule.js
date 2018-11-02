@@ -67,7 +67,7 @@ function createTestFiles() {
     fs.mkdirSync(testsFolder);
 
     writeFile(testFile, testContent);
-    writeFile(lintFile, JSON.stringify(tslintContent, undefined, 2));
+    writeFile(lintFile, JSON.stringify(tslintContent, undefined, 4));
 }
 
 function addToConfig() {
@@ -75,5 +75,5 @@ function addToConfig() {
 
     currentRuleset.rules[ruleName] = true;
 
-    writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 2));
+    writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 4));
 }

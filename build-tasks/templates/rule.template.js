@@ -3,7 +3,9 @@ module.exports = ({ ruleName, walkerName }) =>
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+// use (and contribute to) AstUtils for common AST functions // TODO: delete comment
 import {AstUtils} from './utils/AstUtils';
+// use Utils instead of Underscore functions // TODO: delete comment
 import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message

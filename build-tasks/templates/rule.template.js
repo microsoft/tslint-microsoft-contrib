@@ -3,9 +3,7 @@ module.exports = ({ ruleName, walkerName }) =>
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
-// use (and contribute to) AstUtils for common AST functions // TODO: delete comment
 import {AstUtils} from './utils/AstUtils';
-// use Utils instead of Underscore functions // TODO: delete comment
 import {Utils} from './utils/Utils';
 
 const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message
@@ -18,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: '... add a meaningful one line description',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
-        optionExamples: [],         //Remove this property if the rule has no options
+        optionExamples: [],         // Remove this property if the rule has no options
         typescriptOnly: false,
         issueClass: 'Non-SDL',      // one of: 'SDL' | 'Non-SDL' | 'Ignored'
         issueType: 'Warning',       // one of: 'Error' | 'Warning'

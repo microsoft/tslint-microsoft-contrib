@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to tslint-microsoft-contrib!
+Thanks for your interest in contributing to `tslint-microsoft-contrib`!
 Be sure to read our [code of conduct](./CODE_OF_CONDUCT.md) first.
 
 To develop `tslint-microsoft-contrib`, clone the repository, install dependencies, and run `npm test`:
@@ -23,8 +23,6 @@ npm run create-rule -- --rule-name=no-something-or-other
 This script will create file for rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
 
 More information about writing rule tests can be found in [TSLint documentation](https://palantir.github.io/tslint/develop/testing-rules/).
-
-Please also see our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Watchers
 

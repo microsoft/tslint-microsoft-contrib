@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 const a = <a href="hrefPropValue" aria-checked />;
 const b = <area href="hrefPropValue" aria-checked />;

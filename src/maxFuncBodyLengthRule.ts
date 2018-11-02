@@ -1,26 +1,26 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { AstUtils } from "./utils/AstUtils";
-import { Utils } from "./utils/Utils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { forEachTokenWithTrivia } from "tsutils";
-import { isObject } from "./utils/TypeGuard";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { AstUtils } from './utils/AstUtils';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
+import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "max-func-body-length",
-        type: "maintainability",
-        description: "Avoid long functions.",
+        ruleName: 'max-func-body-length',
+        type: 'maintainability',
+        description: 'Avoid long functions.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Moderate",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
         recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],',
-        commonWeaknessEnumeration: "398, 710"
+        commonWeaknessEnumeration: '398, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -28,13 +28,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-const FUNC_BODY_LENGTH = "func-body-length";
-const FUNC_EXPRESSION_BODY_LENGTH = "func-express-body-length";
-const ARROW_BODY_LENGTH = "arrow-body-length";
-const METHOD_BODY_LENGTH = "method-body-length";
-const CTOR_BODY_LENGTH = "ctor-body-length";
-const IGNORE_PARAMETERS_TO_FUNCTION = "ignore-parameters-to-function-regex";
-const IGNORE_COMMENTS = "ignore-comments";
+const FUNC_BODY_LENGTH = 'func-body-length';
+const FUNC_EXPRESSION_BODY_LENGTH = 'func-express-body-length';
+const ARROW_BODY_LENGTH = 'arrow-body-length';
+const METHOD_BODY_LENGTH = 'method-body-length';
+const CTOR_BODY_LENGTH = 'ctor-body-length';
+const IGNORE_PARAMETERS_TO_FUNCTION = 'ignore-parameters-to-function-regex';
+const IGNORE_COMMENTS = 'ignore-comments';
 
 class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private maxBodyLength!: number;
@@ -96,7 +96,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        this.currentClassName = (node.name && node.name.text) || "default";
+        this.currentClassName = (node.name && node.name.text) || 'default';
         super.visitClassDeclaration(node);
         this.currentClassName = undefined;
     }
@@ -148,7 +148,7 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
 
     private parseOptions() {
         this.getOptions().forEach((opt: unknown) => {
-            if (typeof opt === "number") {
+            if (typeof opt === 'number') {
                 this.maxBodyLength = opt;
                 return;
             }
@@ -182,24 +182,24 @@ class MaxFunctionBodyLengthRuleWalker extends Lint.RuleWalker {
     private formatPlaceText(node: ts.FunctionLikeDeclaration) {
         const funcTypeText = this.getFuncTypeText(node.kind);
         if (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)) {
-            return ` in ${funcTypeText} ${node.name ? node.name.getText() : ""}()`;
+            return ` in ${funcTypeText} ${node.name ? node.name.getText() : ''}()`;
         } else if (node.kind === ts.SyntaxKind.Constructor) {
             return ` in class ${this.currentClassName}`;
         }
-        return "";
+        return '';
     }
 
     private getFuncTypeText(nodeKind: ts.SyntaxKind) {
         if (nodeKind === ts.SyntaxKind.FunctionDeclaration) {
-            return "function";
+            return 'function';
         } else if (nodeKind === ts.SyntaxKind.FunctionExpression) {
-            return "function expression";
+            return 'function expression';
         } else if (nodeKind === ts.SyntaxKind.MethodDeclaration) {
-            return "method";
+            return 'method';
         } else if (nodeKind === ts.SyntaxKind.ArrowFunction) {
-            return "arrow function";
+            return 'arrow function';
         } else if (nodeKind === ts.SyntaxKind.Constructor) {
-            return "constructor";
+            return 'constructor';
         } else {
             throw new Error(`Unsupported node kind: ${nodeKind}`);
         }

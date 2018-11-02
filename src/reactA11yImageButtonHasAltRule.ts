@@ -1,31 +1,31 @@
 /**
  * Enforce that inputs element with type="image" must have alt attribute.
  */
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from "./utils/JsxAttribute";
-import { isStringLiteral } from "./utils/TypeGuard";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
+import { isStringLiteral } from './utils/TypeGuard';
 
 const NO_ALT_ATTRIBUTE_FAILURE_STRING: string = 'Inputs element with type="image" must have alt attribute.';
 const EMPTY_ALT_ATTRIBUTE_FAILURE_STRING: string = 'Inputs element with type="image" must have non-empty alt attribute.';
-const TYPE_STRING: string = "type";
-const ALT_STRING: string = "alt";
+const TYPE_STRING: string = 'type';
+const ALT_STRING: string = 'alt';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-a11y-image-button-has-alt",
-        type: "maintainability",
+        ruleName: 'react-a11y-image-button-has-alt',
+        type: 'maintainability',
         description: 'Enforce that inputs element with type="image" must have alt attribute.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Accessibility"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -49,7 +49,7 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
     private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (tagName !== "input") {
+        if (tagName !== 'input') {
             return;
         }
 
@@ -61,7 +61,7 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
             typeAttribute.initializer === undefined ||
             !isStringLiteral(typeAttribute.initializer) ||
             getStringLiteral(typeAttribute) === undefined ||
-            getStringLiteral(typeAttribute)!.toLowerCase() !== "image"
+            getStringLiteral(typeAttribute)!.toLowerCase() !== 'image'
         ) {
             return;
         }

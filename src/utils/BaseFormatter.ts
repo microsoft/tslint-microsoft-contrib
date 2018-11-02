@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-import * as fs from "fs";
-import { Formatters, RuleFailure } from "tslint";
+import * as fs from 'fs';
+import { Formatters, RuleFailure } from 'tslint';
 
 /**
  * A base class for formatters that fix linting issues.
@@ -26,17 +26,17 @@ export class BaseFormatter extends Formatters.AbstractFormatter {
             }
         }
         const outputLines = allFailures.map(this.formatFailure);
-        return outputLines.join("\n") + "\n";
+        return outputLines.join('\n') + '\n';
     }
 
     protected readFile(fileName: string): string {
         // tslint:disable-next-line non-literal-fs-path
-        return fs.readFileSync(fileName, { encoding: "UTF-8" });
+        return fs.readFileSync(fileName, { encoding: 'UTF-8' });
     }
 
     protected writeFile(fileName: string, fileContents: string): void {
         // tslint:disable-next-line non-literal-fs-path
-        fs.writeFileSync(fileName, fileContents, { encoding: "UTF-8" });
+        fs.writeFileSync(fileName, fileContents, { encoding: 'UTF-8' });
     }
 
     private formatFailure(failure: RuleFailure): string {
@@ -44,7 +44,7 @@ export class BaseFormatter extends Formatters.AbstractFormatter {
         const failureString: string = failure.getFailure();
         const ruleName: string = failure.getRuleName();
         const lineAndCharacter = failure.getStartPosition().getLineAndCharacter();
-        const positionTuple = "[" + (lineAndCharacter.line + 1) + ", " + (lineAndCharacter.character + 1) + "]";
-        return "(" + ruleName + ") " + fileName + positionTuple + ": " + failureString;
+        const positionTuple = '[' + (lineAndCharacter.line + 1) + ', ' + (lineAndCharacter.character + 1) + ']';
+        return '(' + ruleName + ') ' + fileName + positionTuple + ': ' + failureString;
     }
 }

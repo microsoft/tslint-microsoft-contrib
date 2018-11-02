@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import * as ts from 'typescript';
 
 /**
  * Utility methods for the chai.related rules.

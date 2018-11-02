@@ -1,5 +1,5 @@
 var stringFunction: () => string = () => {
-    return "";
+    return '';
 }; // function that produces a string
 
 // these should all create violations

@@ -1,25 +1,25 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { Utils } from "./utils/Utils";
-import { MochaUtils } from "./utils/MochaUtils";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { MochaUtils } from './utils/MochaUtils';
 
-const FAILURE_STRING: string = "Unneeded Mocha Done. Parameter can be safely removed: ";
+const FAILURE_STRING: string = 'Unneeded Mocha Done. Parameter can be safely removed: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "mocha-unneeded-done",
-        type: "maintainability",
-        description: "A function declares a MochaDone parameter but only resolves it synchronously in the main function.",
+        ruleName: 'mocha-unneeded-done',
+        type: 'maintainability',
+        description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Ignored",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity"
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -91,10 +91,10 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
         }
         const allDones: ts.ParameterDeclaration[] = node.parameters.filter(
             (parameter: ts.ParameterDeclaration): boolean => {
-                if (parameter.type !== undefined && parameter.type.getText() === "MochaDone") {
+                if (parameter.type !== undefined && parameter.type.getText() === 'MochaDone') {
                     return true;
                 }
-                return parameter.name.getText() === "done";
+                return parameter.name.getText() === 'done';
             }
         );
 

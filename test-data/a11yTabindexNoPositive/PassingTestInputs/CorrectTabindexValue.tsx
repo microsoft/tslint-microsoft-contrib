@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 const d = <div tabindex="0" />;
 const a = <div TaBindex="-1" />;

@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 let role, button;
 // when role value is not literal string

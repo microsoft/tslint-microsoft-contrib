@@ -1,28 +1,28 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { MochaUtils } from "./utils/MochaUtils";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { MochaUtils } from './utils/MochaUtils';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "mocha-avoid-only",
-        type: "maintainability",
+        ruleName: 'mocha-avoid-only',
+        type: 'maintainability',
         description: "Do not invoke Mocha's describe.only, it.only or context.only functions.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Opportunity for Excellence",
-        group: "Correctness"
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
     };
 
-    public static FAILURE_STRING_IT: string = "Do not commit Mocha it.only function call";
-    public static FAILURE_STRING_SPECIFY: string = "Do not commit Mocha specify.only function call";
-    public static FAILURE_STRING_DESCRIBE: string = "Do not commit Mocha describe.only function call";
-    public static FAILURE_STRING_CONTEXT: string = "Do not commit Mocha context.only function call";
+    public static FAILURE_STRING_IT: string = 'Do not commit Mocha it.only function call';
+    public static FAILURE_STRING_SPECIFY: string = 'Do not commit Mocha specify.only function call';
+    public static FAILURE_STRING_DESCRIBE: string = 'Do not commit Mocha describe.only function call';
+    public static FAILURE_STRING_CONTEXT: string = 'Do not commit Mocha context.only function call';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
@@ -44,13 +44,13 @@ class MochaAvoidOnlyRuleWalker extends Lint.RuleWalker {
                         node.arguments[1].kind === ts.SyntaxKind.FunctionExpression ||
                         node.arguments[1].kind === ts.SyntaxKind.ArrowFunction
                     ) {
-                        if (node.expression.getText() === "it.only") {
+                        if (node.expression.getText() === 'it.only') {
                             this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_IT);
-                        } else if (node.expression.getText() === "specify.only") {
+                        } else if (node.expression.getText() === 'specify.only') {
                             this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_SPECIFY);
-                        } else if (node.expression.getText() === "describe.only") {
+                        } else if (node.expression.getText() === 'describe.only') {
                             this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_DESCRIBE);
-                        } else if (node.expression.getText() === "context.only") {
+                        } else if (node.expression.getText() === 'context.only') {
                             this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_CONTEXT);
                         }
                     }

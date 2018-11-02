@@ -1,22 +1,22 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-unexternalized-strings",
-        type: "maintainability",
-        description: "Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales",
+        ruleName: 'no-unexternalized-strings',
+        type: 'maintainability',
+        description: 'Ensures that double quoted strings are passed to a localize call to provide proper strings for different locales',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Ignored",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Configurable",
-        recommendation: "false, // the VS Code team has a specific localization process that this rule enforces"
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Configurable',
+        recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

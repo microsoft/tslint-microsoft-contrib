@@ -1,11 +1,11 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("promiseMustCompleteRule", (): void => {
-    const ruleName: string = "promise-must-complete";
+describe('promiseMustCompleteRule', (): void => {
+    const ruleName: string = 'promise-must-complete';
 
-    describe("should pass", (): void => {
-        it("when promise completes", (): void => {
+    describe('should pass', (): void => {
+        it('when promise completes', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -22,7 +22,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on resolve - lambda", (): void => {
+        it('on resolve - lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     resolve('value');
@@ -31,7 +31,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on resolve - function", (): void => {
+        it('on resolve - function', (): void => {
             const script: string = `
                 new Promise<string>(function (resolve, reject) {
                     resolve('value');
@@ -40,7 +40,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on resolve - alternative name", (): void => {
+        it('on resolve - alternative name', (): void => {
             const script: string = `
                 new Promise<string>((someOtherName, reject) => {
                     someOtherName('value');
@@ -49,7 +49,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on reject", (): void => {
+        it('on reject', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     reject('value);
@@ -58,7 +58,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on reject - function", (): void => {
+        it('on reject - function', (): void => {
             const script: string = `
                 new Promise<string>(function (resolve, reject) {
                     reject('value);
@@ -67,7 +67,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on reject - alternative name", (): void => {
+        it('on reject - alternative name', (): void => {
             const script: string = `
                 new Promise<string>((resolve, someOtherName) => {
                     someOtherName('value);
@@ -76,7 +76,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-statement", (): void => {
+        it('when single branch is completed - with if-statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -87,7 +87,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-else-statement", (): void => {
+        it('when single branch is completed - with if-else-statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -100,7 +100,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-else-statement", (): void => {
+        it('when single branch is completed - with if-else-statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -120,7 +120,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("with nested if-else statement", (): void => {
+        it('with nested if-else statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -141,7 +141,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a function", (): void => {
+        it('when resolved within a function', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function () {
@@ -151,7 +151,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a lambda", (): void => {
+        it('when resolved within a lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(() => {
@@ -161,7 +161,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a lambda - with extra parameter", (): void => {
+        it('when resolved within a lambda - with extra parameter', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((someParm) => {
@@ -171,7 +171,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a for loop", (): void => {
+        it('when resolved within a for loop', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     for(var x = 0; x < something.length; x++) {
@@ -181,7 +181,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a for in loop", (): void => {
+        it('when resolved within a for in loop', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     for(var x in something) {
@@ -191,7 +191,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a while loop", (): void => {
+        it('when resolved within a while loop', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     while (something) {
@@ -201,7 +201,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolve reference escaped into a function call", (): void => {
+        it('when resolve reference escaped into a function call', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     doSomething(resolve); // reference escapes and we assume it resolves
@@ -209,7 +209,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when reject reference escaped into a function call", (): void => {
+        it('when reject reference escaped into a function call', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     doSomething(reject); // reference escapes and we assume it resolves
@@ -217,7 +217,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when non-shadowed parameter resolves within a function", (): void => {
+        it('when non-shadowed parameter resolves within a function', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (arg1, reject) {
@@ -227,7 +227,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when non-shadowed parameter rejects within a function", (): void => {
+        it('when non-shadowed parameter rejects within a function', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (resolve, arg2) {
@@ -237,7 +237,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when non-shadowed parameter resolves within a lambda", (): void => {
+        it('when non-shadowed parameter resolves within a lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((arg1, reject) => {
@@ -247,7 +247,7 @@ describe("promiseMustCompleteRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when non-shadowed parameter rejects within a lambda", (): void => {
+        it('when non-shadowed parameter rejects within a lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((resolve, arg2) => {
@@ -258,53 +258,53 @@ describe("promiseMustCompleteRule", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
-        it("when empty lambda", (): void => {
+    describe('should fail', (): void => {
+        it('when empty lambda', (): void => {
             const script: string = `
                 new Promise<string>(() => {
                 })`;
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when empty function", (): void => {
+        it('when empty function', (): void => {
             const script: string = `
                 new Promise<string>(function {
                 })`;
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when has no complete", (): void => {
+        it('when has no complete', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                 })`;
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when single branch is missing complete - with if-statement", (): void => {
+        it('when single branch is missing complete - with if-statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -314,15 +314,15 @@ describe("promiseMustCompleteRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when single branch is missing complete - with if-else-statement", (): void => {
+        it('when single branch is missing complete - with if-else-statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -334,15 +334,15 @@ describe("promiseMustCompleteRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("with nested if-else statement", (): void => {
+        it('with nested if-else statement', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     if (something) {
@@ -361,15 +361,15 @@ describe("promiseMustCompleteRule", (): void => {
                 })`;
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when shadowed parameter resolved within a function", (): void => {
+        it('when shadowed parameter resolved within a function', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (resolve) {  // this parameter actually shadows the one in the enclosing scope
@@ -378,15 +378,15 @@ describe("promiseMustCompleteRule", (): void => {
                 })`;
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when shadowed parameter rejects within a function", (): void => {
+        it('when shadowed parameter rejects within a function', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall(function (reject) {  // this parameter actually shadows the one in the enclosing scope
@@ -395,15 +395,15 @@ describe("promiseMustCompleteRule", (): void => {
                 })`;
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when shadowed parameter resolved within a lambda", (): void => {
+        it('when shadowed parameter resolved within a lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((arg1, resolve) => { // this parameter actually shadows the one in the enclosing scope
@@ -412,15 +412,15 @@ describe("promiseMustCompleteRule", (): void => {
                 })`;
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("when shadowed parameter rejects within a lambda", (): void => {
+        it('when shadowed parameter rejects within a lambda', (): void => {
             const script: string = `
                 new Promise<string>((resolve, reject) => {
                     someCall((reject) => {  // this parameter actually shadows the one in the enclosing scope
@@ -429,9 +429,9 @@ describe("promiseMustCompleteRule", (): void => {
                 })`;
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "A Promise was found that appears to not have resolve or reject invoked on all code paths",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "promise-must-complete",
+                    failure: 'A Promise was found that appears to not have resolve or reject invoked on all code paths',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'promise-must-complete',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);

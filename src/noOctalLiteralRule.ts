@@ -1,24 +1,24 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-octal-literal",
-        type: "maintainability",
-        description: "Do not use octal literals or escaped octal sequences",
+        ruleName: 'no-octal-literal',
+        type: 'maintainability',
+        description: 'Do not use octal literals or escaped octal sequences',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Mandatory",
-        group: "Security"
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security'
     };
 
-    public static FAILURE_STRING: string = "Octal literals should not be used: ";
+    public static FAILURE_STRING: string = 'Octal literals should not be used: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
@@ -39,7 +39,7 @@ class NoOctalLiteral extends Lint.RuleWalker {
 
         if (match) {
             let octalValue: string = match[2]; // match[2] is the matched octal value.
-            const backslashCount: number = octalValue.lastIndexOf("\\") + 1;
+            const backslashCount: number = octalValue.lastIndexOf('\\') + 1;
             if (backslashCount % 2 === 1) {
                 // Make sure the string starts with an odd number of backslashes
                 octalValue = octalValue.substr(backslashCount - 1);

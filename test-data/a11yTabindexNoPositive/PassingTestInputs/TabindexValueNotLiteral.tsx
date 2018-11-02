@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 let value, tabindex;
 const e = <div tabindex={value} />;

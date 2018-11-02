@@ -1,11 +1,11 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noUnnecessaryBindRule", (): void => {
-    const ruleName: string = "no-unnecessary-bind";
+describe('noUnnecessaryBindRule', (): void => {
+    const ruleName: string = 'no-unnecessary-bind';
 
-    describe("should pass", (): void => {
-        it("should pass on function/lambda literals with multiple parameters", (): void => {
+    describe('should pass', (): void => {
+        it('should pass on function/lambda literals with multiple parameters', (): void => {
             const script: string = `
             _.bind(function() {}, this, someArg);
             (function() {}).bind(this, someArg);
@@ -16,7 +16,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on function/lambda literals with non-this parameter", (): void => {
+        it('should pass on function/lambda literals with non-this parameter', (): void => {
             const script: string = `
             (function() {}).bind(context);
             (() => {}).bind(context);
@@ -26,7 +26,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore static invocation with no context", (): void => {
+        it('should pass on underscore static invocation with no context', (): void => {
             const script: string = `
             _.forEach(list, function() {});
             _.forEach(list, () => {});
@@ -36,7 +36,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore invocation with no context", (): void => {
+        it('should pass on underscore invocation with no context', (): void => {
             const script: string = `
             _(list).collect(function() {});
             _(list).collect(() => {});
@@ -46,7 +46,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore static invocation with context", (): void => {
+        it('should pass on underscore static invocation with context', (): void => {
             const script: string = `
             _.bind(function() {}, context);
             _.map(list, function() {}, context);
@@ -57,7 +57,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore invocation with context", (): void => {
+        it('should pass on underscore invocation with context', (): void => {
             const script: string = `
             _(list).map(function() {}, context);
             _(list).map(() => {}, context);
@@ -77,7 +77,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on _.sortedIndex", (): void => {
+        it('should pass on _.sortedIndex', (): void => {
             // sortedIndex is unique because the function parameter is the 2nd in the list
             const script: string = `
             _(list).sortedIndex(value, someReference, this);
@@ -90,7 +90,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore static invocation with unknown method", (): void => {
+        it('should pass on underscore static invocation with unknown method', (): void => {
             const script: string = `
             _.not_an_underscore_function(list, function() {}, this);
             _.not_an_underscore_function(list, () => {}, this);
@@ -99,7 +99,7 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on underscore invocation with unknown method", (): void => {
+        it('should pass on underscore invocation with unknown method', (): void => {
             const script: string = `
             _(list).not_an_underscore_function(function() {}, context);
             _(list).not_an_underscore_function(() => {}, context);
@@ -108,8 +108,8 @@ describe("noUnnecessaryBindRule", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
-        it("should fail on binding this on function literal", (): void => {
+    describe('should fail', (): void => {
+        it('should fail on binding this on function literal', (): void => {
             const script: string = `
             (function() {}).bind(this);
         `;
@@ -117,14 +117,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 13, line: 2 }
                 }
             ]);
         });
 
-        it("should fail on binding this on lambda", (): void => {
+        it('should fail on binding this on lambda', (): void => {
             const script: string = `
             (() => {}).bind(this);
         `;
@@ -132,14 +132,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 13, line: 2 }
                 }
             ]);
         });
 
-        it("should fail on underscore static invocation with this as context and function", (): void => {
+        it('should fail on underscore static invocation with this as context and function', (): void => {
             const script: string = `
                 _.map(list, function() {}, this);
             `;
@@ -147,14 +147,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("should fail on underscore static invocation with this as context and lambda", (): void => {
+        it('should fail on underscore static invocation with this as context and lambda', (): void => {
             const script: string = `
                 _.map(list, () => {}, this);
             `;
@@ -162,42 +162,42 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("should fail on underscore instance invocation with this as context and function", (): void => {
+        it('should fail on underscore instance invocation with this as context and function', (): void => {
             const script: string = `
                 _(list).forEach(function() {}, this);
             `;
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("should fail on underscore instance invocation with this as context and lambda", (): void => {
+        it('should fail on underscore instance invocation with this as context and lambda', (): void => {
             const script: string = `
                 _(list).every(() => {}, this);
             `;
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.reduce - static invocation - function parameter", (): void => {
+        it('fail on _.reduce - static invocation - function parameter', (): void => {
             // reduce is a special case because the 2nd parameter in the list is a value
             const script: string = `
                 _.reduce(list, function () {}, memo, this);
@@ -206,14 +206,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.reduce - static invocation - lambda parameter", (): void => {
+        it('fail on _.reduce - static invocation - lambda parameter', (): void => {
             // reduce is a special case because the 2nd parameter in the list is a value
             const script: string = `
                 _.reduce(list, () => {}, memo, this);
@@ -222,14 +222,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.reduce - instance invocation - function parameter", (): void => {
+        it('fail on _.reduce - instance invocation - function parameter', (): void => {
             // reduce is a special case because the 2nd parameter in the list is a value
             const script: string = `
                 _(list).reduce(function () {}, memo, this);
@@ -238,14 +238,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.reduce - instance invocation - lambda parameter", (): void => {
+        it('fail on _.reduce - instance invocation - lambda parameter', (): void => {
             // reduce is a special case because the 2nd parameter in the list is a value
             const script: string = `
                 _(list).reduce(() => {}, memo, this);
@@ -254,14 +254,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.sortedIndex - static invocation - function literal", (): void => {
+        it('fail on _.sortedIndex - static invocation - function literal', (): void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
             const script: string = `
                 _.sortedIndex(list, value, function () {}, this);
@@ -270,14 +270,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.sortedIndex - static invocation - lambda", (): void => {
+        it('fail on _.sortedIndex - static invocation - lambda', (): void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
             const script: string = `
                 _.sortedIndex(list, value, () => {}, this);
@@ -286,14 +286,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.sortedIndex - instance invocation - function literal", (): void => {
+        it('fail on _.sortedIndex - instance invocation - function literal', (): void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
             const script: string = `
                 _(list).sortedIndex(value, function () {}, this);
@@ -302,14 +302,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.sortedIndex - instance invocation - lambda", (): void => {
+        it('fail on _.sortedIndex - instance invocation - lambda', (): void => {
             // sortedIndex is special case because the 2nd parameter in the list is a value
             const script: string = `
                 _(list).sortedIndex(value, () => {}, this);
@@ -318,14 +318,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.bind - function literal", (): void => {
+        it('fail on _.bind - function literal', (): void => {
             const script: string = `
                 _.bind(function () {}, this);
             `;
@@ -333,14 +333,14 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding function literal with 'this' context. Use lambdas instead",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);
         });
 
-        it("fail on _.bind - lambda", (): void => {
+        it('fail on _.bind - lambda', (): void => {
             const script: string = `
                 _.bind(() => {}, this);
             `;
@@ -348,8 +348,8 @@ describe("noUnnecessaryBindRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure: "Binding lambda with 'this' context. Lambdas already have 'this' bound",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-bind",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-bind',
                     startPosition: { character: 17, line: 2 }
                 }
             ]);

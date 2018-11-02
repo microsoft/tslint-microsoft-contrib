@@ -1,6 +1,6 @@
-import * as ts from "typescript";
-import { implicitRoles } from "./implicitRoles";
-import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from "./TypeGuard";
+import * as ts from 'typescript';
+import { implicitRoles } from './implicitRoles';
+import { isJsxElement, isJsxSelfClosingElement, isJsxOpeningElement } from './TypeGuard';
 
 /**
  * @returns string of the implicit role or undefined if no corresponding role for a

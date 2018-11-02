@@ -2,30 +2,30 @@
  * Enforce ARIA state and property values are valid.
  */
 
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { AstUtils } from "./utils/AstUtils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { getPropName, getStringLiteral, getBooleanLiteral } from "./utils/JsxAttribute";
-import { IAria } from "./utils/attributes/IAria";
-import { isStringLiteral, isNumericLiteral, isJsxExpression, isFalseKeyword, isTrueKeyword, isNullKeyword } from "./utils/TypeGuard";
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { getPropName, getStringLiteral, getBooleanLiteral } from './utils/JsxAttribute';
+import { IAria } from './utils/attributes/IAria';
+import { isStringLiteral, isNumericLiteral, isJsxExpression, isFalseKeyword, isTrueKeyword, isNullKeyword } from './utils/TypeGuard';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const aria: { [attributeName: string]: IAria } = require("./utils/attributes/ariaSchema.json");
+const aria: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 
 export function getFailureString(propName: string, expectedType: string, permittedValues: string[]): string {
     switch (expectedType) {
-        case "tristate":
+        case 'tristate':
             return `The value for ${propName} must be a boolean or the string 'mixed'.`;
-        case "token":
+        case 'token':
             return `The value for ${propName} must be a single token from the following: ${permittedValues}.`;
-        case "tokenlist":
+        case 'tokenlist':
             return `The value for ${propName} must be a list of one or more tokens from the following: ${permittedValues}.`;
-        case "boolean":
-        case "string":
-        case "integer":
-        case "number":
+        case 'boolean':
+        case 'string':
+        case 'integer':
+        case 'number':
         default:
             // tslint:disable-line:no-switch-case-fall-through
             return `The value for ${propName} must be a ${expectedType}.`;
@@ -34,17 +34,17 @@ export function getFailureString(propName: string, expectedType: string, permitt
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-a11y-proptypes",
-        type: "maintainability",
-        description: "Enforce ARIA state and property values are valid.",
+        ruleName: 'react-a11y-proptypes',
+        type: 'maintainability',
+        description: 'Enforce ARIA state and property values are valid.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Accessibility"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -98,25 +98,25 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
 
         switch (expectedType) {
-            case "boolean":
+            case 'boolean':
                 return this.isBoolean(propValueExpression);
-            case "tristate":
+            case 'tristate':
                 return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case "integer":
+            case 'integer':
                 return this.isInteger(propValueExpression);
-            case "number":
+            case 'number':
                 return this.isNumber(propValueExpression);
-            case "string":
+            case 'string':
                 return this.isString(propValueExpression);
-            case "token":
+            case 'token':
                 return (
                     (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
                     permittedValues.indexOf(propValue.toLowerCase()) > -1
                 );
-            case "tokenlist":
+            case 'tokenlist':
                 return (
                     (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(" ").every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
+                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
                 );
             default:
                 return false;
@@ -152,7 +152,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         if (isStringLiteral(node)) {
             const propValue: string = node.text.toLowerCase();
 
-            return propValue === "true" || propValue === "false";
+            return propValue === 'true' || propValue === 'false';
         } else if (isJsxExpression(node)) {
             const expression = node.expression;
             if (expression === undefined) {
@@ -162,7 +162,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             if (isStringLiteral(expression)) {
                 const propValue: string = expression.text.toLowerCase();
 
-                return propValue === "true" || propValue === "false";
+                return propValue === 'true' || propValue === 'false';
             } else {
                 return isFalseKeyword(expression) || isTrueKeyword(expression);
             }
@@ -173,14 +173,14 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
 
     private isMixed(node: ts.Expression): boolean {
         if (isStringLiteral(node)) {
-            return node.text.toLowerCase() === "mixed";
+            return node.text.toLowerCase() === 'mixed';
         } else if (isJsxExpression(node)) {
             const expression = node.expression;
             if (expression === undefined) {
                 return false;
             }
 
-            return isStringLiteral(expression) && expression.text.toLowerCase() === "mixed";
+            return isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
         }
 
         return false;

@@ -1,22 +1,22 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { Utils } from "./utils/Utils";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
 
-import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from "./utils/JsxAttribute";
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 
-const OPTION_FORCE_REL_REDUNDANCY = "force-rel-redundancy";
+const OPTION_FORCE_REL_REDUNDANCY = 'force-rel-redundancy';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-anchor-blank-noopener",
-        type: "functionality",
+        ruleName: 'react-anchor-blank-noopener',
+        type: 'functionality',
         description: 'Anchor tags with target="_blank" should also include rel="noreferrer"',
         options: {
-            type: "array",
+            type: 'array',
             items: {
-                type: "string",
+                type: 'string',
                 enum: [OPTION_FORCE_REL_REDUNDANCY]
             },
             minLength: 0,
@@ -27,12 +27,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             behaviour which implies \`rel="noreferrer noopener"\`. Instead, force redundancy
             for \`rel\` attribute.`,
         typescriptOnly: true,
-        issueClass: "SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Mandatory",
-        group: "Security",
-        commonWeaknessEnumeration: "242,676"
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '242,676'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -70,13 +70,13 @@ class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
     }
 
     private validateOpeningElement(openingElement: ts.JsxOpeningLikeElement): void {
-        if (openingElement.tagName.getText() === "a") {
+        if (openingElement.tagName.getText() === 'a') {
             const allAttributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
             /* tslint:disable:no-string-literal */
-            const target: ts.JsxAttribute = allAttributes["target"];
-            const rel: ts.JsxAttribute = allAttributes["rel"];
+            const target: ts.JsxAttribute = allAttributes['target'];
+            const rel: ts.JsxAttribute = allAttributes['rel'];
             /* tslint:enable:no-string-literal */
-            if (target !== undefined && getStringLiteral(target) === "_blank" && !isRelAttributeValue(rel, this.forceRelRedundancy)) {
+            if (target !== undefined && getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel, this.forceRelRedundancy)) {
                 this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), this.failureString);
             }
         }
@@ -103,6 +103,6 @@ function isRelAttributeValue(attribute: ts.JsxAttribute, forceRedundancy: boolea
     const relValues: string[] = stringValue.split(/\s+/);
 
     return forceRedundancy
-        ? Utils.contains(relValues, "noreferrer") && Utils.contains(relValues, "noopener")
-        : Utils.contains(relValues, "noreferrer");
+        ? Utils.contains(relValues, 'noreferrer') && Utils.contains(relValues, 'noopener')
+        : Utils.contains(relValues, 'noreferrer');
 }

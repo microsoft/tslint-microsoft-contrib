@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 export class MyComponent extends React.Component<{}, {}> {
     constructor(props, context) {

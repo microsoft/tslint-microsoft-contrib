@@ -1,13 +1,13 @@
-import * as Lint from "tslint";
-import * as ts from "typescript";
+import * as Lint from 'tslint';
+import * as ts from 'typescript';
 
-import { getApparentJsDoc, getNodeName } from "./utils/NodeDocs";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { getApparentJsDoc, getNodeName } from './utils/NodeDocs';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const defaultUselessWords = ["a", "an", "of", "our", "the"];
+const defaultUselessWords = ['a', 'an', 'of', 'our', 'the'];
 
 const defaultAliases: { [i: string]: string[] } = {
-    a: ["an", "our"]
+    a: ['an', 'our']
 };
 
 const failureString = "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.";
@@ -27,19 +27,19 @@ interface Options {
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        description: "Enforces that comments do more than just reiterate names of objects.",
+        description: 'Enforces that comments do more than just reiterate names of objects.',
         options: undefined,
-        optionsDescription: "Not configurable.",
+        optionsDescription: 'Not configurable.',
         optionExamples: [
             true,
             [
                 true,
                 {
                     aliases: {
-                        a: ["an", "our"],
-                        emoji: ["smiley"]
+                        a: ['an', 'our'],
+                        emoji: ['smiley']
                     },
-                    uselessWords: [...defaultUselessWords, "also"]
+                    uselessWords: [...defaultUselessWords, 'also']
                 }
             ]
         ],
@@ -52,14 +52,14 @@ export class Rule extends Lint.Rules.AbstractRule {
             Alternately, if something's name is so descriptive that it doesn't need to be fully documented,
             just leave out documentation altogether.
         `,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Moderate",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        recommendation: "true,",
-        ruleName: "informative-docs",
-        type: "maintainability",
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        recommendation: 'true,',
+        ruleName: 'informative-docs',
+        type: 'maintainability',
         typescriptOnly: false
     };
 
@@ -120,20 +120,20 @@ function walk(context: Lint.WalkContext<Options>) {
     }
 
     function splitNameIntoWords(name: string): string[] | undefined {
-        if (name.length > 2 && name[0] === "I" && Lint.Utils.isUpperCase(name[1])) {
+        if (name.length > 2 && name[0] === 'I' && Lint.Utils.isUpperCase(name[1])) {
             name = name.substring(1);
         }
 
         const nameSpaced = name
-            .replace(/\W/g, "")
-            .replace(/([a-z])([A-Z])/g, "$1 $2")
+            .replace(/\W/g, '')
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
             .trim();
 
         if (nameSpaced.length === 0) {
             return undefined;
         }
 
-        return nameSpaced.split(" ").map(normalizeWord);
+        return nameSpaced.split(' ').map(normalizeWord);
     }
 
     function getNodeDocComments(node: ts.Node): string[] | undefined {
@@ -149,9 +149,9 @@ function walk(context: Lint.WalkContext<Options>) {
         }
 
         return docs
-            .join(" ")
-            .replace(/[^A-Za-z0-9 ]/g, "")
-            .split(" ")
+            .join(' ')
+            .replace(/[^A-Za-z0-9 ]/g, '')
+            .split(' ')
             .map(normalizeWord);
     }
 

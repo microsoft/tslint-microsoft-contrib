@@ -2,37 +2,37 @@
  * Generates an SDL report in csv format.
  */
 
-const { red } = require("chalk");
-const { readJSON, writeFile } = require("./common/files");
-const { getAllRules, getMetadataFromFile, getMetadataValue } = require("./common/meta");
-const allCweDescriptions = readJSON("cwe_descriptions.json");
+const { red } = require('chalk');
+const { readJSON, writeFile } = require('./common/files');
+const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
+const allCweDescriptions = readJSON('cwe_descriptions.json');
 const rows = [];
-const resolution = "See description on the tslint or tslint-microsoft-contrib website";
-const procedure = "TSLint Procedure";
+const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
+const procedure = 'TSLint Procedure';
 const header =
-    "Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity," + "SDL Level,Resolution,SDL Procedure,CWE,CWE Description";
+    'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' + 'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
 
 getAllRules().forEach(ruleFile => {
     const metadata = getMetadataFromFile(ruleFile);
 
-    const issueClass = getMetadataValue(metadata, "issueClass");
-    if (issueClass === "Ignored") {
+    const issueClass = getMetadataValue(metadata, 'issueClass');
+    if (issueClass === 'Ignored') {
         return;
     }
-    const ruleName = getMetadataValue(metadata, "ruleName");
-    const errorId = "TSLINT" + getHash(ruleName);
-    const issueType = getMetadataValue(metadata, "issueType");
-    const severity = getMetadataValue(metadata, "severity");
-    const level = getMetadataValue(metadata, "level");
-    const description = getMetadataValue(metadata, "description");
-    const cwe = getMetadataValue(metadata, "commonWeaknessEnumeration", true, false);
+    const ruleName = getMetadataValue(metadata, 'ruleName');
+    const errorId = 'TSLINT' + getHash(ruleName);
+    const issueType = getMetadataValue(metadata, 'issueType');
+    const severity = getMetadataValue(metadata, 'severity');
+    const level = getMetadataValue(metadata, 'level');
+    const description = getMetadataValue(metadata, 'description');
+    const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, false);
     const cweDescription = createCweDescription(metadata);
 
     const row = [
         ruleName,
         description,
         errorId,
-        "tslint",
+        'tslint',
         issueClass,
         issueType,
         severity,
@@ -41,14 +41,14 @@ getAllRules().forEach(ruleFile => {
         procedure,
         cwe,
         cweDescription
-    ].join(",");
+    ].join(',');
     rows.push(row);
 });
 
 rows.sort();
 rows.unshift(header);
 
-writeFile("tslint-warnings.csv", rows.join("\n"));
+writeFile('tslint-warnings.csv', rows.join('\n'));
 
 function getHash(input) {
     // initialized with a prime number
@@ -65,25 +65,25 @@ function getHash(input) {
 }
 
 function createCweDescription(metadata) {
-    const cwe = getMetadataValue(metadata, "commonWeaknessEnumeration", true, true);
-    if (cwe === "") {
-        return "";
+    const cwe = getMetadataValue(metadata, 'commonWeaknessEnumeration', true, true);
+    if (cwe === '') {
+        return '';
     }
 
-    let result = "";
-    cwe.split(",").forEach(cweNumber => {
+    let result = '';
+    cwe.split(',').forEach(cweNumber => {
         cweNumber = cweNumber.trim();
         const description = allCweDescriptions[cweNumber];
         if (description === undefined) {
             console.log(red(`Cannot find description of ${cweNumber} for rule ${metadata.ruleName} in cwe_descriptions.json`));
             process.exit(1);
         }
-        if (result !== "") {
-            result = result + "\n";
+        if (result !== '') {
+            result = result + '\n';
         }
         result = result + `CWE ${cweNumber} - ${description}`;
     });
-    if (result !== "") {
+    if (result !== '') {
         return `"${result}"`;
     }
     return result;

@@ -1,5 +1,5 @@
-import * as ts from "typescript";
-import { isNamed } from "./TypeGuard";
+import * as ts from 'typescript';
+import { isNamed } from './TypeGuard';
 
 /**
  * General utility class.
@@ -7,7 +7,7 @@ import { isNamed } from "./TypeGuard";
 export namespace AstUtils {
     export function getLanguageVariant(node: ts.SourceFile): ts.LanguageVariant {
         const fileName: string = node.fileName.toLowerCase();
-        if (fileName.endsWith(".tsx") || fileName.endsWith(".jsx")) {
+        if (fileName.endsWith('.tsx') || fileName.endsWith('.jsx')) {
             return ts.LanguageVariant.JSX;
         } else {
             return ts.LanguageVariant.Standard;
@@ -16,13 +16,13 @@ export namespace AstUtils {
 
     export function getFunctionName(node: ts.CallExpression | ts.NewExpression): string {
         const expression: ts.Expression = node.expression;
-        if ("text" in expression) {
+        if ('text' in expression) {
             return <string>(<{ text: unknown }>expression).text;
         }
         if (isNamed(expression)) {
             return expression.name.getText();
         }
-        return "";
+        return '';
     }
 
     export function getFunctionTarget(expression: ts.CallExpression): string | undefined {
@@ -34,7 +34,7 @@ export namespace AstUtils {
     }
 
     export function isJQuery(functionTarget: string): boolean {
-        return functionTarget === "$" || /^(jquery)$/i.test(functionTarget);
+        return functionTarget === '$' || /^(jquery)$/i.test(functionTarget);
     }
 
     export function hasModifier(modifiers: ts.ModifiersArray, modifierKind: number): boolean {
@@ -55,63 +55,63 @@ export namespace AstUtils {
     export function dumpTypeInfo(expression: ts.Expression, languageServices: ts.LanguageService, typeChecker: ts.TypeChecker): void {
         /* tslint:disable:no-console */
         console.log(expression.getFullText());
-        console.log("\tkind: " + expression.kind);
+        console.log('\tkind: ' + expression.kind);
 
         if (expression.kind === ts.SyntaxKind.Identifier || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            const definitionInfo = languageServices.getDefinitionAtPosition("file.ts", expression.getStart());
+            const definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo !== undefined) {
                 definitionInfo.forEach(
                     (info: ts.DefinitionInfo, index: number): void => {
-                        console.log("\tdefinitionInfo-" + index);
-                        console.log("\t\tkind: " + info.kind);
-                        console.log("\t\tname: " + info.name);
+                        console.log('\tdefinitionInfo-' + index);
+                        console.log('\t\tkind: ' + info.kind);
+                        console.log('\t\tname: ' + info.name);
                     }
                 );
             }
 
-            const typeInfo = languageServices.getTypeDefinitionAtPosition("file.ts", expression.getStart());
+            const typeInfo = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo !== undefined) {
                 typeInfo.forEach(
                     (info: ts.DefinitionInfo, index: number): void => {
-                        console.log("\ttypeDefinitionInfo-" + index);
-                        console.log("\t\tkind: " + info.kind);
-                        console.log("\t\tname: " + info.name);
+                        console.log('\ttypeDefinitionInfo-' + index);
+                        console.log('\t\tkind: ' + info.kind);
+                        console.log('\t\tname: ' + info.name);
                     }
                 );
             }
 
-            const quickInfo = languageServices.getQuickInfoAtPosition("file.ts", expression.getStart());
+            const quickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
             if (quickInfo !== undefined) {
-                console.log("\tquickInfo.kind         = " + quickInfo.kind);
-                console.log("\tquickInfo.kindModifiers= " + quickInfo.kindModifiers);
-                console.log("\tquickInfo.textSpan     = " + quickInfo.textSpan.start);
+                console.log('\tquickInfo.kind         = ' + quickInfo.kind);
+                console.log('\tquickInfo.kindModifiers= ' + quickInfo.kindModifiers);
+                console.log('\tquickInfo.textSpan     = ' + quickInfo.textSpan.start);
 
                 if (quickInfo.displayParts !== undefined) {
-                    console.log("\tquickInfo.displayParts = " + quickInfo.displayParts[0].text);
-                    console.log("\tquickInfo.displayParts = " + quickInfo.displayParts[0].kind);
+                    console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].text);
+                    console.log('\tquickInfo.displayParts = ' + quickInfo.displayParts[0].kind);
                 }
             }
 
             const expressionType: ts.Type = typeChecker.getTypeAtLocation(expression);
-            console.log("\ttypeChecker.typeToString: " + typeChecker.typeToString(expressionType));
-            console.log("\ttype.flags: " + expressionType.flags);
-            console.log("\ttype.symbol: " + expressionType.symbol);
+            console.log('\ttypeChecker.typeToString: ' + typeChecker.typeToString(expressionType));
+            console.log('\ttype.flags: ' + expressionType.flags);
+            console.log('\ttype.symbol: ' + expressionType.symbol);
 
             const expressionSymbol = typeChecker.getSymbolAtLocation(expression);
             if (expressionSymbol === undefined) {
-                console.log("\tsymbol: " + expressionSymbol);
+                console.log('\tsymbol: ' + expressionSymbol);
             } else {
-                console.log("\tsymbol.flags: " + expressionSymbol.flags);
-                console.log("\tsymbol.name: " + expressionSymbol.name);
-                console.log("\tsymbol.declarations: " + expressionSymbol.declarations);
+                console.log('\tsymbol.flags: ' + expressionSymbol.flags);
+                console.log('\tsymbol.name: ' + expressionSymbol.name);
+                console.log('\tsymbol.declarations: ' + expressionSymbol.declarations);
             }
 
             const contextualType = typeChecker.getContextualType(expression);
             if (contextualType === undefined) {
-                console.log("\tcontextualType: " + contextualType);
+                console.log('\tcontextualType: ' + contextualType);
             } else {
-                console.log("\tcontextualType.flags: " + contextualType.flags);
-                console.log("\tcontextualType.symbol: " + contextualType.symbol);
+                console.log('\tcontextualType.flags: ' + contextualType.flags);
+                console.log('\tcontextualType.symbol: ' + contextualType.symbol);
             }
         }
         /* tslint:enable:no-console */
@@ -222,7 +222,7 @@ export namespace AstUtils {
             }
             parent = parent.parent;
         }
-        throw new Error("Could not determine parent block of node: " + child);
+        throw new Error('Could not determine parent block of node: ' + child);
     }
 
     export function isSameIdentifer(source: ts.Node, target: ts.Node): boolean {
@@ -252,7 +252,7 @@ export namespace AstUtils {
 
     export function isDeclarationFunctionType(node: ts.PropertyDeclaration | ts.VariableDeclaration | ts.ParameterDeclaration): boolean {
         if (node.type !== undefined) {
-            if (node.type.getText() === "Function") {
+            if (node.type.getText() === 'Function') {
                 return true;
             }
             return node.type.kind === ts.SyntaxKind.FunctionType;
@@ -265,7 +265,7 @@ export namespace AstUtils {
     export function isUndefined(node: ts.Expression | undefined): boolean {
         if (node !== undefined) {
             if (node.kind === ts.SyntaxKind.Identifier) {
-                return node.getText() === "undefined";
+                return node.getText() === 'undefined';
             }
         }
         return false;

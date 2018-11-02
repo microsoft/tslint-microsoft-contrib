@@ -1,30 +1,30 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { Utils } from "./utils/Utils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { isObject } from "./utils/TypeGuard";
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
-const PROPS_REGEX = "props-interface-regex";
-const STATE_REGEX = "state-interface-regex";
+const PROPS_REGEX = 'props-interface-regex';
+const STATE_REGEX = 'state-interface-regex';
 
-const FAILURE_UNUSED_PROP: string = "Unused React property defined in interface: ";
-const FAILURE_UNUSED_STATE: string = "Unused React state defined in interface: ";
+const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
+const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-unused-props-and-state",
-        type: "maintainability",
-        description: "Remove unneeded properties defined in React Props and State interfaces",
+        ruleName: 'react-unused-props-and-state',
+        type: 'maintainability',
+        description: 'Remove unneeded properties defined in React Props and State interfaces',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Correctness",
-        commonWeaknessEnumeration: "398"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -60,12 +60,12 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
     private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
             const value: unknown = option[key];
-            if (value !== undefined && typeof value === "string") {
+            if (value !== undefined && typeof value === 'string') {
                 return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
-            console.error("Could not read " + key + " within react-unused-props-and-state-name configuration");
+            console.error('Could not read ' + key + ' within react-unused-props-and-state-name configuration');
             /* tslint:enable:no-console */
         }
         return defaultValue;
@@ -120,20 +120,20 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
         if (this.propsAlias !== undefined) {
-            if (new RegExp(this.propsAlias + "\\..*").test(referencedPropertyName)) {
+            if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
                 this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
         if (this.stateAlias !== undefined) {
-            if (new RegExp(this.stateAlias + "\\..*").test(referencedPropertyName)) {
+            if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
         }
         if (node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression) {
-            if (referencedPropertyName === "this.props") {
+            if (referencedPropertyName === 'this.props') {
                 // this props reference has escaped the function
                 this.propNames = [];
-            } else if (referencedPropertyName === "this.state") {
+            } else if (referencedPropertyName === 'this.state') {
                 // this state reference has escaped the function
                 this.stateNames = [];
             }
@@ -211,7 +211,7 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
     private isParentNodeSuperCall(node: ts.Node): boolean {
         if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
-            return call.expression.getText() === "super";
+            return call.expression.getText() === 'super';
         }
         return false;
     }

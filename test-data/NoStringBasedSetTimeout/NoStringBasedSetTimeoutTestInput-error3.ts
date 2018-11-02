@@ -9,7 +9,7 @@ namespace MyModule {
         private myMethod(param1: any): void {}
 
         private perform(): void {
-            setTimeout(_.bind(this.myMethod, "some value"), 500);
+            setTimeout(_.bind(this.myMethod, 'some value'), 500);
         }
     }
 }

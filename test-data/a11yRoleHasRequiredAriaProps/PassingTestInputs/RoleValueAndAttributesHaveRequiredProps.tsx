@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 // Explicit role.
 const a = <div role="heading" aria-level />;

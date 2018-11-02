@@ -8,7 +8,7 @@ interface Window {
 
 // tslint:enable
 
-var typedStringVariable = "string variable";
+var typedStringVariable = 'string variable';
 var functionVariable = () => {};
 var anyVariable: any = () => {};
 var createFunction: () => (() => void) = () => {
@@ -16,7 +16,7 @@ var createFunction: () => (() => void) = () => {
 }; // function that produces a function
 var untypedCreateFunction: () => any = () => {}; // function that produces a function
 var stringFunction: () => string = () => {
-    return "";
+    return '';
 }; // function that produces a string
 
 // lambdas are OK

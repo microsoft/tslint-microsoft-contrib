@@ -2,30 +2,30 @@
  * Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role
  */
 
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { getImplicitRole } from "./utils/getImplicitRole";
-import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from "./utils/JsxAttribute";
-import { IRole, IRoleSchema } from "./utils/attributes/IRole";
-import { IAria } from "./utils/attributes/IAria";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { getImplicitRole } from './utils/getImplicitRole';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
+import { IRole, IRoleSchema } from './utils/attributes/IRole';
+import { IAria } from './utils/attributes/IAria';
 
 // tslint:disable:no-require-imports no-var-requires
-const ROLE_SCHEMA: IRoleSchema = require("./utils/attributes/roleSchema.json");
-const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require("./utils/attributes/ariaSchema.json");
+const ROLE_SCHEMA: IRoleSchema = require('./utils/attributes/roleSchema.json');
+const ARIA_ATTRIBUTES: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
 // tslint:enable:no-require-imports no-var-requires
 
 const ROLES: { [key: string]: IRole } = ROLE_SCHEMA.roles;
-const ROLE_STRING: string = "role";
+const ROLE_STRING: string = 'role';
 
 export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], invalidPropNames: string[]): string {
-    return `Attribute(s) ${invalidPropNames.join(", ")} are not supported by role(s) ${roleNamesInElement.join(", ")}. \
+    return `Attribute(s) ${invalidPropNames.join(', ')} are not supported by role(s) ${roleNamesInElement.join(', ')}. \
 You are using incorrect role or incorrect aria-* attribute`;
 }
 
 export function getFailureStringForImplicitRole(tagName: string, roleName: string, invalidPropNames: string[]): string {
-    return `Attribute(s) ${invalidPropNames.join(", ")} not supported \
+    return `Attribute(s) ${invalidPropNames.join(', ')} not supported \
 by role ${roleName} which is implicitly set by the HTML tag ${tagName}.`;
 }
 
@@ -37,18 +37,18 @@ A reference about no corresponding role: https://www.w3.org/TR/html-aria/#dfn-no
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-a11y-role-supports-aria-props",
-        type: "maintainability",
+        ruleName: 'react-a11y-role-supports-aria-props',
+        type: 'maintainability',
         description:
-            "Enforce that elements with explicit or implicit roles defined contain " + "only `aria-*` properties supported by that `role`.",
+            'Enforce that elements with explicit or implicit roles defined contain ' + 'only `aria-*` properties supported by that `role`.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Accessibility"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -89,9 +89,9 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
 
         const isImplicitRole: boolean = !roleProp && !!roleValue;
-        const normalizedRoles = (roleValue || "")
+        const normalizedRoles = (roleValue || '')
             .toLowerCase()
-            .split(" ")
+            .split(' ')
             .filter((role: string) => role in ROLES);
 
         let supportedAttributeNames: string[] = ROLE_SCHEMA.globalSupportedProps;

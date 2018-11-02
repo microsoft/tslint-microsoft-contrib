@@ -1,24 +1,24 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-control-regex",
-        type: "maintainability",
-        description: "Do not use control characters in regular expressions",
+        ruleName: 'no-control-regex',
+        type: 'maintainability',
+        description: 'Do not use control characters in regular expressions',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Correctness"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
     };
 
-    public static FAILURE_STRING: string = "Unexpected control character in regular expression";
+    public static FAILURE_STRING: string = 'Unexpected control character in regular expression';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
@@ -45,7 +45,7 @@ class NoControlRegexRuleWalker extends Lint.RuleWalker {
 
     /* tslint:disable:no-control-regex */
     private validateCall(expression: ts.CallExpression | ts.NewExpression): void {
-        if (expression.expression.getText() === "RegExp" && expression.arguments !== undefined && expression.arguments.length > 0) {
+        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
             const arg1: ts.Expression = expression.arguments[0];
             if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                 const regexpText: string = (<ts.StringLiteral>arg1).text;

@@ -1,8 +1,8 @@
-import * as ts from "typescript";
-import { Utils } from "./utils/Utils";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import { Utils } from './utils/Utils';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export interface Exception {
     file: string;
@@ -12,18 +12,18 @@ export interface Exception {
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-no-dangerous-html",
-        type: "maintainability",
+        ruleName: 'react-no-dangerous-html',
+        type: 'maintainability',
         description: "Do not use React's dangerouslySetInnerHTML API.",
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Mandatory",
-        group: "Security",
-        commonWeaknessEnumeration: "79, 85, 710"
+        issueClass: 'SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Mandatory',
+        group: 'Security',
+        commonWeaknessEnumeration: '79, 85, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -51,13 +51,13 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.currentMethodName = "<unknown>";
+        this.currentMethodName = '<unknown>';
     }
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         this.currentMethodName = node.name.getText();
         super.visitMethodDeclaration(node);
-        this.currentMethodName = "<unknown>";
+        this.currentMethodName = '<unknown>';
     }
 
     protected visitPropertyAssignment(node: ts.PropertyAssignment): void {
@@ -65,7 +65,7 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
         const keyNode: ts.DeclarationName = node.name;
 
         if (keyNode.kind === ts.SyntaxKind.Identifier) {
-            if (keyNode.text === "dangerouslySetInnerHTML") {
+            if (keyNode.text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, <ts.Identifier>keyNode);
             }
         }
@@ -88,7 +88,7 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
                 if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
                     const attributeName = jsxAttribute.name.text;
-                    if (attributeName === "dangerouslySetInnerHTML") {
+                    if (attributeName === 'dangerouslySetInnerHTML') {
                         this.addFailureIfNotSuppressed(node, <ts.Identifier>jsxAttribute.name);
                     }
                 }
@@ -102,12 +102,12 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
                 'Invalid call to dangerouslySetInnerHTML in method "' +
                 this.currentMethodName +
                 '"\n' +
-                "    of source file " +
+                '    of source file ' +
                 this.getSourceFile().fileName +
                 '"\n' +
-                "    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n" +
-                "    to review the usage with a security expert/QE representative. If they decide that this is an\n" +
-                "    acceptable usage then add the exception to xss_exceptions.json";
+                '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
+                '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
+                '    acceptable usage then add the exception to xss_exceptions.json';
             const position = parent.getStart();
             this.addFailureAt(position, node.text.length, failureString);
         }

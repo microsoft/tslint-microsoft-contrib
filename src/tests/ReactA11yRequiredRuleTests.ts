@@ -1,15 +1,15 @@
-import { TestHelper } from "./TestHelper";
-import { Utils } from "../utils/Utils";
+import { TestHelper } from './TestHelper';
+import { Utils } from '../utils/Utils';
 
 /**
  * Unit tests for react-a11y-required rule.
  */
-describe("reactA11yRequiredRule", (): void => {
-    const ruleName: string = "react-a11y-required";
-    const FAILURE_STRING: string = "Required input elements must have an aria-required set to true";
+describe('reactA11yRequiredRule', (): void => {
+    const ruleName: string = 'react-a11y-required';
+    const FAILURE_STRING: string = 'Required input elements must have an aria-required set to true';
 
-    describe("should pass", (): void => {
-        it("when there is no required input element", (): void => {
+    describe('should pass', (): void => {
+        it('when there is no required input element', (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='text' />;
@@ -22,7 +22,7 @@ describe("reactA11yRequiredRule", (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when there is a required input element with aria-required set to true", (): void => {
+        it('when there is a required input element with aria-required set to true', (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='text' required aria-required='true' />;
@@ -36,8 +36,8 @@ describe("reactA11yRequiredRule", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
-        it("when there is a required element without aria-required", (): void => {
+    describe('should fail', (): void => {
+        it('when there is a required element without aria-required', (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='text' required />;
@@ -49,31 +49,31 @@ describe("reactA11yRequiredRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
                     failure: FAILURE_STRING
@@ -81,7 +81,7 @@ describe("reactA11yRequiredRule", (): void => {
             ]);
         });
 
-        it("when there is a required element with an invalid value for aria-required", (): void => {
+        it('when there is a required element with an invalid value for aria-required', (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='text' required aria-required='' />;
@@ -95,43 +95,43 @@ describe("reactA11yRequiredRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 8 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 9 },
                     failure: FAILURE_STRING
@@ -139,7 +139,7 @@ describe("reactA11yRequiredRule", (): void => {
             ]);
         });
 
-        it("when there is a required element with aria-required set to false", (): void => {
+        it('when there is a required element with aria-required set to false', (): void => {
             const script: string = `
                 import React = require('react');
                 const a = <input type='text' required aria-required='false' />;
@@ -151,31 +151,31 @@ describe("reactA11yRequiredRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
                     failure: FAILURE_STRING
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
                     failure: FAILURE_STRING

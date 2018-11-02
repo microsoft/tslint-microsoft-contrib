@@ -2,8 +2,8 @@
  * Copyright Microsoft Corporation. All rights reserved.
  */
 
-import * as tsutils from "tsutils";
-import * as ts from "typescript";
+import * as tsutils from 'tsutils';
+import * as ts from 'typescript';
 
 /**
  * Node types that may include a name identifier.

@@ -1,8 +1,8 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { AstUtils } from "./AstUtils";
-import { Scope } from "./Scope";
-import { isNamed } from "./TypeGuard";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { AstUtils } from './AstUtils';
+import { Scope } from './Scope';
+import { isNamed } from './TypeGuard';
 
 /**
  * This exists so that you can try to tell the types of variables
@@ -60,7 +60,7 @@ export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
 
         if (ts.isCallExpression(expression)) {
             // calling Function.bind is a special case that makes tslint throw an exception
-            if (isNamed(expression.expression) && expression.expression.name.getText() === "bind") {
+            if (isNamed(expression.expression) && expression.expression.name.getText() === 'bind') {
                 return true; // for now assume invoking a function named bind returns a function. Follow up with tslint.
             }
 
@@ -118,7 +118,7 @@ export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
         const scope = (this.scope = new Scope(this.scope));
         node.members.forEach(
             (element: ts.ClassElement): void => {
-                const prefix: string = AstUtils.isStatic(element) && node.name !== undefined ? node.name.getText() + "." : "this.";
+                const prefix: string = AstUtils.isStatic(element) && node.name !== undefined ? node.name.getText() + '.' : 'this.';
 
                 if (element.kind === ts.SyntaxKind.MethodDeclaration) {
                     // add all declared methods as valid functions

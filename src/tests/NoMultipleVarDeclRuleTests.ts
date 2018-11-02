@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noMultipleVarDeclRule", (): void => {
-    const ruleName: string = "no-multiple-var-decl";
+describe('noMultipleVarDeclRule', (): void => {
+    const ruleName: string = 'no-multiple-var-decl';
 
-    it("should pass on separate var declaration and multiple var declarations within a for loop", (): void => {
+    it('should pass on separate var declaration and multiple var declarations within a for loop', (): void => {
         const script: string = `
             var x = 1;
             var y: number = 2;
@@ -15,7 +15,7 @@ describe("noMultipleVarDeclRule", (): void => {
         TestHelper.assertNoViolation(ruleName, script);
     });
 
-    it("should fail on multiple var declaration", (): void => {
+    it('should fail on multiple var declaration', (): void => {
         const script: string = `
             var x = 1,
                 y = 2;
@@ -24,15 +24,15 @@ describe("noMultipleVarDeclRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Do not use comma separated variable declarations: x = 1,",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-multiple-var-decl",
+                failure: 'Do not use comma separated variable declarations: x = 1,',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-multiple-var-decl',
                 startPosition: { character: 13, line: 2 }
             },
             {
-                failure: "Do not use comma separated variable declarations: x,",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-multiple-var-decl",
+                failure: 'Do not use comma separated variable declarations: x,',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-multiple-var-decl',
                 startPosition: { character: 13, line: 4 }
             }
         ]);

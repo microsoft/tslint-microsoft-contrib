@@ -1,26 +1,26 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const OPTION_ALLOW_SIBLINGS = "allow-siblings";
+const OPTION_ALLOW_SIBLINGS = 'allow-siblings';
 
-const FAILURE_STRING_EXT: string = "External module is being loaded from a relative path. Please use an absolute path: ";
-const FAILURE_STRING_IMPORT: string = "Imported module is being loaded from a relative path. Please use an absolute path: ";
+const FAILURE_STRING_EXT: string = 'External module is being loaded from a relative path. Please use an absolute path: ';
+const FAILURE_STRING_IMPORT: string = 'Imported module is being loaded from a relative path. Please use an absolute path: ';
 const FAILURE_STRING_EXT_SIBLINGS: string =
-    "External module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ";
+    'External module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ';
 const FAILURE_STRING_IMPORT_SIBLINGS: string =
-    "Imported module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ";
+    'Imported module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-relative-imports",
-        type: "maintainability",
-        description: "Do not use relative paths when importing external modules or ES6 import declarations",
+        ruleName: 'no-relative-imports',
+        type: 'maintainability',
+        description: 'Do not use relative paths when importing external modules or ES6 import declarations',
         options: {
-            type: "array",
+            type: 'array',
             items: {
-                type: "string",
+                type: 'string',
                 enum: [OPTION_ALLOW_SIBLINGS]
             },
             minLength: 0,
@@ -29,12 +29,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         optionsDescription: `One argument may be optionally provided: \n\n' +
             '* \`${OPTION_ALLOW_SIBLINGS}\` allows relative imports for files in the same or nested folders.`,
         typescriptOnly: false,
-        issueClass: "Ignored",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "710"
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -73,12 +73,12 @@ class NoRelativeImportsRuleWalker extends Lint.RuleWalker {
             const moduleName: ts.StringLiteral = <ts.StringLiteral>expression;
 
             // when no siblings allowed path cannot start with '.' (relative)
-            if (!this.allowSiblings && moduleName.text[0] === ".") {
+            if (!this.allowSiblings && moduleName.text[0] === '.') {
                 return false;
             }
 
             // when siblings allowed path cannot start '..' (reference to parrent directory)
-            if (this.allowSiblings && moduleName.text.indexOf("..") === 0) {
+            if (this.allowSiblings && moduleName.text.indexOf('..') === 0) {
                 return false;
             }
         }

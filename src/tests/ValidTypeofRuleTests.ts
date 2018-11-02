@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("validTypeofRule", (): void => {
-    const ruleName: string = "valid-typeof";
+describe('validTypeofRule', (): void => {
+    const ruleName: string = 'valid-typeof';
 
-    it("should pass on valid typeofs", (): void => {
+    it('should pass on valid typeofs', (): void => {
         const script: string = `
             typeof bar === "undefined"
             typeof bar == "undefined"
@@ -26,7 +26,7 @@ describe("validTypeofRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on invalid string with ===", (): void => {
+    it('should fail on invalid string with ===', (): void => {
         const script: string = `
             typeof foo === "strnig"
             "strnig" === typeof foo
@@ -34,15 +34,15 @@ describe("validTypeofRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Invalid comparison in typeof. Did you mean string?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean string?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 28, line: 2 }
             },
             {
-                failure: "Invalid comparison in typeof. Did you mean string?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean string?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: {
                     character: 13,
                     line: 3
@@ -51,7 +51,7 @@ describe("validTypeofRule", (): void => {
         ]);
     });
 
-    it("should fail on invalid string with ==", (): void => {
+    it('should fail on invalid string with ==', (): void => {
         const script: string = `
             typeof foo == "funcion"
             "fction" == typeof foo
@@ -59,21 +59,21 @@ describe("validTypeofRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Invalid comparison in typeof. Did you mean function?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean function?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 27, line: 2 }
             },
             {
-                failure: "Invalid comparison in typeof. Did you mean function?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean function?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 13, line: 3 }
             }
         ]);
     });
 
-    it("should fail on invalid string with !==", (): void => {
+    it('should fail on invalid string with !==', (): void => {
         const script: string = `
             typeof foo !== "undfind"
             "ndefined" !== typeof foo
@@ -81,21 +81,21 @@ describe("validTypeofRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Invalid comparison in typeof. Did you mean undefined?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean undefined?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 28, line: 2 }
             },
             {
-                failure: "Invalid comparison in typeof. Did you mean undefined?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean undefined?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 13, line: 3 }
             }
         ]);
     });
 
-    it("should fail on invalid string with !=", (): void => {
+    it('should fail on invalid string with !=', (): void => {
         const script: string = `
             typeof foo != "bollean"
             "bollen" != typeof foo
@@ -103,15 +103,15 @@ describe("validTypeofRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Invalid comparison in typeof. Did you mean boolean?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean boolean?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 27, line: 2 }
             },
             {
-                failure: "Invalid comparison in typeof. Did you mean boolean?",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "valid-typeof",
+                failure: 'Invalid comparison in typeof. Did you mean boolean?',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'valid-typeof',
                 startPosition: { character: 13, line: 3 }
             }
         ]);

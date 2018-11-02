@@ -1,24 +1,24 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = "Unnecessary method override. A method that only calls super can be removed: ";
+const FAILURE_STRING: string = 'Unnecessary method override. A method that only calls super can be removed: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-unnecessary-override",
-        type: "maintainability",
-        description: "Do not write a method that only calls super() on the parent method with the same arguments.",
+        ruleName: 'no-unnecessary-override',
+        type: 'maintainability',
+        description: 'Do not write a method that only calls super() on the parent method with the same arguments.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Moderate",
-        level: "Opportunity for Excellence",
-        group: "Correctness",
-        commonWeaknessEnumeration: "398, 710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness',
+        commonWeaknessEnumeration: '398, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -128,6 +128,6 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
         if (nameNode.kind === ts.SyntaxKind.Identifier) {
             return (<ts.Identifier>nameNode).text;
         }
-        return "<unknown>";
+        return '<unknown>';
     }
 }

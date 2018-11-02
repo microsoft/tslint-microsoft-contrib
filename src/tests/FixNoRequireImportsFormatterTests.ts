@@ -1,6 +1,6 @@
-import * as chai from "chai";
-import { TestHelper } from "./TestHelper";
-import { Formatter } from "../fixNoRequireImportsFormatter";
+import * as chai from 'chai';
+import { TestHelper } from './TestHelper';
+import { Formatter } from '../fixNoRequireImportsFormatter';
 
 class FormatterForTesting extends Formatter {
     private readonly input: string;
@@ -25,10 +25,10 @@ class FormatterForTesting extends Formatter {
     }
 }
 
-describe("fixNoRequireImportsFormatter", (): void => {
-    const ruleName: string = "no-require-imports";
+describe('fixNoRequireImportsFormatter', (): void => {
+    const ruleName: string = 'no-require-imports';
 
-    it("should fix imports in middle of list", (): void => {
+    it('should fix imports in middle of list', (): void => {
         const input: string = `
 import {BaseFormatter} from './utils/BaseFormatter';
 import TestHelper = require('./TestHelper');
@@ -44,7 +44,7 @@ import {TestHelper} from './TestHelper';
         );
     });
 
-    it("should fix imports at start of list", (): void => {
+    it('should fix imports at start of list', (): void => {
         const input: string = `import TestHelper = require('./TestHelper');
 `;
 
@@ -56,7 +56,7 @@ import {TestHelper} from './TestHelper';
         );
     });
 
-    it("should fix imports at end of list", (): void => {
+    it('should fix imports at end of list', (): void => {
         const input: string = `import TestHelper = require('./TestHelper');
 
 console.log(TestHelper);`;
@@ -70,7 +70,7 @@ console.log(TestHelper);`.trim()
         );
     });
 
-    it("should fix multiline import", (): void => {
+    it('should fix multiline import', (): void => {
         const input: string = `
 import TestHelper = require(
     './TestHelper'

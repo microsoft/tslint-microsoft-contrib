@@ -1,6 +1,6 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { isObject, isNamed } from "./TypeGuard";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { isObject, isNamed } from './TypeGuard';
 
 export class BannedTermWalker extends Lint.RuleWalker {
     private readonly failureString: string;
@@ -13,7 +13,7 @@ export class BannedTermWalker extends Lint.RuleWalker {
         this.bannedTerms = bannedTerms;
         this.getOptions().forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.allowQuotedProperties = opt["allow-quoted-properties"] === true;
+                this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
             }
         });
     }
@@ -64,7 +64,7 @@ export class BannedTermWalker extends Lint.RuleWalker {
 
     protected visitParameterDeclaration(node: ts.ParameterDeclaration): void {
         // typescript 2.0 introduces function level 'this' types
-        if (node.name.getText() !== "this") {
+        if (node.name.getText() !== 'this') {
             this.validateNode(node);
         }
         super.visitParameterDeclaration(node);

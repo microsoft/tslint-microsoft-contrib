@@ -1,11 +1,11 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noUnnecessaryOverrideRule", (): void => {
-    const ruleName: string = "no-unnecessary-override";
+describe('noUnnecessaryOverrideRule', (): void => {
+    const ruleName: string = 'no-unnecessary-override';
 
-    describe("should pass", (): void => {
-        it("when adding a parameter", (): void => {
+    describe('should pass', (): void => {
+        it('when adding a parameter', (): void => {
             const script: string = `
                 class MyClass {
                     private myField;
@@ -21,7 +21,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when negating result", (): void => {
+        it('when negating result', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -33,7 +33,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when removing a parameter", (): void => {
+        it('when removing a parameter', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod1(arg1, arg2) {
@@ -48,7 +48,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when transposing parameters", (): void => {
+        it('when transposing parameters', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
@@ -60,7 +60,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when changing a parameter", (): void => {
+        it('when changing a parameter', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
@@ -72,7 +72,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when adding statements before ", (): void => {
+        it('when adding statements before ', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -85,7 +85,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when adding statements after", (): void => {
+        it('when adding statements after', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -98,7 +98,7 @@ describe("noUnnecessaryOverrideRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when calling different methods", (): void => {
+        it('when calling different methods', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -111,8 +111,8 @@ describe("noUnnecessaryOverrideRule", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
-        it("should fail on calling super with 0 args and no return", (): void => {
+    describe('should fail', (): void => {
+        it('should fail on calling super with 0 args and no return', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -123,15 +123,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should fail on calling super with 0 args and return", (): void => {
+        it('should fail on calling super with 0 args and return', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -142,15 +142,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should fail on calling super with argument", (): void => {
+        it('should fail on calling super with argument', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod(arg1) {
@@ -161,15 +161,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should fail on calling super with two arguments", (): void => {
+        it('should fail on calling super with two arguments', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod(arg1, arg2) {
@@ -180,15 +180,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should fail on calling super with default arguments", (): void => {
+        it('should fail on calling super with default arguments', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod(arg1 = true, arg2 = false) {
@@ -199,15 +199,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should fail on calling super with comments involved", (): void => {
+        it('should fail on calling super with comments involved', (): void => {
             const script: string = `
                 class MyClass {
                     myMethod() {
@@ -220,15 +220,15 @@ describe("noUnnecessaryOverrideRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "Unnecessary method override. A method that only calls super can be removed: myMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-unnecessary-override",
+                    failure: 'Unnecessary method override. A method that only calls super can be removed: myMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-unnecessary-override',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("should not fail on empty void method", (): void => {
+        it('should not fail on empty void method', (): void => {
             const script: string = `
                 class BaseComponent {
                     public function1(): void { return; }

@@ -1,21 +1,21 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-invalid-regexp",
-        type: "maintainability",
-        description: "Do not use invalid regular expression strings in the RegExp constructor.",
+        ruleName: 'no-invalid-regexp',
+        type: 'maintainability',
+        description: 'Do not use invalid regular expression strings in the RegExp constructor.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Opportunity for Excellence",
-        group: "Correctness"
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -35,7 +35,7 @@ class NoInvalidRegexpRuleWalker extends Lint.RuleWalker {
     }
 
     private validateCall(expression: ts.CallExpression | ts.NewExpression): void {
-        if (expression.expression.getText() === "RegExp" && expression.arguments !== undefined && expression.arguments.length > 0) {
+        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
             const arg1: ts.Expression = expression.arguments[0];
             if (arg1.kind === ts.SyntaxKind.StringLiteral) {
                 const regexpText: string = (<ts.StringLiteral>arg1).text;

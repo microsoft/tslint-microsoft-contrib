@@ -1,16 +1,16 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noEmptyLineAfterOpeningBraceRule", (): void => {
-    const ruleName: string = "no-empty-line-after-opening-brace";
+describe('noEmptyLineAfterOpeningBraceRule', (): void => {
+    const ruleName: string = 'no-empty-line-after-opening-brace';
 
-    it("should allow a single-line block", (): void => {
-        const inputScript: string = "function () { }";
+    it('should allow a single-line block', (): void => {
+        const inputScript: string = 'function () { }';
 
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
-    it("should allow a multiline block without a newline after the opening brace", (): void => {
+    it('should allow a multiline block without a newline after the opening brace', (): void => {
         const inputScript: string = `
             function () {
             }
@@ -19,7 +19,7 @@ describe("noEmptyLineAfterOpeningBraceRule", (): void => {
         TestHelper.assertViolations(ruleName, inputScript, []);
     });
 
-    it("should ban a multiline block with a newline after the opening brace", (): void => {
+    it('should ban a multiline block with a newline after the opening brace', (): void => {
         const inputScript: string = `
             function () {
 
@@ -28,8 +28,8 @@ describe("noEmptyLineAfterOpeningBraceRule", (): void => {
 
         TestHelper.assertViolations(ruleName, inputScript, [
             {
-                failure: "Opening brace cannot be followed by empty line",
-                name: Utils.absolutePath("file.ts"),
+                failure: 'Opening brace cannot be followed by empty line',
+                name: Utils.absolutePath('file.ts'),
                 ruleName: ruleName,
                 startPosition: {
                     character: 1,

@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 // Only one role.
 const a = <div role="combobox" aria-controls />;

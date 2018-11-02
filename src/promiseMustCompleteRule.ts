@@ -1,28 +1,28 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { AstUtils } from "./utils/AstUtils";
-import { Utils } from "./utils/Utils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { AstUtils } from './utils/AstUtils';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "promise-must-complete",
-        type: "maintainability",
+        ruleName: 'promise-must-complete',
+        type: 'maintainability',
         description:
-            "When a Promise instance is created, then either the reject() or resolve() parameter must be " +
-            "called on it within all code branches in the scope.",
+            'When a Promise instance is created, then either the reject() or resolve() parameter must be ' +
+            'called on it within all code branches in the scope.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Opportunity for Excellence",
-        group: "Correctness"
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
     };
 
-    public static FAILURE_STRING: string = "A Promise was found that appears to not have resolve or reject invoked on all code paths";
+    public static FAILURE_STRING: string = 'A Promise was found that appears to not have resolve or reject invoked on all code paths';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new PromiseAnalyzer(sourceFile, this.getOptions()));
@@ -33,7 +33,7 @@ class PromiseAnalyzer extends Lint.RuleWalker {
     private isPromiseDeclaration(node: ts.NewExpression): boolean {
         if (
             node.expression.kind === ts.SyntaxKind.Identifier &&
-            node.expression.getText() === "Promise" &&
+            node.expression.getText() === 'Promise' &&
             node.arguments !== undefined &&
             node.arguments.length > 0
         ) {

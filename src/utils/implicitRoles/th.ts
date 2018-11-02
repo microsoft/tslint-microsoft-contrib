@@ -3,7 +3,7 @@
  * The implicit role is columnheader or rowheader, the func only return columnheader.
  */
 function getImplicitRoleForTh(): string {
-    return "columnheader";
+    return 'columnheader';
 }
 
 export { getImplicitRoleForTh as th };

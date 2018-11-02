@@ -1,9 +1,9 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
-describe("insecureRandomRule", (): void => {
-    const ruleName: string = "insecure-random";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
+describe('insecureRandomRule', (): void => {
+    const ruleName: string = 'insecure-random';
 
-    it("should pass on non related functions", (): void => {
+    it('should pass on non related functions', (): void => {
         const script: string = `
             import crypto = require('crypto')
             Math.abs(x)
@@ -13,7 +13,7 @@ describe("insecureRandomRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on Math.random", (): void => {
+    it('should fail on Math.random', (): void => {
         const script: string = `
             Math.random();
             const x = Math.random;
@@ -22,24 +22,24 @@ describe("insecureRandomRule", (): void => {
         TestHelper.assertViolations(ruleName, script, [
             {
                 failure:
-                    "Math.random produces insecure random numbers. " +
-                    "Use crypto.randomBytes() or window.crypto.getRandomValues() instead",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "insecure-random",
+                    'Math.random produces insecure random numbers. ' +
+                    'Use crypto.randomBytes() or window.crypto.getRandomValues() instead',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'insecure-random',
                 startPosition: { character: 13, line: 2 }
             },
             {
                 failure:
-                    "Math.random produces insecure random numbers. " +
-                    "Use crypto.randomBytes() or window.crypto.getRandomValues() instead",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "insecure-random",
+                    'Math.random produces insecure random numbers. ' +
+                    'Use crypto.randomBytes() or window.crypto.getRandomValues() instead',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'insecure-random',
                 startPosition: { character: 23, line: 3 }
             }
         ]);
     });
 
-    it("should fail on pseudoRandomBytes", (): void => {
+    it('should fail on pseudoRandomBytes', (): void => {
         const script: string = `
             import crypto = require('crypto')
 
@@ -49,15 +49,15 @@ describe("insecureRandomRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "insecure-random",
+                failure: 'crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'insecure-random',
                 startPosition: { character: 13, line: 4 }
             },
             {
-                failure: "crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "insecure-random",
+                failure: 'crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'insecure-random',
                 startPosition: { character: 23, line: 5 }
             }
         ]);

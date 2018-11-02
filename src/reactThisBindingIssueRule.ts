@@ -1,47 +1,47 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { AstUtils } from "./utils/AstUtils";
-import { Scope } from "./utils/Scope";
-import { Utils } from "./utils/Utils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { isObject } from "./utils/TypeGuard";
+import { AstUtils } from './utils/AstUtils';
+import { Scope } from './utils/Scope';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
-const FAILURE_ANONYMOUS_LISTENER: string = "A new instance of an anonymous method is passed as a JSX attribute: ";
+const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = "A function is having its 'this' reference bound twice in the constructor: ";
-const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' " + "reference bound: ";
+const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' " + 'reference bound: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-this-binding-issue",
-        type: "maintainability",
+        ruleName: 'react-this-binding-issue',
+        type: 'maintainability',
         description:
-            "When using React components you must be careful to correctly bind the `this` reference " +
-            "on any methods that you pass off to child components as callbacks.",
+            'When using React components you must be careful to correctly bind the `this` reference ' +
+            'on any methods that you pass off to child components as callbacks.',
         options: {
-            type: "object",
+            type: 'object',
             properties: {
-                "allow-anonymous-listeners": {
-                    type: "boolean"
+                'allow-anonymous-listeners': {
+                    type: 'boolean'
                 },
-                "bind-decorators": {
-                    type: "list",
+                'bind-decorators': {
+                    type: 'list',
                     listType: {
                         anyOf: {
-                            type: "string"
+                            type: 'string'
                         }
                     }
                 }
             }
         },
-        optionExamples: [true, [true, { "bind-decorators": ["autobind"] }]],
-        optionsDescription: "",
+        optionExamples: [true, [true, { 'bind-decorators': ['autobind'] }]],
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Opportunity for Excellence",
-        group: "Correctness"
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        group: 'Correctness'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -64,11 +64,11 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         super(sourceFile, options);
         this.getOptions().forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.allowAnonymousListeners = opt["allow-anonymous-listeners"] === true;
-                if (opt["bind-decorators"]) {
-                    const allowedDecorators: unknown = opt["bind-decorators"];
-                    if (!Array.isArray(allowedDecorators) || allowedDecorators.some(decorator => typeof decorator !== "string")) {
-                        throw new Error("one or more members of bind-decorators is invalid, string required.");
+                this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
+                if (opt['bind-decorators']) {
+                    const allowedDecorators: unknown = opt['bind-decorators'];
+                    if (!Array.isArray(allowedDecorators) || allowedDecorators.some(decorator => typeof decorator !== 'string')) {
+                        throw new Error('one or more members of bind-decorators is invalid, string required.');
                     }
                     // tslint:disable-next-line:prefer-type-cast
                     this.allowedDecorators = new Set<string>(allowedDecorators);
@@ -84,7 +84,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         this.declaredMethods = new Set<string>();
         AstUtils.getDeclaredMethodNames(node).forEach(
             (methodName: string): void => {
-                this.declaredMethods.add("this." + methodName);
+                this.declaredMethods.add('this.' + methodName);
             }
         );
         super.visitClassDeclaration(node);
@@ -109,7 +109,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         // reset variable scope when we encounter a method. Start tracking variables that are instantiated
         // in scope so we can make sure new function instances are not passed as JSX attributes
         if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
-            this.boundListeners = this.boundListeners.add("this." + node.name.getText());
+            this.boundListeners = this.boundListeners.add('this.' + node.name.getText());
         }
         this.scope = new Scope(undefined);
         super.visitMethodDeclaration(node);
@@ -227,7 +227,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         if (expression.kind === ts.SyntaxKind.CallExpression) {
             const callExpression = <ts.CallExpression>expression;
             const functionName = AstUtils.getFunctionName(callExpression);
-            if (functionName === "bind") {
+            if (functionName === 'bind') {
                 return true; // bind functions on Function or _ create a new anonymous instance of a function
             }
         }
@@ -245,7 +245,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                 const jsxExpression = attribute.initializer;
                 if (jsxExpression.expression !== undefined && jsxExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
                     const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
-                    if (propAccess.expression.getText() === "this") {
+                    if (propAccess.expression.getText() === 'this') {
                         const listenerText: string = propAccess.getText();
 
                         // an unbound listener is a class method reference that was not bound to 'this' in the constructor
@@ -278,10 +278,10 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                                         const callExpression = <ts.CallExpression>binaryExpression.right;
 
                                         if (
-                                            AstUtils.getFunctionName(callExpression) === "bind" &&
+                                            AstUtils.getFunctionName(callExpression) === 'bind' &&
                                             callExpression.arguments !== undefined &&
                                             callExpression.arguments.length === 1 &&
-                                            callExpression.arguments[0].getText() === "this"
+                                            callExpression.arguments[0].getText() === 'this'
                                         ) {
                                             const rightPropText = AstUtils.getFunctionTarget(callExpression);
                                             if (leftPropText === rightPropText) {

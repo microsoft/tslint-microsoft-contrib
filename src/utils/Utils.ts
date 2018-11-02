@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as path from 'path';
 
 /**
  * Control flow functions.
@@ -59,17 +59,17 @@ export namespace Utils {
 
     export function trimTo(source: string | undefined, maxLength: number): string {
         if (source === undefined) {
-            return "";
+            return '';
         }
         if (source.length <= maxLength) {
             return source;
         }
-        return source.substr(0, maxLength - 2) + "...";
+        return source.substr(0, maxLength - 2) + '...';
     }
 
     export function absolutePath(relativePath: string): string {
         // Replaces \ with / to match format of ts.SourceFile.fileName on Windows
-        return path.resolve(relativePath).replace(/\\/g, "/");
+        return path.resolve(relativePath).replace(/\\/g, '/');
     }
 }
 /* tslint:enable:no-increment-decrement */

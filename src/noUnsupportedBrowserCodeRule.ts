@@ -1,14 +1,14 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { forEachTokenWithTrivia } from "tsutils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { forEachTokenWithTrivia } from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const UNSPECIFIED_BROWSER_VERSION: string = "unspecified version";
-const JSDOC_BROWSERSPECIFIC: string = "@browserspecific";
-const COMMENT_BROWSERSPECIFIC: string = "Browser Specific:";
-const FAILURE_BROWSER_STRING: string = "Unsupported browser";
-const FAILURE_VERSION_STRING: string = "Unsupported browser version";
+const UNSPECIFIED_BROWSER_VERSION: string = 'unspecified version';
+const JSDOC_BROWSERSPECIFIC: string = '@browserspecific';
+const COMMENT_BROWSERSPECIFIC: string = 'Browser Specific:';
+const FAILURE_BROWSER_STRING: string = 'Unsupported browser';
+const FAILURE_VERSION_STRING: string = 'Unsupported browser version';
 
 interface BrowserVersion {
     name: string;
@@ -18,17 +18,17 @@ interface BrowserVersion {
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-unsupported-browser-code",
-        type: "maintainability",
-        description: "Avoid writing browser-specific code for unsupported browser versions",
+        ruleName: 'no-unsupported-browser-code',
+        type: 'maintainability',
+        description: 'Avoid writing browser-specific code for unsupported browser versions',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -50,9 +50,9 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
         forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
             let regex;
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
-                regex = new RegExp(`${JSDOC_BROWSERSPECIFIC}\\s*(.*)`, "gi");
+                regex = new RegExp(`${JSDOC_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
             } else if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia) {
-                regex = new RegExp(`${COMMENT_BROWSERSPECIFIC}\\s*(.*)`, "gi");
+                regex = new RegExp(`${COMMENT_BROWSERSPECIFIC}\\s*(.*)`, 'gi');
             } else {
                 return;
             }
@@ -77,7 +77,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
 
         return {
             name: match[1].trim(),
-            comparison: match[2] || "=",
+            comparison: match[2] || '=',
             version: parseInt(match[3], 10) || UNSPECIFIED_BROWSER_VERSION
         };
     }
@@ -110,15 +110,15 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
         }
 
         switch (supportedBrowser.comparison) {
-            case ">":
+            case '>':
                 return targetBrowser.version > supportedBrowser.version;
-            case ">=":
+            case '>=':
                 return targetBrowser.version >= supportedBrowser.version;
-            case "<":
+            case '<':
                 return targetBrowser.version < supportedBrowser.version;
-            case "<=":
+            case '<=':
                 return targetBrowser.version <= supportedBrowser.version;
-            case "=":
+            case '=':
                 return targetBrowser.version === supportedBrowser.version;
             default:
                 return false;

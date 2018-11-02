@@ -1,11 +1,11 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("jquery-deferred-must-complete", (): void => {
-    const ruleName: string = "jquery-deferred-must-complete";
+describe('jquery-deferred-must-complete', (): void => {
+    const ruleName: string = 'jquery-deferred-must-complete';
 
-    describe("should pass", (): void => {
-        it("when deferred named jquery completes", (): void => {
+    describe('should pass', (): void => {
+        it('when deferred named jquery completes', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -24,7 +24,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when deferred named jquery completes - let declaration", (): void => {
+        it('when deferred named jquery completes - let declaration', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -43,7 +43,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when deferred named $ completes", (): void => {
+        it('when deferred named $ completes', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
@@ -63,7 +63,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on resolve", (): void => {
+        it('on resolve', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
@@ -75,7 +75,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("on reject", (): void => {
+        it('on reject', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
@@ -87,7 +87,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-statement", (): void => {
+        it('when single branch is completed - with if-statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -101,7 +101,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-else-statement", (): void => {
+        it('when single branch is completed - with if-else-statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -116,7 +116,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when single branch is completed - with if-else-statement", (): void => {
+        it('when single branch is completed - with if-else-statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -138,7 +138,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("with nested if-else statement", (): void => {
+        it('with nested if-else statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -161,7 +161,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a function", (): void => {
+        it('when resolved within a function', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -173,7 +173,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a lambda", (): void => {
+        it('when resolved within a lambda', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -185,7 +185,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a function", (): void => {
+        it('when resolved within a function', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -197,7 +197,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a lambda", (): void => {
+        it('when resolved within a lambda', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -209,7 +209,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a for loop", (): void => {
+        it('when resolved within a for loop', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -221,7 +221,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a for in loop", (): void => {
+        it('when resolved within a for in loop', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -233,7 +233,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when resolved within a while loop", (): void => {
+        it('when resolved within a while loop', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -245,7 +245,7 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("when deferred reference escaped into a function call", (): void => {
+        it('when deferred reference escaped into a function call', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -256,8 +256,8 @@ describe("jquery-deferred-must-complete", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
-        it("when has no complete", (): void => {
+    describe('should fail', (): void => {
+        it('when has no complete', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = $.Deferred<void>();
@@ -268,16 +268,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = $.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("when has no complete - var declared on two lines", (): void => {
+        it('when has no complete - var declared on two lines', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void>;
@@ -289,16 +289,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred = $.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 17, line: 4 }
                 }
             ]);
         });
 
-        it("when single branch is missing complete - with if-statement", (): void => {
+        it('when single branch is missing complete - with if-statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -311,16 +311,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("when single branch is missing complete - with if-else-statement", (): void => {
+        it('when single branch is missing complete - with if-else-statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -335,16 +335,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("with nested if-else statement", (): void => {
+        it('with nested if-else statement', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -366,16 +366,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("when shadowed parameter resolved within a function", (): void => {
+        it('when shadowed parameter resolved within a function', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -387,16 +387,16 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);
         });
 
-        it("when shadowed parameter resolved within a lambda", (): void => {
+        it('when shadowed parameter resolved within a lambda', (): void => {
             const script: string = `
             function myMethod() : JQueryPromise<void> {
                 var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
@@ -408,10 +408,10 @@ describe("jquery-deferred-must-complete", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: " +
+                        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ' +
                         "'deferred: JQueryDeferred<void> = jquery.Deferred<void>()'",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "jquery-deferred-must-complete",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'jquery-deferred-must-complete',
                     startPosition: { character: 21, line: 3 }
                 }
             ]);

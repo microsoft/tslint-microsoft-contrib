@@ -1,32 +1,32 @@
-const fs = require("fs");
-const { red } = require("chalk");
-const { readJSON, writeFile } = require("./common/files");
+const fs = require('fs');
+const { red } = require('chalk');
+const { readJSON, writeFile } = require('./common/files');
 
 const ruleName = getRuleName();
 validateAguments();
 
-const ruleFile = camelCase(ruleName) + "Rule";
-const sourceFileName = "src/" + ruleFile + ".ts";
-const testsFolder = "tests/" + ruleName;
-const testFile = testsFolder + "/test.ts.lint";
-const lintFile = testsFolder + "/tslint.json";
+const ruleFile = camelCase(ruleName) + 'Rule';
+const sourceFileName = 'src/' + ruleFile + '.ts';
+const testsFolder = 'tests/' + ruleName;
+const testFile = testsFolder + '/test.ts.lint';
+const lintFile = testsFolder + '/tslint.json';
 
 createImplementationFile();
 createTestFiles();
 addToConfig();
 
-console.log("Rule created");
-console.log("Rule source: " + sourceFileName);
-console.log("Test file: " + testFile);
+console.log('Rule created');
+console.log('Rule source: ' + sourceFileName);
+console.log('Test file: ' + testFile);
 
 function getRuleName() {
-    const option = process.argv.find(str => str.startsWith("--rule-name"));
+    const option = process.argv.find(str => str.startsWith('--rule-name'));
 
     if (!option) {
         return;
     }
 
-    return option.split("=")[1];
+    return option.split('=')[1];
 }
 
 function camelCase(input) {
@@ -34,10 +34,10 @@ function camelCase(input) {
 }
 
 function validateAguments() {
-    const USAGE_EXAMPLE = "\nUsage example:\nnpm run create-rule -- --rule-name=no-something-or-other\n";
+    const USAGE_EXAMPLE = '\nUsage example:\nnpm run create-rule -- --rule-name=no-something-or-other\n';
 
     if (!ruleName) {
-        console.log(red("--rule-name parameter is required." + USAGE_EXAMPLE));
+        console.log(red('--rule-name parameter is required.' + USAGE_EXAMPLE));
         process.exit(1);
     }
 
@@ -48,16 +48,16 @@ function validateAguments() {
 }
 
 function createImplementationFile() {
-    const walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + "Walker";
+    const walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
 
-    const ruleTemplate = require("./templates/rule.template");
+    const ruleTemplate = require('./templates/rule.template');
     const ruleSource = ruleTemplate({ ruleName, walkerName });
 
     writeFile(sourceFileName, ruleSource);
 }
 
 function createTestFiles() {
-    const testContent = "// Code that should be checked by rule";
+    const testContent = '// Code that should be checked by rule';
     const tslintContent = {
         rules: {
             [ruleName]: true
@@ -71,9 +71,9 @@ function createTestFiles() {
 }
 
 function addToConfig() {
-    const currentRuleset = readJSON("tslint.json");
+    const currentRuleset = readJSON('tslint.json');
 
     currentRuleset.rules[ruleName] = true;
 
-    writeFile("tslint.json", JSON.stringify(currentRuleset, undefined, 2));
+    writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 2));
 }

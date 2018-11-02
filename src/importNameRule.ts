@@ -1,31 +1,31 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { Utils } from "./utils/Utils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { isObject } from "./utils/TypeGuard";
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "import-name",
-        type: "maintainability",
-        description: "The name of the imported module must match the name of the thing being imported",
+        ruleName: 'import-name',
+        type: 'maintainability',
+        description: 'The name of the imported module must match the name of the thing being imported',
         hasFix: true,
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         optionExamples: [
             [true],
-            [true, { moduleName: "importedName" }],
-            [true, { moduleName: "importedName" }, ["moduleName1", "moduleName2"]],
-            [true, { moduleName: "importedName" }, ["moduleName1", "moduleName2"], { ignoreExternalModule: false }]
+            [true, { moduleName: 'importedName' }],
+            [true, { moduleName: 'importedName' }, ['moduleName1', 'moduleName2']],
+            [true, { moduleName: 'importedName' }, ['moduleName1', 'moduleName2'], { ignoreExternalModule: false }]
         ],
         typescriptOnly: true,
-        issueClass: "Ignored",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "710"
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 type Replacement = { [index: string]: string };
 type IgnoredList = string[];
-type ConfigKey = "ignoreExternalModule";
+type ConfigKey = 'ignoreExternalModule';
 type Config = { [index in ConfigKey]: unknown };
 
 // This is for temporarily reolving type errors. Actual runtime Node, SourceFile object
@@ -93,7 +93,7 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
             Object.keys(opt).forEach(
                 (key: string): void => {
                     const value: unknown = opt[key];
-                    if (typeof value === "string") {
+                    if (typeof value === 'string') {
                         result[key] = value;
                     }
                 }
@@ -103,12 +103,12 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     private extractIgnoredList(opt: IgnoredList): IgnoredList {
-        return opt.filter((moduleName: string) => typeof moduleName === "string");
+        return opt.filter((moduleName: string) => typeof moduleName === 'string');
     }
 
     private extractConfig(opt: unknown): Config {
         const result: Config = { ignoreExternalModule: true };
-        const configKeyLlist: ConfigKey[] = ["ignoreExternalModule"];
+        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
         if (isObject(opt)) {
             return Object.keys(opt).reduce(
                 (accum: Config, key: string) => {
@@ -135,7 +135,7 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
             }
         } else if (node.moduleReference.kind === ts.SyntaxKind.QualifiedName) {
             let moduleName = node.moduleReference.getText();
-            moduleName = moduleName.replace(/.*\./, ""); // chop off the qualified parts
+            moduleName = moduleName.replace(/.*\./, ''); // chop off the qualified parts
             this.validateImport(node, name, moduleName);
         }
         super.visitImportEqualsDeclaration(node);
@@ -153,8 +153,8 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
-        let expectedImportedName = moduleName.replace(/.*\//, ""); // chop off the path
-        if (expectedImportedName === "" || expectedImportedName === "." || expectedImportedName === "..") {
+        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
             return;
         }
         expectedImportedName = this.makeCamelCase(expectedImportedName);
@@ -219,7 +219,7 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
-        const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, "")];
+        const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
         return Utils.exists(
             Object.keys(replacements),
             (replacementKey: string): boolean => {

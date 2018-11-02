@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import * as ts from 'typescript';
 
 /**
  * TypeScript 2.0 will have more features to support type guard.
@@ -54,9 +54,9 @@ export function isNullKeyword(node: ts.Node): node is ts.LiteralExpression {
 }
 
 export function isObject(value: unknown): value is { [key: string]: unknown } {
-    return value !== undefined && typeof value === "object" && !Array.isArray(value);
+    return value !== undefined && typeof value === 'object' && !Array.isArray(value);
 }
 
 export function isNamed(node: ts.Node): node is ts.Node & { name: ts.Node } {
-    return "name" in node && (<{ name: ts.Node }>node).name !== undefined;
+    return 'name' in node && (<{ name: ts.Node }>node).name !== undefined;
 }

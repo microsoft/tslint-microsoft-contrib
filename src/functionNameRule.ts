@@ -1,19 +1,19 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { AstUtils } from "./utils/AstUtils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { isObject } from "./utils/TypeGuard";
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
-const METHOD_REGEX = "method-regex";
-const PRIVATE_METHOD_REGEX = "private-method-regex";
-const PROTECTED_METHOD_REGEX = "protected-method-regex";
-const STATIC_METHOD_REGEX = "static-method-regex";
-const FUNCTION_REGEX = "function-regex";
+const METHOD_REGEX = 'method-regex';
+const PRIVATE_METHOD_REGEX = 'private-method-regex';
+const PROTECTED_METHOD_REGEX = 'protected-method-regex';
+const STATIC_METHOD_REGEX = 'static-method-regex';
+const FUNCTION_REGEX = 'function-regex';
 
-const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = "validate-private-statics-as-private";
-const VALIDATE_PRIVATE_STATICS_AS_STATIC = "validate-private-statics-as-static";
-const VALIDATE_PRIVATE_STATICS_AS_EITHER = "validate-private-statics-as-either";
+const VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
+const VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
+const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
 
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
@@ -41,9 +41,9 @@ interface Options {
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "function-name",
-        type: "maintainability",
-        description: "Applies a naming convention to function names and method names",
+        ruleName: 'function-name',
+        type: 'maintainability',
+        description: 'Applies a naming convention to function names and method names',
         optionsDescription: Lint.Utils.dedent`
             Function styles should be consistent throughout the code.
             Users may want functions with multiple descriptors to be validated a certain way.
@@ -53,10 +53,10 @@ export class Rule extends Lint.Rules.AbstractRule {
             * \`${VALIDATE_PRIVATE_STATICS_AS_EITHER}\` enforces validation as either.
             `,
         options: {
-            type: "array",
+            type: 'array',
             items: [
                 {
-                    type: "string",
+                    type: 'string',
                     enum: [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER]
                 }
             ],
@@ -70,12 +70,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             [true]
         ],
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "398, 710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -156,12 +156,12 @@ class FunctionNameRuleWalker extends Lint.RuleWalker {
     private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
             const value = option[key];
-            if (value !== undefined && (typeof value === "string" || value instanceof RegExp)) {
+            if (value !== undefined && (typeof value === 'string' || value instanceof RegExp)) {
                 return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
-            console.error("Could not read " + key + " within function-name configuration");
+            console.error('Could not read ' + key + ' within function-name configuration');
             /* tslint:enable:no-console */
         }
         return defaultValue;

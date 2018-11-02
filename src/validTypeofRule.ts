@@ -1,33 +1,33 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "valid-typeof",
-        type: "maintainability",
-        description: "Ensures that the results of typeof are compared against a valid string.",
+        ruleName: 'valid-typeof',
+        type: 'maintainability',
+        description: 'Ensures that the results of typeof are compared against a valid string.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Error",
-        severity: "Critical",
-        level: "Opportunity for Excellence",
-        recommendation: "false,",
-        group: "Deprecated"
+        issueClass: 'Non-SDL',
+        issueType: 'Error',
+        severity: 'Critical',
+        level: 'Opportunity for Excellence',
+        recommendation: 'false,',
+        group: 'Deprecated'
     };
 
-    public static FAILURE_STRING: string = "Invalid comparison in typeof. Did you mean ";
+    public static FAILURE_STRING: string = 'Invalid comparison in typeof. Did you mean ';
 
-    public static VALID_TERMS: string[] = ["undefined", "object", "boolean", "number", "string", "function", "symbol"];
+    public static VALID_TERMS: string[] = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
 
     private static isWarningShown: boolean = false;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
-            console.warn("Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.");
+            console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
             Rule.isWarningShown = true;
         }
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
@@ -48,7 +48,7 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
         if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
             const start: number = node.getStart();
             const width: number = node.getWidth();
-            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + "?");
+            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?');
         }
     }
 
@@ -61,7 +61,7 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
                 closestTerm = thisTerm;
             }
             return closestTerm;
-        }, "");
+        }, '');
     }
 
     /**

@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("reactIframeMissingSandboxRule", (): void => {
-    const ruleName: string = "react-iframe-missing-sandbox";
+describe('reactIframeMissingSandboxRule', (): void => {
+    const ruleName: string = 'react-iframe-missing-sandbox';
 
-    it("should pass on empty attribute", (): void => {
+    it('should pass on empty attribute', (): void => {
         const script: string = `
             import React = require('react');
             <iframe sandbox='' />
@@ -14,7 +14,7 @@ describe("reactIframeMissingSandboxRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on non-iframe tags", (): void => {
+    it('should pass on non-iframe tags', (): void => {
         const script: string = `
             import React = require('react');
             <div sandbox='__unknown__' />
@@ -24,7 +24,7 @@ describe("reactIframeMissingSandboxRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on empty single attribute - open tag", (): void => {
+    it('should pass on empty single attribute - open tag', (): void => {
         const script: string = `
             import React = require('react');
             <iframe sandbox='allow-forms'></iframe>
@@ -41,7 +41,7 @@ describe("reactIframeMissingSandboxRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on empty single attribute - self closing tag", (): void => {
+    it('should pass on empty single attribute - self closing tag', (): void => {
         const script: string = `
             import React = require('react');
             <iframe sandbox='allow-forms' />
@@ -58,7 +58,7 @@ describe("reactIframeMissingSandboxRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on multiple attributes", (): void => {
+    it('should pass on multiple attributes', (): void => {
         const script: string = `
             import React = require('react');
             <iframe sandbox='allow-forms allow-modals'></iframe>
@@ -70,7 +70,7 @@ describe("reactIframeMissingSandboxRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on missing attribute", (): void => {
+    it('should fail on missing attribute', (): void => {
         const script: string = `
             import React = require('react');
             <iframe></iframe>
@@ -79,21 +79,21 @@ describe("reactIframeMissingSandboxRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "An iframe element requires a sandbox attribute",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element requires a sandbox attribute',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 13, line: 3 }
             },
             {
-                failure: "An iframe element requires a sandbox attribute",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element requires a sandbox attribute',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 13, line: 4 }
             }
         ]);
     });
 
-    it("should fail on invalid attribute", (): void => {
+    it('should fail on invalid attribute', (): void => {
         const script: string = `
             import React = require('react');
             <iframe sandbox='__unknown__'></iframe>
@@ -104,27 +104,27 @@ describe("reactIframeMissingSandboxRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "An iframe element defines an invalid sandbox attribute: __unknown__",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines an invalid sandbox attribute: __unknown__',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 3 }
             },
             {
-                failure: "An iframe element defines an invalid sandbox attribute: __unknown__",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines an invalid sandbox attribute: __unknown__',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 4 }
             },
             {
-                failure: "An iframe element defines an invalid sandbox attribute: __unknown__",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines an invalid sandbox attribute: __unknown__',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 5 }
             },
             {
-                failure: "An iframe element defines an invalid sandbox attribute: __unknown__",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines an invalid sandbox attribute: __unknown__',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 6 }
             }
         ]);
@@ -139,15 +139,15 @@ describe("reactIframeMissingSandboxRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "An iframe element defines a sandbox with both allow-scripts and allow-same-origin",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines a sandbox with both allow-scripts and allow-same-origin',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 3 }
             },
             {
-                failure: "An iframe element defines a sandbox with both allow-scripts and allow-same-origin",
-                name: Utils.absolutePath("file.tsx"),
-                ruleName: "react-iframe-missing-sandbox",
+                failure: 'An iframe element defines a sandbox with both allow-scripts and allow-same-origin',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-iframe-missing-sandbox',
                 startPosition: { character: 29, line: 4 }
             }
         ]);

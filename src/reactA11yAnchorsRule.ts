@@ -1,38 +1,38 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { Utils } from "./utils/Utils";
-import { getImplicitRole } from "./utils/getImplicitRole";
-import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from "./utils/JsxAttribute";
-import { isObject } from "./utils/TypeGuard";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { getImplicitRole } from './utils/getImplicitRole';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
+import { isObject } from './utils/TypeGuard';
 
-export const OPTION_IGNORE_CASE: string = "ignore-case";
-export const OPTION_IGNORE_WHITESPACE: string = "ignore-whitespace";
+export const OPTION_IGNORE_CASE: string = 'ignore-case';
+export const OPTION_IGNORE_WHITESPACE: string = 'ignore-whitespace';
 
-const ROLE_STRING: string = "role";
+const ROLE_STRING: string = 'role';
 
-export const NO_HASH_FAILURE_STRING: string = "Do not use # as anchor href.";
-export const MISSING_HREF_FAILURE_STRING: string = "Do not leave href undefined or null";
+export const NO_HASH_FAILURE_STRING: string = 'Do not use # as anchor href.';
+export const MISSING_HREF_FAILURE_STRING: string = 'Do not leave href undefined or null';
 export const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
-    "Link text or the alt text of image in link should be at least 4 characters long. " +
+    'Link text or the alt text of image in link should be at least 4 characters long. ' +
     "If you are not using <a> element as anchor, please specify explicit role, e.g. role='button'";
 export const UNIQUE_ALT_FAILURE_STRING: string =
-    "Links with images and text content, the alt attribute should be unique to the text content or empty.";
-export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string = "Links with the same HREF should have the same link text.";
-export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string = "Links that point to different HREFs should have different link text.";
+    'Links with images and text content, the alt attribute should be unique to the text content or empty.';
+export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string = 'Links with the same HREF should have the same link text.';
+export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string = 'Links that point to different HREFs should have different link text.';
 export const ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING: string =
-    "Link content can not be hidden for screen-readers by using aria-hidden attribute.";
+    'Link content can not be hidden for screen-readers by using aria-hidden attribute.';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-a11y-anchors",
-        type: "functionality",
-        description: "For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.",
+        ruleName: 'react-a11y-anchors',
+        type: 'functionality',
+        description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
         options: {
-            type: "array",
+            type: 'array',
             items: {
-                type: "string",
+                type: 'string',
                 enum: [OPTION_IGNORE_CASE, OPTION_IGNORE_WHITESPACE]
             },
             minLength: 0,
@@ -45,11 +45,11 @@ export class Rule extends Lint.Rules.AbstractRule {
         * \`{"${OPTION_IGNORE_WHITESPACE}": "all"}\` ignore differences in all whitespace.
         `,
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Accessibility"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Accessibility'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -67,7 +67,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     private ignoreCase: boolean = false;
-    private ignoreWhitespace: string = "";
+    private ignoreWhitespace: string = '';
     private readonly anchorInfoList: IAnchorInfo[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -77,7 +77,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
 
     private parseOptions(): void {
         this.getOptions().forEach((opt: unknown) => {
-            if (typeof opt === "string" && opt === OPTION_IGNORE_CASE) {
+            if (typeof opt === 'string' && opt === OPTION_IGNORE_CASE) {
                 this.ignoreCase = true;
             }
 
@@ -141,26 +141,26 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             altText2 = altText2.toLowerCase();
         }
 
-        if (this.ignoreWhitespace === "trim") {
+        if (this.ignoreWhitespace === 'trim') {
             text1 = text1.trim();
             text2 = text2.trim();
             altText1 = altText1.trim();
             altText2 = altText2.trim();
         }
 
-        if (this.ignoreWhitespace === "all") {
+        if (this.ignoreWhitespace === 'all') {
             const regex: RegExp = /\s/g;
-            text1 = text1.replace(regex, "");
-            text2 = text2.replace(regex, "");
-            altText1 = altText1.replace(regex, "");
-            altText2 = altText2.replace(regex, "");
+            text1 = text1.replace(regex, '');
+            text2 = text2.replace(regex, '');
+            altText1 = altText1.replace(regex, '');
+            altText2 = altText2.replace(regex, '');
         }
 
         return text1 === text2 && altText1 === altText2;
     }
 
     private firstPosition(anchorInfo: IAnchorInfo): string {
-        const startPosition: ts.LineAndCharacter = this.createFailure(anchorInfo.start, anchorInfo.width, "")
+        const startPosition: ts.LineAndCharacter = this.createFailure(anchorInfo.start, anchorInfo.width, '')
             .getStartPosition()
             .getLineAndCharacter();
 
@@ -182,11 +182,11 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     }
 
     private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
-        if (openingElement.tagName.getText() === "a") {
-            const hrefAttribute = this.getAttribute(openingElement, "href");
+        if (openingElement.tagName.getText() === 'a') {
+            const hrefAttribute = this.getAttribute(openingElement, 'href');
 
             const anchorInfo: IAnchorInfo = {
-                href: hrefAttribute ? getStringLiteral(hrefAttribute) || "" : "",
+                href: hrefAttribute ? getStringLiteral(hrefAttribute) || '' : '',
                 text: this.anchorText(parent),
                 altText: this.imageAlt(parent),
                 hasAriaHiddenCount: this.jsxElementAriaHidden(parent),
@@ -198,7 +198,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, MISSING_HREF_FAILURE_STRING);
             }
 
-            if (anchorInfo.href === "#") {
+            if (anchorInfo.href === '#') {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
             }
 
@@ -213,7 +213,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             const anchorInfoTextLength: number = anchorInfo.text ? anchorInfo.text.length : 0;
             const anchorImageAltTextLength: number = anchorInfo.altText ? anchorInfo.altText.length : 0;
 
-            if (this.anchorRole(openingElement) === "link" && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
+            if (this.anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
 
@@ -230,7 +230,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
      * Return a string which contains literal text and text in 'alt' attribute.
      */
     private anchorText(root: ts.Node | undefined, isChild: boolean = false): string {
-        let title: string = "";
+        let title: string = '';
         if (root === undefined) {
             return title;
         } else if (root.kind === ts.SyntaxKind.JsxElement) {
@@ -251,11 +251,11 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             title += this.anchorText(expression.expression);
         } else if (isChild && root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             const jsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
-            if (jsxSelfClosingElement.tagName.getText() !== "img") {
-                title += "<component>";
+            if (jsxSelfClosingElement.tagName.getText() !== 'img') {
+                title += '<component>';
             }
         } else if (root.kind !== ts.SyntaxKind.JsxSelfClosingElement) {
-            title += "<unknown>";
+            title += '<unknown>';
         }
 
         return title;
@@ -270,16 +270,16 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     }
 
     private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
-        if (openingElement.tagName.getText() === "img") {
-            const altAttribute = getStringLiteral(this.getAttribute(openingElement, "alt"));
-            return altAttribute === undefined ? "<unknown>" : altAttribute;
+        if (openingElement.tagName.getText() === 'img') {
+            const altAttribute = getStringLiteral(this.getAttribute(openingElement, 'alt'));
+            return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
 
-        return "";
+        return '';
     }
 
     private imageAlt(root: ts.Node): string {
-        let altText: string = "";
+        let altText: string = '';
         if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             altText += this.imageAltAttribute(jsxElement.openingElement);
@@ -300,7 +300,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     }
 
     private ariaHiddenAttribute(openingElement: ts.JsxOpeningLikeElement): boolean {
-        return this.getAttribute(openingElement, "aria-hidden") === undefined;
+        return this.getAttribute(openingElement, 'aria-hidden') === undefined;
     }
 
     private jsxElementAriaHidden(root: ts.Node): number {

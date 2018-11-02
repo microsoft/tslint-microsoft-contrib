@@ -1,25 +1,25 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { forEachTokenWithTrivia } from "tsutils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { forEachTokenWithTrivia } from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = "Replace block comment with a single-line comment";
+const FAILURE_STRING: string = 'Replace block comment with a single-line comment';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-single-line-block-comment",
-        type: "maintainability",
-        description: "Avoid single line block comments; use single line comments instead",
+        ruleName: 'no-single-line-block-comment',
+        type: 'maintainability',
+        description: 'Avoid single line block comments; use single line comments instead',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Whitespace",
-        commonWeaknessEnumeration: "710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Whitespace',
+        commonWeaknessEnumeration: '710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

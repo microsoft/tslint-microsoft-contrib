@@ -1,5 +1,5 @@
 namespace SetTimeoutSample {
-    "use strict";
+    'use strict';
 
     class MyClass {
         private onAnimationEnd(): Function {

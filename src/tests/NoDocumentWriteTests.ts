@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noDocumentWriteRule", (): void => {
-    const RULE_NAME: string = "no-document-write";
+describe('noDocumentWriteRule', (): void => {
+    const RULE_NAME: string = 'no-document-write';
 
-    it("should not produce violations ", (): void => {
+    it('should not produce violations ', (): void => {
         const script: string = `
 interface DocumentLikeAPI {
     write: ((arg : string) => void);
@@ -50,7 +50,7 @@ this.document.writeln('...');
         TestHelper.assertViolations(RULE_NAME, script, []);
     });
 
-    it("should produce violations ", (): void => {
+    it('should produce violations ', (): void => {
         const script: string = `
 document.write('...');
 document.writeln('...');
@@ -59,27 +59,27 @@ window.document.writeln('...');
 `;
         TestHelper.assertViolations(RULE_NAME, script, [
             {
-                failure: "Forbidden call to document.write",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-document-write",
+                failure: 'Forbidden call to document.write',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-document-write',
                 startPosition: { character: 1, line: 2 }
             },
             {
-                failure: "Forbidden call to document.writeln",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-document-write",
+                failure: 'Forbidden call to document.writeln',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-document-write',
                 startPosition: { character: 1, line: 3 }
             },
             {
-                failure: "Forbidden call to document.write",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-document-write",
+                failure: 'Forbidden call to document.write',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-document-write',
                 startPosition: { character: 1, line: 4 }
             },
             {
-                failure: "Forbidden call to document.writeln",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-document-write",
+                failure: 'Forbidden call to document.writeln',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-document-write',
                 startPosition: { character: 1, line: 5 }
             }
         ]);

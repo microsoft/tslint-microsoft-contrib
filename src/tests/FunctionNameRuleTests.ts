@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("functionNameRule", (): void => {
-    const ruleName: string = "function-name";
+describe('functionNameRule', (): void => {
+    const ruleName: string = 'function-name';
 
-    it("should pass on correctly named functions", (): void => {
+    it('should pass on correctly named functions', (): void => {
         const script: string = `
             function foo() {}
             class MyClass {
@@ -23,7 +23,7 @@ describe("functionNameRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on functions as symbol properties", (): void => {
+    it('should pass on functions as symbol properties', (): void => {
         const script: string = `
             class MyClass {
                 static [Symbol.staticDefault](): any {}
@@ -44,7 +44,7 @@ describe("functionNameRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on correctly public static methods", (): void => {
+    it('should pass on correctly public static methods', (): void => {
         const script: string = `
             class MyClass {
                 static FOO() {}
@@ -57,7 +57,7 @@ describe("functionNameRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on correctly private static methods", (): void => {
+    it('should pass on correctly private static methods', (): void => {
         const script: string = `
             class MyClass {
                 private static bar() {}
@@ -70,7 +70,7 @@ describe("functionNameRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on correctly protected static methods", (): void => {
+    it('should pass on correctly protected static methods', (): void => {
         const script: string = `
             class MyClass {
                 protected static bar() {}
@@ -83,7 +83,7 @@ describe("functionNameRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on correctly private static methods as static with option", (): void => {
+    it('should pass on correctly private static methods as static with option', (): void => {
         const script: string = `
             class MyClass {
                 private static BAR() {}
@@ -93,10 +93,10 @@ describe("functionNameRule", (): void => {
             }
         `;
 
-        TestHelper.assertNoViolationWithOptions(ruleName, ["true", "validate-private-statics-as-static"], script);
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
     });
 
-    it("should pass on correctly protected static methods as static with option", (): void => {
+    it('should pass on correctly protected static methods as static with option', (): void => {
         const script: string = `
             class MyClass {
                 protected static BAR() {}
@@ -106,10 +106,10 @@ describe("functionNameRule", (): void => {
             }
         `;
 
-        TestHelper.assertNoViolationWithOptions(ruleName, ["true", "validate-private-statics-as-static"], script);
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
     });
 
-    it("should pass on correctly private static methods as private with option", (): void => {
+    it('should pass on correctly private static methods as private with option', (): void => {
         const script: string = `
             class MyClass {
                 private static bar() {}
@@ -119,10 +119,10 @@ describe("functionNameRule", (): void => {
             }
         `;
 
-        TestHelper.assertNoViolationWithOptions(ruleName, ["true", "validate-private-statics-as-private"], script);
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
     });
 
-    it("should pass on correctly protected static methods as private with option", (): void => {
+    it('should pass on correctly protected static methods as private with option', (): void => {
         const script: string = `
             class MyClass {
                 protected static bar() {}
@@ -132,10 +132,10 @@ describe("functionNameRule", (): void => {
             }
         `;
 
-        TestHelper.assertNoViolationWithOptions(ruleName, ["true", "validate-private-statics-as-private"], script);
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
     });
 
-    it("should pass on correctly private or protected static methods as either with option", (): void => {
+    it('should pass on correctly private or protected static methods as either with option', (): void => {
         const script: string = `
             class MyClass {
                 private static bar() {}
@@ -149,10 +149,10 @@ describe("functionNameRule", (): void => {
             }
         `;
 
-        TestHelper.assertNoViolationWithOptions(ruleName, ["true", "validate-private-statics-as-either"], script);
+        TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-either'], script);
     });
 
-    it("should fail on incorrect public methods", (): void => {
+    it('should fail on incorrect public methods', (): void => {
         const script: string = `
             class MyClass {
                 Foo() {}
@@ -165,39 +165,39 @@ describe("functionNameRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 17, line: 3 }
             },
             {
-                failure: "Method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 17, line: 4 }
             },
             {
-                failure: "Method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 17, line: 5 }
             },
             {
-                failure: "Method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 17, line: 6 }
             },
             {
-                failure: "Method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 17, line: 7 }
             }
         ]);
     });
 
-    it("should fail on incorrect private methods", (): void => {
+    it('should fail on incorrect private methods', (): void => {
         const script: string = `
             class MyClass {
                 private Foo() {}
@@ -210,39 +210,39 @@ describe("functionNameRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Private method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 25, line: 3 }
             },
             {
-                failure: "Private method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 25, line: 4 }
             },
             {
-                failure: "Private method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 25, line: 5 }
             },
             {
-                failure: "Private method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 25, line: 6 }
             },
             {
-                failure: "Private method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Private method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 25, line: 7 }
             }
         ]);
     });
 
-    it("should fail on incorrect protected methods", (): void => {
+    it('should fail on incorrect protected methods', (): void => {
         const script: string = `
             class MyClass {
                 protected Foo() {}
@@ -255,39 +255,39 @@ describe("functionNameRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Protected method name does not match /^[a-z][\\w\\d]+$/: Foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: Foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 27, line: 3 }
             },
             {
-                failure: "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 27, line: 4 }
             },
             {
-                failure: "Protected method name does not match /^[a-z][\\w\\d]+$/: FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 27, line: 5 }
             },
             {
-                failure: "Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _FOO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 27, line: 6 }
             },
             {
-                failure: "Protected method name does not match /^[a-z][\\w\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Protected method name does not match /^[a-z][\\w\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 27, line: 7 }
             }
         ]);
     });
 
-    it("should fail on incorrect static methods", (): void => {
+    it('should fail on incorrect static methods', (): void => {
         const script: string = `
             class MyClass {
                 static Foo() {}
@@ -298,42 +298,42 @@ describe("functionNameRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Static method name does not match /^[A-Z_\\d]+$/: Foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: Foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 24, line: 3 }
             },
             {
-                failure: "Static method name does not match /^[A-Z_\\d]+$/: _foo",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 24, line: 4 }
             },
             {
-                failure: "Static method name does not match /^[A-Z_\\d]+$/: _foo2",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "function-name",
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: _foo2',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
                 startPosition: { character: 24, line: 5 }
             }
         ]);
     });
 
-    describe("reading options", (): void => {
+    describe('reading options', (): void => {
         let options: [boolean, object];
 
         beforeEach((): void => {
             options = [
                 true,
                 {
-                    "method-regex": "^myMethod$",
-                    "private-method-regex": "^myPrivateMethod$",
-                    "static-method-regex": "^myStaticMethod$",
-                    "function-regex": "^myFunction$"
+                    'method-regex': '^myMethod$',
+                    'private-method-regex': '^myPrivateMethod$',
+                    'static-method-regex': '^myStaticMethod$',
+                    'function-regex': '^myFunction$'
                 }
             ];
         });
 
-        it("should allow passing names", (): void => {
+        it('should allow passing names', (): void => {
             const script: string = `
             function myFunction() {}
             class MyClass {
@@ -345,7 +345,7 @@ describe("functionNameRule", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
         });
 
-        it("should ban non-passing names", (): void => {
+        it('should ban non-passing names', (): void => {
             const script: string = `
             function notMyFunction() {}
             class MyClass {
@@ -356,27 +356,27 @@ describe("functionNameRule", (): void => {
 
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
-                    failure: "Function name does not match /^myFunction$/: notMyFunction",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "function-name",
+                    failure: 'Function name does not match /^myFunction$/: notMyFunction',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'function-name',
                     startPosition: { character: 22, line: 2 }
                 },
                 {
-                    failure: "Method name does not match /^myMethod$/: notMyMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "function-name",
+                    failure: 'Method name does not match /^myMethod$/: notMyMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'function-name',
                     startPosition: { character: 17, line: 4 }
                 },
                 {
-                    failure: "Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "function-name",
+                    failure: 'Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'function-name',
                     startPosition: { character: 25, line: 5 }
                 },
                 {
-                    failure: "Static method name does not match /^myStaticMethod$/: notMyStaticMethod",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "function-name",
+                    failure: 'Static method name does not match /^myStaticMethod$/: notMyStaticMethod',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'function-name',
                     startPosition: { character: 24, line: 6 }
                 }
             ]);

@@ -1,6 +1,6 @@
-import React = require("react");
+import React = require('react');
 
-const role = "some role";
+const role = 'some role';
 
 // Only one role.
 const a = <div role={role} aria-controls />;

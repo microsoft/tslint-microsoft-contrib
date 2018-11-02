@@ -1,6 +1,6 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { AstUtils } from "./AstUtils";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { AstUtils } from './AstUtils';
 
 /**
  * Tracks nested scope of variables.

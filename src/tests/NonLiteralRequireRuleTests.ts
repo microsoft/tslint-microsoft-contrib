@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("nonLiteralRequireRule", (): void => {
-    const ruleName: string = "non-literal-require";
+describe('nonLiteralRequireRule', (): void => {
+    const ruleName: string = 'non-literal-require';
 
-    it("should pass on imports", (): void => {
+    it('should pass on imports', (): void => {
         const script: string = `
             import React = require('react');
         `;
@@ -12,7 +12,7 @@ describe("nonLiteralRequireRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on string literals", (): void => {
+    it('should pass on string literals', (): void => {
         const script: string = `
             const myModule = require('myModule');
         `;
@@ -20,7 +20,7 @@ describe("nonLiteralRequireRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on empty array", (): void => {
+    it('should pass on empty array', (): void => {
         const script: string = `
             const myModule = require([]);
         `;
@@ -28,7 +28,7 @@ describe("nonLiteralRequireRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on array of strings", (): void => {
+    it('should pass on array of strings', (): void => {
         const script: string = `
             const myModule = require(['myModule']);
         `;
@@ -36,22 +36,22 @@ describe("nonLiteralRequireRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on non string literal", (): void => {
+    it('should fail on non string literal', (): void => {
         const script: string = `
             const moduleName = 'myModule';
             const myModule = require(moduleName);`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Non-literal (insecure) parameter passed to require(): moduleName",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "non-literal-require",
+                failure: 'Non-literal (insecure) parameter passed to require(): moduleName',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'non-literal-require',
                 startPosition: { character: 38, line: 3 }
             }
         ]);
     });
 
-    it("should fail on non-string array element", (): void => {
+    it('should fail on non-string array element', (): void => {
         const script: string = `
             let myModule = require([
                 'myModule',
@@ -63,15 +63,15 @@ describe("nonLiteralRequireRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Non-literal (insecure) parameter passed to require(): somethingElse",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "non-literal-require",
+                failure: 'Non-literal (insecure) parameter passed to require(): somethingElse',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'non-literal-require',
                 startPosition: { character: 17, line: 4 }
             },
             {
-                failure: "Non-literal (insecure) parameter passed to require(): getModuleName()",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "non-literal-require",
+                failure: 'Non-literal (insecure) parameter passed to require(): getModuleName()',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'non-literal-require',
                 startPosition: { character: 17, line: 6 }
             }
         ]);

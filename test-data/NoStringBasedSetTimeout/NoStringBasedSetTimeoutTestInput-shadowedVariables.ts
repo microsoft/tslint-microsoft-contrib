@@ -10,7 +10,7 @@ namespace SetTimeoutModule {
     var moduleProp3 = function() {};
 
     var globalProp1: any; // ! shadow !
-    var globalFunctionShadow1 = "not a function"; // ! shadow !
+    var globalFunctionShadow1 = 'not a function'; // ! shadow !
 
     function moduleFunction1(globalProp2: any, moduleProp1: any) {
         // ! shadow !

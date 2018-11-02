@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 let spreadAttributes;
 const a = <img {...this.props} />;

@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("nonLiteralFsPathRule", (): void => {
-    const ruleName: string = "non-literal-fs-path";
+describe('nonLiteralFsPathRule', (): void => {
+    const ruleName: string = 'non-literal-fs-path';
 
-    it("should pass on literal path", (): void => {
+    it('should pass on literal path', (): void => {
         const script: string = `
             const fs = require('fs');
 
@@ -14,7 +14,7 @@ describe("nonLiteralFsPathRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should pass on non related fs functions", (): void => {
+    it('should pass on non related fs functions', (): void => {
         const script: string = `
             const fs = require('fs');
 
@@ -24,7 +24,7 @@ describe("nonLiteralFsPathRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on non literal path", (): void => {
+    it('should fail on non literal path', (): void => {
         const script: string = `
             const fs = require('fs');
             const path = 'file';
@@ -34,9 +34,9 @@ describe("nonLiteralFsPathRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Non-literal (insecure) path passed to fs.existsSync: path",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "non-literal-fs-path",
+                failure: 'Non-literal (insecure) path passed to fs.existsSync: path',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'non-literal-fs-path',
                 startPosition: { character: 27, line: 5 }
             }
         ]);

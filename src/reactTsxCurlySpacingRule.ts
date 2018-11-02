@@ -1,6 +1,6 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 /**
  * TSX curly spacing rule.
@@ -9,18 +9,18 @@ import { ExtendedMetadata } from "./utils/ExtendedMetadata";
  */
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "react-tsx-curly-spacing",
-        type: "style",
-        description: "Consistently use spaces around the brace characters of JSX attributes.",
+        ruleName: 'react-tsx-curly-spacing',
+        type: 'style',
+        description: 'Consistently use spaces around the brace characters of JSX attributes.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        recommendation: "false,",
-        group: "Deprecated"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        recommendation: 'false,',
+        group: 'Deprecated'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -40,7 +40,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         // default value is always
-        this.spacing = options.ruleArguments[0] === "never" ? Spacing.never : Spacing.always;
+        this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
         // default value is to not allow multiline
         this.allowMultiline = false;
         if (options.ruleArguments[1] !== undefined) {
@@ -132,7 +132,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         const text: string = this.getSourceFile()
             .getText()
             .slice(left.getEnd(), right.getStart());
-        return /\s/.test(text.replace(/\/\*.*?\*\//g, ""));
+        return /\s/.test(text.replace(/\/\*.*?\*\//g, ''));
     }
 
     private isMultiline(left: ts.Node, right: ts.Node): boolean {

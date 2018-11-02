@@ -1,8 +1,8 @@
-import * as Lint from "tslint";
-import * as fs from "fs";
-import * as chai from "chai";
-import { Utils } from "../utils/Utils";
-import * as ts from "typescript";
+import * as Lint from 'tslint';
+import * as fs from 'fs';
+import * as chai from 'chai';
+import { Utils } from '../utils/Utils';
+import * as ts from 'typescript';
 
 /**
  * Test Utilities.
@@ -14,17 +14,17 @@ export namespace TestHelper {
     /**
      * This setting must point to your rule .js files. 3rd party libraries may reuse this class and change value.
      */
-    export let RULES_DIRECTORY: string = "dist/src/";
+    export let RULES_DIRECTORY: string = 'dist/src/';
 
     /**
      * This setting must point to your formatter .js files. 3rd party libraries may reuse this class and change value.
      */
-    export let FORMATTER_DIRECTORY: string = "customFormatters/";
+    export let FORMATTER_DIRECTORY: string = 'customFormatters/';
 
     /**
      * You must specify an encoding for file read/writes. 3rd party libraries may reuse this class and change value.
      */
-    export let FILE_ENCODING: string = "utf8";
+    export let FILE_ENCODING: string = 'utf8';
     /* tslint:enable:prefer-const */
 
     export interface FailurePosition {
@@ -106,7 +106,7 @@ export namespace TestHelper {
         }
 
         const options: Lint.ILinterOptions = {
-            formatter: "json",
+            formatter: 'json',
             fix: false,
             rulesDirectory: RULES_DIRECTORY,
             formattersDirectory: FORMATTER_DIRECTORY
@@ -125,10 +125,10 @@ export namespace TestHelper {
             result = linter.getResult();
         } else {
             let filename: string;
-            if (inputFileOrScript.indexOf("import React") > -1) {
-                filename = Utils.absolutePath("file.tsx");
+            if (inputFileOrScript.indexOf('import React') > -1) {
+                filename = Utils.absolutePath('file.tsx');
             } else {
-                filename = Utils.absolutePath("file.ts");
+                filename = Utils.absolutePath('file.ts');
             }
 
             const linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
@@ -166,7 +166,7 @@ export namespace TestHelper {
                 delete expected.startPosition.position;
                 delete expected.endPosition;
                 if (!expected.ruleSeverity) {
-                    expected.ruleSeverity = "ERROR";
+                    expected.ruleSeverity = 'ERROR';
                 }
             }
         );

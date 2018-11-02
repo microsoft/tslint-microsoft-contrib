@@ -1,10 +1,10 @@
-const { red } = require("chalk");
-const fs = require("fs");
-const stripJsonComments = require("strip-json-comments");
+const { red } = require('chalk');
+const fs = require('fs');
+const stripJsonComments = require('strip-json-comments');
 
 function readFile(fileName) {
     try {
-        return fs.readFileSync(fileName, { encoding: "utf8" });
+        return fs.readFileSync(fileName, { encoding: 'utf8' });
     } catch (e) {
         console.log(red(`Unable to read file: ${fileName}. Error code: ${e.code}`));
         process.exit(1);
@@ -13,7 +13,7 @@ function readFile(fileName) {
 
 function writeFile(fileName, data) {
     try {
-        return fs.writeFileSync(fileName, data, { encoding: "utf8" });
+        return fs.writeFileSync(fileName, data, { encoding: 'utf8' });
     } catch (e) {
         console.log(red(`Unable to write file: ${fileName}. Error code: ${e.code}`));
         process.exit(1);

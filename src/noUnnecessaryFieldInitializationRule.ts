@@ -1,26 +1,26 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
-import { AstUtils } from "./utils/AstUtils";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
 
-const FAILURE_UNDEFINED_INIT: string = "Unnecessary field initialization. Field explicitly initialized to undefined: ";
-const FAILURE_UNDEFINED_DUPE: string = "Unnecessary field initialization. Field value already initialized in declaration: ";
+const FAILURE_UNDEFINED_INIT: string = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
+const FAILURE_UNDEFINED_DUPE: string = 'Unnecessary field initialization. Field value already initialized in declaration: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-unnecessary-field-initialization",
-        type: "maintainability",
-        description: "Do not unnecessarily initialize the fields of a class to values they already have.",
+        ruleName: 'no-unnecessary-field-initialization',
+        type: 'maintainability',
+        description: 'Do not unnecessarily initialize the fields of a class to values they already have.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Moderate",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "398, 710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Moderate',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '398, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -49,7 +49,7 @@ class UnnecessaryFieldInitializationRuleWalker extends Lint.RuleWalker {
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         const initializer = node.initializer;
         if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const fieldName: string = "this." + (<ts.Identifier>node.name).getText();
+            const fieldName: string = 'this.' + (<ts.Identifier>node.name).getText();
             if (initializer === undefined) {
                 this.fieldInitializations[fieldName] = undefined;
             } else if (AstUtils.isConstant(initializer)) {

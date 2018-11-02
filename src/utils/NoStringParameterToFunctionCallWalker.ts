@@ -1,8 +1,8 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import { ScopedSymbolTrackingWalker } from "./ScopedSymbolTrackingWalker";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import { ScopedSymbolTrackingWalker } from './ScopedSymbolTrackingWalker';
 
-import { AstUtils } from "./AstUtils";
+import { AstUtils } from './AstUtils';
 
 /**
  * A walker that creates failures whenever it detects a string parameter is being passed to a certain constructor. .
@@ -14,7 +14,7 @@ export class NoStringParameterToFunctionCallWalker extends ScopedSymbolTrackingW
     public constructor(sourceFile: ts.SourceFile, targetFunctionName: string, options: Lint.IOptions, program?: ts.Program) {
         super(sourceFile, options, program);
         this.targetFunctionName = targetFunctionName;
-        this.failureString = "Forbidden " + targetFunctionName + " string parameter: ";
+        this.failureString = 'Forbidden ' + targetFunctionName + ' string parameter: ';
     }
 
     protected visitCallExpression(node: ts.CallExpression) {

@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 const a = <div />;
 const b = <div />;

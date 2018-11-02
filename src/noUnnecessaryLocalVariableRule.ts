@@ -1,25 +1,25 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
-import * as tsutils from "tsutils";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = "Unnecessary local variable: ";
+const FAILURE_STRING: string = 'Unnecessary local variable: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-unnecessary-local-variable",
-        type: "maintainability",
-        description: "Do not declare a variable only to return it from the function on the next line.",
+        ruleName: 'no-unnecessary-local-variable',
+        type: 'maintainability',
+        description: 'Do not declare a variable only to return it from the function on the next line.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "563, 710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '563, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

@@ -1,26 +1,26 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-typeof-undefined",
-        type: "maintainability",
+        ruleName: 'no-typeof-undefined',
+        type: 'maintainability',
         description:
             "Do not use the idiom typeof `x === 'undefined'`. You can safely use the simpler x === undefined " +
-            "or perhaps x == null if you want to check for either null or undefined.",
+            'or perhaps x == null if you want to check for either null or undefined.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
@@ -45,7 +45,7 @@ class NoTypeofUndefinedRuleWalker extends Lint.RuleWalker {
 
     private isUndefinedString(node: ts.Node): boolean {
         if (node.kind === ts.SyntaxKind.StringLiteral) {
-            if ((<ts.StringLiteral>node).text === "undefined") {
+            if ((<ts.StringLiteral>node).text === 'undefined') {
                 return true;
             }
         }

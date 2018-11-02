@@ -1,12 +1,12 @@
 /* tslint:disable:no-irregular-whitespace */
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noRelativeImportsRule", (): void => {
-    const ruleName: string = "no-relative-imports";
+describe('noRelativeImportsRule', (): void => {
+    const ruleName: string = 'no-relative-imports';
 
-    describe("no options", (): void => {
-        it("should pass on absolute path require imports", (): void => {
+    describe('no options', (): void => {
+        it('should pass on absolute path require imports', (): void => {
             const script: string = `
                 import App = require('App');
                 import App = require('common/App');
@@ -15,7 +15,7 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should pass on absolute path ES6 imports", (): void => {
+        it('should pass on absolute path ES6 imports', (): void => {
             const script: string = `
                 import OfficeApp from 'OfficeApp';
                 import OfficeApp from 'common/OfficeApp';
@@ -24,7 +24,7 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolations(ruleName, script, []);
         });
 
-        it("should fail on relative path require import", (): void => {
+        it('should fail on relative path require import', (): void => {
             const script: string = `
                 import App = require('./App');
                 import App = require('./common/App');
@@ -34,37 +34,37 @@ describe("noRelativeImportsRule", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure: "External module is being loaded from a relative path. " + "Please use an absolute path: require('./App')",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    failure: 'External module is being loaded from a relative path. ' + "Please use an absolute path: require('./App')",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 2 }
                 },
                 {
                     failure:
-                        "External module is being loaded from a relative path. " + "Please use an absolute path: require('./common/App')",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                        'External module is being loaded from a relative path. ' + "Please use an absolute path: require('./common/App')",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 3 }
                 },
                 {
                     failure:
-                        "External module is being loaded from a relative path. " + "Please use an absolute path: require('../common/App')",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                        'External module is being loaded from a relative path. ' + "Please use an absolute path: require('../common/App')",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 4 }
                 },
                 {
                     failure:
-                        "External module is being loaded from a relative path. " +
+                        'External module is being loaded from a relative path. ' +
                         "Please use an absolute path: require('./../common/App')",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 5 }
                 }
             ]);
         });
 
-        it("should fail on relative path ES6 import", (): void => {
+        it('should fail on relative path ES6 import', (): void => {
             const script: string = `
                 import OfficeApp from './OfficeApp';
                 import OfficeApp from './common/OfficeApp';
@@ -75,44 +75,44 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolations(ruleName, script, [
                 {
                     failure:
-                        "Imported module is being loaded from a relative path. " +
+                        'Imported module is being loaded from a relative path. ' +
                         "Please use an absolute path: import OfficeApp from './OfficeApp';",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 2 }
                 },
                 {
                     failure:
-                        "Imported module is being loaded from a relative path. " +
+                        'Imported module is being loaded from a relative path. ' +
                         "Please use an absolute path: import OfficeApp from './common/OfficeApp';",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 3 }
                 },
                 {
                     failure:
-                        "Imported module is being loaded from a relative path. " +
+                        'Imported module is being loaded from a relative path. ' +
                         "Please use an absolute path: import OfficeApp from '../common/OfficeApp';",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 4 }
                 },
                 {
                     failure:
-                        "Imported module is being loaded from a relative path. " +
+                        'Imported module is being loaded from a relative path. ' +
                         "Please use an absolute path: import OfficeApp from './../common/OfficeApp';",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 5 }
                 }
             ]);
         });
     });
 
-    describe("allow-siblings enabled", (): void => {
-        const options = ["allow-siblings"];
+    describe('allow-siblings enabled', (): void => {
+        const options = ['allow-siblings'];
 
-        it("should pass on absolute path require imports when siblings allowed", (): void => {
+        it('should pass on absolute path require imports when siblings allowed', (): void => {
             const script: string = `
                 import App = require('App');
                 import App = require('common/App');
@@ -120,7 +120,7 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
         });
 
-        it("should pass on absolute path ES6 imports when siblings allowed", (): void => {
+        it('should pass on absolute path ES6 imports when siblings allowed', (): void => {
             const script: string = `
                 import OfficeApp from 'OfficeApp';
                 import OfficeApp from 'common/OfficeApp';
@@ -140,10 +140,10 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
                     failure:
-                        "External module path starts with reference to parent directory. " +
+                        'External module path starts with reference to parent directory. ' +
                         "Please use an absolute path or sibling files/folders: require('../common/App')",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 30, line: 4 }
                 }
             ]);
@@ -160,10 +160,10 @@ describe("noRelativeImportsRule", (): void => {
             TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                 {
                     failure:
-                        "Imported module path starts with reference to parent directory. " +
+                        'Imported module path starts with reference to parent directory. ' +
                         "Please use an absolute path or sibling files/folders: import OfficeApp from '../common/OfficeApp';",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-relative-imports",
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-relative-imports',
                     startPosition: { character: 17, line: 4 }
                 }
             ]);

@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 // only one role.
 const a = <div role="button" aria-checked />;

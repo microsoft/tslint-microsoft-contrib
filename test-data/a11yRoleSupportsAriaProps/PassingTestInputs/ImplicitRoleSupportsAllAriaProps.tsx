@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 const a = <a href="hrefValue" aria-expanded />;
 const b = <a href="hrefValue" aria-atomic />;

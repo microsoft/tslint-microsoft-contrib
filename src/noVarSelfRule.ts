@@ -1,32 +1,32 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = "Assigning this reference to local variable: ";
+const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "no-var-self",
-        type: "maintainability",
-        description: "Do not use var self = this; instead, manage scope with arrow functions/lambdas.",
+        ruleName: 'no-var-self',
+        type: 'maintainability',
+        description: 'Do not use var self = this; instead, manage scope with arrow functions/lambdas.',
         options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Non-SDL",
-        issueType: "Warning",
-        severity: "Important",
-        level: "Opportunity for Excellence",
-        group: "Deprecated",
-        recommendation: "false,",
-        commonWeaknessEnumeration: "398, 710"
+        issueClass: 'Non-SDL',
+        issueType: 'Warning',
+        severity: 'Important',
+        level: 'Opportunity for Excellence',
+        group: 'Deprecated',
+        recommendation: 'false,',
+        commonWeaknessEnumeration: '398, 710'
     };
 
     private static isWarningShown: boolean = false;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
-            console.warn("Warning: no-var-self rule is deprecated. Replace your usage with the TSLint no-this-assignment rule.");
+            console.warn('Warning: no-var-self rule is deprecated. Replace your usage with the TSLint no-this-assignment rule.');
             Rule.isWarningShown = true;
         }
         return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));

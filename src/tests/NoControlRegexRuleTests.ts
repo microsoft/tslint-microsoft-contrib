@@ -1,10 +1,10 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noControlRegexRule", (): void => {
-    const ruleName: string = "no-control-regex";
+describe('noControlRegexRule', (): void => {
+    const ruleName: string = 'no-control-regex';
 
-    it("should pass on chars higher than x20", (): void => {
+    it('should pass on chars higher than x20', (): void => {
         const script: string = `
             var pattern1 = /\\x20/;
             var pattern2 = /\\x21/;
@@ -17,7 +17,7 @@ describe("noControlRegexRule", (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it("should fail on x1f", (): void => {
+    it('should fail on x1f', (): void => {
         const script: string = `
             var pattern1 = /\\x1f/;
             var pattern2 = new RegExp("something \\x1f something else");
@@ -26,27 +26,27 @@ describe("noControlRegexRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 28, line: 2 }
             },
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 39, line: 3 }
             },
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 35, line: 4 }
             }
         ]);
     });
 
-    it("should fail on x00", (): void => {
+    it('should fail on x00', (): void => {
         const script: string = `
             var pattern1 = /\\x00/;
             var pattern2 = new RegExp("\\x00");
@@ -55,21 +55,21 @@ describe("noControlRegexRule", (): void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 28, line: 2 }
             },
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 39, line: 3 }
             },
             {
-                failure: "Unexpected control character in regular expression",
-                name: Utils.absolutePath("file.ts"),
-                ruleName: "no-control-regex",
+                failure: 'Unexpected control character in regular expression',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-control-regex',
                 startPosition: { character: 35, line: 4 }
             }
         ]);

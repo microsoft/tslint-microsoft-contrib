@@ -10,8 +10,8 @@ class TestClassIssue46 {
 
         //Strings
         const alertNum = 1;
-        setTimeout("alert(" + alertNum + ")", 100);
-        window.setTimeout("alert(" + alertNum + ")", 100);
+        setTimeout('alert(' + alertNum + ')', 100);
+        window.setTimeout('alert(' + alertNum + ')', 100);
 
         //TS Template Strings
         setTimeout(`alert(${alertNum})`, 100);

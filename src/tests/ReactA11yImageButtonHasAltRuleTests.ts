@@ -1,13 +1,13 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
 /**
  * Unit tests for react-a11y-image-button-has-alt rule.
  */
-describe("reactA11yImageButtonHasAlt", (): void => {
-    const ruleName: string = "react-a11y-image-button-has-alt";
+describe('reactA11yImageButtonHasAlt', (): void => {
+    const ruleName: string = 'react-a11y-image-button-has-alt';
 
-    describe("should pass", (): void => {
+    describe('should pass', (): void => {
         it("when there has no input element with type='image'", (): void => {
             const script: string = `
                 import React = require('react');
@@ -29,7 +29,7 @@ describe("reactA11yImageButtonHasAlt", (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when input element has an expression for its type.", (): void => {
+        it('when input element has an expression for its type.', (): void => {
             const script: string = `
                 import React = require('react');
                 const type: string = "text";
@@ -39,7 +39,7 @@ describe("reactA11yImageButtonHasAlt", (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when input element has an expression for its type thats undefined.", (): void => {
+        it('when input element has an expression for its type thats undefined.', (): void => {
             const script: string = `
                 import React = require('react');
                 const type = undefined;
@@ -50,7 +50,7 @@ describe("reactA11yImageButtonHasAlt", (): void => {
         });
     });
 
-    describe("should fail", (): void => {
+    describe('should fail', (): void => {
         it("when input element with type='image' has no alt attribute.", (): void => {
             const script: string = `
                 import React = require('react');
@@ -60,13 +60,13 @@ describe("reactA11yImageButtonHasAlt", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: 'Inputs element with type="image" must have alt attribute.'
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: 'Inputs element with type="image" must have alt attribute.'
@@ -86,31 +86,31 @@ describe("reactA11yImageButtonHasAlt", (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 3 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 4 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 5 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 6 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'
                 },
                 {
-                    name: Utils.absolutePath("file.tsx"),
+                    name: Utils.absolutePath('file.tsx'),
                     ruleName: ruleName,
                     startPosition: { character: 27, line: 7 },
                     failure: 'Inputs element with type="image" must have non-empty alt attribute.'

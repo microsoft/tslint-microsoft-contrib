@@ -1,4 +1,4 @@
-var f = new Function("doSomething()");
+var f = new Function('doSomething()');
 
 () => {
     alert(1);

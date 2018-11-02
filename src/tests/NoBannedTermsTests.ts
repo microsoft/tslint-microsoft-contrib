@@ -1,11 +1,11 @@
-import { Utils } from "../utils/Utils";
-import { TestHelper } from "./TestHelper";
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe("noBannedTermsRule", (): void => {
-    const RULE_NAME: string = "no-banned-terms";
+describe('noBannedTermsRule', (): void => {
+    const RULE_NAME: string = 'no-banned-terms';
 
-    describe("module variables", () => {
-        it("should not refer to caller", (): void => {
+    describe('module variables', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -13,16 +13,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 25, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -30,16 +30,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 25, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -47,16 +47,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 25, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -64,9 +64,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 25, line: 2 }
                     }
                 ]
@@ -74,8 +74,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("module functions", () => {
-        it("should not refer to caller", (): void => {
+    describe('module functions', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -83,16 +83,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -100,16 +100,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -117,16 +117,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -134,9 +134,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
@@ -144,8 +144,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("class variables", () => {
-        it("should not refer to caller", (): void => {
+    describe('class variables', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -153,16 +153,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -170,16 +170,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -187,16 +187,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -204,9 +204,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
@@ -214,8 +214,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("class properties", () => {
-        it("should not refer to caller", (): void => {
+    describe('class properties', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -225,22 +225,22 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 3 }
                     },
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 4 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -250,22 +250,22 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 3 }
                     },
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 4 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -275,22 +275,22 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 3 }
                     },
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 4 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -300,15 +300,15 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 3 }
                     },
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 4 }
                     }
                 ]
@@ -316,8 +316,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("class methods", () => {
-        it("should not refer to caller", (): void => {
+    describe('class methods', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -325,16 +325,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -342,16 +342,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -359,16 +359,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -376,9 +376,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
@@ -386,8 +386,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("methods parameters", () => {
-        it("should not refer to caller", (): void => {
+    describe('methods parameters', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -395,16 +395,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 28, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -412,16 +412,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 28, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -429,16 +429,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 28, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `class Sample {
@@ -446,9 +446,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 28, line: 2 }
                     }
                 ]
@@ -456,8 +456,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("function parameters", () => {
-        it("should not refer to caller", (): void => {
+    describe('function parameters', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -465,16 +465,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 37, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -482,16 +482,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 37, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -499,16 +499,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 37, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -516,9 +516,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 37, line: 2 }
                     }
                 ]
@@ -526,8 +526,8 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("arrow function parameters", () => {
-        it("should not refer to caller", (): void => {
+    describe('arrow function parameters', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -535,16 +535,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 33, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -552,16 +552,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 33, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -569,16 +569,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 33, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `module Sample {
@@ -586,9 +586,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 33, line: 2 }
                     }
                 ]
@@ -596,54 +596,54 @@ describe("noBannedTermsRule", (): void => {
         });
     });
 
-    describe("local variables", () => {
-        it("should not refer to caller", (): void => {
+    describe('local variables', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(RULE_NAME, `var caller;`, [
                 {
-                    failure: "Forbidden reference to banned term: caller",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-banned-terms",
+                    failure: 'Forbidden reference to banned term: caller',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-banned-terms',
                     startPosition: { character: 5, line: 1 }
                 }
             ]);
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(RULE_NAME, `var callee;`, [
                 {
-                    failure: "Forbidden reference to banned term: callee",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-banned-terms",
+                    failure: 'Forbidden reference to banned term: callee',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-banned-terms',
                     startPosition: { character: 5, line: 1 }
                 }
             ]);
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(RULE_NAME, `var arguments`, [
                 {
-                    failure: "Forbidden reference to banned term: arguments",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-banned-terms",
+                    failure: 'Forbidden reference to banned term: arguments',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-banned-terms',
                     startPosition: { character: 5, line: 1 }
                 }
             ]);
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(RULE_NAME, `var eval;`, [
                 {
-                    failure: "Forbidden reference to banned term: eval",
-                    name: Utils.absolutePath("file.ts"),
-                    ruleName: "no-banned-terms",
+                    failure: 'Forbidden reference to banned term: eval',
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-banned-terms',
                     startPosition: { character: 5, line: 1 }
                 }
             ]);
         });
     });
 
-    describe("interface declarations", () => {
-        it("should not refer to caller", (): void => {
+    describe('interface declarations', () => {
+        it('should not refer to caller', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `interface Sample {
@@ -651,16 +651,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: caller",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: caller',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to callee", (): void => {
+        it('should not refer to callee', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `interface Sample {
@@ -668,16 +668,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: callee",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: callee',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to arguments", (): void => {
+        it('should not refer to arguments', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `interface Sample {
@@ -685,16 +685,16 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: arguments",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: arguments',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]
             );
         });
 
-        it("should not refer to eval", (): void => {
+        it('should not refer to eval', (): void => {
             TestHelper.assertViolations(
                 RULE_NAME,
                 `interface Sample {
@@ -702,9 +702,9 @@ describe("noBannedTermsRule", (): void => {
                 }`,
                 [
                     {
-                        failure: "Forbidden reference to banned term: eval",
-                        name: Utils.absolutePath("file.ts"),
-                        ruleName: "no-banned-terms",
+                        failure: 'Forbidden reference to banned term: eval',
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'no-banned-terms',
                         startPosition: { character: 21, line: 2 }
                     }
                 ]

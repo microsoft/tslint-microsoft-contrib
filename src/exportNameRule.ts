@@ -1,34 +1,34 @@
-import * as ts from "typescript";
-import * as Lint from "tslint";
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
 
-import { Utils } from "./utils/Utils";
-import { AstUtils } from "./utils/AstUtils";
-import { ExtendedMetadata } from "./utils/ExtendedMetadata";
+import { Utils } from './utils/Utils';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-export const OPTION_IGNORE_CASE: string = "ignore-case";
+export const OPTION_IGNORE_CASE: string = 'ignore-case';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: "export-name",
-        type: "maintainability",
-        description: "The name of the exported module must match the filename of the source file",
+        ruleName: 'export-name',
+        type: 'maintainability',
+        description: 'The name of the exported module must match the filename of the source file',
         options: {
-            type: "list",
+            type: 'list',
             listType: {
                 anyOf: [
                     {
-                        type: "string"
+                        type: 'string'
                     },
                     {
-                        type: "object",
+                        type: 'object',
                         properties: {
-                            "ignore-case": {
-                                type: "boolean"
+                            'ignore-case': {
+                                type: 'boolean'
                             },
                             allow: {
-                                type: "array",
+                                type: 'array',
                                 items: {
-                                    type: "string"
+                                    type: 'string'
                                 }
                             }
                         }
@@ -36,17 +36,17 @@ export class Rule extends Lint.Rules.AbstractRule {
                 ]
             }
         },
-        optionsDescription: "",
+        optionsDescription: '',
         typescriptOnly: true,
-        issueClass: "Ignored",
-        issueType: "Warning",
-        severity: "Low",
-        level: "Opportunity for Excellence",
-        group: "Clarity",
-        commonWeaknessEnumeration: "710"
+        issueClass: 'Ignored',
+        issueType: 'Warning',
+        severity: 'Low',
+        level: 'Opportunity for Excellence',
+        group: 'Clarity',
+        commonWeaknessEnumeration: '710'
     };
 
-    public static FAILURE_STRING: string = "The exported module or identifier name must match the file name. Found: ";
+    public static FAILURE_STRING: string = 'The exported module or identifier name must match the file name. Found: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new ExportNameWalker(sourceFile, this.getOptions()));
@@ -59,7 +59,7 @@ export class Rule extends Lint.Rules.AbstractRule {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return typeof options[0] === "object" ? options[0].allow : options;
+            return typeof options[0] === 'object' ? options[0].allow : options;
         }
         return undefined;
     }
@@ -68,7 +68,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static getIgnoreCase(options: Lint.IOptions): boolean {
         /* tslint:enable:function-name */
         if (options instanceof Array) {
-            return typeof options[0] === "object" ? options[0]["ignore-case"] : true;
+            return typeof options[0] === 'object' ? options[0]['ignore-case'] : true;
         }
         return true;
     }
@@ -156,11 +156,11 @@ export class ExportNameWalker extends Lint.RuleWalker {
     }
 
     private validateExport(exportedName: string, node: ts.Node): void {
-        const flags = Rule.getIgnoreCase(this.getOptions()) ? "i" : "";
-        const regex: RegExp = new RegExp(exportedName + "..*", flags); // filename must be exported name plus any extension
+        const flags = Rule.getIgnoreCase(this.getOptions()) ? 'i' : '';
+        const regex: RegExp = new RegExp(exportedName + '..*', flags); // filename must be exported name plus any extension
         if (!regex.test(this.getFilename())) {
             if (!this.isSuppressed(exportedName)) {
-                const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + " and " + exportedName;
+                const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
@@ -168,7 +168,7 @@ export class ExportNameWalker extends Lint.RuleWalker {
 
     private getFilename(): string {
         const filename = this.getSourceFile().fileName;
-        const lastSlash = filename.lastIndexOf("/");
+        const lastSlash = filename.lastIndexOf('/');
         if (lastSlash > -1) {
             return filename.substring(lastSlash + 1);
         }

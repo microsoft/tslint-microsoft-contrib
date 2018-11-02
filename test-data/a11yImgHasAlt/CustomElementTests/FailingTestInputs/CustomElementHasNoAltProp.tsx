@@ -1,4 +1,4 @@
-import React = require("react");
+import React = require('react');
 
 let Picture = props => <span />;
 

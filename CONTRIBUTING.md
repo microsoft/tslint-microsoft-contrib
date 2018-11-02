@@ -30,8 +30,6 @@ Two npm scripts can be used to watch files and simplify testing and linting with
 
 Use `npm start` to start watcher that will rebuild rules and Mocha tests.
 
-> NOTE: Run `npm test` before `npm start` to copy all required files to `dist` folder.
-
 Use `npm run watch:run-tests` that will re-run tests (both Mocha and TSLint) and lint code when: files changed in `tests`, `test-data` or `npm start` compiled rules or tests code.
 
 > NOTE: It is recommended to wait when `npm start` will finish initial compilation before starting `npm run watch:run-tests` (in separate terminal).

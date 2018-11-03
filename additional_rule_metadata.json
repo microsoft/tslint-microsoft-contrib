@@ -587,7 +587,7 @@
         "severity": "Low",
         "level": "Opportunity for Excellence",
         "group": "Whitespace",
-        "recommendation": "[true, {\"singleline\": \"never\", \"multiline\": \"never\"}], // forcing trailing commas for multi-line\n                    // lists results in lists that are easier to reorder and version control diffs that are more clear.\n                    // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the\n                    // internal MS JavaScript coding standard does discourage it.",
+        "recommendation": "[true, { \"singleline\": \"never\", \"multiline\": \"never\" }], // forcing trailing commas for multi-line\n                    // lists results in lists that are easier to reorder and version control diffs that are more clear.\n                    // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the\n                    // internal MS JavaScript coding standard does discourage it.",
         "commonWeaknessEnumeration": "710"
     },
     "triple-equals": {

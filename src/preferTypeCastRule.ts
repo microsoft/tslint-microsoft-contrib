@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'true,   // pick either type-cast format and use it consistently',
+        recommendation: 'true, // pick either type-cast format and use it consistently',
         commonWeaknessEnumeration: '398, 710'
     };
 

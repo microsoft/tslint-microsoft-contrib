@@ -3,7 +3,7 @@
  * This file is exported in the npm/nuget package as ./tslint.json.
  */
 module.exports = {
-    rules: {
+    'rules': {
         /**
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
@@ -37,7 +37,7 @@ module.exports = {
          * common bug patterns in the code or enforce type safety.
          */
         'await-promise': true,
-        forin: true,
+        'forin': true,
         'jquery-deferred-must-complete': true,
         'label-position': true,
         'match-default-export-name': true,
@@ -86,7 +86,7 @@ module.exports = {
         'no-with-statement': true,
         'promise-function-async': true,
         'promise-must-complete': true,
-        radix: true,
+        'radix': true,
         'react-this-binding-issue': true,
         'react-unused-props-and-state': true,
         'restrict-plus-operands': true, // the plus operand should really only be used for strings and numbers
@@ -124,7 +124,7 @@ module.exports = {
         'max-func-body-length': [true, 100, { 'ignore-parameters-to-function-regex': '^describe$' }],
         'max-line-length': [true, 140],
         'member-access': true,
-        'member-ordering': [true, { order: 'fields-first' }],
+        'member-ordering': [true, { 'order': 'fields-first' }],
         'mocha-unneeded-done': true,
         'new-parens': true,
         'newline-per-chained-call': true,
@@ -170,16 +170,7 @@ module.exports = {
         'prefer-template': true,
         'prefer-while': true,
         'type-literal-delimiter': true,
-        typedef: [
-            true,
-            'call-signature',
-            'arrow-call-signature',
-            'parameter',
-            'arrow-parameter',
-            'property-declaration',
-            'variable-declaration',
-            'member-variable-declaration'
-        ],
+        'typedef': [true, 'call-signature', 'arrow-call-signature', 'parameter', 'arrow-parameter', 'property-declaration', 'variable-declaration', 'member-variable-declaration'],
         'underscore-consistent-invocation': true,
         'unified-signatures': true,
         'use-default-type-parameter': true,
@@ -211,12 +202,12 @@ module.exports = {
          * Whitespace related rules. The only recommended whitespace strategy is to pick a single format and
          * be consistent.
          */
-        align: [true, 'parameters', 'arguments', 'statements'],
-        curly: true,
-        encoding: true,
-        eofline: true,
+        'align': [true, 'parameters', 'arguments', 'statements'],
+        'curly': true,
+        'encoding': true,
+        'eofline': true,
         'import-spacing': true,
-        indent: [true, 'spaces'],
+        'indent': [true, 'spaces'],
         'linebreak-style': true,
         'newline-before-return': true,
         'no-consecutive-blank-lines': true,
@@ -227,23 +218,23 @@ module.exports = {
         'no-unnecessary-semicolons': true,
         'object-literal-key-quotes': [true, 'as-needed'],
         'one-line': [true, 'check-open-brace', 'check-catch', 'check-else', 'check-whitespace'],
-        quotemark: [true, 'single'],
-        semicolon: [true, 'always'],
+        'quotemark': [true, 'single'],
+        'semicolon': [true, 'always'],
         'space-within-parens': true,
-        'trailing-comma': [true, { singleline: 'never', multiline: 'never' }], // forcing trailing commas for multi-line
-        // lists results in lists that are easier to reorder and version control diffs that are more clear.
-        // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
-        // internal MS JavaScript coding standard does discourage it.
+        'trailing-comma': [true, { 'singleline': 'never', 'multiline': 'never' }], // forcing trailing commas for multi-line
+                    // lists results in lists that are easier to reorder and version control diffs that are more clear.
+                    // Many teams like to have multiline be 'always'. There is no clear consensus on this rule but the
+                    // internal MS JavaScript coding standard does discourage it.
         'typedef-whitespace': false,
-        whitespace: [true, 'check-branch', 'check-decl', 'check-operator', 'check-separator', 'check-type'],
+        'whitespace': [true, 'check-branch', 'check-decl', 'check-operator', 'check-separator', 'check-type'],
 
         /**
          * Controversial/Configurable rules.
          */
-        ban: false, // only enable this if you have some code pattern that you want to ban
+        'ban': false, // only enable this if you have some code pattern that you want to ban
         'ban-types': true,
         'cyclomatic-complexity': true,
-        deprecation: false, // deprecated APIs are sometimes unavoidable
+        'deprecation': false, // deprecated APIs are sometimes unavoidable
         'file-header': false, // enable this rule only if you are legally required to add a file header
         'import-blacklist': false, // enable and configure this as you desire
         'interface-over-type-literal': false, // there are plenty of reasons to prefer interfaces
@@ -278,6 +269,6 @@ module.exports = {
         'no-var-self': false,
         'react-tsx-curly-spacing': false,
         'typeof-compare': false, // the valid-typeof rule is currently superior to this version
-        'valid-typeof': false
+        'valid-typeof': false,
     }
 };

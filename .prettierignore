@@ -1,7 +1,7 @@
-# Discard build directory
+# Build directory
 dist/
 
-# Discard definition files
+# Definition files
 *.d.ts
 
 # NPM files

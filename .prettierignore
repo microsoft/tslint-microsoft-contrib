@@ -10,3 +10,6 @@ package-lock.json
 
 # Test files
 test-data/NoUnnecessarySemicolonsTestInput.ts
+
+# Generated files
+recommended_ruleset.js

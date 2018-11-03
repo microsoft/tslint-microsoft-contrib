@@ -4,24 +4,12 @@
     "rules": {
         // Core rules with custom configurations
         "array-type": [true, "array"],
-        "max-line-length": [true, 140],
         "no-console": [true, "debug", "error", "info", "log", "time", "timeEnd", "trace"],
-        "object-literal-key-quotes": [true, "as-needed"],
         "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
-        "quotemark": [true, "single"],
-        "trailing-comma": [
-            true,
-            {
-                "singleline": "never",
-                "multiline": "never"
-            }
-        ],
         "triple-equals": [true, "allow-null-check"],
-        "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
 
         // Core rules we plan on enabling
         // See https://github.com/Microsoft/tslint-microsoft-contrib/issues/491
-        "align": false,
         "ban-types": false,
         "deprecation": false,
         "eofline": false,
@@ -42,8 +30,6 @@
         "strict-type-predicates": false,
 
         // Core rules intentionally disabled
-        "arrow-parens": false,
-        "arrow-return-shorthand": false,
         "comment-format": false,
         "completed-docs": false,
         "cyclomatic-complexity": false,
@@ -64,8 +50,6 @@
         "object-literal-sort-keys": false,
         "ordered-imports": false,
         "prefer-template": false,
-        "space-before-function-name": false,
-        "space-before-function-paren": false,
         "typedef": false,
         "typedef-whitespace": false,
 
@@ -107,7 +91,6 @@
         "no-increment-decrement": true,
         "no-inner-html": true,
         "no-invalid-regexp": true,
-        "no-irregular-whitespace": true,
         "no-jquery-raw-elements": true,
         "no-missing-visibility-modifiers": true,
         "no-multiple-var-decl": true,
@@ -131,14 +114,12 @@
         "no-unnecessary-field-initialization": true,
         "no-unnecessary-local-variable": true,
         "no-unnecessary-override": true,
-        "no-unnecessary-semicolons": true,
         "no-unnecessary-type-assertion": false,
         "no-unsupported-browser-code": true,
         "no-useless-files": true,
         "no-with-statement": true,
         "non-literal-fs-path": true,
         "non-literal-require": true,
-        "number-literal-format": true,
         "possible-timing-attack": true,
         "prefer-array-literal": true,
         "prefer-conditional-expression": false,
@@ -168,7 +149,6 @@
         "react-no-dangerous-html": true,
         "react-this-binding-issue": true,
         "react-unused-props-and-state": true,
-        "space-within-parens": true,
         "switch-final-break": true,
         "type-literal-delimiter": false,
         "underscore-consistent-invocation": true,

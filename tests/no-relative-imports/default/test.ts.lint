@@ -1,6 +1,10 @@
 import App = require('App');
 import App = require('common/App');
-
+import App = require('common/dotted.folder/App');
+import App = require('common/./App');
+             ~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common/./App')]
+import App = require('common/../App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common/../App')]
 import App = require('./App');
              ~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('./App')]
 import App = require('./common/App');
@@ -9,9 +13,26 @@ import App = require('../common/App');
              ~~~~~~~~~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('../common/App')]
 import App = require('./../common/App');
              ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('./../common/App')]
+import App = require('./common/./App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('./common/./App')]
+import App = require('./common/../App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('./common/../App')]
+
+import App = require('common\\App');
+import App = require('.\\common\\App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~ [External module is being loaded from a relative path. Please use an absolute path: require('.\\common\\App')]
+import App = require('common\\.\\App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common\\.\\App')]
+import App = require('common\\..\\App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common\\..\\App')]
 
 import OfficeApp from 'OfficeApp';
 import OfficeApp from 'common/OfficeApp';
+import OfficeApp from 'common/dotted.folder/OfficeApp';
+import OfficeApp from 'common/./OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common/./OfficeApp';]
+import OfficeApp from 'common/../OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common/../OfficeApp';]
 import OfficeApp from './OfficeApp';
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './OfficeApp';]
 import OfficeApp from './common/OfficeApp';
@@ -20,3 +41,15 @@ import OfficeApp from '../common/OfficeApp';
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from '../common/OfficeApp';]
 import OfficeApp from './../common/OfficeApp';
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './../common/OfficeApp';]
+import OfficeApp from './common/./OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './common/./OfficeApp';]
+import OfficeApp from './common/../OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from './common/../OfficeApp';]
+
+import OfficeApp from 'common\\OfficeApp';
+import OfficeApp from '.\\common\\OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module is being loaded from a relative path. Please use an absolute path: import OfficeApp from '.\\common\\OfficeApp';]
+import OfficeApp from 'common\\.\\OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common\\.\\OfficeApp';]
+import OfficeApp from 'common\\..\\OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common\\..\\OfficeApp';]

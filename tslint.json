@@ -30,6 +30,7 @@
         "strict-type-predicates": false,
 
         // Core rules intentionally disabled
+        "arrow-return-shorthand": false,
         "comment-format": false,
         "completed-docs": false,
         "cyclomatic-complexity": false,

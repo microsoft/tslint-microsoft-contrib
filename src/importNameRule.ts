@@ -171,9 +171,8 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     private makeCamelCase(input: string): string {
-        // tslint:disable-next-line:variable-name
         return input.replace(
-            /[-|\.|_](.)/g,
+            /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
             (_match: string, group1: string): string => {
                 return group1.toUpperCase();
             }

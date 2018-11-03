@@ -185,6 +185,7 @@
     "react-a11y-lang": true,
     "react-a11y-meta": true,
     "react-a11y-no-onchange": true,
+    "use-simple-attribute": true,
     "react-a11y-props": true,
     "react-a11y-proptypes": true,
     "react-a11y-required": true,

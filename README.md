@@ -938,6 +938,15 @@ There certainly are a lot of options! Here are some links to get you started.
     </tr>
     <tr>
       <td>
+        <code>use-simple-attribute</code>
+      </td>
+      <td>
+        Enforce usage of only simple attribute types.
+      </td>
+      <td>1.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-props</code>
       </td>
       <td>

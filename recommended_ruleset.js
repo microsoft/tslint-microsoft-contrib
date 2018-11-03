@@ -97,6 +97,7 @@ module.exports = {
         "triple-equals": [true, "allow-null-check"],
         "use-isnan": true,
         "use-named-parameter": true,
+        "use-simple-attribute": true,
 
         /**
          * Code Clarity. The following rules should be turned on because they make the code

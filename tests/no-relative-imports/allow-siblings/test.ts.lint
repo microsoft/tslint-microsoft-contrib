@@ -1,15 +1,49 @@
 import App = require('App');
 import App = require('common/App');
+import App = require('common/dotted.folder/App');
+import App = require('common/./App');
+             ~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common/./App')]
+import App = require('common/../App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common/../App')]
 import App = require('./App');
 import App = require('./common/App');
 import App = require('../common/App');
              ~~~~~~~~~~~~~~~~~~~~~~~~ [External module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: require('../common/App')]
 import App = require('./../common/App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('./../common/App')]
+import App = require('./common/./App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('./common/./App')]
+import App = require('./common/../App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('./common/../App')]
+
+import App = require('common\\App');
+import App = require('.\\common\\App');
+import App = require('common\\.\\App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common\\.\\App')]
+import App = require('common\\..\\App');
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~ [External module path should not contain reference to current or parent directory inside: require('common\\..\\App')]
 
 import OfficeApp from 'OfficeApp';
 import OfficeApp from 'common/OfficeApp';
+import OfficeApp from 'common/dotted.folder/OfficeApp';
+import OfficeApp from 'common/./OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common/./OfficeApp';]
+import OfficeApp from 'common/../OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common/../OfficeApp';]
 import OfficeApp from './OfficeApp';
 import OfficeApp from './common/OfficeApp';
 import OfficeApp from '../common/OfficeApp';
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path starts with reference to parent directory. Please use an absolute path or sibling files/folders: import OfficeApp from '../common/OfficeApp';]
 import OfficeApp from './../common/OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from './../common/OfficeApp';]
+import OfficeApp from './common/./OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from './common/./OfficeApp';]
+import OfficeApp from './common/../OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from './common/../OfficeApp';]
+
+import OfficeApp from 'common\\OfficeApp';
+import OfficeApp from '.\\common\\OfficeApp';
+import OfficeApp from 'common\\.\\OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common\\.\\OfficeApp';]
+import OfficeApp from 'common\\..\\OfficeApp';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Imported module path should not contain reference to current or parent directory inside: import OfficeApp from 'common\\..\\OfficeApp';]

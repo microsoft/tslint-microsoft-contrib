@@ -185,7 +185,6 @@
     "react-a11y-lang": true,
     "react-a11y-meta": true,
     "react-a11y-no-onchange": true,
-    "use-simple-attribute": true,
     "react-a11y-props": true,
     "react-a11y-proptypes": true,
     "react-a11y-required": true,
@@ -205,6 +204,7 @@
     "underscore-consistent-invocation": true,
     "use-default-type-parameter": false,
     "use-named-parameter": true,
+    "use-simple-attribute": true,
 
     // tslint-microsoft-contrib rules disabled
     "missing-jsdoc": false,

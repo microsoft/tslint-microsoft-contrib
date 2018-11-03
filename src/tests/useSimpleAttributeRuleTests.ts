@@ -5,11 +5,8 @@ import {TestHelper} from './TestHelper';
  */
 describe('useSimpleAttributeRule', () : void => {
     const ruleName : string = 'use-simple-attribute';
-    const binaryExpressionErrorMessage: string = 'Attribute containes a complex binary expression';
-    const trenaryExpressionErrorMessage: string = 'Attribute contains a trenary expression';
-    it('if this rule is out then first check doesnt work', () : void => {
-        TestHelper.assertNoViolation(ruleName, 'someScript');
-    });
+    const binaryExpressionErrorMessage: string = 'Attribute contains a complex binary expression';
+    const ternaryExpressionErrorMessage: string = 'Attribute contains a ternary expression';
     it('should fail if only attribute initializer is a complex binary expression', () : void => {
         const script : string = `
         import React = require('react');
@@ -46,7 +43,7 @@ describe('useSimpleAttributeRule', () : void => {
 
         TestHelper.assertNoViolation(ruleName, script);
     });
-    it('should fail if only attribute initializer is a trenary expression', () : void => {
+    it('should fail if only attribute initializer is a ternary expression', () : void => {
         const script : string = `
         import React = require('react');
         const someVar = 3;
@@ -55,13 +52,13 @@ describe('useSimpleAttributeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: trenaryExpressionErrorMessage,
+                failure: ternaryExpressionErrorMessage,
                 name: Utils.absolutePath('file.tsx'),
                 ruleName: ruleName,
                 startPosition: { character: 25, line: 4 }
             }]);
     });
-    it('should fail if any attribute initializer is a trenary expression', () : void => {
+    it('should fail if any attribute initializer is a ternary expression', () : void => {
         const script : string = `
         import React = require('react');
         const someVar = 3;
@@ -70,13 +67,13 @@ describe('useSimpleAttributeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: trenaryExpressionErrorMessage,
+                failure: ternaryExpressionErrorMessage,
                 name: Utils.absolutePath('file.tsx'),
                 ruleName: ruleName,
                 startPosition: { character: 25, line: 4 }
             }]);
     });
-    it('should fail if any attribute initializer is a trenary expression or a complex binary expression', () : void => {
+    it('should fail if any attribute initializer is a ternary expression or a complex binary expression', () : void => {
         const script : string = `
         import React = require('react');
         const someVar = 3;
@@ -85,7 +82,7 @@ describe('useSimpleAttributeRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: trenaryExpressionErrorMessage,
+                failure: ternaryExpressionErrorMessage,
                 name: Utils.absolutePath('file.tsx'),
                 ruleName: ruleName,
                 startPosition: { character: 25, line: 4 }

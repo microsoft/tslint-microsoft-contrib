@@ -47,15 +47,15 @@ class UseSimpleAttributeRuleWalker extends Lint.RuleWalker {
             // Handle Binary Expressions
             const binaryExpression = <ts.BinaryExpression>this.getNextNodeRecursive(attribute, ts.SyntaxKind.BinaryExpression);
             if (binaryExpression && !this.isSimpleBinaryExpression(binaryExpression)) {
-                const binaryExpressionErrorMessage: string = 'Attribute containes a complex binary expression';
+                const binaryExpressionErrorMessage: string = 'Attribute contains a complex binary expression';
                 this.addFailureAt(node.getStart(), node.getWidth(), binaryExpressionErrorMessage);
             }
 
-            // Handle Trenary Expression
-            const trenaryExpression = <ts.ConditionalExpression>this.getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
-            if (trenaryExpression) {
-                const trenaryExpressionErrorMessage: string = 'Attribute contains a trenary expression';
-                this.addFailureAt(node.getStart(), node.getWidth(), trenaryExpressionErrorMessage);
+            // Handle Ternary Expression
+            const ternaryExpression = <ts.ConditionalExpression>this.getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
+            if (ternaryExpression) {
+                const ternaryExpressionErrorMessage: string = 'Attribute contains a ternary expression';
+                this.addFailureAt(node.getStart(), node.getWidth(), ternaryExpressionErrorMessage);
             }
         }
     }

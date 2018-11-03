@@ -259,7 +259,7 @@ module.exports = {
         'prefer-conditional-expression': false, // unnecessarily strict
         'prefer-switch': false, // more of a style preference
         'prefer-type-cast': true, // pick either type-cast format and use it consistently
-        'return-undefined': false, // this actually affect the readability of the code
+        'return-undefined': false, // this actually affects the readability of the code
         'space-before-function-paren': false, // turn this on if this is really your coding standard
 
         /**

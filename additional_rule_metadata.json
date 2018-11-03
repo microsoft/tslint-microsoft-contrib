@@ -23,7 +23,7 @@
         "severity": "Critical",
         "level": "Opportunity for Excellence",
         "group": "Configurable",
-        "recommendation": "false,                // only enable this if you have some code pattern that you want to ban"
+        "recommendation": "false, // only enable this if you have some code pattern that you want to ban"
     },
     "class-name": {
         "issueClass": "Non-SDL",
@@ -178,7 +178,7 @@
         "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Configurable",
-        "recommendation": "false,  // pick either type-cast format and use it consistently",
+        "recommendation": "false, // pick either type-cast format and use it consistently",
         "commonWeaknessEnumeration": "398, 710"
     },
     "no-any": {
@@ -332,7 +332,7 @@
         "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Configurable",
-        "recommendation": "false,  // your project may require mergeable namespaces",
+        "recommendation": "false, // your project may require mergeable namespaces",
         "commonWeaknessEnumeration": "710"
     },
     "no-namespace": {
@@ -341,7 +341,7 @@
         "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Configurable",
-        "recommendation": "false,       // only enable this if you are not using modules/namespaces",
+        "recommendation": "false, // only enable this if you are not using modules/namespaces",
         "commonWeaknessEnumeration": "710"
     },
     "no-null-keyword": {
@@ -359,7 +359,7 @@
         "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Configurable",
-        "recommendation": "true,        // in general you should use a module system and not /// reference imports",
+        "recommendation": "true, // in general you should use a module system and not /// reference imports",
         "commonWeaknessEnumeration": "398, 710"
     },
     "no-require-imports": {
@@ -393,7 +393,7 @@
         "severity": "Low",
         "level": "Opportunity for Excellence",
         "group": "Deprecated",
-        "recommendation": "false,  // now supported by TypeScript compiler",
+        "recommendation": "false, // now supported by TypeScript compiler",
         "commonWeaknessEnumeration": "398, 484, 710"
     },
     "no-trailing-whitespace": {
@@ -411,7 +411,7 @@
         "severity": "Critical",
         "level": "Opportunity for Excellence",
         "group": "Deprecated",
-        "recommendation": "false,               // now supported by TypeScript compiler"
+        "recommendation": "false, // now supported by TypeScript compiler"
     },
     "no-unsafe-finally": {
         "issueClass": "Non-SDL",
@@ -511,7 +511,7 @@
         "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Clarity",
-        "recommendation": "false,  // there are many valid reasons to declare a function",
+        "recommendation": "false, // there are many valid reasons to declare a function",
         "commonWeaknessEnumeration": "710"
     },
     "ordered-imports": {
@@ -685,7 +685,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // enable this rule only if you are legally required to add a file header",
+        "recommendation": "false, // enable this rule only if you are legally required to add a file header",
         "level": "Opportunity for Excellence"
     },
     "max-classes-per-file": {
@@ -693,7 +693,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Clarity",
-        "recommendation": "[true, 3],  // we generally recommend making one public class per file",
+        "recommendation": "[true, 3], // we generally recommend making one public class per file",
         "level": "Opportunity for Excellence"
     },
     "no-parameter-properties": {
@@ -709,7 +709,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // object-literal-shorthand offers an abbreviation not an abstraction",
+        "recommendation": "false, // object-literal-shorthand offers an abbreviation not an abstraction",
         "level": "Opportunity for Excellence"
     },
     "prefer-for-of": {
@@ -733,7 +733,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // enable and configure this as you desire",
+        "recommendation": "false, // enable and configure this as you desire",
         "level": "Opportunity for Excellence"
     },
     "import-spacing": {
@@ -749,7 +749,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // there are plenty of reasons to prefer interfaces",
+        "recommendation": "false, // there are plenty of reasons to prefer interfaces",
         "level": "Opportunity for Excellence"
     },
     "no-empty-interface": {
@@ -765,7 +765,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // if the compiler is satisfied then this is probably not an issue",
+        "recommendation": "false, // if the compiler is satisfied then this is probably not an issue",
         "level": "Opportunity for Excellence"
     },
     "no-magic-numbers": {
@@ -773,7 +773,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,  // by default it will find too many false positives",
+        "recommendation": "false, // by default it will find too many false positives",
         "level": "Opportunity for Excellence"
     },
     "no-string-throw": {
@@ -814,7 +814,7 @@
         "issueType": "Warning",
         "severity": "Low",
         "group": "Configurable",
-        "recommendation": "false,   // turn this on if this is really your coding standard",
+        "recommendation": "false, // turn this on if this is really your coding standard",
         "level": "Opportunity for Excellence"
     },
     "strict-boolean-expressions": {
@@ -830,7 +830,7 @@
         "issueType": "Warning",
         "severity": "High",
         "group": "Deprecated",
-        "recommendation": "false,               // the valid-typeof rule is currently superior to this version",
+        "recommendation": "false, // the valid-typeof rule is currently superior to this version",
         "level": "Opportunity for Excellence"
     },
     "unified-signatures": {
@@ -1017,7 +1017,7 @@
         "level": "Opportunity for Excellence",
         "group": "Configurable",
         "commonWeaknessEnumeration": "710",
-        "recommendation": "false, // this actually affect the readability of the code"
+        "recommendation": "false, // this actually affects the readability of the code"
     },
     "ban-comma-operator": {
         "issueClass": "Non-SDL",

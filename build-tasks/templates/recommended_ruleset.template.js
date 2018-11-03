@@ -5,7 +5,6 @@ module.exports = rows =>
  */
 module.exports = {
     'rules': {
-
         /**
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)

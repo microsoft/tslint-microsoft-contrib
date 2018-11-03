@@ -15,103 +15,103 @@ describe('noStringBasedSetImmediateRule', (): void => {
                     failure: 'Forbidden setImmediate string parameter: "var x = \'should fail\'"',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
-                    startPosition: { line: 46, character: 1 }
-                },
-                {
-                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
-                    name: inputFile,
-                    ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 47, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: anyVariable',
+                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 48, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
+                    failure: 'Forbidden setImmediate string parameter: anyVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 49, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
+                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 50, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: "var x = \'should fail\'"',
+                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 51, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
+                    failure: 'Forbidden setImmediate string parameter: "var x = \'should fail\'"',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 52, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: anyVariable',
+                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 53, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
+                    failure: 'Forbidden setImmediate string parameter: anyVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 54, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
+                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 55, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: "var x = \'should fail\'"',
+                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 56, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
+                    failure: 'Forbidden setImmediate string parameter: "var x = \'should fail\'"',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 57, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: anyVariable',
+                    failure: 'Forbidden setImmediate string parameter: typedStringVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 58, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
+                    failure: 'Forbidden setImmediate string parameter: anyVariable',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 59, character: 1 }
                 },
                 {
-                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
+                    failure: 'Forbidden setImmediate string parameter: untypedCreateFunction()',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
                     startPosition: { line: 60, character: 1 }
                 },
                 {
+                    failure: 'Forbidden setImmediate string parameter: stringFunction()',
+                    name: inputFile,
+                    ruleName: 'no-string-based-set-immediate',
+                    startPosition: { line: 61, character: 1 }
+                },
+                {
                     failure: 'Forbidden setImmediate string parameter: stringArg',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
-                    startPosition: { line: 62, character: 5 }
+                    startPosition: { line: 63, character: 5 }
                 },
                 {
                     failure: 'Forbidden setImmediate string parameter: anyArg',
                     name: inputFile,
                     ruleName: 'no-string-based-set-immediate',
-                    startPosition: { line: 65, character: 5 }
+                    startPosition: { line: 66, character: 5 }
                 }
             ],
             true

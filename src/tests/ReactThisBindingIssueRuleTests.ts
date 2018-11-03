@@ -54,7 +54,7 @@ describe('reactThisBindingIssueRule', (): void => {
                 failure: "A class method is passed as a JSX attribute without having the 'this' reference bound: this.listener",
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-unbound.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 28, line: 14 }
+                startPosition: { character: 32, line: 11 }
             }
         ]);
     });
@@ -73,25 +73,25 @@ describe('reactThisBindingIssueRule', (): void => {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: _.bind(this.listener, this)',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 35, line: 12 }
+                startPosition: { character: 32, line: 11 }
             },
             {
                 failure: "A new instance of an anonymous method is passed as a JSX attribute: this.listener.bind(this, 'so...",
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 35, line: 13 }
+                startPosition: { character: 32, line: 12 }
             },
             {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: () => {}',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 35, line: 16 }
+                startPosition: { character: 32, line: 14 }
             },
             {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: function() {}',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-anon-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 35, line: 17 }
+                startPosition: { character: 32, line: 15 }
             }
         ]);
     });
@@ -110,19 +110,19 @@ describe('reactThisBindingIssueRule', (): void => {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: listener2',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 26, line: 15 }
+                startPosition: { character: 54, line: 12 }
             },
             {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: listener3',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 26, line: 16 }
+                startPosition: { character: 78, line: 12 }
             },
             {
                 failure: 'A new instance of an anonymous method is passed as a JSX attribute: listener4',
                 name: 'test-data/ReactThisBinding/ReactThisBindingIssue-local-instance.tsx',
                 ruleName: 'react-this-binding-issue',
-                startPosition: { character: 25, line: 17 }
+                startPosition: { character: 101, line: 12 }
             }
         ]);
     });

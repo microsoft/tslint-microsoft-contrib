@@ -27,19 +27,19 @@ describe('noCookiesRule', (): void => {
                 failure: 'Forbidden call to document.cookie',
                 name: 'test-data/NoCookies/NoCookiesFailingTestInput.ts',
                 ruleName: 'no-cookies',
+                startPosition: { line: 7, character: 1 }
+            },
+            {
+                failure: 'Forbidden call to document.cookie',
+                name: 'test-data/NoCookies/NoCookiesFailingTestInput.ts',
+                ruleName: 'no-cookies',
                 startPosition: { line: 9, character: 1 }
             },
             {
                 failure: 'Forbidden call to document.cookie',
                 name: 'test-data/NoCookies/NoCookiesFailingTestInput.ts',
                 ruleName: 'no-cookies',
-                startPosition: { line: 11, character: 1 }
-            },
-            {
-                failure: 'Forbidden call to document.cookie',
-                name: 'test-data/NoCookies/NoCookiesFailingTestInput.ts',
-                ruleName: 'no-cookies',
-                startPosition: { line: 14, character: 1 }
+                startPosition: { line: 12, character: 1 }
             }
         ]);
     });

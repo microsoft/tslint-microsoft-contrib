@@ -25,31 +25,31 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: moduleProp1',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 18 }
+                startPosition: { character: 9, line: 17 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: globalFunction1',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 20 }
+                startPosition: { character: 9, line: 19 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: globalProp2',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 21 }
+                startPosition: { character: 9, line: 20 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: globalProp1',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 13, line: 27 }
+                startPosition: { character: 13, line: 25 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: moduleProp1',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 13, line: 28 }
+                startPosition: { character: 13, line: 26 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: globalProp1',
@@ -102,7 +102,7 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: this.onAnimationEnd()',
                 name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutTestInput-error4.ts',
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { line: 12, character: 13 }
+                startPosition: { line: 10, character: 13 }
             }
         ]);
     });
@@ -124,6 +124,12 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 ruleName: 'no-string-based-set-timeout',
                 failure: 'Forbidden setTimeout string parameter: "var x = \'should fail\'"',
                 name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-literals.ts',
+                startPosition: { line: 2, character: 1 }
+            },
+            {
+                ruleName: 'no-string-based-set-timeout',
+                failure: 'Forbidden setTimeout string parameter: "var x = \'should fail\'"',
+                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-literals.ts',
                 startPosition: { line: 3, character: 1 }
             },
             {
@@ -131,12 +137,6 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: "var x = \'should fail\'"',
                 name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-literals.ts',
                 startPosition: { line: 4, character: 1 }
-            },
-            {
-                ruleName: 'no-string-based-set-timeout',
-                failure: 'Forbidden setTimeout string parameter: "var x = \'should fail\'"',
-                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-literals.ts',
-                startPosition: { line: 5, character: 1 }
             }
         ]);
     });
@@ -223,19 +223,19 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: stringFunction()',
                 name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts',
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { line: 4, character: 1 }
-            },
-            {
-                failure: 'Forbidden setTimeout string parameter: stringFunction()',
-                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts',
-                ruleName: 'no-string-based-set-timeout',
-                startPosition: { line: 5, character: 1 }
-            },
-            {
-                failure: 'Forbidden setTimeout string parameter: stringFunction()',
-                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts',
-                ruleName: 'no-string-based-set-timeout',
                 startPosition: { line: 6, character: 1 }
+            },
+            {
+                failure: 'Forbidden setTimeout string parameter: stringFunction()',
+                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts',
+                ruleName: 'no-string-based-set-timeout',
+                startPosition: { line: 7, character: 1 }
+            },
+            {
+                failure: 'Forbidden setTimeout string parameter: stringFunction()',
+                name: 'test-data/NoStringBasedSetTimeout/NoStringBasedSetTimeoutFailingTestInput-string-functions.ts',
+                ruleName: 'no-string-based-set-timeout',
+                startPosition: { line: 8, character: 1 }
             }
         ]);
     });
@@ -247,13 +247,13 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: stringArg',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { line: 4, character: 5 }
+                startPosition: { line: 3, character: 5 }
             },
             {
                 failure: 'Forbidden setTimeout string parameter: anyArg',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { line: 7, character: 5 }
+                startPosition: { line: 6, character: 5 }
             }
         ]);
     });
@@ -270,7 +270,7 @@ describe('noStringBasedSetTimeoutRule', (): void => {
                 failure: 'Forbidden setTimeout string parameter: arg1',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 4 }
+                startPosition: { character: 9, line: 3 }
             }
         ]);
     });
@@ -294,30 +294,30 @@ describe('noStringBasedSetTimeoutRule', (): void => {
 
         TestHelper.assertViolationsWithTypeChecker(RULE_NAME, inputFile, [
             {
-                failure: 'Forbidden setTimeout string parameter: "alert(" + alertNum + ")"',
+                failure: "Forbidden setTimeout string parameter: 'alert(' + alertNum + ')'",
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 15 }
+                startPosition: { character: 9, line: 13 }
             },
             {
-                failure: 'Forbidden setTimeout string parameter: "alert(" + alertNum + ")"',
+                failure: "Forbidden setTimeout string parameter: 'alert(' + alertNum + ')'",
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 16 }
-            },
-            {
-                // tslint:disable-next-line:no-invalid-template-strings
-                failure: 'Forbidden setTimeout string parameter: `alert(${alertNum})`',
-                name: inputFile,
-                ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 19 }
+                startPosition: { character: 9, line: 14 }
             },
             {
                 // tslint:disable-next-line:no-invalid-template-strings
                 failure: 'Forbidden setTimeout string parameter: `alert(${alertNum})`',
                 name: inputFile,
                 ruleName: 'no-string-based-set-timeout',
-                startPosition: { character: 9, line: 20 }
+                startPosition: { character: 9, line: 17 }
+            },
+            {
+                // tslint:disable-next-line:no-invalid-template-strings
+                failure: 'Forbidden setTimeout string parameter: `alert(${alertNum})`',
+                name: inputFile,
+                ruleName: 'no-string-based-set-timeout',
+                startPosition: { character: 9, line: 18 }
             }
         ]);
     });

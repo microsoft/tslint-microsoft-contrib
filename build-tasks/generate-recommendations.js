@@ -26,8 +26,11 @@ getAllRules().forEach(ruleFile => {
     if (recommendation === '') {
         recommendation = 'true,';
     }
+    // Replace double quotes with single quote
+    recommendation = recommendation.replace(/"/g, "'");
+
     const ruleName = getMetadataValue(metadata, 'ruleName');
-    groupedRows[groupName].push(`        "${ruleName}": ${recommendation}`);
+    groupedRows[groupName].push(`        '${ruleName}': ${recommendation}`);
 });
 
 if (warnings.length > 0) {

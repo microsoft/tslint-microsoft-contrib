@@ -4,7 +4,7 @@ module.exports = rows =>
  * This file is exported in the npm/nuget package as ./tslint.json.
  */
 module.exports = {
-    "rules": {
+    'rules': {
 
         /**
          * Security Rules. The following rules should be turned on because they find security issues

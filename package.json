@@ -50,7 +50,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "copy:json": "cpy \"src/**/*.json\" dist --parents",
-    "copy:meta": "cpy README.md recommended_ruleset.js dist/build  --parents",
+    "copy:meta": "cpy README.md recommended_ruleset.js dist/build --parents",
     "copy:package": "cpy \"**/*.js\" \"**/*.json\" \"!tests/**\" \"!references.js\" \"tests/TestHelper.js\" \"tests/TestHelper.d.ts\" ../build --cwd=\"dist/src\" --parents",
     "create-rule": "node build-tasks/create-rule.js",
     "generate:recommendations": "node build-tasks/generate-recommendations.js",

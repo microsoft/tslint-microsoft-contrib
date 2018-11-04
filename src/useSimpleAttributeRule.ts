@@ -10,6 +10,8 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'use-simple-attribute',
         type: 'functionality',
         description: 'Enforce usage of only simple attribute types.',
+        rationale: 'Simpler attributes in JSX and TSX files helps keep code clean and readable.\
+            Separate complex expressions into their own line and use clear variable names to make your code more understandable.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: false,

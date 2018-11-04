@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {forEachTokenWithTrivia} from 'tsutils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Suspicious comment found: ';
 const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
@@ -13,8 +13,15 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'no-suspicious-comment',
         type: 'maintainability',
         description: `Do not use suspicious comments, such as ${SUSPICIOUS_WORDS.join(', ')}`,
-        options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        options: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        optionsDescription: `One argument may be optionally provided: \n\n' +
+            '* an array of regex that disable the warning if one or several of them
+            are found in the comment text. (Example: \`['https://github.com/my-org/my-project/']\`)`,
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -31,6 +38,17 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
+    private exceptionRegex: RegExp[] = [];
+
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
+        super(sourceFile, options);
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
+            options.ruleArguments.forEach((regexStr: string) => {
+                this.exceptionRegex.push(new RegExp(regexStr));
+            });
+        }
+    }
+
     public visitSourceFile(node: ts.SourceFile) {
         forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
             if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia ||
@@ -41,6 +59,9 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
     }
 
     private scanCommentForSuspiciousWords(startPosition: number, commentText: string): void {
+        if (this.commentContainsExceptionRegex(this.exceptionRegex, commentText)) {
+            return;
+        }
         SUSPICIOUS_WORDS.forEach((suspiciousWord: string) => {
             this.scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition);
         });
@@ -57,5 +78,14 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
     private foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
         const errorMessage: string = FAILURE_STRING + suspiciousWord;
         this.addFailureAt(startPosition, commentText.length, errorMessage);
+    }
+
+    private commentContainsExceptionRegex(exceptionRegex: RegExp[], commentText: string): boolean {
+        for (const regex of exceptionRegex) {
+            if (regex.test(commentText)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

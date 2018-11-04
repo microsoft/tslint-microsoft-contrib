@@ -7,6 +7,7 @@ import {TestHelper} from './TestHelper';
 describe('noSuspiciousCommentRule', (): void => {
 
     const ruleName: string = 'no-suspicious-comment';
+    const option: string[]  = ['https\:\/\/example.com\/*'];
 
     it('should pass on normal comments', (): void => {
         const script: string = `
@@ -14,6 +15,7 @@ describe('noSuspiciousCommentRule', (): void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, []);
+        TestHelper.assertViolationsWithOptions(ruleName, option, script, []);
     });
 
     it('should pass on multi-line comments', (): void => {
@@ -53,6 +55,17 @@ describe('noSuspiciousCommentRule', (): void => {
         }]);
     });
 
+    it('should pass on multiline TODO comments with regex option', (): void => {
+        const script: string = `
+            /**
+            * TODO: add failing example and update assertions
+            * See https://example.com/article/123
+            */
+        `;
+
+        TestHelper.assertViolationsWithOptions(ruleName, option, script, []);
+    });
+
     it('should pass on lower case todo comments without colons', (): void => {
         const script: string = `
             // todo add failing example and update assertions
@@ -78,6 +91,14 @@ describe('noSuspiciousCommentRule', (): void => {
             }]);
         });
 
+        it(`should pass on upper case ${suspiciousWord} comments without colons and with regex option`, (): void => {
+            const script: string = `
+                // ${suspiciousWord} you should fix this https://example.com/article/123
+            `;
+
+            TestHelper.assertViolationsWithOptions(ruleName, option, script, []);
+        });
+
         it(`should fail on upper case ${suspiciousWord} comments with colons`, (): void => {
             const script: string = `
                 // ${suspiciousWord}: you should fix this
@@ -91,6 +112,14 @@ describe('noSuspiciousCommentRule', (): void => {
             }]);
         });
 
+        it(`should pass on upper case ${suspiciousWord} comments with colons and with regex option`, (): void => {
+            const script: string = `
+                // ${suspiciousWord}: you should fix this (see https://example.com/article/123)
+            `;
+
+            TestHelper.assertViolationsWithOptions(ruleName, option, script, []);
+        });
+
         it(`should fail on lower case ${suspiciousWord} comments with colons`, (): void => {
             const script: string = `
                 // ${suspiciousWord}: you should fix this
@@ -102,6 +131,14 @@ describe('noSuspiciousCommentRule', (): void => {
                 "ruleName": "no-suspicious-comment",
                 "startPosition": {"character": 17, "line": 2}
             }]);
+        });
+
+        it(`should pass on lower case ${suspiciousWord} comments with colons and with regex option`, (): void => {
+            const script: string = `
+                // ${suspiciousWord}: you should fix this  (see https://example.com/article/123)
+            `;
+
+            TestHelper.assertViolationsWithOptions(ruleName, option, script, []);
         });
     });
 });

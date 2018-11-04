@@ -4,9 +4,9 @@ import * as Lint from 'tslint';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const MATH_FAIL_STRING: string =
-    'Math.random produces insecure random numbers. ' + 'Use crypto.randomBytes() or window.crypto.getRandomValues() instead';
+    'Math.random produces insecure random numbers. Use crypto.randomBytes() or window.crypto.getRandomValues() instead';
 
-const NODE_FAIL_STRING: string = 'crypto.pseudoRandomBytes produces insecure random numbers. ' + 'Use crypto.randomBytes() instead';
+const NODE_FAIL_STRING: string = 'crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {

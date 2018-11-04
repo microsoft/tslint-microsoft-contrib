@@ -40,7 +40,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-supports-aria-props',
         type: 'maintainability',
         description:
-            'Enforce that elements with explicit or implicit roles defined contain ' + 'only `aria-*` properties supported by that `role`.',
+            'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

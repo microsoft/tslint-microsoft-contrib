@@ -9,7 +9,7 @@ import { isObject } from './utils/TypeGuard';
 
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = "A function is having its 'this' reference bound twice in the constructor: ";
-const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' " + 'reference bound: ';
+const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' reference bound: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {

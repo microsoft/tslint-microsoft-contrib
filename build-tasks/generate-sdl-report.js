@@ -10,7 +10,7 @@ const rows = [];
 const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
 const procedure = 'TSLint Procedure';
 const header =
-    'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' + 'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
+    'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
 
 getAllRules().forEach(ruleFile => {
     const metadata = getMetadataFromFile(ruleFile);

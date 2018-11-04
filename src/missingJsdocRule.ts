@@ -25,7 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
-            console.warn('Warning: missing-jsdoc rule is deprecated. ' + 'Replace your usage with the TSLint missing-jsdoc rule.');
+            console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint missing-jsdoc rule.');
             Rule.isWarningShown = true;
         }
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));

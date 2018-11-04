@@ -27,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
             console.warn(
-                'Warning: no-duplicate-case rule is deprecated. ' + 'Replace your usage with the TSLint no-duplicate-switch-case rule.'
+                'Warning: no-duplicate-case rule is deprecated. Replace your usage with the TSLint no-duplicate-switch-case rule.'
             );
             Rule.isWarningShown = true;
         }

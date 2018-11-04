@@ -10,8 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'jquery-deferred-must-complete',
         type: 'maintainability',
         description:
-            'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
-            'on it within all code branches in the scope.',
+            'When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
@@ -23,7 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public static FAILURE_STRING: string =
-        'A JQuery deferred was found that appears to not have resolve ' + 'or reject invoked on all code paths: ';
+        'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new JQueryDeferredAnalyzer(sourceFile, this.getOptions()));

@@ -39,7 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
-    private exceptionRegex: RegExp[] = [];
+    private readonly exceptionRegex: RegExp[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);

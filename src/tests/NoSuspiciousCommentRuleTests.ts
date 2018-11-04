@@ -7,7 +7,7 @@ import {TestHelper} from './TestHelper';
 describe('noSuspiciousCommentRule', (): void => {
 
     const ruleName: string = 'no-suspicious-comment';
-    const option: string[]  = ['https\:\/\/example.com\/*'];
+    const option: string[]  = ['https://example.com/*'];
 
     it('should pass on normal comments', (): void => {
         const script: string = `
@@ -85,6 +85,13 @@ describe('noSuspiciousCommentRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [{
                 "failure": `Suspicious comment found: ${suspiciousWord}`,
+                "name": Utils.absolutePath("file.ts"),
+                "ruleName": "no-suspicious-comment",
+                "startPosition": {"character": 17, "line": 2}
+            }]);
+            TestHelper.assertViolationsWithOptions(ruleName, option, script, [{
+                "failure": `Suspicious comment found: ${suspiciousWord}.
+To disable this warning, the comment should include one of the following regex: /https:\\/\\/example.com\\/*/`,
                 "name": Utils.absolutePath("file.ts"),
                 "ruleName": "no-suspicious-comment",
                 "startPosition": {"character": 17, "line": 2}

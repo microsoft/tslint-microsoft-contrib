@@ -1,20 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-document-write rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-document-write',
         type: 'maintainability',
         description: 'Do not use document.write',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -28,15 +23,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static WRITE_FAILURE: string = 'Forbidden call to document.write';
     public static WRITELN_FAILURE: string = 'Forbidden call to document.writeln';
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions()));
     }
 }
 
-class NoDocumentWriteWalker extends ErrorTolerantWalker {
-
+class NoDocumentWriteWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression) {
-
         const functionTarget = AstUtils.getFunctionTarget(node);
         if (functionTarget === 'document' || functionTarget === 'window.document') {
             if (node.arguments.length === 1) {

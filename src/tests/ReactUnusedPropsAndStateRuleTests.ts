@@ -1,15 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-/**
- * Unit tests.
- */
-describe('reactUnusedPropsAndStateRule', () : void => {
+describe('reactUnusedPropsAndStateRule', (): void => {
+    const ruleName: string = 'react-unused-props-and-state';
 
-    const ruleName : string = 'react-unused-props-and-state';
-
-    it('should pass on referenced Props and State', () : void => {
-        const script : string = `
+    it('should pass on referenced Props and State', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -40,11 +36,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on referenced Props and State functions', () : void => {
-        const script : string = `
+    it('should pass on referenced Props and State functions', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -66,11 +62,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props and state escape the class/function', () : void => {
-        const script : string = `
+    it('should pass when props and state escape the class/function', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -92,11 +88,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props referenced from constructor parameter', () : void => {
-        const script : string = `
+    it('should pass when props referenced from constructor parameter', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -117,11 +113,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props referenced from constructor parameter', () : void => {
-        const script : string = `
+    it('should pass when props referenced from constructor parameter', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -142,11 +138,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props referenced from lifecycle method ', () : void => {
-        const script : string = `
+    it('should pass when props referenced from lifecycle method ', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -180,11 +176,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when state referenced from lifecycle method ', () : void => {
-        const script : string = `
+    it('should pass when state referenced from lifecycle method ', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -214,11 +210,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when state escapes from shouldComponentUpdate', () : void => {
-        const script : string = `
+    it('should pass when state escapes from shouldComponentUpdate', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -240,11 +236,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when state escapes from componentWillUpdate', () : void => {
-        const script : string = `
+    it('should pass when state escapes from componentWillUpdate', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -265,11 +261,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when state escapes from componentDidUpdate', () : void => {
-        const script : string = `
+    it('should pass when state escapes from componentDidUpdate', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -290,11 +286,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props escapes from componentWillReceiveProps ', () : void => {
-        const script : string = `
+    it('should pass when props escapes from componentWillReceiveProps ', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -315,11 +311,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props escapes from shouldComponentUpdate ', () : void => {
-        const script : string = `
+    it('should pass when props escapes from shouldComponentUpdate ', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -341,11 +337,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props escapes from componentWillUpdate', () : void => {
-        const script : string = `
+    it('should pass when props escapes from componentWillUpdate', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -366,11 +362,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when props escapes from componentDidUpdate ', () : void => {
-        const script : string = `
+    it('should pass when props escapes from componentDidUpdate ', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -391,11 +387,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on referenced Props and State even when interfaces defined at end', () : void => {
-        const script : string = `
+    it('should pass on referenced Props and State even when interfaces defined at end', (): void => {
+        const script: string = `
             module SomeModule {
                 export class SomeComponent extends SomeBaseComponent<Props, State> {
                     public render() {
@@ -416,11 +412,11 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = SomeModule;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on unused Props and State', () : void => {
-        const script : string = `
+    it('should fail on unused Props and State', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -448,34 +444,34 @@ describe('reactUnusedPropsAndStateRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unused React property defined in interface: myProp1",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": {"character": 21, "line": 6 }
+                failure: 'Unused React property defined in interface: myProp1',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 6 }
             },
             {
-                "failure": "Unused React property defined in interface: myProp2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 7 }
+                failure: 'Unused React property defined in interface: myProp2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 7 }
             },
             {
-                "failure": "Unused React state defined in interface: myState1",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 10 }
+                failure: 'Unused React state defined in interface: myState1',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 10 }
             },
             {
-                "failure": "Unused React state defined in interface: myState2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 11 }
+                failure: 'Unused React state defined in interface: myState2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 11 }
             }
         ]);
     });
 
-    it('should fail on unused Props and State with custom names', () : void => {
-        const script : string = `
+    it('should fail on unused Props and State with custom names', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -501,7 +497,8 @@ describe('reactUnusedPropsAndStateRule', () : void => {
             export = VideoContainer;
         `;
 
-        const options = [ true,
+        const options = [
+            true,
             {
                 'props-interface-regex': 'Props$',
                 'state-interface-regex': 'State$'
@@ -510,34 +507,34 @@ describe('reactUnusedPropsAndStateRule', () : void => {
 
         TestHelper.assertViolationsWithOptions(ruleName, options, script, [
             {
-                "failure": "Unused React property defined in interface: myProp1",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": {"character": 21, "line": 6 }
+                failure: 'Unused React property defined in interface: myProp1',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 6 }
             },
             {
-                "failure": "Unused React property defined in interface: myProp2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 7 }
+                failure: 'Unused React property defined in interface: myProp2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 7 }
             },
             {
-                "failure": "Unused React state defined in interface: myState1",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 10 }
+                failure: 'Unused React state defined in interface: myState1',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 10 }
             },
             {
-                "failure": "Unused React state defined in interface: myState2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 11 }
+                failure: 'Unused React state defined in interface: myState2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 11 }
             }
         ]);
     });
 
-    it('should fail on unused Props and State functions', () : void => {
-        const script : string = `
+    it('should fail on unused Props and State functions', (): void => {
+        const script: string = `
             import React = require('react');
 
             module VideoContainer {
@@ -559,22 +556,22 @@ describe('reactUnusedPropsAndStateRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unused React property defined in interface: myProp",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 6 }
+                failure: 'Unused React property defined in interface: myProp',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 6 }
             },
             {
-                "failure": "Unused React state defined in interface: myState",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 9 }
+                failure: 'Unused React state defined in interface: myState',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 9 }
             }
         ]);
     });
 
-    it('should fail when props are referenced in a ternary expression', () : void => {
-        const script : string = `
+    it('should fail when props are referenced in a ternary expression', (): void => {
+        const script: string = `
             import React = require('react');
 
             module AssigneePicker {
@@ -604,16 +601,16 @@ describe('reactUnusedPropsAndStateRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unused React property defined in interface: myProps2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 13 }
+                failure: 'Unused React property defined in interface: myProps2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 13 }
             },
             {
-                "failure": "Unused React state defined in interface: myState2",
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-unused-props-and-state",
-                "startPosition": { "character": 21, "line": 8 }
+                failure: 'Unused React state defined in interface: myState2',
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-unused-props-and-state',
+                startPosition: { character: 21, line: 8 }
             }
         ]);
     });

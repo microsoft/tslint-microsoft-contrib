@@ -1,23 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ChaiUtils} from './utils/ChaiUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ChaiUtils } from './utils/ChaiUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Found chai call with indexOf that can be converted to .contain assertion: ';
 
-/**
- * Implementation of the chai-prefer-contains-to-index-of rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'chai-prefer-contains-to-index-of',
         type: 'maintainability',
         description: 'Avoid Chai assertions that invoke indexOf and compare for a -1 result.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -33,8 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
-
+class ChaiPreferContainsToIndexOfRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (this.isFirstArgumentIndexOfResult(node)) {
@@ -51,7 +45,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
     }
 
     private isFirstArgumentNegative1(node: ts.CallExpression): boolean {
-        if (node.arguments != null && node.arguments.length > 0) {
+        if (node.arguments !== undefined && node.arguments.length > 0) {
             const firstArgument: ts.Expression = node.arguments[0];
             if (firstArgument.getText() === '-1') {
                 return true;
@@ -62,7 +56,7 @@ class ChaiPreferContainsToIndexOfRuleWalker extends ErrorTolerantWalker {
 
     private isFirstArgumentIndexOfResult(node: ts.CallExpression): boolean {
         const expectCall = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall !== null && expectCall.arguments != null && expectCall.arguments.length > 0) {
+        if (expectCall !== undefined && expectCall.arguments !== undefined && expectCall.arguments.length > 0) {
             const firstArgument: ts.Expression = expectCall.arguments[0];
             if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils.getFunctionName(<ts.CallExpression>firstArgument) === 'indexOf') {

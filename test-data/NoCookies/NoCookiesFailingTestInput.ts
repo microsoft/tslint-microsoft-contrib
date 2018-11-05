@@ -1,8 +1,6 @@
-
-function documentFunction() : Document {
+function documentFunction(): Document {
     return window.document;
 }
-
 
 document.cookie = '...';
 this.document.cookie = '...';

@@ -1,23 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {Utils} from './utils/Utils';
-import {MochaUtils} from './utils/MochaUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { MochaUtils } from './utils/MochaUtils';
 
 const FAILURE_STRING: string = 'Unneeded Mocha Done. Parameter can be safely removed: ';
 
-/**
- * Implementation of the mocha-unneeded-done rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'mocha-unneeded-done',
         type: 'maintainability',
         description: 'A function declares a MochaDone parameter but only resolves it synchronously in the main function.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -32,8 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
-
+class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (MochaUtils.isMochaTest(node)) {
             super.visitSourceFile(node);
@@ -52,7 +46,7 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
 
     private validateMochaDoneUsage(node: ts.FunctionLikeDeclaration): void {
         const doneIdentifier = this.maybeGetMochaDoneParameter(node);
-        if (doneIdentifier == null) {
+        if (doneIdentifier === undefined) {
             return;
         }
         if (!this.isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
@@ -60,7 +54,9 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
         }
 
         const walker: IdentifierReferenceCountWalker = new IdentifierReferenceCountWalker(
-            this.getSourceFile(), this.getOptions(), doneIdentifier
+            this.getSourceFile(),
+            this.getOptions(),
+            doneIdentifier
         );
         const count: number = walker.getReferenceCount(<ts.Block>node.body);
         if (count === 1) {
@@ -69,44 +65,48 @@ class MochaUnneededDoneRuleWalker extends ErrorTolerantWalker {
     }
 
     private isIdentifierInvokedDirectlyInBody(doneIdentifier: ts.Identifier, node: ts.FunctionLikeDeclaration): boolean {
-        if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
+        if (node.body === undefined || node.body.kind !== ts.SyntaxKind.Block) {
             return false;
         }
         const block: ts.Block = <ts.Block>node.body;
-        return Utils.exists(block.statements, (statement: ts.Statement): boolean => {
-            if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
-                const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                if (expression.kind === ts.SyntaxKind.CallExpression) {
-                    const leftHandSideExpression: ts.Expression = (<ts.CallExpression>expression).expression;
-                    return leftHandSideExpression.getText() === doneIdentifier.getText();
+        return Utils.exists(
+            block.statements,
+            (statement: ts.Statement): boolean => {
+                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
+                    const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
+                    if (expression.kind === ts.SyntaxKind.CallExpression) {
+                        const leftHandSideExpression: ts.Expression = (<ts.CallExpression>expression).expression;
+                        return leftHandSideExpression.getText() === doneIdentifier.getText();
+                    }
                 }
-            }
 
-            return false;
-        });
+                return false;
+            }
+        );
     }
 
-    private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | null {
+    private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | undefined {
         if (node.parameters.length === 0) {
-            return null;
+            return undefined;
         }
-        const allDones: ts.ParameterDeclaration[] = node.parameters.filter((parameter: ts.ParameterDeclaration): boolean => {
-            if (parameter.type != null && parameter.type.getText() === 'MochaDone') {
-                return true;
+        const allDones: ts.ParameterDeclaration[] = node.parameters.filter(
+            (parameter: ts.ParameterDeclaration): boolean => {
+                if (parameter.type !== undefined && parameter.type.getText() === 'MochaDone') {
+                    return true;
+                }
+                return parameter.name.getText() === 'done';
             }
-            return parameter.name.getText() === 'done';
-        });
+        );
 
         if (allDones.length === 0 || allDones[0].name.kind !== ts.SyntaxKind.Identifier) {
-            return null;
+            return undefined;
         }
         return <ts.Identifier>allDones[0].name;
     }
 }
 
-class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
-
-    private identifierText: string;
+class IdentifierReferenceCountWalker extends Lint.RuleWalker {
+    private readonly identifierText: string;
     private count!: number;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, identifier: ts.Identifier) {
@@ -116,9 +116,11 @@ class IdentifierReferenceCountWalker extends ErrorTolerantWalker {
 
     public getReferenceCount(body: ts.Block): number {
         this.count = 0;
-        body.statements.forEach((statement: ts.Statement): void => {
-            this.walk(statement);
-        });
+        body.statements.forEach(
+            (statement: ts.Statement): void => {
+                this.walk(statement);
+            }
+        );
         return this.count;
     }
 

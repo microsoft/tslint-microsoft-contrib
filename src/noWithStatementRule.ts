@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-with-statement rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-with-statement',
         type: 'maintainability',
         description: 'Do not use with statements. Assign the item to a new variable instead',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -26,12 +21,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Forbidden with statement';
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));
     }
 }
 
-class NoWithStatementWalker extends ErrorTolerantWalker {
+class NoWithStatementWalker extends Lint.RuleWalker {
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.WithStatement) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);

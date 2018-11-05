@@ -1,0 +1,15 @@
+function add1(a, b) {
+    return a + b;
+}
+
+function add2() {
+    return arguments[0] + arguments[1];
+           ~~~~~~~~~~~~                  [Use a named parameter instead: 'arguments[0]']
+                          ~~~~~~~~~~~~   [Use a named parameter instead: 'arguments[1]']
+
+const n = 1;
+const whatever = () => 0;
+
+function add3() {
+    return arguments[whatever()] + arguments[n];
+}

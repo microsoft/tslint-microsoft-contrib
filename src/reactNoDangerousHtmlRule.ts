@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
-import {Utils} from './utils/Utils';
+import { Utils } from './utils/Utils';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export interface Exception {
     file: string;
@@ -11,16 +10,12 @@ export interface Exception {
     comment: string;
 }
 
-/**
- * Implementation of the react-no-dangerous-html rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-no-dangerous-html',
         type: 'maintainability',
-        description: 'Do not use React\'s dangerouslySetInnerHTML API.',
-        options: null,
+        description: "Do not use React's dangerouslySetInnerHTML API.",
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -31,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '79, 85, 710'
     };
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions()));
     }
 
@@ -39,38 +34,38 @@ export class Rule extends Lint.Rules.AbstractRule {
      * Exposed for testing.
      */
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions): Exception[] | null {
-    /* tslint:enable:function-name */
+    public static getExceptions(options: Lint.IOptions): Exception[] | undefined {
+        /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return <Exception[]><any>options; // MSE version of tslint somehow requires this
+            return options;
         }
-        return null;
+        return undefined;
     }
 }
 
-class NoDangerousHtmlWalker extends ErrorTolerantWalker {
-    private currentMethodName : string;
+class NoDangerousHtmlWalker extends Lint.RuleWalker {
+    private currentMethodName: string;
 
-    constructor(sourceFile : ts.SourceFile, options : Lint.IOptions) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         this.currentMethodName = '<unknown>';
     }
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.currentMethodName = (<any>node.name).text;
+        this.currentMethodName = node.name.getText();
         super.visitMethodDeclaration(node);
         this.currentMethodName = '<unknown>';
     }
 
     protected visitPropertyAssignment(node: ts.PropertyAssignment): void {
         super.visitPropertyAssignment(node);
-        const keyNode : ts.DeclarationName = node.name;
+        const keyNode: ts.DeclarationName = node.name;
 
         if (keyNode.kind === ts.SyntaxKind.Identifier) {
-            if ((<any>keyNode).text === 'dangerouslySetInnerHTML') {
+            if (keyNode.text === 'dangerouslySetInnerHTML') {
                 this.addFailureIfNotSuppressed(node, <ts.Identifier>keyNode);
             }
         }
@@ -88,21 +83,28 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
     }
 
     private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
-        node.attributes.properties.forEach((attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
-                const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
-                const attributeName = jsxAttribute.name.text;
-                if (attributeName === 'dangerouslySetInnerHTML') {
-                    this.addFailureIfNotSuppressed(node, <ts.Identifier>jsxAttribute.name);
+        node.attributes.properties.forEach(
+            (attribute: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+                if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
+                    const jsxAttribute: ts.JsxAttribute = <ts.JsxAttribute>attribute;
+                    const attributeName = jsxAttribute.name.text;
+                    if (attributeName === 'dangerouslySetInnerHTML') {
+                        this.addFailureIfNotSuppressed(node, <ts.Identifier>jsxAttribute.name);
+                    }
                 }
             }
-        });
+        );
     }
 
-    private addFailureIfNotSuppressed(parent: ts.Node, node: { text: string; }): void {
+    private addFailureIfNotSuppressed(parent: ts.Node, node: { text: string }): void {
         if (!this.isSuppressed(this.currentMethodName)) {
-            const failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
-                '    of source file ' + this.getSourceFile().fileName + '"\n' +
+            const failureString =
+                'Invalid call to dangerouslySetInnerHTML in method "' +
+                this.currentMethodName +
+                '"\n' +
+                '    of source file ' +
+                this.getSourceFile().fileName +
+                '"\n' +
                 '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
@@ -111,21 +113,23 @@ class NoDangerousHtmlWalker extends ErrorTolerantWalker {
         }
     }
 
-    private isSuppressed(methodName : string): boolean {
+    private isSuppressed(methodName: string): boolean {
         const exceptions = Rule.getExceptions(this.getOptions());
-        if (exceptions == null || exceptions.length === 0) {
+        if (exceptions === undefined || exceptions.length === 0) {
             return false; // no file specified means the usage is not suppressed
         }
         let found = false;
-        exceptions.forEach((exception : Exception) : void => {
-            if (Utils.absolutePath(exception.file) === this.getSourceFile().fileName) {
-                if (exception.method === methodName) {
-                    if (exception.comment != null) {
-                        found = true;
+        exceptions.forEach(
+            (exception: Exception): void => {
+                if (Utils.absolutePath(exception.file) === this.getSourceFile().fileName) {
+                    if (exception.method === methodName) {
+                        if (exception.comment !== undefined) {
+                            found = true;
+                        }
                     }
                 }
             }
-        });
+        );
         return found;
     }
 }

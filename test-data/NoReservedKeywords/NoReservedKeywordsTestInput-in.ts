@@ -1,4 +1,3 @@
-
 class SampleIn3 {
     // class variables
     private in;
@@ -8,12 +7,13 @@ class SampleIn3 {
 class SampleIn4 {
     private var;
     set in(value) {}
-    get in() { return this.var;}
+    get in() {
+        return this.var;
+    }
 }
 
-
 class SampleIn5 {
-    in() {}       // class methods
+    in() {} // class methods
 }
 
 // interface declarations

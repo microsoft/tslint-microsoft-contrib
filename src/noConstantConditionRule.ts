@@ -1,20 +1,16 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
-/**
- * Implementation of the no-constant-condition rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-constant-condition',
         type: 'maintainability',
         description: 'Do not use constant expressions in conditions.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -32,9 +28,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
-
-    private checkLoops: boolean;
+class NoConstantConditionRuleWalker extends Lint.RuleWalker {
+    private readonly checkLoops: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -42,9 +37,9 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     }
 
     private extractBoolean(keyName: string): boolean {
-        let result : boolean = true;
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        let result: boolean = true;
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 if (opt[keyName] === false || opt[keyName] === 'false') {
                     result = false;
                 }
@@ -90,7 +85,7 @@ class NoConstantConditionRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitForStatement(node: ts.ForStatement): void {
-        if (this.checkLoops && node.condition != null) {
+        if (this.checkLoops && node.condition !== undefined) {
             if (AstUtils.isConstantExpression(node.condition)) {
                 const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
                 this.addFailureAt(node.getStart(), node.getWidth(), message);

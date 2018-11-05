@@ -1,4 +1,3 @@
-
 class SampleWith3 {
     // class variables
     private with;
@@ -8,13 +7,13 @@ class SampleWith3 {
 class SampleWith4 {
     private var;
     set with(value) {}
-    get with() { return this.var;}
+    get with() {
+        return this.var;
+    }
 }
 
-
 class SampleWith5 {
-    with() {}       // class methods
-
+    with() {} // class methods
 }
 
 // interface declarations

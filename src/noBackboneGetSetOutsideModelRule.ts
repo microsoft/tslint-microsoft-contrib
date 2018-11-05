@@ -1,23 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-backbone-get-set-outside-model rule.
- *
- * Currently only makes sure that get and set Backbone methods are called
- * on the this reference.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-backbone-get-set-outside-model',
         type: 'maintainability',
-        description: 'Avoid using `model.get(\'x\')` and `model.set(\'x\', value)` Backbone accessors outside of the owning model.',
-        options: null,
+        description: "Avoid using `model.get('x')` and `model.set('x', value)` Backbone accessors outside of the owning model.",
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -36,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoBackboneGetSetOutsideModelRuleWalker extends ErrorTolerantWalker {
+class NoBackboneGetSetOutsideModelRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         if (AstUtils.getFunctionTarget(node) !== 'this') {
             const functionName: string = AstUtils.getFunctionName(node);

@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {forEachTokenWithTrivia} from 'tsutils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const UNSPECIFIED_BROWSER_VERSION: string = 'unspecified version';
 const JSDOC_BROWSERSPECIFIC: string = '@browserspecific';
@@ -16,16 +16,12 @@ interface BrowserVersion {
     version: number | string;
 }
 
-/**
- * Implementation of the no-unsupported-browser-code rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unsupported-browser-code',
         type: 'maintainability',
         description: 'Avoid writing browser-specific code for unsupported browser versions',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -41,7 +37,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
-    private supportedBrowsers: { [key: string]: BrowserVersion };
+    private readonly supportedBrowsers: { [key: string]: BrowserVersion };
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -89,7 +85,7 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
     private parseSupportedBrowsers(): { [key: string]: BrowserVersion } {
         const result: { [key: string]: BrowserVersion } = {};
 
-        this.getOptions().forEach((option: any) => {
+        this.getOptions().forEach((option: unknown) => {
             if (option instanceof Array) {
                 option.forEach((browserString: string) => {
                     const browser = this.parseBrowserString(browserString);
@@ -131,17 +127,9 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
 
     private findUnsupportedBrowserFailures(targetBrowser: BrowserVersion, startPos: number, length: number) {
         if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailureAt(
-                startPos,
-                length,
-                `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`
-            );
+            this.addFailureAt(startPos, length, `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`);
         } else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailureAt(
-                startPos,
-                length,
-                `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`
-            );
+            this.addFailureAt(startPos, length, `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`);
         }
     }
 }

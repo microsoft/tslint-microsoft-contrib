@@ -2,21 +2,16 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { AstUtils } from './utils/AstUtils';
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
 
-/**
- * Implementation of the prefer-type-cast rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-type-cast',
         type: 'maintainability',
-        description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
-        options: null,
+        description: "Prefer the tradition type casts instead of the new 'as-cast' syntax",
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -24,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'true,   // pick either type-cast format and use it consistently',
+        recommendation: 'true, // pick either type-cast format and use it consistently',
         commonWeaknessEnumeration: '398, 710'
     };
 
@@ -33,7 +28,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class PreferTypeCastRuleWalker extends ErrorTolerantWalker {
+class PreferTypeCastRuleWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (AstUtils.getLanguageVariant(node) === ts.LanguageVariant.Standard) {
             super.visitSourceFile(node);

@@ -1,8 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const OPTION_ALLOW_FOR_LOOPS = 'allow-for-loops';
 
@@ -10,7 +9,6 @@ const OPTION_ALLOW_FOR_LOOPS = 'allow-for-loops';
  * Implementation of the no-increment-decrement rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-increment-decrement',
         type: 'maintainability',
@@ -40,8 +38,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoIncrementDecrementWalker extends ErrorTolerantWalker {
-    private allowForLoops: boolean;
+class NoIncrementDecrementWalker extends Lint.RuleWalker {
+    private readonly allowForLoops: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -76,12 +74,11 @@ class NoIncrementDecrementWalker extends ErrorTolerantWalker {
         super.visitPrefixUnaryExpression(node);
     }
 
-    private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
+    private validateUnaryExpression(node: ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
         if (node.operator === ts.SyntaxKind.PlusPlusToken) {
             this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden ++ operator');
         } else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
             this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden -- operator');
         }
     }
-
 }

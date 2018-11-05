@@ -9,19 +9,36 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { IDom } from './utils/attributes/IDom';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const DOM_SCHEMA: IDom[] = require('./utils/attributes/domSchema.json');
+const DOM_SCHEMA: { [key: string]: IDom } = require('./utils/attributes/domSchema.json');
 const FAILURE_STRING: string = 'Elements with event handlers must have role attribute.';
 const ROLE_STRING: string = 'role';
-const TARGET_EVENTS: string[] = ['click', 'keyup', 'keydown', 'keypress', 'mousedown', 'mouseup',
-    'mousemove', 'mouseout', 'mouseover', 'onclick', 'onkeyup', 'onkeydown', 'onkeypress', 'onmousedown',
-    'onmouseup', 'onmousemove', 'onmouseout', 'onmouseover'];
+const TARGET_EVENTS: string[] = [
+    'click',
+    'keyup',
+    'keydown',
+    'keypress',
+    'mousedown',
+    'mouseup',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'onclick',
+    'onkeyup',
+    'onkeydown',
+    'onkeypress',
+    'onmousedown',
+    'onmouseup',
+    'onmousemove',
+    'onmouseout',
+    'onmouseover'
+];
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-event-has-role',
         type: 'maintainability',
         description: 'Elements with event handlers must have role attribute.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -52,7 +69,7 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
     private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
-        if (!(<any>DOM_SCHEMA)[tagName]) {
+        if (!DOM_SCHEMA[tagName]) {
             return;
         }
 
@@ -61,11 +78,7 @@ class ReactA11yEventHasRoleWalker extends Lint.RuleWalker {
         const hasAriaRole: boolean = !!attributes[ROLE_STRING] || !!getImplicitRole(node);
 
         if (events.length > 0 && !hasAriaRole) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                FAILURE_STRING
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
     }
 }

@@ -4,14 +4,14 @@ import * as path from 'path';
  * Control flow functions.
  */
 /* tslint:disable:no-increment-decrement */
-export module Utils {
+export namespace Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
-    export function exists<T>(list : ReadonlyArray<T> | null | undefined, predicate: (t: T) => boolean) : boolean {
-        if (list != null) {
+    export function exists<T>(list: ReadonlyArray<T> | undefined, predicate: (t: T) => boolean): boolean {
+        if (list !== undefined) {
             for (let i = 0; i < list.length; i++) {
-                const obj : T = list[i];
+                const obj: T = list[i];
                 if (predicate(obj)) {
                     return true;
                 }
@@ -23,29 +23,31 @@ export module Utils {
     /**
      * A contains function.
      */
-    export function contains<T>(list: ReadonlyArray<T> | null | undefined, element: T): boolean {
-        return exists(list, (item: T): boolean => {
-            return item === element;
-        });
+    export function contains<T>(list: ReadonlyArray<T> | undefined, element: T): boolean {
+        return exists(
+            list,
+            (item: T): boolean => {
+                return item === element;
+            }
+        );
     }
 
     /**
      * A removeAll function.
      */
-    export function removeAll<T>(
-        source: ReadonlyArray<T> | null | undefined,
-        elementsToRemove: ReadonlyArray<T> | null | undefined
-    ): T[] {
-        if (source == null || source.length === 0) {
+    export function removeAll<T>(source: ReadonlyArray<T> | undefined, elementsToRemove: ReadonlyArray<T> | undefined): T[] {
+        if (source === undefined || source.length === 0) {
             return [];
         }
-        if (elementsToRemove == null || elementsToRemove.length === 0) {
+        if (elementsToRemove === undefined || elementsToRemove.length === 0) {
             return [...source]; // be sure to return a copy of the array
         }
 
-        return source.filter((sourceElement: T): boolean => {
-            return !contains(elementsToRemove, sourceElement);
-        });
+        return source.filter(
+            (sourceElement: T): boolean => {
+                return !contains(elementsToRemove, sourceElement);
+            }
+        );
     }
 
     /**
@@ -55,8 +57,8 @@ export module Utils {
         return removeAll(source, [elementToRemove]);
     }
 
-    export function trimTo(source: string | null | undefined, maxLength: number): string {
-        if (source == null) {
+    export function trimTo(source: string | undefined, maxLength: number): string {
+        if (source === undefined) {
             return '';
         }
         if (source.length <= maxLength) {

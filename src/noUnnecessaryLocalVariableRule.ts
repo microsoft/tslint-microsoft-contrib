@@ -2,21 +2,16 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import * as tsutils from 'tsutils';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary local variable: ';
 
-/**
- * Implementation of the no-unnecessary-local-variable rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-local-variable',
         type: 'maintainability',
         description: 'Do not declare a variable only to return it from the function on the next line.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -32,7 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
+class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
     private readonly variableUsages: Map<ts.Identifier, tsutils.VariableInfo> = tsutils.collectVariableUsage(this.getSourceFile());
 
     protected visitBlock(node: ts.Block): void {
@@ -56,14 +51,14 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
-        if (node.body != null && tsutils.isModuleBlock(node.body)) {
+        if (node.body !== undefined && tsutils.isModuleBlock(node.body)) {
             this.validateStatementArray(node.body.statements);
         }
         super.visitModuleDeclaration(node);
     }
 
     private validateStatementArray(statements: ts.NodeArray<ts.Statement>): void {
-        if (statements == null || statements.length < 2) {
+        if (statements === undefined || statements.length < 2) {
             return; // one liners are always valid
         }
 
@@ -72,40 +67,41 @@ class UnnecessaryLocalVariableRuleWalker extends ErrorTolerantWalker {
 
         const returnedVariableName = this.tryToGetReturnedVariableName(lastStatement);
         const declaredVariableIdentifier = this.tryToGetDeclaredVariable(nextToLastStatement);
-        if (declaredVariableIdentifier == null) {
+        if (declaredVariableIdentifier === undefined) {
             return;
         }
 
         const declaredVariableName: string = declaredVariableIdentifier.text;
 
-        if (returnedVariableName != null
-            && declaredVariableName != null
-            && returnedVariableName === declaredVariableName
-            && this.variableIsOnlyUsedOnce(declaredVariableIdentifier)) {
-            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(),
-                FAILURE_STRING + returnedVariableName);
+        if (
+            returnedVariableName !== undefined &&
+            declaredVariableName !== undefined &&
+            returnedVariableName === declaredVariableName &&
+            this.variableIsOnlyUsedOnce(declaredVariableIdentifier)
+        ) {
+            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
         }
     }
 
-    private tryToGetDeclaredVariable(statement: ts.Statement): ts.Identifier | null {
-        if (statement != null && tsutils.isVariableStatement(statement)) {
+    private tryToGetDeclaredVariable(statement: ts.Statement): ts.Identifier | undefined {
+        if (statement !== undefined && tsutils.isVariableStatement(statement)) {
             if (statement.declarationList.declarations.length === 1) {
                 const declaration: ts.VariableDeclaration = statement.declarationList.declarations[0];
-                if (declaration.name != null && tsutils.isIdentifier(declaration.name)) {
+                if (declaration.name !== undefined && tsutils.isIdentifier(declaration.name)) {
                     return declaration.name;
                 }
             }
         }
-        return null;
+        return undefined;
     }
 
-    private tryToGetReturnedVariableName(statement: ts.Statement): string | null {
-        if (statement != null && tsutils.isReturnStatement(statement)) {
-            if (statement.expression != null && tsutils.isIdentifier(statement.expression)) {
+    private tryToGetReturnedVariableName(statement: ts.Statement): string | undefined {
+        if (statement !== undefined && tsutils.isReturnStatement(statement)) {
+            if (statement.expression !== undefined && tsutils.isIdentifier(statement.expression)) {
                 return statement.expression.text;
             }
         }
-        return null;
+        return undefined;
     }
 
     private variableIsOnlyUsedOnce(declaredVariableIdentifier: ts.Identifier) {

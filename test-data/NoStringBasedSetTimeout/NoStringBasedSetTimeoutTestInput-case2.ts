@@ -1,6 +1,6 @@
 var globalProp1: () => void;
 var globalProp2 = () => {};
-var globalProp3 = function () {};
+var globalProp3 = function() {};
 
 function globalFunction1() {}
 
@@ -9,11 +9,10 @@ setTimeout(globalProp2, 5);
 setTimeout(globalProp3, 5);
 setTimeout(globalFunction1, 5);
 
-module SetTimeoutModule {
-
+namespace SetTimeoutModule {
     var moduleProp1: () => void;
     var moduleProp2 = () => {};
-    var moduleProp3 = function () {};
+    var moduleProp3 = function() {};
 
     function moduleFunction1() {
         setTimeout(moduleProp1, 5);
@@ -23,14 +22,13 @@ module SetTimeoutModule {
     }
 
     class View {
-
         private property1: () => void;
         private property2 = () => {};
-        private property3 = function () {};
+        private property3 = function() {};
 
         private static property4: () => void;
         private static property5 = () => {};
-        private static property6 = function () {};
+        private static property6 = function() {};
 
         private static method1() {}
 

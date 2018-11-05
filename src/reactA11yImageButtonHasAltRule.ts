@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-image-button-has-alt',
         type: 'maintainability',
         description: 'Enforce that inputs element with type="image" must have alt attribute.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -56,11 +56,13 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const typeAttribute: ts.JsxAttribute = attributes[TYPE_STRING];
 
-        if (!typeAttribute
-            || typeAttribute.initializer === undefined
-            || !isStringLiteral(typeAttribute.initializer)
-            || getStringLiteral(typeAttribute) === undefined
-            || getStringLiteral(typeAttribute)!.toLowerCase() !== 'image') {
+        if (
+            !typeAttribute ||
+            typeAttribute.initializer === undefined ||
+            !isStringLiteral(typeAttribute.initializer) ||
+            getStringLiteral(typeAttribute) === undefined ||
+            getStringLiteral(typeAttribute)!.toLowerCase() !== 'image'
+        ) {
             return;
         }
 

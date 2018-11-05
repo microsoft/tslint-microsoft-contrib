@@ -1,4 +1,3 @@
-
 class SampleConst3 {
     // class variables
     private const;
@@ -8,12 +7,13 @@ class SampleConst3 {
 class SampleConst4 {
     private var;
     set const(value) {}
-    get const() { return this.var;}
+    get const() {
+        return this.var;
+    }
 }
 
-
 class SampleConst5 {
-    const() {}       // class methods
+    const() {} // class methods
 }
 
 // interface declarations

@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-multiline-string rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-multiline-string',
         type: 'maintainability',
         description: 'Do not declare multiline strings',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -32,12 +27,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoMultilineStringWalker extends ErrorTolerantWalker {
+class NoMultilineStringWalker extends Lint.RuleWalker {
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
-            const fullText : string = node.getFullText();
-            const firstLine : string = fullText.substring(0, fullText.indexOf('\n'));
-            const trimmed : string = firstLine.substring(0, 40).trim();
+            const fullText: string = node.getFullText();
+            const firstLine: string = fullText.substring(0, fullText.indexOf('\n'));
+            const trimmed: string = firstLine.substring(0, 40).trim();
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...');
         }
         super.visitNode(node);

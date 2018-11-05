@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-invalid-regexp rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-invalid-regexp',
         type: 'maintainability',
         description: 'Do not use invalid regular expression strings in the RegExp constructor.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -28,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoInvalidRegexpRuleWalker extends ErrorTolerantWalker {
+class NoInvalidRegexpRuleWalker extends Lint.RuleWalker {
     protected visitNewExpression(node: ts.NewExpression): void {
         this.validateCall(node);
         super.visitNewExpression(node);

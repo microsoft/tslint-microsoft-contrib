@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-delete-expression rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-delete-expression',
         type: 'maintainability',
         description: 'Do not delete expressions. Only properties should be deleted',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -31,14 +26,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDeleteExpression extends ErrorTolerantWalker {
-
+class NoDeleteExpression extends Lint.RuleWalker {
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);
         if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
             // first child is delete keyword, second one is what is being deleted.
             const deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject != null && deletedObject.kind === ts.SyntaxKind.Identifier) {
+            if (deletedObject !== undefined && deletedObject.kind === ts.SyntaxKind.Identifier) {
                 this.addNoDeleteFailure(deletedObject);
             }
         }
@@ -48,5 +42,4 @@ class NoDeleteExpression extends ErrorTolerantWalker {
         const msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
         this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
     }
-
 }

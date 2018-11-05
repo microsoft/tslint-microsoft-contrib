@@ -11,6 +11,6 @@ export interface IRole {
  * Interface of role schema.
  */
 export interface IRoleSchema {
-    roles: IRole[];
+    roles: { [key: string]: IRole };
     globalSupportedProps: string[];
 }

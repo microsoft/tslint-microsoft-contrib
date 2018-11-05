@@ -1,27 +1,22 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import { ErrorTolerantWalker } from './utils/ErrorTolerantWalker';
 import { ChaiUtils } from './utils/ChaiUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const BASE_ERROR: string = 'Found chai call with vague failure message. ';
 const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE: string = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
-    'call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE: string = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
-    'call into the assertion value. ';
+const FAILURE_STRING_COMPARE_TRUE: string =
+    BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
+const FAILURE_STRING_COMPARE_FALSE: string =
+    BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
 
-/**
- * Implementation of the chai-vague-errors rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'chai-vague-errors',
         type: 'maintainability',
         description: 'Avoid Chai assertions that result in vague errors',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -37,7 +32,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
+class ChaiVagueErrorsRuleWalker extends Lint.RuleWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         if (ChaiUtils.isExpectInvocation(node)) {
             if (/ok|true|false|undefined|null/.test(node.name.getText())) {
@@ -63,13 +58,13 @@ class ChaiVagueErrorsRuleWalker extends ErrorTolerantWalker {
             }
 
             const actualValue = ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue !== null && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
+            if (actualValue !== undefined && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
                 const expectedValue = ChaiUtils.getFirstExpectationParameter(node);
-                if (expectedValue !== null) {
+                if (expectedValue !== undefined) {
                     const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
                     const operator: string = binaryExpression.operatorToken.getText();
-                    const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
-                        || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+                    const expectingBooleanKeyword: boolean =
+                        expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
                     if (operator === '===' && expectingBooleanKeyword) {
                         this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);

@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-with-statement": true
+    }
+}

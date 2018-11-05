@@ -44,9 +44,19 @@ export function isJsxOpeningElement(node: ts.Node): node is ts.JsxOpeningElement
 export function isTrueKeyword(node: ts.Node): node is ts.LiteralExpression {
     return node && node.kind === ts.SyntaxKind.TrueKeyword;
 }
+
 export function isFalseKeyword(node: ts.Node): node is ts.LiteralExpression {
     return node && node.kind === ts.SyntaxKind.FalseKeyword;
 }
+
 export function isNullKeyword(node: ts.Node): node is ts.LiteralExpression {
     return node && node.kind === ts.SyntaxKind.NullKeyword;
+}
+
+export function isObject(value: unknown): value is { [key: string]: unknown } {
+    return value !== undefined && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function isNamed(node: ts.Node): node is ts.Node & { name: ts.Node } {
+    return 'name' in node && (<{ name: ts.Node }>node).name !== undefined;
 }

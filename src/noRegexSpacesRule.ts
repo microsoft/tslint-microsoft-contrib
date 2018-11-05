@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-regex-spaces rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-regex-spaces',
         type: 'maintainability',
         description: 'Do not use multiple spaces in a regular expression literal. Similar to the ESLint no-regex-spaces rule',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -28,18 +23,16 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoRegexSpacesRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
-class NoRegexSpacesRuleWalker extends ErrorTolerantWalker {
+class NoRegexSpacesRuleWalker extends Lint.RuleWalker {
     protected visitRegularExpressionLiteral(node: ts.Node): void {
         const match = /( {2,})+?/.exec(node.getText());
-        if (match != null) {
+        if (match !== null) {
             const replacement: string = '{' + match[0].length + '}';
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
         }
 
         super.visitRegularExpressionLiteral(node);
     }
-
 }

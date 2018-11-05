@@ -7,20 +7,9 @@ import * as Lint from 'tslint';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import {
-    getPropName,
-    getStringLiteral,
-    getBooleanLiteral
-} from './utils/JsxAttribute';
+import { getPropName, getStringLiteral, getBooleanLiteral } from './utils/JsxAttribute';
 import { IAria } from './utils/attributes/IAria';
-import {
-    isStringLiteral,
-    isNumericLiteral,
-    isJsxExpression,
-    isFalseKeyword,
-    isTrueKeyword,
-    isNullKeyword
-} from './utils/TypeGuard';
+import { isStringLiteral, isNumericLiteral, isJsxExpression, isFalseKeyword, isTrueKeyword, isNullKeyword } from './utils/TypeGuard';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const aria: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
@@ -37,7 +26,8 @@ export function getFailureString(propName: string, expectedType: string, permitt
         case 'string':
         case 'integer':
         case 'number':
-        default: // tslint:disable-line:no-switch-case-fall-through
+        default:
+            // tslint:disable-line:no-switch-case-fall-through
             return `The value for ${propName} must be a ${expectedType}.`;
     }
 }
@@ -47,7 +37,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-proptypes',
         type: 'maintainability',
         description: 'Enforce ARIA state and property values are valid.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -78,18 +68,14 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             return;
         }
 
-        const allowUndefined: boolean = aria[propName].allowUndefined != null
-            ? aria[propName].allowUndefined
-            : false;
+        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
         const expectedType: string = aria[propName].type;
         const permittedValues: string[] = aria[propName].values;
         const propValue: string = getStringLiteral(node) || String(getBooleanLiteral(node));
 
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
-                this.addFailureAt(
-                    node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)
-                );
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
             }
             return;
         } else if (this.isComplexType(node.initializer)) {
@@ -97,42 +83,47 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
 
         if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                getFailureString(propName, expectedType, permittedValues)
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
         }
     }
 
     private validityCheck(
-        propValueExpression: ts.Expression | null | undefined,
+        propValueExpression: ts.Expression | undefined,
         propValue: string,
         expectedType: string,
         permittedValues: string[]
     ): boolean {
-        if (propValueExpression == null) {
+        if (propValueExpression === undefined) {
             return true;
         }
 
         switch (expectedType) {
-            case 'boolean': return this.isBoolean(propValueExpression);
-            case 'tristate': return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer': return this.isInteger(propValueExpression);
-            case 'number': return this.isNumber(propValueExpression);
-            case 'string': return this.isString(propValueExpression);
+            case 'boolean':
+                return this.isBoolean(propValueExpression);
+            case 'tristate':
+                return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
+            case 'integer':
+                return this.isInteger(propValueExpression);
+            case 'number':
+                return this.isNumber(propValueExpression);
+            case 'string':
+                return this.isString(propValueExpression);
             case 'token':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    permittedValues.indexOf(propValue.toLowerCase()) > -1;
+                return (
+                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    permittedValues.indexOf(propValue.toLowerCase()) > -1
+                );
             case 'tokenlist':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1);
+                return (
+                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
+                );
             default:
                 return false;
         }
     }
 
-    private isUndefined(node: ts.Expression | null | undefined): boolean {
+    private isUndefined(node: ts.Expression | undefined): boolean {
         if (!node) {
             return true;
         } else if (isJsxExpression(node)) {
@@ -153,8 +144,8 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
      * For this case <div prop={ x + 1 } />
      * we can't check the type of atrribute's expression until running time.
      */
-    private isComplexType(node: ts.Expression | null | undefined): boolean {
-        return node != null && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
+    private isComplexType(node: ts.Expression | undefined): boolean {
+        return node !== undefined && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
     }
 
     private isBoolean(node: ts.Expression): boolean {

@@ -1,16 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {ErrorTolerantWalker} from './ErrorTolerantWalker';
-import {AstUtils} from './AstUtils';
+import { AstUtils } from './AstUtils';
 
 /**
  * Tracks nested scope of variables.
  */
 export class Scope {
-    public parent: Scope | null;
-    private symbols: { [index: string]: number } = {};
+    public parent: Scope | undefined;
+    private readonly symbols: { [index: string]: number } = {};
 
-    constructor(parent: Scope | null) {
+    constructor(parent: Scope | undefined) {
         this.parent = parent;
     }
 
@@ -29,39 +28,49 @@ export class Scope {
         if (this.symbols[symbolString] === ts.SyntaxKind.Unknown) {
             return false;
         }
-        if (this.parent != null) {
+        if (this.parent !== undefined) {
             return this.parent.isFunctionSymbol(symbolString);
         }
         return false;
     }
 
     public addParameters(parameters: ReadonlyArray<ts.ParameterDeclaration>): void {
-        parameters.forEach((parm: ts.ParameterDeclaration): void => {
-            if (AstUtils.isDeclarationFunctionType(parm)) {
-                this.addFunctionSymbol(parm.name.getText());
-            } else {
-                this.addNonFunctionSymbol(parm.name.getText());
+        parameters.forEach(
+            (parm: ts.ParameterDeclaration): void => {
+                if (AstUtils.isDeclarationFunctionType(parm)) {
+                    this.addFunctionSymbol(parm.name.getText());
+                } else {
+                    this.addNonFunctionSymbol(parm.name.getText());
+                }
             }
-        });
+        );
     }
 
-    public addGlobalScope(node: ts.Node, sourceFile : ts.SourceFile, options : Lint.IOptions): void {
+    public addGlobalScope(node: ts.Node, sourceFile: ts.SourceFile, options: Lint.IOptions): void {
         const refCollector = new GlobalReferenceCollector(sourceFile, options);
         refCollector.visitNode(node);
-        refCollector.functionIdentifiers.forEach((identifier: string): void => { this.addFunctionSymbol(identifier); });
-        refCollector.nonFunctionIdentifiers.forEach((identifier: string): void => { this.addNonFunctionSymbol(identifier); });
+        refCollector.functionIdentifiers.forEach(
+            (identifier: string): void => {
+                this.addFunctionSymbol(identifier);
+            }
+        );
+        refCollector.nonFunctionIdentifiers.forEach(
+            (identifier: string): void => {
+                this.addNonFunctionSymbol(identifier);
+            }
+        );
     }
 }
 
-class GlobalReferenceCollector extends ErrorTolerantWalker {
+class GlobalReferenceCollector extends Lint.RuleWalker {
     public functionIdentifiers: string[] = [];
     public nonFunctionIdentifiers: string[] = [];
 
     /* tslint:disable:no-empty */
-    protected visitModuleDeclaration(): void { }   // do not descend into fresh scopes
-    protected visitClassDeclaration(): void { }     // do not descend into fresh scopes
-    protected visitArrowFunction(): void { }           // do not descend into fresh scopes
-    protected visitFunctionExpression(): void { } // do not descend into fresh scopes
+    protected visitModuleDeclaration(): void {} // do not descend into fresh scopes
+    protected visitClassDeclaration(): void {} // do not descend into fresh scopes
+    protected visitArrowFunction(): void {} // do not descend into fresh scopes
+    protected visitFunctionExpression(): void {} // do not descend into fresh scopes
     /* tslint:enable:no-empty */
 
     // need to make this public so it can be invoked outside of class

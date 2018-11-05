@@ -1,12 +1,10 @@
-
 // class properties
 class SampleClass4 {
     set class(value) {}
 }
 
-
 class SampleClass5 {
-    class() {}       // class methods
+    class() {} // class methods
 }
 
 // interface declarations

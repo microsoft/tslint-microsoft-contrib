@@ -1,21 +1,17 @@
-
 // module names
-module WrapperDeclare {
-    module declare {
-
+namespace WrapperDeclare {
+    namespace declare {
         // class names
-        class declare {
-
-        }
+        class declare {}
     }
 }
 
-module SampleDeclare1 {
+namespace SampleDeclare1 {
     // module variables
     var declare;
 }
 
-module SampleDeclare2 {
+namespace SampleDeclare2 {
     // module function
     function declare() {}
 }
@@ -29,15 +25,15 @@ class SampleDeclare3 {
 class SampleDeclare4 {
     private var;
     set declare(value) {}
-    get declare() { return this.var;}
+    get declare() {
+        return this.var;
+    }
 }
 
-
 class SampleDeclare5 {
-    declare() {}       // class methods
-    method(declare) {}  // method parameters
-    private func = (declare) => {}; // arrow function parameters
-
+    declare() {} // class methods
+    method(declare) {} // method parameters
+    private func = declare => {}; // arrow function parameters
 }
 
 // interface declarations

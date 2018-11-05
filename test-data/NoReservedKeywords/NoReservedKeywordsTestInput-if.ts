@@ -1,4 +1,3 @@
-
 class SampleIf3 {
     // class variables
     private if;
@@ -8,13 +7,13 @@ class SampleIf3 {
 class SampleIf4 {
     private var;
     set if(value) {}
-    get if() { return this.var;}
+    get if() {
+        return this.var;
+    }
 }
 
-
 class SampleIf5 {
-    if() {}       // class methods
-
+    if() {} // class methods
 }
 
 // interface declarations

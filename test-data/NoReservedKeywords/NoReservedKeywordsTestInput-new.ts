@@ -1,4 +1,3 @@
-
 class SampleNew3 {
     // class variables
     private new;
@@ -8,12 +7,13 @@ class SampleNew3 {
 class SampleNew4 {
     private var;
     set new(value) {}
-    get new() { return this.var;}
+    get new() {
+        return this.var;
+    }
 }
 
-
 class SampleNew5 {
-    new() {}       // class methods
+    new() {} // class methods
 }
 
 // interface declarations

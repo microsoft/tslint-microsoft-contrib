@@ -1,0 +1,11 @@
+let a;
+let b;
+
+with({}) {
+~~~~~~~~~~~
+    a = 1;
+~~~~~~~~~~~
+    b = 2;
+~~~~~~~~~~~
+}
+~  [Forbidden with statement]

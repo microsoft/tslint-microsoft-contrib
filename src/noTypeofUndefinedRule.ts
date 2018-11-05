@@ -1,22 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = 'Avoid typeof x === \'undefined\' comparisons. Prefer x == undefined or x === undefined: ';
+const FAILURE_STRING: string = "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: ";
 
-/**
- * Implementation of the no-typeof-undefined rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-typeof-undefined',
         type: 'maintainability',
-        description: 'Do not use the idiom typeof `x === \'undefined\'`. You can safely use the simpler x === undefined ' +
-                    'or perhaps x == null if you want to check for either null or undefined.',
-        options: null,
+        description:
+            "Do not use the idiom typeof `x === 'undefined'`. You can safely use the simpler x === undefined " +
+            'or perhaps x == null if you want to check for either null or undefined.',
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -32,12 +28,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoTypeofUndefinedRuleWalker extends ErrorTolerantWalker {
-
+class NoTypeofUndefinedRuleWalker extends Lint.RuleWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if ((this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right))
-            || this.isUndefinedString(node.right) && this.isTypeOfExpression(node.left)) {
-
+        if (
+            (this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right)) ||
+            (this.isUndefinedString(node.right) && this.isTypeOfExpression(node.left))
+        ) {
             this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
         super.visitBinaryExpression(node);

@@ -1,20 +1,16 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-document-domain rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-document-domain',
         type: 'maintainability',
-        description: 'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
-                    'validated to ensure that the value is on a list of allowed sites.',
-        options: null,
+        description:
+            'Do not write to document.domain. Scripts setting document.domain to any value should be ' +
+            'validated to ensure that the value is on a list of allowed sites.',
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -31,11 +27,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
+class NoDocumentDomainRuleWalker extends Lint.RuleWalker {
     protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.operatorToken.getText() === '='
-            && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
-            && this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)) {
+        if (
+            node.operatorToken.getText() === '=' &&
+            node.left.kind === ts.SyntaxKind.PropertyAccessExpression &&
+            this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)
+        ) {
             const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
@@ -46,8 +44,6 @@ class NoDocumentDomainRuleWalker extends ErrorTolerantWalker {
         if (node.name.text !== 'domain') {
             return false;
         }
-        return node.expression.getText() === 'document'
-            || node.expression.getText() === 'window.document';
-
+        return node.expression.getText() === 'document' || node.expression.getText() === 'window.document';
     }
 }

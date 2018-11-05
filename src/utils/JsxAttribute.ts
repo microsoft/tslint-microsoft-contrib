@@ -20,9 +20,7 @@ export function getPropName(node: ts.JsxAttribute): string | undefined {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
 
-    return node.name
-        ? node.name.text
-        : undefined;
+    return node.name ? node.name.text : undefined;
 }
 
 /**
@@ -37,16 +35,19 @@ export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute):
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
 
-    const initializer = node == null ? null : node.initializer;
+    const initializer = node === undefined ? undefined : node.initializer;
 
-    if (!initializer) { // <tag attribute/>
+    if (!initializer) {
+        // <tag attribute/>
         return '';
-    } else if (isStringLiteral(initializer)) { // <tag attribute='value' />
+    } else if (isStringLiteral(initializer)) {
+        // <tag attribute='value' />
         return initializer.text.trim();
-    } else if (isJsxExpression(initializer) && initializer.expression != null
-        && isStringLiteral(initializer.expression)) { // <tag attribute={'value'} />
+    } else if (isJsxExpression(initializer) && initializer.expression !== undefined && isStringLiteral(initializer.expression)) {
+        // <tag attribute={'value'} />
         return (<ts.StringLiteral>initializer.expression).text;
-    } else if (isJsxExpression(initializer) && !initializer.expression) { // <tag attribute={} />
+    } else if (isJsxExpression(initializer) && !initializer.expression) {
+        // <tag attribute={} />
         return '';
     } else {
         return undefined;
@@ -67,8 +68,8 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
 
-    const initializer = node == null ? null : node.initializer;
-    if (initializer == null) {
+    const initializer = node === undefined ? undefined : node.initializer;
+    if (initializer === undefined) {
         return false;
     }
 
@@ -87,7 +88,7 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
     } else if (isJsxExpression(initializer)) {
         const expression = initializer.expression;
 
-        if (expression == null) {
+        if (expression === undefined) {
             return undefined;
         } else if (isStringLiteral(expression)) {
             return getBooleanFromString(expression.text);
@@ -106,14 +107,14 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
 }
 
 export function isEmpty(node: ts.JsxAttribute): boolean {
-    const initializer = node == null ? null : node.initializer;
+    const initializer = node === undefined ? undefined : node.initializer;
 
-    if (initializer == null) {
+    if (initializer === undefined) {
         return true;
     } else if (isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
-    } else if ((<any>initializer).expression != null) {
-        const expression: ts.Expression = (<any>initializer).expression;
+    } else if (initializer.expression !== undefined) {
+        const expression: ts.Expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
         } else if (expression.kind === ts.SyntaxKind.NullKeyword) {
@@ -133,21 +134,25 @@ export function getNumericLiteral(node: ts.JsxAttribute): string | undefined {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
 
-    const initializer = node == null ? null : node.initializer;
+    const initializer = node === undefined ? undefined : node.initializer;
 
-    return initializer != null && isJsxExpression(initializer) && initializer.expression != null && isNumericLiteral(initializer.expression)
-        ? (<ts.LiteralExpression>initializer.expression).text
-        : undefined;
+    if (initializer !== undefined && isJsxExpression(initializer)) {
+        if (initializer.expression !== undefined && isNumericLiteral(initializer.expression)) {
+            return (<ts.LiteralExpression>initializer.expression).text;
+        }
+    }
+
+    return undefined;
 }
 
 /**
  * Get an array of attributes in the given node.
  * It contains JsxAttribute and JsxSpreadAttribute.
  */
-export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.JsxAttributeLike> | null {
-    let attributes: ts.NodeArray<ts.JsxAttributeLike> | null = null;
+export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.JsxAttributeLike> | undefined {
+    let attributes: ts.NodeArray<ts.JsxAttributeLike> | undefined;
 
-    if (node == null) {
+    if (node === undefined) {
         return attributes;
     } else if (isJsxElement(node)) {
         attributes = node.openingElement.attributes.properties;
@@ -170,14 +175,14 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
     const attributesDictionary: { [propName: string]: ts.JsxAttribute } = {};
     const attributes = getAllAttributesFromJsxElement(node);
 
-    if (attributes != null) {
-        attributes.forEach((attr) => {
+    if (attributes !== undefined) {
+        attributes.forEach(attr => {
             if (!isJsxAttribute(attr)) {
                 return;
             }
 
             const propName = getPropName(attr);
-            if (propName != null) {
+            if (propName !== undefined) {
                 attributesDictionary[propName.toLowerCase()] = attr;
             }
         });

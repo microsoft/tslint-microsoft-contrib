@@ -1,4 +1,3 @@
-
 class SampleFunction3 {
     // class variables
     private function;
@@ -8,12 +7,13 @@ class SampleFunction3 {
 class SampleFunction4 {
     private var;
     set function(value) {}
-    get function() { return this.var;}
+    get function() {
+        return this.var;
+    }
 }
 
-
 class SampleFunction5 {
-    function() {}       // class methods
+    function() {} // class methods
 }
 
 // interface declarations

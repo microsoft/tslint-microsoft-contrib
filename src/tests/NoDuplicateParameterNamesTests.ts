@@ -1,15 +1,12 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-/**
- * Unit tests.
- */
-describe('noDuplicateParameterNames', () : void => {
-    const RULE_NAME : string = 'no-duplicate-parameter-names';
+describe('noDuplicateParameterNames', (): void => {
+    const RULE_NAME: string = 'no-duplicate-parameter-names';
 
-    it('should produce violations ', () : void => {
+    it('should produce violations ', (): void => {
         /* tslint:disable:max-line-length */
-        const inputFile : string = `
+        const inputFile: string = `
 class NoDuplicateParameterNamesTestInput {
 
     /**
@@ -52,51 +49,50 @@ function function3(duplicateFunctionParameter, duplicateFunctionParameter) {}   
         /* tslint:enable:max-line-length */
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Duplicate parameter name: 'duplicateConstructorParameter'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-parameter-names",
-                "startPosition": {
-                    "line": 28,
-                    "character": 54
+                failure: "Duplicate parameter name: 'duplicateConstructorParameter'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-parameter-names',
+                startPosition: {
+                    line: 28,
+                    character: 54
                 }
             },
             {
-                "failure": "Duplicate parameter name: 'duplicateMethodParameter'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-parameter-names",
-                "startPosition": {
-                    "line": 29,
-                    "character": 45
+                failure: "Duplicate parameter name: 'duplicateMethodParameter'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-parameter-names',
+                startPosition: {
+                    line: 29,
+                    character: 45
                 }
             },
             {
-                "failure": "Duplicate parameter name: 'duplicateArrowFunctionParameter'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-parameter-names",
-                "startPosition": {
-                    "line": 30,
-                    "character": 64
+                failure: "Duplicate parameter name: 'duplicateArrowFunctionParameter'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-parameter-names',
+                startPosition: {
+                    line: 30,
+                    character: 64
                 }
             },
             {
-                "failure": "Duplicate parameter name: 'duplicateFunctionExpParameter'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-parameter-names",
-                "startPosition": {
-                    "line": 31,
-                    "character": 65
+                failure: "Duplicate parameter name: 'duplicateFunctionExpParameter'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-parameter-names',
+                startPosition: {
+                    line: 31,
+                    character: 65
                 }
             },
             {
-                "failure": "Duplicate parameter name: 'duplicateFunctionParameter'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-parameter-names",
-                "startPosition": {
-                    "line": 38,
-                    "character": 48
+                failure: "Duplicate parameter name: 'duplicateFunctionParameter'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-parameter-names',
+                startPosition: {
+                    line: 38,
+                    character: 48
                 }
             }
         ]);
     });
-
 });

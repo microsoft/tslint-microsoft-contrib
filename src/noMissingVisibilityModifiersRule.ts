@@ -1,20 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the mo-missing-visibility-modifiers rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-missing-visibility-modifiers',
         type: 'maintainability',
         description: 'Deprecated - This rule is in the TSLint product as `member-access`',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -31,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
+class MissingVisibilityModifierWalker extends Lint.RuleWalker {
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
         if (this.isMissingVisibilityModifier(node)) {
             const failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
@@ -48,7 +43,7 @@ class MissingVisibilityModifierWalker extends ErrorTolerantWalker {
         super.visitMethodDeclaration(node);
     }
 
-    private isMissingVisibilityModifier(node: ts.Node) : boolean {
+    private isMissingVisibilityModifier(node: ts.Declaration): boolean {
         return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
     }
 

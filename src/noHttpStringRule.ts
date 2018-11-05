@@ -1,22 +1,17 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-http-string rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-http-string',
         type: 'maintainability',
         /* tslint:disable:no-http-string */
-        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+        description: "Do not use strings that start with 'http:'. URL strings should start with 'https:'. ",
         /* tslint:enable:no-http-string */
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -33,10 +28,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
     }
-
 }
 
-class NoHttpStringWalker extends ErrorTolerantWalker {
+class NoHttpStringWalker extends Lint.RuleWalker {
     protected visitStringLiteral(node: ts.StringLiteral): void {
         this.visitLiteralExpression(node);
         super.visitStringLiteral(node);
@@ -56,7 +50,7 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
         // tslint:disable-next-line no-http-string
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
-                const failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                const failureString = Rule.FAILURE_STRING + "'" + stringText + "'";
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
@@ -64,18 +58,21 @@ class NoHttpStringWalker extends ErrorTolerantWalker {
 
     private isSuppressed(stringText: string): boolean {
         const allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
-        return Utils.exists(allExceptions, (exception: string): boolean => {
-            return new RegExp(exception).test(stringText);
-        });
+        return Utils.exists(
+            allExceptions,
+            (exception: string): boolean => {
+                return new RegExp(exception).test(stringText);
+            }
+        );
     }
 
-    private static getExceptions(options: Lint.IOptions): string[] | null {
+    private static getExceptions(options: Lint.IOptions): string[] | undefined {
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return <string[]><any>options; // MSE version of tslint somehow requires this
+            return options;
         }
-        return null;
+        return undefined;
     }
 }

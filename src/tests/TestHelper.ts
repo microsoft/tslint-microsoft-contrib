@@ -1,15 +1,13 @@
 import * as Lint from 'tslint';
 import * as fs from 'fs';
 import * as chai from 'chai';
-import {Utils} from '../utils/Utils';
+import { Utils } from '../utils/Utils';
 import * as ts from 'typescript';
-import {ErrorTolerantWalker} from '../utils/ErrorTolerantWalker';
 
 /**
  * Test Utilities.
  */
-export module TestHelper {
-
+export namespace TestHelper {
     let program: ts.Program;
 
     /* tslint:disable:prefer-const */
@@ -49,16 +47,12 @@ export module TestHelper {
         fix?: Fix;
     }
 
-    export function assertNoViolation(
-        ruleName: string,
-        inputFileOrScript: string,
-        useTypeChecker: boolean = false
-    ) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, [], useTypeChecker);
+    export function assertNoViolation(ruleName: string, inputFileOrScript: string, useTypeChecker: boolean = false) {
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, [], useTypeChecker);
     }
     export function assertNoViolationWithOptions(
         ruleName: string,
-        options: any[],
+        options: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         useTypeChecker: boolean = false
     ) {
@@ -66,7 +60,7 @@ export module TestHelper {
     }
     export function assertViolationsWithOptions(
         ruleName: string,
-        options: any[],
+        options: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
@@ -79,20 +73,17 @@ export module TestHelper {
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
     ) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, useTypeChecker);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, useTypeChecker);
     }
-    export function assertViolationsWithTypeChecker(
-        ruleName: string,
-        inputFileOrScript: string,
-        expectedFailures: ExpectedFailure[]) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, true);
+    export function assertViolationsWithTypeChecker(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[]) {
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, true);
     }
 
     export function runRule(
         ruleName: string,
-        userOptions: string[] | null,
-        inputFileOrScript : string,
-        useTypeChecker : boolean = false
+        userOptions: any[] | undefined, // tslint:disable-line:no-any
+        inputFileOrScript: string,
+        useTypeChecker: boolean = false
     ): Lint.LintResult {
         const configuration: Lint.Configuration.IConfigurationFile = {
             extends: [],
@@ -102,7 +93,7 @@ export module TestHelper {
             rulesDirectory: []
         };
 
-        if (userOptions != null && userOptions.length > 0) {
+        if (userOptions !== undefined && userOptions.length > 0) {
             //options like `[4, 'something', false]` were passed, so prepend `true` to make the array like `[true, 4, 'something', false]`
             configuration.rules.set(ruleName, {
                 ruleName,
@@ -114,19 +105,17 @@ export module TestHelper {
             });
         }
 
-        const options : Lint.ILinterOptions = {
+        const options: Lint.ILinterOptions = {
             formatter: 'json',
             fix: false,
             rulesDirectory: RULES_DIRECTORY,
             formattersDirectory: FORMATTER_DIRECTORY
         };
 
-        const debug: boolean = ErrorTolerantWalker.DEBUG;
-        ErrorTolerantWalker.DEBUG = true; // never fail silently
         let result: Lint.LintResult;
         if (useTypeChecker) {
             //program = Lint.Linter.createProgram([ ], './dist/test-data');
-            program = ts.createProgram([inputFileOrScript], { });
+            program = ts.createProgram([inputFileOrScript], {});
         }
         if (inputFileOrScript.match(/.*\.ts(x)?$/)) {
             // tslint:disable-next-line non-literal-fs-path
@@ -146,13 +135,12 @@ export module TestHelper {
             linter.lint(filename, inputFileOrScript, configuration);
             result = linter.getResult();
         }
-        ErrorTolerantWalker.DEBUG = debug;
         return result;
     }
 
     function runRuleAndEnforceAssertions(
         ruleName: string,
-        userOptions: string[] | null,
+        userOptions: any[] | undefined, // tslint:disable-line:no-any
         inputFileOrScript: string,
         expectedFailures: ExpectedFailure[],
         useTypeChecker: boolean = false
@@ -163,29 +151,35 @@ export module TestHelper {
         // All the information we need is line and character of start position. For JSON comparison
         // to work, we will delete the information that we are not interested in from both actual and
         // expected failures.
-        actualFailures.forEach((actual: ExpectedFailure): void => {
-            delete actual.startPosition.position;
-            delete actual.endPosition;
-            // Editors start counting lines and characters from 1, but tslint does it from 0.
-            // To make thing easier to debug, align to editor values.
-            actual.startPosition.line = actual.startPosition.line + 1;
-            actual.startPosition.character = actual.startPosition.character + 1;
-        });
-        expectedFailures.forEach((expected: ExpectedFailure): void => {
-            delete expected.startPosition.position;
-            delete expected.endPosition;
-            if (!expected.ruleSeverity) {
-                expected.ruleSeverity = 'ERROR';
+        actualFailures.forEach(
+            (actual: ExpectedFailure): void => {
+                delete actual.startPosition.position;
+                delete actual.endPosition;
+                // Editors start counting lines and characters from 1, but tslint does it from 0.
+                // To make thing easier to debug, align to editor values.
+                actual.startPosition.line = actual.startPosition.line + 1;
+                actual.startPosition.character = actual.startPosition.character + 1;
             }
-        });
+        );
+        expectedFailures.forEach(
+            (expected: ExpectedFailure): void => {
+                delete expected.startPosition.position;
+                delete expected.endPosition;
+                if (!expected.ruleSeverity) {
+                    expected.ruleSeverity = 'ERROR';
+                }
+            }
+        );
 
-        const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, null, 2)}`;
+        const errorMessage = `Wrong # of failures: \n${JSON.stringify(actualFailures, undefined, 2)}`;
 
         chai.assert.equal(actualFailures.length, expectedFailures.length, errorMessage);
 
-        expectedFailures.forEach((expected: ExpectedFailure, index: number): void => {
-            const actual = actualFailures[index];
-            chai.assert.deepEqual(actual, expected);
-        });
+        expectedFailures.forEach(
+            (expected: ExpectedFailure, index: number): void => {
+                const actual = actualFailures[index];
+                chai.assert.deepEqual(actual, expected);
+            }
+        );
     }
 }

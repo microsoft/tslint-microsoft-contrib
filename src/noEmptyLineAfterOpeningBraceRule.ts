@@ -1,20 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {forEachTokenWithTrivia} from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
 
-/**
- * Implementation of the no-empty-line-after-opening-brace rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-empty-line-after-opening-brace',
         type: 'maintainability',
         description: 'Avoid an empty line after an opening brace',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -33,8 +28,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
-    private scanner: ts.Scanner;
+class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
+    private readonly scanner: ts.Scanner;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -52,10 +47,11 @@ class NoEmptyLineAfterOpeningBraceWalker extends ErrorTolerantWalker {
         let previousPrevious: ts.SyntaxKind;
 
         forEachTokenWithTrivia(node, ({}, tokenSyntaxKind, range) => {
-            if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
+            if (
+                previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
-                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
-
+                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia
+            ) {
                 this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
 

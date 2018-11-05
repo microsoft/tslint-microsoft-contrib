@@ -1,20 +1,16 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
-/**
- * Implementation of the prefer-array-literal rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-array-literal',
         type: 'maintainability',
         description: 'Use array literal syntax when declaring or instantiating array types.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -33,14 +29,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoGenericArrayWalker extends ErrorTolerantWalker {
-
+class NoGenericArrayWalker extends Lint.RuleWalker {
     private allowTypeParameters: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.allowTypeParameters = opt['allow-type-parameters'] === true;
             }
         });
@@ -57,7 +52,7 @@ class NoGenericArrayWalker extends ErrorTolerantWalker {
     }
 
     protected visitNewExpression(node: ts.NewExpression): void {
-        const functionName  = AstUtils.getFunctionName(node);
+        const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'Array') {
             const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
             this.addFailureAt(node.getStart(), node.getWidth(), failureString);

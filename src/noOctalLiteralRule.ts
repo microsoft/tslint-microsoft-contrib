@@ -1,19 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-/**
- * Implementation of the no-octal-literal rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-octal-literal',
         type: 'maintainability',
         description: 'Do not use octal literals or escaped octal sequences',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -31,7 +26,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoOctalLiteral extends ErrorTolerantWalker {
+class NoOctalLiteral extends Lint.RuleWalker {
     public visitNode(node: ts.Node) {
         if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
             this.failOnOctalString(<ts.LiteralExpression>node);
@@ -45,7 +40,8 @@ class NoOctalLiteral extends ErrorTolerantWalker {
         if (match) {
             let octalValue: string = match[2]; // match[2] is the matched octal value.
             const backslashCount: number = octalValue.lastIndexOf('\\') + 1;
-            if (backslashCount % 2 === 1) { // Make sure the string starts with an odd number of backslashes
+            if (backslashCount % 2 === 1) {
+                // Make sure the string starts with an odd number of backslashes
                 octalValue = octalValue.substr(backslashCount - 1);
 
                 const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);

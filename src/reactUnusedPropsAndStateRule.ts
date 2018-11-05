@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const PROPS_REGEX = 'props-interface-regex';
 const STATE_REGEX = 'state-interface-regex';
@@ -11,16 +11,12 @@ const STATE_REGEX = 'state-interface-regex';
 const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
 const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
 
-/**
- * Implementation of the react-unused-props-and-state rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-unused-props-and-state',
         type: 'maintainability',
         description: 'Remove unneeded properties defined in React Props and State interfaces',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -40,13 +36,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
-
+class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
     private propNames: string[] = [];
     private propNodes: { [index: string]: ts.TypeElement } = {};
     private stateNames: string[] = [];
     private stateNodes: { [index: string]: ts.TypeElement } = {};
-    private classDeclarations: ts.ClassDeclaration[] = [];
+    private readonly classDeclarations: ts.ClassDeclaration[] = [];
     private propsAlias: string | undefined;
     private stateAlias: string | undefined;
     private propsInterfaceRegex: RegExp = /^Props$/;
@@ -54,18 +49,19 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, this.propsInterfaceRegex);
                 this.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, this.stateInterfaceRegex);
             }
         });
     }
 
-    private getOptionOrDefault(option: any, key: string, defaultValue: RegExp): RegExp {
+    private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
         try {
-            if (option[key] != null) {
-                return new RegExp(option[key]);
+            const value: unknown = option[key];
+            if (value !== undefined && typeof value === 'string') {
+                return new RegExp(value);
             }
         } catch (e) {
             /* tslint:disable:no-console */
@@ -76,7 +72,6 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitSourceFile(node: ts.SourceFile): void {
-
         super.visitSourceFile(node);
 
         // if no Props or State interface is declared then don't bother scanning the class
@@ -84,14 +79,18 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
             this.classDeclarations.forEach(this.walkChildren, this);
         }
 
-        this.propNames.forEach((propName: string): void => {
-            const typeElement: ts.TypeElement = this.propNodes[propName];
-            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
-        });
-        this.stateNames.forEach((stateName: string): void => {
-            const typeElement: ts.TypeElement = this.stateNodes[stateName];
-            this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
-        });
+        this.propNames.forEach(
+            (propName: string): void => {
+                const typeElement: ts.TypeElement = this.propNodes[propName];
+                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
+            }
+        );
+        this.stateNames.forEach(
+            (stateName: string): void => {
+                const typeElement: ts.TypeElement = this.stateNodes[stateName];
+                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
+            }
+        );
     }
 
     /**
@@ -120,12 +119,12 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
         } else if (/this\.state\..*/.test(referencedPropertyName)) {
             this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
                 this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
                 this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
@@ -143,24 +142,26 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
     }
 
     protected visitIdentifier(node: ts.Identifier): void {
-        if (this.propsAlias != null) {
-            if (node.text === this.propsAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter
-                && this.isParentNodeSuperCall(node) === false) {
+        if (this.propsAlias !== undefined) {
+            if (
+                node.text === this.propsAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter &&
+                this.isParentNodeSuperCall(node) === false
+            ) {
                 // this props reference has escaped the constructor
                 this.propNames = [];
             }
-
         }
-        if (this.stateAlias != null) {
-            if (node.text === this.stateAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter) {
+        if (this.stateAlias !== undefined) {
+            if (
+                node.text === this.stateAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter
+            ) {
                 // this state reference has escaped the constructor
                 this.stateNames = [];
             }
-
         }
         super.visitIdentifier(node);
     }
@@ -178,12 +179,13 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
         const methodName: string = (<ts.Identifier>node.name).text;
-        if (/componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-                && node.parameters.length > 0) {
+        if (
+            /componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) &&
+            node.parameters.length > 0
+        ) {
             this.propsAlias = (<ts.Identifier>node.parameters[0].name).text;
         }
-        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-                && node.parameters.length > 1) {
+        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) && node.parameters.length > 1) {
             this.stateAlias = (<ts.Identifier>node.parameters[1].name).text;
         }
         super.visitMethodDeclaration(node);
@@ -193,16 +195,21 @@ class ReactUnusedPropsAndStateRuleWalker extends ErrorTolerantWalker {
 
     private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
-        node.members.forEach((typeElement: ts.TypeElement): void => {
-            if (typeElement.name != null && (<any>typeElement.name).text != null) {
-                result[(<any>typeElement.name).text] = typeElement;
+        node.members.forEach(
+            (typeElement: ts.TypeElement): void => {
+                if (typeElement.name !== undefined) {
+                    const text = typeElement.name.getText();
+                    if (text !== undefined) {
+                        result[text] = typeElement;
+                    }
+                }
             }
-        });
+        );
         return result;
     }
 
     private isParentNodeSuperCall(node: ts.Node): boolean {
-        if (node.parent != null && node.parent.kind === ts.SyntaxKind.CallExpression) {
+        if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }

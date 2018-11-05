@@ -1,15 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-/**
- * Unit tests.
- */
-describe('mochaUnneededDoneRule', () : void => {
+describe('mochaUnneededDoneRule', (): void => {
+    const ruleName: string = 'mocha-unneeded-done';
 
-    const ruleName : string = 'mocha-unneeded-done';
-
-    it('should pass on standard usage - arrow functions', () : void => {
-        const script : string = `
+    it('should pass on standard usage - arrow functions', (): void => {
+        const script: string = `
             describe('...', (): void => {
                 before((done: MochaDone): void => {
                     something(done);
@@ -29,11 +25,11 @@ describe('mochaUnneededDoneRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on standard usage - functions expressions', () : void => {
-        const script : string = `
+    it('should pass on standard usage - functions expressions', (): void => {
+        const script: string = `
             describe('...', function(): void {
                 before(function(done: MochaDone): void {
                     something(done);
@@ -53,11 +49,11 @@ describe('mochaUnneededDoneRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on standard usage - context/specify', () : void => {
-        const script : string = `
+    it('should pass on standard usage - context/specify', (): void => {
+        const script: string = `
             context('...', function(): void {
                 specify('...', function(done: MochaDone): void {
                     something(done);
@@ -65,11 +61,11 @@ describe('mochaUnneededDoneRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on reassignment', () : void => {
-        const script : string = `
+    it('should pass on reassignment', (): void => {
+        const script: string = `
             describe('something...', (): void => {
                 it('...', (done): void => {
                     var x = done;
@@ -78,11 +74,11 @@ describe('mochaUnneededDoneRule', () : void => {
             });
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on unneeded dones in arrow functions', () : void => {
-        const script : string = `
+    it('should fail on unneeded dones in arrow functions', (): void => {
+        const script: string = `
             describe('...', (): void => {
                 before((done): void => {
                     doSomething();
@@ -109,40 +105,40 @@ describe('mochaUnneededDoneRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 25, "line": 3 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 25, line: 3 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 24, "line": 7 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 24, line: 7 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: aliasedDone",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 29, "line": 11 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: aliasedDone',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 29, line: 11 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 28, "line": 15 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 28, line: 15 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 28, "line": 19 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 28, line: 19 }
             }
         ]);
     });
 
-    it('should fail on unneeded dones - context/specify', () : void => {
-        const script : string = `
+    it('should fail on unneeded dones - context/specify', (): void => {
+        const script: string = `
             context('...', (): void => {
                 specify('...', (done: MochaDone): void => {
                     doSomething();
@@ -153,16 +149,16 @@ describe('mochaUnneededDoneRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 33, "line": 3 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 33, line: 3 }
             }
         ]);
     });
 
-    it('should fail on unneeded done - functions expressions', () : void => {
-        const script : string = `
+    it('should fail on unneeded done - functions expressions', (): void => {
+        const script: string = `
             describe('...', function(): void {
                 before(function(done): void {
                     something();
@@ -189,34 +185,34 @@ describe('mochaUnneededDoneRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 33, "line": 3 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 33, line: 3 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: myDone",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 32, "line": 7 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: myDone',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 32, line: 7 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 37, "line": 11 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 37, line: 11 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 36, "line": 15 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 36, line: 15 }
             },
             {
-                "failure": "Unneeded Mocha Done. Parameter can be safely removed: done",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "mocha-unneeded-done",
-                "startPosition": { "character": 36, "line": 19 }
+                failure: 'Unneeded Mocha Done. Parameter can be safely removed: done',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'mocha-unneeded-done',
+                startPosition: { character: 36, line: 19 }
             }
         ]);
     });

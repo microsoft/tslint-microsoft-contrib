@@ -1,41 +1,82 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STATIC_FOUND: string = 'Static invocation of underscore function found. Prefer instance version instead: ';
 const FAILURE_INSTANCE_FOUND: string = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
 
 const FUNCTION_NAMES: string[] = [
-    'each', 'forEach', 'map', 'collect',
-    'reduce', 'inject', 'foldl', 'reduceRight',
-    'foldr', 'find', 'detect', 'filter',
-    'select', 'where', 'findWhere', 'reject',
-    'every', 'all', 'some', 'any',
-    'contains', 'include', 'invoke', 'pluck',
-    'max', 'min', 'sortBy', 'groupBy',
-    'indexBy', 'countBy', 'shuffle', 'sample',
-    'toArray', 'size', 'partition', 'first',
-    'head', 'take', 'initial', 'last',
-    'rest', 'tail', 'drop', 'compact',
-    'flatten', 'without', 'union', 'intersection',
-    'difference', 'uniq', 'unique', 'object',
-    'zip', 'unzip', 'indexOf', 'findIndex',
-    'lastIndexOf', 'findLastIndex', 'sortedIndex', 'range'
+    'each',
+    'forEach',
+    'map',
+    'collect',
+    'reduce',
+    'inject',
+    'foldl',
+    'reduceRight',
+    'foldr',
+    'find',
+    'detect',
+    'filter',
+    'select',
+    'where',
+    'findWhere',
+    'reject',
+    'every',
+    'all',
+    'some',
+    'any',
+    'contains',
+    'include',
+    'invoke',
+    'pluck',
+    'max',
+    'min',
+    'sortBy',
+    'groupBy',
+    'indexBy',
+    'countBy',
+    'shuffle',
+    'sample',
+    'toArray',
+    'size',
+    'partition',
+    'first',
+    'head',
+    'take',
+    'initial',
+    'last',
+    'rest',
+    'tail',
+    'drop',
+    'compact',
+    'flatten',
+    'without',
+    'union',
+    'intersection',
+    'difference',
+    'uniq',
+    'unique',
+    'object',
+    'zip',
+    'unzip',
+    'indexOf',
+    'findIndex',
+    'lastIndexOf',
+    'findLastIndex',
+    'sortedIndex',
+    'range'
 ];
 
-/**
- * Implementation of the underscore-consistent-invocation rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'underscore-consistent-invocation',
         type: 'maintainability',
         description: 'Enforce a consistent usage of the _ functions',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -51,14 +92,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
-
+class UnderscoreConsistentInvocationRuleWalker extends Lint.RuleWalker {
     private style: string = 'instance';
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 if (opt.style === 'static') {
                     this.style = 'static';
                 }
@@ -85,7 +125,7 @@ class UnderscoreConsistentInvocationRuleWalker extends ErrorTolerantWalker {
                 const call: ts.CallExpression = <ts.CallExpression>propExpression.expression;
                 const target = AstUtils.getFunctionTarget(call);
                 const functionName = AstUtils.getFunctionName(call);
-                if (target == null && functionName === '_' && call.arguments.length === 1) {
+                if (target === undefined && functionName === '_' && call.arguments.length === 1) {
                     const underscoreFunctionName = AstUtils.getFunctionName(node);
                     return FUNCTION_NAMES.indexOf(underscoreFunctionName) > -1;
                 }

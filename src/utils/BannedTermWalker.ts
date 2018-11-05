@@ -1,21 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {ErrorTolerantWalker} from './ErrorTolerantWalker';
+import { isObject, isNamed } from './TypeGuard';
 
-/**
- * Implementation of the banned-term rulesets.
- */
-export class BannedTermWalker extends ErrorTolerantWalker {
-    private failureString : string;
-    private bannedTerms: string[];
+export class BannedTermWalker extends Lint.RuleWalker {
+    private readonly failureString: string;
+    private readonly bannedTerms: string[];
     private allowQuotedProperties: boolean = false;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString : string, bannedTerms: string[]) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString: string, bannedTerms: string[]) {
         super(sourceFile, options);
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
-        this.getOptions().forEach((opt: any) => {
-            if (typeof(opt) === 'object') {
+        this.getOptions().forEach((opt: unknown) => {
+            if (isObject(opt)) {
                 this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
             }
         });
@@ -73,10 +70,10 @@ export class BannedTermWalker extends ErrorTolerantWalker {
         super.visitParameterDeclaration(node);
     }
 
-    private validateNode(node: ts.Node) : void {
-        if ((<any>node).name) {
-            if ((<any>node).name.text) {
-                const text : string = (<any>node).name.text;
+    private validateNode(node: ts.Node): void {
+        if (isNamed(node)) {
+            const text: string = node.name.getText();
+            if (text !== undefined) {
                 if (this.isBannedTerm(text)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
                 }
@@ -84,8 +81,7 @@ export class BannedTermWalker extends ErrorTolerantWalker {
         }
     }
 
-    private isBannedTerm(text : string) : boolean {
+    private isBannedTerm(text: string): boolean {
         return this.bannedTerms.indexOf(text) !== -1;
     }
-
 }

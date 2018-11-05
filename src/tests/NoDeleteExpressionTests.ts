@@ -1,9 +1,6 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-/**
- * Unit tests.
- */
 describe('noDeleteExpressionRule', (): void => {
     const RULE_NAME: string = 'no-delete-expression';
 
@@ -38,15 +35,14 @@ describe('noDeleteExpressionRule', (): void => {
             } `;
         TestHelper.assertViolations(RULE_NAME, inputFile, [
             {
-                "failure": "Variables should not be deleted: variableForDeletion",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-delete-expression",
-                "startPosition": {
-                    "line": 6,
-                    "character": 24
+                failure: 'Variables should not be deleted: variableForDeletion',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-delete-expression',
+                startPosition: {
+                    line: 6,
+                    character: 24
                 }
             }
         ]);
     });
-
 });

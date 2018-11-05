@@ -1,9 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {AstUtils} from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
 
 const PATH_PARAMETER_POSITIONS: { [key: string]: number[] } = {
     appendFile: [0],
@@ -57,16 +56,12 @@ const PATH_PARAMETER_POSITIONS: { [key: string]: number[] } = {
     writeFileSync: [0]
 };
 
-/**
- * Implementation of the non-literal-fs-path rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'non-literal-fs-path',
         type: 'functionality',
         description: 'Detect calls to fs functions with a non literal filepath',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -82,17 +77,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NonLiteralFsPathRuleWalker extends ErrorTolerantWalker {
-
+class NonLiteralFsPathRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (AstUtils.getFunctionTarget(node) === 'fs'
-            && node.arguments.length > 0) {
+        if (AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
             const functionName = AstUtils.getFunctionName(node);
             const positions = PATH_PARAMETER_POSITIONS[functionName];
 
-            if (positions !== undefined
-                && node.arguments.length >= positions.length) {
-                positions.forEach((position) => {
+            if (positions !== undefined && node.arguments.length >= positions.length) {
+                positions.forEach(position => {
                     const argument = node.arguments[position];
 
                     if (argument.kind !== ts.SyntaxKind.StringLiteral) {

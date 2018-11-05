@@ -1,24 +1,19 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ErrorTolerantWalker} from './utils/ErrorTolerantWalker';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_INNER: string = 'Writing a string to the innerHTML property is insecure: ';
 const FAILURE_OUTER: string = 'Writing a string to the outerHTML property is insecure: ';
 const FAILURE_HTML_LIB: string = 'Using the html() function to write a string to innerHTML is insecure: ';
 
-/**
- * Implementation of the no-inner-html rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-inner-html',
         type: 'maintainability',
         description: 'Do not write values to innerHTML, outerHTML, or set HTML using the JQuery html() function.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'SDL',
@@ -34,9 +29,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
-
-    private htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
+class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
+    private readonly htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -68,7 +62,7 @@ class NoInnerHtmlRuleWalker extends ErrorTolerantWalker {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 const functionTarget = AstUtils.getFunctionTarget(node);
-                if (functionTarget !== null && this.htmlLibExpressionRegex.test(functionTarget)) {
+                if (functionTarget !== undefined && this.htmlLibExpressionRegex.test(functionTarget)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
                 }
             }

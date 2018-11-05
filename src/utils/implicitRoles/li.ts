@@ -12,7 +12,7 @@ function getImplicitRoleForLi(node: ts.Node): string | undefined {
         parentTagName = parentNode.openingElement.tagName.getText();
     }
 
-    return (parentTagName === 'ol' || parentTagName === 'ul') ? 'listitem' : undefined;
+    return parentTagName === 'ol' || parentTagName === 'ul' ? 'listitem' : undefined;
 }
 
 export { getImplicitRoleForLi as li };

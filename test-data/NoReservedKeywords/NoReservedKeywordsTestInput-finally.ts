@@ -1,4 +1,3 @@
-
 class SampleFinally3 {
     // class variables
     private finally;
@@ -8,12 +7,13 @@ class SampleFinally3 {
 class SampleFinally4 {
     private var;
     set finally(value) {}
-    get finally() { return this.var;}
+    get finally() {
+        return this.var;
+    }
 }
 
-
 class SampleFinally5 {
-    finally() {}       // class methods
+    finally() {} // class methods
 }
 
 // interface declarations

@@ -1,5 +1,5 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 import {
     OPTION_IGNORE_CASE,
     OPTION_IGNORE_WHITESPACE,
@@ -12,35 +12,31 @@ import {
     ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING
 } from '../reactA11yAnchorsRule';
 
-/**
- * Unit tests.
- */
-describe('reactA11yAnchorsRule', () : void => {
+describe('reactA11yAnchorsRule', (): void => {
+    const ruleName: string = 'react-a11y-anchors';
 
-    const ruleName : string = 'react-a11y-anchors';
-
-    it('should pass on opening anchor when href contains alphanumeric characters', () : void => {
-        const script : string = `
+    it('should pass on opening anchor when href contains alphanumeric characters', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="someRef">someTitle</a>;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on function call', () : void => {
-        const script : string = `
+    it('should pass on function call', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href={PrivacyNotification.privacyNoticeLink}>
                             {TEXT(CommonKey.privacy_notice_2())}
                         </a>
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on null or undefined function calls', () : void => {
-        const script : string = `
+    it('should fail on null or undefined function calls', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href={null}>someTitle</a>
             const anchor2 = <a href={undefined}>someTitle</a>
@@ -50,88 +46,88 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 3 }
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 3 }
             },
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 4 }
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 4 }
             },
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should fail on self closing anchor without link text', () : void => {
-        const script : string = `
+    it('should fail on self closing anchor without link text', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="someRef"/>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 28, "line": 3 }
+                failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 28, line: 3 }
             }
         ]);
     });
 
-    it('should fail on anchor when href is #', () : void => {
-        const script : string = `
+    it('should fail on anchor when href is #', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="#">someTitle</a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": NO_HASH_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 28, "line": 3 }
+                failure: NO_HASH_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 28, line: 3 }
             }
         ]);
     });
 
-    it('should fail on self closing anchor when href is #', () : void => {
-        const script : string = `
+    it('should fail on self closing anchor when href is #', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="#"/>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": NO_HASH_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 28, "line": 3 }
+                failure: NO_HASH_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 28, line: 3 }
             },
             {
-                "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 28, "line": 3 }
+                failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 28, line: 3 }
             }
         ]);
     });
 
     it('shoud fail when href is not defined', (): void => {
-        const script : string = `
+        const script: string = `
             import React = require('react');
             const anchor1 = <a>someTitle1</a>;
             const anchor2 = <a />;
@@ -140,22 +136,22 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {"character": 29, "line": 3}
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 3 }
             },
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {"character": 29, "line": 4}
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 4 }
             },
             {
-                "failure": MISSING_HREF_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {"character": 29, "line": 5}
+                failure: MISSING_HREF_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             }
         ]);
     });
@@ -196,35 +192,35 @@ describe('reactA11yAnchorsRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": Utils.absolutePath("file.tsx"),
-                    "ruleName": "react-a11y-anchors",
-                    "startPosition": { "character": 33, "line": 3 }
+                    failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    name: Utils.absolutePath('file.tsx'),
+                    ruleName: 'react-a11y-anchors',
+                    startPosition: { character: 33, line: 3 }
                 },
                 {
-                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": Utils.absolutePath("file.tsx"),
-                    "ruleName": "react-a11y-anchors",
-                    "startPosition": { "character": 33, "line": 4 }
+                    failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    name: Utils.absolutePath('file.tsx'),
+                    ruleName: 'react-a11y-anchors',
+                    startPosition: { character: 33, line: 4 }
                 },
                 {
-                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": Utils.absolutePath("file.tsx"),
-                    "ruleName": "react-a11y-anchors",
-                    "startPosition": { "character": 33, "line": 5 }
+                    failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    name: Utils.absolutePath('file.tsx'),
+                    ruleName: 'react-a11y-anchors',
+                    startPosition: { character: 33, line: 5 }
                 },
                 {
-                    "failure": LINK_TEXT_TOO_SHORT_FAILURE_STRING,
-                    "name": Utils.absolutePath("file.tsx"),
-                    "ruleName": "react-a11y-anchors",
-                    "startPosition": { "character": 33, "line": 6 }
+                    failure: LINK_TEXT_TOO_SHORT_FAILURE_STRING,
+                    name: Utils.absolutePath('file.tsx'),
+                    ruleName: 'react-a11y-anchors',
+                    startPosition: { character: 33, line: 6 }
                 }
             ]);
         });
     });
 
-    it('should pass when hrefs and texts both are identical', () : void => {
-        const script : string = `
+    it('should pass when hrefs and texts both are identical', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef">someTitle</a>;
             const anchor2 = <a href="someRef">someTitle</a>;
@@ -232,11 +228,11 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor4 = <a href="someRef">someTitle</a>;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when hrefs, texts and alt texts are all identical', () : void => {
-        const scriptWithAltText : string = `
+    it('should pass when hrefs, texts and alt texts are all identical', (): void => {
+        const scriptWithAltText: string = `
             import React = require('react');
             const anchor1 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
             const anchor2 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
@@ -244,11 +240,11 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor4 = <a href="someRef"><span>someTitle</span><img alt="someAlt" /></a>;
         `;
 
-        TestHelper.assertViolations(ruleName, scriptWithAltText, [ ]);
+        TestHelper.assertViolations(ruleName, scriptWithAltText, []);
     });
 
-    it('should pass when hrefs and texts both are different', () : void => {
-        const script : string = `
+    it('should pass when hrefs and texts both are different', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2">someTitle2</a>;
@@ -260,11 +256,11 @@ describe('reactA11yAnchorsRule', () : void => {
             const anchor8 = <a href="someRef8"><img alt="someAlt4" /></a>;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass when identical hrefs have texts with different cases on ignore-case', () : void => {
-        const script : string = `
+    it('should pass when identical hrefs have texts with different cases on ignore-case', (): void => {
+        const script: string = `
             import React = require('react);
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2">someTitle2</a>;
@@ -275,11 +271,11 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, [true, OPTION_IGNORE_CASE], script);
     });
 
-    it('should pass when identical hrefs have texts with different leading/trailing whitespace on ignore-whitespace trim', () : void => {
-        const opt : any = {};
+    it('should pass when identical hrefs have texts with different leading/trailing whitespace on ignore-whitespace trim', (): void => {
+        const opt: { [key: string]: string } = {};
         opt[OPTION_IGNORE_WHITESPACE] = 'trim';
 
-        const script : string = `
+        const script: string = `
             import React = require('react);
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
@@ -290,11 +286,11 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, [true, opt], script);
     });
 
-    it('should pass when identical hrefs have texts with different whitespace on ignore-whitespace all', () : void => {
-        const opt : any = {};
+    it('should pass when identical hrefs have texts with different whitespace on ignore-whitespace all', (): void => {
+        const opt: { [key: string]: string } = {};
         opt[OPTION_IGNORE_WHITESPACE] = 'all';
 
-        const script : string = `
+        const script: string = `
             import React = require('react);
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
@@ -305,8 +301,8 @@ describe('reactA11yAnchorsRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, [true, opt], script);
     });
 
-    it('should fail when identical hrefs have different texts', () : void => {
-        const script : string = `
+    it('should fail when identical hrefs have different texts', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef">someTitle1</a>;
             const anchor2 = <a href="someRef1">someTitle2</a>;
@@ -316,22 +312,22 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should fail when identical hrefs have texts with different cases', () : void => {
-        const script : string = `
+    it('should fail when identical hrefs have texts with different cases', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef">someTitle1</a>;
             const anchor2 = <a href="someRef1">someTitle2</a>;
@@ -341,22 +337,22 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should fail when identical hrefs have texts with different whitespace', () : void => {
-        const script : string = `
+    it('should fail when identical hrefs have texts with different whitespace', (): void => {
+        const script: string = `
             import React = require('react);
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2"><span>someTitle</span><img alt="someAlt2" /></a>;
@@ -366,22 +362,22 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should fail when identical hrefs have different alt texts', () : void => {
-        const script : string = `
+    it('should fail when identical hrefs have different alt texts', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef"><img alt="someAlt1" /></a>;
             const anchor2 = <a href="someRef1"><span>someTitle</span><img alt="someAlt2" /></a>;
@@ -391,22 +387,22 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should fail when identical hrefs have different texts in multiple repeated anchors', () : void => {
-        const script : string = `
+    it('should fail when identical hrefs have different texts in multiple repeated anchors', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef">someTitle1</a>;
             const anchor2 = <a href="someRef">someTitle2</a>; // should fail with line 3
@@ -416,37 +412,37 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {
-                    "character": 29,
-                    "line": 4
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: {
+                    character: 29,
+                    line: 4
                 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {
-                    "character": 29,
-                    "line": 5
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: {
+                    character: 29,
+                    line: 5
                 }
             },
             {
-                "failure": `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {
-                    "character": 29,
-                    "line": 6
+                failure: `${SAME_HREF_SAME_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: {
+                    character: 29,
+                    line: 6
                 }
             }
         ]);
     });
 
-    it('should fail when different hrefs have same text', () : void => {
-        const script : string = `
+    it('should fail when different hrefs have same text', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef1">someTitle1</a>;
             const anchor2 = <a href="someRef2">someTitle2</a>;
@@ -456,28 +452,28 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {
-                    "character": 29,
-                    "line": 5
+                failure: `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: {
+                    character: 29,
+                    line: 5
                 }
             },
             {
-                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": {
-                    "character": 29,
-                    "line": 6
+                failure: `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 4`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: {
+                    character: 29,
+                    line: 6
                 }
             }
         ]);
     });
 
-    it('should fail when different hrefs have same text in multiple repeated anchors', () : void => {
-        const script : string = `
+    it('should fail when different hrefs have same text in multiple repeated anchors', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor1 = <a href="someRef1">someTitle</a>;
             const anchor2 = <a href="someRef2">someTitle</a>; // should fail with line 3
@@ -487,73 +483,73 @@ describe('reactA11yAnchorsRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 4 }
+                failure: `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 4 }
             },
             {
-                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 5 }
+                failure: `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 5 }
             },
             {
-                "failure": `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 29, "line": 6 }
+                failure: `${DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING} First link at character: 29 line: 3`,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 29, line: 6 }
             }
         ]);
     });
 
-    it('should pass on anchor with image content when alt is unique', () : void => {
-        const script : string = `
+    it('should pass on anchor with image content when alt is unique', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="someRef"><img alt="someOtherTitle"/>someTitle</a>;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on anchor with image content when alt is empty', () : void => {
-        const script : string = `
+    it('should pass on anchor with image content when alt is empty', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="someRef"><img alt=""/>someTitle</a>;
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on anchor with image content when alt is identical to text', () : void => {
-        const script : string = `
+    it('should fail on anchor with image content when alt is identical to text', (): void => {
+        const script: string = `
             import React = require('react');
             const anchor = <a href="someRef"><img alt="someTitle"/><span>someTitle</span></a>;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": UNIQUE_ALT_FAILURE_STRING,
-                "name": Utils.absolutePath("file.tsx"),
-                "ruleName": "react-a11y-anchors",
-                "startPosition": { "character": 28, "line": 3 }
+                failure: UNIQUE_ALT_FAILURE_STRING,
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: 'react-a11y-anchors',
+                startPosition: { character: 28, line: 3 }
             }
         ]);
     });
 
     describe('Link with React component as content', () => {
         it('should pass on valid React component which is not hidden by aria-hidden attribute', () => {
-            const script : string = `
+            const script: string = `
                 import React = require('react');
                 const TextWrapper = () => someTitle;
                 const a = <a href="someRef"><TextWrapper /></a>;
             `;
 
-            TestHelper.assertViolations(ruleName, script, [ ]);
+            TestHelper.assertViolations(ruleName, script, []);
         });
 
         it('should fail on React component is hidden by aria-hidden attribute', () => {
-            const script : string = `
+            const script: string = `
                 import React = require('react');
                 const TextWrapper = () => someTitle;
                 const a = <a href="someRef"><TextWrapper aria-hidden /></a>;
@@ -561,10 +557,10 @@ describe('reactA11yAnchorsRule', () : void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    "failure": ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING,
-                    "name": Utils.absolutePath("file.tsx"),
-                    "ruleName": "react-a11y-anchors",
-                    "startPosition": { "character": 27, "line": 4 }
+                    failure: ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING,
+                    name: Utils.absolutePath('file.tsx'),
+                    ruleName: 'react-a11y-anchors',
+                    startPosition: { character: 27, line: 4 }
                 }
             ]);
         });

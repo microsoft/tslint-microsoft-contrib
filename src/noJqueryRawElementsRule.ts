@@ -1,21 +1,17 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
 const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery API: ';
 
-/**
- * Implementation of the no-jquery-raw-elements rule.
- */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-jquery-raw-elements',
         type: 'maintainability',
         description: 'Do not create HTML elements using JQuery and string concatenation. It is error prone and can hide subtle defects.',
-        options: null,
+        options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
@@ -33,7 +29,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-
         const functionName: string = AstUtils.getFunctionName(node);
         if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
@@ -70,7 +65,7 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         }
 
         const match = text.match(/^<[A-Za-z]+\s*>(.*)<\/[A-Za-z]+\s*>$/m);
-        if (match != null && match[1] != null) {
+        if (match !== null && match[1] !== undefined) {
             const enclosedContent: string = match[1]; // get the stuff inside the tag
             if (enclosedContent.indexOf('<') === -1 && enclosedContent.indexOf('>') === -1) {
                 return false; // enclosed content looks like it contains no html elements
@@ -81,7 +76,6 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
 }
 
 class HtmlLikeStringLiteralFinder extends Lint.RuleWalker {
-
     private found: boolean = false;
 
     public isFound(): boolean {

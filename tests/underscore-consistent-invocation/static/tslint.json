@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "underscore-consistent-invocation": [true, {
+            "style": "static"
+        }]
+    }
+}

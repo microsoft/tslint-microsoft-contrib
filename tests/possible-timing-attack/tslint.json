@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "possible-timing-attack": true
+    }
+}

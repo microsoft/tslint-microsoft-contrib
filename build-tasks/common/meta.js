@@ -80,23 +80,7 @@ function getContribRuleNames() {
         .sort();
 }
 
-function getAllFormatterNames() {
-    const convertToFormatterNames = filename => {
-        filename = filename
-            .replace(/Formatter\..*/, '') // file extension plus Formatter suffix
-            .replace(/.*\//, ''); // leading path
-
-        return kebabCase(filename);
-    };
-
-    const formatters = glob.sync('src/*Formatter.ts').map(convertToFormatterNames);
-    formatters.sort();
-
-    return formatters;
-}
-
 module.exports = {
-    getAllFormatterNames,
     getContribRuleNames,
     getAllRules,
     getMetadataFromFile,

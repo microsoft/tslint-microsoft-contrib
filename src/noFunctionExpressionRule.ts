@@ -2,10 +2,9 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { AstUtils } from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-function-expression',
         type: 'maintainability',
@@ -26,7 +25,6 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
@@ -48,9 +46,12 @@ class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
 
         const isGenericFunctionInTSX = this.allowGenericFunctionExpression && walker.isGenericFunction;
         // function expression that access 'this' is allowed
-        if (!walker.isAccessingThis && !node.asteriskToken
+        if (
+            !walker.isAccessingThis &&
+            !node.asteriskToken &&
             // generic function expression in .tsx file is allowed
-            && !isGenericFunctionInTSX) {
+            !isGenericFunctionInTSX
+        ) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
 

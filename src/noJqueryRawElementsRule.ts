@@ -1,13 +1,12 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING_MANIPULATION: string = 'Replace HTML string manipulation with jQuery API: ';
 const FAILURE_STRING_COMPLEX: string = 'Replace complex HTML strings with jQuery API: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-jquery-raw-elements',
         type: 'maintainability',
@@ -30,7 +29,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-
         const functionName: string = AstUtils.getFunctionName(node);
         if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
             const firstArg: ts.Expression = node.arguments[0];
@@ -78,7 +76,6 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
 }
 
 class HtmlLikeStringLiteralFinder extends Lint.RuleWalker {
-
     private found: boolean = false;
 
     public isFound(): boolean {

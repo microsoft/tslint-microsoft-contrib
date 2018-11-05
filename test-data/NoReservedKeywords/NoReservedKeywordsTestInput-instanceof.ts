@@ -1,4 +1,3 @@
-
 class SampleInstanceOf3 {
     // class variables
     private instanceof;
@@ -8,12 +7,13 @@ class SampleInstanceOf3 {
 class SampleInstanceOf4 {
     private var;
     set instanceof(value) {}
-    get instanceof() { return this.var;}
+    get instanceof() {
+        return this.var;
+    }
 }
 
-
 class SampleInstanceOf5 {
-    instanceof() {}       // class methods
+    instanceof() {} // class methods
 }
 
 // interface declarations

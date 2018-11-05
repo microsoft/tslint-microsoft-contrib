@@ -26,7 +26,9 @@ function runTests() {
     })
         .then(() => console.log(green('\nSuccess.')))
         .catch(() => console.error(red('\nFailure!')))
-        .then(() => { testsRunning = false; })
+        .then(() => {
+            testsRunning = false;
+        });
 }
 
 const scheduleTests = simpleDebounce(1000, () => {
@@ -34,12 +36,11 @@ const scheduleTests = simpleDebounce(1000, () => {
 
     changes.clear();
 
-    runTests()
-        .then(() => {
-            if (changes.size > 0) {
-                scheduleTests();
-            }
-        });
+    runTests().then(() => {
+        if (changes.size > 0) {
+            scheduleTests();
+        }
+    });
 });
 
 function registerChange(path) {
@@ -51,8 +52,7 @@ function registerChange(path) {
     }
 }
 
-const fileWatcher = chokidar
-    .watch(['dist/src/**/*.js', 'test-data/**', 'tests/**']);
+const fileWatcher = chokidar.watch(['dist/src/**/*.js', 'test-data/**', 'tests/**']);
 
 function subscribeFileEvents() {
     fileWatcher
@@ -62,8 +62,7 @@ function subscribeFileEvents() {
 }
 
 fileWatcher.on('ready', () => {
-    const watchedCount = Object.keys(fileWatcher.getWatched())
-        .reduce((memo, items) => memo + items.length, 0);
+    const watchedCount = Object.keys(fileWatcher.getWatched()).reduce((memo, items) => memo + items.length, 0);
     console.log(`Watching ${watchedCount} files and folders.`);
 
     subscribeFileEvents();

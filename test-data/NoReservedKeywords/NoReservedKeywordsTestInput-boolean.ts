@@ -1,16 +1,14 @@
-
 // module names
-module WrapperBoolean {
-    module boolean {
-    }
+namespace WrapperBoolean {
+    namespace boolean {  }
 }
 
-module SampleBoolean1 {
+namespace SampleBoolean1 {
     // module variables
     var boolean;
 }
 
-module SampleBoolean2 {
+namespace SampleBoolean2 {
     // module function
     function boolean() {}
 }
@@ -24,15 +22,15 @@ class SampleBoolean3 {
 class SampleBoolean4 {
     private var;
     set boolean(value) {}
-    get boolean() { return this.var;}
+    get boolean() {
+        return this.var;
+    }
 }
 
-
 class SampleBoolean5 {
-    boolean() {}       // class methods
-    method(boolean) {}  // method parameters
-    private func = (boolean) => {}; // arrow function parameters
-
+    boolean() {} // class methods
+    method(boolean) {} // method parameters
+    private func = boolean => {}; // arrow function parameters
 }
 
 // interface declarations

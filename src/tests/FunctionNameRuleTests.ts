@@ -1,12 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe('functionNameRule', () : void => {
+describe('functionNameRule', (): void => {
+    const ruleName: string = 'function-name';
 
-    const ruleName : string = 'function-name';
-
-    it('should pass on correctly named functions', () : void => {
-        const script : string = `
+    it('should pass on correctly named functions', (): void => {
+        const script: string = `
             function foo() {}
             class MyClass {
                 foo() {}
@@ -21,11 +20,11 @@ describe('functionNameRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
     it('should pass on functions as symbol properties', (): void => {
-        const script : string = `
+        const script: string = `
             class MyClass {
                 static [Symbol.staticDefault](): any {}
                 public static [Symbol.staticPublic](): any {}
@@ -42,11 +41,11 @@ describe('functionNameRule', () : void => {
                 [Symbol.toStringTag](): string => "hello world"
             }
         `;
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on correctly public static methods', () : void => {
-        const script : string = `
+    it('should pass on correctly public static methods', (): void => {
+        const script: string = `
             class MyClass {
                 static FOO() {}
                 static FOO_BAR() {}
@@ -55,11 +54,11 @@ describe('functionNameRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on correctly private static methods', () : void => {
-        const script : string = `
+    it('should pass on correctly private static methods', (): void => {
+        const script: string = `
             class MyClass {
                 private static bar() {}
                 private static bar1() {}
@@ -68,11 +67,11 @@ describe('functionNameRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on correctly protected static methods', () : void => {
-        const script : string = `
+    it('should pass on correctly protected static methods', (): void => {
+        const script: string = `
             class MyClass {
                 protected static bar() {}
                 protected static bar1() {}
@@ -81,11 +80,11 @@ describe('functionNameRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on correctly private static methods as static with option', () : void => {
-        const script : string = `
+    it('should pass on correctly private static methods as static with option', (): void => {
+        const script: string = `
             class MyClass {
                 private static BAR() {}
                 private static BAR_1() {}
@@ -97,8 +96,8 @@ describe('functionNameRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
     });
 
-    it('should pass on correctly protected static methods as static with option', () : void => {
-        const script : string = `
+    it('should pass on correctly protected static methods as static with option', (): void => {
+        const script: string = `
             class MyClass {
                 protected static BAR() {}
                 protected static BAR_1() {}
@@ -110,8 +109,8 @@ describe('functionNameRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-static'], script);
     });
 
-    it('should pass on correctly private static methods as private with option', () : void => {
-        const script : string = `
+    it('should pass on correctly private static methods as private with option', (): void => {
+        const script: string = `
             class MyClass {
                 private static bar() {}
                 private static bar1() {}
@@ -123,8 +122,8 @@ describe('functionNameRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
     });
 
-    it('should pass on correctly protected static methods as private with option', () : void => {
-        const script : string = `
+    it('should pass on correctly protected static methods as private with option', (): void => {
+        const script: string = `
             class MyClass {
                 protected static bar() {}
                 protected static bar1() {}
@@ -136,8 +135,8 @@ describe('functionNameRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-private'], script);
     });
 
-    it('should pass on correctly private or protected static methods as either with option', () : void => {
-        const script : string = `
+    it('should pass on correctly private or protected static methods as either with option', (): void => {
+        const script: string = `
             class MyClass {
                 private static bar() {}
                 private static bar1() {}
@@ -153,8 +152,8 @@ describe('functionNameRule', () : void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-either'], script);
     });
 
-    it('should fail on incorrect public methods', () : void => {
-        const script : string = `
+    it('should fail on incorrect public methods', (): void => {
+        const script: string = `
             class MyClass {
                 Foo() {}
                 _foo() {}
@@ -198,8 +197,8 @@ describe('functionNameRule', () : void => {
         ]);
     });
 
-    it('should fail on incorrect private methods', () : void => {
-        const script : string = `
+    it('should fail on incorrect private methods', (): void => {
+        const script: string = `
             class MyClass {
                 private Foo() {}
                 private _foo() {}
@@ -243,8 +242,8 @@ describe('functionNameRule', () : void => {
         ]);
     });
 
-    it('should fail on incorrect protected methods', () : void => {
-        const script : string = `
+    it('should fail on incorrect protected methods', (): void => {
+        const script: string = `
             class MyClass {
                 protected Foo() {}
                 protected _foo() {}
@@ -288,8 +287,8 @@ describe('functionNameRule', () : void => {
         ]);
     });
 
-    it('should fail on incorrect static methods', () : void => {
-        const script : string = `
+    it('should fail on incorrect static methods', (): void => {
+        const script: string = `
             class MyClass {
                 static Foo() {}
                 static _foo() {}
@@ -320,11 +319,11 @@ describe('functionNameRule', () : void => {
     });
 
     describe('reading options', (): void => {
-
         let options: [boolean, object];
 
         beforeEach((): void => {
-            options = [ true,
+            options = [
+                true,
                 {
                     'method-regex': '^myMethod$',
                     'private-method-regex': '^myPrivateMethod$',
@@ -335,7 +334,7 @@ describe('functionNameRule', () : void => {
         });
 
         it('should allow passing names', (): void => {
-            const script : string = `
+            const script: string = `
             function myFunction() {}
             class MyClass {
                 myMethod() {}
@@ -343,11 +342,11 @@ describe('functionNameRule', () : void => {
                 static myStaticMethod() {}
             }`;
 
-            TestHelper.assertViolationsWithOptions(ruleName, options, script, [ ]);
+            TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
         });
 
         it('should ban non-passing names', (): void => {
-            const script : string = `
+            const script: string = `
             function notMyFunction() {}
             class MyClass {
                 notMyMethod() {}

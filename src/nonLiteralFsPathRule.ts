@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {AstUtils} from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
 
 const PATH_PARAMETER_POSITIONS: { [key: string]: number[] } = {
     appendFile: [0],
@@ -57,7 +57,6 @@ const PATH_PARAMETER_POSITIONS: { [key: string]: number[] } = {
 };
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'non-literal-fs-path',
         type: 'functionality',
@@ -79,16 +78,13 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NonLiteralFsPathRuleWalker extends Lint.RuleWalker {
-
     protected visitCallExpression(node: ts.CallExpression): void {
-        if (AstUtils.getFunctionTarget(node) === 'fs'
-            && node.arguments.length > 0) {
+        if (AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
             const functionName = AstUtils.getFunctionName(node);
             const positions = PATH_PARAMETER_POSITIONS[functionName];
 
-            if (positions !== undefined
-                && node.arguments.length >= positions.length) {
-                positions.forEach((position) => {
+            if (positions !== undefined && node.arguments.length >= positions.length) {
+                positions.forEach(position => {
                     const argument = node.arguments[position];
 
                     if (argument.kind !== ts.SyntaxKind.StringLiteral) {

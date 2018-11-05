@@ -1,4 +1,3 @@
-
 class SampleTry3 {
     // class variables
     private try;
@@ -8,13 +7,13 @@ class SampleTry3 {
 class SampleTry4 {
     private var;
     set try(value) {}
-    get try() { return this.var;}
+    get try() {
+        return this.var;
+    }
 }
 
-
 class SampleTry5 {
-    try() {}       // class methods
-
+    try() {} // class methods
 }
 
 // interface declarations

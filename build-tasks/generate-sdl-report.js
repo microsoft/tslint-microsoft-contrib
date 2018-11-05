@@ -9,8 +9,8 @@ const allCweDescriptions = readJSON('cwe_descriptions.json');
 const rows = [];
 const resolution = 'See description on the tslint or tslint-microsoft-contrib website';
 const procedure = 'TSLint Procedure';
-const header = 'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,' +
-    'SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
+const header =
+    'Title,Description,ErrorID,Tool,IssueClass,IssueType,SDL Bug Bar Severity,SDL Level,Resolution,SDL Procedure,CWE,CWE Description';
 
 getAllRules().forEach(ruleFile => {
     const metadata = getMetadataFromFile(ruleFile);
@@ -59,7 +59,9 @@ function getHash(input) {
         hash = 31 * hash + input.charCodeAt(i); // run the hash function on all chars
         hash = hash | 0; // convert to 32 bit signed integer
     }
-    return Math.abs(hash).toString(32).toUpperCase();
+    return Math.abs(hash)
+        .toString(32)
+        .toUpperCase();
 }
 
 function createCweDescription(metadata) {
@@ -73,16 +75,16 @@ function createCweDescription(metadata) {
         cweNumber = cweNumber.trim();
         const description = allCweDescriptions[cweNumber];
         if (description === undefined) {
-            console.log(red(`Cannot find description of ${ cweNumber } for rule ${ metadata.ruleName } in cwe_descriptions.json`));
+            console.log(red(`Cannot find description of ${cweNumber} for rule ${metadata.ruleName} in cwe_descriptions.json`));
             process.exit(1);
         }
         if (result !== '') {
             result = result + '\n';
         }
-        result = result + `CWE ${ cweNumber } - ${ description }`;
+        result = result + `CWE ${cweNumber} - ${description}`;
     });
     if (result !== '') {
-        return `"${ result }"`;
+        return `"${result}"`;
     }
     return result;
 }

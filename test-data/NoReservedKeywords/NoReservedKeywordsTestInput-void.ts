@@ -1,4 +1,3 @@
-
 class SampleVoid3 {
     // class variables
     private void;
@@ -8,12 +7,13 @@ class SampleVoid3 {
 class SampleVoid4 {
     private var;
     set void(value) {}
-    get void() { return this.var;}
+    get void() {
+        return this.var;
+    }
 }
 
-
 class SampleVoid5 {
-    void() {}       // class methods
+    void() {} // class methods
 }
 
 // interface declarations

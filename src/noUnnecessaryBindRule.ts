@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-bind',
         type: 'maintainability',
@@ -21,18 +20,36 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static FAILURE_FUNCTION_WITH_BIND: string = 'Binding function literal with \'this\' context. Use lambdas instead';
-    public static FAILURE_ARROW_WITH_BIND: string = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
+    public static FAILURE_FUNCTION_WITH_BIND: string = "Binding function literal with 'this' context. Use lambdas instead";
+    public static FAILURE_ARROW_WITH_BIND: string = "Binding lambda with 'this' context. Lambdas already have 'this' bound";
 
     public static UNDERSCORE_BINARY_FUNCTION_NAMES: string[] = [
-        'all', 'any', 'collect', 'countBy', 'detect', 'each',
-        'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
-        'map', 'max', 'max', 'min', 'partition', 'reject',
-        'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
+        'all',
+        'any',
+        'collect',
+        'countBy',
+        'detect',
+        'each',
+        'every',
+        'filter',
+        'find',
+        'forEach',
+        'groupBy',
+        'indexBy',
+        'map',
+        'max',
+        'max',
+        'min',
+        'partition',
+        'reject',
+        'select',
+        'some',
+        'sortBy',
+        'times',
+        'uniq',
+        'unique'
     ];
-    public static UNDERSCORE_TERNARY_FUNCTION_NAMES: string[] = [
-        'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
-    ];
+    public static UNDERSCORE_TERNARY_FUNCTION_NAMES: string[] = ['foldl', 'foldr', 'inject', 'reduce', 'reduceRight'];
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
@@ -42,25 +59,29 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoUnnecessaryBindRuleWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
         const analyzers: CallAnalyzer[] = [
-            new TypeScriptFunctionAnalyzer(), new UnderscoreStaticAnalyzer(), new UnderscoreInstanceAnalyzer()
+            new TypeScriptFunctionAnalyzer(),
+            new UnderscoreStaticAnalyzer(),
+            new UnderscoreInstanceAnalyzer()
         ];
 
-        analyzers.forEach((analyzer: CallAnalyzer): void => {
-            if (analyzer.canHandle(node)) {
-                const contextArgument = analyzer.getContextArgument(node);
-                const functionArgument = analyzer.getFunctionArgument(node);
-                if (contextArgument === undefined || functionArgument === undefined) {
-                    return;
-                }
-                if (contextArgument.getText() === 'this') {
-                    if (isArrowFunction(functionArgument)) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
-                    } else if (isFunctionLiteral(functionArgument)) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
+        analyzers.forEach(
+            (analyzer: CallAnalyzer): void => {
+                if (analyzer.canHandle(node)) {
+                    const contextArgument = analyzer.getContextArgument(node);
+                    const functionArgument = analyzer.getFunctionArgument(node);
+                    if (contextArgument === undefined || functionArgument === undefined) {
+                        return;
+                    }
+                    if (contextArgument.getText() === 'this') {
+                        if (isArrowFunction(functionArgument)) {
+                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
+                        } else if (isFunctionLiteral(functionArgument)) {
+                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
+                        }
                     }
                 }
             }
-        });
+        );
         super.visitCallExpression(node);
     }
 }
@@ -73,9 +94,11 @@ interface CallAnalyzer {
 
 class TypeScriptFunctionAnalyzer implements CallAnalyzer {
     public canHandle(node: ts.CallExpression): boolean {
-        return !!(AstUtils.getFunctionName(node) === 'bind'
-            && node.arguments.length === 1
-            && node.expression.kind === ts.SyntaxKind.PropertyAccessExpression);
+        return !!(
+            AstUtils.getFunctionName(node) === 'bind' &&
+            node.arguments.length === 1 &&
+            node.expression.kind === ts.SyntaxKind.PropertyAccessExpression
+        );
     }
 
     public getContextArgument(node: ts.CallExpression): ts.Expression {
@@ -163,7 +186,6 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         }
         return undefined;
     }
-
 }
 
 function isFunctionLiteral(expression: ts.Expression): boolean {

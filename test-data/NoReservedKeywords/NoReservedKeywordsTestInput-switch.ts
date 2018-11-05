@@ -1,4 +1,3 @@
-
 class SampleSwitch3 {
     // class variables
     private switch;
@@ -8,13 +7,13 @@ class SampleSwitch3 {
 class SampleSwitch4 {
     private var;
     set switch(value) {}
-    get switch() { return this.var;}
+    get switch() {
+        return this.var;
+    }
 }
 
-
 class SampleSwitch5 {
-    switch() {}       // class methods
-
+    switch() {} // class methods
 }
 
 // interface declarations

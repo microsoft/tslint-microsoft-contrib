@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-var-self',
         type: 'maintainability',
@@ -35,7 +34,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoVarSelfRuleWalker extends Lint.RuleWalker {
-
     private readonly bannedVariableNames: RegExp = /.*/; // default is to ban everything
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

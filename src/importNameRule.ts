@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'import-name',
         type: 'maintainability',
@@ -34,10 +33,10 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-type Replacement = { [index: string]: string; };
+type Replacement = { [index: string]: string };
 type IgnoredList = string[];
 type ConfigKey = 'ignoreExternalModule';
-type Config = { [index in ConfigKey]: unknown; };
+type Config = { [index in ConfigKey]: unknown };
 
 // This is for temporarily reolving type errors. Actual runtime Node, SourceFile object
 // has those properties.
@@ -49,13 +48,12 @@ interface RuntimeNode extends ts.Node {
 }
 
 type Option = {
-    replacements: Replacement
-    ignoredList: IgnoredList
-    config: Config
+    replacements: Replacement;
+    ignoredList: IgnoredList;
+    config: Config;
 };
 
 class ImportNameRuleWalker extends Lint.RuleWalker {
-
     private readonly option: Option;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -64,7 +62,7 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     private extractOptions(): Option {
-        const result : Option = {
+        const result: Option = {
             replacements: {},
             ignoredList: [],
             config: {
@@ -92,12 +90,14 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     private extractReplacements(opt: Replacement | unknown): Replacement {
         const result: Replacement = {};
         if (isObject(opt)) {
-            Object.keys(opt).forEach((key: string): void => {
-                const value: unknown = opt[key];
-                if (typeof value === 'string') {
-                    result[key] = value;
+            Object.keys(opt).forEach(
+                (key: string): void => {
+                    const value: unknown = opt[key];
+                    if (typeof value === 'string') {
+                        result[key] = value;
+                    }
                 }
-            });
+            );
         }
         return result;
     }
@@ -110,13 +110,16 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         const result: Config = { ignoreExternalModule: true };
         const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
         if (isObject(opt)) {
-            return Object.keys(opt).reduce((accum: Config, key: string) => {
-                if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
-                    accum[<ConfigKey>key] = opt[key];
+            return Object.keys(opt).reduce(
+                (accum: Config, key: string) => {
+                    if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
+                        accum[<ConfigKey>key] = opt[key];
+                        return accum;
+                    }
                     return accum;
-                }
-                return accum;
-            }, { ignoreExternalModule: true });
+                },
+                { ignoreExternalModule: true }
+            );
         }
         return result;
     }
@@ -157,9 +160,10 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         expectedImportedName = this.makeCamelCase(expectedImportedName);
         if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
             const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
-            const nameNode = node.kind === ts.SyntaxKind.ImportEqualsDeclaration
-                ? (<ts.ImportEqualsDeclaration>node).name
-                : (<ts.ImportDeclaration>node).importClause!.name;
+            const nameNode =
+                node.kind === ts.SyntaxKind.ImportEqualsDeclaration
+                    ? (<ts.ImportEqualsDeclaration>node).name
+                    : (<ts.ImportDeclaration>node).importClause!.name;
             const nameNodeStartPos = nameNode!.getStart();
             const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, expectedImportedName);
             this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
@@ -167,14 +171,20 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     private makeCamelCase(input: string): string {
-        // tslint:disable-next-line:variable-name
-        return input.replace(/[-|\.|_](.)/g, (_match: string, group1: string): string => {
-            return group1.toUpperCase();
-        });
+        return input.replace(
+            /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
+            (_match: string, group1: string): string => {
+                return group1.toUpperCase();
+            }
+        );
     }
 
-    private isImportNameValid(importedName: string, expectedImportedName: string, moduleName: string,
-        node: ts.ImportEqualsDeclaration | ts.ImportDeclaration): boolean {
+    private isImportNameValid(
+        importedName: string,
+        expectedImportedName: string,
+        moduleName: string,
+        node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
+    ): boolean {
         if (expectedImportedName === importedName) {
             return true;
         }
@@ -197,22 +207,29 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         return false;
     }
 
-    private checkReplacementsExist(importedName: string, expectedImportedName: string, moduleName: string, replacements: Replacement)
-        : boolean {
+    private checkReplacementsExist(
+        importedName: string,
+        expectedImportedName: string,
+        moduleName: string,
+        replacements: Replacement
+    ): boolean {
         // Allowed Replacement keys are specifiers that are allowed when overriding or adding exceptions
         // to import-name rule.
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
         const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
-        return Utils.exists(Object.keys(replacements), (replacementKey: string): boolean => {
-            for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
-                if (replacementKey === allowedReplacementKeys[index]) {
-                    return importedName === replacements[replacementKey];
+        return Utils.exists(
+            Object.keys(replacements),
+            (replacementKey: string): boolean => {
+                for (let index = 0; allowedReplacementKeys.length > index; index = index + 1) {
+                    if (replacementKey === allowedReplacementKeys[index]) {
+                        return importedName === replacements[replacementKey];
+                    }
                 }
+                return false;
             }
-            return false;
-        });
+        );
     }
 
     // Ignore array of strings that comes from third argument.

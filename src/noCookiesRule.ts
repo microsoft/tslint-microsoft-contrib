@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.TypedRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-cookies',
         type: 'maintainability',
@@ -28,7 +27,7 @@ export class Rule extends Lint.Rules.TypedRule {
 }
 
 class NoCookiesWalker extends Lint.RuleWalker {
-    private readonly typeChecker : ts.TypeChecker;
+    private readonly typeChecker: ts.TypeChecker;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, program: ts.Program) {
         super(sourceFile, options);
@@ -38,7 +37,7 @@ class NoCookiesWalker extends Lint.RuleWalker {
     protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
         const propertyName = node.name.text;
         if (propertyName === 'cookie') {
-            const leftSide : ts.Expression = node.expression;
+            const leftSide: ts.Expression = node.expression;
             try {
                 const leftSideType: ts.Type = this.typeChecker.getTypeAtLocation(leftSide);
                 const typeAsString: string = this.typeChecker.typeToString(leftSideType);
@@ -55,5 +54,4 @@ class NoCookiesWalker extends Lint.RuleWalker {
 
         super.visitPropertyAccessExpression(node);
     }
-
 }

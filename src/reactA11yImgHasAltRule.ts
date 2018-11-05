@@ -2,12 +2,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import {
-    getAllAttributesFromJsxElement,
-    getJsxAttributesFromJsxElement,
-    getStringLiteral,
-    isEmpty
-} from './utils/JsxAttribute';
+import { getAllAttributesFromJsxElement, getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 import { isJsxSpreadAttribute } from './utils/TypeGuard';
 
 const ROLE_STRING: string = 'role';
@@ -47,7 +42,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-img-has-alt',
         type: 'maintainability',
-        description: 'Enforce that an img element contains the non-empty alt attribute. ' +
+        description:
+            'Enforce that an img element contains the non-empty alt attribute. ' +
             'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
         optionsDescription: '',
@@ -104,47 +100,29 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
         if (!altAttribute) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                getFailureStringNoAlt(tagName)
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
         } else {
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
             const titleAttribute: ts.JsxAttribute = attributes[TITLE_STRING];
-            const isPresentationRole: boolean = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
+            const isPresentationRole: boolean = !!String(roleAttributeValue)
+                .toLowerCase()
+                .match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
             const isEmptyTitle: boolean = isEmpty(titleAttribute) || getStringLiteral(titleAttribute) === '';
-            const allowNonEmptyAltWithRolePresentation: boolean = options.length > 1
-                ? options[1].allowNonEmptyAltWithRolePresentation
-                : false;
+            const allowNonEmptyAltWithRolePresentation: boolean =
+                options.length > 1 ? options[1].allowNonEmptyAltWithRolePresentation : false;
             const isAltImageFileName: boolean = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(getStringLiteral(altAttribute) || '');
             // <img alt='altValue' role='presentation' />
             if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
-                this.addFailureAt(
-                    node.getStart(),
-                    node.getWidth(),
-                    getFailureStringNonEmptyAltAndPresentationRole(tagName)
-                );
-            } else if (isEmptyAlt && !isPresentationRole && !titleAttribute) { // <img alt='' />
-                this.addFailureAt(
-                    node.getStart(),
-                    node.getWidth(),
-                    getFailureStringEmptyAltAndNotPresentationRole(tagName)
-                );
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
+            } else if (isEmptyAlt && !isPresentationRole && !titleAttribute) {
+                // <img alt='' />
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
             } else if (isEmptyAlt && titleAttribute && !isEmptyTitle) {
-                this.addFailureAt(
-                    node.getStart(),
-                    node.getWidth(),
-                    getFailureStringEmptyAltAndNotEmptyTitle(tagName)
-                );
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
             } else if (isAltImageFileName) {
-                this.addFailureAt(
-                    node.getStart(),
-                    node.getWidth(),
-                    getFailureStringAltIsImageFileName(tagName)
-                );
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
             }
         }
     }

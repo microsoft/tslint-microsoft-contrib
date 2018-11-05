@@ -1,4 +1,4 @@
-import {Utils} from '../utils/Utils';
+import { Utils } from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
 /**
@@ -42,23 +42,19 @@ describe('reactA11yEventHasRoleRule', () => {
             const a = <div onclick />;
             const b = <div onkeyup></div>;
         `;
-        TestHelper.assertViolations(
-            ruleName,
-            script,
-            [
-                {
-                    name: Utils.absolutePath('file.tsx'),
-                    ruleName: ruleName,
-                    startPosition: { character: 23, line: 4 },
-                    failure: 'Elements with event handlers must have role attribute.'
-                },
-                {
-                    name: Utils.absolutePath('file.tsx'),
-                    ruleName: ruleName,
-                    startPosition: { character: 23, line: 5 },
-                    failure: 'Elements with event handlers must have role attribute.'
-                }
-            ]
-        );
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: ruleName,
+                startPosition: { character: 23, line: 4 },
+                failure: 'Elements with event handlers must have role attribute.'
+            },
+            {
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: ruleName,
+                startPosition: { character: 23, line: 5 },
+                failure: 'Elements with event handlers must have role attribute.'
+            }
+        ]);
     });
 });

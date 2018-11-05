@@ -1,31 +1,25 @@
 {
-  "compilerOptions": {
-    "alwaysStrict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true,
-    "declaration": true,
-    "jsx": "react",
-    "lib": [
-      "es6",
-      "dom",
-      "scripthost"
-    ],
-    "module": "commonjs",
-    "outDir": "dist/src",
-    "removeComments": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "target": "es5"
-  },
-  "include": [
-    "src"
-  ]
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true,
+        "declaration": true,
+        "jsx": "react",
+        "lib": ["es6", "dom", "scripthost"],
+        "module": "commonjs",
+        "outDir": "dist/src",
+        "removeComments": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "target": "es5"
+    },
+    "include": ["src"]
 }

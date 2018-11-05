@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-constant-condition',
         type: 'maintainability',
@@ -30,7 +29,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoConstantConditionRuleWalker extends Lint.RuleWalker {
-
     private readonly checkLoops: boolean;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -39,7 +37,7 @@ class NoConstantConditionRuleWalker extends Lint.RuleWalker {
     }
 
     private extractBoolean(keyName: string): boolean {
-        let result : boolean = true;
+        let result: boolean = true;
         this.getOptions().forEach((opt: unknown) => {
             if (isObject(opt)) {
                 if (opt[keyName] === false || opt[keyName] === 'false') {

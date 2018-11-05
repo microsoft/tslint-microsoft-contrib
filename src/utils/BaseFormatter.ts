@@ -1,13 +1,12 @@
 'use strict';
 
 import * as fs from 'fs';
-import {Formatters, RuleFailure} from 'tslint';
+import { Formatters, RuleFailure } from 'tslint';
 
 /**
  * A base class for formatters that fix linting issues.
  */
 export class BaseFormatter extends Formatters.AbstractFormatter {
-
     private readonly ruleName: string;
     private readonly applyFix: (this: BaseFormatter, failure: RuleFailure) => void;
 

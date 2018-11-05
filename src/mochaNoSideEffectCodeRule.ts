@@ -1,16 +1,15 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {AstUtils} from './utils/AstUtils';
-import {MochaUtils} from './utils/MochaUtils';
-import {Utils} from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { MochaUtils } from './utils/MochaUtils';
+import { Utils } from './utils/Utils';
 import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'mocha-no-side-effect-code',
         type: 'maintainability',
@@ -21,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Moderate',
-        level: 'Opportunity for Excellence',  // one of 'Mandatory' | 'Opportunity for Excellence'
+        level: 'Opportunity for Excellence', // one of 'Mandatory' | 'Opportunity for Excellence'
         group: 'Correctness'
     };
 
@@ -31,7 +30,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
-
     private isInDescribe: boolean = false;
     private ignoreRegex!: RegExp;
 
@@ -52,24 +50,28 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
 
     protected visitSourceFile(node: ts.SourceFile): void {
         if (MochaUtils.isMochaTest(node)) {
-            node.statements.forEach((statement: ts.Statement): void => {
-                // validate variable declarations in global scope
-                if (statement.kind === ts.SyntaxKind.VariableStatement) {
-                    const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
-                    declarationList.declarations.forEach((declaration: ts.VariableDeclaration): void => {
-                        if (declaration.initializer !== undefined) {
-                            this.validateExpression(declaration.initializer, declaration);
-                        }
-                    });
-                }
+            node.statements.forEach(
+                (statement: ts.Statement): void => {
+                    // validate variable declarations in global scope
+                    if (statement.kind === ts.SyntaxKind.VariableStatement) {
+                        const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
+                        declarationList.declarations.forEach(
+                            (declaration: ts.VariableDeclaration): void => {
+                                if (declaration.initializer !== undefined) {
+                                    this.validateExpression(declaration.initializer, declaration);
+                                }
+                            }
+                        );
+                    }
 
-                // walk into the describe calls
-                if (MochaUtils.isStatementDescribeCall(statement)) {
-                    const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                    const call: ts.CallExpression = <ts.CallExpression>expression;
-                    this.visitCallExpression(call);
+                    // walk into the describe calls
+                    if (MochaUtils.isStatementDescribeCall(statement)) {
+                        const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
+                        const call: ts.CallExpression = <ts.CallExpression>expression;
+                        this.visitCallExpression(call);
+                    }
                 }
-            });
+            );
         }
     }
 
@@ -113,16 +115,17 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
             return;
         }
         // function expressions are not executed now and will not throw an error
-        if (initializer.kind === ts.SyntaxKind.FunctionExpression
-            || initializer.kind === ts.SyntaxKind.ArrowFunction) {
+        if (initializer.kind === ts.SyntaxKind.FunctionExpression || initializer.kind === ts.SyntaxKind.ArrowFunction) {
             return;
         }
         // empty arrays and arrays filled with constants are allowed
         if (initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             const arrayLiteral: ts.ArrayLiteralExpression = <ts.ArrayLiteralExpression>initializer;
-            arrayLiteral.elements.forEach((expression: ts.Expression): void => {
-                this.validateExpression(expression, parentNode);
-            });
+            arrayLiteral.elements.forEach(
+                (expression: ts.Expression): void => {
+                    this.validateExpression(expression, parentNode);
+                }
+            );
             return;
         }
         // template strings are OK (it is too hard to analyze a template string fully)
@@ -147,12 +150,14 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
         if (initializer.kind === ts.SyntaxKind.ObjectLiteralExpression) {
             const literal: ts.ObjectLiteralExpression = <ts.ObjectLiteralExpression>initializer;
 
-            literal.properties.forEach((element: ts.ObjectLiteralElement): void => {
-                if (element.kind === ts.SyntaxKind.PropertyAssignment) {
-                    const assignment: ts.PropertyAssignment = <ts.PropertyAssignment>element;
-                    this.validateExpression(assignment.initializer, parentNode);
+            literal.properties.forEach(
+                (element: ts.ObjectLiteralElement): void => {
+                    if (element.kind === ts.SyntaxKind.PropertyAssignment) {
+                        const assignment: ts.PropertyAssignment = <ts.PropertyAssignment>element;
+                        this.validateExpression(assignment.initializer, parentNode);
+                    }
                 }
-            });
+            );
             return;
         }
         // From https://mochajs.org/, `this.retries(...)`, `this.slow(...)`, and
@@ -164,8 +169,10 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
         if (initializer.getText() === 'moment()') {
             return;
         }
-        if (initializer.kind === ts.SyntaxKind.CallExpression
-                && AstUtils.getFunctionTarget(<ts.CallExpression>initializer) === 'moment()') {
+        if (
+            initializer.kind === ts.SyntaxKind.CallExpression &&
+            AstUtils.getFunctionTarget(<ts.CallExpression>initializer) === 'moment()'
+        ) {
             return;
         }
         // new Date is OK
@@ -184,9 +191,11 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
                         // The forEach() call is OK, but check the contents of the array and the parameters
                         // to the forEach call because they could contain code with side effects.
                         this.validateExpression(propExp.expression, parentNode);
-                        callExp.arguments.forEach((arg: ts.Expression): void => {
-                            super.visitNode(arg);
-                        });
+                        callExp.arguments.forEach(
+                            (arg: ts.Expression): void => {
+                                super.visitNode(arg);
+                            }
+                        );
                         return;
                     }
                 }

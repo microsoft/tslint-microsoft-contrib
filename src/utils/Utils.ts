@@ -4,14 +4,14 @@ import * as path from 'path';
  * Control flow functions.
  */
 /* tslint:disable:no-increment-decrement */
-export module Utils {
+export namespace Utils {
     /**
      * Logical 'any' or 'exists' function.
      */
-    export function exists<T>(list : ReadonlyArray<T> | undefined, predicate: (t: T) => boolean) : boolean {
+    export function exists<T>(list: ReadonlyArray<T> | undefined, predicate: (t: T) => boolean): boolean {
         if (list !== undefined) {
             for (let i = 0; i < list.length; i++) {
-                const obj : T = list[i];
+                const obj: T = list[i];
                 if (predicate(obj)) {
                     return true;
                 }
@@ -24,18 +24,18 @@ export module Utils {
      * A contains function.
      */
     export function contains<T>(list: ReadonlyArray<T> | undefined, element: T): boolean {
-        return exists(list, (item: T): boolean => {
-            return item === element;
-        });
+        return exists(
+            list,
+            (item: T): boolean => {
+                return item === element;
+            }
+        );
     }
 
     /**
      * A removeAll function.
      */
-    export function removeAll<T>(
-        source: ReadonlyArray<T> | undefined,
-        elementsToRemove: ReadonlyArray<T> | undefined
-    ): T[] {
+    export function removeAll<T>(source: ReadonlyArray<T> | undefined, elementsToRemove: ReadonlyArray<T> | undefined): T[] {
         if (source === undefined || source.length === 0) {
             return [];
         }
@@ -43,9 +43,11 @@ export module Utils {
             return [...source]; // be sure to return a copy of the array
         }
 
-        return source.filter((sourceElement: T): boolean => {
-            return !contains(elementsToRemove, sourceElement);
-        });
+        return source.filter(
+            (sourceElement: T): boolean => {
+                return !contains(elementsToRemove, sourceElement);
+            }
+        );
     }
 
     /**

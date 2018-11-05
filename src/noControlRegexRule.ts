@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-control-regex',
         type: 'maintainability',
@@ -24,7 +23,6 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class NoControlRegexRuleWalker extends Lint.RuleWalker {

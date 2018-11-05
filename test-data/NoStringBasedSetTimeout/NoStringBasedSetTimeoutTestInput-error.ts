@@ -1,2 +1,1 @@
-setTimeout(function (): void {
-}.bind(this), 400);
+setTimeout(function(): void {}.bind(this), 400);

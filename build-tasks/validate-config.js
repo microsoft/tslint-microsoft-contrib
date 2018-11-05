@@ -29,6 +29,7 @@ const disabledRules = new Set([
     'no-relative-imports',
     'no-stateless-class',
     'no-unexternalized-strings',
+    'no-unnecessary-semicolons',
     'no-var-self',
     'react-tsx-curly-spacing',
     'valid-typeof'

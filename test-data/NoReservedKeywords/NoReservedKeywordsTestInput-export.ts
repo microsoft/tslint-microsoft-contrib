@@ -1,4 +1,3 @@
-
 class SampleExport3 {
     // class variables
     private export;
@@ -8,13 +7,13 @@ class SampleExport3 {
 class SampleExport4 {
     private var;
     set export(value) {}
-    get export() { return this.var;}
+    get export() {
+        return this.var;
+    }
 }
 
-
 class SampleExport5 {
-    export() {}       // class methods
-
+    export() {} // class methods
 }
 
 // interface declarations

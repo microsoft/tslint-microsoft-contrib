@@ -1,7 +1,7 @@
 import React = require('react');
 
-let Img = (props) => <span />;
-let IMG = (props) => <span />;
+let Img = props => <span />;
+let IMG = props => <span />;
 
-const a = <Img />
-const b = <IMG alt=''/>
+const a = <Img />;
+const b = <IMG alt="" />;

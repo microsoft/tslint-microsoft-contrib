@@ -1,11 +1,10 @@
-module.exports = (rows) =>
-`/**
+module.exports = rows =>
+    `/**
  * These rule settings are a broad, general recommendation for a good default configuration.
  * This file is exported in the npm/nuget package as ./tslint.json.
  */
 module.exports = {
-    "rules": {
-
+    'rules': {
         /**
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)

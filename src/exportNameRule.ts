@@ -158,21 +158,13 @@ export class ExportNameWalker extends Lint.RuleWalker {
     private validateExport(exportedName: string, node: ts.Node): void {
         const flags = Rule.getIgnoreCase(this.getOptions()) ? 'i' : '';
         const regex: RegExp = new RegExp(exportedName + '..*', flags); // filename must be exported name plus any extension
-        if (!regex.test(this.getFilename())) {
+        const fileName = Utils.fileBasename(this.getSourceFile().fileName);
+        if (!regex.test(fileName)) {
             if (!this.isSuppressed(exportedName)) {
-                const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                const failureString: string = Rule.FAILURE_STRING + fileName + ' and ' + exportedName;
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
-    }
-
-    private getFilename(): string {
-        const filename = this.getSourceFile().fileName;
-        const lastSlash = filename.lastIndexOf('/');
-        if (lastSlash > -1) {
-            return filename.substring(lastSlash + 1);
-        }
-        return filename;
     }
 
     private isSuppressed(exportedName: string): boolean {

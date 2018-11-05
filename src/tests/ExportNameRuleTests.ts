@@ -243,7 +243,7 @@ describe('exportNameRule', (): void => {
                 {
                     failure:
                         'The exported module or identifier name must match the file name. ' +
-                        'Found: test-data/ExportName/ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile',
+                        'Found: ExportNameRuleFailingTestInput.ts and ThisIsNotTheNameOfTheFile',
                     name: 'test-data/ExportName/ExportNameRuleFailingTestInput.ts',
                     ruleName: 'export-name',
                     startPosition: { character: 10, line: 2 }
@@ -257,7 +257,7 @@ describe('exportNameRule', (): void => {
                 {
                     failure:
                         'The exported module or identifier name must match the file name. ' +
-                        'Found: test-data/ExportName/ExportNameRuleFailingTestInput2.tsx and ThisIsNotTheNameOfTheFile',
+                        'Found: ExportNameRuleFailingTestInput2.tsx and ThisIsNotTheNameOfTheFile',
                     name: 'test-data/ExportName/ExportNameRuleFailingTestInput2.tsx',
                     ruleName: 'export-name',
                     startPosition: { character: 10, line: 2 }
@@ -274,10 +274,7 @@ describe('exportNameRule', (): void => {
             `;
             TestHelper.assertViolations(ruleName, inputScript, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and NotMatching',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and NotMatching',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 21, line: 3 }
@@ -293,10 +290,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example1',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example1',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: {
@@ -315,10 +309,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example2',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example2',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 17, line: 2 }
@@ -334,10 +325,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example3',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example3',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 17, line: 2 }
@@ -354,10 +342,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example3a',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example3a',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 17, line: 3 }
@@ -373,10 +358,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example4',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example4',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 28, line: 2 }
@@ -392,10 +374,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example5',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example5',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 30, line: 2 }
@@ -411,10 +390,7 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, [
                 {
-                    failure:
-                        'The exported module or identifier name must match the file name. Found: ' +
-                        Utils.absolutePath('file.ts') +
-                        ' and Example6',
+                    failure: 'The exported module or identifier name must match the file name. Found: file.ts and Example6',
                     name: Utils.absolutePath('file.ts'),
                     ruleName: 'export-name',
                     startPosition: { character: 28, line: 2 }

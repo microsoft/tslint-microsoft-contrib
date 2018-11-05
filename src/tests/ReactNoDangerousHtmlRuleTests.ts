@@ -22,9 +22,8 @@ function someFunction() {
             [
                 {
                     failure:
-                        'Invalid call to dangerouslySetInnerHTML in method "<unknown>"\n    of source file ' +
-                        Utils.absolutePath('file.tsx') +
-                        '"\n    Do *NOT* add a suppression for this warning. ' +
+                        'Invalid call to dangerouslySetInnerHTML in method "<unknown>".' +
+                        '\n    Do *NOT* add a suppression for this warning. ' +
                         'If you absolutely must use this API then you need\n    to review the usage with a security expert/QE ' +
                         'representative. If they decide that this is an\n    acceptable usage then add the exception ' +
                         'to xss_exceptions.json',
@@ -34,9 +33,8 @@ function someFunction() {
                 },
                 {
                     failure:
-                        'Invalid call to dangerouslySetInnerHTML in method "<unknown>"\n    of source file ' +
-                        Utils.absolutePath('file.tsx') +
-                        '"\n    Do *NOT* add a suppression for this warning. ' +
+                        'Invalid call to dangerouslySetInnerHTML in method "<unknown>".' +
+                        '\n    Do *NOT* add a suppression for this warning. ' +
                         'If you absolutely must use this API then you need\n    to review the usage with a security expert/QE ' +
                         'representative. If they decide that this is an\n    acceptable usage then add the exception ' +
                         'to xss_exceptions.json',

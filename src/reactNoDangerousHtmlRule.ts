@@ -101,10 +101,7 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
             const failureString =
                 'Invalid call to dangerouslySetInnerHTML in method "' +
                 this.currentMethodName +
-                '"\n' +
-                '    of source file ' +
-                this.getSourceFile().fileName +
-                '"\n' +
+                '".\n' +
                 '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';

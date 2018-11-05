@@ -71,5 +71,9 @@ export namespace Utils {
         // Replaces \ with / to match format of ts.SourceFile.fileName on Windows
         return path.resolve(relativePath).replace(/\\/g, '/');
     }
+
+    export function fileBasename(relativePath: string): string {
+        return path.basename(relativePath);
+    }
 }
 /* tslint:enable:no-increment-decrement */

@@ -1,5 +1,5 @@
 {
     "rules": {
-      "no-unsupported-browser-code": true
+        "no-unsupported-browser-code": true
     }
-  }
+}

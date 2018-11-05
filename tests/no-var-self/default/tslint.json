@@ -1,5 +1,5 @@
 {
     "rules": {
-      "no-var-self": true
+        "no-var-self": true
     }
-  }
+}

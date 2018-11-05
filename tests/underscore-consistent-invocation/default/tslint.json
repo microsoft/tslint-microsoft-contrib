@@ -1,5 +1,5 @@
 {
     "rules": {
-      "underscore-consistent-invocation": true
+        "underscore-consistent-invocation": true
     }
-  }
+}

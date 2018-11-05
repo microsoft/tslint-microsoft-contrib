@@ -1,8 +1,8 @@
 {
     "rules": {
-      "use-named-parameter": true
+        "use-named-parameter": true
     },
     "jsRules": {
-      "use-named-parameter": true
+        "use-named-parameter": true
     }
-  }
+}

@@ -60,7 +60,7 @@
         "chai-prefer-contains-to-index-of": true,
         "chai-vague-errors": true,
         "encoding": true,
-        "export-name": true,
+        "export-name": [true, { "allow": ["^Rule$"] }],
         "function-name": true,
         "import-name": true,
         "informative-docs": true,

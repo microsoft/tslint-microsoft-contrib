@@ -1,2 +1,2 @@
-class ThisIsNotTheNameOfTheFile {}
-export = ThisIsNotTheNameOfTheFile; // does not match filename
+class ExportNameRuleFailingTestInput {}
+export = ExportNameRuleFailingTestInput; // does not match filename

@@ -26,34 +26,39 @@ npm install tslint-microsoft-contrib --save-dev
 
 ## Configuration
 
-### Configure your Grunt build task
+Add `"node_modules/tslint-microsoft-contrib"` under your `"rulesDirectory"` configuration to inform TSLint it should look under this package for additional rules in your `tslint.json`:
 
-Add the new `rulesDirectory` to your `tslint` task:
-
-```js
-grunt.initConfig({
-    tslint: {
-        options: {
-            rulesDirectory: 'node_modules/tslint-microsoft-contrib',
-            configuration: grunt.file.readJSON('tslint.json')
-        },
-        files: {
-            src: ['src/file1.ts', 'src/file2.ts']
-        }
+```json
+{
+    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+    "rules": {
+        // ...
     }
-});
+}
 ```
-
-The `tslint.json` file does not change format when using this package. Just add our rule definitions to your existing `tslint.json` file.
 
 ### Which Rules Should I Turn On?
 
-There certainly are a lot of options! Here are some links to get you started.
+There certainly are a lot of options!
+To start, you can enable our recommended defaults ([recommended_ruleset.js](recommended_ruleset.js)) by adding `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
 
--   Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
--   A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
--   A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
--   And our configuration file with all options is available here: [tslint.json](tslint.json)
+```json
+{
+    "extends": ["tslint-microsoft-contrib"],
+    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+    "rules": {
+        // ...
+    }
+}
+```
+
+You can then disable rules you don't find useful.
+
+Please note, some of the default rules require the `--project` TSLint options.
+
+Also, please note that adding a rule to the recommended ruleset is considered backwards compatible.
+If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
+We recommend you specify exact versions of lint libraries, including `tslint-microsoft-contrib`, in your `package.json`.
 
 ### Supported Rules
 

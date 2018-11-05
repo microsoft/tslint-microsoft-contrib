@@ -1,2 +1,2 @@
-class ExportNameRulePassingTestInput {}
-export = ExportNameRulePassingTestInput; // matches filename
+class ExportNameRulePassingTestInput2 {}
+export = ExportNameRulePassingTestInput2; // matches filename

@@ -257,8 +257,22 @@ describe('exportNameRule', (): void => {
                 {
                     failure:
                         'The exported module or identifier name must match the file name. ' +
-                        'Found: ExportNameRuleFailingTestInput2.tsx and ThisIsNotTheNameOfTheFile',
+                        'Found: ExportNameRuleFailingTestInput2.tsx and ExportNameRuleFailingTestInput',
                     name: 'test-data/ExportName/ExportNameRuleFailingTestInput2.tsx',
+                    ruleName: 'export-name',
+                    startPosition: { character: 10, line: 2 }
+                }
+            ]);
+        });
+
+        it('for prefixed name', (): void => {
+            const inputFile: string = 'test-data/ExportName/PrefixedExpectedClassName.ts';
+            TestHelper.assertViolations(ruleName, inputFile, [
+                {
+                    failure:
+                        'The exported module or identifier name must match the file name. ' +
+                        'Found: PrefixedExpectedClassName.ts and ExpectedClassName',
+                    name: 'test-data/ExportName/PrefixedExpectedClassName.ts',
                     ruleName: 'export-name',
                     startPosition: { character: 10, line: 2 }
                 }

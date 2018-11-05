@@ -98,9 +98,6 @@ There certainly are a lot of options! Here are some links to get you started.
         It can be configured to be case-insensitive or to allow names matching a regex.
         For example, to allow names that differ only in case and an exported name like myChartOptions, then configure the rule like this: <code>"export-name": [true, { "ignore-case": true, "allow": ["myChartOptions"] }]</code>.
         You can also just give a list of allowed names, like <code>"export-name": [true, "myChartOptions"]</code>.
-        <br />
-         Note that the name of the package is the expected camelCase name of the package.
-         For example, to allow <code>request-promise-native</code> to be imported as <code>request</code>, add this configuration: <code>'import-name': [true, { 'requestPromiseNative': 'request'}]</code>.
       </td>
       <td>0.0.3</td>
     </tr>

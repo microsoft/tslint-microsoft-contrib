@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-array-literal',
         type: 'maintainability',
@@ -31,7 +30,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoGenericArrayWalker extends Lint.RuleWalker {
-
     private allowTypeParameters: boolean = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -54,7 +52,7 @@ class NoGenericArrayWalker extends Lint.RuleWalker {
     }
 
     protected visitNewExpression(node: ts.NewExpression): void {
-        const functionName  = AstUtils.getFunctionName(node);
+        const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'Array') {
             const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
             this.addFailureAt(node.getStart(), node.getWidth(), failureString);

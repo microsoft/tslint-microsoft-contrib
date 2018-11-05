@@ -4,8 +4,7 @@ import { isNamed } from './TypeGuard';
 /**
  * General utility class.
  */
-export module AstUtils {
-
+export namespace AstUtils {
     export function getLanguageVariant(node: ts.SourceFile): ts.LanguageVariant {
         const fileName: string = node.fileName.toLowerCase();
         if (fileName.endsWith('.tsx') || fileName.endsWith('.jsx')) {
@@ -43,11 +42,13 @@ export module AstUtils {
             return false;
         }
         let result: boolean = false;
-        modifiers.forEach((modifier: ts.Node): void => {
-            if (modifier.kind === modifierKind) {
-                result = true;
+        modifiers.forEach(
+            (modifier: ts.Node): void => {
+                if (modifier.kind === modifierKind) {
+                    result = true;
+                }
             }
-        });
+        );
         return result;
     }
 
@@ -56,24 +57,27 @@ export module AstUtils {
         console.log(expression.getFullText());
         console.log('\tkind: ' + expression.kind);
 
-        if (expression.kind === ts.SyntaxKind.Identifier
-            || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+        if (expression.kind === ts.SyntaxKind.Identifier || expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const definitionInfo = languageServices.getDefinitionAtPosition('file.ts', expression.getStart());
             if (definitionInfo !== undefined) {
-                definitionInfo.forEach((info: ts.DefinitionInfo, index: number): void => {
-                    console.log('\tdefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + info.kind);
-                    console.log('\t\tname: ' + info.name);
-                });
+                definitionInfo.forEach(
+                    (info: ts.DefinitionInfo, index: number): void => {
+                        console.log('\tdefinitionInfo-' + index);
+                        console.log('\t\tkind: ' + info.kind);
+                        console.log('\t\tname: ' + info.name);
+                    }
+                );
             }
 
             const typeInfo = languageServices.getTypeDefinitionAtPosition('file.ts', expression.getStart());
             if (typeInfo !== undefined) {
-                typeInfo.forEach((info: ts.DefinitionInfo, index: number): void => {
-                    console.log('\ttypeDefinitionInfo-' + index);
-                    console.log('\t\tkind: ' + info.kind);
-                    console.log('\t\tname: ' + info.name);
-                });
+                typeInfo.forEach(
+                    (info: ts.DefinitionInfo, index: number): void => {
+                        console.log('\ttypeDefinitionInfo-' + index);
+                        console.log('\t\tkind: ' + info.kind);
+                        console.log('\t\tname: ' + info.name);
+                    }
+                );
             }
 
             const quickInfo = languageServices.getQuickInfoAtPosition('file.ts', expression.getStart());
@@ -142,8 +146,7 @@ export module AstUtils {
     }
 
     function isBindingPattern(node: ts.Node): node is ts.BindingPattern {
-        return node !== undefined && (node.kind === ts.SyntaxKind.ArrayBindingPattern ||
-            node.kind === ts.SyntaxKind.ObjectBindingPattern);
+        return node !== undefined && (node.kind === ts.SyntaxKind.ArrayBindingPattern || node.kind === ts.SyntaxKind.ObjectBindingPattern);
     }
 
     function walkUpBindingElementsAndPatterns(node: ts.Node): ts.Node {
@@ -187,11 +190,15 @@ export module AstUtils {
     export function isExported(node: ts.Node): boolean {
         // typescript 2.1.4 introduces a new edge case for when
         // top level variables are exported from a source file
-        if (node.kind === ts.SyntaxKind.VariableDeclaration
-            && node.parent.kind === ts.SyntaxKind.VariableDeclarationList
-            && node.parent.parent.kind === ts.SyntaxKind.VariableStatement) {
-            if (node.parent.parent.modifiers !== undefined
-                && AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)) {
+        if (
+            node.kind === ts.SyntaxKind.VariableDeclaration &&
+            node.parent.kind === ts.SyntaxKind.VariableDeclarationList &&
+            node.parent.parent.kind === ts.SyntaxKind.VariableStatement
+        ) {
+            if (
+                node.parent.parent.modifiers !== undefined &&
+                AstUtils.hasModifier(node.parent.parent.modifiers, ts.SyntaxKind.ExportKeyword)
+            ) {
                 return true;
             }
         }
@@ -203,9 +210,8 @@ export module AstUtils {
         return token >= ts.SyntaxKind.FirstAssignment && token <= ts.SyntaxKind.LastAssignment;
     }
 
-    export function isBindingLiteralExpression(node: ts.Node): node is (ts.ArrayLiteralExpression | ts.ObjectLiteralExpression) {
-        return (!!node) &&
-            (node.kind === ts.SyntaxKind.ObjectLiteralExpression || node.kind === ts.SyntaxKind.ArrayLiteralExpression);
+    export function isBindingLiteralExpression(node: ts.Node): node is ts.ArrayLiteralExpression | ts.ObjectLiteralExpression {
+        return !!node && (node.kind === ts.SyntaxKind.ObjectLiteralExpression || node.kind === ts.SyntaxKind.ArrayLiteralExpression);
     }
 
     export function findParentBlock(child: ts.Node): ts.Node {
@@ -231,14 +237,16 @@ export module AstUtils {
 
     export function getDeclaredMethodNames(node: ts.ClassDeclaration): string[] {
         const result: string[] = [];
-        node.members.forEach((classElement: ts.ClassElement): void => {
-            if (classElement.kind === ts.SyntaxKind.MethodDeclaration) {
-                const methodDeclaration: ts.MethodDeclaration = <ts.MethodDeclaration>classElement;
-                if (methodDeclaration.name.kind === ts.SyntaxKind.Identifier) {
-                    result.push((<ts.Identifier>methodDeclaration.name).text);
+        node.members.forEach(
+            (classElement: ts.ClassElement): void => {
+                if (classElement.kind === ts.SyntaxKind.MethodDeclaration) {
+                    const methodDeclaration: ts.MethodDeclaration = <ts.MethodDeclaration>classElement;
+                    if (methodDeclaration.name.kind === ts.SyntaxKind.Identifier) {
+                        result.push((<ts.Identifier>methodDeclaration.name).text);
+                    }
                 }
             }
-        });
+        );
         return result;
     }
 
@@ -249,8 +257,7 @@ export module AstUtils {
             }
             return node.type.kind === ts.SyntaxKind.FunctionType;
         } else if (node.initializer !== undefined) {
-            return (node.initializer.kind === ts.SyntaxKind.ArrowFunction
-            || node.initializer.kind === ts.SyntaxKind.FunctionExpression);
+            return node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression;
         }
         return false;
     }
@@ -268,15 +275,16 @@ export module AstUtils {
         if (node === undefined) {
             return false;
         }
-        return node.kind === ts.SyntaxKind.NullKeyword
-            || node.kind === ts.SyntaxKind.StringLiteral
-            || node.kind === ts.SyntaxKind.FalseKeyword
-            || node.kind === ts.SyntaxKind.TrueKeyword
-            || node.kind === ts.SyntaxKind.NumericLiteral;
+        return (
+            node.kind === ts.SyntaxKind.NullKeyword ||
+            node.kind === ts.SyntaxKind.StringLiteral ||
+            node.kind === ts.SyntaxKind.FalseKeyword ||
+            node.kind === ts.SyntaxKind.TrueKeyword ||
+            node.kind === ts.SyntaxKind.NumericLiteral
+        );
     }
 
     export function isConstantExpression(node: ts.Expression): boolean {
-
         if (node.kind === ts.SyntaxKind.BinaryExpression) {
             const expression: ts.BinaryExpression = <ts.BinaryExpression>node;
             const kind: ts.SyntaxKind = expression.operatorToken.kind;
@@ -285,8 +293,9 @@ export module AstUtils {
             }
         }
         if (node.kind === ts.SyntaxKind.PrefixUnaryExpression || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
-            const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression =
-                <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>node;
+            const expression: ts.PostfixUnaryExpression | ts.PrefixUnaryExpression = <ts.PostfixUnaryExpression | ts.PrefixUnaryExpression>(
+                node
+            );
             return isConstantExpression(expression.operand);
         }
         return isConstant(node);

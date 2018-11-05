@@ -12,7 +12,7 @@ function getImplicitRoleForMenu(node: ts.Node): string | undefined {
     if (typeAttribute) {
         const value = getStringLiteral(typeAttribute) || undefined;
 
-        return (value && value.toUpperCase() === 'TOOLBAR') ? 'toolbar' : undefined;
+        return value && value.toUpperCase() === 'TOOLBAR' ? 'toolbar' : undefined;
     }
 
     return undefined;

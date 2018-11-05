@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-empty-interfaces',
         type: 'maintainability',
@@ -32,16 +31,13 @@ export class Rule extends Lint.Rules.AbstractRule {
         }
         return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class NoEmptyInterfacesRuleWalker extends Lint.RuleWalker {
     protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
         // do we have an empty interface?
         if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
-            this.addFailureAt(
-                    node.getStart(), node.getWidth(), Rule.FAILURE_STRING + '\'' + node.name.getText() + '\''
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + "'" + node.name.getText() + "'");
         }
         super.visitInterfaceDeclaration(node);
     }

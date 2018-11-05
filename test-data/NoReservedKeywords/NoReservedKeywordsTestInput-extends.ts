@@ -1,4 +1,3 @@
-
 class SampleExtends3 {
     // class variables
     private extends;
@@ -8,12 +7,13 @@ class SampleExtends3 {
 class SampleExtends4 {
     private var;
     set extends(value) {}
-    get extends() { return this.var;}
+    get extends() {
+        return this.var;
+    }
 }
 
-
 class SampleExtends5 {
-    extends() {}       // class methods
+    extends() {} // class methods
 }
 
 // interface declarations

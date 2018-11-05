@@ -1,19 +1,17 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {getJsxAttributesFromJsxElement, isEmpty} from './utils/JsxAttribute';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { getJsxAttributesFromJsxElement, isEmpty } from './utils/JsxAttribute';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string
-    = 'Input elements must include default, place-holding characters if empty';
-export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string
-    = 'Textarea elements must include default, place-holding characters if empty';
+export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string = 'Input elements must include default, place-holding characters if empty';
+export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string =
+    'Textarea elements must include default, place-holding characters if empty';
 
 /**
  * Implementation of the react-a11y-input-elements rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-input-elements',
         type: 'functionality',
@@ -38,7 +36,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yInputElementsRuleWalker extends Lint.RuleWalker {
-
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
         const tagName = node.tagName.getText();
 

@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-missing-visibility-modifiers',
         type: 'maintainability',
@@ -44,7 +43,7 @@ class MissingVisibilityModifierWalker extends Lint.RuleWalker {
         super.visitMethodDeclaration(node);
     }
 
-    private isMissingVisibilityModifier(node: ts.Declaration) : boolean {
+    private isMissingVisibilityModifier(node: ts.Declaration): boolean {
         return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
     }
 

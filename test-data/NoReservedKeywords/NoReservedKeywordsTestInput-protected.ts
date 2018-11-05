@@ -1,15 +1,14 @@
-
 // module names
-module protected {
+namespace protected {
 
 }
 
-module SampleProtected1 {
+namespace SampleProtected1 {
     // module variables
     var protected;
 }
 
-module SampleProtected2 {
+namespace SampleProtected2 {
     // module function
     function protected() {}
 }
@@ -23,12 +22,13 @@ class SampleProtected3 {
 class SampleProtected4 {
     private var;
     set protected(value) {}
-    get protected() { return this.var;}
+    get protected() {
+        return this.var;
+    }
 }
 
-
 class SampleProtected5 {
-    protected() {}       // class methods
+    protected() {} // class methods
 }
 
 // interface declarations

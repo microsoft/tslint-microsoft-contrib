@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-delete-expression',
         type: 'maintainability',
@@ -28,7 +27,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoDeleteExpression extends Lint.RuleWalker {
-
     public visitExpressionStatement(node: ts.ExpressionStatement) {
         super.visitExpressionStatement(node);
         if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
@@ -44,5 +42,4 @@ class NoDeleteExpression extends Lint.RuleWalker {
         const msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
         this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
     }
-
 }

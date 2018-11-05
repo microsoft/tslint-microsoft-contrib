@@ -11,4 +11,4 @@ getAllRules().forEach(ruleFile => {
     allMetadata.push(metadata);
 });
 
-writeFile('rule-metadata.json', JSON.stringify(allMetadata, undefined, 2));
+writeFile('rule-metadata.json', JSON.stringify(allMetadata, undefined, 4));

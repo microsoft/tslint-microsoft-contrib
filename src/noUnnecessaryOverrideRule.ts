@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Unnecessary method override. A method that only calls super can be removed: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unnecessary-override',
         type: 'maintainability',
@@ -62,7 +61,7 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
         const allParameters: ReadonlyArray<ts.ParameterDeclaration> = node.parameters;
         /* tslint:disable:no-increment-decrement */
         for (let i = 0; i < allParameters.length; i++) {
-        /* tslint:enable:no-increment-decrement */
+            /* tslint:enable:no-increment-decrement */
             const parameter: ts.ParameterDeclaration = allParameters[i];
             const argument: ts.Expression = call.arguments[i];
             if (argument.kind !== ts.SyntaxKind.Identifier) {

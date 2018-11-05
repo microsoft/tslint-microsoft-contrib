@@ -1,12 +1,11 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Do not use http-equiv="refresh"';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-meta',
         type: 'functionality',
@@ -31,7 +30,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yMetaRuleWalker extends Lint.RuleWalker {
-
     protected visitJsxElement(node: ts.JsxElement): void {
         this.validateOpeningElement(node, node.openingElement);
         super.visitJsxElement(node);
@@ -44,16 +42,18 @@ class ReactA11yMetaRuleWalker extends Lint.RuleWalker {
     private validateOpeningElement(parent: ts.Node, openElement: ts.JsxOpeningLikeElement): void {
         if (openElement.tagName.getText() === 'meta') {
             const attributes: ts.JsxAttributes = openElement.attributes;
-            attributes.properties.forEach((parameter: ts.JsxAttributeLike): void => {
-                if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
-                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
-                    if (attribute.name.getText() === 'http-equiv') {
-                        if (attribute.initializer !== undefined && this.isStringLiteral(attribute.initializer, 'refresh')) {
-                            this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
+            attributes.properties.forEach(
+                (parameter: ts.JsxAttributeLike): void => {
+                    if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
+                        const attribute: ts.JsxAttribute = <ts.JsxAttribute>parameter;
+                        if (attribute.name.getText() === 'http-equiv') {
+                            if (attribute.initializer !== undefined && this.isStringLiteral(attribute.initializer, 'refresh')) {
+                                this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
+                            }
                         }
                     }
                 }
-            });
+            );
         }
     }
 

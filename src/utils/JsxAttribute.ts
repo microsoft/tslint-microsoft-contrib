@@ -20,9 +20,7 @@ export function getPropName(node: ts.JsxAttribute): string | undefined {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
 
-    return node.name
-        ? node.name.text
-        : undefined;
+    return node.name ? node.name.text : undefined;
 }
 
 /**
@@ -39,14 +37,17 @@ export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute):
 
     const initializer = node === undefined ? undefined : node.initializer;
 
-    if (!initializer) { // <tag attribute/>
+    if (!initializer) {
+        // <tag attribute/>
         return '';
-    } else if (isStringLiteral(initializer)) { // <tag attribute='value' />
+    } else if (isStringLiteral(initializer)) {
+        // <tag attribute='value' />
         return initializer.text.trim();
-    } else if (isJsxExpression(initializer) && initializer.expression !== undefined
-        && isStringLiteral(initializer.expression)) { // <tag attribute={'value'} />
+    } else if (isJsxExpression(initializer) && initializer.expression !== undefined && isStringLiteral(initializer.expression)) {
+        // <tag attribute={'value'} />
         return (<ts.StringLiteral>initializer.expression).text;
-    } else if (isJsxExpression(initializer) && !initializer.expression) { // <tag attribute={} />
+    } else if (isJsxExpression(initializer) && !initializer.expression) {
+        // <tag attribute={} />
         return '';
     } else {
         return undefined;
@@ -175,7 +176,7 @@ export function getJsxAttributesFromJsxElement(node: ts.Node): { [propName: stri
     const attributes = getAllAttributesFromJsxElement(node);
 
     if (attributes !== undefined) {
-        attributes.forEach((attr) => {
+        attributes.forEach(attr => {
             if (!isJsxAttribute(attr)) {
                 return;
             }

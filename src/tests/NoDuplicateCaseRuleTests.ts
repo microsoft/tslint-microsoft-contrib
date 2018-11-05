@@ -1,11 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe('noDuplicateCaseRule', () : void => {
-    const ruleName : string = 'no-duplicate-case';
+describe('noDuplicateCaseRule', (): void => {
+    const ruleName: string = 'no-duplicate-case';
 
-    it('should pass on valid switch', () : void => {
-        const script : string = `
+    it('should pass on valid switch', (): void => {
+        const script: string = `
             var a = 1;
 
             switch (a) {
@@ -17,11 +17,11 @@ describe('noDuplicateCaseRule', () : void => {
                     break;
             } `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on string duplicates', () : void => {
-        const script : string = `
+    it('should fail on string duplicates', (): void => {
+        const script: string = `
             switch (a) {
                 case 1:
                     break;
@@ -36,16 +36,16 @@ describe('noDuplicateCaseRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Duplicate case found in switch statement: 1",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-case",
-                "startPosition": { "character": 17, "line": 5 }
+                failure: 'Duplicate case found in switch statement: 1',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-case',
+                startPosition: { character: 17, line: 5 }
             }
         ]);
     });
 
-    it('should fail on number duplicates', () : void => {
-        const script : string = `
+    it('should fail on number duplicates', (): void => {
+        const script: string = `
             switch (a) {
                 case "1":
                     break;
@@ -60,16 +60,16 @@ describe('noDuplicateCaseRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Duplicate case found in switch statement: \"1\"",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-case",
-                "startPosition": { "character": 17, "line": 5 }
+                failure: 'Duplicate case found in switch statement: "1"',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-case',
+                startPosition: { character: 17, line: 5 }
             }
         ]);
     });
 
-    it('should fail on identifier duplicates', () : void => {
-        const script : string = `
+    it('should fail on identifier duplicates', (): void => {
+        const script: string = `
             switch (a) {
                 case one:
                     break;
@@ -84,12 +84,11 @@ describe('noDuplicateCaseRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Duplicate case found in switch statement: one",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-duplicate-case",
-                "startPosition": { "character": 17, "line": 5 }
+                failure: 'Duplicate case found in switch statement: one',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-duplicate-case',
+                startPosition: { character: 17, line: 5 }
             }
         ]);
     });
-
 });

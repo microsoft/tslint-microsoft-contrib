@@ -1,4 +1,3 @@
-
 class SampleFor3 {
     // class variables
     private for;
@@ -8,12 +7,13 @@ class SampleFor3 {
 class SampleFor4 {
     private var;
     set for(value) {}
-    get for() { return this.var;}
+    get for() {
+        return this.var;
+    }
 }
 
-
 class SampleFor5 {
-    for() {}       // class methods
+    for() {} // class methods
 }
 
 // interface declarations

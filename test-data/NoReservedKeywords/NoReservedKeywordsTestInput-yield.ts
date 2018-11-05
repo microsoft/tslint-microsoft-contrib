@@ -1,15 +1,14 @@
-
 // module names
-module yield {
+namespace yield {
 
 }
 
-module SampleYield1 {
+namespace SampleYield1 {
     // module variables
     var yield;
 }
 
-module SampleYield2 {
+namespace SampleYield2 {
     // module function
     function yield() {}
 }
@@ -23,12 +22,13 @@ class SampleYield3 {
 class SampleYield4 {
     private var;
     set yield(value) {}
-    get yield() { return this.var;}
+    get yield() {
+        return this.var;
+    }
 }
 
-
 class SampleYield5 {
-    yield() {}       // class methods
+    yield() {} // class methods
 }
 
 // interface declarations

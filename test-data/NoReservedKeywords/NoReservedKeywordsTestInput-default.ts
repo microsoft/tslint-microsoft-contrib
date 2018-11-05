@@ -1,4 +1,3 @@
-
 class SampleDefault3 {
     // class variables
     private default;
@@ -8,12 +7,13 @@ class SampleDefault3 {
 class SampleDefault4 {
     private var;
     set default(value) {}
-    get default() { return this.var;}
+    get default() {
+        return this.var;
+    }
 }
 
-
 class SampleDefault5 {
-    default() {}       // class methods
+    default() {} // class methods
 }
 
 // interface declarations

@@ -1,21 +1,17 @@
-
 // module names
-module WrapperFrom {
-    module from {
-
+namespace WrapperFrom {
+    namespace from {
         // class names
-        class from {
-
-        }
+        class from {}
     }
 }
 
-module SampleFrom1 {
+namespace SampleFrom1 {
     // module variables
     var from;
 }
 
-module SampleFrom2 {
+namespace SampleFrom2 {
     // module function
     function from() {}
 }
@@ -29,15 +25,15 @@ class SampleFrom3 {
 class SampleFrom4 {
     private var;
     set from(value) {}
-    get from() { return this.var;}
+    get from() {
+        return this.var;
+    }
 }
 
-
 class SampleFrom5 {
-    from() {}       // class methods
-    method(from) {}  // method parameters
-    private func = (from) => {}; // arrow function parameters
-
+    from() {} // class methods
+    method(from) {} // method parameters
+    private func = from => {}; // arrow function parameters
 }
 
 // interface declarations

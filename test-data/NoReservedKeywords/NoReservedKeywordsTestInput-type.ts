@@ -1,21 +1,17 @@
-
 // module names
-module WrapperType {
-    module type {
-
+namespace WrapperType {
+    namespace type {
         // class names
-        class type {
-
-        }
+        class type {}
     }
 }
 
-module SampleType1 {
+namespace SampleType1 {
     // module variables
     var type;
 }
 
-module SampleType2 {
+namespace SampleType2 {
     // module function
     function type() {}
 }
@@ -29,15 +25,15 @@ class SampleType3 {
 class SampleType4 {
     private var;
     set type(value) {}
-    get type() { return this.var;}
+    get type() {
+        return this.var;
+    }
 }
 
-
 class SampleType5 {
-    type() {}       // class methods
-    method(type) {}  // method parameters
-    private func = (type) => {}; // arrow function parameters
-
+    type() {} // class methods
+    method(type) {} // method parameters
+    private func = type => {}; // arrow function parameters
 }
 
 // interface declarations

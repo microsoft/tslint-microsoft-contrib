@@ -1,4 +1,4 @@
-import {Utils} from '../utils/Utils';
+import { Utils } from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 import { getFailureString } from '../reactA11yAriaUnsupportedElementsRule';
 
@@ -35,23 +35,19 @@ describe('reactA11yAriaUnsupportedElementsRule', () => {
             const a = <base aria-label role { ...this.props }></base>;
             const b = <base aria-label role { ...this.props } />;
         `;
-        TestHelper.assertViolations(
-            ruleName,
-            script,
-            [
-                {
-                    name: Utils.absolutePath('file.tsx'),
-                    ruleName: ruleName,
-                    startPosition: { character: 23, line: 4 },
-                    failure: getFailureString('base', ['aria-label', 'role'])
-                },
-                {
-                    name: Utils.absolutePath('file.tsx'),
-                    ruleName: ruleName,
-                    startPosition: { character: 23, line: 5 },
-                    failure: getFailureString('base', ['aria-label', 'role'])
-                }
-            ]
-        );
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: ruleName,
+                startPosition: { character: 23, line: 4 },
+                failure: getFailureString('base', ['aria-label', 'role'])
+            },
+            {
+                name: Utils.absolutePath('file.tsx'),
+                ruleName: ruleName,
+                startPosition: { character: 23, line: 5 },
+                failure: getFailureString('base', ['aria-label', 'role'])
+            }
+        ]);
     });
 });

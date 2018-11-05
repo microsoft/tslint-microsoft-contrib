@@ -1,15 +1,16 @@
-
 var functionVariable = () => {};
-var createFunction : () => (() => void) = () => { return () => {}}; // function that produces a function
+var createFunction: () => (() => void) = () => {
+    return () => {};
+}; // function that produces a function
 
 // lambdas are OK
 setTimeout(() => {});
 this.setTimeout(() => {});
 window.setTimeout(() => {});
 // functions are OK
-setTimeout(function () {});
-this.setTimeout(function () {});
-window.setTimeout(function () {});
+setTimeout(function() {});
+this.setTimeout(function() {});
+window.setTimeout(function() {});
 // expressions of type function are OK
 setTimeout(functionVariable);
 this.setTimeout(functionVariable);

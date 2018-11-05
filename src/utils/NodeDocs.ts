@@ -35,9 +35,7 @@ const nodeKindsWithNameIdentifiers = new Set([
 const getNodeWithOptionalIdentifierName = (node: INodeWithNameIdentifier): string | undefined => {
     const { name } = node;
 
-    return name === undefined
-        ? undefined
-        : name.text;
+    return name === undefined ? undefined : name.text;
 };
 
 /**
@@ -76,7 +74,5 @@ export const getApparentJsDoc = (node: ts.Node): ts.JSDoc[] | undefined => {
  * @returns Name text of a node, if it contains a name identifier.
  */
 export const getNodeName = (node: ts.Node): string | undefined => {
-    return nodeKindsWithNameIdentifiers.has(node.kind)
-        ? getNodeWithOptionalIdentifierName(<INodeWithNameIdentifier>node)
-        : undefined;
+    return nodeKindsWithNameIdentifiers.has(node.kind) ? getNodeWithOptionalIdentifierName(<INodeWithNameIdentifier>node) : undefined;
 };

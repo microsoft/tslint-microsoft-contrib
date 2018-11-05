@@ -1,23 +1,23 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {Scope} from './utils/Scope';
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { Scope } from './utils/Scope';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
-const FAILURE_DOUBLE_BIND: string = 'A function is having its \'this\' reference bound twice in the constructor: ';
-const FAILURE_UNBOUND_LISTENER: string = 'A class method is passed as a JSX attribute without having the \'this\' ' +
-    'reference bound: ';
+const FAILURE_DOUBLE_BIND: string = "A function is having its 'this' reference bound twice in the constructor: ";
+const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' reference bound: ";
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-this-binding-issue',
         type: 'maintainability',
-        description: 'When using React components you must be careful to correctly bind the `this` reference ' +
-                     'on any methods that you pass off to child components as callbacks.',
+        description:
+            'When using React components you must be careful to correctly bind the `this` reference ' +
+            'on any methods that you pass off to child components as callbacks.',
         options: {
             type: 'object',
             properties: {
@@ -54,7 +54,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
-
     private allowAnonymousListeners: boolean = false;
     private allowedDecorators: Set<string> = new Set<string>();
     private boundListeners: Set<string> = new Set<string>();
@@ -68,10 +67,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                 this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
                 if (opt['bind-decorators']) {
                     const allowedDecorators: unknown = opt['bind-decorators'];
-                    if (
-                        !Array.isArray(allowedDecorators)
-                        || allowedDecorators.some(decorator => typeof decorator !== 'string')
-                    ) {
+                    if (!Array.isArray(allowedDecorators) || allowedDecorators.some(decorator => typeof decorator !== 'string')) {
                         throw new Error('one or more members of bind-decorators is invalid, string required.');
                     }
                     // tslint:disable-next-line:prefer-type-cast
@@ -86,9 +82,11 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         this.boundListeners = new Set<string>();
         // find all method names and prepend 'this.' to it so we can compare array elements to method names easily
         this.declaredMethods = new Set<string>();
-        AstUtils.getDeclaredMethodNames(node).forEach((methodName: string): void => {
-            this.declaredMethods.add('this.' + methodName);
-        });
+        AstUtils.getDeclaredMethodNames(node).forEach(
+            (methodName: string): void => {
+                this.declaredMethods.add('this.' + methodName);
+            }
+        );
         super.visitClassDeclaration(node);
     }
 
@@ -103,7 +101,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.visitJsxOpeningElement(node);  // a self closing JSX element is-a OpeningElement
+        this.visitJsxOpeningElement(node); // a self closing JSX element is-a OpeningElement
         super.visitJsxSelfClosingElement(node);
     }
 
@@ -122,7 +120,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         if (!(allowedDecorators.size > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
-        return node.decorators.some((decorator) => {
+        return node.decorators.some(decorator => {
             if (decorator.kind !== ts.SyntaxKind.Decorator) {
                 return false;
             }
@@ -166,39 +164,41 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
 
     private visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
-        node.attributes.properties.forEach((attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-            if (this.isUnboundListener(attributeLikeElement)) {
-                const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                const jsxExpression = attribute.initializer;
-                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                    return;
-                }
-                const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
-                const listenerText: string = propAccess.getText();
-                if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
-                    const start: number = propAccess.getStart();
-                    const widget: number = propAccess.getWidth();
-                    const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
+        node.attributes.properties.forEach(
+            (attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+                if (this.isUnboundListener(attributeLikeElement)) {
+                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                    const jsxExpression = attribute.initializer;
+                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                        return;
+                    }
+                    const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
+                    const listenerText: string = propAccess.getText();
+                    if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
+                        const start: number = propAccess.getStart();
+                        const widget: number = propAccess.getWidth();
+                        const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
+                        this.addFailureAt(start, widget, message);
+                    }
+                } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
+                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                    const jsxExpression = attribute.initializer;
+                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                        return;
+                    }
+
+                    const expression = jsxExpression.expression;
+                    if (expression === undefined) {
+                        return;
+                    }
+
+                    const start: number = expression.getStart();
+                    const widget: number = expression.getWidth();
+                    const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
                     this.addFailureAt(start, widget, message);
                 }
-            } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
-                const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                const jsxExpression = attribute.initializer;
-                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                    return;
-                }
-
-                const expression = jsxExpression.expression;
-                if (expression === undefined) {
-                    return;
-                }
-
-                const start: number = expression.getStart();
-                const widget: number = expression.getWidth();
-                const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
-                this.addFailureAt(start, widget, message);
             }
-        });
+        );
     }
 
     private isAttributeAnonymousFunction(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
@@ -220,8 +220,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         }
 
         // Arrow functions and Function expressions create new anonymous function instances
-        if (expression.kind === ts.SyntaxKind.ArrowFunction
-            || expression.kind === ts.SyntaxKind.FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true;
         }
 
@@ -263,34 +262,37 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
     private getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
         const result: Set<string> = new Set<string>();
         if (node.body !== undefined && node.body.statements !== undefined) {
-            node.body.statements.forEach((statement: ts.Statement): void => {
-                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
-                    const expressionStatement = <ts.ExpressionStatement>statement;
-                    const expression = expressionStatement.expression;
-                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
-                        const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>expression;
-                        const operator: ts.Node = binaryExpression.operatorToken;
-                        if (operator.kind === ts.SyntaxKind.EqualsToken) {
-                            if (binaryExpression.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                                const leftPropText: string = binaryExpression.left.getText();
+            node.body.statements.forEach(
+                (statement: ts.Statement): void => {
+                    if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
+                        const expressionStatement = <ts.ExpressionStatement>statement;
+                        const expression = expressionStatement.expression;
+                        if (expression.kind === ts.SyntaxKind.BinaryExpression) {
+                            const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>expression;
+                            const operator: ts.Node = binaryExpression.operatorToken;
+                            if (operator.kind === ts.SyntaxKind.EqualsToken) {
+                                if (binaryExpression.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
+                                    const leftPropText: string = binaryExpression.left.getText();
 
-                                if (binaryExpression.right.kind === ts.SyntaxKind.CallExpression) {
-                                    const callExpression = <ts.CallExpression>binaryExpression.right;
+                                    if (binaryExpression.right.kind === ts.SyntaxKind.CallExpression) {
+                                        const callExpression = <ts.CallExpression>binaryExpression.right;
 
-                                    if (AstUtils.getFunctionName(callExpression) === 'bind'
-                                        && callExpression.arguments !== undefined
-                                        && callExpression.arguments.length === 1
-                                        && callExpression.arguments[0].getText() === 'this') {
-
-                                        const rightPropText = AstUtils.getFunctionTarget(callExpression);
-                                        if (leftPropText === rightPropText) {
-                                            if (result.has(rightPropText)) {
-                                                const start = binaryExpression.getStart();
-                                                const width = binaryExpression.getWidth();
-                                                const msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
-                                                this.addFailureAt(start, width, msg);
+                                        if (
+                                            AstUtils.getFunctionName(callExpression) === 'bind' &&
+                                            callExpression.arguments !== undefined &&
+                                            callExpression.arguments.length === 1 &&
+                                            callExpression.arguments[0].getText() === 'this'
+                                        ) {
+                                            const rightPropText = AstUtils.getFunctionTarget(callExpression);
+                                            if (leftPropText === rightPropText) {
+                                                if (result.has(rightPropText)) {
+                                                    const start = binaryExpression.getStart();
+                                                    const width = binaryExpression.getWidth();
+                                                    const msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
+                                                    this.addFailureAt(start, width, msg);
+                                                }
+                                                result.add(rightPropText);
                                             }
-                                            result.add(rightPropText);
                                         }
                                     }
                                 }
@@ -298,7 +300,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                         }
                     }
                 }
-            });
+            );
         }
         return result;
     }

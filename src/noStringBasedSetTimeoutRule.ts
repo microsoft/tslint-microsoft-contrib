@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {NoStringParameterToFunctionCallWalker} from './utils/NoStringParameterToFunctionCallWalker';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { NoStringParameterToFunctionCallWalker } from './utils/NoStringParameterToFunctionCallWalker';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.OptionallyTypedRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-string-based-set-timeout',
         type: 'maintainability',
@@ -21,14 +20,12 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         commonWeaknessEnumeration: '95, 676, 242, 116'
     };
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithProgram(sourceFile, undefined);
     }
 
-    public applyWithProgram(sourceFile : ts.SourceFile, program : ts.Program | undefined): Lint.RuleFailure[] {
-        const walker : Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(
-            sourceFile , 'setTimeout', this.getOptions(), program
-        );
+    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program | undefined): Lint.RuleFailure[] {
+        const walker: Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), program);
         return this.applyWithWalker(walker);
     }
 }

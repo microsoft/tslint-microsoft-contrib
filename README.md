@@ -18,17 +18,16 @@ Alternately, you can download the files directly from GitHub: see [npm-5.2.1](ht
 ...or use the [`releases`](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) branch, which is available online.
 You can use that build by setting your npm version of `tslint-microsoft-contrib` to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`.
 
-
 ## TSLint and corresponding tslint-microsoft-contrib version
 
-| TSLint version | tslint-microsoft-contrib version |
-| --- | --- |
-| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x, >=2.4, 3.x)|
-| **>= 4.x**   | 4.x (supporting TypeScript 2.1.x) |
-| **>= 3.2.x** | 2.x |
-| **3.1.x**    | unsupported |
-| **3.0.x**    | unsupported |
-| **2.x**      | 1.x |
+| TSLint version | tslint-microsoft-contrib version              |
+| -------------- | --------------------------------------------- |
+| **>= 5.x**     | 5.x (supporting TypeScript 2.3.x, >=2.4, 3.x) |
+| **>= 4.x**     | 4.x (supporting TypeScript 2.1.x)             |
+| **>= 3.2.x**   | 2.x                                           |
+| **3.1.x**      | unsupported                                   |
+| **3.0.x**      | unsupported                                   |
+| **2.x**        | 1.x                                           |
 
 ## Configuration
 
@@ -38,16 +37,16 @@ Add the new `rulesDirectory` to your `tslint` task:
 
 ```js
 grunt.initConfig({
-  tslint: {
-    options: {
-      rulesDirectory: 'node_modules/tslint-microsoft-contrib',
-      configuration: grunt.file.readJSON("tslint.json")
-    },
-    files: {
-      src: ['src/file1.ts', 'src/file2.ts']
+    tslint: {
+        options: {
+            rulesDirectory: 'node_modules/tslint-microsoft-contrib',
+            configuration: grunt.file.readJSON('tslint.json')
+        },
+        files: {
+            src: ['src/file1.ts', 'src/file2.ts']
+        }
     }
-  }
-})
+});
 ```
 
 The `tslint.json` file does not change format when using this package. Just add our rule definitions to your existing `tslint.json` file.
@@ -56,10 +55,10 @@ The `tslint.json` file does not change format when using this package. Just add 
 
 There certainly are a lot of options! Here are some links to get you started.
 
-* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
-* A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
-* A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
-* And our configuration file with all options is available here: [tslint.json](tslint.json)
+-   Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
+-   A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
+-   A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
+-   And our configuration file with all options is available here: [tslint.json](tslint.json)
 
 ### Supported Rules
 
@@ -1207,10 +1206,10 @@ There certainly are a lot of options! Here are some links to get you started.
 
 These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as `\r\n` on Windows).
 
-Formatter Name          | Description | Since
-:----------             | :------------ | -------------
-`fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
-`fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
+| Formatter Name           | Description                                                                                                                                                                                                                                                                                                                                                                                 | Since |
+| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
+| `fix-no-require-imports` | This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8 |
+| `fix-no-var-keyword`     | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule.                                                                                                                                                                                                                                                            | 2.0.8 |
 
 ## Development
 

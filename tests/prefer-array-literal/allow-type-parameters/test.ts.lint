@@ -1,0 +1,24 @@
+let a: string[];
+
+let b: Array<string> = [];
+       ~~~~~~~~~~~~~       [Replace generic-typed Array with array literal: Array<string>]
+
+interface C {
+    myArray: Array<string>;
+             ~~~~~~~~~~~~~  [Replace generic-typed Array with array literal: Array<string>]
+}
+
+var d: Array<string>;
+       ~~~~~~~~~~~~~  [Replace generic-typed Array with array literal: Array<string>]
+
+function e(param: Array<number>) { }
+                  ~~~~~~~~~~~~~      [Replace generic-typed Array with array literal: Array<number>]
+
+var f = new Array();
+        ~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array()]
+
+var g = new Array(4, 5);
+        ~~~~~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array(4, 5)]
+
+var h = new Array(4);
+        ~~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array(4)]

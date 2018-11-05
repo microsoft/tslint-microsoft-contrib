@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "promise-must-complete": true
+    }
+}

@@ -1,0 +1,45 @@
+class Class1 {
+    private myField1;
+    private myField2 = 'value';
+    private myField3 = null;
+
+    constructor() {
+        this.myField1 = 'something';
+        this.myField2 = undefined;
+        this.myField3 = undefined;
+    }
+}
+
+class Class2 {
+    private myField = undefined;
+                      ~~~~~~~~~  [Unnecessary field initialization. Field explicitly initialized to undefined: myField]
+}
+
+class Class3 {
+    private myField;
+    constructor() {
+        this.myField = undefined;
+        ~~~~~~~~~~~~              [Unnecessary field initialization. Field explicitly initialized to undefined: this.myField]
+    }
+}
+
+class Class4 {
+    private myField1 = null;
+    private myField2 = 'value';
+    private myField3 = 12345;
+    private myField4 = true;
+    private myField5 = false;
+
+    constructor() {
+        this.myField1 = null;
+        ~~~~~~~~~~~~~~~~~~~~  [Unnecessary field initialization. Field value already initialized in declaration: this.myField1 = null]
+        this.myField2 = 'value';
+        ~~~~~~~~~~~~~~~~~~~~~~~  [Unnecessary field initialization. Field value already initialized in declaration: this.myField2 = 'value']
+        this.myField3 = 12345;
+        ~~~~~~~~~~~~~~~~~~~~~  [Unnecessary field initialization. Field value already initialized in declaration: this.myField3 = 12345]
+        this.myField4 = true;
+        ~~~~~~~~~~~~~~~~~~~~  [Unnecessary field initialization. Field value already initialized in declaration: this.myField4 = true]
+        this.myField5 = false;
+        ~~~~~~~~~~~~~~~~~~~~~  [Unnecessary field initialization. Field value already initialized in declaration: this.myField5 = false]
+    }
+}

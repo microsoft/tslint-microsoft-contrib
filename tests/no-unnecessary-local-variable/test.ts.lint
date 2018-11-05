@@ -1,0 +1,58 @@
+class Class1 {
+    public myMethod() {
+        let x = 1;
+        ~~~~~~~~~~ [Unnecessary local variable: x]
+        return x;
+    }
+}
+
+class Class2 {
+    public myMethod() {
+        if (foo) {
+            let x = 1;
+            ~~~~~~~~~~ [Unnecessary local variable: x]
+            return x;
+        }
+        return x;
+    }
+}
+
+const x = 1;
+const y = 1
+
+class Class3 {
+    public myMethod1() {
+        let x = 1;
+        return y;
+    }
+
+    public myMethod2() {
+        let y = 1;
+        return x;
+    }
+}
+
+(() => {
+    const balls = {
+        foo: 'foo',
+        bar: () => balls.foo
+    };
+
+    return balls;
+})();
+
+(() => {
+    const whatever = 1;
+
+    switch (whatever) {
+        case 1:
+            let a = 1;
+            ~~~~~~~~~~ [Unnecessary local variable: a]
+            return a;
+
+        default:
+            let b = 1;
+            ~~~~~~~~~~ [Unnecessary local variable: b]
+            return b;
+    }
+})();

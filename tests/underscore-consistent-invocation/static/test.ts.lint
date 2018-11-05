@@ -1,0 +1,184 @@
+declare const _: any;
+
+_.each(list, () => { return undefined; });
+_.forEach(list, () => { return undefined; });
+_.map(list, () => { return undefined; });
+_.collect(list, () => { return undefined; });
+_.reduce(list, () => { return undefined; });
+_.inject(list, () => { return undefined; });
+_.foldl(list, () => { return undefined; });
+_.reduceRight(list, () => { return undefined; });
+_.foldr(list, () => { return undefined; });
+_.find(list, () => { return undefined; });
+_.detect(list, () => { return undefined; });
+_.filter(list, () => { return undefined; });
+_.select(list, () => { return undefined; });
+_.where(list, () => { return undefined; });
+_.findWhere(list, () => { return undefined; });
+_.reject(list, () => { return undefined; });
+_.every(list, () => { return undefined; });
+_.all(list, () => { return undefined; });
+_.some(list, () => { return undefined; });
+_.any(list, () => { return undefined; });
+_.contains(list, () => { return undefined; });
+_.include(list, () => { return undefined; });
+_.invoke(list, () => { return undefined; });
+_.pluck(list, () => { return undefined; });
+_.max(list, () => { return undefined; });
+_.min(list, () => { return undefined; });
+_.sortBy(list, () => { return undefined; });
+_.groupBy(list, () => { return undefined; });
+_.indexBy(list, () => { return undefined; });
+_.countBy(list, () => { return undefined; });
+_.shuffle(list, () => { return undefined; });
+_.sample(list, () => { return undefined; });
+_.toArray(list, () => { return undefined; });
+_.size(list, () => { return undefined; });
+_.partition(list, () => { return undefined; });
+_.first(list, () => { return undefined; });
+_.head(list, () => { return undefined; });
+_.take(list, () => { return undefined; });
+_.initial(list, () => { return undefined; });
+_.last(list, () => { return undefined; });
+_.rest(list, () => { return undefined; });
+_.tail(list, () => { return undefined; });
+_.drop(list, () => { return undefined; });
+_.compact(list, () => { return undefined; });
+_.flatten(list, () => { return undefined; });
+_.without(list, () => { return undefined; });
+_.union(list, () => { return undefined; });
+_.intersection(list, () => { return undefined; });
+_.difference(list, () => { return undefined; });
+_.uniq(list, () => { return undefined; });
+_.unique(list, () => { return undefined; });
+_.object(list, () => { return undefined; });
+_.zip(list, () => { return undefined; });
+_.unzip(list, () => { return undefined; });
+_.indexOf(list, () => { return undefined; });
+_.findIndex(list, () => { return undefined; });
+_.lastIndexOf(list, () => { return undefined; });
+_.findLastIndex(list, () => { return undefined; });
+_.sortedIndex(list, () => { return undefined; });
+_.range(list, () => { return undefined; });
+
+_(list).each(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).each]
+_(list).forEach(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).forEach]
+_(list).map(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).map]
+_(list).collect(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).collect]
+_(list).reduce(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reduce]
+_(list).inject(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).inject]
+_(list).foldl(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).foldl]
+_(list).reduceRight(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reduceRight]
+_(list).foldr(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).foldr]
+_(list).find(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).find]
+_(list).detect(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).detect]
+_(list).filter(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).filter]
+_(list).select(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).select]
+_(list).where(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).where]
+_(list).findWhere(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findWhere]
+_(list).reject(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).reject]
+_(list).every(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).every]
+_(list).all(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).all]
+_(list).some(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).some]
+_(list).any(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).any]
+_(list).contains(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).contains]
+_(list).include(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).include]
+_(list).invoke(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).invoke]
+_(list).pluck(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).pluck]
+_(list).max(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).max]
+_(list).min(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).min]
+_(list).sortBy(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sortBy]
+_(list).groupBy(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).groupBy]
+_(list).indexBy(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).indexBy]
+_(list).countBy(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).countBy]
+_(list).shuffle(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).shuffle]
+_(list).sample(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sample]
+_(list).toArray(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).toArray]
+_(list).size(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).size]
+_(list).partition(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).partition]
+_(list).first(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).first]
+_(list).head(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).head]
+_(list).take(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).take]
+_(list).initial(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).initial]
+_(list).last(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).last]
+_(list).rest(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).rest]
+_(list).tail(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).tail]
+_(list).drop(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).drop]
+_(list).compact(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).compact]
+_(list).flatten(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).flatten]
+_(list).without(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).without]
+_(list).union(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).union]
+_(list).intersection(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).intersection]
+_(list).difference(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).difference]
+_(list).uniq(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).uniq]
+_(list).unique(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).unique]
+_(list).object(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).object]
+_(list).zip(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).zip]
+_(list).unzip(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).unzip]
+_(list).indexOf(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).indexOf]
+_(list).findIndex(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findIndex]
+_(list).lastIndexOf(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).lastIndexOf]
+_(list).findLastIndex(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).findLastIndex]
+_(list).sortedIndex(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).sortedIndex]
+_(list).range(() => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Underscore instance wrapping of variable found. Prefer underscore static functions instead: _(list).range]
+tests/use-named-parameter/test.js.lint: Passed

@@ -1,0 +1,145 @@
+class Passing {
+    // Browser Specific: Chrome 49
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: Chrome]
+    sayHey() {
+        console.log('hey');
+    }
+
+    // browser specific: IE 10
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: IE]
+    sayHello() {
+        console.log('hello');
+    }
+
+    /**
+    ~~~~
+        * Says hi
+~~~~~~~~~~~~~~~~~~
+        *
+~~~~~~~~~~
+        * @browserspecific Firefox 48
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: Firefox]
+    sayHi() {
+        console.log('hi');
+    }
+
+    // Browser specific: firefox
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: firefox]
+    sayBye() {
+        console.log('bye');
+    }
+
+    /**
+    ~~~~
+    ~~~~
+        * goes boom
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+        *
+~~~~~~~~~~
+~~~~~~~~~~
+        * @browserspecific mobile safari 9
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        * @browserspecific            IE 10
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: IE]
+~~~~~~~~~~  [Unsupported browser: mobile safari]
+    goBoom() {
+        throw new Error('boom');
+    }
+
+    /**
+    ~~~~
+        * goes vroom
+~~~~~~~~~~~~~~~~~~~~~
+        *
+~~~~~~~~~~
+        * @browserspecific mobile ie 10
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: mobile ie]
+    goVroom() {
+        console.log('vroom');
+    }
+}
+
+class Failing {
+    // Browser Specific: Netscape 2
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: Netscape]
+    sayHey() {
+        console.log('hey');
+    }
+
+    // browser specific: Chrome
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: Chrome]
+    sayHello() {
+        console.log('hello');
+    }
+
+    /**
+    ~~~~
+        * @browserspecific IE 8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: IE]
+    sayHi() {
+        console.log('hi');
+    }
+
+    // Browser specific: aquaman
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Unsupported browser: aquaman]
+    sayBye() {
+        console.log('bye');
+    }
+
+    /**
+    ~~~~
+    ~~~~
+    ~~~~
+        * goes boom
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+        *
+~~~~~~~~~~
+~~~~~~~~~~
+~~~~~~~~~~
+        * @browserspecific mobile safari 10
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        * @browserspecific            IE 8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        * @browserspecific            IE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: IE]
+~~~~~~~~~~  [Unsupported browser: IE]
+~~~~~~~~~~  [Unsupported browser: mobile safari]
+    goBoom() {
+        throw new Error('boom');
+    }
+
+    /**
+    ~~~~
+        * goes vroom
+~~~~~~~~~~~~~~~~~~~~~
+        *
+~~~~~~~~~~
+        * @browserspecific mobile ie 9
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        */
+~~~~~~~~~~  [Unsupported browser: mobile ie]
+    goVroom() {
+        console.log('vroom');
+    }
+}

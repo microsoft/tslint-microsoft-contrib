@@ -1,0 +1,38 @@
+declare const foo: any;
+declare const bar: any;
+
+typeof bar === "undefined"
+typeof bar == "undefined"
+typeof bar !== "undefined"
+typeof bar != "undefined"
+"undefined" === typeof bar
+typeof foo === "object"
+typeof foo === "boolean"
+typeof foo === "number"
+typeof foo === "string"
+"function" === typeof foo
+typeof foo == baz
+typeof bar === typeof qux
+typeof Symbol() === "symbol"
+typeof Symbol("foo") === "symbol"
+typeof Symbol.iterator === "symbol"
+
+typeof foo === "strnig"
+               ~~~~~~~~  [Invalid comparison in typeof. Did you mean string?]
+"strnig" === typeof foo
+~~~~~~~~                 [Invalid comparison in typeof. Did you mean string?]
+
+typeof foo == "funcion"
+              ~~~~~~~~~  [Invalid comparison in typeof. Did you mean function?]
+"fction" == typeof foo
+~~~~~~~~                [Invalid comparison in typeof. Did you mean function?]
+
+typeof foo !== "undfind"
+               ~~~~~~~~~  [Invalid comparison in typeof. Did you mean undefined?]
+"ndefined" !== typeof foo
+~~~~~~~~~~                 [Invalid comparison in typeof. Did you mean undefined?]
+
+typeof foo != "bollean"
+              ~~~~~~~~~  [Invalid comparison in typeof. Did you mean boolean?]
+"bollen" != typeof foo
+~~~~~~~~                [Invalid comparison in typeof. Did you mean boolean?]

@@ -1,0 +1,96 @@
+declare const _: any;
+const list = [];
+const someArg = true;
+const someReference = function () { };
+const memo = function (a, b) { return { a, b } };
+const value = 1;
+
+_.bind(function () { }, this, someArg);
+(function () { }).bind(this, someArg);
+(() => { }).bind(this, someArg);
+(someReference).bind(this, someArg);
+
+(function () { }).bind(context);
+(() => { }).bind(context);
+(someReference).bind(context);
+
+_.forEach(list, function () { });
+_.forEach(list, () => { });
+_.forEach(list, someReference);
+
+
+_(list).collect(function () { });
+_(list).collect(() => { });
+_(list).collect(someReference);
+
+_.bind(function () { }, context);
+_.map(list, function () { }, context);
+_.map(list, () => { }, context);
+_.map(list, someReference, context);
+
+_(list).map(function() {}, context);
+_(list).map(() => {}, context);
+_(list).map(someReference, context);
+
+(someReference).bind(this);
+_(list).reject(someReference, this);
+_.reject(list, someReference, this);
+
+_(list).sortedIndex(value, someReference, this);
+_.sortedIndex(list, value, someReference, this);
+
+_(list).sortedIndex(() => {}, someReference, this);
+_.sortedIndex(function () {}, value, someReference, this);
+
+_.not_an_underscore_function(list, function() {}, this);
+_.not_an_underscore_function(list, () => {}, this);
+
+_(list).not_an_underscore_function(function() {}, context);
+_(list).not_an_underscore_function(() => {}, context);
+(function() {}).bind(this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+(() => {}).bind(this);
+~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_.map(list, function() {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_.map(list, () => {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_(list).forEach(function() {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_(list).every(() => {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_.reduce(list, function () {}, memo, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_.reduce(list, () => {}, memo, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_(list).reduce(function () {}, memo, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_(list).reduce(() => {}, memo, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_.sortedIndex(list, value, function () {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_.sortedIndex(list, value, () => {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_(list).sortedIndex(value, function () {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_(list).sortedIndex(value, () => {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]
+
+_.bind(function () {}, this);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Binding function literal with 'this' context. Use lambdas instead]
+
+_.bind(() => {}, this);
+~~~~~~~~~~~~~~~~~~~~~~  [Binding lambda with 'this' context. Lambdas already have 'this' bound]

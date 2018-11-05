@@ -54,7 +54,7 @@ To start, you can enable our recommended defaults ([recommended_ruleset.js](reco
 
 You can then disable rules you don't find useful.
 
-Please note, some of the default rules require the `--project` TSLint options.
+Please note, some of the default rules require the `--project` TSLint option.
 
 Also, please note that adding a rule to the recommended ruleset is considered backwards compatible.
 If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.

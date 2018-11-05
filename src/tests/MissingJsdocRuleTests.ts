@@ -30,7 +30,7 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: 'File missing JSDoc comment at the top-level: ' + Utils.absolutePath('file.ts'),
+                failure: 'File missing JSDoc comment at the top-level.',
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'missing-jsdoc',
                 startPosition: { character: 1, line: 2 }
@@ -47,7 +47,7 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: 'File missing JSDoc comment at the top-level: ' + Utils.absolutePath('file.ts'),
+                failure: 'File missing JSDoc comment at the top-level.',
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'missing-jsdoc',
                 startPosition: { character: 1, line: 5 }
@@ -64,7 +64,7 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: 'File missing JSDoc comment at the top-level: ' + Utils.absolutePath('file.ts'),
+                failure: 'File missing JSDoc comment at the top-level.',
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'missing-jsdoc',
                 startPosition: { character: 1, line: 5 }
@@ -81,7 +81,7 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: 'File missing JSDoc comment at the top-level: ' + Utils.absolutePath('file.ts'),
+                failure: 'File missing JSDoc comment at the top-level.',
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'missing-jsdoc',
                 startPosition: { character: 1, line: 5 }
@@ -98,7 +98,7 @@ function whatever() { }`;
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                failure: 'File missing JSDoc comment at the top-level: ' + Utils.absolutePath('file.ts'),
+                failure: 'File missing JSDoc comment at the top-level.',
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'missing-jsdoc',
                 startPosition: { character: 5, line: 5 }

@@ -19,7 +19,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         recommendation: 'false,'
     };
 
-    public static FAILURE_STRING: string = 'File missing JSDoc comment at the top-level: ';
+    public static FAILURE_STRING: string = 'File missing JSDoc comment at the top-level.';
 
     private static isWarningShown: boolean = false;
 
@@ -35,8 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class MissingJSDocWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            const failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
         // do not continue walking
     }

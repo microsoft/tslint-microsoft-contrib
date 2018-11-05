@@ -48,11 +48,7 @@ class A11yPropsWalker extends Lint.RuleWalker {
         }
 
         if (!ARIA_SCHEMA[name.toLowerCase()]) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                getFailureString(name)
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name));
         }
     }
 }

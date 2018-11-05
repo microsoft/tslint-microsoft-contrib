@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-disable-auto-sanitization',
         type: 'maintainability',
@@ -23,14 +22,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Forbidden call to ';
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDisableAutoSanitizationWalker(sourceFile, this.getOptions()));
     }
 }
 
 class NoDisableAutoSanitizationWalker extends Lint.RuleWalker {
     protected visitCallExpression(node: ts.CallExpression): void {
-        const functionName : string = AstUtils.getFunctionName(node);
+        const functionName: string = AstUtils.getFunctionName(node);
         if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName);
         }

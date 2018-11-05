@@ -8,8 +8,7 @@ const OPTION_ALLOW_SIBLINGS = 'allow-siblings';
 const FAILURE_BODY_RELATIVE: string = 'module is being loaded from a relative path. Please use an absolute path';
 const FAILURE_BODY_SIBLINGS: string =
     'module path starts with reference to parent directory. Please use an absolute path or sibling files/folders';
-const FAILURE_BODY_INSIDE: string =
-    'module path should not contain reference to current or parent directory inside';
+const FAILURE_BODY_INSIDE: string = 'module path should not contain reference to current or parent directory inside';
 
 // Looks for path separator `/` or `\\`(Windows style)
 // followed than one or two dot characters
@@ -17,7 +16,6 @@ const FAILURE_BODY_INSIDE: string =
 const illegalInsideRegex = /(\/|\\)\.\.?\1/;
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-relative-imports',
         type: 'maintainability',

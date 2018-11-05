@@ -1,14 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {getJsxAttributesFromJsxElement} from './utils/JsxAttribute';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
 
 /**
  * Implementation of the react-a11y-no-onchange rule.
  */
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-no-onchange',
         type: 'functionality',
@@ -25,9 +24,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX ?
-            this.applyWithWalker(new ReactA11yNoOnchangeRuleWalker(sourceFile, this.getOptions())) :
-            [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX
+            ? this.applyWithWalker(new ReactA11yNoOnchangeRuleWalker(sourceFile, this.getOptions()))
+            : [];
     }
 }
 

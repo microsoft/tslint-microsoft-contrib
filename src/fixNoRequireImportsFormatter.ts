@@ -1,7 +1,7 @@
 'use strict';
 
-import {RuleFailure} from 'tslint';
-import {BaseFormatter} from './utils/BaseFormatter';
+import { RuleFailure } from 'tslint';
+import { BaseFormatter } from './utils/BaseFormatter';
 
 let warnedForDeprecation = false;
 
@@ -10,7 +10,7 @@ let warnedForDeprecation = false;
  */
 /* tslint:disable:export-name */
 export class Formatter extends BaseFormatter {
-/* tslint:enable:export-name */
+    /* tslint:enable:export-name */
 
     constructor() {
         if (!warnedForDeprecation) {
@@ -18,7 +18,7 @@ export class Formatter extends BaseFormatter {
             warnedForDeprecation = true;
         }
 
-        super('no-require-imports', function (this: Formatter, failure: RuleFailure): void {
+        super('no-require-imports', function(this: Formatter, failure: RuleFailure): void {
             const fileName: string = failure.getFileName();
             const fileContents: string = this.readFile(fileName);
             const start: number = failure.getStartPosition().getPosition();
@@ -34,9 +34,7 @@ export class Formatter extends BaseFormatter {
             const middle: string = fileContents.substring(importStartIndex, importEndIndex).trim();
             const rightSide: string = fileContents.substring(importEndIndex);
 
-            let newImport: string = middle.replace(
-                /import\s+(.*)\s+=\s*require\(((.|\s)*)\);/m,
-                'import {$1} from $2;');
+            let newImport: string = middle.replace(/import\s+(.*)\s+=\s*require\(((.|\s)*)\);/m, 'import {$1} from $2;');
             newImport = newImport.replace(/from \n/, 'from\n'); // clean up some spacing
             const newContent: string = leftSide + newImport + rightSide;
 

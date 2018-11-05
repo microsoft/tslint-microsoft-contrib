@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'missing-jsdoc',
         type: 'maintainability',
@@ -26,8 +25,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
-            console.warn('Warning: missing-jsdoc rule is deprecated. ' +
-                'Replace your usage with the TSLint missing-jsdoc rule.');
+            console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint missing-jsdoc rule.');
             Rule.isWarningShown = true;
         }
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));

@@ -1,21 +1,17 @@
-
 // module names
-module WrapperRequire {
-    module require {
-
+namespace WrapperRequire {
+    namespace require {
         // class names
-        class require {
-
-        }
+        class require {}
     }
 }
 
-module SampleRequire1 {
+namespace SampleRequire1 {
     // module variables
     var require;
 }
 
-module SampleRequire2 {
+namespace SampleRequire2 {
     // module function
     function require() {}
 }
@@ -29,15 +25,15 @@ class SampleRequire3 {
 class SampleRequire4 {
     private var;
     set require(value) {}
-    get require() { return this.var;}
+    get require() {
+        return this.var;
+    }
 }
 
-
 class SampleRequire5 {
-    require() {}       // class methods
-    method(require) {}  // method parameters
-    private func = (require) => {}; // arrow function parameters
-
+    require() {} // class methods
+    method(require) {} // method parameters
+    private func = require => {}; // arrow function parameters
 }
 
 // interface declarations

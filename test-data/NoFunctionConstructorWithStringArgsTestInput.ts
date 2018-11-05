@@ -1,5 +1,9 @@
-var f = new Function("doSomething()");
+var f = new Function('doSomething()');
 
-() => { alert(1);  }
+() => {
+    alert(1);
+};
 
-var x = function () { alert(1) }
+var x = function() {
+    alert(1);
+};

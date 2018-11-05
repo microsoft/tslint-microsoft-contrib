@@ -1,7 +1,7 @@
-import {Utils} from '../utils/Utils';
+import { Utils } from '../utils/Utils';
 import * as chai from 'chai';
 
-describe('Utils', () : void => {
+describe('Utils', (): void => {
     describe('contains', (): void => {
         it('should handle empty states', (): void => {
             // tslint:disable-next-line:no-null-keyword
@@ -16,8 +16,8 @@ describe('Utils', () : void => {
         });
 
         it('should handle strings', (): void => {
-            chai.expect(Utils.contains(['a', 'b', 'c'], 'a')).to.equal(true, 'array containing \'a\' should contain \'a\'');
-            chai.expect(Utils.contains(['a', 'b', 'c'], 'z')).to.equal(false, 'array containing \'a\' should not contain \'z\'');
+            chai.expect(Utils.contains(['a', 'b', 'c'], 'a')).to.equal(true, "array containing 'a' should contain 'a'");
+            chai.expect(Utils.contains(['a', 'b', 'c'], 'z')).to.equal(false, "array containing 'a' should not contain 'z'");
         });
 
         it('should handle objects', (): void => {

@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'unnecessary semi-colon';
@@ -27,7 +27,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoUnnecessarySemicolonsWalker extends Lint.RuleWalker {
-
     protected visitNode(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.EmptyStatement) {
             this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);

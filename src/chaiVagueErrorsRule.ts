@@ -6,13 +6,12 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const BASE_ERROR: string = 'Found chai call with vague failure message. ';
 const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE: string = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
-    'call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE: string = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
-    'call into the assertion value. ';
+const FAILURE_STRING_COMPARE_TRUE: string =
+    BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
+const FAILURE_STRING_COMPARE_FALSE: string =
+    BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'chai-vague-errors',
         type: 'maintainability',
@@ -64,8 +63,8 @@ class ChaiVagueErrorsRuleWalker extends Lint.RuleWalker {
                 if (expectedValue !== undefined) {
                     const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
                     const operator: string = binaryExpression.operatorToken.getText();
-                    const expectingBooleanKeyword: boolean = expectedValue.kind === ts.SyntaxKind.TrueKeyword
-                        || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+                    const expectingBooleanKeyword: boolean =
+                        expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
 
                     if (operator === '===' && expectingBooleanKeyword) {
                         this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);

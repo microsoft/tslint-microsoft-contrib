@@ -1,13 +1,12 @@
 /* tslint:disable:quotemark */
 /* tslint:disable:no-multiline-string */
 
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
 describe('noSuspiciousCommentRule', (): void => {
-
     const ruleName: string = 'no-suspicious-comment';
-    const option: string[]  = ['https://example.com/*'];
+    const option: string[] = ['https://example.com/*'];
 
     it('should pass on normal comments', (): void => {
         const script: string = `
@@ -47,12 +46,14 @@ describe('noSuspiciousCommentRule', (): void => {
             */
         `;
 
-        TestHelper.assertViolations(ruleName, script, [{
-            "failure": "Suspicious comment found: TODO",
-            "name": Utils.absolutePath("file.ts"),
-            "ruleName": "no-suspicious-comment",
-            "startPosition": {"character": 13, "line": 2}
-        }]);
+        TestHelper.assertViolations(ruleName, script, [
+            {
+                failure: 'Suspicious comment found: TODO',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-suspicious-comment',
+                startPosition: { character: 13, line: 2 }
+            }
+        ]);
     });
 
     it('should pass on multiline TODO comments with regex option', (): void => {
@@ -83,19 +84,23 @@ describe('noSuspiciousCommentRule', (): void => {
                 // ${suspiciousWord} you should fix this
             `;
 
-            TestHelper.assertViolations(ruleName, script, [{
-                "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-suspicious-comment",
-                "startPosition": {"character": 17, "line": 2}
-            }]);
-            TestHelper.assertViolationsWithOptions(ruleName, option, script, [{
-                "failure": `Suspicious comment found: ${suspiciousWord}.
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    failure: `Suspicious comment found: ${suspiciousWord}`,
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-suspicious-comment',
+                    startPosition: { character: 17, line: 2 }
+                }
+            ]);
+            TestHelper.assertViolationsWithOptions(ruleName, option, script, [
+                {
+                    failure: `Suspicious comment found: ${suspiciousWord}.
 To disable this warning, the comment should include one of the following regex: /https:\\/\\/example.com\\/*/`,
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-suspicious-comment",
-                "startPosition": {"character": 17, "line": 2}
-            }]);
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-suspicious-comment',
+                    startPosition: { character: 17, line: 2 }
+                }
+            ]);
         });
 
         it(`should pass on upper case ${suspiciousWord} comments without colons and with regex option`, (): void => {
@@ -111,12 +116,14 @@ To disable this warning, the comment should include one of the following regex: 
                 // ${suspiciousWord}: you should fix this
             `;
 
-            TestHelper.assertViolations(ruleName, script, [{
-                "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-suspicious-comment",
-                "startPosition": {"character": 17, "line": 2}
-            }]);
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    failure: `Suspicious comment found: ${suspiciousWord}`,
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-suspicious-comment',
+                    startPosition: { character: 17, line: 2 }
+                }
+            ]);
         });
 
         it(`should pass on upper case ${suspiciousWord} comments with colons and with regex option`, (): void => {
@@ -132,12 +139,14 @@ To disable this warning, the comment should include one of the following regex: 
                 // ${suspiciousWord}: you should fix this
             `;
 
-            TestHelper.assertViolations(ruleName, script, [{
-                "failure": `Suspicious comment found: ${suspiciousWord}`,
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-suspicious-comment",
-                "startPosition": {"character": 17, "line": 2}
-            }]);
+            TestHelper.assertViolations(ruleName, script, [
+                {
+                    failure: `Suspicious comment found: ${suspiciousWord}`,
+                    name: Utils.absolutePath('file.ts'),
+                    ruleName: 'no-suspicious-comment',
+                    startPosition: { character: 17, line: 2 }
+                }
+            ]);
         });
 
         it(`should pass on lower case ${suspiciousWord} comments with colons and with regex option`, (): void => {

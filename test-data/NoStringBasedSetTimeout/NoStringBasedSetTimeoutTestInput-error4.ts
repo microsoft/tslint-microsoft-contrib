@@ -1,9 +1,7 @@
-
-module SetTimeoutSample {
+namespace SetTimeoutSample {
     'use strict';
 
     class MyClass {
-
         private onAnimationEnd(): Function {
             return () => {};
         }
@@ -11,6 +9,5 @@ module SetTimeoutSample {
         private method(): void {
             setTimeout(this.onAnimationEnd(), 300);
         }
-
     }
 }

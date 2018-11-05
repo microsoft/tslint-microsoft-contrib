@@ -1,4 +1,3 @@
-
 class SampleElse3 {
     // class variables
     private else;
@@ -8,12 +7,13 @@ class SampleElse3 {
 class SampleElse4 {
     private var;
     set else(value) {}
-    get else() { return this.var;}
+    get else() {
+        return this.var;
+    }
 }
 
-
 class SampleElse5 {
-    else() {}       // class methods
+    else() {} // class methods
 }
 
 // interface declarations

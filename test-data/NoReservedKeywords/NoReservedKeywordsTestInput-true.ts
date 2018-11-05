@@ -1,4 +1,3 @@
-
 class SampleTrue3 {
     // class variables
     private true;
@@ -8,12 +7,13 @@ class SampleTrue3 {
 class SampleTrue4 {
     private var;
     set true(value) {}
-    get true() { return this.var;}
+    get true() {
+        return this.var;
+    }
 }
 
-
 class SampleTrue5 {
-    true() {}       // class methods
+    true() {} // class methods
 }
 
 // interface declarations

@@ -1,9 +1,8 @@
 import * as chai from 'chai';
-import {TestHelper} from './TestHelper';
-import {Formatter} from '../fixNoRequireImportsFormatter';
+import { TestHelper } from './TestHelper';
+import { Formatter } from '../fixNoRequireImportsFormatter';
 
 class FormatterForTesting extends Formatter {
-
     private readonly input: string;
     private output!: string;
 
@@ -26,12 +25,11 @@ class FormatterForTesting extends Formatter {
     }
 }
 
-describe('fixNoRequireImportsFormatter', () : void => {
+describe('fixNoRequireImportsFormatter', (): void => {
+    const ruleName: string = 'no-require-imports';
 
-    const ruleName : string = 'no-require-imports';
-
-    it('should fix imports in middle of list', () : void => {
-        const input : string = `
+    it('should fix imports in middle of list', (): void => {
+        const input: string = `
 import {BaseFormatter} from './utils/BaseFormatter';
 import TestHelper = require('./TestHelper');
 `;
@@ -42,22 +40,24 @@ import TestHelper = require('./TestHelper');
             `
 import {BaseFormatter} from './utils/BaseFormatter';
 import {TestHelper} from './TestHelper';
-`.trim());
+`.trim()
+        );
     });
 
-    it('should fix imports at start of list', () : void => {
-        const input : string = `import TestHelper = require('./TestHelper');
+    it('should fix imports at start of list', (): void => {
+        const input: string = `import TestHelper = require('./TestHelper');
 `;
 
         const formatter = new FormatterForTesting(input);
         formatter.format(TestHelper.runRule(ruleName, undefined, input).failures);
         chai.expect(formatter.getOutput().trim()).to.equal(
             `import {TestHelper} from './TestHelper';
-`.trim());
+`.trim()
+        );
     });
 
-    it('should fix imports at end of list', () : void => {
-        const input : string = `import TestHelper = require('./TestHelper');
+    it('should fix imports at end of list', (): void => {
+        const input: string = `import TestHelper = require('./TestHelper');
 
 console.log(TestHelper);`;
 
@@ -66,11 +66,12 @@ console.log(TestHelper);`;
         chai.expect(formatter.getOutput().trim()).to.equal(
             `import {TestHelper} from './TestHelper';
 
-console.log(TestHelper);`.trim());
+console.log(TestHelper);`.trim()
+        );
     });
 
-    it('should fix multiline import', () : void => {
-        const input : string = `
+    it('should fix multiline import', (): void => {
+        const input: string = `
 import TestHelper = require(
     './TestHelper'
 );
@@ -83,6 +84,7 @@ import TestHelper = require(
 import {TestHelper} from
     './TestHelper'
 ;
-`.trim());
+`.trim()
+        );
     });
 });

@@ -1,33 +1,77 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STATIC_FOUND: string = 'Static invocation of underscore function found. Prefer instance version instead: ';
 const FAILURE_INSTANCE_FOUND: string = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
 
 const FUNCTION_NAMES: string[] = [
-    'each', 'forEach', 'map', 'collect',
-    'reduce', 'inject', 'foldl', 'reduceRight',
-    'foldr', 'find', 'detect', 'filter',
-    'select', 'where', 'findWhere', 'reject',
-    'every', 'all', 'some', 'any',
-    'contains', 'include', 'invoke', 'pluck',
-    'max', 'min', 'sortBy', 'groupBy',
-    'indexBy', 'countBy', 'shuffle', 'sample',
-    'toArray', 'size', 'partition', 'first',
-    'head', 'take', 'initial', 'last',
-    'rest', 'tail', 'drop', 'compact',
-    'flatten', 'without', 'union', 'intersection',
-    'difference', 'uniq', 'unique', 'object',
-    'zip', 'unzip', 'indexOf', 'findIndex',
-    'lastIndexOf', 'findLastIndex', 'sortedIndex', 'range'
+    'each',
+    'forEach',
+    'map',
+    'collect',
+    'reduce',
+    'inject',
+    'foldl',
+    'reduceRight',
+    'foldr',
+    'find',
+    'detect',
+    'filter',
+    'select',
+    'where',
+    'findWhere',
+    'reject',
+    'every',
+    'all',
+    'some',
+    'any',
+    'contains',
+    'include',
+    'invoke',
+    'pluck',
+    'max',
+    'min',
+    'sortBy',
+    'groupBy',
+    'indexBy',
+    'countBy',
+    'shuffle',
+    'sample',
+    'toArray',
+    'size',
+    'partition',
+    'first',
+    'head',
+    'take',
+    'initial',
+    'last',
+    'rest',
+    'tail',
+    'drop',
+    'compact',
+    'flatten',
+    'without',
+    'union',
+    'intersection',
+    'difference',
+    'uniq',
+    'unique',
+    'object',
+    'zip',
+    'unzip',
+    'indexOf',
+    'findIndex',
+    'lastIndexOf',
+    'findLastIndex',
+    'sortedIndex',
+    'range'
 ];
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'underscore-consistent-invocation',
         type: 'maintainability',
@@ -49,7 +93,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class UnderscoreConsistentInvocationRuleWalker extends Lint.RuleWalker {
-
     private style: string = 'instance';
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

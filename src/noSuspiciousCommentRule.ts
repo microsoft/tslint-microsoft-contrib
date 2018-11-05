@@ -9,7 +9,6 @@ const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
 const FAILURE_STRING_OPTION: string = '\nTo disable this warning, the comment should include one of the following regex: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-suspicious-comment',
         type: 'maintainability',
@@ -38,7 +37,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
-
     private readonly exceptionRegex: RegExp[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -52,8 +50,7 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
     public visitSourceFile(node: ts.SourceFile) {
         forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
-            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia ||
-                tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+            if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia || tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
                 this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
@@ -70,7 +67,7 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
 
     private scanCommentForSuspiciousWord(suspiciousWord: string, commentText: string, startPosition: number) {
         const regexExactCaseNoColon = new RegExp('\\b' + suspiciousWord + '\\b');
-        const regexCaseInsensistiveWithColon = new RegExp('\\b' + suspiciousWord + '\\b\:', 'i');
+        const regexCaseInsensistiveWithColon = new RegExp('\\b' + suspiciousWord + '\\b:', 'i');
         if (regexExactCaseNoColon.test(commentText) || regexCaseInsensistiveWithColon.test(commentText)) {
             this.foundSuspiciousComment(startPosition, commentText, suspiciousWord);
         }

@@ -27,7 +27,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
     if (value === undefined) {
         if (additionalMetadata[metadata.ruleName] === undefined) {
             if (allowEmpty === false) {
-                console.log(red(`Could not read metadata for rule ${ metadata.ruleName } from additional_rule_metadata.json`));
+                console.log(red(`Could not read metadata for rule ${metadata.ruleName} from additional_rule_metadata.json`));
                 process.exit(1);
             } else {
                 return '';
@@ -36,7 +36,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
         value = additionalMetadata[metadata.ruleName][name];
         if (value === undefined) {
             if (allowEmpty === false) {
-                console.log(red(`Could not read attribute ${ name } of rule ${ metadata.ruleName }`));
+                console.log(red(`Could not read attribute ${name} of rule ${metadata.ruleName}`));
                 process.exit(1);
             }
             return '';
@@ -68,13 +68,14 @@ function kebabCase(input) {
 function getContribRuleNames() {
     const convertToRuleNames = filename => {
         filename = filename
-            .replace(/Rule\..*/, '')  // file extension plus Rule suffix
-            .replace(/.*\//, '');     // leading path
+            .replace(/Rule\..*/, '') // file extension plus Rule suffix
+            .replace(/.*\//, ''); // leading path
 
         return kebabCase(filename);
     };
 
-    return glob.sync('src/*Rule.ts')
+    return glob
+        .sync('src/*Rule.ts')
         .map(convertToRuleNames)
         .sort();
 }
@@ -82,8 +83,8 @@ function getContribRuleNames() {
 function getAllFormatterNames() {
     const convertToFormatterNames = filename => {
         filename = filename
-            .replace(/Formatter\..*/, '')  // file extension plus Formatter suffix
-            .replace(/.*\//, '');     // leading path
+            .replace(/Formatter\..*/, '') // file extension plus Formatter suffix
+            .replace(/.*\//, ''); // leading path
 
         return kebabCase(filename);
     };

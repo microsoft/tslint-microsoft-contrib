@@ -1,9 +1,9 @@
 import { Utils } from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
-describe('informativeDocsRule', () : void => {
-    it('should pass on well-described functions', () : void => {
-        const script : string = `
+describe('informativeDocsRule', (): void => {
+    it('should pass on well-described functions', (): void => {
+        const script: string = `
             /**
              * Does X Y Z work.
              */
@@ -23,16 +23,16 @@ describe('informativeDocsRule', () : void => {
         TestHelper.assertViolations('informative-docs', script, []);
     });
 
-    it('should pass on a non-commented function', () : void => {
-        const script : string = `
+    it('should pass on a non-commented function', (): void => {
+        const script: string = `
             function foo() {}
         `;
 
         TestHelper.assertViolations('informative-docs', script, []);
     });
 
-    it('should fail on uninformative docs comments of all kinds', () : void => {
-        const script : string = `
+    it('should fail on uninformative docs comments of all kinds', (): void => {
+        const script: string = `
             /**
              * Foo class
              */
@@ -85,55 +85,55 @@ describe('informativeDocsRule', () : void => {
 
         TestHelper.assertViolations('informative-docs', script, [
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 5 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 17, line: 9 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 17, line: 14 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 20 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 25 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 17, line: 31 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 39 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 44 }
             },
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 49 }
@@ -141,8 +141,8 @@ describe('informativeDocsRule', () : void => {
         ]);
     });
 
-    it('should fail on uninformative docs comments using alias options', () : void => {
-        const script : string = `
+    it('should fail on uninformative docs comments using alias options', (): void => {
+        const script: string = `
             /**
              * The FancyFoo.
              */
@@ -159,7 +159,7 @@ describe('informativeDocsRule', () : void => {
 
         TestHelper.assertViolationsWithOptions('informative-docs', options, script, [
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 5 }
@@ -167,8 +167,8 @@ describe('informativeDocsRule', () : void => {
         ]);
     });
 
-    it('should fail on uninformative docs comments using useless word options', () : void => {
-        const script : string = `
+    it('should fail on uninformative docs comments using useless word options', (): void => {
+        const script: string = `
             /**
              * Also foo.
              */
@@ -183,7 +183,7 @@ describe('informativeDocsRule', () : void => {
 
         TestHelper.assertViolationsWithOptions('informative-docs', options, script, [
             {
-                failure: 'This comment is roughly the same as the object\'s name. Either be more informative or don\'t include a comment.',
+                failure: "This comment is roughly the same as the object's name. Either be more informative or don't include a comment.",
                 name: Utils.absolutePath('file.ts'),
                 ruleName: 'informative-docs',
                 startPosition: { character: 13, line: 5 }

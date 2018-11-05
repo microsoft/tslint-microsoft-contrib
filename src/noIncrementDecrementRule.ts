@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-increment-decrement',
         type: 'maintainability',
@@ -36,12 +35,11 @@ class NoIncrementDecrementWalker extends Lint.RuleWalker {
         super.visitPrefixUnaryExpression(node);
     }
 
-    private validateUnaryExpression(node : ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
+    private validateUnaryExpression(node: ts.PrefixUnaryExpression | ts.PostfixUnaryExpression) {
         if (node.operator === ts.SyntaxKind.PlusPlusToken) {
             this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden ++ operator');
         } else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
             this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden -- operator');
         }
     }
-
 }

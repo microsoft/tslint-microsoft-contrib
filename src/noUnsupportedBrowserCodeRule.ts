@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {forEachTokenWithTrivia} from 'tsutils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const UNSPECIFIED_BROWSER_VERSION: string = 'unspecified version';
 const JSDOC_BROWSERSPECIFIC: string = '@browserspecific';
@@ -17,7 +17,6 @@ interface BrowserVersion {
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-unsupported-browser-code',
         type: 'maintainability',
@@ -128,17 +127,9 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
 
     private findUnsupportedBrowserFailures(targetBrowser: BrowserVersion, startPos: number, length: number) {
         if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailureAt(
-                startPos,
-                length,
-                `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`
-            );
+            this.addFailureAt(startPos, length, `${FAILURE_BROWSER_STRING}: ${targetBrowser.name}`);
         } else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailureAt(
-                startPos,
-                length,
-                `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`
-            );
+            this.addFailureAt(startPos, length, `${FAILURE_VERSION_STRING}: ${targetBrowser.name} ${targetBrowser.version}`);
         }
     }
 }

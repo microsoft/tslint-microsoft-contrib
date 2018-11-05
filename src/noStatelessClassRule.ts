@@ -1,14 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {Utils} from './utils/Utils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { Utils } from './utils/Utils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'A stateless class was found. This indicates a failure in the object model: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-stateless-class',
         type: 'maintainability',
@@ -61,42 +60,56 @@ class NoStatelessClassRuleWalker extends Lint.RuleWalker {
     }
 
     private classDeclaresInstanceData(node: ts.ClassDeclaration): boolean {
-        return Utils.exists(node.members, (classElement: ts.ClassElement): boolean => {
-            if (classElement.kind === ts.SyntaxKind.Constructor) {
-                return false;
+        return Utils.exists(
+            node.members,
+            (classElement: ts.ClassElement): boolean => {
+                if (classElement.kind === ts.SyntaxKind.Constructor) {
+                    return false;
+                }
+                if (AstUtils.isStatic(classElement)) {
+                    return false;
+                }
+                return true;
             }
-            if (AstUtils.isStatic(classElement)) {
-                return false;
-            }
-            return true;
-        });
+        );
     }
 
     private classDeclaresConstructorProperties(node: ts.ClassDeclaration): boolean {
-        return Utils.exists(node.members, (element: ts.ClassElement): boolean => {
-            if (element.kind === ts.SyntaxKind.Constructor) {
-                return this.constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
+        return Utils.exists(
+            node.members,
+            (element: ts.ClassElement): boolean => {
+                if (element.kind === ts.SyntaxKind.Constructor) {
+                    return this.constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
+                }
+                return false;
             }
-            return false;
-        });
+        );
     }
 
     private constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
-        return Utils.exists(ctor.parameters, (param: ts.ParameterDeclaration): boolean => {
-            if (param.modifiers === undefined) {
-                return false;
-            }
+        return Utils.exists(
+            ctor.parameters,
+            (param: ts.ParameterDeclaration): boolean => {
+                if (param.modifiers === undefined) {
+                    return false;
+                }
 
-            return AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword)
-                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword)
-                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword)
-                || AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword);
-        });
+                return (
+                    AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword) ||
+                    AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword) ||
+                    AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword) ||
+                    AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword)
+                );
+            }
+        );
     }
 
     private classExtendsSomething(node: ts.ClassDeclaration): boolean {
-        return Utils.exists(node.heritageClauses, (clause: ts.HeritageClause): boolean => {
-            return clause.token === ts.SyntaxKind.ExtendsKeyword;
-        });
+        return Utils.exists(
+            node.heritageClauses,
+            (clause: ts.HeritageClause): boolean => {
+                return clause.token === ts.SyntaxKind.ExtendsKeyword;
+            }
+        );
     }
 }

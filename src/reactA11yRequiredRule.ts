@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement, isEmpty, getBooleanLiteral } from './utils/JsxAttribute';
 
 const FAILURE_STRING: string = 'Required input elements must have an aria-required set to true';
@@ -9,7 +9,6 @@ const REQUIRED_STRING: string = 'required';
 const ARIA_REQUIRED_STRING = 'aria-required';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-required',
         type: 'functionality',
@@ -58,11 +57,8 @@ class ReactA11yRequiredRuleWalker extends Lint.RuleWalker {
 
         const ariaRequiredAttribute: ts.JsxAttribute = attributes[ARIA_REQUIRED_STRING];
 
-        if (!ariaRequiredAttribute ||
-            isEmpty(ariaRequiredAttribute) ||
-            !getBooleanLiteral(ariaRequiredAttribute)) {
+        if (!ariaRequiredAttribute || isEmpty(ariaRequiredAttribute) || !getBooleanLiteral(ariaRequiredAttribute)) {
             this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
     }
-
 }

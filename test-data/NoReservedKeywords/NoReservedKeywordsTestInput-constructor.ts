@@ -1,20 +1,16 @@
-
 // module names
-module WrapperConstructor {
-    module constructor {
-
+namespace WrapperConstructor {
+    namespace constructor {
         // class names
-        class constructor {
-
-        }
+        class constructor {}
     }
 }
-module SampleConstructor1 {
+namespace SampleConstructor1 {
     // module variables
     var constructor;
 }
 
-module SampleConstructor2 {
+namespace SampleConstructor2 {
     // module function
     function constructor() {}
 }
@@ -23,15 +19,15 @@ module SampleConstructor2 {
 class SampleConstructor4 {
     private var;
     set constructor(value) {}
-    get constructor() { return this.var;}
+    get constructor() {
+        return this.var;
+    }
 }
 
-
 class SampleConstructor5 {
-    constructor() {}       // class methods
-    method(constructor) {}  // method parameters
-    private func = (constructor) => {}; // arrow function parameters
-
+    constructor() {} // class methods
+    method(constructor) {} // method parameters
+    private func = constructor => {}; // arrow function parameters
 }
 
 // interface declarations

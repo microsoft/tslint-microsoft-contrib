@@ -1,12 +1,11 @@
-import {Utils} from '../utils/Utils';
-import {TestHelper} from './TestHelper';
+import { Utils } from '../utils/Utils';
+import { TestHelper } from './TestHelper';
 
-describe('unnecessaryFieldInitializationRule', () : void => {
+describe('unnecessaryFieldInitializationRule', (): void => {
+    const ruleName: string = 'no-unnecessary-field-initialization';
 
-    const ruleName : string = 'no-unnecessary-field-initialization';
-
-    it('should pass on settings fields to different values', () : void => {
-        const script : string = `
+    it('should pass on settings fields to different values', (): void => {
+        const script: string = `
             class MyClass {
                 private myField1;
                 private myField2 = 'value';
@@ -20,11 +19,11 @@ describe('unnecessaryFieldInitializationRule', () : void => {
             }
         `;
 
-        TestHelper.assertViolations(ruleName, script, [ ]);
+        TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on initializing to undefined', () : void => {
-        const script : string = `
+    it('should fail on initializing to undefined', (): void => {
+        const script: string = `
             class MyClass {
                 private myField = undefined;
             }
@@ -32,16 +31,16 @@ describe('unnecessaryFieldInitializationRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unnecessary field initialization. Field explicitly initialized to undefined: myField",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 35, "line": 3 }
+                failure: 'Unnecessary field initialization. Field explicitly initialized to undefined: myField',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 35, line: 3 }
             }
         ]);
     });
 
-    it('should fail on setting to undefined', () : void => {
-        const script : string = `
+    it('should fail on setting to undefined', (): void => {
+        const script: string = `
             class MyClass {
                 private myField;
                 constructor() {
@@ -52,16 +51,16 @@ describe('unnecessaryFieldInitializationRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unnecessary field initialization. Field explicitly initialized to undefined: this.myField",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 5 }
+                failure: 'Unnecessary field initialization. Field explicitly initialized to undefined: this.myField',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 5 }
             }
         ]);
     });
 
-    it('should fail on initializing and setting to same values', () : void => {
-        const script : string = `
+    it('should fail on initializing and setting to same values', (): void => {
+        const script: string = `
             class MyClass {
                 private myField1 = null;
                 private myField2 = 'value';
@@ -81,36 +80,35 @@ describe('unnecessaryFieldInitializationRule', () : void => {
 
         TestHelper.assertViolations(ruleName, script, [
             {
-                "failure": "Unnecessary field initialization. Field value already initialized in declaration: this.myField1 = null",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 10 }
+                failure: 'Unnecessary field initialization. Field value already initialized in declaration: this.myField1 = null',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 10 }
             },
             {
-                "failure": "Unnecessary field initialization. Field value already initialized in declaration: this.myField2 = 'value'",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 11 }
+                failure: "Unnecessary field initialization. Field value already initialized in declaration: this.myField2 = 'value'",
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 11 }
             },
             {
-                "failure": "Unnecessary field initialization. Field value already initialized in declaration: this.myField3 = 12345",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 12 }
+                failure: 'Unnecessary field initialization. Field value already initialized in declaration: this.myField3 = 12345',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 12 }
             },
             {
-                "failure": "Unnecessary field initialization. Field value already initialized in declaration: this.myField4 = true",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 13 }
+                failure: 'Unnecessary field initialization. Field value already initialized in declaration: this.myField4 = true',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 13 }
             },
             {
-                "failure": "Unnecessary field initialization. Field value already initialized in declaration: this.myField5 = false",
-                "name": Utils.absolutePath("file.ts"),
-                "ruleName": "no-unnecessary-field-initialization",
-                "startPosition": { "character": 21, "line": 14 }
+                failure: 'Unnecessary field initialization. Field value already initialized in declaration: this.myField5 = false',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'no-unnecessary-field-initialization',
+                startPosition: { character: 21, line: 14 }
             }
         ]);
     });
-
 });

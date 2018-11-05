@@ -1,15 +1,14 @@
-
 // module names
-module public {
+namespace public {
 
 }
 
-module SamplePublic1 {
+namespace SamplePublic1 {
     // module variables
     var public;
 }
 
-module SamplePublic2 {
+namespace SamplePublic2 {
     // module function
     function public() {}
 }
@@ -23,12 +22,13 @@ class SamplePublic3 {
 class SamplePublic4 {
     private var;
     set public(value) {}
-    get public() { return this.var;}
+    get public() {
+        return this.var;
+    }
 }
 
-
 class SamplePublic5 {
-    public() {}       // class methods
+    public() {} // class methods
 }
 
 // interface declarations

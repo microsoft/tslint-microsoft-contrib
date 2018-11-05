@@ -1,5 +1,5 @@
-module.exports = ({ruleName, walkerName}) =>
-`import * as ts from 'typescript';
+module.exports = ({ ruleName, walkerName }) =>
+    `import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: '... add a meaningful one line description',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
-        optionExamples: [],         //Remove this property if the rule has no options
+        optionExamples: [],         // Remove this property if the rule has no options
         typescriptOnly: false,
         issueClass: 'Non-SDL',      // one of: 'SDL' | 'Non-SDL' | 'Ignored'
         issueType: 'Warning',       // one of: 'Error' | 'Warning'

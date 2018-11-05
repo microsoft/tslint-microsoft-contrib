@@ -1,4 +1,3 @@
-
 class SampleDebugger3 {
     // class variables
     private debugger;
@@ -8,12 +7,13 @@ class SampleDebugger3 {
 class SampleDebugger4 {
     private var;
     set debugger(value) {}
-    get debugger() { return this.var;}
+    get debugger() {
+        return this.var;
+    }
 }
 
-
 class SampleDebugger5 {
-    debugger() {}       // class methods
+    debugger() {} // class methods
 }
 
 // interface declarations

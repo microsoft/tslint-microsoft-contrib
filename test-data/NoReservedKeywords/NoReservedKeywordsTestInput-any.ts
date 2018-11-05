@@ -1,15 +1,14 @@
-
 // module names
-module any {
+namespace any {
 
 }
 
-module SampleAny1 {
+namespace SampleAny1 {
     // module variables
     var any;
 }
 
-module SampleAny2 {
+namespace SampleAny2 {
     // module function
     function any() {}
 }
@@ -23,15 +22,15 @@ class SampleAny3 {
 class SampleAny4 {
     private var;
     set any(value) {}
-    get any() { return this.var;}
+    get any() {
+        return this.var;
+    }
 }
 
-
 class SampleAny5 {
-    any() {}       // class methods
-    method(any) {}  // method parameters
-    private func = (any) => {}; // arrow function parameters
-
+    any() {} // class methods
+    method(any) {} // method parameters
+    private func = any => {}; // arrow function parameters
 }
 
 // interface declarations

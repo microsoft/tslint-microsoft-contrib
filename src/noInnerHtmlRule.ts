@@ -1,15 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_INNER: string = 'Writing a string to the innerHTML property is insecure: ';
 const FAILURE_OUTER: string = 'Writing a string to the outerHTML property is insecure: ';
 const FAILURE_HTML_LIB: string = 'Using the html() function to write a string to innerHTML is insecure: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-inner-html',
         type: 'maintainability',
@@ -31,7 +30,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class NoInnerHtmlRuleWalker extends Lint.RuleWalker {
-
     private readonly htmlLibExpressionRegex: RegExp = /^(jquery|[$])/i;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {

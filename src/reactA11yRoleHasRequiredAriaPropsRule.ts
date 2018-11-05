@@ -7,10 +7,7 @@ import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
-import {
-    getJsxAttributesFromJsxElement,
-    getStringLiteral
-} from './utils/JsxAttribute';
+import { getJsxAttributesFromJsxElement, getStringLiteral } from './utils/JsxAttribute';
 import { IRole, IRoleSchema } from './utils/attributes/IRole';
 import { IAria } from './utils/attributes/IAria';
 
@@ -25,16 +22,13 @@ const ROLE_STRING: string = 'role';
 // h1-h6 tags have implicit role heading with aria-level attribute.
 const TAGS_WITH_ARIA_LEVEL: string[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-export function getFailureStringForNotImplicitRole(roleNamesInElement: string[],
-                                                   missingProps: string[]): string {
+export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], missingProps: string[]): string {
     return `Element with ARIA role(s) '${roleNamesInElement.join(', ')}' \
 are missing required attribute(s): ${missingProps.join(', ')}. \
 A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
 }
 
-export function getFailureStringForImplicitRole(tagName: string,
-                                                roleNamesInElement: string,
-                                                missingProps: string[]): string {
+export function getFailureStringForImplicitRole(tagName: string, roleNamesInElement: string, missingProps: string[]): string {
     return `Tag '${tagName}' has implicit role '${roleNamesInElement}'. \
 It requires aria-* attributes: ${missingProps.join(', ')} that are missing in the element. \
 A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
@@ -81,7 +75,9 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         // If role attribute is specified, get the role value. Otherwise get the implicit role from tag name.
         const roleValue = roleProp ? getStringLiteral(roleProp) : getImplicitRole(node);
         const isImplicitRole: boolean = !roleProp && !!roleValue;
-        const normalizedRoles: string[] = (roleValue || '').toLowerCase().split(' ')
+        const normalizedRoles: string[] = (roleValue || '')
+            .toLowerCase()
+            .split(' ')
             .filter((role: string) => !!ROLES[role]);
 
         if (normalizedRoles.length === 0) {
@@ -100,16 +96,17 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
             .concat(TAGS_WITH_ARIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
 
         // Get the list of missing required aria-* attributes in current element.
-        const missingAttributes: string[] = requiredAttributeNames
-            .filter((attributeName: string) => attributeNamesInElement.indexOf(attributeName) === -1);
+        const missingAttributes: string[] = requiredAttributeNames.filter(
+            (attributeName: string) => attributeNamesInElement.indexOf(attributeName) === -1
+        );
 
         if (missingAttributes.length > 0) {
             this.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
-                isImplicitRole ?
-                    getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes) :
-                    getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes)
+                isImplicitRole
+                    ? getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes)
+                    : getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes)
             );
         }
     }

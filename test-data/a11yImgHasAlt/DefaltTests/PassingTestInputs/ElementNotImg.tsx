@@ -1,5 +1,5 @@
 import React = require('react');
 
-const a = <div />
-const b = <button />
-const c = <image />
+const a = <div />;
+const b = <button />;
+const c = <image />;

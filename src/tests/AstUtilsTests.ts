@@ -1,7 +1,7 @@
-import {AstUtils} from '../utils/AstUtils';
+import { AstUtils } from '../utils/AstUtils';
 import * as chai from 'chai';
 
-describe('AstUtils', () : void => {
+describe('AstUtils', (): void => {
     describe('isJQuery', (): void => {
         it('should match expected strings', (): void => {
             chai.expect(AstUtils.isJQuery('$')).to.equal(true, 'short form');

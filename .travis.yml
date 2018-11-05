@@ -9,3 +9,7 @@ node_js:
   - '8'
 
 sudo: false
+
+before_install:
+  - git config core.autocrlf input
+  - git config core.eol lf

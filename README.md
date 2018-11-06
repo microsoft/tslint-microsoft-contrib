@@ -152,7 +152,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         You can override the default list of "useless" words ignored by the comment checker like <code>"informative-docs": [true, { "useless-words": ["a", "an", "the", "text" ] } ]</code>.
         You can indicate words as synonyms (aliases) of each other like <code>"informative-docs": [true, { "aliases": { text: ["emoji", "smiley"] } ]</code>.
       </td>
-      <td>6.0.0-beta0</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -743,7 +743,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         For security reasons, it may be best to only pass string literals as filesystem paths.
         Otherwise, it may be possible for an attacker to read and write arbitrary files on your system through path traversal attacks.
       </td>
-      <td>6.0.0-beta0</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -898,7 +898,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li><a href="https://www.w3.org/TR/WCAG10-HTML-TECHS/#forms-specific">WCAG 11.5</a></li>
         </ul>
       </td>
-      <td>6.0.0-beta0</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -932,7 +932,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         For accessibility of your website, enforce usage of onBlur over onChange on select menus.
       </td>
-      <td>6.0.0-beta0</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -966,7 +966,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li><a href="http://www.clarissapeterson.com/2012/11/html5-accessibility/">Acessibility in HTML5</a></li>
         </ul>
       </td>
-      <td>6.0.0-beta0</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>

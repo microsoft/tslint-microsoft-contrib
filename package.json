@@ -1,49 +1,82 @@
 {
-  "name": "tslint-microsoft-contrib",
-  "version": "5.2.1",
-  "description": "TSLint Rules for Microsoft",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/tslint-microsoft-contrib"
-  },
-  "author": "Hamlet D'Arcy",
-  "contributors": [
-    {
-      "name": "Bernd Kiefer",
-      "email": "bernd.kiefer@microsoft.com"
+    "name": "tslint-microsoft-contrib",
+    "version": "6.0.0-beta0",
+    "description": "TSLint Rules for Microsoft",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/tslint-microsoft-contrib"
     },
-    {
-      "name": "Daniel Manesku",
-      "email": "daniel.manesku@microsoft.com"
+    "author": "Hamlet D'Arcy",
+    "contributors": [
+        {
+            "name": "Bernd Kiefer",
+            "email": "bernd.kiefer@microsoft.com"
+        },
+        {
+            "name": "Daniel Manesku",
+            "email": "daniel.manesku@microsoft.com"
+        },
+        {
+            "name": "Hamlet D'Arcy",
+            "email": "hamlet.darcy@microsoft.com"
+        },
+        {
+            "name": "Josh Goldberg",
+            "email": "joshua.goldberg@microsoft.com"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
     },
-    {
-      "name": "Hamlet D'Arcy",
-      "email": "hamlet.darcy@microsoft.com"
+    "main": "tslint.json",
+    "keywords": [
+        "tslint",
+        "microsoft",
+        "typescript"
+    ],
+    "license": "MIT",
+    "analyze": true,
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
-    {
-      "name": "Josh Goldberg",
-      "email": "joshua.goldberg@microsoft.com"
+    "lint-staged": {
+        "*.{js,ts,tsx,json,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "copy:json": "cpy \"src/**/*.json\" dist --parents",
+        "copy:meta": "cpy README.md recommended_ruleset.js dist/build --parents",
+        "copy:package": "cpy \"**/*.js\" \"**/*.json\" \"!tests/**\" \"!references.js\" \"tests/TestHelper.js\" \"tests/TestHelper.d.ts\" ../build --cwd=\"dist/src\" --parents",
+        "create-rule": "node build-tasks/create-rule.js",
+        "generate:recommendations": "node build-tasks/generate-recommendations.js",
+        "generate:default-tslint-json": "node build-tasks/generate-default-tslint-json.js",
+        "generate:sdl-report": "node build-tasks/generate-sdl-report.js",
+        "generate:rule-metadata": "node build-tasks/generate-rule-metadata.js",
+        "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",
+        "lint:rules": "tslint -p tsconfig.json -t stylish -c tslint.json -e \"src/tests/**\" \"src/**/*.ts\"",
+        "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
+        "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+        "start": "npm-run-all clean copy:json watch:src",
+        "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
+        "test:rules": "tslint -r dist/src --test \"tests/**\"",
+        "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package copy:meta generate:*",
+        "tsc:src": "tsc",
+        "tslint:check": "tslint-config-prettier-check ./tslint.json",
+        "validate:config": "node build-tasks/validate-config.js",
+        "validate:documentation": "node build-tasks/validate-documentation.js",
+        "watch:run-tests": "node build-tasks/watch-run-tests.js",
+        "watch:src": "tsc --watch"
+    },
+    "dependencies": {
+        "tsutils": "^2.27.2 <2.29.0"
+    },
+    "peerDependencies": {
+        "tslint": "^5.1.0",
+        "typescript": "^2.1.0 || ^3.0.0"
     }
-  ],
-  "bugs": {
-    "url": "https://github.com/Microsoft/tslint-microsoft-contrib/issues"
-  },
-  "main": "tslint.json",
-  "keywords": [
-    "tslint",
-    "microsoft",
-    "typescript"
-  ],
-  "license": "MIT",
-  "analyze": true,
-  "scripts": {
-    "test": "grunt all"
-  },
-  "dependencies": {
-    "tsutils": "^2.27.2 <2.29.0"
-  },
-  "peerDependencies": {
-    "tslint": "^5.1.0",
-    "typescript": "^2.1.0 || ^3.0.0"
-  }
 }

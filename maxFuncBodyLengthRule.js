@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15,6 +18,7 @@ var Lint = require("tslint");
 var AstUtils_1 = require("./utils/AstUtils");
 var Utils_1 = require("./utils/Utils");
 var tsutils_1 = require("tsutils");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -35,7 +39,7 @@ var Rule = (function (_super) {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: '[true, 100, {"ignore-parameters-to-function-regex": "^describe$"}],',
+        recommendation: '[true, 100, { "ignore-parameters-to-function-regex": "^describe$" }],',
         commonWeaknessEnumeration: '398, 710'
     };
     return Rule;
@@ -91,7 +95,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         _super.prototype.visitConstructorDeclaration.call(this, node);
     };
     MaxFunctionBodyLengthRuleWalker.prototype.visitClassDeclaration = function (node) {
-        this.currentClassName = node.name.text;
+        this.currentClassName = (node.name && node.name.text) || 'default';
         _super.prototype.visitClassDeclaration.call(this, node);
         this.currentClassName = undefined;
     };
@@ -107,7 +111,7 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
         }
     };
     MaxFunctionBodyLengthRuleWalker.prototype.calcBodyLength = function (node) {
-        if (node.body == null) {
+        if (node.body === undefined) {
             return 0;
         }
         var sourceFile = this.getSourceFile();
@@ -117,12 +121,12 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     };
     MaxFunctionBodyLengthRuleWalker.prototype.calcBodyCommentLength = function (node) {
         var commentLineCount = 0;
-        commentLineCount += node.getFullText()
+        commentLineCount += node
+            .getFullText()
             .split(/\n/)
             .filter(function (line) {
             return line.trim().match(/^\/\//) !== null;
-        })
-            .length;
+        }).length;
         tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind) {
             if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
                 commentLineCount += text.split(/\n/).length;
@@ -136,17 +140,17 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     MaxFunctionBodyLengthRuleWalker.prototype.parseOptions = function () {
         var _this = this;
         this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'number') {
+            if (typeof opt === 'number') {
                 _this.maxBodyLength = opt;
                 return;
             }
-            if (typeof (opt) === 'object') {
+            if (TypeGuard_1.isObject(opt)) {
                 _this.maxFuncBodyLength = opt[FUNC_BODY_LENGTH];
                 _this.maxFuncExpressionBodyLength = opt[FUNC_EXPRESSION_BODY_LENGTH];
                 _this.maxArrowBodyLength = opt[ARROW_BODY_LENGTH];
                 _this.maxMethodBodyLength = opt[METHOD_BODY_LENGTH];
                 _this.maxCtorBodyLength = opt[CTOR_BODY_LENGTH];
-                _this.ignoreComments = opt[IGNORE_COMMENTS];
+                _this.ignoreComments = !!opt[IGNORE_COMMENTS];
                 var regex = opt[IGNORE_PARAMETERS_TO_FUNCTION];
                 if (regex) {
                     _this.ignoreParametersToFunctionRegex = new RegExp(regex);
@@ -165,10 +169,8 @@ var MaxFunctionBodyLengthRuleWalker = (function (_super) {
     };
     MaxFunctionBodyLengthRuleWalker.prototype.formatPlaceText = function (node) {
         var funcTypeText = this.getFuncTypeText(node.kind);
-        if (node.kind === ts.SyntaxKind.MethodDeclaration ||
-            node.kind === ts.SyntaxKind.FunctionDeclaration ||
-            node.kind === ts.SyntaxKind.FunctionExpression) {
-            return " in " + funcTypeText + " " + (node.name || { text: '' }).text + "()";
+        if (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)) {
+            return " in " + funcTypeText + " " + (node.name ? node.name.getText() : '') + "()";
         }
         else if (node.kind === ts.SyntaxKind.Constructor) {
             return " in class " + this.currentClassName;

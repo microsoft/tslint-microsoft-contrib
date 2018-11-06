@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_INNER = 'Writing a string to the innerHTML property is insecure: ';
 var FAILURE_OUTER = 'Writing a string to the outerHTML property is insecure: ';
@@ -73,7 +75,7 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         if (functionName === 'html') {
             if (node.arguments.length > 0) {
                 var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
-                if (this.htmlLibExpressionRegex.test(functionTarget)) {
+                if (functionTarget !== undefined && this.htmlLibExpressionRegex.test(functionTarget)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
                 }
             }
@@ -81,5 +83,5 @@ var NoInnerHtmlRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoInnerHtmlRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noInnerHtmlRule.js.map

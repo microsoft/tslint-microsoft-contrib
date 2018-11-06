@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -29,7 +32,7 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
         var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
         var functionTargetType = this.getFunctionTargetType(node);
         var firstArg = node.arguments[0];
-        if (functionName === this.targetFunctionName && firstArg != null) {
+        if (functionName === this.targetFunctionName && firstArg !== undefined) {
             if (functionTarget) {
                 if (functionTargetType) {
                     if (!functionTargetType.match(/^(any|Window|Worker)$/)) {
@@ -43,7 +46,11 @@ var NoStringParameterToFunctionCallWalker = (function (_super) {
                 }
             }
             if (!this.isExpressionEvaluatingToFunction(firstArg)) {
-                var msg = this.failureString + firstArg.getFullText().trim().substring(0, 40);
+                var msg = this.failureString +
+                    firstArg
+                        .getFullText()
+                        .trim()
+                        .substring(0, 40);
                 this.addFailureAt(node.getStart(), node.getWidth(), msg);
             }
         }

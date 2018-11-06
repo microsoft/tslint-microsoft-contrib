@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,14 +15,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var ChaiUtils_1 = require("./utils/ChaiUtils");
 var BASE_ERROR = 'Found chai call with vague failure message. ';
 var FAILURE_STRING = BASE_ERROR + 'Please add an explicit failure message';
-var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect ' +
-    'call into the assertion value';
-var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comparison from the expect ' +
-    'call into the assertion value. ';
+var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
+var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -73,22 +73,23 @@ var ChaiVagueErrorsRuleWalker = (function (_super) {
                 }
             }
             var actualValue = ChaiUtils_1.ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue.kind === ts.SyntaxKind.BinaryExpression) {
+            if (actualValue !== undefined && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
                 var expectedValue = ChaiUtils_1.ChaiUtils.getFirstExpectationParameter(node);
-                var binaryExpression = actualValue;
-                var operator = binaryExpression.operatorToken.getText();
-                var expectingBooleanKeyword = expectedValue.kind === ts.SyntaxKind.TrueKeyword
-                    || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
-                if (operator === '===' && expectingBooleanKeyword) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
-                }
-                else if (operator === '!==' && expectingBooleanKeyword) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
+                if (expectedValue !== undefined) {
+                    var binaryExpression = actualValue;
+                    var operator = binaryExpression.operatorToken.getText();
+                    var expectingBooleanKeyword = expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+                    if (operator === '===' && expectingBooleanKeyword) {
+                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
+                    }
+                    else if (operator === '!==' && expectingBooleanKeyword) {
+                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
+                    }
                 }
             }
         }
         _super.prototype.visitCallExpression.call(this, node);
     };
     return ChaiVagueErrorsRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=chaiVagueErrorsRule.js.map

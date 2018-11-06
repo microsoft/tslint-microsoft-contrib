@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37,23 +40,66 @@ var Rule = (function (_super) {
     };
     Rule.FAILURE_STRING = 'Forbidden reference to reserved keyword: ';
     Rule.BANNED_TERMS = [
-        'break', 'case', 'catch', 'class',
-        'const', 'continue', 'debugger', 'default',
-        'delete', 'do', 'else', 'enum', 'export',
-        'extends', 'false', 'finally', 'for',
-        'function', 'if', 'import', 'in',
-        'instanceof', 'new', 'null', 'return',
-        'super', 'switch', 'this', 'throw',
-        'true', 'try', 'typeof', 'var',
-        'void', 'while', 'with',
-        'as', 'implements', 'interface', 'let',
-        'package', 'private', 'protected',
-        'public', 'static', 'yield',
-        'any', 'boolean', 'constructor',
-        'declare', 'get', 'module',
-        'require', 'number', 'set',
-        'string', 'symbol', 'type',
-        'from', 'of'
+        'break',
+        'case',
+        'catch',
+        'class',
+        'const',
+        'continue',
+        'debugger',
+        'default',
+        'delete',
+        'do',
+        'else',
+        'enum',
+        'export',
+        'extends',
+        'false',
+        'finally',
+        'for',
+        'function',
+        'if',
+        'import',
+        'in',
+        'instanceof',
+        'new',
+        'null',
+        'return',
+        'super',
+        'switch',
+        'this',
+        'throw',
+        'true',
+        'try',
+        'typeof',
+        'var',
+        'void',
+        'while',
+        'with',
+        'as',
+        'implements',
+        'interface',
+        'let',
+        'package',
+        'private',
+        'protected',
+        'public',
+        'static',
+        'yield',
+        'any',
+        'boolean',
+        'constructor',
+        'declare',
+        'get',
+        'module',
+        'require',
+        'number',
+        'set',
+        'string',
+        'symbol',
+        'type',
+        'from',
+        'of'
     ];
     return Rule;
 }(Lint.Rules.AbstractRule));

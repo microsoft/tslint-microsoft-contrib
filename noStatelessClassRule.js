@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'A stateless class was found. This indicates a failure in the object model: ';
@@ -54,7 +56,7 @@ var NoStatelessClassRuleWalker = (function (_super) {
     }
     NoStatelessClassRuleWalker.prototype.visitClassDeclaration = function (node) {
         if (!this.isClassStateful(node)) {
-            var className = node.name == null ? '<unknown>' : node.name.text;
+            var className = node.name === undefined ? '<unknown>' : node.name.text;
             this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
         }
         _super.prototype.visitClassDeclaration.call(this, node);
@@ -93,10 +95,13 @@ var NoStatelessClassRuleWalker = (function (_super) {
     };
     NoStatelessClassRuleWalker.prototype.constructorDeclaresProperty = function (ctor) {
         return Utils_1.Utils.exists(ctor.parameters, function (param) {
-            return AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword)
-                || AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword)
-                || AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword)
-                || AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword);
+            if (param.modifiers === undefined) {
+                return false;
+            }
+            return (AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PublicKeyword) ||
+                AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.PrivateKeyword) ||
+                AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ProtectedKeyword) ||
+                AstUtils_1.AstUtils.hasModifier(param.modifiers, ts.SyntaxKind.ReadonlyKeyword));
         });
     };
     NoStatelessClassRuleWalker.prototype.classExtendsSomething = function (node) {
@@ -105,5 +110,5 @@ var NoStatelessClassRuleWalker = (function (_super) {
         });
     };
     return NoStatelessClassRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noStatelessClassRule.js.map

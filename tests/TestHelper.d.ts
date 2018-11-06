@@ -1,5 +1,5 @@
 import * as Lint from 'tslint';
-export declare module TestHelper {
+export declare namespace TestHelper {
     let RULES_DIRECTORY: string;
     let FORMATTER_DIRECTORY: string;
     let FILE_ENCODING: string;
@@ -23,9 +23,9 @@ export declare module TestHelper {
         fix?: Fix;
     }
     function assertNoViolation(ruleName: string, inputFileOrScript: string, useTypeChecker?: boolean): void;
-    function assertNoViolationWithOptions(ruleName: string, options: any[], inputFileOrScript: string, useTypeChecker?: boolean): void;
-    function assertViolationsWithOptions(ruleName: string, options: any[], inputFileOrScript: string, expectedFailures: ExpectedFailure[], useTypeChecker?: boolean): void;
+    function assertNoViolationWithOptions(ruleName: string, options: any[] | undefined, inputFileOrScript: string, useTypeChecker?: boolean): void;
+    function assertViolationsWithOptions(ruleName: string, options: any[] | undefined, inputFileOrScript: string, expectedFailures: ExpectedFailure[], useTypeChecker?: boolean): void;
     function assertViolations(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[], useTypeChecker?: boolean): void;
     function assertViolationsWithTypeChecker(ruleName: string, inputFileOrScript: string, expectedFailures: ExpectedFailure[]): void;
-    function runRule(ruleName: string, userOptions: string[], inputFileOrScript: string, useTypeChecker?: boolean): Lint.LintResult;
+    function runRule(ruleName: string, userOptions: any[] | undefined, inputFileOrScript: string, useTypeChecker?: boolean): Lint.LintResult;
 }

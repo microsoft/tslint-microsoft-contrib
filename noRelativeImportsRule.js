@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,9 +15,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
-var FAILURE_STRING_EXT = 'External module is being loaded from a relative path. Please use an absolute path: ';
-var FAILURE_STRING_IMPORT = 'Imported module is being loaded from a relative path. Please use an absolute path: ';
+var OPTION_ALLOW_SIBLINGS = 'allow-siblings';
+var FAILURE_BODY_RELATIVE = 'module is being loaded from a relative path. Please use an absolute path';
+var FAILURE_BODY_SIBLINGS = 'module path starts with reference to parent directory. Please use an absolute path or sibling files/folders';
+var FAILURE_BODY_INSIDE = 'module path should not contain reference to current or parent directory inside';
+var illegalInsideRegex = /(\/|\\)\.\.?\1/;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -27,9 +32,17 @@ var Rule = (function (_super) {
         ruleName: 'no-relative-imports',
         type: 'maintainability',
         description: 'Do not use relative paths when importing external modules or ES6 import declarations',
-        options: null,
-        optionsDescription: '',
-        typescriptOnly: true,
+        options: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [OPTION_ALLOW_SIBLINGS]
+            },
+            minLength: 0,
+            maxLength: 1
+        },
+        optionsDescription: "One argument may be optionally provided: \n\n' +\n            '* `" + OPTION_ALLOW_SIBLINGS + "` allows relative imports for files in the same or nested folders.",
+        typescriptOnly: false,
         issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
@@ -42,33 +55,44 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var NoRelativeImportsRuleWalker = (function (_super) {
     __extends(NoRelativeImportsRuleWalker, _super);
-    function NoRelativeImportsRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function NoRelativeImportsRuleWalker(sourceFile, options) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.allowSiblings = options.ruleArguments.indexOf(OPTION_ALLOW_SIBLINGS) > -1;
+        return _this;
     }
     NoRelativeImportsRuleWalker.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
             var moduleExpression = node.expression;
-            if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_EXT + node.getText());
+            var errorBody = this.getValidationErrorBody(moduleExpression);
+            if (errorBody !== undefined) {
+                this.addFailureAt(node.getStart(), node.getWidth(), "External " + errorBody + ": " + node.getText());
             }
         }
         else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
             var moduleExpression = node.moduleSpecifier;
-            if (!this.isModuleExpressionValid(moduleExpression)) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_IMPORT + node.getText());
+            var errorBody = this.getValidationErrorBody(moduleExpression);
+            if (errorBody !== undefined) {
+                this.addFailureAt(node.getStart(), node.getWidth(), "Imported " + errorBody + ": " + node.getText());
             }
         }
         _super.prototype.visitNode.call(this, node);
     };
-    NoRelativeImportsRuleWalker.prototype.isModuleExpressionValid = function (expression) {
+    NoRelativeImportsRuleWalker.prototype.getValidationErrorBody = function (expression) {
         if (expression.kind === ts.SyntaxKind.StringLiteral) {
             var moduleName = expression;
-            if (moduleName.text[0] === '.') {
-                return false;
+            var path = moduleName.text;
+            if (!this.allowSiblings && path[0] === '.') {
+                return FAILURE_BODY_RELATIVE;
+            }
+            if (this.allowSiblings && path.indexOf('..') === 0) {
+                return FAILURE_BODY_SIBLINGS;
+            }
+            if (illegalInsideRegex.test(path)) {
+                return FAILURE_BODY_INSIDE;
             }
         }
-        return true;
+        return undefined;
     };
     return NoRelativeImportsRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noRelativeImportsRule.js.map

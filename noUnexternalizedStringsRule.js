@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -45,13 +47,13 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
         _this.signatures = Object.create(null);
         _this.ignores = Object.create(null);
         var options = _this.getOptions();
-        var first = options && options.length > 0 ? options[0] : null;
+        var first = options && Array.isArray(options) && options.length > 0 ? options[0] : undefined;
         if (first) {
             if (Array.isArray(first.signatures)) {
-                first.signatures.forEach(function (signature) { return _this.signatures[signature] = true; });
+                first.signatures.forEach(function (signature) { return (_this.signatures[signature] = true); });
             }
             if (Array.isArray(first.ignores)) {
-                first.ignores.forEach(function (ignore) { return _this.ignores[ignore] = true; });
+                first.ignores.forEach(function (ignore) { return (_this.ignores[ignore] = true); });
             }
             if (first.messageIndex !== undefined) {
                 _this.messageIndex = first.messageIndex;
@@ -65,15 +67,16 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
     };
     NoUnexternalizedStringsRuleWalker.prototype.checkStringLiteral = function (node) {
         var text = node.getText();
-        if (text.length >= 2 && text[0] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE
-            && text[text.length - 1] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE) {
+        if (text.length >= 2 &&
+            text[0] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE &&
+            text[text.length - 1] === NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE) {
             return;
         }
         var info = this.findDescribingParent(node);
         if (info && info.ignoreUsage) {
             return;
         }
-        var callInfo = info ? info.callInfo : null;
+        var callInfo = info ? info.callInfo : undefined;
         if (callInfo && this.ignores[callInfo.callExpression.expression.getText()]) {
             return;
         }
@@ -81,9 +84,7 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
             this.addFailureAt(node.getStart(), node.getWidth(), "Unexternalized string found: " + node.getText());
             return;
         }
-        var messageArg = callInfo.argIndex === this.messageIndex
-            ? callInfo.callExpression.arguments[this.messageIndex]
-            : null;
+        var messageArg = callInfo.argIndex === this.messageIndex ? callInfo.callExpression.arguments[this.messageIndex] : undefined;
         if (messageArg && messageArg !== node) {
             this.addFailureAt(node.getStart(), node.getWidth(), "Message argument to '" + callInfo.callExpression.expression.getText() + "' must be a string literal.");
             return;
@@ -91,27 +92,39 @@ var NoUnexternalizedStringsRuleWalker = (function (_super) {
     };
     NoUnexternalizedStringsRuleWalker.prototype.findDescribingParent = function (node) {
         var kinds = ts.SyntaxKind;
-        while ((node.parent != null)) {
+        while (node.parent !== undefined) {
             var parent_1 = node.parent;
             var kind = parent_1.kind;
             if (kind === kinds.CallExpression) {
                 var callExpression = parent_1;
-                return { callInfo: { callExpression: callExpression, argIndex: callExpression.arguments.indexOf(node) } };
+                return {
+                    callInfo: {
+                        callExpression: callExpression,
+                        argIndex: callExpression.arguments.indexOf(node)
+                    }
+                };
             }
             else if (kind === kinds.ImportEqualsDeclaration || kind === kinds.ImportDeclaration || kind === kinds.ExportDeclaration) {
                 return { ignoreUsage: true };
             }
-            else if (kind === kinds.VariableDeclaration || kind === kinds.FunctionDeclaration || kind === kinds.PropertyDeclaration
-                || kind === kinds.MethodDeclaration || kind === kinds.VariableDeclarationList || kind === kinds.InterfaceDeclaration
-                || kind === kinds.ClassDeclaration || kind === kinds.EnumDeclaration || kind === kinds.ModuleDeclaration
-                || kind === kinds.TypeAliasDeclaration || kind === kinds.SourceFile) {
-                return null;
+            else if (kind === kinds.VariableDeclaration ||
+                kind === kinds.FunctionDeclaration ||
+                kind === kinds.PropertyDeclaration ||
+                kind === kinds.MethodDeclaration ||
+                kind === kinds.VariableDeclarationList ||
+                kind === kinds.InterfaceDeclaration ||
+                kind === kinds.ClassDeclaration ||
+                kind === kinds.EnumDeclaration ||
+                kind === kinds.ModuleDeclaration ||
+                kind === kinds.TypeAliasDeclaration ||
+                kind === kinds.SourceFile) {
+                return undefined;
             }
             node = parent_1;
         }
-        return null;
+        return undefined;
     };
-    NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = '\'';
+    NoUnexternalizedStringsRuleWalker.SINGLE_QUOTE = "'";
     return NoUnexternalizedStringsRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noUnexternalizedStringsRule.js.map

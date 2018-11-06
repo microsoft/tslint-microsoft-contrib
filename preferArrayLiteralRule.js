@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,8 +14,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -46,7 +49,7 @@ var NoGenericArrayWalker = (function (_super) {
         var _this = _super.call(this, sourceFile, options) || this;
         _this.allowTypeParameters = false;
         _this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'object') {
+            if (TypeGuard_1.isObject(opt)) {
                 _this.allowTypeParameters = opt['allow-type-parameters'] === true;
             }
         });
@@ -70,5 +73,5 @@ var NoGenericArrayWalker = (function (_super) {
         _super.prototype.visitNewExpression.call(this, node);
     };
     return NoGenericArrayWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=preferArrayLiteralRule.js.map

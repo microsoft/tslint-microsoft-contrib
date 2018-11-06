@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var MochaUtils_1 = require("./utils/MochaUtils");
 var FAILURE_STRING = 'Unneeded Mocha Done. Parameter can be safely removed: ';
@@ -60,7 +62,7 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
     };
     MochaUnneededDoneRuleWalker.prototype.validateMochaDoneUsage = function (node) {
         var doneIdentifier = this.maybeGetMochaDoneParameter(node);
-        if (doneIdentifier == null) {
+        if (doneIdentifier === undefined) {
             return;
         }
         if (!this.isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
@@ -73,7 +75,7 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
         }
     };
     MochaUnneededDoneRuleWalker.prototype.isIdentifierInvokedDirectlyInBody = function (doneIdentifier, node) {
-        if (node.body == null || node.body.kind !== ts.SyntaxKind.Block) {
+        if (node.body === undefined || node.body.kind !== ts.SyntaxKind.Block) {
             return false;
         }
         var block = node.body;
@@ -90,21 +92,21 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
     };
     MochaUnneededDoneRuleWalker.prototype.maybeGetMochaDoneParameter = function (node) {
         if (node.parameters.length === 0) {
-            return null;
+            return undefined;
         }
         var allDones = node.parameters.filter(function (parameter) {
-            if (parameter.type != null && parameter.type.getText() === 'MochaDone') {
+            if (parameter.type !== undefined && parameter.type.getText() === 'MochaDone') {
                 return true;
             }
             return parameter.name.getText() === 'done';
         });
         if (allDones.length === 0 || allDones[0].name.kind !== ts.SyntaxKind.Identifier) {
-            return null;
+            return undefined;
         }
         return allDones[0].name;
     };
     return MochaUnneededDoneRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 var IdentifierReferenceCountWalker = (function (_super) {
     __extends(IdentifierReferenceCountWalker, _super);
     function IdentifierReferenceCountWalker(sourceFile, options, identifier) {
@@ -127,5 +129,5 @@ var IdentifierReferenceCountWalker = (function (_super) {
         _super.prototype.visitIdentifier.call(this, node);
     };
     return IdentifierReferenceCountWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=mochaUnneededDoneRule.js.map

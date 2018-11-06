@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,26 +15,71 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var FAILURE_STATIC_FOUND = 'Static invocation of underscore function found. Prefer instance version instead: ';
 var FAILURE_INSTANCE_FOUND = 'Underscore instance wrapping of variable found. Prefer underscore static functions instead: ';
 var FUNCTION_NAMES = [
-    'each', 'forEach', 'map', 'collect',
-    'reduce', 'inject', 'foldl', 'reduceRight',
-    'foldr', 'find', 'detect', 'filter',
-    'select', 'where', 'findWhere', 'reject',
-    'every', 'all', 'some', 'any',
-    'contains', 'include', 'invoke', 'pluck',
-    'max', 'min', 'sortBy', 'groupBy',
-    'indexBy', 'countBy', 'shuffle', 'sample',
-    'toArray', 'size', 'partition', 'first',
-    'head', 'take', 'initial', 'last',
-    'rest', 'tail', 'drop', 'compact',
-    'flatten', 'without', 'union', 'intersection',
-    'difference', 'uniq', 'unique', 'object',
-    'zip', 'unzip', 'indexOf', 'findIndex',
-    'lastIndexOf', 'findLastIndex', 'sortedIndex', 'range'
+    'each',
+    'forEach',
+    'map',
+    'collect',
+    'reduce',
+    'inject',
+    'foldl',
+    'reduceRight',
+    'foldr',
+    'find',
+    'detect',
+    'filter',
+    'select',
+    'where',
+    'findWhere',
+    'reject',
+    'every',
+    'all',
+    'some',
+    'any',
+    'contains',
+    'include',
+    'invoke',
+    'pluck',
+    'max',
+    'min',
+    'sortBy',
+    'groupBy',
+    'indexBy',
+    'countBy',
+    'shuffle',
+    'sample',
+    'toArray',
+    'size',
+    'partition',
+    'first',
+    'head',
+    'take',
+    'initial',
+    'last',
+    'rest',
+    'tail',
+    'drop',
+    'compact',
+    'flatten',
+    'without',
+    'union',
+    'intersection',
+    'difference',
+    'uniq',
+    'unique',
+    'object',
+    'zip',
+    'unzip',
+    'indexOf',
+    'findIndex',
+    'lastIndexOf',
+    'findLastIndex',
+    'sortedIndex',
+    'range'
 ];
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -64,7 +112,7 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
         var _this = _super.call(this, sourceFile, options) || this;
         _this.style = 'instance';
         _this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'object') {
+            if (TypeGuard_1.isObject(opt)) {
                 if (opt.style === 'static') {
                     _this.style = 'static';
                 }
@@ -89,7 +137,7 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
                 var call = propExpression.expression;
                 var target = AstUtils_1.AstUtils.getFunctionTarget(call);
                 var functionName = AstUtils_1.AstUtils.getFunctionName(call);
-                if (target == null && functionName === '_' && call.arguments.length === 1) {
+                if (target === undefined && functionName === '_' && call.arguments.length === 1) {
                     var underscoreFunctionName = AstUtils_1.AstUtils.getFunctionName(node);
                     return FUNCTION_NAMES.indexOf(underscoreFunctionName) > -1;
                 }
@@ -106,5 +154,5 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
         return FUNCTION_NAMES.indexOf(functionName) > -1;
     };
     return UnderscoreConsistentInvocationRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=underscoreConsistentInvocationRule.js.map

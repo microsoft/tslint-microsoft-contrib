@@ -6,7 +6,7 @@ function getImplicitRoleForMenu(node) {
     var typeAttribute = JsxAttribute_1.getJsxAttributesFromJsxElement(node)[typeString];
     if (typeAttribute) {
         var value = JsxAttribute_1.getStringLiteral(typeAttribute) || undefined;
-        return (value && value.toUpperCase() === 'TOOLBAR') ? 'toolbar' : undefined;
+        return value && value.toUpperCase() === 'TOOLBAR' ? 'toolbar' : undefined;
     }
     return undefined;
 }

@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_STRING = 'Do not use http-equiv="refresh"';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -63,7 +65,7 @@ var ReactA11yMetaRuleWalker = (function (_super) {
                 if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     var attribute = parameter;
                     if (attribute.name.getText() === 'http-equiv') {
-                        if (_this.isStringLiteral(attribute.initializer, 'refresh')) {
+                        if (attribute.initializer !== undefined && _this.isStringLiteral(attribute.initializer, 'refresh')) {
                             _this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
                         }
                     }
@@ -72,21 +74,21 @@ var ReactA11yMetaRuleWalker = (function (_super) {
         }
     };
     ReactA11yMetaRuleWalker.prototype.isStringLiteral = function (expression, literal) {
-        if (expression != null) {
+        if (expression !== undefined) {
             if (expression.kind === ts.SyntaxKind.StringLiteral) {
                 var value = expression.text;
                 return value === literal;
             }
             else if (expression.kind === ts.SyntaxKind.JsxExpression) {
                 var exp = expression;
-                if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
+                if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                     var value = exp.expression.text;
                     return value === literal;
                 }
             }
         }
-        return null;
+        return undefined;
     };
     return ReactA11yMetaRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=reactA11yMetaRule.js.map

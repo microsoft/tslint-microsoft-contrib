@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,7 +25,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'no-multiple-var-decl',
         type: 'maintainability',
-        description: 'Deprecated - This rule is now part of the base TSLint product as the rule named \'one-variable-per-declaration\'',
+        description: "Deprecated - This rule is now part of the base TSLint product as the rule named 'one-variable-per-declaration'",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -32,7 +34,7 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false,         // use tslint one-variable-per-declaration rule instead',
+        recommendation: 'false, // use tslint one-variable-per-declaration rule instead',
         commonWeaknessEnumeration: '710'
     };
     Rule.FAILURE_STRING = 'Do not use comma separated variable declarations: ';
@@ -51,5 +53,5 @@ var NoMultipleVarDeclRuleWalker = (function (_super) {
         _super.prototype.visitVariableStatement.call(this, node);
     };
     return NoMultipleVarDeclRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noMultipleVarDeclRule.js.map

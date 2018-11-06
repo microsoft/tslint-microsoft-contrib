@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -16,6 +19,8 @@ var JsxAttribute_1 = require("./utils/JsxAttribute");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var ROLE_STRING = 'role';
 var ALT_STRING = 'alt';
+var TITLE_STRING = 'title';
+var IMAGE_FILENAME_REGEX = new RegExp('^.*\\.(jpg|bmp|jpeg|jfif|gif|png|tif|tiff)$', 'i');
 function getFailureStringNoAlt(tagName) {
     return "<" + tagName + "> elements must have an non-empty alt attribute or use empty alt attribute as well as role='presentation' for decorative/presentational images. A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.";
 }
@@ -28,6 +33,14 @@ function getFailureStringNonEmptyAltAndPresentationRole(tagName) {
     return "The value of alt attribute in <" + tagName + "> tag is non-empty and role value is presentation. Remove role='presentation' or specify 'alt' attribute to be empty when role attributes equals 'presentation'.";
 }
 exports.getFailureStringNonEmptyAltAndPresentationRole = getFailureStringNonEmptyAltAndPresentationRole;
+function getFailureStringEmptyAltAndNotEmptyTitle(tagName) {
+    return "The value of alt attribute in <" + tagName + "> tag is empty and the role is presentation, but the value of its title attribute is not empty. Remove the title attribute.";
+}
+exports.getFailureStringEmptyAltAndNotEmptyTitle = getFailureStringEmptyAltAndNotEmptyTitle;
+function getFailureStringAltIsImageFileName(tagName) {
+    return "The value of alt attribute in <" + tagName + "> tag is an image file name. Give meaningful value to the alt attribute ";
+}
+exports.getFailureStringAltIsImageFileName = getFailureStringAltIsImageFileName;
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -77,7 +90,8 @@ var ImgHasAltWalker = (function (_super) {
         if (!tagName || targetTagNames.indexOf(tagName) === -1) {
             return;
         }
-        if (JsxAttribute_1.getAllAttributesFromJsxElement(node).some(TypeGuard_1.isJsxSpreadAttribute)) {
+        var nodeAttributes = JsxAttribute_1.getAllAttributesFromJsxElement(node);
+        if (nodeAttributes !== undefined && nodeAttributes.some(TypeGuard_1.isJsxSpreadAttribute)) {
             return;
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
@@ -88,16 +102,25 @@ var ImgHasAltWalker = (function (_super) {
         else {
             var roleAttribute = attributes[ROLE_STRING];
             var roleAttributeValue = roleAttribute ? JsxAttribute_1.getStringLiteral(roleAttribute) : '';
-            var isPresentationRole = !!String(roleAttributeValue).toLowerCase().match(/\bpresentation\b/);
+            var titleAttribute = attributes[TITLE_STRING];
+            var isPresentationRole = !!String(roleAttributeValue)
+                .toLowerCase()
+                .match(/\bpresentation\b/);
             var isEmptyAlt = JsxAttribute_1.isEmpty(altAttribute) || JsxAttribute_1.getStringLiteral(altAttribute) === '';
-            var allowNonEmptyAltWithRolePresentation = options.length > 1
-                ? options[1].allowNonEmptyAltWithRolePresentation
-                : false;
-            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation) {
+            var isEmptyTitle = JsxAttribute_1.isEmpty(titleAttribute) || JsxAttribute_1.getStringLiteral(titleAttribute) === '';
+            var allowNonEmptyAltWithRolePresentation = options.length > 1 ? options[1].allowNonEmptyAltWithRolePresentation : false;
+            var isAltImageFileName = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(JsxAttribute_1.getStringLiteral(altAttribute) || '');
+            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
                 this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
             }
-            else if (isEmptyAlt && !isPresentationRole) {
+            else if (isEmptyAlt && !isPresentationRole && !titleAttribute) {
                 this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
+            }
+            else if (isEmptyAlt && titleAttribute && !isEmptyTitle) {
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
+            }
+            else if (isAltImageFileName) {
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
             }
         }
     };

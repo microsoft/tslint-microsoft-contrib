@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var EMPTY_TITLE_FAILURE_STRING = 'Title elements must not be empty';
 var LONG_TITLE_FAILURE_STRING = 'Title length must not be longer than 60 characters';
@@ -71,7 +73,7 @@ var ReactA11yTitlesRuleWalker = (function (_super) {
                 }
                 else if (node.children[0].kind === ts.SyntaxKind.JsxExpression) {
                     var exp = node.children[0];
-                    if (exp.expression.kind === ts.SyntaxKind.StringLiteral) {
+                    if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                         this.validateTitleText(exp.expression.text, node);
                     }
                 }
@@ -88,5 +90,5 @@ var ReactA11yTitlesRuleWalker = (function (_super) {
         }
     };
     return ReactA11yTitlesRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=reactA11yTitlesRule.js.map

@@ -6,23 +6,21 @@ function getPropName(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
-    return node.name
-        ? node.name.text
-        : undefined;
+    return node.name ? node.name.text : undefined;
 }
 exports.getPropName = getPropName;
 function getStringLiteral(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
-    var initializer = node == null ? null : node.initializer;
+    var initializer = node === undefined ? undefined : node.initializer;
     if (!initializer) {
         return '';
     }
     else if (TypeGuard_1.isStringLiteral(initializer)) {
         return initializer.text.trim();
     }
-    else if (TypeGuard_1.isJsxExpression(initializer) && TypeGuard_1.isStringLiteral(initializer.expression)) {
+    else if (TypeGuard_1.isJsxExpression(initializer) && initializer.expression !== undefined && TypeGuard_1.isStringLiteral(initializer.expression)) {
         return initializer.expression.text;
     }
     else if (TypeGuard_1.isJsxExpression(initializer) && !initializer.expression) {
@@ -37,7 +35,10 @@ function getBooleanLiteral(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
-    var initializer = node == null ? null : node.initializer;
+    var initializer = node === undefined ? undefined : node.initializer;
+    if (initializer === undefined) {
+        return false;
+    }
     var getBooleanFromString = function (value) {
         if (value.toLowerCase() === 'true') {
             return true;
@@ -54,7 +55,10 @@ function getBooleanLiteral(node) {
     }
     else if (TypeGuard_1.isJsxExpression(initializer)) {
         var expression = initializer.expression;
-        if (TypeGuard_1.isStringLiteral(expression)) {
+        if (expression === undefined) {
+            return undefined;
+        }
+        else if (TypeGuard_1.isStringLiteral(expression)) {
             return getBooleanFromString(expression.text);
         }
         else {
@@ -73,20 +77,14 @@ function getBooleanLiteral(node) {
 }
 exports.getBooleanLiteral = getBooleanLiteral;
 function isEmpty(node) {
-    var initializer = node == null ? null : node.initializer;
-    if (initializer == null) {
+    var initializer = node === undefined ? undefined : node.initializer;
+    if (initializer === undefined) {
         return true;
     }
     else if (TypeGuard_1.isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
     }
-    else if (initializer.kind === ts.SyntaxKind.Identifier) {
-        return initializer.getText() === 'undefined';
-    }
-    else if (initializer.kind === ts.SyntaxKind.NullKeyword) {
-        return true;
-    }
-    else if (initializer.expression != null) {
+    else if (initializer.expression !== undefined) {
         var expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
@@ -102,15 +100,18 @@ function getNumericLiteral(node) {
     if (!TypeGuard_1.isJsxAttribute(node)) {
         throw new Error('The node must be a JsxAttribute collected by the AST parser.');
     }
-    var initializer = node == null ? null : node.initializer;
-    return TypeGuard_1.isJsxExpression(initializer) && TypeGuard_1.isNumericLiteral(initializer.expression)
-        ? initializer.expression.text
-        : undefined;
+    var initializer = node === undefined ? undefined : node.initializer;
+    if (initializer !== undefined && TypeGuard_1.isJsxExpression(initializer)) {
+        if (initializer.expression !== undefined && TypeGuard_1.isNumericLiteral(initializer.expression)) {
+            return initializer.expression.text;
+        }
+    }
+    return undefined;
 }
 exports.getNumericLiteral = getNumericLiteral;
 function getAllAttributesFromJsxElement(node) {
-    var attributes = null;
-    if (node == null) {
+    var attributes;
+    if (node === undefined) {
         return attributes;
     }
     else if (TypeGuard_1.isJsxElement(node)) {
@@ -130,11 +131,18 @@ function getAllAttributesFromJsxElement(node) {
 exports.getAllAttributesFromJsxElement = getAllAttributesFromJsxElement;
 function getJsxAttributesFromJsxElement(node) {
     var attributesDictionary = {};
-    getAllAttributesFromJsxElement(node).forEach(function (attr) {
-        if (TypeGuard_1.isJsxAttribute(attr)) {
-            attributesDictionary[getPropName(attr).toLowerCase()] = attr;
-        }
-    });
+    var attributes = getAllAttributesFromJsxElement(node);
+    if (attributes !== undefined) {
+        attributes.forEach(function (attr) {
+            if (!TypeGuard_1.isJsxAttribute(attr)) {
+                return;
+            }
+            var propName = getPropName(attr);
+            if (propName !== undefined) {
+                attributesDictionary[propName.toLowerCase()] = attr;
+            }
+        });
+    }
     return attributesDictionary;
 }
 exports.getJsxAttributesFromJsxElement = getJsxAttributesFromJsxElement;

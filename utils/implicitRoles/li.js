@@ -7,7 +7,7 @@ function getImplicitRoleForLi(node) {
     if (TypeGuard_1.isJsxElement(parentNode)) {
         parentTagName = parentNode.openingElement.tagName.getText();
     }
-    return (parentTagName === 'ol' || parentTagName === 'ul') ? 'listitem' : undefined;
+    return parentTagName === 'ol' || parentTagName === 'ul' ? 'listitem' : undefined;
 }
 exports.li = getImplicitRoleForLi;
 //# sourceMappingURL=li.js.map

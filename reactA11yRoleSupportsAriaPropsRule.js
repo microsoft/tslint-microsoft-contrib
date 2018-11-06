@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -43,8 +46,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'react-a11y-role-supports-aria-props',
         type: 'maintainability',
-        description: 'Enforce that elements with explicit or implicit roles defined contain ' +
-            'only `aria-*` properties supported by that `role`.',
+        description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -77,9 +79,9 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
         if (node.tagName.getText().match(/^[A-Z].*/)) {
             return;
         }
-        if (roleProp != null) {
+        if (roleProp !== undefined) {
             roleValue = JsxAttribute_1.getStringLiteral(roleProp);
-            if (!JsxAttribute_1.isEmpty(roleProp) && roleValue == null) {
+            if (!JsxAttribute_1.isEmpty(roleProp) && roleValue === undefined) {
                 return;
             }
         }
@@ -87,16 +89,16 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
             roleValue = getImplicitRole_1.getImplicitRole(node);
         }
         var isImplicitRole = !roleProp && !!roleValue;
-        var normalizedRoles = (roleValue || '').toLowerCase().split(' ')
-            .filter(function (role) { return !!ROLES[role]; });
+        var normalizedRoles = (roleValue || '')
+            .toLowerCase()
+            .split(' ')
+            .filter(function (role) { return role in ROLES; });
         var supportedAttributeNames = ROLE_SCHEMA.globalSupportedProps;
         normalizedRoles.forEach(function (role) {
             supportedAttributeNames = supportedAttributeNames.concat(ROLES[role].additionalSupportedProps || []);
         });
-        var attributeNamesInElement = Object.keys(attributesInElement)
-            .filter(function (attributeName) { return !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]; });
-        var invalidAttributeNamesInElement = attributeNamesInElement
-            .filter(function (attributeName) { return supportedAttributeNames.indexOf(attributeName) === -1; });
+        var attributeNamesInElement = Object.keys(attributesInElement).filter(function (attributeName) { return !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]; });
+        var invalidAttributeNamesInElement = attributeNamesInElement.filter(function (attributeName) { return supportedAttributeNames.indexOf(attributeName) === -1; });
         var failureString;
         if (normalizedRoles.length === 0) {
             failureString = getFailureStringForNoRole(node.tagName.getText(), invalidAttributeNamesInElement);

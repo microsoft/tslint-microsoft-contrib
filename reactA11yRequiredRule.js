@@ -16,30 +16,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
-var getImplicitRole_1 = require("./utils/getImplicitRole");
-var DOM_SCHEMA = require('./utils/attributes/domSchema.json');
-var FAILURE_STRING = 'Elements with event handlers must have role attribute.';
-var ROLE_STRING = 'role';
-var TARGET_EVENTS = [
-    'click',
-    'keyup',
-    'keydown',
-    'keypress',
-    'mousedown',
-    'mouseup',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'onclick',
-    'onkeyup',
-    'onkeydown',
-    'onkeypress',
-    'onmousedown',
-    'onmouseup',
-    'onmousemove',
-    'onmouseout',
-    'onmouseover'
-];
+var FAILURE_STRING = 'Required input elements must have an aria-required set to true';
+var REQUIRED_STRING = 'required';
+var ARIA_REQUIRED_STRING = 'aria-required';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -47,50 +26,53 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yEventHasRoleWalker(sourceFile, this.getOptions()))
+            ? this.applyWithWalker(new ReactA11yRequiredRuleWalker(sourceFile, this.getOptions()))
             : [];
     };
     Rule.metadata = {
-        ruleName: 'react-a11y-event-has-role',
-        type: 'maintainability',
-        description: 'Elements with event handlers must have role attribute.',
+        ruleName: 'react-a11y-required',
+        type: 'functionality',
+        description: 'Enforce that required input elements must have aria-required set to true',
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
-        severity: 'Important',
+        severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Accessibility'
     };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yEventHasRoleWalker = (function (_super) {
-    __extends(ReactA11yEventHasRoleWalker, _super);
-    function ReactA11yEventHasRoleWalker() {
+var ReactA11yRequiredRuleWalker = (function (_super) {
+    __extends(ReactA11yRequiredRuleWalker, _super);
+    function ReactA11yRequiredRuleWalker() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    ReactA11yEventHasRoleWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxOpeningElement(node.openingElement);
+    ReactA11yRequiredRuleWalker.prototype.visitJsxElement = function (node) {
+        this.validateOpeningElement(node.openingElement);
         _super.prototype.visitJsxElement.call(this, node);
     };
-    ReactA11yEventHasRoleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxOpeningElement(node);
+    ReactA11yRequiredRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
+        this.validateOpeningElement(node);
         _super.prototype.visitJsxSelfClosingElement.call(this, node);
     };
-    ReactA11yEventHasRoleWalker.prototype.checkJsxOpeningElement = function (node) {
+    ReactA11yRequiredRuleWalker.prototype.validateOpeningElement = function (node) {
         var tagName = node.tagName.getText();
-        if (!DOM_SCHEMA[tagName]) {
+        if (tagName !== 'input') {
             return;
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
-        var events = TARGET_EVENTS.filter(function (eventName) { return !!attributes[eventName]; });
-        var hasAriaRole = !!attributes[ROLE_STRING] || !!getImplicitRole_1.getImplicitRole(node);
-        if (events.length > 0 && !hasAriaRole) {
+        var requiredAttribute = attributes[REQUIRED_STRING];
+        if (!requiredAttribute) {
+            return;
+        }
+        var ariaRequiredAttribute = attributes[ARIA_REQUIRED_STRING];
+        if (!ariaRequiredAttribute || JsxAttribute_1.isEmpty(ariaRequiredAttribute) || !JsxAttribute_1.getBooleanLiteral(ariaRequiredAttribute)) {
             this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
     };
-    return ReactA11yEventHasRoleWalker;
+    return ReactA11yRequiredRuleWalker;
 }(Lint.RuleWalker));
-//# sourceMappingURL=reactA11yEventHasRoleRule.js.map
+//# sourceMappingURL=reactA11yRequiredRule.js.map

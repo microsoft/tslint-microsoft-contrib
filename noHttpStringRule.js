@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -25,7 +27,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'no-http-string',
         type: 'maintainability',
-        description: 'Do not use strings that start with \'http:\'. URL strings should start with \'https:\'. ',
+        description: "Do not use strings that start with 'http:'. URL strings should start with 'https:'. ",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -63,7 +65,7 @@ var NoHttpStringWalker = (function (_super) {
         var stringText = node.text;
         if (stringText.indexOf('http:') === 0) {
             if (!this.isSuppressed(stringText)) {
-                var failureString = Rule.FAILURE_STRING + '\'' + stringText + '\'';
+                var failureString = Rule.FAILURE_STRING + "'" + stringText + "'";
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
@@ -81,8 +83,8 @@ var NoHttpStringWalker = (function (_super) {
         if (options instanceof Array) {
             return options;
         }
-        return null;
+        return undefined;
     };
     return NoHttpStringWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noHttpStringRule.js.map

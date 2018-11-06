@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
 var fs = require("fs");
 var chai = require("chai");
+var Utils_1 = require("../utils/Utils");
 var ts = require("typescript");
-var ErrorTolerantWalker_1 = require("../utils/ErrorTolerantWalker");
 var TestHelper;
 (function (TestHelper) {
     var program;
@@ -13,7 +13,7 @@ var TestHelper;
     TestHelper.FILE_ENCODING = 'utf8';
     function assertNoViolation(ruleName, inputFileOrScript, useTypeChecker) {
         if (useTypeChecker === void 0) { useTypeChecker = false; }
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, [], useTypeChecker);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, [], useTypeChecker);
     }
     TestHelper.assertNoViolation = assertNoViolation;
     function assertNoViolationWithOptions(ruleName, options, inputFileOrScript, useTypeChecker) {
@@ -28,11 +28,11 @@ var TestHelper;
     TestHelper.assertViolationsWithOptions = assertViolationsWithOptions;
     function assertViolations(ruleName, inputFileOrScript, expectedFailures, useTypeChecker) {
         if (useTypeChecker === void 0) { useTypeChecker = false; }
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, useTypeChecker);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, useTypeChecker);
     }
     TestHelper.assertViolations = assertViolations;
     function assertViolationsWithTypeChecker(ruleName, inputFileOrScript, expectedFailures) {
-        runRuleAndEnforceAssertions(ruleName, null, inputFileOrScript, expectedFailures, true);
+        runRuleAndEnforceAssertions(ruleName, undefined, inputFileOrScript, expectedFailures, true);
     }
     TestHelper.assertViolationsWithTypeChecker = assertViolationsWithTypeChecker;
     function runRule(ruleName, userOptions, inputFileOrScript, useTypeChecker) {
@@ -44,7 +44,7 @@ var TestHelper;
             rules: new Map(),
             rulesDirectory: []
         };
-        if (userOptions != null && userOptions.length > 0) {
+        if (userOptions !== undefined && userOptions.length > 0) {
             configuration.rules.set(ruleName, {
                 ruleName: ruleName,
                 ruleArguments: userOptions
@@ -61,8 +61,6 @@ var TestHelper;
             rulesDirectory: TestHelper.RULES_DIRECTORY,
             formattersDirectory: TestHelper.FORMATTER_DIRECTORY
         };
-        var debug = ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG;
-        ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG = true;
         var result;
         if (useTypeChecker) {
             program = ts.createProgram([inputFileOrScript], {});
@@ -76,16 +74,15 @@ var TestHelper;
         else {
             var filename = void 0;
             if (inputFileOrScript.indexOf('import React') > -1) {
-                filename = 'file.tsx';
+                filename = Utils_1.Utils.absolutePath('file.tsx');
             }
             else {
-                filename = 'file.ts';
+                filename = Utils_1.Utils.absolutePath('file.ts');
             }
             var linter = new Lint.Linter(options, useTypeChecker ? program : undefined);
             linter.lint(filename, inputFileOrScript, configuration);
             result = linter.getResult();
         }
-        ErrorTolerantWalker_1.ErrorTolerantWalker.DEBUG = debug;
         return result;
     }
     TestHelper.runRule = runRule;
@@ -106,7 +103,7 @@ var TestHelper;
                 expected.ruleSeverity = 'ERROR';
             }
         });
-        var errorMessage = "Wrong # of failures: \n" + JSON.stringify(actualFailures, null, 2);
+        var errorMessage = "Wrong # of failures: \n" + JSON.stringify(actualFailures, undefined, 2);
         chai.assert.equal(actualFailures.length, expectedFailures.length, errorMessage);
         expectedFailures.forEach(function (expected, index) {
             var actual = actualFailures[index];

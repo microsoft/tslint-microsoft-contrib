@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -49,13 +52,13 @@ var NoVarSelfRuleWalker = (function (_super) {
     function NoVarSelfRuleWalker(sourceFile, options) {
         var _this = _super.call(this, sourceFile, options) || this;
         _this.bannedVariableNames = /.*/;
-        if (options.ruleArguments != null && options.ruleArguments.length > 0) {
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
             _this.bannedVariableNames = new RegExp(options.ruleArguments[0]);
         }
         return _this;
     }
     NoVarSelfRuleWalker.prototype.visitVariableDeclaration = function (node) {
-        if (node.initializer != null && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
+        if (node.initializer !== undefined && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 var identifier = node.name;
                 if (this.bannedVariableNames.test(identifier.text)) {

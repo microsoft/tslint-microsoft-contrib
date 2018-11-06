@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,7 +14,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
+var Lint = require("tslint");
+var TypeGuard_1 = require("./TypeGuard");
 var BannedTermWalker = (function (_super) {
     __extends(BannedTermWalker, _super);
     function BannedTermWalker(sourceFile, options, failureString, bannedTerms) {
@@ -20,7 +24,7 @@ var BannedTermWalker = (function (_super) {
         _this.failureString = failureString;
         _this.bannedTerms = bannedTerms;
         _this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'object') {
+            if (TypeGuard_1.isObject(opt)) {
                 _this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
             }
         });
@@ -70,9 +74,9 @@ var BannedTermWalker = (function (_super) {
         _super.prototype.visitParameterDeclaration.call(this, node);
     };
     BannedTermWalker.prototype.validateNode = function (node) {
-        if (node.name) {
-            if (node.name.text) {
-                var text = node.name.text;
+        if (TypeGuard_1.isNamed(node)) {
+            var text = node.name.getText();
+            if (text !== undefined) {
                 if (this.isBannedTerm(text)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
                 }
@@ -83,6 +87,6 @@ var BannedTermWalker = (function (_super) {
         return this.bannedTerms.indexOf(text) !== -1;
     };
     return BannedTermWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 exports.BannedTermWalker = BannedTermWalker;
 //# sourceMappingURL=BannedTermWalker.js.map

@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
@@ -26,8 +28,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'jquery-deferred-must-complete',
         type: 'maintainability',
-        description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called ' +
-            'on it within all code branches in the scope.',
+        description: 'When a JQuery Deferred instance is created, then either reject() or resolve() must be called on it within all code branches in the scope.',
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -37,16 +38,15 @@ var Rule = (function (_super) {
         level: 'Opportunity for Excellence',
         group: 'Correctness'
     };
-    Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve ' +
-        'or reject invoked on all code paths: ';
+    Rule.FAILURE_STRING = 'A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 function isPromiseInstantiation(expression) {
-    if (expression != null && expression.kind === ts.SyntaxKind.CallExpression) {
+    if (expression !== undefined && expression.kind === ts.SyntaxKind.CallExpression) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(expression);
         var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(expression);
-        if (functionName === 'Deferred' && AstUtils_1.AstUtils.isJQuery(functionTarget)) {
+        if (functionName === 'Deferred' && functionTarget !== undefined && AstUtils_1.AstUtils.isJQuery(functionTarget)) {
             return true;
         }
     }
@@ -63,7 +63,7 @@ var JQueryDeferredAnalyzer = (function (_super) {
     JQueryDeferredAnalyzer.prototype.visitBinaryExpression = function (node) {
         if (node.operatorToken.getText() === '=' && isPromiseInstantiation(node.right)) {
             if (node.left.kind === ts.SyntaxKind.Identifier) {
-                if (node.left.text != null) {
+                if (node.left.text !== undefined) {
                     var name_1 = node.left;
                     this.validateDeferredUsage(node, name_1);
                 }
@@ -72,8 +72,8 @@ var JQueryDeferredAnalyzer = (function (_super) {
         _super.prototype.visitBinaryExpression.call(this, node);
     };
     JQueryDeferredAnalyzer.prototype.visitVariableDeclaration = function (node) {
-        if (isPromiseInstantiation(node.initializer)) {
-            if (node.name.text != null) {
+        if (node.initializer !== undefined && isPromiseInstantiation(node.initializer)) {
+            if (node.name.text !== undefined) {
                 var name_2 = node.name;
                 this.validateDeferredUsage(node, name_2);
             }
@@ -85,12 +85,12 @@ var JQueryDeferredAnalyzer = (function (_super) {
         var blockAnalyzer = new DeferredCompletionWalker(this.getSourceFile(), this.getOptions(), deferredIdentifier);
         blockAnalyzer.visitNode(parent);
         if (!blockAnalyzer.isAlwaysCompleted()) {
-            var failureString = Rule.FAILURE_STRING + '\'' + rootNode.getText() + '\'';
+            var failureString = Rule.FAILURE_STRING + "'" + rootNode.getText() + "'";
             this.addFailureAt(rootNode.getStart(), rootNode.getWidth(), failureString);
         }
     };
     return JQueryDeferredAnalyzer;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 var DeferredCompletionWalker = (function (_super) {
     __extends(DeferredCompletionWalker, _super);
     function DeferredCompletionWalker(sourceFile, options, deferredIdentifier) {
@@ -122,7 +122,7 @@ var DeferredCompletionWalker = (function (_super) {
         if (!ifAnalyzer.isAlwaysCompleted()) {
             this.allBranchesCompleted = false;
         }
-        else if (node.elseStatement != null) {
+        else if (node.elseStatement !== undefined) {
             elseAnalyzer.visitNode(node.elseStatement);
             if (!elseAnalyzer.isAlwaysCompleted()) {
                 this.allBranchesCompleted = false;
@@ -175,5 +175,5 @@ var DeferredCompletionWalker = (function (_super) {
         _super.prototype.visitFunctionExpression.call(this, node);
     };
     return DeferredCompletionWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=jqueryDeferredMustCompleteRule.js.map

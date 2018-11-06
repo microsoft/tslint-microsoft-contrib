@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -65,13 +68,15 @@ var ReactA11yProptypesWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ReactA11yProptypesWalker.prototype.visitJsxAttribute = function (node) {
-        var propName = JsxAttribute_1.getPropName(node).toLowerCase();
+        var propNameNode = JsxAttribute_1.getPropName(node);
+        if (propNameNode === undefined) {
+            return;
+        }
+        var propName = propNameNode.toLowerCase();
         if (!aria[propName]) {
             return;
         }
-        var allowUndefined = aria[propName].allowUndefined != null
-            ? aria[propName].allowUndefined
-            : false;
+        var allowUndefined = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
         var expectedType = aria[propName].type;
         var permittedValues = aria[propName].values;
         var propValue = JsxAttribute_1.getStringLiteral(node) || String(JsxAttribute_1.getBooleanLiteral(node));
@@ -89,18 +94,26 @@ var ReactA11yProptypesWalker = (function (_super) {
         }
     };
     ReactA11yProptypesWalker.prototype.validityCheck = function (propValueExpression, propValue, expectedType, permittedValues) {
+        if (propValueExpression === undefined) {
+            return true;
+        }
         switch (expectedType) {
-            case 'boolean': return this.isBoolean(propValueExpression);
-            case 'tristate': return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer': return this.isInteger(propValueExpression);
-            case 'number': return this.isNumber(propValueExpression);
-            case 'string': return this.isString(propValueExpression);
+            case 'boolean':
+                return this.isBoolean(propValueExpression);
+            case 'tristate':
+                return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
+            case 'integer':
+                return this.isInteger(propValueExpression);
+            case 'number':
+                return this.isNumber(propValueExpression);
+            case 'string':
+                return this.isString(propValueExpression);
             case 'token':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    permittedValues.indexOf(propValue.toLowerCase()) > -1;
+                return ((this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    permittedValues.indexOf(propValue.toLowerCase()) > -1);
             case 'tokenlist':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(' ').every(function (token) { return permittedValues.indexOf(token.toLowerCase()) > -1; });
+                return ((this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    propValue.split(' ').every(function (token) { return permittedValues.indexOf(token.toLowerCase()) > -1; }));
             default:
                 return false;
         }
@@ -124,7 +137,7 @@ var ReactA11yProptypesWalker = (function (_super) {
         return false;
     };
     ReactA11yProptypesWalker.prototype.isComplexType = function (node) {
-        return !this.isUndefined(node) && TypeGuard_1.isJsxExpression(node) && !AstUtils_1.AstUtils.isConstant(node.expression);
+        return node !== undefined && !this.isUndefined(node) && TypeGuard_1.isJsxExpression(node) && !AstUtils_1.AstUtils.isConstant(node.expression);
     };
     ReactA11yProptypesWalker.prototype.isBoolean = function (node) {
         if (TypeGuard_1.isStringLiteral(node)) {
@@ -133,6 +146,9 @@ var ReactA11yProptypesWalker = (function (_super) {
         }
         else if (TypeGuard_1.isJsxExpression(node)) {
             var expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
             if (TypeGuard_1.isStringLiteral(expression)) {
                 var propValue = expression.text.toLowerCase();
                 return propValue === 'true' || propValue === 'false';
@@ -149,6 +165,9 @@ var ReactA11yProptypesWalker = (function (_super) {
         }
         else if (TypeGuard_1.isJsxExpression(node)) {
             var expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
             return TypeGuard_1.isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
         }
         return false;
@@ -159,6 +178,9 @@ var ReactA11yProptypesWalker = (function (_super) {
         }
         else if (TypeGuard_1.isJsxExpression(node)) {
             var expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
             if (TypeGuard_1.isStringLiteral(expression)) {
                 return !isNaN(Number(expression.text));
             }
@@ -175,6 +197,9 @@ var ReactA11yProptypesWalker = (function (_super) {
         }
         else if (TypeGuard_1.isJsxExpression(node)) {
             var expression = node.expression;
+            if (expression === undefined) {
+                return false;
+            }
             if (TypeGuard_1.isStringLiteral(expression)) {
                 var value = Number(expression.text);
                 return !isNaN(value) && Math.round(value) === value;
@@ -188,7 +213,7 @@ var ReactA11yProptypesWalker = (function (_super) {
         return false;
     };
     ReactA11yProptypesWalker.prototype.isString = function (node) {
-        return TypeGuard_1.isStringLiteral(node) || (TypeGuard_1.isJsxExpression(node) && TypeGuard_1.isStringLiteral(node.expression));
+        return TypeGuard_1.isStringLiteral(node) || (TypeGuard_1.isJsxExpression(node) && node.expression !== undefined && TypeGuard_1.isStringLiteral(node.expression));
     };
     return ReactA11yProptypesWalker;
 }(Lint.RuleWalker));

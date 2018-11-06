@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -48,19 +51,21 @@ var TsxCurlySpacingWalker = (function (_super) {
         var _this = _super.call(this, sourceFile, options) || this;
         _this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
         _this.allowMultiline = false;
-        if (options.ruleArguments[1] != null) {
+        if (options.ruleArguments[1] !== undefined) {
             _this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
         }
         return _this;
     }
     TsxCurlySpacingWalker.prototype.visitJsxExpression = function (node) {
         var childrenCount = node.getChildCount();
-        var first = node.getFirstToken();
-        var last = node.getLastToken();
-        var second = node.getChildAt(1);
-        var penultimate = node.getChildAt(childrenCount - 2);
-        this.validateBraceSpacing(node, first, second, first);
-        this.validateBraceSpacing(node, penultimate, last, last);
+        if (childrenCount > 2) {
+            var first = node.getFirstToken();
+            var last = node.getLastToken();
+            var second = node.getChildAt(1);
+            var penultimate = node.getChildAt(childrenCount - 2);
+            this.validateBraceSpacing(node, first, second, first);
+            this.validateBraceSpacing(node, penultimate, last, last);
+        }
     };
     TsxCurlySpacingWalker.prototype.visitNode = function (node) {
         if (node.kind === ts.SyntaxKind.JsxExpression) {
@@ -72,6 +77,9 @@ var TsxCurlySpacingWalker = (function (_super) {
         }
     };
     TsxCurlySpacingWalker.prototype.validateBraceSpacing = function (node, first, second, violationRoot) {
+        if (first === undefined || second === undefined || violationRoot === undefined) {
+            return;
+        }
         if (this.isMultiline(first, second)) {
             if (!this.allowMultiline) {
                 this.reportFailure(node, violationRoot, this.getFailureForNewLine(first, violationRoot));
@@ -118,7 +126,9 @@ var TsxCurlySpacingWalker = (function (_super) {
         this.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
     };
     TsxCurlySpacingWalker.prototype.isSpaceBetweenTokens = function (left, right) {
-        var text = this.getSourceFile().getText().slice(left.getEnd(), right.getStart());
+        var text = this.getSourceFile()
+            .getText()
+            .slice(left.getEnd(), right.getStart());
         return /\s/.test(text.replace(/\/\*.*?\*\//g, ''));
     };
     TsxCurlySpacingWalker.prototype.isMultiline = function (left, right) {

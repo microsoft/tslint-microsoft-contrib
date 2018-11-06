@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'Possible timing attack detected. Direct comparison found: ';
 var SENSITIVE_VAR_NAME = /^(password|secret|api|apiKey|token|auth|pass|hash)$/im;
@@ -47,13 +49,15 @@ var PossibleTimingAttackRuleWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PossibleTimingAttackRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken
-            || node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken
-            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken
-            || node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
-            if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText()))
-                && node.left.getText() !== 'null' && node.right.getText() !== 'null'
-                && node.left.getText() !== 'undefined' && node.right.getText() !== 'undefined') {
+        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken ||
+            node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken ||
+            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken ||
+            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
+            if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) &&
+                node.left.getText() !== 'null' &&
+                node.right.getText() !== 'null' &&
+                node.left.getText() !== 'undefined' &&
+                node.right.getText() !== 'undefined') {
                 this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20));
             }
             else {
@@ -65,5 +69,5 @@ var PossibleTimingAttackRuleWalker = (function (_super) {
         }
     };
     return PossibleTimingAttackRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=possibleTimingAttackRule.js.map

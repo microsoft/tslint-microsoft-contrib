@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,10 +15,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
-var FAILURE_STRING = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
+var OPTION_FORCE_REL_REDUNDANCY = 'force-rel-redundancy';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -32,9 +34,17 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'react-anchor-blank-noopener',
         type: 'functionality',
-        description: 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"',
-        options: null,
-        optionsDescription: '',
+        description: 'Anchor tags with target="_blank" should also include rel="noreferrer"',
+        options: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [OPTION_FORCE_REL_REDUNDANCY]
+            },
+            minLength: 0,
+            maxLength: 1
+        },
+        optionsDescription: "One argument may be optionally provided: \n\n' +\n            '* `" + OPTION_FORCE_REL_REDUNDANCY + "` ignores the default `rel=\"noreferrer\"`\n            behaviour which implies `rel=\"noreferrer noopener\"`. Instead, force redundancy\n            for `rel` attribute.",
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
@@ -48,8 +58,17 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
     __extends(ReactAnchorBlankNoopenerRuleWalker, _super);
-    function ReactAnchorBlankNoopenerRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function ReactAnchorBlankNoopenerRuleWalker(sourceFile, options) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.forceRelRedundancy = false;
+        _this.failureString = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
+            _this.forceRelRedundancy = options.ruleArguments.indexOf(OPTION_FORCE_REL_REDUNDANCY) > -1;
+        }
+        if (_this.forceRelRedundancy) {
+            _this.failureString = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
+        }
+        return _this;
     }
     ReactAnchorBlankNoopenerRuleWalker.prototype.visitJsxElement = function (node) {
         var openingElement = node.openingElement;
@@ -65,28 +84,30 @@ var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
             var allAttributes = JsxAttribute_1.getJsxAttributesFromJsxElement(openingElement);
             var target = allAttributes['target'];
             var rel = allAttributes['rel'];
-            if (target != null && JsxAttribute_1.getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel)) {
-                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), FAILURE_STRING);
+            if (target !== undefined && JsxAttribute_1.getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel, this.forceRelRedundancy)) {
+                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), this.failureString);
             }
         }
     };
     return ReactAnchorBlankNoopenerRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
-function isRelAttributeValue(attribute) {
+}(Lint.RuleWalker));
+function isRelAttributeValue(attribute, forceRedundancy) {
     if (JsxAttribute_1.isEmpty(attribute)) {
         return false;
     }
-    if (attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
+    if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
         var expression = attribute.initializer;
-        if (expression.expression != null && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
+        if (expression.expression !== undefined && expression.expression.kind !== ts.SyntaxKind.StringLiteral) {
             return true;
         }
     }
     var stringValue = JsxAttribute_1.getStringLiteral(attribute);
-    if (stringValue == null || stringValue.length === 0) {
+    if (stringValue === undefined || stringValue.length === 0) {
         return false;
     }
     var relValues = stringValue.split(/\s+/);
-    return Utils_1.Utils.contains(relValues, 'noreferrer') && Utils_1.Utils.contains(relValues, 'noopener');
+    return forceRedundancy
+        ? Utils_1.Utils.contains(relValues, 'noreferrer') && Utils_1.Utils.contains(relValues, 'noopener')
+        : Utils_1.Utils.contains(relValues, 'noreferrer');
 }
 //# sourceMappingURL=reactAnchorBlankNoopenerRule.js.map

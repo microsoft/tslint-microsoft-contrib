@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_NOT_FOUND = 'An iframe element requires a sandbox attribute';
 var FAILURE_INVALID_ENTRY = 'An iframe element defines an invalid sandbox attribute: ';
 var FAILURE_INVALID_COMBINATION = 'An iframe element defines a sandbox with both allow-scripts and allow-same-origin';
@@ -83,7 +85,7 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
                 var attributeName = jsxAttribute.name.text;
                 if (attributeName === 'sandbox') {
                     sandboxAttributeFound = true;
-                    if (jsxAttribute.initializer != null && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                    if (jsxAttribute.initializer !== undefined && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                         _this.validateSandboxValue(jsxAttribute.initializer);
                     }
                 }
@@ -114,5 +116,5 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
         }
     };
     return ReactIframeMissingSandboxRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=reactIframeMissingSandboxRule.js.map

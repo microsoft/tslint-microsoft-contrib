@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -45,9 +47,9 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     NoUnnecessaryOverrideRuleWalker.prototype.visitMethodDeclaration = function (node) {
-        if (node.body != null) {
+        if (node.body !== undefined) {
             var statement = this.getSingleStatement(node.body);
-            if (statement != null) {
+            if (statement !== undefined) {
                 if (this.isSuperCall(node, statement) && this.isMatchingArgumentList(node, statement)) {
                     this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node));
                 }
@@ -59,11 +61,11 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         if (block.statements.length === 1) {
             return block.statements[0];
         }
-        return null;
+        return undefined;
     };
     NoUnnecessaryOverrideRuleWalker.prototype.isMatchingArgumentList = function (node, statement) {
         var call = this.getCallExpressionFromStatement(statement);
-        if (call == null) {
+        if (call === undefined) {
             return false;
         }
         if (call.arguments.length === 0 && node.parameters.length === 0) {
@@ -92,7 +94,7 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
     };
     NoUnnecessaryOverrideRuleWalker.prototype.isSuperCall = function (node, statement) {
         var call = this.getCallExpressionFromStatement(statement);
-        if (call == null) {
+        if (call === undefined) {
             return false;
         }
         if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
@@ -113,19 +115,19 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         }
         else if (statement.kind === ts.SyntaxKind.ReturnStatement) {
             expression = statement.expression;
-            if (expression == null) {
-                return null;
+            if (expression === undefined) {
+                return undefined;
             }
         }
         else {
-            return null;
+            return undefined;
         }
         if (expression.kind !== ts.SyntaxKind.CallExpression) {
-            return null;
+            return undefined;
         }
         var call = expression;
         if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
-            return null;
+            return undefined;
         }
         return call;
     };
@@ -137,5 +139,5 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         return '<unknown>';
     };
     return NoUnnecessaryOverrideRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noUnnecessaryOverrideRule.js.map

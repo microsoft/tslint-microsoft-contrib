@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
@@ -47,9 +49,10 @@ var PromiseAnalyzer = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PromiseAnalyzer.prototype.isPromiseDeclaration = function (node) {
-        if (node.expression.kind === ts.SyntaxKind.Identifier
-            && node.expression.getText() === 'Promise'
-            && node.arguments != null && node.arguments.length > 0) {
+        if (node.expression.kind === ts.SyntaxKind.Identifier &&
+            node.expression.getText() === 'Promise' &&
+            node.arguments !== undefined &&
+            node.arguments.length > 0) {
             var firstArg = node.arguments[0];
             if (firstArg.kind === ts.SyntaxKind.ArrowFunction || firstArg.kind === ts.SyntaxKind.FunctionExpression) {
                 return true;
@@ -59,25 +62,27 @@ var PromiseAnalyzer = (function (_super) {
     };
     PromiseAnalyzer.prototype.getCompletionIdentifiers = function (declaration) {
         var result = [];
-        if (declaration.parameters == null || declaration.parameters.length === 0) {
+        if (declaration.parameters === undefined || declaration.parameters.length === 0) {
             return result;
         }
         var arg1 = declaration.parameters[0];
         var arg2 = declaration.parameters[1];
-        if (arg1 != null && arg1.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg1 !== undefined && arg1.name.kind === ts.SyntaxKind.Identifier) {
             result.push(declaration.parameters[0].name);
         }
-        if (arg2 != null && arg2.name.kind === ts.SyntaxKind.Identifier) {
+        if (arg2 !== undefined && arg2.name.kind === ts.SyntaxKind.Identifier) {
             result.push(declaration.parameters[1].name);
         }
         return result;
     };
     PromiseAnalyzer.prototype.visitNewExpression = function (node) {
-        if (this.isPromiseDeclaration(node)) {
+        if (this.isPromiseDeclaration(node) && node.arguments !== undefined) {
             var functionArgument = node.arguments[0];
             var functionBody = functionArgument.body;
-            var competionIdentifiers = this.getCompletionIdentifiers(functionArgument);
-            this.validatePromiseUsage(node, functionBody, competionIdentifiers);
+            if (functionBody !== undefined) {
+                var competionIdentifiers = this.getCompletionIdentifiers(functionArgument);
+                this.validatePromiseUsage(node, functionBody, competionIdentifiers);
+            }
         }
         _super.prototype.visitNewExpression.call(this, node);
     };
@@ -89,7 +94,7 @@ var PromiseAnalyzer = (function (_super) {
         }
     };
     return PromiseAnalyzer;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 var PromiseCompletionWalker = (function (_super) {
     __extends(PromiseCompletionWalker, _super);
     function PromiseCompletionWalker(sourceFile, options, completionIdentifiers) {
@@ -121,7 +126,7 @@ var PromiseCompletionWalker = (function (_super) {
         if (!ifAnalyzer.isAlwaysCompleted()) {
             this.allBranchesCompleted = false;
         }
-        else if (node.elseStatement != null) {
+        else if (node.elseStatement !== undefined) {
             elseAnalyzer.visitNode(node.elseStatement);
             if (!elseAnalyzer.isAlwaysCompleted()) {
                 this.allBranchesCompleted = false;
@@ -179,5 +184,5 @@ var PromiseCompletionWalker = (function (_super) {
         });
     };
     return PromiseCompletionWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=promiseMustCompleteRule.js.map

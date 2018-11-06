@@ -1,8 +1,11 @@
 'use strict';
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,10 +14,16 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var BaseFormatter_1 = require("./utils/BaseFormatter");
+var warnedForDeprecation = false;
 var Formatter = (function (_super) {
     __extends(Formatter, _super);
     function Formatter() {
-        return _super.call(this, 'no-require-imports', function (failure) {
+        var _this = this;
+        if (!warnedForDeprecation) {
+            console.warn('The fix-no-require-imports formatter is deprecated. Use --fix instead.');
+            warnedForDeprecation = true;
+        }
+        _this = _super.call(this, 'no-require-imports', function (failure) {
             var fileName = failure.getFileName();
             var fileContents = this.readFile(fileName);
             var start = failure.getStartPosition().getPosition();
@@ -33,6 +42,7 @@ var Formatter = (function (_super) {
             this.writeFile(fileName, newContent);
             console.log('Automatically converting require-style import to an ES6 import. Please re-compile and re-lint: ' + fileName);
         }) || this;
+        return _this;
     }
     return Formatter;
 }(BaseFormatter_1.BaseFormatter));

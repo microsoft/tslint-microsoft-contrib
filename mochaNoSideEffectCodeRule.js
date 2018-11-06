@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,10 +15,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var MochaUtils_1 = require("./utils/MochaUtils");
 var Utils_1 = require("./utils/Utils");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var FAILURE_STRING = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -52,8 +55,8 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     MochaNoSideEffectCodeRuleWalker.prototype.parseOptions = function () {
         var _this = this;
         this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'object') {
-                if (opt.ignore != null) {
+            if (TypeGuard_1.isObject(opt)) {
+                if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
                     _this.ignoreRegex = new RegExp(opt.ignore);
                 }
             }
@@ -66,7 +69,9 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
                 if (statement.kind === ts.SyntaxKind.VariableStatement) {
                     var declarationList = statement.declarationList;
                     declarationList.declarations.forEach(function (declaration) {
-                        _this.validateExpression(declaration.initializer, declaration);
+                        if (declaration.initializer !== undefined) {
+                            _this.validateExpression(declaration.initializer, declaration);
+                        }
                     });
                 }
                 if (MochaUtils_1.MochaUtils.isStatementDescribeCall(statement)) {
@@ -78,7 +83,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         }
     };
     MochaNoSideEffectCodeRuleWalker.prototype.visitVariableDeclaration = function (node) {
-        if (this.isInDescribe === true) {
+        if (this.isInDescribe === true && node.initializer !== undefined) {
             this.validateExpression(node.initializer, node);
         }
     };
@@ -104,14 +109,13 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
     };
     MochaNoSideEffectCodeRuleWalker.prototype.validateExpression = function (initializer, parentNode) {
         var _this = this;
-        if (initializer == null) {
+        if (initializer === undefined) {
             return;
         }
         if (AstUtils_1.AstUtils.isConstant(initializer)) {
             return;
         }
-        if (initializer.kind === ts.SyntaxKind.FunctionExpression
-            || initializer.kind === ts.SyntaxKind.ArrowFunction) {
+        if (initializer.kind === ts.SyntaxKind.FunctionExpression || initializer.kind === ts.SyntaxKind.ArrowFunction) {
             return;
         }
         if (initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
@@ -151,8 +155,8 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         if (initializer.getText() === 'moment()') {
             return;
         }
-        if (initializer.kind === ts.SyntaxKind.CallExpression
-            && AstUtils_1.AstUtils.getFunctionTarget(initializer) === 'moment()') {
+        if (initializer.kind === ts.SyntaxKind.CallExpression &&
+            AstUtils_1.AstUtils.getFunctionTarget(initializer) === 'moment()') {
             return;
         }
         if (initializer.kind === ts.SyntaxKind.NewExpression) {
@@ -160,7 +164,22 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
                 return;
             }
         }
-        if (this.ignoreRegex != null && this.ignoreRegex.test(initializer.getText())) {
+        if (initializer.kind === ts.SyntaxKind.CallExpression) {
+            var callExp = initializer;
+            if (callExp.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+                var propExp = callExp.expression;
+                if (propExp.expression.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+                    if (propExp.name.getText() === 'forEach') {
+                        this.validateExpression(propExp.expression, parentNode);
+                        callExp.arguments.forEach(function (arg) {
+                            _super.prototype.visitNode.call(_this, arg);
+                        });
+                        return;
+                    }
+                }
+            }
+        }
+        if (this.ignoreRegex !== undefined && this.ignoreRegex.test(initializer.getText())) {
             return;
         }
         if (AstUtils_1.AstUtils.isConstantExpression(initializer)) {
@@ -170,5 +189,5 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
     };
     return MochaNoSideEffectCodeRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=mochaNoSideEffectCodeRule.js.map

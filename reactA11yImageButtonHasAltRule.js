@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -64,7 +67,11 @@ var ReactA11yImageButtonHasAltWalker = (function (_super) {
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var typeAttribute = attributes[TYPE_STRING];
-        if (!typeAttribute || !TypeGuard_1.isStringLiteral(typeAttribute.initializer) || JsxAttribute_1.getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
+        if (!typeAttribute ||
+            typeAttribute.initializer === undefined ||
+            !TypeGuard_1.isStringLiteral(typeAttribute.initializer) ||
+            JsxAttribute_1.getStringLiteral(typeAttribute) === undefined ||
+            JsxAttribute_1.getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
             return;
         }
         var altAttribute = attributes[ALT_STRING];

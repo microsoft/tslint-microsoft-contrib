@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -45,10 +47,10 @@ var UseNamedParameterWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     UseNamedParameterWalker.prototype.visitElementAccessExpression = function (node) {
-        if (node.argumentExpression != null) {
+        if (node.argumentExpression !== undefined) {
             if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
                 if (node.expression.getText() === 'arguments') {
-                    var failureString = Rule.FAILURE_STRING + '\'' + node.getText() + '\'';
+                    var failureString = Rule.FAILURE_STRING + "'" + node.getText() + "'";
                     this.addFailureAt(node.getStart(), node.getWidth(), failureString);
                 }
             }
@@ -56,5 +58,5 @@ var UseNamedParameterWalker = (function (_super) {
         _super.prototype.visitElementAccessExpression.call(this, node);
     };
     return UseNamedParameterWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=useNamedParameterRule.js.map

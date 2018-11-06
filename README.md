@@ -15,14 +15,14 @@ npm install tslint-microsoft-contrib --save-dev
 
 ## TSLint and corresponding tslint-microsoft-contrib version
 
-| TSLint version | tslint-microsoft-contrib version |
-| -------------- | ---------------------------------------------**\_\_\_\_** |
-| **>= 5.x** | 5.x and 6.x (supporting TypeScript 2.3.x, >=2.4, 3.x) |
-| **>= 4.x** | 4.x (supporting TypeScript 2.1.x) |
-| **>= 3.2.x** | 2.x |
-| **3.1.x** | unsupported |
-| **3.0.x** | unsupported |
-| **2.x** | 1.x |
+| TSLint version | tslint-microsoft-contrib version                      |
+| -------------- | ----------------------------------------------------- |
+| **>= 5.x**     | 5.x and 6.x (supporting TypeScript 2.3.x, >=2.4, 3.x) |
+| **>= 4.x**     | 4.x (supporting TypeScript 2.1.x)                     |
+| **>= 3.2.x**   | 2.x                                                   |
+| **3.1.x**      | unsupported                                           |
+| **3.0.x**      | unsupported                                           |
+| **2.x**        | 1.x                                                   |
 
 ## Configuration
 

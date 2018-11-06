@@ -4,10 +4,24 @@
 This was a _huge_ one.
 Thanks so much to our many contributors, both during #hacktoberfest and in the surrounding weeks!
 
-* [#634](https://github.com/Microsoft/tslint-microsoft-contrib/issues/634) Remove absolute paths from error messages
+⚠️ Breaking changes:
+
 * [#632](https://github.com/Microsoft/tslint-microsoft-contrib/issues/632) Update `export-name`: fixed overly permissive validator
 * [#624](https://github.com/Microsoft/tslint-microsoft-contrib/issues/624) Update `no-relative-imports`: disallow `.` and `..` path components
 * [#594](https://github.com/Microsoft/tslint-microsoft-contrib/issues/594) Update `import-name`: fixed for long `../..` paths and similar
+* [#527](https://github.com/Microsoft/tslint-microsoft-contrib/issues/527) Allow `.jsx` files to be considered as TSX
+
+➕ New rules:
+
+* [#457](https://github.com/Microsoft/tslint-microsoft-contrib/issues/457) New rule: `informative docs`
+* [#280](https://github.com/Microsoft/tslint-microsoft-contrib/issues/280) New rule: `react-a11y-required`
+* [#278](https://github.com/Microsoft/tslint-microsoft-contrib/issues/278) New rule: `react-a11y-no-onchange`
+* [#275](https://github.com/Microsoft/tslint-microsoft-contrib/issues/275) New rule: `react-a11y-input-elements`
+* [#253](https://github.com/Microsoft/tslint-microsoft-contrib/issues/253) New rule: `non-literal-fs-path`
+
+✅ General changes:
+
+* [#634](https://github.com/Microsoft/tslint-microsoft-contrib/issues/634) Remove absolute paths from error messages
 * [#588](https://github.com/Microsoft/tslint-microsoft-contrib/issues/588) Update `import-name`: better documentation on complex packages
 * [#571](https://github.com/Microsoft/tslint-microsoft-contrib/issues/571) Update `react-anchor-blank-noopener`: option to avoid redundant rel values
 * [#545](https://github.com/Microsoft/tslint-microsoft-contrib/issues/545) Update `mocha-no-side-effect-code`: ignore `.forEach` setups
@@ -15,14 +29,12 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 * [#537](https://github.com/Microsoft/tslint-microsoft-contrib/issues/537) Update `react-no-dangerous-html`: suppressions no longer require absolute paths
 * [#535](https://github.com/Microsoft/tslint-microsoft-contrib/issues/535) Update `react-this-binding-issue`: performance boost from internal `Set`s
 * [#531](https://github.com/Microsoft/tslint-microsoft-contrib/issues/531) Update `export-name`: case-insensitive by default
-* [#527](https://github.com/Microsoft/tslint-microsoft-contrib/issues/527) Allow `.jsx` files to be considered as TSX
 * [#525](https://github.com/Microsoft/tslint-microsoft-contrib/issues/525) Don't consider `.tsx.ts` files as TSX
 * [#518](https://github.com/Microsoft/tslint-microsoft-contrib/issues/518) Update `no-function-expression`: exclude generics in `.tsx` files
 * [#498](https://github.com/Microsoft/tslint-microsoft-contrib/issues/498) Update `function-name`: add options for overlapping private and/or static method types
 * [#493](https://github.com/Microsoft/tslint-microsoft-contrib/issues/493) Update `no-relative-import`: allow same folder imports
 * [#486](https://github.com/Microsoft/tslint-microsoft-contrib/issues/486) Remove `newline-before-return` from recommended preset
 * [#459](https://github.com/Microsoft/tslint-microsoft-contrib/issues/459) Update `function-name`: support symbol properties as names
-* [#457](https://github.com/Microsoft/tslint-microsoft-contrib/issues/457) New rule: `informative docs`
 * [#451](https://github.com/Microsoft/tslint-microsoft-contrib/issues/451) Update `import-name`: allow more forms of specifies with hyphens
 * [#440](https://github.com/Microsoft/tslint-microsoft-contrib/issues/440) Update `no-suspicious-comment`: allow links to issues
 * [#437](https://github.com/Microsoft/tslint-microsoft-contrib/issues/437) Update `react-a11y-image-button-has-alt`: no longer throw on input elements
@@ -38,11 +50,9 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 * [#362](https://github.com/Microsoft/tslint-microsoft-contrib/issues/362) Update `no-increment-decrement`: add an `allow-for-loop` option
 * [#353](https://github.com/Microsoft/tslint-microsoft-contrib/issues/353) Update `react-tsx-curly-spacing`: empty `{}` node when it only contains comments
 * [#317](https://github.com/Microsoft/tslint-microsoft-contrib/issues/317) Update `react-a11y-img-has-alt`: alt-text cannot be an image file name
-* [#280](https://github.com/Microsoft/tslint-microsoft-contrib/issues/280) New rule: `react-a11y-required`
-* [#278](https://github.com/Microsoft/tslint-microsoft-contrib/issues/278) New rule: `react-a11y-no-onchange`
 * [#276](https://github.com/Microsoft/tslint-microsoft-contrib/issues/276) Update `img-alt-ignored-image-support`: add check for title attribute for images
-* [#275](https://github.com/Microsoft/tslint-microsoft-contrib/issues/275) New rule: `react-a11y-input-elements`
-* [#253](https://github.com/Microsoft/tslint-microsoft-contrib/issues/253) New rule: `non-literal-fs-path`
+
+☑️ Internal source code improvements:
 
 * [#622](https://github.com/Microsoft/tslint-microsoft-contrib/issues/622) Added Node versions 10 and 11 on Travis
 * [#616](https://github.com/Microsoft/tslint-microsoft-contrib/pulls/616) Add watcher that will run tests and lint

@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -36,17 +38,35 @@ var Rule = (function (_super) {
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };
-    Rule.FAILURE_FUNCTION_WITH_BIND = 'Binding function literal with \'this\' context. Use lambdas instead';
-    Rule.FAILURE_ARROW_WITH_BIND = 'Binding lambda with \'this\' context. Lambdas already have \'this\' bound';
+    Rule.FAILURE_FUNCTION_WITH_BIND = "Binding function literal with 'this' context. Use lambdas instead";
+    Rule.FAILURE_ARROW_WITH_BIND = "Binding lambda with 'this' context. Lambdas already have 'this' bound";
     Rule.UNDERSCORE_BINARY_FUNCTION_NAMES = [
-        'all', 'any', 'collect', 'countBy', 'detect', 'each',
-        'every', 'filter', 'find', 'forEach', 'groupBy', 'indexBy',
-        'map', 'max', 'max', 'min', 'partition', 'reject',
-        'select', 'some', 'sortBy', 'times', 'uniq', 'unique'
+        'all',
+        'any',
+        'collect',
+        'countBy',
+        'detect',
+        'each',
+        'every',
+        'filter',
+        'find',
+        'forEach',
+        'groupBy',
+        'indexBy',
+        'map',
+        'max',
+        'max',
+        'min',
+        'partition',
+        'reject',
+        'select',
+        'some',
+        'sortBy',
+        'times',
+        'uniq',
+        'unique'
     ];
-    Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = [
-        'foldl', 'foldr', 'inject', 'reduce', 'reduceRight'
-    ];
+    Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = ['foldl', 'foldr', 'inject', 'reduce', 'reduceRight'];
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -58,13 +78,15 @@ var NoUnnecessaryBindRuleWalker = (function (_super) {
     NoUnnecessaryBindRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
         var analyzers = [
-            new TypeScriptFunctionAnalyzer(), new UnderscoreStaticAnalyzer(), new UnderscoreInstanceAnalyzer()
+            new TypeScriptFunctionAnalyzer(),
+            new UnderscoreStaticAnalyzer(),
+            new UnderscoreInstanceAnalyzer()
         ];
         analyzers.forEach(function (analyzer) {
             if (analyzer.canHandle(node)) {
                 var contextArgument = analyzer.getContextArgument(node);
                 var functionArgument = analyzer.getFunctionArgument(node);
-                if (contextArgument == null || functionArgument == null) {
+                if (contextArgument === undefined || functionArgument === undefined) {
                     return;
                 }
                 if (contextArgument.getText() === 'this') {
@@ -80,14 +102,14 @@ var NoUnnecessaryBindRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     return NoUnnecessaryBindRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 var TypeScriptFunctionAnalyzer = (function () {
     function TypeScriptFunctionAnalyzer() {
     }
     TypeScriptFunctionAnalyzer.prototype.canHandle = function (node) {
-        return !!(AstUtils_1.AstUtils.getFunctionName(node) === 'bind'
-            && node.arguments.length === 1
-            && node.expression.kind === ts.SyntaxKind.PropertyAccessExpression);
+        return !!(AstUtils_1.AstUtils.getFunctionName(node) === 'bind' &&
+            node.arguments.length === 1 &&
+            node.expression.kind === ts.SyntaxKind.PropertyAccessExpression);
     };
     TypeScriptFunctionAnalyzer.prototype.getContextArgument = function (node) {
         return node.arguments[0];
@@ -124,7 +146,7 @@ var UnderscoreStaticAnalyzer = (function () {
         else if (functionName === 'bind') {
             return node.arguments[1];
         }
-        return null;
+        return undefined;
     };
     UnderscoreStaticAnalyzer.prototype.getFunctionArgument = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
@@ -140,7 +162,7 @@ var UnderscoreStaticAnalyzer = (function () {
         else if (functionName === 'bind') {
             return node.arguments[0];
         }
-        return null;
+        return undefined;
     };
     return UnderscoreStaticAnalyzer;
 }());
@@ -168,7 +190,7 @@ var UnderscoreInstanceAnalyzer = (function () {
         else if (functionName === 'sortedIndex') {
             return node.arguments[2];
         }
-        return null;
+        return undefined;
     };
     UnderscoreInstanceAnalyzer.prototype.getFunctionArgument = function (node) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
@@ -181,7 +203,7 @@ var UnderscoreInstanceAnalyzer = (function () {
         else if (functionName === 'sortedIndex') {
             return node.arguments[1];
         }
-        return null;
+        return undefined;
     };
     return UnderscoreInstanceAnalyzer;
 }());

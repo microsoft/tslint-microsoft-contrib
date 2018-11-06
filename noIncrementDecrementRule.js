@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var OPTION_ALLOW_FOR_LOOPS = 'allow-for-loops';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,8 +28,16 @@ var Rule = (function (_super) {
         ruleName: 'no-increment-decrement',
         type: 'maintainability',
         description: 'Avoid use of increment and decrement operators particularly as part of complicated expressions',
-        options: null,
-        optionsDescription: '',
+        options: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [OPTION_ALLOW_FOR_LOOPS]
+            },
+            minLength: 0,
+            maxLength: 1
+        },
+        optionsDescription: "One argument may be optionally provided: \n\n' +\n        '* `" + OPTION_ALLOW_FOR_LOOPS + "` allows increments and decrement operators to be used in for loop headers.",
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -40,9 +51,25 @@ var Rule = (function (_super) {
 exports.Rule = Rule;
 var NoIncrementDecrementWalker = (function (_super) {
     __extends(NoIncrementDecrementWalker, _super);
-    function NoIncrementDecrementWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function NoIncrementDecrementWalker(sourceFile, options) {
+        var _this = _super.call(this, sourceFile, options) || this;
+        _this.allowForLoops = options.ruleArguments.indexOf(OPTION_ALLOW_FOR_LOOPS) > -1;
+        return _this;
     }
+    NoIncrementDecrementWalker.prototype.visitForStatement = function (node) {
+        if (this.allowForLoops) {
+            _super.prototype.visitNode.call(this, node.statement);
+            if (node.initializer) {
+                _super.prototype.visitNode.call(this, node.initializer);
+            }
+            if (node.condition) {
+                _super.prototype.visitNode.call(this, node.condition);
+            }
+        }
+        else {
+            _super.prototype.visitForStatement.call(this, node);
+        }
+    };
     NoIncrementDecrementWalker.prototype.visitPostfixUnaryExpression = function (node) {
         this.validateUnaryExpression(node);
         _super.prototype.visitPostfixUnaryExpression.call(this, node);
@@ -60,5 +87,5 @@ var NoIncrementDecrementWalker = (function (_super) {
         }
     };
     return NoIncrementDecrementWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noIncrementDecrementRule.js.map

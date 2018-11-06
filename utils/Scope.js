@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
+var Lint = require("tslint");
 var AstUtils_1 = require("./AstUtils");
 var Scope = (function () {
     function Scope(parent) {
@@ -31,7 +34,7 @@ var Scope = (function () {
         if (this.symbols[symbolString] === ts.SyntaxKind.Unknown) {
             return false;
         }
-        if (this.parent != null) {
+        if (this.parent !== undefined) {
             return this.parent.isFunctionSymbol(symbolString);
         }
         return false;
@@ -51,8 +54,12 @@ var Scope = (function () {
         var _this = this;
         var refCollector = new GlobalReferenceCollector(sourceFile, options);
         refCollector.visitNode(node);
-        refCollector.functionIdentifiers.forEach(function (identifier) { _this.addFunctionSymbol(identifier); });
-        refCollector.nonFunctionIdentifiers.forEach(function (identifier) { _this.addNonFunctionSymbol(identifier); });
+        refCollector.functionIdentifiers.forEach(function (identifier) {
+            _this.addFunctionSymbol(identifier);
+        });
+        refCollector.nonFunctionIdentifiers.forEach(function (identifier) {
+            _this.addNonFunctionSymbol(identifier);
+        });
     };
     return Scope;
 }());
@@ -81,5 +88,5 @@ var GlobalReferenceCollector = (function (_super) {
         }
     };
     return GlobalReferenceCollector;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=Scope.js.map

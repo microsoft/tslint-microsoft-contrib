@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -58,18 +60,16 @@ var NoControlRegexRuleWalker = (function (_super) {
         _super.prototype.visitRegularExpressionLiteral.call(this, node);
     };
     NoControlRegexRuleWalker.prototype.validateCall = function (expression) {
-        if (expression.expression.getText() === 'RegExp') {
-            if (expression.arguments.length > 0) {
-                var arg1 = expression.arguments[0];
-                if (arg1.kind === ts.SyntaxKind.StringLiteral) {
-                    var regexpText = arg1.text;
-                    if (/[\x00-\x1f]/.test(regexpText)) {
-                        this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
-                    }
+        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
+            var arg1 = expression.arguments[0];
+            if (arg1.kind === ts.SyntaxKind.StringLiteral) {
+                var regexpText = arg1.text;
+                if (/[\x00-\x1f]/.test(regexpText)) {
+                    this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
                 }
             }
         }
     };
     return NoControlRegexRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noControlRegexRule.js.map

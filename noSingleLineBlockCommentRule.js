@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -48,10 +51,10 @@ var NoSingleLineBlockCommentRuleWalker = (function (_super) {
         var _this = this;
         tsutils_1.forEachTokenWithTrivia(node, function (fullText, tokenSyntaxKind, range) {
             var tokenText = fullText.substring(range.pos, range.end);
-            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia
-                && _this.isSingleLineComment(tokenText)
-                && !_this.isTsLintSuppression(tokenText)
-                && !_this.isFollowedByMoreCodeOnSameLine(fullText, range)) {
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia &&
+                _this.isSingleLineComment(tokenText) &&
+                !_this.isTsLintSuppression(tokenText) &&
+                !_this.isFollowedByMoreCodeOnSameLine(fullText, range)) {
                 _this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });

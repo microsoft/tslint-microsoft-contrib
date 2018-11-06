@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_UNDEFINED_INIT = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
 var FAILURE_UNDEFINED_DUPE = 'Unnecessary field initialization. Field value already initialized in declaration: ';
@@ -65,14 +67,14 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
         var initializer = node.initializer;
         if (node.name.kind === ts.SyntaxKind.Identifier) {
             var fieldName = 'this.' + node.name.getText();
-            if (initializer == null) {
+            if (initializer === undefined) {
                 this.fieldInitializations[fieldName] = undefined;
             }
             else if (AstUtils_1.AstUtils.isConstant(initializer)) {
                 this.fieldInitializations[fieldName] = initializer.getText();
             }
         }
-        if (AstUtils_1.AstUtils.isUndefined(initializer)) {
+        if (initializer !== undefined && AstUtils_1.AstUtils.isUndefined(initializer)) {
             var start = initializer.getStart();
             var width = initializer.getWidth();
             this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + node.name.getText());
@@ -80,7 +82,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
     };
     UnnecessaryFieldInitializationRuleWalker.prototype.visitConstructorDeclaration = function (node) {
         var _this = this;
-        if (node.body != null) {
+        if (node.body !== undefined) {
             node.body.statements.forEach(function (statement) {
                 if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
                     var expression = statement.expression;
@@ -92,7 +94,7 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                             if (AstUtils_1.AstUtils.isUndefined(binaryExpression.right)) {
                                 if (Object.keys(_this.fieldInitializations).indexOf(propertyName) > -1) {
                                     var fieldInitValue = _this.fieldInitializations[propertyName];
-                                    if (fieldInitValue == null) {
+                                    if (fieldInitValue === undefined) {
                                         var start = property.getStart();
                                         var width = property.getWidth();
                                         _this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());
@@ -115,5 +117,5 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
         }
     };
     return UnnecessaryFieldInitializationRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noUnnecessaryFieldInitializationRule.js.map

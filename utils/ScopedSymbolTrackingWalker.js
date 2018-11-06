@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,9 +14,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
-var ErrorTolerantWalker_1 = require("./ErrorTolerantWalker");
+var Lint = require("tslint");
 var AstUtils_1 = require("./AstUtils");
 var Scope_1 = require("./Scope");
+var TypeGuard_1 = require("./TypeGuard");
 var ScopedSymbolTrackingWalker = (function (_super) {
     __extends(ScopedSymbolTrackingWalker, _super);
     function ScopedSymbolTrackingWalker(sourceFile, options, program) {
@@ -29,21 +33,20 @@ var ScopedSymbolTrackingWalker = (function (_super) {
             var targetType = this.typeChecker.getTypeAtLocation(propExp.expression);
             return this.typeChecker.typeToString(targetType);
         }
-        return null;
+        return undefined;
     };
     ScopedSymbolTrackingWalker.prototype.isExpressionEvaluatingToFunction = function (expression) {
-        if (expression.kind === ts.SyntaxKind.ArrowFunction
-            || expression.kind === ts.SyntaxKind.FunctionExpression) {
+        if (expression.kind === ts.SyntaxKind.ArrowFunction || expression.kind === ts.SyntaxKind.FunctionExpression) {
             return true;
         }
-        if (expression.kind === ts.SyntaxKind.StringLiteral
-            || expression.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
-            || expression.kind === ts.SyntaxKind.TemplateExpression
-            || expression.kind === ts.SyntaxKind.TaggedTemplateExpression
-            || expression.kind === ts.SyntaxKind.BinaryExpression) {
+        if (expression.kind === ts.SyntaxKind.StringLiteral ||
+            expression.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral ||
+            expression.kind === ts.SyntaxKind.TemplateExpression ||
+            expression.kind === ts.SyntaxKind.TaggedTemplateExpression ||
+            expression.kind === ts.SyntaxKind.BinaryExpression) {
             return false;
         }
-        if (this.scope.isFunctionSymbol(expression.getText())) {
+        if (this.scope !== undefined && this.scope.isFunctionSymbol(expression.getText())) {
             return true;
         }
         if (expression.kind === ts.SyntaxKind.Identifier && this.typeChecker) {
@@ -53,8 +56,8 @@ var ScopedSymbolTrackingWalker = (function (_super) {
             }
             return false;
         }
-        if (expression.kind === ts.SyntaxKind.CallExpression) {
-            if (expression.expression.name && expression.expression.name.getText() === 'bind') {
+        if (ts.isCallExpression(expression)) {
+            if (TypeGuard_1.isNamed(expression.expression) && expression.expression.name.getText() === 'bind') {
                 return true;
             }
             try {
@@ -62,8 +65,10 @@ var ScopedSymbolTrackingWalker = (function (_super) {
                     return true;
                 }
                 var signature = this.typeChecker.getResolvedSignature(expression);
-                var expressionType = this.typeChecker.getReturnTypeOfSignature(signature);
-                return this.isFunctionType(expressionType, this.typeChecker);
+                if (signature !== undefined) {
+                    var expressionType = this.typeChecker.getReturnTypeOfSignature(signature);
+                    return this.isFunctionType(expressionType, this.typeChecker);
+                }
             }
             catch (e) {
                 return false;
@@ -76,19 +81,19 @@ var ScopedSymbolTrackingWalker = (function (_super) {
     };
     ScopedSymbolTrackingWalker.prototype.isFunctionType = function (expressionType, typeChecker) {
         var signatures = typeChecker.getSignaturesOfType(expressionType, ts.SignatureKind.Call);
-        if (signatures != null && signatures.length > 0) {
+        if (signatures !== undefined && signatures.length > 0) {
             var signatureDeclaration = signatures[0].declaration;
-            if (signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
+            if (signatureDeclaration !== undefined && signatureDeclaration.kind === ts.SyntaxKind.FunctionType) {
                 return true;
             }
         }
         return false;
     };
     ScopedSymbolTrackingWalker.prototype.visitSourceFile = function (node) {
-        this.scope = new Scope_1.Scope(null);
+        this.scope = new Scope_1.Scope(undefined);
         this.scope.addGlobalScope(node, node, this.getOptions());
         _super.prototype.visitSourceFile.call(this, node);
-        this.scope = null;
+        this.scope = undefined;
     };
     ScopedSymbolTrackingWalker.prototype.visitModuleDeclaration = function (node) {
         this.scope = new Scope_1.Scope(this.scope);
@@ -97,22 +102,19 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         this.scope = this.scope.parent;
     };
     ScopedSymbolTrackingWalker.prototype.visitClassDeclaration = function (node) {
-        var _this = this;
-        this.scope = new Scope_1.Scope(this.scope);
+        var scope = (this.scope = new Scope_1.Scope(this.scope));
         node.members.forEach(function (element) {
-            var prefix = AstUtils_1.AstUtils.isStatic(element)
-                ? node.name.getText() + '.'
-                : 'this.';
+            var prefix = AstUtils_1.AstUtils.isStatic(element) && node.name !== undefined ? node.name.getText() + '.' : 'this.';
             if (element.kind === ts.SyntaxKind.MethodDeclaration) {
-                _this.scope.addFunctionSymbol(prefix + element.name.getText());
+                scope.addFunctionSymbol(prefix + element.name.getText());
             }
             else if (element.kind === ts.SyntaxKind.PropertyDeclaration) {
                 var prop = element;
                 if (AstUtils_1.AstUtils.isDeclarationFunctionType(prop)) {
-                    _this.scope.addFunctionSymbol(prefix + element.name.getText());
+                    scope.addFunctionSymbol(prefix + element.name.getText());
                 }
                 else {
-                    _this.scope.addNonFunctionSymbol(prefix + element.name.getText());
+                    scope.addNonFunctionSymbol(prefix + element.name.getText());
                 }
             }
         });
@@ -165,6 +167,6 @@ var ScopedSymbolTrackingWalker = (function (_super) {
         _super.prototype.visitVariableDeclaration.call(this, node);
     };
     return ScopedSymbolTrackingWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 exports.ScopedSymbolTrackingWalker = ScopedSymbolTrackingWalker;
 //# sourceMappingURL=ScopedSymbolTrackingWalker.js.map

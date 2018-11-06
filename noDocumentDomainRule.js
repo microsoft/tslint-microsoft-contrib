@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -45,9 +47,9 @@ var NoDocumentDomainRuleWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     NoDocumentDomainRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.getText() === '='
-            && node.left.kind === ts.SyntaxKind.PropertyAccessExpression
-            && this.isDocumentDomainProperty(node.left)) {
+        if (node.operatorToken.getText() === '=' &&
+            node.left.kind === ts.SyntaxKind.PropertyAccessExpression &&
+            this.isDocumentDomainProperty(node.left)) {
             var msg = Rule.FAILURE_STRING + node.getFullText().trim();
             this.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
@@ -57,9 +59,8 @@ var NoDocumentDomainRuleWalker = (function (_super) {
         if (node.name.text !== 'domain') {
             return false;
         }
-        return node.expression.getText() === 'document'
-            || node.expression.getText() === 'window.document';
+        return node.expression.getText() === 'document' || node.expression.getText() === 'window.document';
     };
     return NoDocumentDomainRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=noDocumentDomainRule.js.map

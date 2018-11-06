@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -17,8 +20,8 @@ var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ROLES = ROLE_SCHEMA.roles;
 var VALID_ROLES = Object.keys(ROLES).filter(function (role) { return ROLES[role].isAbstract === false; });
 function getFailureStringUndefinedRole() {
-    return '\'role\' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, ' +
-        'or simply remove this attribute';
+    return ("'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, " +
+        'or simply remove this attribute');
 }
 exports.getFailureStringUndefinedRole = getFailureStringUndefinedRole;
 function getFailureStringInvalidRole(invalidRoleName) {
@@ -64,7 +67,7 @@ var A11yRoleRuleWalker = (function (_super) {
         var roleValue = JsxAttribute_1.getStringLiteral(node);
         if (roleValue) {
             var normalizedValues = roleValue.toLowerCase().split(' ');
-            if (normalizedValues.some(function (value) { return value && VALID_ROLES.indexOf(value) === -1; })) {
+            if (normalizedValues.some(function (value) { return !!(value && VALID_ROLES.indexOf(value) === -1); })) {
                 this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
             }
         }

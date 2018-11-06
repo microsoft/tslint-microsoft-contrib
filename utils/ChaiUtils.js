@@ -5,7 +5,7 @@ var ChaiUtils;
 (function (ChaiUtils) {
     function isExpectInvocation(node) {
         var callExpression = getLeftMostCallExpression(node);
-        if (callExpression == null) {
+        if (callExpression === undefined) {
             return false;
         }
         return /.*\.?expect/.test(callExpression.expression.getText());
@@ -13,50 +13,50 @@ var ChaiUtils;
     ChaiUtils.isExpectInvocation = isExpectInvocation;
     function getExpectInvocation(node) {
         var callExpression = getLeftMostCallExpression(node, false);
-        if (callExpression == null) {
-            return null;
+        if (callExpression === undefined) {
+            return undefined;
         }
         if (/.*\.?expect/.test(callExpression.expression.getText())) {
             return callExpression;
         }
         else {
-            return null;
+            return undefined;
         }
     }
     ChaiUtils.getExpectInvocation = getExpectInvocation;
     function getLeftMostCallExpression(node, checkParent) {
         if (checkParent === void 0) { checkParent = false; }
         var leftSide = node.expression;
-        while (leftSide != null) {
+        while (leftSide !== undefined) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return leftSide;
             }
-            else if (leftSide.kind === (ts.SyntaxKind.PropertyAccessExpression)) {
+            else if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 leftSide = leftSide.expression;
             }
             else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return leftSide.parent;
             }
             else {
-                return null;
+                return undefined;
             }
         }
-        return null;
+        return undefined;
     }
     ChaiUtils.getLeftMostCallExpression = getLeftMostCallExpression;
     function getFirstExpectCallParameter(node) {
         var expectCall = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall.arguments.length > 0) {
+        if (expectCall !== undefined && expectCall.arguments.length > 0) {
             return expectCall.arguments[0];
         }
-        return null;
+        return undefined;
     }
     ChaiUtils.getFirstExpectCallParameter = getFirstExpectCallParameter;
     function getFirstExpectationParameter(node) {
         if (node.arguments.length > 0) {
             return node.arguments[0];
         }
-        return null;
+        return undefined;
     }
     ChaiUtils.getFirstExpectationParameter = getFirstExpectationParameter;
     function isEqualsInvocation(propExpression) {

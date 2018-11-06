@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -16,8 +19,8 @@ var JsxAttribute_1 = require("./utils/JsxAttribute");
 var DOM_SCHEMA = require('./utils/attributes/domSchema.json');
 var ARIA_SCHEMA = require('./utils/attributes/ariaSchema.json');
 function getFailureString(tagName, ariaAttributeNames) {
-    return "This element " + tagName + " does not support ARIA roles, states and properties. "
-        + ("Try removing attribute(s): " + ariaAttributeNames.join(', ') + ".");
+    return ("This element " + tagName + " does not support ARIA roles, states and properties. " +
+        ("Try removing attribute(s): " + ariaAttributeNames.join(', ') + "."));
 }
 exports.getFailureString = getFailureString;
 var Rule = (function (_super) {
@@ -64,9 +67,7 @@ var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
         if (!DOM_SCHEMA[tagName]) {
             return;
         }
-        var supportAria = DOM_SCHEMA[tagName].supportAria != null
-            ? DOM_SCHEMA[tagName].supportAria
-            : false;
+        var supportAria = DOM_SCHEMA[tagName].supportAria !== undefined ? DOM_SCHEMA[tagName].supportAria : false;
         if (supportAria) {
             return;
         }

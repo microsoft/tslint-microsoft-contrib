@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,13 +14,16 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint missing-jsdoc rule.');
+            Rule.isWarningShown = true;
+        }
         return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
     };
     Rule.metadata = {
@@ -27,14 +33,15 @@ var Rule = (function (_super) {
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
-        issueClass: 'Non-SDL',
+        issueClass: 'Ignored',
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        group: 'Clarity',
-        commonWeaknessEnumeration: '398, 710'
+        group: 'Deprecated',
+        recommendation: 'false,'
     };
-    Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level: ';
+    Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level.';
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
@@ -45,10 +52,9 @@ var MissingJSDocWalker = (function (_super) {
     }
     MissingJSDocWalker.prototype.visitSourceFile = function (node) {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName;
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
     };
     return MissingJSDocWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=missingJsdocRule.js.map

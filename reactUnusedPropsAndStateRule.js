@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,8 +15,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var PROPS_REGEX = 'props-interface-regex';
 var STATE_REGEX = 'state-interface-regex';
 var FAILURE_UNUSED_PROP = 'Unused React property defined in interface: ';
@@ -60,7 +63,7 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
         _this.propsInterfaceRegex = /^Props$/;
         _this.stateInterfaceRegex = /^State$/;
         _this.getOptions().forEach(function (opt) {
-            if (typeof (opt) === 'object') {
+            if (TypeGuard_1.isObject(opt)) {
                 _this.propsInterfaceRegex = _this.getOptionOrDefault(opt, PROPS_REGEX, _this.propsInterfaceRegex);
                 _this.stateInterfaceRegex = _this.getOptionOrDefault(opt, STATE_REGEX, _this.stateInterfaceRegex);
             }
@@ -69,8 +72,9 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
     }
     ReactUnusedPropsAndStateRuleWalker.prototype.getOptionOrDefault = function (option, key, defaultValue) {
         try {
-            if (option[key] != null) {
-                return new RegExp(option[key]);
+            var value = option[key];
+            if (value !== undefined && typeof value === 'string') {
+                return new RegExp(value);
             }
         }
         catch (e) {
@@ -115,12 +119,12 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
         else if (/this\.state\..*/.test(referencedPropertyName)) {
             this.stateNames = Utils_1.Utils.remove(this.stateNames, referencedPropertyName.substring(11));
         }
-        if (this.propsAlias != null) {
+        if (this.propsAlias !== undefined) {
             if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
                 this.propNames = Utils_1.Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
             }
         }
-        if (this.stateAlias != null) {
+        if (this.stateAlias !== undefined) {
             if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
                 this.stateNames = Utils_1.Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
             }
@@ -136,18 +140,18 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
         _super.prototype.visitPropertyAccessExpression.call(this, node);
     };
     ReactUnusedPropsAndStateRuleWalker.prototype.visitIdentifier = function (node) {
-        if (this.propsAlias != null) {
-            if (node.text === this.propsAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter
-                && this.isParentNodeSuperCall(node) === false) {
+        if (this.propsAlias !== undefined) {
+            if (node.text === this.propsAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter &&
+                this.isParentNodeSuperCall(node) === false) {
                 this.propNames = [];
             }
         }
-        if (this.stateAlias != null) {
-            if (node.text === this.stateAlias
-                && node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression
-                && node.parent.kind !== ts.SyntaxKind.Parameter) {
+        if (this.stateAlias !== undefined) {
+            if (node.text === this.stateAlias &&
+                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                node.parent.kind !== ts.SyntaxKind.Parameter) {
                 this.stateNames = [];
             }
         }
@@ -162,12 +166,11 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
     };
     ReactUnusedPropsAndStateRuleWalker.prototype.visitMethodDeclaration = function (node) {
         var methodName = node.name.text;
-        if (/componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-            && node.parameters.length > 0) {
+        if (/componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) &&
+            node.parameters.length > 0) {
             this.propsAlias = node.parameters[0].name.text;
         }
-        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName)
-            && node.parameters.length > 1) {
+        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) && node.parameters.length > 1) {
             this.stateAlias = node.parameters[1].name.text;
         }
         _super.prototype.visitMethodDeclaration.call(this, node);
@@ -177,19 +180,22 @@ var ReactUnusedPropsAndStateRuleWalker = (function (_super) {
     ReactUnusedPropsAndStateRuleWalker.prototype.getTypeElementData = function (node) {
         var result = {};
         node.members.forEach(function (typeElement) {
-            if (typeElement.name != null && typeElement.name.text != null) {
-                result[typeElement.name.text] = typeElement;
+            if (typeElement.name !== undefined) {
+                var text = typeElement.name.getText();
+                if (text !== undefined) {
+                    result[text] = typeElement;
+                }
             }
         });
         return result;
     };
     ReactUnusedPropsAndStateRuleWalker.prototype.isParentNodeSuperCall = function (node) {
-        if (node.parent != null && node.parent.kind === ts.SyntaxKind.CallExpression) {
+        if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             var call = node.parent;
             return call.expression.getText() === 'super';
         }
         return false;
     };
     return ReactUnusedPropsAndStateRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=reactUnusedPropsAndStateRule.js.map

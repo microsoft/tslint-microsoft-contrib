@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11,8 +14,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
+var Utils_1 = require("./utils/Utils");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -28,12 +31,12 @@ var Rule = (function (_super) {
         if (options instanceof Array) {
             return options;
         }
-        return null;
+        return undefined;
     };
     Rule.metadata = {
         ruleName: 'react-no-dangerous-html',
         type: 'maintainability',
-        description: 'Do not use React\'s dangerouslySetInnerHTML API.',
+        description: "Do not use React's dangerouslySetInnerHTML API.",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -55,7 +58,7 @@ var NoDangerousHtmlWalker = (function (_super) {
         return _this;
     }
     NoDangerousHtmlWalker.prototype.visitMethodDeclaration = function (node) {
-        this.currentMethodName = node.name.text;
+        this.currentMethodName = node.name.getText();
         _super.prototype.visitMethodDeclaration.call(this, node);
         this.currentMethodName = '<unknown>';
     };
@@ -91,8 +94,9 @@ var NoDangerousHtmlWalker = (function (_super) {
     };
     NoDangerousHtmlWalker.prototype.addFailureIfNotSuppressed = function (parent, node) {
         if (!this.isSuppressed(this.currentMethodName)) {
-            var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' + this.currentMethodName + '"\n' +
-                '    of source file ' + this.getSourceFile().fileName + '"\n' +
+            var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' +
+                this.currentMethodName +
+                '".\n' +
                 '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
@@ -103,14 +107,14 @@ var NoDangerousHtmlWalker = (function (_super) {
     NoDangerousHtmlWalker.prototype.isSuppressed = function (methodName) {
         var _this = this;
         var exceptions = Rule.getExceptions(this.getOptions());
-        if (exceptions == null || exceptions.length === 0) {
+        if (exceptions === undefined || exceptions.length === 0) {
             return false;
         }
         var found = false;
         exceptions.forEach(function (exception) {
-            if (exception.file === _this.getSourceFile().fileName) {
+            if (Utils_1.Utils.absolutePath(exception.file) === _this.getSourceFile().fileName) {
                 if (exception.method === methodName) {
-                    if (exception.comment != null) {
+                    if (exception.comment !== undefined) {
                         found = true;
                     }
                 }
@@ -119,5 +123,5 @@ var NoDangerousHtmlWalker = (function (_super) {
         return found;
     };
     return NoDangerousHtmlWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=reactNoDangerousHtmlRule.js.map

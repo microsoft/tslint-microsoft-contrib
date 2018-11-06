@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var ChaiUtils_1 = require("./utils/ChaiUtils");
 var FAILURE_STRING = 'Found chai call with indexOf that can be converted to .contain assertion: ';
@@ -61,7 +63,7 @@ var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
         _super.prototype.visitCallExpression.call(this, node);
     };
     ChaiPreferContainsToIndexOfRuleWalker.prototype.isFirstArgumentNegative1 = function (node) {
-        if (node.arguments != null && node.arguments.length > 0) {
+        if (node.arguments !== undefined && node.arguments.length > 0) {
             var firstArgument = node.arguments[0];
             if (firstArgument.getText() === '-1') {
                 return true;
@@ -71,7 +73,7 @@ var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
     };
     ChaiPreferContainsToIndexOfRuleWalker.prototype.isFirstArgumentIndexOfResult = function (node) {
         var expectCall = ChaiUtils_1.ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall.arguments != null && expectCall.arguments.length > 0) {
+        if (expectCall !== undefined && expectCall.arguments !== undefined && expectCall.arguments.length > 0) {
             var firstArgument = expectCall.arguments[0];
             if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
                 if (AstUtils_1.AstUtils.getFunctionName(firstArgument) === 'indexOf') {
@@ -82,5 +84,5 @@ var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
         return false;
     };
     return ChaiPreferContainsToIndexOfRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=chaiPreferContainsToIndexOfRule.js.map

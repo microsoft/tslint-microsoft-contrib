@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,9 +15,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var Utils_1 = require("./utils/Utils");
 var AstUtils_1 = require("./utils/AstUtils");
+exports.OPTION_IGNORE_CASE = 'ignore-case';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -28,15 +31,44 @@ var Rule = (function (_super) {
             return options.ruleArguments[0];
         }
         if (options instanceof Array) {
-            return options;
+            return typeof options[0] === 'object' ? options[0].allow : options;
         }
-        return null;
+        return undefined;
+    };
+    Rule.getIgnoreCase = function (options) {
+        if (options instanceof Array) {
+            return typeof options[0] === 'object' ? options[0]['ignore-case'] : true;
+        }
+        return true;
     };
     Rule.metadata = {
         ruleName: 'export-name',
         type: 'maintainability',
         description: 'The name of the exported module must match the filename of the source file',
-        options: null,
+        options: {
+            type: 'list',
+            listType: {
+                anyOf: [
+                    {
+                        type: 'string'
+                    },
+                    {
+                        type: 'object',
+                        properties: {
+                            'ignore-case': {
+                                type: 'boolean'
+                            },
+                            allow: {
+                                type: 'array',
+                                items: {
+                                    type: 'string'
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Ignored',
@@ -51,7 +83,7 @@ var Rule = (function (_super) {
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 function isExportedDeclaration(element) {
-    return AstUtils_1.AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
+    return element.modifiers !== undefined && AstUtils_1.AstUtils.hasModifier(element.modifiers, ts.SyntaxKind.ExportKeyword);
 }
 function isExportStatement(node) {
     return ts.isExportAssignment(node) || ts.isExportDeclaration(node);
@@ -87,7 +119,7 @@ var ExportNameWalker = (function (_super) {
         if (exportedTopLevelElements.length === 0) {
             node.statements.forEach(function (element) {
                 if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
-                    var exportStatements = _this.getExportStatementsWithinModules(element);
+                    var exportStatements = _this.getExportStatementsWithinModules(element) || [];
                     exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
                 }
             });
@@ -102,40 +134,35 @@ var ExportNameWalker = (function (_super) {
             var moduleBlock = moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
-        return null;
+        return undefined;
     };
     ExportNameWalker.prototype.validateExportedElements = function (exportedElements) {
         if (exportedElements.length === 1) {
-            if (exportedElements[0].kind === ts.SyntaxKind.ModuleDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.ClassDeclaration ||
-                exportedElements[0].kind === ts.SyntaxKind.FunctionDeclaration) {
-                this.validateExport(exportedElements[0].name.text, exportedElements[0]);
+            var element = exportedElements[0];
+            if (ts.isModuleDeclaration(element) || ts.isClassDeclaration(element) || ts.isFunctionDeclaration(element)) {
+                if (element.name !== undefined) {
+                    this.validateExport(element.name.text, exportedElements[0]);
+                }
             }
             else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 var variableStatement = exportedElements[0];
                 if (variableStatement.declarationList.declarations.length === 1) {
                     var variableDeclaration = variableStatement.declarationList.declarations[0];
-                    this.validateExport(variableDeclaration.name.text, variableDeclaration);
+                    this.validateExport(variableDeclaration.name.getText(), variableDeclaration);
                 }
             }
         }
     };
     ExportNameWalker.prototype.validateExport = function (exportedName, node) {
-        var regex = new RegExp(exportedName + '\..*');
-        if (!regex.test(this.getFilename())) {
+        var flags = Rule.getIgnoreCase(this.getOptions()) ? 'i' : '';
+        var regex = new RegExp("^" + exportedName + "\\..+", flags);
+        var fileName = Utils_1.Utils.fileBasename(this.getSourceFile().fileName);
+        if (!regex.test(fileName)) {
             if (!this.isSuppressed(exportedName)) {
-                var failureString = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                var failureString = Rule.FAILURE_STRING + fileName + ' and ' + exportedName;
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
-    };
-    ExportNameWalker.prototype.getFilename = function () {
-        var filename = this.getSourceFile().fileName;
-        var lastSlash = filename.lastIndexOf('/');
-        if (lastSlash > -1) {
-            return filename.substring(lastSlash + 1);
-        }
-        return filename;
     };
     ExportNameWalker.prototype.isSuppressed = function (exportedName) {
         var allExceptions = Rule.getExceptions(this.getOptions());
@@ -144,6 +171,6 @@ var ExportNameWalker = (function (_super) {
         });
     };
     return ExportNameWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 exports.ExportNameWalker = ExportNameWalker;
 //# sourceMappingURL=exportNameRule.js.map

@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -72,7 +75,9 @@ var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
         var roleProp = attributesInElement[ROLE_STRING];
         var roleValue = roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(node);
         var isImplicitRole = !roleProp && !!roleValue;
-        var normalizedRoles = (roleValue || '').toLowerCase().split(' ')
+        var normalizedRoles = (roleValue || '')
+            .toLowerCase()
+            .split(' ')
             .filter(function (role) { return !!ROLES[role]; });
         if (normalizedRoles.length === 0) {
             return;
@@ -84,12 +89,11 @@ var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
         var attributeNamesInElement = Object.keys(attributesInElement)
             .filter(function (attributeName) { return !!ARIA_ATTRIBUTES[attributeName.toLowerCase()]; })
             .concat(TAGS_WITH_ARIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
-        var missingAttributes = requiredAttributeNames
-            .filter(function (attributeName) { return attributeNamesInElement.indexOf(attributeName) === -1; });
+        var missingAttributes = requiredAttributeNames.filter(function (attributeName) { return attributeNamesInElement.indexOf(attributeName) === -1; });
         if (missingAttributes.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), isImplicitRole ?
-                getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes) :
-                getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes));
+            this.addFailureAt(node.getStart(), node.getWidth(), isImplicitRole
+                ? getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes)
+                : getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes));
         }
     };
     return A11yRoleHasRequiredAriaPropsWalker;

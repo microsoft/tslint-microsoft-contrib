@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
 var AstUtils_1 = require("./utils/AstUtils");
 var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'Non-literal (insecure) parameter passed to require(): ';
@@ -48,9 +50,7 @@ var NonLiteralRequireRuleWalker = (function (_super) {
     }
     NonLiteralRequireRuleWalker.prototype.visitCallExpression = function (node) {
         var _this = this;
-        if (AstUtils_1.AstUtils.getFunctionName(node) === 'require'
-            && AstUtils_1.AstUtils.getFunctionTarget(node) == null
-            && node.arguments.length > 0) {
+        if (AstUtils_1.AstUtils.getFunctionName(node) === 'require' && AstUtils_1.AstUtils.getFunctionTarget(node) === undefined && node.arguments.length > 0) {
             if (node.arguments[0].kind === ts.SyntaxKind.ArrayLiteralExpression) {
                 var arrayExp = node.arguments[0];
                 arrayExp.elements.forEach(function (initExpression) {
@@ -72,5 +72,5 @@ var NonLiteralRequireRuleWalker = (function (_super) {
         this.addFailureAt(start, width, message);
     };
     return NonLiteralRequireRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=nonLiteralRequireRule.js.map

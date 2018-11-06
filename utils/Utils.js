@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var path = require("path");
 var Utils;
 (function (Utils) {
     function exists(list, predicate) {
-        if (list != null) {
+        if (list !== undefined) {
             for (var i = 0; i < list.length; i++) {
                 var obj = list[i];
                 if (predicate(obj)) {
@@ -21,11 +22,11 @@ var Utils;
     }
     Utils.contains = contains;
     function removeAll(source, elementsToRemove) {
-        if (source == null || source.length === 0) {
+        if (source === undefined || source.length === 0) {
             return [];
         }
-        if (elementsToRemove == null || elementsToRemove.length === 0) {
-            return [].concat(source);
+        if (elementsToRemove === undefined || elementsToRemove.length === 0) {
+            return source.slice();
         }
         return source.filter(function (sourceElement) {
             return !contains(elementsToRemove, sourceElement);
@@ -37,7 +38,7 @@ var Utils;
     }
     Utils.remove = remove;
     function trimTo(source, maxLength) {
-        if (source == null) {
+        if (source === undefined) {
             return '';
         }
         if (source.length <= maxLength) {
@@ -46,5 +47,13 @@ var Utils;
         return source.substr(0, maxLength - 2) + '...';
     }
     Utils.trimTo = trimTo;
+    function absolutePath(relativePath) {
+        return path.resolve(relativePath).replace(/\\/g, '/');
+    }
+    Utils.absolutePath = absolutePath;
+    function fileBasename(relativePath) {
+        return path.basename(relativePath);
+    }
+    Utils.fileBasename = fileBasename;
 })(Utils = exports.Utils || (exports.Utils = {}));
 //# sourceMappingURL=Utils.js.map

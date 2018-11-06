@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
-var ErrorTolerantWalker_1 = require("./utils/ErrorTolerantWalker");
+var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_STRING = 'Found as-cast instead of a traditional type-cast. Please convert to a type-cast: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -25,7 +28,7 @@ var Rule = (function (_super) {
     Rule.metadata = {
         ruleName: 'prefer-type-cast',
         type: 'maintainability',
-        description: 'Prefer the tradition type casts instead of the new \'as-cast\' syntax',
+        description: "Prefer the tradition type casts instead of the new 'as-cast' syntax",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -34,7 +37,7 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'true,   // pick either type-cast format and use it consistently',
+        recommendation: 'true, // pick either type-cast format and use it consistently',
         commonWeaknessEnumeration: '398, 710'
     };
     return Rule;
@@ -46,7 +49,7 @@ var PreferTypeCastRuleWalker = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PreferTypeCastRuleWalker.prototype.visitSourceFile = function (node) {
-        if (/.*\.tsx/.test(node.fileName) === false) {
+        if (AstUtils_1.AstUtils.getLanguageVariant(node) === ts.LanguageVariant.Standard) {
             _super.prototype.visitSourceFile.call(this, node);
         }
     };
@@ -57,5 +60,5 @@ var PreferTypeCastRuleWalker = (function (_super) {
         _super.prototype.visitNode.call(this, node);
     };
     return PreferTypeCastRuleWalker;
-}(ErrorTolerantWalker_1.ErrorTolerantWalker));
+}(Lint.RuleWalker));
 //# sourceMappingURL=preferTypeCastRule.js.map

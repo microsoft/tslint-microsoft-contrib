@@ -1,4 +1,4 @@
-## 6.0.0-beta0
+## 6.0.0-beta
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.0.0-beta0)
 
 This was a _huge_ one.

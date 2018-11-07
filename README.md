@@ -13,53 +13,52 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 npm install tslint-microsoft-contrib --save-dev
 ```
 
-Alternately, you can download the files directly from GitHub: see [npm-5.2.1](https://github.com/Microsoft/tslint-microsoft-contrib/tree/npm-5.2.1).
-
-...or use the [`releases`](https://github.com/Microsoft/tslint-microsoft-contrib/tree/releases) branch, which is available online.
-You can use that build by setting your npm version of `tslint-microsoft-contrib` to `git://github.com/Microsoft/tslint-microsoft-contrib.git#releases`.
-
-
 ## TSLint and corresponding tslint-microsoft-contrib version
 
-| TSLint version | tslint-microsoft-contrib version |
-| --- | --- |
-| **>= 5.x**   | 5.x (supporting TypeScript 2.3.x, >=2.4, 3.x)|
-| **>= 4.x**   | 4.x (supporting TypeScript 2.1.x) |
-| **>= 3.2.x** | 2.x |
-| **3.1.x**    | unsupported |
-| **3.0.x**    | unsupported |
-| **2.x**      | 1.x |
+| TSLint version | tslint-microsoft-contrib version                      |
+| -------------- | ----------------------------------------------------- |
+| **>= 5.x**     | 5.x and 6.x (supporting TypeScript 2.3.x, >=2.4, 3.x) |
+| **>= 4.x**     | 4.x (supporting TypeScript 2.1.x)                     |
+| **>= 3.2.x**   | 2.x                                                   |
+| **3.1.x**      | unsupported                                           |
+| **3.0.x**      | unsupported                                           |
+| **2.x**        | 1.x                                                   |
 
 ## Configuration
 
-### Configure your Grunt build task
+Add `"node_modules/tslint-microsoft-contrib"` under your `"rulesDirectory"` configuration to inform TSLint it should look under this package for additional rules in your `tslint.json`:
 
-Add the new `rulesDirectory` to your `tslint` task:
-
-```js
-grunt.initConfig({
-  tslint: {
-    options: {
-      rulesDirectory: 'node_modules/tslint-microsoft-contrib',
-      configuration: grunt.file.readJSON("tslint.json")
-    },
-    files: {
-      src: ['src/file1.ts', 'src/file2.ts']
+```json
+{
+    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+    "rules": {
+        // ...
     }
-  }
-})
+}
 ```
-
-The `tslint.json` file does not change format when using this package. Just add our rule definitions to your existing `tslint.json` file.
 
 ### Which Rules Should I Turn On?
 
-There certainly are a lot of options! Here are some links to get you started.
+There certainly are a lot of options!
+To start, you can enable our recommended defaults ([recommended_ruleset.js](recommended_ruleset.js)) by adding `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
 
-* Easiest Option - Our recommended ruleset is here: [recommended_ruleset.js](recommended_ruleset.js). You can also easily extend the ruleset by adding `"extends": "tslint-microsoft-contrib"` to your configuration. Please note, the default rules require the `--type-check` and `--project` TSLint options. Also, please note that adding a rule to the recommended ruleset is considered backwards compatible. If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
-* A nice blog post on the MSDN secure development blog can be found here: [Automating Secure Development Lifecycle Checks in TypeScript with TSLint](https://blogs.msdn.microsoft.com/secdevblog/2016/05/11/automating-secure-development-lifecycle-checks-in-typescript-with-tslint/)
-* A wiki briefly describing the SDL and related rules is here: [TSLint and the Microsoft Security Development Lifecycle](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/TSLint-and-the-Microsoft-Security-Development-Lifecycle)
-* And our configuration file with all options is available here: [tslint.json](tslint.json)
+```json
+{
+    "extends": ["tslint-microsoft-contrib"],
+    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+    "rules": {
+        // ...
+    }
+}
+```
+
+You can then disable rules you don't find useful.
+
+Please note, some of the default rules require the `--project` TSLint option.
+
+Also, please note that adding a rule to the recommended ruleset is considered backwards compatible.
+If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
+We recommend you specify exact versions of lint libraries, including `tslint-microsoft-contrib`, in your `package.json`.
 
 ### Supported Rules
 
@@ -104,9 +103,6 @@ There certainly are a lot of options! Here are some links to get you started.
         It can be configured to be case-insensitive or to allow names matching a regex.
         For example, to allow names that differ only in case and an exported name like myChartOptions, then configure the rule like this: <code>"export-name": [true, { "ignore-case": true, "allow": ["myChartOptions"] }]</code>.
         You can also just give a list of allowed names, like <code>"export-name": [true, "myChartOptions"]</code>.
-        <br />
-         Note that the name of the package is the expected camelCase name of the package.
-         For example, to allow <code>request-promise-native</code> to be imported as <code>request</code>, add this configuration: <code>'import-name': [true, { 'requestPromiseNative': 'request'}]</code>.
       </td>
       <td>0.0.3</td>
     </tr>
@@ -154,7 +150,9 @@ There certainly are a lot of options! Here are some links to get you started.
         Enforces that comments do more than just reiterate names of objects.
         Either be informative with comments or don't include a comment.
         You can override the default list of "useless" words ignored by the comment checker like <code>"informative-docs": [true, { "useless-words": ["a", "an", "the", "text" ] } ]</code>.
-        You can indicate words as synonyms (aliases) of each other like <code>"informative-docs": [true, { "aliases": { text: ["emoji", "smiley"] } ]</code>.</td>
+        You can indicate words as synonyms (aliases) of each other like <code>"informative-docs": [true, { "aliases": { text: ["emoji", "smiley"] } ]</code>.
+      </td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -745,7 +743,7 @@ There certainly are a lot of options! Here are some links to get you started.
         For security reasons, it may be best to only pass string literals as filesystem paths.
         Otherwise, it may be possible for an attacker to read and write arbitrary files on your system through path traversal attacks.
       </td>
-      <td>5.2.2</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -900,7 +898,7 @@ There certainly are a lot of options! Here are some links to get you started.
           <li><a href="https://www.w3.org/TR/WCAG10-HTML-TECHS/#forms-specific">WCAG 11.5</a></li>
         </ul>
       </td>
-      <td>5.2.3</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -934,7 +932,7 @@ There certainly are a lot of options! Here are some links to get you started.
       <td>
         For accessibility of your website, enforce usage of onBlur over onChange on select menus.
       </td>
-      <td>5.2.3</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -977,7 +975,7 @@ There certainly are a lot of options! Here are some links to get you started.
           <li><a href="http://www.clarissapeterson.com/2012/11/html5-accessibility/">Acessibility in HTML5</a></li>
         </ul>
       </td>
-      <td>5.2.11</td>
+      <td>6.0.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -1211,15 +1209,6 @@ There certainly are a lot of options! Here are some links to get you started.
     </tr>
   </tbody>
 </table>
-
-### Supported Formatters
-
-These formatters assume that you use the UTF-8 file encoding. They may not work if you have a different encoding, especially if your encoding uses a 2-byte line ending (such as `\r\n` on Windows).
-
-Formatter Name          | Description | Since
-:----------             | :------------ | -------------
-`fix-no-require-imports`| This formatter automatically converts imports from the require syntax to the ES6 syntax. For example `import Utils = require('Utils');` becomes `import {Utils} from 'Utils';`. However, be warned that the fix assumes that your imported module exports the correct thing. If anything goes wrong with your exports then you'll get a compiler failure saying there is no default export. | 2.0.8
-`fix-no-var-keyword`    | This formatter automatically converts var variable declarations into let variable declarations found by the no-var-keyword rule. | 2.0.8
 
 ## Development
 

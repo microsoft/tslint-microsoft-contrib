@@ -1,0 +1,37 @@
+(function (this: any) {
+    var self = other;
+})();
+
+(function (this: any) {
+    var other = this;
+        ~~~~~~~~~~~~  [Assigning this reference to local variable: other = this]
+})();
+
+(function (this: any) {
+    let other = this;
+        ~~~~~~~~~~~~  [Assigning this reference to local variable: other = this]
+})();
+
+(function (this: any) {
+    const other = this;
+          ~~~~~~~~~~~~  [Assigning this reference to local variable: other = this]
+})();
+
+(function (this: any) {
+    var self = this,
+        ~~~~~~~~~~~  [Assigning this reference to local variable: self = this]
+        foo = bar;
+})();
+
+(function (this: any) {
+    var foo = bar,
+        self = this,
+        ~~~~~~~~~~~  [Assigning this reference to local variable: self = this]
+        baz = qux;
+})();
+
+(function (this: any) {
+    var foo = bar,
+        that = this;
+        ~~~~~~~~~~~  [Assigning this reference to local variable: that = this]
+})();

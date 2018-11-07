@@ -1,14 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {Utils} from './utils/Utils';
-import {getImplicitRole} from './utils/getImplicitRole';
-import {
-    getJsxAttributesFromJsxElement,
-    getStringLiteral,
-    isEmpty
-} from './utils/JsxAttribute';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { getImplicitRole } from './utils/getImplicitRole';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 import { isObject } from './utils/TypeGuard';
 
 export const OPTION_IGNORE_CASE: string = 'ignore-case';
@@ -16,24 +12,19 @@ export const OPTION_IGNORE_WHITESPACE: string = 'ignore-whitespace';
 
 const ROLE_STRING: string = 'role';
 
-export const NO_HASH_FAILURE_STRING: string =
-    'Do not use # as anchor href.';
-export const MISSING_HREF_FAILURE_STRING: string =
-    'Do not leave href undefined or null';
+export const NO_HASH_FAILURE_STRING: string = 'Do not use # as anchor href.';
+export const MISSING_HREF_FAILURE_STRING: string = 'Do not leave href undefined or null';
 export const LINK_TEXT_TOO_SHORT_FAILURE_STRING: string =
     'Link text or the alt text of image in link should be at least 4 characters long. ' +
-    'If you are not using <a> element as anchor, please specify explicit role, e.g. role=\'button\'';
+    "If you are not using <a> element as anchor, please specify explicit role, e.g. role='button'";
 export const UNIQUE_ALT_FAILURE_STRING: string =
     'Links with images and text content, the alt attribute should be unique to the text content or empty.';
-export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string =
-    'Links with the same HREF should have the same link text.';
-export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string =
-    'Links that point to different HREFs should have different link text.';
+export const SAME_HREF_SAME_TEXT_FAILURE_STRING: string = 'Links with the same HREF should have the same link text.';
+export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string = 'Links that point to different HREFs should have different link text.';
 export const ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING: string =
     'Link content can not be hidden for screen-readers by using aria-hidden attribute.';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-anchors',
         type: 'functionality',
@@ -102,28 +93,38 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
 
         while (this.anchorInfoList.length > 0) {
             const current: IAnchorInfo = this.anchorInfoList.shift()!;
-            this.anchorInfoList.forEach((anchorInfo: IAnchorInfo): void => {
-                if (current.href &&
-                    current.href === anchorInfo.href &&
-                    !this.compareAnchorsText(current, anchorInfo) &&
-                    !Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
+            this.anchorInfoList.forEach(
+                (anchorInfo: IAnchorInfo): void => {
+                    if (
+                        current.href &&
+                        current.href === anchorInfo.href &&
+                        !this.compareAnchorsText(current, anchorInfo) &&
+                        !Utils.contains(sameHrefDifferentTexts, anchorInfo)
+                    ) {
+                        // Same href - different text...
+                        sameHrefDifferentTexts.push(anchorInfo);
+                        this.addFailureAt(
+                            anchorInfo.start,
+                            anchorInfo.width,
+                            SAME_HREF_SAME_TEXT_FAILURE_STRING + this.firstPosition(current)
+                        );
+                    }
 
-                    // Same href - different text...
-                    sameHrefDifferentTexts.push(anchorInfo);
-                    this.addFailureAt(anchorInfo.start, anchorInfo.width,
-                        SAME_HREF_SAME_TEXT_FAILURE_STRING + this.firstPosition(current));
+                    if (
+                        current.href !== anchorInfo.href &&
+                        this.compareAnchorsText(current, anchorInfo) &&
+                        !Utils.contains(differentHrefSameText, anchorInfo)
+                    ) {
+                        // Different href - same text...
+                        differentHrefSameText.push(anchorInfo);
+                        this.addFailureAt(
+                            anchorInfo.start,
+                            anchorInfo.width,
+                            DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + this.firstPosition(current)
+                        );
+                    }
                 }
-
-                if (current.href !== anchorInfo.href &&
-                    this.compareAnchorsText(current, anchorInfo) &&
-                    !Utils.contains(differentHrefSameText, anchorInfo)) {
-
-                    // Different href - same text...
-                    differentHrefSameText.push(anchorInfo);
-                    this.addFailureAt(anchorInfo.start, anchorInfo.width,
-                        DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + this.firstPosition(current));
-                }
-            });
+            );
         }
     }
 
@@ -159,8 +160,9 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     }
 
     private firstPosition(anchorInfo: IAnchorInfo): string {
-        const startPosition: ts.LineAndCharacter =
-            this.createFailure(anchorInfo.start, anchorInfo.width, '').getStartPosition().getLineAndCharacter();
+        const startPosition: ts.LineAndCharacter = this.createFailure(anchorInfo.start, anchorInfo.width, '')
+            .getStartPosition()
+            .getLineAndCharacter();
 
         // Position is zero based - add 1...
         const character: number = startPosition.character + 1;
@@ -211,11 +213,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             const anchorInfoTextLength: number = anchorInfo.text ? anchorInfo.text.length : 0;
             const anchorImageAltTextLength: number = anchorInfo.altText ? anchorInfo.altText.length : 0;
 
-            if (
-                this.anchorRole(openingElement) === 'link' &&
-                anchorInfoTextLength < 4 &&
-                anchorImageAltTextLength < 4
-            ) {
+            if (this.anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
                 this.addFailureAt(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
 
@@ -237,9 +235,11 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             return title;
         } else if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
-            jsxElement.children.forEach((child: ts.JsxChild): void => {
-                title += this.anchorText(child, true);
-            });
+            jsxElement.children.forEach(
+                (child: ts.JsxChild): void => {
+                    title += this.anchorText(child, true);
+                }
+            );
         } else if (root.kind === ts.SyntaxKind.JsxText) {
             const jsxText: ts.JsxText = <ts.JsxText>root;
             title += jsxText.getText();
@@ -284,9 +284,11 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             altText += this.imageAltAttribute(jsxElement.openingElement);
 
-            jsxElement.children.forEach((child: ts.JsxChild): void => {
-                altText += this.imageAlt(child);
-            });
+            jsxElement.children.forEach(
+                (child: ts.JsxChild): void => {
+                    altText += this.imageAlt(child);
+                }
+            );
         }
 
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
@@ -308,9 +310,11 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             hasAriaHiddenCount += this.ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
 
-            jsxElement.children.forEach((child: ts.JsxChild): void => {
-                hasAriaHiddenCount += this.jsxElementAriaHidden(child);
-            });
+            jsxElement.children.forEach(
+                (child: ts.JsxChild): void => {
+                    hasAriaHiddenCount += this.jsxElementAriaHidden(child);
+                }
+            );
         }
 
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {

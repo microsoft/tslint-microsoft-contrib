@@ -1,0 +1,10 @@
+const fs = require('fs');
+
+fs.existsSync('file');
+fs.existsSync(-1);
+              ~~    [Non-literal (insecure) path passed to fs.existsSync: -1]
+
+fs.existsSync(path);
+              ~~~~    [Non-literal (insecure) path passed to fs.existsSync: path]
+fs.existsSync(path);
+              ~~~~   [Non-literal (insecure) path passed to fs.existsSync: path]

@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'valid-typeof',
         type: 'maintainability',
@@ -22,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING: string = 'Invalid comparison in typeof. Did you mean ';
 
-    public static VALID_TERMS: string[] = [ 'undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol' ];
+    public static VALID_TERMS: string[] = ['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol'];
 
     private static isWarningShown: boolean = false;
 
@@ -33,7 +32,6 @@ export class Rule extends Lint.Rules.AbstractRule {
         }
         return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
     }
-
 }
 
 class ValidTypeofRuleWalker extends Lint.RuleWalker {
@@ -56,7 +54,7 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
 
     private getClosestTerm(term: string): string {
         let closestMatch: number = 99999999;
-        return Rule.VALID_TERMS.reduce((closestTerm: string, thisTerm: string) : string => {
+        return Rule.VALID_TERMS.reduce((closestTerm: string, thisTerm: string): string => {
             const distance = this.levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;

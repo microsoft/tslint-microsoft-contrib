@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-document-write',
         type: 'maintainability',
@@ -24,15 +23,13 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static WRITE_FAILURE: string = 'Forbidden call to document.write';
     public static WRITELN_FAILURE: string = 'Forbidden call to document.writeln';
 
-    public apply(sourceFile : ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoDocumentWriteWalker(sourceFile, this.getOptions()));
     }
 }
 
 class NoDocumentWriteWalker extends Lint.RuleWalker {
-
     protected visitCallExpression(node: ts.CallExpression) {
-
         const functionTarget = AstUtils.getFunctionTarget(node);
         if (functionTarget === 'document' || functionTarget === 'window.document') {
             if (node.arguments.length === 1) {

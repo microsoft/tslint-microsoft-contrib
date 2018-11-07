@@ -7,4 +7,4 @@ const { readJSON, writeFile } = require('./common/files');
 const basePackageJson = readJSON('package.json');
 delete basePackageJson.devDependencies;
 
-writeFile('dist/build/package.json', JSON.stringify(basePackageJson, undefined, 2));
+writeFile('dist/build/package.json', JSON.stringify(basePackageJson, undefined, 4));

@@ -1,21 +1,17 @@
-
 // module names
-module WrapperAs {
-    module as {
-
+namespace WrapperAs {
+    namespace as {
         // class names
-        class as {
-
-        }
+        class as {}
     }
 }
 
-module SampleAs1 {
+namespace SampleAs1 {
     // module variables
     var as;
 }
 
-module SampleAs2 {
+namespace SampleAs2 {
     // module function
     function as() {}
 }
@@ -29,15 +25,15 @@ class SampleAs3 {
 class SampleAs4 {
     private var;
     set as(value) {}
-    get as() { return this.var;}
+    get as() {
+        return this.var;
+    }
 }
 
-
 class SampleAs5 {
-    as() {}       // class methods
-    method(as) {}  // method parameters
-    private func = (as) => {}; // arrow function parameters
-
+    as() {} // class methods
+    method(as) {} // method parameters
+    private func = as => {}; // arrow function parameters
 }
 
 // interface declarations

@@ -1,21 +1,17 @@
-
 // module names
-module WrapperOf {
-    module of {
-
+namespace WrapperOf {
+    namespace of {
         // class names
-        class of {
-
-        }
+        class of {}
     }
 }
 
-module SampleOf1 {
+namespace SampleOf1 {
     // module variables
     var of;
 }
 
-module SampleOf2 {
+namespace SampleOf2 {
     // module function
     function of() {}
 }
@@ -29,15 +25,15 @@ class SampleOf3 {
 class SampleOf4 {
     private var;
     set of(value) {}
-    get of() { return this.var;}
+    get of() {
+        return this.var;
+    }
 }
 
-
 class SampleOf5 {
-    of() {}       // class methods
-    method(of) {}  // method parameters
-    private func = (of) => {}; // arrow function parameters
-
+    of() {} // class methods
+    method(of) {} // method parameters
+    private func = of => {}; // arrow function parameters
 }
 
 // interface declarations

@@ -1,0 +1,183 @@
+declare const _: any;
+
+_(list).each(() => { return undefined; });
+_(list).forEach(() => { return undefined; });
+_(list).map(() => { return undefined; });
+_(list).collect(() => { return undefined; });
+_(list).reduce(() => { return undefined; });
+_(list).inject(() => { return undefined; });
+_(list).foldl(() => { return undefined; });
+_(list).reduceRight(() => { return undefined; });
+_(list).foldr(() => { return undefined; });
+_(list).find(() => { return undefined; });
+_(list).detect(() => { return undefined; });
+_(list).filter(() => { return undefined; });
+_(list).select(() => { return undefined; });
+_(list).where(() => { return undefined; });
+_(list).findWhere(() => { return undefined; });
+_(list).reject(() => { return undefined; });
+_(list).every(() => { return undefined; });
+_(list).all(() => { return undefined; });
+_(list).some(() => { return undefined; });
+_(list).any(() => { return undefined; });
+_(list).contains(() => { return undefined; });
+_(list).include(() => { return undefined; });
+_(list).invoke(() => { return undefined; });
+_(list).pluck(() => { return undefined; });
+_(list).max(() => { return undefined; });
+_(list).min(() => { return undefined; });
+_(list).sortBy(() => { return undefined; });
+_(list).groupBy(() => { return undefined; });
+_(list).indexBy(() => { return undefined; });
+_(list).countBy(() => { return undefined; });
+_(list).shuffle(() => { return undefined; });
+_(list).sample(() => { return undefined; });
+_(list).toArray(() => { return undefined; });
+_(list).size(() => { return undefined; });
+_(list).partition(() => { return undefined; });
+_(list).first(() => { return undefined; });
+_(list).head(() => { return undefined; });
+_(list).take(() => { return undefined; });
+_(list).initial(() => { return undefined; });
+_(list).last(() => { return undefined; });
+_(list).rest(() => { return undefined; });
+_(list).tail(() => { return undefined; });
+_(list).drop(() => { return undefined; });
+_(list).compact(() => { return undefined; });
+_(list).flatten(() => { return undefined; });
+_(list).without(() => { return undefined; });
+_(list).union(() => { return undefined; });
+_(list).intersection(() => { return undefined; });
+_(list).difference(() => { return undefined; });
+_(list).uniq(() => { return undefined; });
+_(list).unique(() => { return undefined; });
+_(list).object(() => { return undefined; });
+_(list).zip(() => { return undefined; });
+_(list).unzip(() => { return undefined; });
+_(list).indexOf(() => { return undefined; });
+_(list).findIndex(() => { return undefined; });
+_(list).lastIndexOf(() => { return undefined; });
+_(list).findLastIndex(() => { return undefined; });
+_(list).sortedIndex(() => { return undefined; });
+_(list).range(() => { return undefined; });
+
+_.each(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.each]
+_.forEach(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.forEach]
+_.map(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.map]
+_.collect(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.collect]
+_.reduce(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.reduce]
+_.inject(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.inject]
+_.foldl(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.foldl]
+_.reduceRight(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.reduceRight]
+_.foldr(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.foldr]
+_.find(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.find]
+_.detect(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.detect]
+_.filter(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.filter]
+_.select(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.select]
+_.where(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.where]
+_.findWhere(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.findWhere]
+_.reject(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.reject]
+_.every(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.every]
+_.all(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.all]
+_.some(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.some]
+_.any(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.any]
+_.contains(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.contains]
+_.include(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.include]
+_.invoke(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.invoke]
+_.pluck(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.pluck]
+_.max(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.max]
+_.min(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.min]
+_.sortBy(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.sortBy]
+_.groupBy(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.groupBy]
+_.indexBy(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.indexBy]
+_.countBy(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.countBy]
+_.shuffle(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.shuffle]
+_.sample(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.sample]
+_.toArray(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.toArray]
+_.size(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.size]
+_.partition(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.partition]
+_.first(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.first]
+_.head(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.head]
+_.take(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.take]
+_.initial(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.initial]
+_.last(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.last]
+_.rest(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.rest]
+_.tail(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.tail]
+_.drop(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.drop]
+_.compact(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.compact]
+_.flatten(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.flatten]
+_.without(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.without]
+_.union(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.union]
+_.intersection(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.intersection]
+_.difference(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.difference]
+_.uniq(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.uniq]
+_.unique(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.unique]
+_.object(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.object]
+_.zip(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.zip]
+_.unzip(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.unzip]
+_.indexOf(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.indexOf]
+_.findIndex(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.findIndex]
+_.lastIndexOf(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.lastIndexOf]
+_.findLastIndex(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.findLastIndex]
+_.sortedIndex(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.sortedIndex]
+_.range(list, () => { return undefined; });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Static invocation of underscore function found. Prefer instance version instead: _.range]

@@ -1,15 +1,13 @@
-
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {Utils} from './utils/Utils';
-import {AstUtils} from './utils/AstUtils';
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { Utils } from './utils/Utils';
+import { AstUtils } from './utils/AstUtils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export const OPTION_IGNORE_CASE: string = 'ignore-case';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'export-name',
         type: 'maintainability',
@@ -55,8 +53,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     /* tslint:disable:function-name */
-    public static getExceptions(options : Lint.IOptions): string[] | undefined {
-    /* tslint:enable:function-name */
+    public static getExceptions(options: Lint.IOptions): string[] | undefined {
+        /* tslint:enable:function-name */
         if (options.ruleArguments instanceof Array) {
             return options.ruleArguments[0];
         }
@@ -70,9 +68,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static getIgnoreCase(options: Lint.IOptions): boolean {
         /* tslint:enable:function-name */
         if (options instanceof Array) {
-            return typeof options[0] === 'object' ?
-                options[0]['ignore-case'] :
-                true;
+            return typeof options[0] === 'object' ? options[0]['ignore-case'] : true;
         }
         return true;
     }
@@ -84,24 +80,23 @@ function isExportedDeclaration(element: ts.Statement): boolean {
 
 type ExportStatement = ts.ExportDeclaration | ts.ExportAssignment;
 function isExportStatement(node: ts.Statement): node is ExportStatement {
-  return ts.isExportAssignment(node) || ts.isExportDeclaration(node);
+    return ts.isExportAssignment(node) || ts.isExportDeclaration(node);
 }
 
 function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
-  if (ts.isExportAssignment(node)) {
-      return [[node.expression.getText(), node.expression]];
-  } else {
-      const symbolAndNodes: [string, ts.Node][] = [];
-      node.exportClause!.elements.forEach(e => {
-          symbolAndNodes.push([e.name.getText(), node]);
-      });
-      return symbolAndNodes;
-  }
+    if (ts.isExportAssignment(node)) {
+        return [[node.expression.getText(), node.expression]];
+    } else {
+        const symbolAndNodes: [string, ts.Node][] = [];
+        node.exportClause!.elements.forEach(e => {
+            symbolAndNodes.push([e.name.getText(), node]);
+        });
+        return symbolAndNodes;
+    }
 }
 
 export class ExportNameWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
-
         // look for single export assignment from file first
         const singleExport = node.statements.filter(isExportStatement);
         if (singleExport.length === 1) {
@@ -118,12 +113,14 @@ export class ExportNameWalker extends Lint.RuleWalker {
 
         // exports might be hidden inside a namespace
         if (exportedTopLevelElements.length === 0) {
-            node.statements.forEach((element: ts.Statement): void => {
-                if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
-                    const exportStatements = this.getExportStatementsWithinModules((<ts.ModuleDeclaration>element)) || [];
-                    exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
+            node.statements.forEach(
+                (element: ts.Statement): void => {
+                    if (element.kind === ts.SyntaxKind.ModuleDeclaration) {
+                        const exportStatements = this.getExportStatementsWithinModules(<ts.ModuleDeclaration>element) || [];
+                        exportedTopLevelElements = exportedTopLevelElements.concat(exportStatements);
+                    }
                 }
-            });
+            );
         }
         this.validateExportedElements(exportedTopLevelElements);
     }
@@ -143,9 +140,7 @@ export class ExportNameWalker extends Lint.RuleWalker {
         // only validate the exported elements when a single export statement is made
         if (exportedElements.length === 1) {
             const element = exportedElements[0];
-            if (ts.isModuleDeclaration(element) ||
-                ts.isClassDeclaration(element) ||
-                ts.isFunctionDeclaration(element)) {
+            if (ts.isModuleDeclaration(element) || ts.isClassDeclaration(element) || ts.isFunctionDeclaration(element)) {
                 if (element.name !== undefined) {
                     this.validateExport(element.name!.text, exportedElements[0]);
                 }
@@ -162,29 +157,24 @@ export class ExportNameWalker extends Lint.RuleWalker {
 
     private validateExport(exportedName: string, node: ts.Node): void {
         const flags = Rule.getIgnoreCase(this.getOptions()) ? 'i' : '';
-        const regex : RegExp = new RegExp(exportedName + '\..*', flags); // filename must be exported name plus any extension
-        if (!regex.test(this.getFilename())) {
+        const regex: RegExp = new RegExp(`^${exportedName}\\..+`, flags); // filename must be exported name plus any extension
+        const fileName = Utils.fileBasename(this.getSourceFile().fileName);
+        if (!regex.test(fileName)) {
             if (!this.isSuppressed(exportedName)) {
-                const failureString: string = Rule.FAILURE_STRING + this.getSourceFile().fileName + ' and ' + exportedName;
+                const failureString: string = Rule.FAILURE_STRING + fileName + ' and ' + exportedName;
                 this.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
     }
 
-    private getFilename(): string {
-        const filename = this.getSourceFile().fileName;
-        const lastSlash = filename.lastIndexOf('/');
-        if (lastSlash > -1) {
-            return filename.substring(lastSlash + 1);
-        }
-        return filename;
-    }
-
-    private isSuppressed(exportedName: string) : boolean {
+    private isSuppressed(exportedName: string): boolean {
         const allExceptions = Rule.getExceptions(this.getOptions());
 
-        return Utils.exists(allExceptions, (exception: string): boolean => {
-            return new RegExp(exception).test(exportedName);
-        });
+        return Utils.exists(
+            allExceptions,
+            (exception: string): boolean => {
+                return new RegExp(exception).test(exportedName);
+            }
+        );
     }
 }

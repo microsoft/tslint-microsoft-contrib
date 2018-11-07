@@ -1,7 +1,7 @@
 'use strict';
 
-import {RuleFailure} from 'tslint';
-import {BaseFormatter} from './utils/BaseFormatter';
+import { RuleFailure } from 'tslint';
+import { BaseFormatter } from './utils/BaseFormatter';
 
 let warnedForDeprecation = false;
 
@@ -10,7 +10,7 @@ let warnedForDeprecation = false;
  */
 /* tslint:disable:export-name */
 export class Formatter extends BaseFormatter {
-/* tslint:enable:export-name */
+    /* tslint:enable:export-name */
 
     constructor() {
         if (!warnedForDeprecation) {
@@ -18,7 +18,7 @@ export class Formatter extends BaseFormatter {
             warnedForDeprecation = true;
         }
 
-        super('no-var-keyword', function (this: Formatter, failure: RuleFailure): void {
+        super('no-var-keyword', function(this: Formatter, failure: RuleFailure): void {
             const fileName: string = failure.getFileName();
             const fileContents: string = this.readFile(fileName);
             const end: number = failure.getEndPosition().getPosition();

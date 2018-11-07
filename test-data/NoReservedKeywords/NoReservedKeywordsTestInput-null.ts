@@ -1,4 +1,3 @@
-
 class SampleNull3 {
     // class variables
     private null;
@@ -8,12 +7,13 @@ class SampleNull3 {
 class SampleNull4 {
     private var;
     set null(value) {}
-    get null() { return this.var;}
+    get null() {
+        return this.var;
+    }
 }
 
-
 class SampleNull5 {
-    null() {}       // class methods
+    null() {} // class methods
 }
 
 // interface declarations

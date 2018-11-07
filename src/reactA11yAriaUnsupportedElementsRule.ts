@@ -5,7 +5,7 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getJsxAttributesFromJsxElement} from './utils/JsxAttribute';
+import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
 import { IDom } from './utils/attributes/IDom';
 import { IAria } from './utils/attributes/IAria';
 
@@ -15,8 +15,10 @@ const ARIA_SCHEMA: { [key: string]: IAria } = require('./utils/attributes/ariaSc
 // tslint:enable:no-require-imports no-var-requires
 
 export function getFailureString(tagName: string, ariaAttributeNames: string[]): string {
-    return `This element ${tagName} does not support ARIA roles, states and properties. `
-        + `Try removing attribute(s): ${ariaAttributeNames.join(', ')}.`;
+    return (
+        `This element ${tagName} does not support ARIA roles, states and properties. ` +
+        `Try removing attribute(s): ${ariaAttributeNames.join(', ')}.`
+    );
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -59,9 +61,7 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
             return;
         }
 
-        const supportAria: boolean = DOM_SCHEMA[tagName].supportAria !== undefined
-            ? DOM_SCHEMA[tagName].supportAria
-            : false;
+        const supportAria: boolean = DOM_SCHEMA[tagName].supportAria !== undefined ? DOM_SCHEMA[tagName].supportAria : false;
 
         if (supportAria) {
             return;
@@ -69,8 +69,7 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
 
         const checkAttributeNames: string[] = Object.keys(ARIA_SCHEMA).concat('role');
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
-        const invalidAttributeNames: string[] =
-            checkAttributeNames.filter((attributeName: string): boolean => !!attributes[attributeName]);
+        const invalidAttributeNames: string[] = checkAttributeNames.filter((attributeName: string): boolean => !!attributes[attributeName]);
 
         if (invalidAttributeNames.length > 0) {
             const message: string = getFailureString(tagName, invalidAttributeNames);

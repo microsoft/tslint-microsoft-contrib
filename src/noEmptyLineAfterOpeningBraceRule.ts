@@ -1,11 +1,10 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
-import {forEachTokenWithTrivia} from 'tsutils';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { forEachTokenWithTrivia } from 'tsutils';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-empty-line-after-opening-brace',
         type: 'maintainability',
@@ -48,10 +47,11 @@ class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
         let previousPrevious: ts.SyntaxKind;
 
         forEachTokenWithTrivia(node, ({}, tokenSyntaxKind, range) => {
-            if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
+            if (
+                previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
-                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
-
+                tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia
+            ) {
                 this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
 

@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import {ExtendedMetadata} from './utils/ExtendedMetadata';
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'no-octal-literal',
         type: 'maintainability',
@@ -41,7 +40,8 @@ class NoOctalLiteral extends Lint.RuleWalker {
         if (match) {
             let octalValue: string = match[2]; // match[2] is the matched octal value.
             const backslashCount: number = octalValue.lastIndexOf('\\') + 1;
-            if (backslashCount % 2 === 1) { // Make sure the string starts with an odd number of backslashes
+            if (backslashCount % 2 === 1) {
+                // Make sure the string starts with an odd number of backslashes
                 octalValue = octalValue.substr(backslashCount - 1);
 
                 const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);

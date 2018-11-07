@@ -1,4 +1,4 @@
-import {Utils} from '../utils/Utils';
+import { Utils } from '../utils/Utils';
 import { TestHelper } from './TestHelper';
 
 /**
@@ -29,7 +29,7 @@ describe('reactA11yImageButtonHasAlt', (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when input element has an expression for its type.", (): void => {
+        it('when input element has an expression for its type.', (): void => {
             const script: string = `
                 import React = require('react');
                 const type: string = "text";
@@ -39,7 +39,7 @@ describe('reactA11yImageButtonHasAlt', (): void => {
             TestHelper.assertNoViolation(ruleName, script);
         });
 
-        it("when input element has an expression for its type thats undefined.", (): void => {
+        it('when input element has an expression for its type thats undefined.', (): void => {
             const script: string = `
                 import React = require('react');
                 const type = undefined;

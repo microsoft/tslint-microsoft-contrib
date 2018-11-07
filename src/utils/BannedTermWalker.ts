@@ -3,11 +3,11 @@ import * as Lint from 'tslint';
 import { isObject, isNamed } from './TypeGuard';
 
 export class BannedTermWalker extends Lint.RuleWalker {
-    private readonly failureString : string;
+    private readonly failureString: string;
     private readonly bannedTerms: string[];
     private allowQuotedProperties: boolean = false;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString : string, bannedTerms: string[]) {
+    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString: string, bannedTerms: string[]) {
         super(sourceFile, options);
         this.failureString = failureString;
         this.bannedTerms = bannedTerms;
@@ -70,7 +70,7 @@ export class BannedTermWalker extends Lint.RuleWalker {
         super.visitParameterDeclaration(node);
     }
 
-    private validateNode(node: ts.Node) : void {
+    private validateNode(node: ts.Node): void {
         if (isNamed(node)) {
             const text: string = node.name.getText();
             if (text !== undefined) {
@@ -81,8 +81,7 @@ export class BannedTermWalker extends Lint.RuleWalker {
         }
     }
 
-    private isBannedTerm(text : string) : boolean {
+    private isBannedTerm(text: string): boolean {
         return this.bannedTerms.indexOf(text) !== -1;
     }
-
 }

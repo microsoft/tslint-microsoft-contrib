@@ -1,4 +1,4 @@
-var function1 = (() => {
+var function1 = () => {
     var functionVariable = () => {};
     var typedStringVariable = 'string variable';
 
@@ -7,4 +7,4 @@ var function1 = (() => {
 
     // this should create violation
     setTimeout(typedStringVariable);
-});
+};

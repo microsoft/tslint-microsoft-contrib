@@ -40,8 +40,8 @@ Use `npm run watch:run-tests` that will re-run tests (both Mocha and TSLint) and
 
 This repo provides pre-configured launch tasks for VS Code debugging rules and tests.
 
-* Pick `Run Mocha Tests` to debug rules which have Mocha unit tests inside `src/tests` folder.
-* Pick `Run TSLint Tests` to debug rules that have tests in TSLint format inside `tests` folder.
+-   Pick `Run Mocha Tests` to debug rules which have Mocha unit tests inside `src/tests` folder.
+-   Pick `Run TSLint Tests` to debug rules that have tests in TSLint format inside `tests` folder.
 
 **Node.js**
 

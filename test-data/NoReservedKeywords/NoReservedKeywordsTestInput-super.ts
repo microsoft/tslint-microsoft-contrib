@@ -1,4 +1,3 @@
-
 class SampleSuper3 {
     // class variables
     private super;
@@ -8,12 +7,13 @@ class SampleSuper3 {
 class SampleSuper4 {
     private var;
     set super(value) {}
-    get super() { return this.var;}
+    get super() {
+        return this.var;
+    }
 }
 
-
 class SampleSuper5 {
-    super() {}       // class methods
+    super() {} // class methods
 }
 
 // interface declarations

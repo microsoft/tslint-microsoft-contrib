@@ -7,20 +7,9 @@ import * as Lint from 'tslint';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import {
-    getPropName,
-    getStringLiteral,
-    getBooleanLiteral
-} from './utils/JsxAttribute';
+import { getPropName, getStringLiteral, getBooleanLiteral } from './utils/JsxAttribute';
 import { IAria } from './utils/attributes/IAria';
-import {
-    isStringLiteral,
-    isNumericLiteral,
-    isJsxExpression,
-    isFalseKeyword,
-    isTrueKeyword,
-    isNullKeyword
-} from './utils/TypeGuard';
+import { isStringLiteral, isNumericLiteral, isJsxExpression, isFalseKeyword, isTrueKeyword, isNullKeyword } from './utils/TypeGuard';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const aria: { [attributeName: string]: IAria } = require('./utils/attributes/ariaSchema.json');
@@ -37,7 +26,8 @@ export function getFailureString(propName: string, expectedType: string, permitt
         case 'string':
         case 'integer':
         case 'number':
-        default: // tslint:disable-line:no-switch-case-fall-through
+        default:
+            // tslint:disable-line:no-switch-case-fall-through
             return `The value for ${propName} must be a ${expectedType}.`;
     }
 }
@@ -78,18 +68,14 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
             return;
         }
 
-        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined
-            ? aria[propName].allowUndefined
-            : false;
+        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
         const expectedType: string = aria[propName].type;
         const permittedValues: string[] = aria[propName].values;
         const propValue: string = getStringLiteral(node) || String(getBooleanLiteral(node));
 
         if (this.isUndefined(node.initializer)) {
             if (!allowUndefined) {
-                this.addFailureAt(
-                    node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues)
-                );
+                this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
             }
             return;
         } else if (this.isComplexType(node.initializer)) {
@@ -97,11 +83,7 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
 
         if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailureAt(
-                node.getStart(),
-                node.getWidth(),
-                getFailureString(propName, expectedType, permittedValues)
-            );
+            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
         }
     }
 
@@ -116,17 +98,26 @@ class ReactA11yProptypesWalker extends Lint.RuleWalker {
         }
 
         switch (expectedType) {
-            case 'boolean': return this.isBoolean(propValueExpression);
-            case 'tristate': return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer': return this.isInteger(propValueExpression);
-            case 'number': return this.isNumber(propValueExpression);
-            case 'string': return this.isString(propValueExpression);
+            case 'boolean':
+                return this.isBoolean(propValueExpression);
+            case 'tristate':
+                return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
+            case 'integer':
+                return this.isInteger(propValueExpression);
+            case 'number':
+                return this.isNumber(propValueExpression);
+            case 'string':
+                return this.isString(propValueExpression);
             case 'token':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    permittedValues.indexOf(propValue.toLowerCase()) > -1;
+                return (
+                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    permittedValues.indexOf(propValue.toLowerCase()) > -1
+                );
             case 'tokenlist':
-                return (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1);
+                return (
+                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
+                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
+                );
             default:
                 return false;
         }

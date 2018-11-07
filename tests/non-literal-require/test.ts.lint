@@ -1,0 +1,24 @@
+import * as a from 'a';
+
+import b = require('b');
+
+import c from 'c';
+
+const d = require('d');
+
+const e = require([]);
+
+const f = require(['f']);
+
+const g = 'myModule';
+const h = require(moduleName);
+                  ~~~~~~~~~~      [Non-literal (insecure) parameter passed to require(): moduleName]
+
+let myModule = require([
+    'myModule',
+    somethingElse,
+    ~~~~~~~~~~~~~   [Non-literal (insecure) parameter passed to require(): somethingElse]
+    'otherModule',
+    getModuleName()
+    ~~~~~~~~~~~~~~~  [Non-literal (insecure) parameter passed to require(): getModuleName()]
+]);

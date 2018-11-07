@@ -1,0 +1,267 @@
+let something: boolean;
+let somethingArray: boolean[];
+let somethingCall: (method: (_: any) => void) => any;
+let somethingElse: boolean;
+let somethingElseGet: () => boolean;
+let someOtherFunction: () => void;
+
+new Promise<string>((resolve, reject) => {
+    if (something) {
+        resolve('value');
+    } else {
+        if (somethingElse) {
+            resolve('value');
+        } else {
+            reject();
+        }
+    }
+});
+
+new Promise<string>((resolve, reject) => {
+    resolve('value');
+});
+
+new Promise<string>(function (resolve, reject) {
+    resolve('value');
+});
+
+new Promise<string>((someOtherName, reject) => {
+    someOtherName('value');
+});
+
+new Promise<string>((resolve, reject) => {
+    reject('value');
+});
+
+new Promise<string>(function (resolve, reject) {
+    reject('value');
+});
+
+new Promise<string>((resolve, someOtherName) => {
+    someOtherName('value');
+});
+
+new Promise<string>((resolve, reject) => {
+    if (something) {
+        resolve('value');
+    }
+});
+
+new Promise<string>((resolve, reject) => {
+    if (something) {
+        resolve('value');
+    } else {
+        resolve('value');
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    if (something) {
+        if (somethingElse) {
+            resolve('value');
+        } else {
+            reject();
+        }
+    } else {
+        if (somethingElse) {
+            resolve('value');
+        } else {
+            reject();
+        }
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    if (something) {
+        if (somethingElse) {
+            resolve('value');
+        } else {
+            reject();
+        }
+    } else {
+        if (somethingElseGet) {
+            somethingElseGet();
+        } else {
+            reject();
+        }
+        reject(); // branches are not even analyzed when main thread resolves
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(function () {
+        resolve('value');
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(() => {
+        resolve();
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall((_) => {
+        resolve('value');
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    for (var x = 0; x < somethingArray.length; x++) {
+        resolve('value');
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    for (var x in somethingArray) {
+        resolve('value');
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    while (something) {
+        resolve();
+    }
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(resolve); // reference escapes and we assume it resolves
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(reject); // reference escapes and we assume it resolves
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(function (arg1, reject) {
+        resolve('value');
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall(function (resolve, arg2) {
+        reject();
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall((arg1, reject) => {
+        resolve('value');
+    });
+})
+
+new Promise<string>((resolve, reject) => {
+    somethingCall((resolve, arg2) => {
+        reject();
+    });
+})
+
+new Promise<string>(() => { })
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>(function { })
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => { })
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if (something) {
+~~~~~~~~~~~~~~~~~~~~
+        someOtherFunction();
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~
+})
+~~  [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if (something) {
+~~~~~~~~~~~~~~~~~~~~
+            resolve('value');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    } else {
+~~~~~~~~~~~~
+            someOtherFunction()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if (something) {
+~~~~~~~~~~~~~~~~~~~~
+        if (somethingElse) {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            resolve('value');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        } else {
+~~~~~~~~~~~~~~~~
+            reject();
+~~~~~~~~~~~~~~~~~~~~~
+        }
+~~~~~~~~~
+    } else {
+~~~~~~~~~~~~
+        if (somethingElseGet) {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            somethingElseGet();
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        } else {
+~~~~~~~~~~~~~~~~
+            reject();
+~~~~~~~~~~~~~~~~~~~~~
+        }
+~~~~~~~~~
+    }
+~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    somethingCall(function (resolve) {  // this parameter actually shadows the one in the enclosing scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        resolve();
+~~~~~~~~~~~~~~~~~~
+    });
+~~~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    somethingCall(function (reject) {  // this parameter actually shadows the one in the enclosing scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        reject();
+~~~~~~~~~~~~~~~~~
+    });
+~~~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    somethingCall((arg1, resolve) => { // this parameter actually shadows the one in the enclosing scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        resolve('value');
+~~~~~~~~~~~~~~~~~~~~~~~~~
+    });
+~~~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]
+
+new Promise<string>((resolve, reject) => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    somethingCall((reject) => {  // this parameter actually shadows the one in the enclosing scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        reject();
+~~~~~~~~~~~~~~~~~
+    });
+~~~~~~~
+})
+~~ [A Promise was found that appears to not have resolve or reject invoked on all code paths]

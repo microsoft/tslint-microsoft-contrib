@@ -1,4 +1,3 @@
-
 class SampleTypeOf3 {
     // class variables
     private typeof;
@@ -8,12 +7,13 @@ class SampleTypeOf3 {
 class SampleTypeOf4 {
     private var;
     set typeof(value) {}
-    get typeof() { return this.var;}
+    get typeof() {
+        return this.var;
+    }
 }
 
-
 class SampleTypeOf5 {
-    typeof() {}       // class methods
+    typeof() {} // class methods
 }
 
 // interface declarations

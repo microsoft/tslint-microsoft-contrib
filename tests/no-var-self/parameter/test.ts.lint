@@ -1,0 +1,7 @@
+(function (this: any) {
+    let xself = this;
+    let selfx = this;
+    let xselfx = this;
+    let self = this;
+        ~~~~~~~~~~~  [Assigning this reference to local variable: self = this]
+})();

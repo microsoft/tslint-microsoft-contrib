@@ -4,14 +4,11 @@ import * as Lint from 'tslint';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { Utils } from './utils/Utils';
 
-import { getJsxAttributesFromJsxElement,
-    getStringLiteral,
-    isEmpty } from './utils/JsxAttribute';
+import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 
 const OPTION_FORCE_REL_REDUNDANCY = 'force-rel-redundancy';
 
 export class Rule extends Lint.Rules.AbstractRule {
-
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-anchor-blank-noopener',
         type: 'functionality',
@@ -19,12 +16,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         options: {
             type: 'array',
             items: {
-              type: 'string',
-              enum: [OPTION_FORCE_REL_REDUNDANCY]
+                type: 'string',
+                enum: [OPTION_FORCE_REL_REDUNDANCY]
             },
             minLength: 0,
             maxLength: 1
-          },
+        },
         optionsDescription: `One argument may be optionally provided: \n\n' +
             '* \`${OPTION_FORCE_REL_REDUNDANCY}\` ignores the default \`rel="noreferrer"\`
             behaviour which implies \`rel="noreferrer noopener"\`. Instead, force redundancy
@@ -48,7 +45,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
-
     private readonly forceRelRedundancy: boolean = false;
     private readonly failureString: string = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
 
@@ -75,7 +71,6 @@ class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
 
     private validateOpeningElement(openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
-
             const allAttributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
             /* tslint:disable:no-string-literal */
             const target: ts.JsxAttribute = allAttributes['target'];
@@ -107,7 +102,7 @@ function isRelAttributeValue(attribute: ts.JsxAttribute, forceRedundancy: boolea
 
     const relValues: string[] = stringValue.split(/\s+/);
 
-    return forceRedundancy ?
-        Utils.contains(relValues, 'noreferrer') && Utils.contains(relValues, 'noopener') :
-        Utils.contains(relValues, 'noreferrer');
+    return forceRedundancy
+        ? Utils.contains(relValues, 'noreferrer') && Utils.contains(relValues, 'noopener')
+        : Utils.contains(relValues, 'noreferrer');
 }

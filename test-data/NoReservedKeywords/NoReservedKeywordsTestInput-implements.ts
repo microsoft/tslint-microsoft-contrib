@@ -1,15 +1,14 @@
-
 // module names
-module implements {
+namespace implements {
 
 }
 
-module SampleImplements1 {
+namespace SampleImplements1 {
     // module variables
     var implements;
 }
 
-module SampleImplements2 {
+namespace SampleImplements2 {
     // module function
     function implements() {}
 }
@@ -23,12 +22,13 @@ class SampleImplements3 {
 class SampleImplements4 {
     private var;
     set implements(value) {}
-    get implements() { return this.var;}
+    get implements() {
+        return this.var;
+    }
 }
 
-
 class SampleImplements5 {
-    implements() {}       // class methods
+    implements() {} // class methods
 }
 
 // interface declarations

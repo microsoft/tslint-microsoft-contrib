@@ -1,4 +1,3 @@
-
 class SampleWhile3 {
     // class variables
     private while;
@@ -8,13 +7,13 @@ class SampleWhile3 {
 class SampleWhile4 {
     private var;
     set while(value) {}
-    get while() { return this.var;}
+    get while() {
+        return this.var;
+    }
 }
 
-
 class SampleWhile5 {
-    while() {}       // class methods
-
+    while() {} // class methods
 }
 
 // interface declarations

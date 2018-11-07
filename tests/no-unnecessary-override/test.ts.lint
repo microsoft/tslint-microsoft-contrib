@@ -1,0 +1,116 @@
+class Class1 {
+    private myField;
+    myMethod1() {
+        super.myMethod1(this.myField);
+    }
+
+    myMethod2() {
+        return super.myMethod2(this.myField);
+    }
+}
+
+class Class2 {
+    myMethod() {
+        -super.myMethod();
+    }
+}
+
+class Class3 {
+    myMethod1(arg1, arg2) {
+        super.myMethod1(arg1);
+    }
+
+    myMethod2(arg1, arg2) {
+        return super.myMethod2(arg1);
+    }
+}
+
+class Class4 {
+    myMethod(arg1, arg2) {
+        super.myMethod(arg2, arg1);
+    }
+}
+
+class Class5 {
+    myMethod(arg1, arg2) {
+        super.myMethod(arg1, arg2 * 2);
+    }
+}
+
+class Class6 {
+    myMethod() {
+        console.log('some logging...');
+        super.myMethod();
+    }
+}
+
+class Class7 {
+    myMethod() {
+        super.myMethod();
+        console.log('some logging...');
+    }
+}
+
+class Class8 {
+    myMethod() {
+        super.notMyMethod();
+    }
+}
+
+class Class9 {
+    myMethod() {
+    ~~~~~~~~~~~~~
+        super.myMethod();
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}
+
+class Class10 {
+    myMethod() {
+    ~~~~~~~~~~~~~
+        return super.myMethod();
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}
+
+class Class11 {
+    myMethod(arg1) {
+    ~~~~~~~~~~~~~~~~~
+        super.myMethod(arg1);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}
+
+class Class12 {
+    myMethod(arg1, arg2) {
+    ~~~~~~~~~~~~~~~~~~~~~~~
+        super.myMethod(arg1, arg2);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}
+
+class Class13 {
+    myMethod(arg1 = true, arg2 = false) {
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        super.myMethod(arg1, arg2);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}
+
+class Class14 {
+    myMethod() {
+    ~~~~~~~~~~~~~
+        // here is a line comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        return super.myMethod();
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // here is another line comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }
+~~~~~  [Unnecessary method override. A method that only calls super can be removed: myMethod]
+}

@@ -1,15 +1,14 @@
-
 // module names
-module let {
+namespace let {
 
 }
 
-module SampleLet1 {
+namespace SampleLet1 {
     // module variables
     var let;
 }
 
-module SampleLet2 {
+namespace SampleLet2 {
     // module function
     function let() {}
 }
@@ -23,12 +22,13 @@ class SampleLet3 {
 class SampleLet4 {
     private var;
     set let(value) {}
-    get let() { return this.var;}
+    get let() {
+        return this.var;
+    }
 }
 
-
 class SampleLet5 {
-    let() {}       // class methods
+    let() {} // class methods
 }
 
 // interface declarations

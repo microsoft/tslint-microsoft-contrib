@@ -321,17 +321,19 @@ describe('functionNameRule', (): void => {
     describe('reading options', (): void => {
         let options: [boolean, object];
 
-        beforeEach((): void => {
-            options = [
-                true,
-                {
-                    'method-regex': '^myMethod$',
-                    'private-method-regex': '^myPrivateMethod$',
-                    'static-method-regex': '^myStaticMethod$',
-                    'function-regex': '^myFunction$'
-                }
-            ];
-        });
+        beforeEach(
+            (): void => {
+                options = [
+                    true,
+                    {
+                        'method-regex': '^myMethod$',
+                        'private-method-regex': '^myPrivateMethod$',
+                        'static-method-regex': '^myStaticMethod$',
+                        'function-regex': '^myFunction$'
+                    }
+                ];
+            }
+        );
 
         it('should allow passing names', (): void => {
             const script: string = `

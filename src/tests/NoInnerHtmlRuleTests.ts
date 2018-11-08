@@ -90,14 +90,16 @@ describe('noInnerHtmlRule', (): void => {
     describe('with options', (): void => {
         let options: [boolean, object];
 
-        beforeEach((): void => {
-            options = [
-                true,
-                {
-                    'html-lib-matcher': 'cheerio|[j|J][q|Q]uery'
-                }
-            ];
-        });
+        beforeEach(
+            (): void => {
+                options = [
+                    true,
+                    {
+                        'html-lib-matcher': 'cheerio|[j|J][q|Q]uery'
+                    }
+                ];
+            }
+        );
 
         it('should fail on invoking html(x) with different jQuery matcher', (): void => {
             const script: string = `

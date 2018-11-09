@@ -939,7 +939,8 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>use-simple-attributes</code>
       </td>
       <td>
-        Enforce usage of only simple attribute types.
+        Simpler attributes in JSX and TSX files helps keep code clean and readable.
+        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
       </td>
       <td>6.0.0</td>
     </tr>

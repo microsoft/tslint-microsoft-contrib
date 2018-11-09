@@ -155,6 +155,7 @@
         "underscore-consistent-invocation": true,
         "use-default-type-parameter": false,
         "use-named-parameter": true,
+        "use-simple-attributes": true,
 
         // tslint-microsoft-contrib rules disabled
         "missing-jsdoc": false,

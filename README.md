@@ -936,12 +936,12 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
-        <code>use-simple-attribute</code>
+        <code>use-simple-attributes</code>
       </td>
       <td>
         Enforce usage of only simple attribute types.
       </td>
-      <td>1.0.0</td>
+      <td>6.0.0</td>
     </tr>
     <tr>
       <td>

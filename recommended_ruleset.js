@@ -180,7 +180,6 @@ module.exports = {
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
-<<<<<<< HEAD
         'react-a11y-anchors': true,
         'react-a11y-aria-unsupported-elements': true,
         'react-a11y-event-has-role': true,
@@ -198,7 +197,6 @@ module.exports = {
         'react-a11y-role-supports-aria-props': true,
         'react-a11y-tabindex-no-positive': true,
         'react-a11y-titles': true,
-=======
         "react-a11y-accessible-headings": true,
         "react-a11y-anchors": true,
         "react-a11y-aria-unsupported-elements": true,
@@ -216,7 +214,6 @@ module.exports = {
         "react-a11y-role-supports-aria-props": true,
         "react-a11y-tabindex-no-positive": true,
         "react-a11y-titles": true,
->>>>>>> implement react-a11y-accessible-headings
 
         /**
          * Whitespace related rules. The only recommended whitespace strategy is to pick a single format and

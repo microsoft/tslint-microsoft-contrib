@@ -147,11 +147,9 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>react-a11y-accessible-headings</code>
       </td>
       <td>
-        For accessibility of your website, HTML heading elements must be concise, non-empty,
-        used for structuring information on the page, and match a subset of the words in the title element. There should be
-        no more than 2 H1 heading elements.
+        For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.
       </td>
-      <td>1.0.0</td>
+      <td>6.0.0</td>
     </tr>
     <tr>
       <td>

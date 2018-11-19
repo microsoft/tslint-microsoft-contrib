@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-
+import * as tsUtils from 'tsutils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const BAD_ORDER_HEADING_FAILURE_STRING: string = 'Heading elements should be used for structuring information on the page';
@@ -10,12 +10,6 @@ const BAD_NUMBER_H1_HEADING_FAILURE_STRING: string = 'H1 heading cannot exceed 2
 const VALID_HEADING_TYPES: Set<string> = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 const MAX_NUMBER_OF_H1_HEADINGS: number = 2;
 const MAX_HEADING_LENGTH_ATTRIBUTE_NAME: string = 'maxHeadingLength';
-
-interface IValidationOptions {
-    validateText?: boolean;
-    validateOrder?: boolean;
-    validateH1Count?: boolean;
-}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -45,11 +39,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
-    //private headings: { [id: string] : IHeadingResult; } = {};
-    private lastKnownHeadingNumber: number | undefined;
-    private numberOfH1Headings: number = 0;
     private readonly maxHeadingTextLength: number | undefined;
-
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
         const option = options.ruleArguments.find(a => a.hasOwnProperty(MAX_HEADING_LENGTH_ATTRIBUTE_NAME));
@@ -58,92 +48,43 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
         }
     }
 
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateSelfClosingElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        const options: IValidationOptions = {
-            validateText: true,
-            validateOrder: false,
-            validateH1Count: false
-        };
+        const elements: ts.JsxElement[] = [];
+        let h1HeadingCounter: number = 0;
+        let previousHeadingNumber: number | undefined;
 
-        let element = this.tryGetNode(node, ts.SyntaxKind.JsxElement);
-        if (element) {
-            this.validateElement(<ts.JsxElement>element, options);
-        } else {
-            element = this.tryGetNode(node, ts.SyntaxKind.JsxSelfClosingElement);
-            if (element) {
-                this.validateSelfClosingElement(<ts.JsxSelfClosingElement>element);
+        // Get JsxElements in scope
+        tsUtils.forEachToken(node, (childNode: ts.Node) => {
+            const parentNode = childNode.parent;
+            if (tsUtils.isJsxOpeningElement(parentNode) && VALID_HEADING_TYPES.has(childNode.getText())) {
+                elements.push(parentNode.parent);
             }
-        }
-        //super.visitVariableDeclaration(node);
-    }
+        });
 
-    protected visitJsxElement(node: ts.JsxElement): void {
-        const options: IValidationOptions = {
-            validateText: true,
-            validateOrder: true,
-            validateH1Count: true
-        };
-        this.validateElement(node, options);
-        super.visitJsxElement(node);
-    }
+        elements.forEach((element: ts.JsxElement) => {
+            const openingElement: ts.JsxOpeningElement = element.openingElement;
 
-    private validateElement(node: ts.JsxElement, options: IValidationOptions): void {
-        if (!node) {
-            return;
-        }
-        const openingElement: ts.JsxOpeningElement = node.openingElement;
-
-        if (VALID_HEADING_TYPES.has(openingElement.tagName.getText())) {
-            // Validate heading text
-            if (options.validateText) {
-                this.validateHeadingText(node);
-            }
             // Validate heading elements are structured in increasing order of +1
-            if (options.validateOrder) {
-                this.validateHeadingsOrder(openingElement);
+            const headingNumber: number = parseInt(openingElement.tagName.getText()[1], 10);
+            if (!previousHeadingNumber) {
+                previousHeadingNumber = headingNumber;
+            } else if (headingNumber !== previousHeadingNumber && headingNumber - 1 !== previousHeadingNumber) {
+                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), BAD_ORDER_HEADING_FAILURE_STRING);
+            } else {
+                previousHeadingNumber = headingNumber;
             }
+
             // Validate no more than 2 H1 headings
-            if (options.validateH1Count) {
-                this.validateH1HeadingCount(node);
+            if (openingElement.tagName.getText().toLowerCase() === 'h1') {
+                h1HeadingCounter += 1;
+                if (h1HeadingCounter > MAX_NUMBER_OF_H1_HEADINGS) {
+                    this.addFailureAt(node.getStart(), node.getWidth(), BAD_NUMBER_H1_HEADING_FAILURE_STRING);
+                }
             }
-        }
-    }
 
-    private validateSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        if (!node) {
-            return;
-        }
-        if (VALID_HEADING_TYPES.has(node.tagName.getText())) {
-            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_HEADING_FAILURE_STRING);
-        }
-    }
-
-    private validateH1HeadingCount(node: ts.JsxElement): void {
-        if (node.openingElement.tagName.getText().toLowerCase() !== 'h1') {
-            return;
-        }
-        this.numberOfH1Headings += 1;
-        if (this.numberOfH1Headings > MAX_NUMBER_OF_H1_HEADINGS) {
-            this.addFailureAt(node.getStart(), node.getWidth(), BAD_NUMBER_H1_HEADING_FAILURE_STRING);
-        }
-    }
-
-    private validateHeadingsOrder(headingNode: ts.JsxOpeningElement): void {
-        const headingNumber: number = parseInt(headingNode.tagName.getText()[1], 10);
-        if (!this.lastKnownHeadingNumber) {
-            this.lastKnownHeadingNumber = headingNumber;
-            return;
-        }
-        if (headingNumber !== this.lastKnownHeadingNumber && headingNumber - 1 !== this.lastKnownHeadingNumber) {
-            this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), BAD_ORDER_HEADING_FAILURE_STRING);
-        } else {
-            this.lastKnownHeadingNumber = headingNumber;
-        }
+            // Validate heading text
+            this.validateHeadingText(element);
+        });
     }
 
     private validateHeadingText(headingNode: ts.JsxElement): void {
@@ -152,10 +93,10 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
         if (headingNode.children.length === 0) {
             this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), EMPTY_HEADING_FAILURE_STRING);
         } else {
-            if (innerNode.kind === ts.SyntaxKind.JsxExpression) {
+            if (tsUtils.isJsxExpression(innerNode)) {
                 headingText = this.extractFromExpression(innerNode);
-            } else {
-                headingText = this.extractFromText(innerNode);
+            } else if (tsUtils.isJsxText(innerNode)) {
+                headingText = innerNode.getText();
             }
 
             if (headingText && this.maxHeadingTextLength && headingText.length > this.maxHeadingTextLength) {
@@ -164,31 +105,10 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
         }
     }
 
-    private extractFromExpression(node: ts.Node): string | undefined {
-        if (!(node.kind === ts.SyntaxKind.JsxExpression)) {
-            return undefined;
-        }
-        const expressionNode = <ts.JsxExpression>node;
+    private extractFromExpression(expressionNode: ts.JsxExpression): string | undefined {
         if (!expressionNode || !expressionNode.expression) {
             return undefined;
         }
         return (<ts.StringLiteral>expressionNode.expression).text;
-    }
-
-    private extractFromText(node: ts.Node): string | undefined {
-        if (!(node.kind === ts.SyntaxKind.JsxText)) {
-            return undefined;
-        }
-        return (<ts.JsxText>node).getText();
-    }
-
-    private tryGetNode(node: ts.Node, kind: ts.SyntaxKind): ts.Node | undefined {
-        if (node) {
-            if (node.kind === kind) {
-                return node;
-            }
-            return node.forEachChild(childNode => this.tryGetNode(childNode, kind));
-        }
-        return undefined;
     }
 }

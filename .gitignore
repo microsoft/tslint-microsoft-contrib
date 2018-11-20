@@ -22,3 +22,6 @@ tslint-microsoft-contrib.iml
 
 out.html
 rule-metadata.json
+
+# test results
+test-results.xml

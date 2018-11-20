@@ -14,5 +14,11 @@ steps:
 
 - script: |
     npm install
-    npm run build
+    npm run test-ci
   displayName: 'npm install and build'
+
+- task: PublishTestResults@2
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: ./test-results.xml
+  displayName: 'Publishing Mocha test results'

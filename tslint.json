@@ -99,6 +99,7 @@
         ],
         "use-isnan": true,
         "use-named-parameter": true,
+        "use-simple-attributes": true,
         "adjacent-overload-signatures": true,
         "array-type": [
             true,

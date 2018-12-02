@@ -1,3 +1,11 @@
+## 6.0.0
+
+The major version 6 comes with all the greatness of the 6.0.0-beta milestone along with:
+
+➕ New rules:
+
+* [#147](https://github.com/Microsoft/tslint-microsoft-contrib/issues/147) New rule: `use-simple-attributes`
+
 ## 6.0.0-beta
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.0.0-beta0)
 

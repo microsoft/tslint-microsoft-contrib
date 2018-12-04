@@ -1,0 +1,114 @@
+describe('...', (): void => {
+    before((done: MochaDone): void => {
+        something(done);
+    });
+    after((done: MochaDone): void => {
+        something(done);
+    });
+    beforeEach((done: MochaDone): void => {
+        something(done);
+    });
+    afterEach((done: MochaDone): void => {
+        something(done);
+    });
+    it('...', (done: MochaDone): void => {
+        something(done);
+    });
+});
+
+describe('...', function(): void {
+    before(function(done: MochaDone): void {
+        something(done);
+    });
+    after(function(done: MochaDone): void {
+        something(done);
+    });
+    beforeEach(function(done: MochaDone): void {
+        something(done);
+    });
+    afterEach(function(done: MochaDone): void {
+        something(done);
+    });
+    it('...', function(done: MochaDone): void {
+        something(done);
+    });
+});
+
+context('...', function(): void {
+    specify('...', function(done: MochaDone): void {
+        something(done);
+    });
+});
+
+describe('something...', (): void => {
+    it('...', (done): void => {
+        var x = done;
+        done();
+    });
+});
+
+describe('...', (): void => {
+    before((done): void => {
+            ~~~~ [0 % ('done')]
+        doSomething();
+        done();
+    });
+    after((done: MochaDone): void => {
+           ~~~~ [0 % ('done')]
+        done(); // it doesn't matter what order done() comes in.
+        doSomething();
+    });
+    beforeEach((aliasedDone: MochaDone): void => {
+                ~~~~~~~~~~~ [0 % ('aliasedDone')]
+        doSomething();
+        aliasedDone();
+    });
+    afterEach((done: MochaDone): void => {
+               ~~~~ [0 % ('done')]
+        doSomething();
+        done();
+    });
+    it('...', (done: MochaDone): void => {
+               ~~~~ [0 % ('done')]
+        doSomething();
+        done();
+    });
+});
+
+context('...', (): void => {
+    specify('...', (done: MochaDone): void => {
+                    ~~~~ [0 % ('done')]
+        doSomething();
+        done();
+    });
+});
+
+describe('...', function(): void {
+    before(function(done): void {
+                    ~~~~ [0 % ('done')]
+        something();
+        done()
+    });
+    after(function(myDone: MochaDone): void {
+                   ~~~~~~ [0 % ('myDone')]
+        myDone(); // it doesn't matter what order it comes in
+        something();
+    });
+    beforeEach(function(done: MochaDone): void {
+                        ~~~~ [0 % ('done')]
+        something();
+        done()
+    });
+    afterEach(function(done: MochaDone): void {
+                       ~~~~ [0 % ('done')]
+        something();
+        done()
+    });
+    it('...', function(done: MochaDone): void {
+                       ~~~~ [0 % ('done')]
+        something();
+        done()
+    });
+});
+
+[0]: Unneeded Mocha Done. Parameter can be safely removed: %s

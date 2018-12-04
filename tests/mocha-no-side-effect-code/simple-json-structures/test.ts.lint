@@ -1,0 +1,10 @@
+let onDaySelected: (newDate: Moment) => void = (newDate: Moment) => {
+    return;
+};
+let inputProps: DatePicker.Props = {
+    selectedDate: moment(),
+    onDaySelected: onDaySelected,
+    componentName: 'test'
+};
+describe('someTest', (): void => {
+});

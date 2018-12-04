@@ -1,0 +1,88 @@
+function fooGood() {}
+class MyClassGood {
+    foo() {}
+    foo1() {}
+    myFoo() {}
+    myFoo1() {}
+
+    private bar() {}
+    private bar1() {}
+    private myBar() {}
+    private myBar1() {}
+}
+
+class MyClassGoodStatic {
+    static FOO() {}
+    static FOO_BAR() {}
+    static FOO_2() {}
+    static FO__O() {}
+}
+
+class MyClassSymbols {
+    static [Symbol.staticDefault](): any {}
+    public static [Symbol.staticPublic](): any {}
+    protected static [Symbol.staticProtected](): any {}
+    private static [Symbol.staticPrivate](): any {}
+
+    static [Symbol.methodDefault](): any {}
+    public static [Symbol.methodPublic](): any {}
+    protected static [Symbol.methodProtected](): any {}
+    private static [Symbol.methodPrivate](): any {}
+}
+
+const objLiteralSymbols = {
+    [Symbol.toStringTag](): string => "hello world"
+}
+
+class MyClassPublic {
+    Foo() {}
+    ~~~ [public % ('Foo')]
+    _foo() {}
+    ~~~~ [public % ('_foo')]
+    FOO() {}
+    ~~~ [public % ('FOO')]
+    _FOO() {}
+    ~~~~ [public % ('_FOO')]
+    _foo() {}
+    ~~~~ [public % ('_foo')]
+}
+
+class MyClassPrivate {
+    private Foo() {}
+            ~~~ [private % ('Foo')]
+    private _foo() {}
+            ~~~~ [private % ('_foo')]
+    private FOO() {}
+            ~~~ [private % ('FOO)]
+    private _FOO() {}
+            ~~~~ [private % ('_FOO')]
+    private _foo() {}
+            ~~~~ [private % ('_foo')]
+}
+
+class MyClassProtected {
+    protected Foo() {}
+              ~~~ [protected % ('Foo')]
+    protected _foo() {}
+              ~~~~ [protected % ('_foo')]
+    protected FOO() {}
+              ~~~ [protected % ('FOO')]
+    protected _FOO() {}
+              ~~~~ [protected % ('_FOO')]
+    protected _foo() {}
+              ~~~~ [protected % ('_foo')]
+}
+
+class MyClassBad {
+    static Foo() {}
+           ~~~ [static % ('Foo')]
+    static _foo() {}
+           ~~~~ [static % ('_foo')]
+    static _foo2() {}
+           ~~~~~ [static % ('_foo2')]
+}
+
+[public]: Method name does not match /^[a-z][\w\d]+$/: %s
+[private]: Private method name does not match /^[a-z][\w\d]+$/: %s
+[protected]: Protected method name does not match /^[a-z][\w\d]+$/: %s
+[static]: Static method name does not match /^[A-Z_\d]+$/: %s

@@ -1,0 +1,13 @@
+var re = /foo {3}bar/;
+
+var re = new RegExp("foo   bar");
+
+var re = /foobar/;
+
+var re = /  bar/;
+         ~~~~~~~ [0 % ('2')]
+
+var re = /bar    /;
+         ~~~~~~~~~ [0 % ('4')]
+
+[0]: Spaces in regular expressions are hard to count. Use {%s}

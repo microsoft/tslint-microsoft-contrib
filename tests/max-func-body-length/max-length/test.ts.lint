@@ -1,0 +1,113 @@
+// https://github.com/Microsoft/tslint-microsoft-contrib/issues/468#issuecomment-407456317
+
+// 1-line arrow function
+const plusOne: (x: number) => number = (x: number): number => x + 1;    // Line 1
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [arrow % ('1')]
+
+// 3-line arrow function
+const plusTwo: (x: number) => number = (x: number): number => { // Line 1
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    return x + 2;                                               // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+};                                                              // Line 3
+~ [arrow % ('3')]
+
+// 5-line "declared" function
+function plusThree(x: number): number { // Line 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    let retVal: number = x;             // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    retVal += 3;                        // Line 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    return retVal;                      // Line 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+}                                       // Line 5
+~ [function % ('plusThree', '5')]
+
+// 7-line "expressed" function
+const plusFour: (x: number) => number = function (x: number): number {  // Line 1
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    let retVal: number = x;                                             // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    retVal += 1;                                                        // Line 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    retVal += 1;                                                        // Line 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    retVal += 2;                                                        // Line 5
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    return retVal;                                                      // Line 6
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+};                                                                      // Line 7
+~ [expression % ('7')]
+
+class PlusPlus {
+    public num: number;
+
+    // 4-line constructor
+    constructor(num: number) {  // Line 1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        this.num = num;         // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        this.num *= 1;          // Line 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }                           // Line 4
+~~~~~[constructor % ('PlusPlus', '4')]
+
+    // 9-line method
+    public plusFive(): number {                             // Line 1
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        let ret: number = this.num;                         // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                            // Line 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        for (let iter: number = 0; iter < 5; iter += 1) {   // Line 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            ret += 1;                                       // Line 5
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        }                                                   // Line 6
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                            // Line 7
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        return ret;                                         // Line 8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }                                                       // Line 9
+~~~~~ [method % ('plusFive', '9')]
+}
+
+// 10-line arrow function (with counted comments amd blanks)
+const plusSix: (x: number) => number = function (x: number): number {   // Line 1
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /* KEEP */                                                          // Line 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /* CALM */                                                          // Line 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /* AND */                                                           // Line 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // MIND                                                             // Line 5
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // THE                                                              // Line 6
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // GAP                                                              // Line 7
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~nil
+    return x + 6;                                                       // Line 9
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+};                                                                      // Line 10
+~ [expression % ('10')]
+
+// 11-nameless class
+export default class extends PlusPlus {}
+
+console.log(plusOne(1));                    // 2
+console.log(plusTwo(2));                    // 4
+console.log(plusThree(3));                  // 6
+console.log(plusFour(4));                   // 8
+console.log(new PlusPlus(5).plusFive());    // 10
+console.log(plusSix(6));                    // 12
+
+[arrow]: Max arrow function body length exceeded - max: 0, actual: %s
+[constructor]: Max constructor body length exceeded in class %s - max: 0, actual: %s
+[function]: Max function body length exceeded in function %s() - max: 0, actual: %s
+[expression]: Max function expression body length exceeded in function expression () - max: 0, actual: %s
+[method]: Max method body length exceeded in method %s() - max: 0, actual: %s

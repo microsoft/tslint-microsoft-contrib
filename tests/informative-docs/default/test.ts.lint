@@ -1,0 +1,86 @@
+/**
+ * Does X Y Z work.
+ */
+function foo() { }
+
+/**
+ * Transforms the processed data.
+ */
+function bar() { }
+
+/**
+ * Transforms the processed baz data.
+ */
+function bazProcessor() { }
+
+function fooNoComments() { }
+
+/**
+ * Foo class
+ */
+class FooClass {
+~~~~~~~~~~~~~~~~
+    /**
+~~~~~~~
+     * the foo method declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+~~~~~~~
+    fooMethodDeclaration() { }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+    /**
+~~~~~~~
+     * The foo property declaration.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+~~~~~~~
+    public fooPropertyDeclaration;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+}
+~ [0]
+
+/**
+ * the Foo enum.
+ */
+enum FooEnum { }
+~~~~~~~~~~~~~~~~ [0]
+
+/**
+ * The foo function
+ */
+function fooFunction() { }
+~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+const _ = {
+    /**
+     * The foo get accessor.
+     */
+    get fooGetAccessor() {
+    ~~~~~~~~~~~~~~~~~~~~~~
+        return 0;
+~~~~~~~~~~~~~~~~~
+    }
+~~~~~ [0]
+};
+
+/**
+ * The foo interface.
+ */
+interface IFooInterface { }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+/**
+ * The foo module.
+ */
+module FooModule { }
+~~~~~~~~~~~~~~~~~~~~ [0]
+
+/**
+ * The foo type.
+ */
+type fooType = {};
+~~~~~~~~~~~~~~~~~~ [0]
+
+[0]: This comment is roughly the same as the object's name. Either be more informative or don't include a comment.

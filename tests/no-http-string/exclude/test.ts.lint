@@ -1,0 +1,5 @@
+var x = "http://www.allowed.com"
+var x = "http://www.notallowed.com"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('http://www.notallowed.com')]
+
+[0]: Forbidden http url in string: '%s'

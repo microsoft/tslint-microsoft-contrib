@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "chai-prefer-contains-to-index-of": true
+    }
+}

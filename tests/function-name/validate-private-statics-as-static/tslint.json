@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "function-name": [true, "validate-private-statics-as-static"]
+    }
+}

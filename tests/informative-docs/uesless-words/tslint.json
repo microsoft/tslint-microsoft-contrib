@@ -1,0 +1,10 @@
+{
+    "rules": {
+        "informative-docs": [
+            true,
+            {
+                "uselessWords": ["also"]
+            }
+        ]
+    }
+}

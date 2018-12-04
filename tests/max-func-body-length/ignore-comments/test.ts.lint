@@ -1,0 +1,29 @@
+function sum(a,b) {
+    /**
+     * add both a and b together
+     * this is some complex math,
+     * so it's best we abstract
+     * it away from the user
+     */
+    return a + b;
+}
+
+function sub(a,b) {
+    // similarly to sub, this is
+    // some pretty complex
+    // arithmetic.
+    // let's keep this away from
+    // the user as well.
+    return a - b;
+}
+
+function sum(a,b) {
+~~~~~~~~~~~~~~~~~~~
+    let sum = a; // start with a
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    sum += b; // now add b
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    return sum; // return the result
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+}
+~ [Max function body length exceeded in function sum() - max: 3, actual: 5]

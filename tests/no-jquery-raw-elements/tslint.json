@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-jquery-raw-elements": true
+    }
+}

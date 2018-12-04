@@ -1,0 +1,4 @@
+describe('someTest', (): void => {
+    const VIOLATION = [ someCall() ];
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION = [ someCall() ]]
+});

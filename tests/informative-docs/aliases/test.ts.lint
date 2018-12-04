@@ -1,0 +1,7 @@
+/**
+ * The FancyFoo.
+ */
+function foo() {}
+~~~~~~~~~~~~~~~~~ [0]
+
+[0]: This comment is roughly the same as the object's name. Either be more informative or don't include a comment.

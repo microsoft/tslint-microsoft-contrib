@@ -1,0 +1,11 @@
+{
+    "rules": {
+        "max-func-body-length": [
+            true,
+            5,
+            {
+                "ignore-parameters-to-function-regex": "^describe$"
+            }
+        ]
+    }
+}

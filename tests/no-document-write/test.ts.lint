@@ -1,0 +1,52 @@
+interface DocumentLikeAPI {
+    write: ((arg : string) => void);
+    writeln: ((arg : string) => void);
+}
+
+function documentLikeAPIFunction() : DocumentLikeAPI {
+    return {
+        write: () => {},
+        writeln: () => {},
+    };
+}
+
+// These usages are OK because they are not on the DOM document
+var documentAPI : DocumentLikeAPI = documentLikeAPIFunction();
+documentAPI.write('...');
+documentAPI.writeln('...');
+documentLikeAPIFunction().write('...');
+documentLikeAPIFunction().writeln('...');
+
+// wrong # of args
+document.write();
+document.write('', '');
+document.writeln();
+document.writeln('', '');
+
+// type system has no idea what 'doc' is
+var doc = document;
+doc.write('...');
+doc.writeln('...');
+
+// type system has no idea what 'documentFunction' returns
+function documentFunction() : Document {
+    return window.document;
+}
+documentFunction().write('...');
+documentFunction().writeln('...');
+
+// this is not the window presumably
+this.document.write('...');
+this.document.writeln('...');
+
+document.write('...');
+~~~~~~~~~~~~~~~~~~~~~ [write]
+document.writeln('...');
+~~~~~~~~~~~~~~~~~~~~~~~ [writeln]
+window.document.write('...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [write]
+window.document.writeln('...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [writeln]
+
+[write]: Forbidden call to document.write
+[writeln]: Forbidden call to document.writeln

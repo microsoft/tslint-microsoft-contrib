@@ -1,0 +1,7 @@
+describe('someTest', (): void => {
+
+    const CONST1 = \`some
+                    multi-line
+                    string\`;
+
+});

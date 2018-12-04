@@ -1,0 +1,36 @@
+class Class1 {
+    private myField1;
+    protected myField2;
+    public myField3;
+    private static myField4;
+    protected static myField5;
+    public static myField6;
+}
+
+class Class2 {
+    private myMethod1() {};
+    protected myMethod2() {};
+    public myMethod3() {};
+    private static myMethod4() {};
+    protected static myMethod5() {};
+    public static myMethod6() {};
+}
+
+class Class3 {
+    myField1;
+    ~~~~~~~~~  [field % ('myField1;')]
+    static myField2;
+    ~~~~~~~~~~~~~~~~  [field % ('static myField2;')]
+}
+
+class Class4 {
+    myMethod1() {
+    ~~~~~~~~~~~~~
+    };
+~~~~~  [method % ('myMethod1() {)]
+    static myMethod2() {};
+    ~~~~~~~~~~~~~~~~~~~~~  [method % ('static myMethod2() {}')]
+}
+
+[field]: Field missing visibility modifier: %s
+[method]: Method missing visibility modifier: %s

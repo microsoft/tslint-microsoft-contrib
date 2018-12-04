@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-missing-visibility-modifiers": true
+    }
+}

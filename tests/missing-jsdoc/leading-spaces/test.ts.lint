@@ -1,0 +1,5 @@
+    /**
+~nil [File missing JSDoc comment at the top-level.]
+     * whatever
+     */
+    function whatever() { }

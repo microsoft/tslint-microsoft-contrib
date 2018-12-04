@@ -1,0 +1,13 @@
+var x = 'http://www.examples.com'
+        ~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('http://www.examples.com')]
+var x = `http://www.examples.com`
+        ~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('http://www.examples.com')]
+var x = `http://www.${example}.com`
+        ~~~~~~~~~~~~~~ [0 % ('http://www.')]
+function f(x : string = 'http://www.example.com/whatever') {}
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('http://www.example.com/whatever')]
+var x = 'https://www.microsoft.com'
+var x = 'The prototcol may be http:// or https://'
+function f(x : string = 'https://www.microsoft.com') {}
+
+[0]: Forbidden http url in string: '%s'

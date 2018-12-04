@@ -6,7 +6,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const FAILURE_STRING: string = 'Suspicious comment found: ';
 const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
-const FAILURE_STRING_OPTION: string = '\nTo disable this warning, the comment should include one of the following regex: ';
+const FAILURE_STRING_OPTION: string = 'To disable this warning, the comment should include one of the following regex: ';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -76,7 +76,7 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
     private foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
         let errorMessage: string = FAILURE_STRING + suspiciousWord;
         if (this.exceptionRegex.length > 0) {
-            errorMessage += '.' + this.getFailureMessageWithExceptionRegexOption();
+            errorMessage += '. ' + this.getFailureMessageWithExceptionRegexOption();
         }
         this.addFailureAt(startPosition, commentText.length, errorMessage);
     }

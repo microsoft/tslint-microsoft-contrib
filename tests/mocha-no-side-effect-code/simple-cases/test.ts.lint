@@ -1,0 +1,40 @@
+describe('someTest', (): void => {
+    const CONST1 = 'one';
+    const CONST2 = 2;
+    const CONST3 = true;
+    const CONST4 = false;
+
+    before((): void => {
+        const foo = someValue();
+    });
+    beforeEach((): void => {
+        const foo = someValue();
+    });
+    beforeAll((): void => {
+        const foo = someValue();
+    });
+    after((): void => {
+        const foo = someValue();
+    });
+    afterEach((): void => {
+        const foo = someValue();
+    });
+    afterAll((): void => {
+        const foo = someValue();
+    });
+    it((): void => {
+        const foo = someValue();
+    });
+    describe((): void => {
+        const CONST4 = false;
+        it((): void => {
+            const foo = someValue();
+        });
+    });
+    context((): void => {
+        const CONST4 = false;
+        specify((): void => {
+            const foo = someValue();
+        });
+    });
+});

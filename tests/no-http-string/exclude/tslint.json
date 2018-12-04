@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-http-string": [true, "http://www.allowed.com"]
+    }
+}

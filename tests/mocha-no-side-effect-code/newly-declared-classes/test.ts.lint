@@ -1,0 +1,16 @@
+describe('someTest', (): void => {
+
+    class MockModel extends Backbone.Model {
+
+        public fetch(options?: Backbone.ModelFetchOptions): JQueryXHR {
+            let request: JQueryXHR = super.fetch(options);
+            return request;
+        }
+
+        public save(attributes?: any, options?: Backbone.ModelSaveOptions): JQueryXHR {
+            let request: JQueryXHR = super.save(attributes, options);
+            return request;
+        }
+
+    }
+});

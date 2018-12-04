@@ -1,0 +1,95 @@
+import * as chai from "chai";
+const { expect } = chai;
+
+const something: any = "";
+
+expect(something).to.equal(true, 'message');
+expect(something).to.be.equal(false, 'message');
+expect(something).to.not.equal(null, 'message');
+expect(something).to.not.be.equal(undefined, 'message');
+
+expect(something, 'message').to.be.true;
+expect(something, 'message').to.be.false;
+expect(something, 'message').to.not.be.null;
+expect(something, 'message').to.not.be.undefined;
+
+expect(something).to.ok;
+~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+chai.expect(something).to.ok;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.ok;
+~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+chai.expect(something).to.not.be.ok;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.true;
+~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+chai.expect(something).to.be.true;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.be.true;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.false;
+~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.false;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.be.false;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.null;
+~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.null;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.be.null;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.undefined;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.undefined;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.be.undefined;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.equal(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.equals(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.equal(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.equals(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.be.equal(false);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.deep.equal(null);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.not.equal(undefined);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something).to.eql(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.be.eql(true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+chai.expect(something).to.not.be.eql(false);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+expect(something).to.deep.eql(null);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+chai.expect(something).to.not.eql(undefined);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [explicit]
+
+expect(something === undefined).to.equal(true, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [equality]
+chai.expect(something === undefined).to.equal(true, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [equality]
+expect(something !== undefined).to.equal(false, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [inequality]
+chai.expect(something !== undefined).to.equal(false, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [inequality]
+
+expect(something === undefined).to.equal(false, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [equality]
+expect(something !== undefined).to.equal(true, 'something should not have been set');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [inequality]
+
+[explicit]: Found chai call with vague failure message. Please add an explicit failure message
+[equality]: Found chai call with vague failure message. Move the strict equality comparison from the expect call into the assertion value
+[inequality]: Found chai call with vague failure message. Move the strict inequality comparison from the expect call into the assertion value

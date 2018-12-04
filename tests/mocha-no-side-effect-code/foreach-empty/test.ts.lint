@@ -1,0 +1,6 @@
+describe('something', (): void => {
+    [].forEach((): void => {
+        it('test', (): void => {
+        });
+    });
+});

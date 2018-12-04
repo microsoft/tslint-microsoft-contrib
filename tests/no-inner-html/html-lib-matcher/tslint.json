@@ -1,0 +1,11 @@
+{
+    "rules": {
+        "no-inner-html": [
+            true,
+            {},
+            {
+                "html-lib-matcher": "cheerio|[j|J][q|Q]uery"
+            }
+        ]
+    }
+}

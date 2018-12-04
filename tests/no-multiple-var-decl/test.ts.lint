@@ -1,0 +1,13 @@
+var x = 1;
+var y: number = 2;
+var z = [3, 4];
+for (var i = x, j = y; i < j; i++) {}
+
+var x = 1,
+~~~~~~~~~~
+    y = 2;
+~~~~~~~~~~ [0 % ('x = 1,')]
+var x, y = 2, z;
+~~~~~~~~~~~~~~~~ [0 % ('x,')]
+
+[0]: Do not use comma separated variable declarations: %s

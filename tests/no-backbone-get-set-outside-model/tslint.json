@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-backbone-get-set-outside-model": true
+    }
+}

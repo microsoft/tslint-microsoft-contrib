@@ -1,0 +1,11 @@
+describe('retries', (): void => {
+    this.retries(42);
+
+    describe('slow', (): void => {
+        this.slow(2500);
+
+        describe('timeout', (): void => {
+            this.timeout(5000);
+        });
+    });
+});

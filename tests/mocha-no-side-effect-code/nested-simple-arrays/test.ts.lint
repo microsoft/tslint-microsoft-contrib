@@ -1,0 +1,9 @@
+describe('someTest', (): void => {
+    const options = [true, [
+        'Mobile IE 10',
+        'IE >= 10',
+        'Chrome > 45',
+        'Firefox',
+        'Mobile Safari < 10'
+    ]];
+});

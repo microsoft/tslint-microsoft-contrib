@@ -1,0 +1,7 @@
+var retVal = MSApp.execUnsafeLocalFunction(() => {});
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [0 % ('execUnsafeLocalFunction')]
+
+WinJS.Utilities.setInnerHTMLUnsafe(element, text);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('setInnerHTMLUnsafe')]
+
+[0]: Forbidden call to %s

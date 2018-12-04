@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-document-write": true
+    }
+}

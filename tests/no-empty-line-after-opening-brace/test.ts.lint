@@ -1,0 +1,10 @@
+function () { }
+
+function () {
+}
+
+function () {
+
+~ [Opening brace cannot be followed by empty line]
+}
+

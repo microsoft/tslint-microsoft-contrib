@@ -1,0 +1,35 @@
+describe('something', (): void => {
+    // line 2
+    // line 3
+    // line 4
+    // line 5
+}); // line 6
+
+describe('something', function name() {
+    // line 2
+    // line 3
+    // line 4
+    // line 5
+    // line 6
+}); // line 7
+
+describe('something', function () {
+    // line 2
+    // line 3
+    // line 4
+    // line 5
+    // line 6
+}); // line 7
+
+describeThings('something', (): void => {
+                            ~~~~~~~~~~~~~
+    // line 2
+~~~~~~~~~~~~~
+    // line 3
+~~~~~~~~~~~~~
+    // line 4
+~~~~~~~~~~~~~
+    // line 5
+~~~~~~~~~~~~~
+}); // line 6
+~ [Max arrow function body length exceeded - max: 5, actual: 6]

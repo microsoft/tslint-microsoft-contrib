@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "missing-optional-annotation": [true]
+    }
+}

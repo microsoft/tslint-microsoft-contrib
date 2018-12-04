@@ -1,0 +1,10 @@
+describe('something', (): void => {
+    [
+        { name: 'alpha', value: 1 },
+        { name: 'beta', value: 2 },
+        { name: 'gamma', value: 3 }
+    ].forEach((): void => {
+        it('test', (): void => {
+        });
+    });
+});

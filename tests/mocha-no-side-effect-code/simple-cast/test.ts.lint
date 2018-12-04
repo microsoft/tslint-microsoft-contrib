@@ -1,0 +1,3 @@
+describe('someTest', (): void => {
+    const publisher: DTO.Publisher = <any>{ '@class': 'Publisher' };
+});

@@ -1,0 +1,227 @@
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        deferred.resolve();
+    } else {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        deferred.resolve();
+    } else {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = $.Deferred<void>();
+    if (something) {
+        deferred.resolve();
+    } else {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = $.Deferred<void>();
+    deferred.resolve();
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = $.Deferred<void>();
+    deferred.reject();
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        deferred.resolve();
+    } else {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    } else {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    if (something) {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    } else {
+        if (somethingElse) {
+            deferred.somethingElse();
+        } else {
+            deferred.reject();
+        }
+        deferred.reject(); // branches are not even analyzed when main thread resolves
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    someCall(function () {
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    someCall(() => {
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    someCall(function (someParm) {
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    someCall((someParm) => { // this parameter actually shadows the one in the enclosing scope
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    for(var x = 0; x < something.length; x++) {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    for(var x in something) {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    while (something) {
+        deferred.resolve();
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+    doSomething(deferred); // reference escapes and we assume it resolves
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = $.Deferred<void>();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('deferred: JQueryDeferred<void> = $.Deferred<void>()')]
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('deferred: JQueryDeferred<void> = jquery.Deferred<void>()')]
+    if (something) {
+        deferred.resolve();
+    } else {
+        deferred.someOtherFunction()
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    let deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('deferred: JQueryDeferred<void> = jquery.Deferred<void>()')]
+    if (something) {
+        if (somethingElse) {
+            deferred.resolve();
+        } else {
+            deferred.reject();
+        }
+    } else {
+        if (somethingElse) {
+            deferred.somethingElse();
+        } else {
+            deferred.reject();
+        }
+    }
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('deferred: JQueryDeferred<void> = jquery.Deferred<void>()')]
+    someCall(function (deferred) {  // this parameter actually shadows the one in the enclosing scope
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+function myMethod() : JQueryPromise<void> {
+    var deferred: JQueryDeferred<void> = jquery.Deferred<void>();
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('deferred: JQueryDeferred<void> = jquery.Deferred<void>()')]
+    someCall((arg1, deferred) => { // this parameter actually shadows the one in the enclosing scope
+        deferred.resolve();
+    });
+    return deferred.promise();
+}
+
+[0]: A JQuery deferred was found that appears to not have resolve or reject invoked on all code paths: '%s'

@@ -1,0 +1,28 @@
+var foo = element.innerHTML;
+var bar = element.outerHTML;
+var baz = $(element).html();
+var quxFunction = $(element).html;
+
+element.innerHTML = '<div></div>';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [innerHTML % ("element.innerHTML = '<div></div>'")]
+parent.child.innerHTML = '<div></div>';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [innerHTML % ("parent.child.innerHTML = '<div></div>'")]
+
+element.outerHTML = '<div></div>';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [outerHTML % ("element.outerHTML = '<div></div>'")]
+parent.child.outerHTML = someVariable;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [outerHTML % ("parent.child.outerHTML = someVariable")]
+
+$(element).html('whatever');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [html % ("$(element).html('whatever')")]
+
+var myCustomObject = {
+  html: function (text) {
+    console.log('Called html with ' + text);
+  },
+};
+myCustomObject.html('here I am');
+
+[innerHTML]: Writing a string to the innerHTML property is insecure: %s
+[outerHTML]: Writing a string to the outerHTML property is insecure: %s
+[html]: Using the html() function to write a string to innerHTML is insecure: %s

@@ -1,0 +1,8 @@
+cheerio(element).html('whatever');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   [Using the html() function to write a string to innerHTML is insecure: cheerio(element).html('whatever')]
+var myCustomObject = {
+  html: function (text) {
+    console.log('Called html with ' + text);
+  },
+};
+myCustomObject.html('here I am');

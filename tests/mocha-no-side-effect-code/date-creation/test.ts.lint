@@ -1,0 +1,5 @@
+let date = moment();
+let firstActiveDay: Moment = moment().subtract(2, 'years');
+let date2 = new Date(123123123);
+describe('someTest', (): void => {
+});

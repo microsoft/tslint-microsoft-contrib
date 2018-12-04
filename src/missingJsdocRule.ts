@@ -35,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class MissingJSDocWalker extends Lint.RuleWalker {
     protected visitSourceFile(node: ts.SourceFile): void {
         if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            this.addFailureAt(0, 0, Rule.FAILURE_STRING);
         }
         // do not continue walking
     }

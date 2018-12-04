@@ -1,0 +1,81 @@
+// this comment is not suspicious
+
+/**
+ * This comment
+ * is not suspicious.
+ */
+
+/**
+ * This comment
+ * is not suspicious, even if it contains the word TODOlike.
+ */
+
+/**
+~~~
+ * TODO: add failing example and update assertions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+~~~ [0 % ('TODO')]
+
+/**
+ * TODO: add failing example and update assertions
+ * See https://example.com/article/123
+ */
+
+// todo add failing example and update assertions
+
+// BUG you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2 you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG you should fix this https://example.com/article/123
+// HACK you should fix this https://example.com/article/123
+// FIXME you should fix this https://example.com/article/123
+// LATER you should fix this https://example.com/article/123
+// LATER2 you should fix this https://example.com/article/123
+// TODO you should fix this https://example.com/article/123
+
+// BUG: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG: you should fix this https://example.com/article/123
+// HACK: you should fix this https://example.com/article/123
+// FIXME: you should fix this https://example.com/article/123
+// LATER: you should fix this https://example.com/article/123
+// LATER2: you should fix this https://example.com/article/123
+// TODO: you should fix this https://example.com/article/123
+
+// BUG: you should fix this (see https://example.com/article/123)
+// HACK: you should fix this (see https://example.com/article/123)
+// FIXME: you should fix this (see https://example.com/article/123)
+// LATER: you should fix this (see https://example.com/article/123))
+// LATER2: you should fix this (see https://example.com/article/123)
+// TODO: you should fix this (see https://example.com/article/123)
+
+// bug: you should fix this (see https://example.com/article/123)
+// hack: you should fix this (see https://example.com/article/123)
+// fixme: you should fix this (see https://example.com/article/123)
+// later: you should fix this (see https://example.com/article/123))
+// later2: you should fix this (see https://example.com/article/123)
+// todo: you should fix this (see https://example.com/article/123)
+
+[0]: Suspicious comment found: %s. To disable this warning, the comment should include one of the following regex: /https:\/\/example.com\/*/

@@ -1,0 +1,19 @@
+var x = {
+    myProperty: 'sometext'
+};
+delete x.myProperty;
+delete x[myProperty]
+
+delete this.router.routes[routeName];
+
+delete this.router.routes.moreRoutes[routeName];
+
+delete rights[name];
+
+var something: int = 22;
+
+if (something) {
+    var variableForDeletion = 10;
+    delete variableForDeletion;
+           ~~~~~~~~~~~~~~~~~~~ [Variables should not be deleted: variableForDeletion]
+}

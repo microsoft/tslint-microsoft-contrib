@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "informative-docs": [
+            true,
+            {
+                "aliases": {
+                    "foo": ["FancyFoo"]
+                }
+            }
+        ]
+    }
+}

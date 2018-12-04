@@ -1,0 +1,36 @@
+$("div");
+
+const x = {
+    html: "<pre>" + $("<div>").text(message).html() + "</pre>"
+}
+
+$("<div></div>");
+
+$("<div>some simple content</div>");
+
+$("<div/>");
+$("<div />");
+
+$("<div><br/></div>"); // nested elements are better expressed in JQuery API
+~~~~~~~~~~~~~~~~~~~~~ [complex % ('$("<div><br/></div>")')]
+
+$("<input readonly='true' >"); // attributes are better expressed in JQuery API
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [complex % ('$("<input readonly=\'true\' >")')]
+
+$("<input readonly >"); // default attributes are better expressed in JQuery API
+~~~~~~~~~~~~~~~~~~~~~~ [complex % ('$("<input readonly >")')]
+
+$("<" + tagName + " />");
+~~~~~~~~~~~~~~~~~~~~~~~~ [string % ('$("<" + tagName + " />")')]
+
+$("<div className='" + className + "' >");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [string % ('$("<div className=\'" + className + "\' >")')]
+
+$(someTagOpening + content + ">");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [string % ('$(someTagOpening + content + ">")')]
+
+jquery("<" + tagName + closingBits);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [string % ('jquery("<" + tagName + closingBits)')]
+
+[complex]: Replace complex HTML strings with jQuery API: %s
+[string]: Replace HTML string manipulation with jQuery API: %s

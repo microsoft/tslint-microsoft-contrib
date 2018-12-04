@@ -1,0 +1,8 @@
+describe('something', (): void => {
+    [1, 2, 3].forEach((): void => {
+        const VIOLATION = new MyClass();
+              ~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION = new MyClass()]
+        it('test', (): void => {
+        });
+    });
+});

@@ -1,0 +1,17 @@
+function myFunction() {}
+class MyClass {
+    myMethod() {}
+    private myPrivateMethod() {}
+    static myStaticMethod() {}
+}
+
+function notMyFunction() {}
+         ~~~~~~~~~~~~~ [Function name does not match /^myFunction$/: notMyFunction]
+class NotMyClass {
+    notMyMethod() {}
+    ~~~~~~~~~~~ [Method name does not match /^myMethod$/: notMyMethod]
+    private notMyPrivateMethod() {}
+            ~~~~~~~~~~~~~~~~~~ [Private method name does not match /^myPrivateMethod$/: notMyPrivateMethod]
+    static notMyStaticMethod() {}
+           ~~~~~~~~~~~~~~~~~ [Static method name does not match /^myStaticMethod$/: notMyStaticMethod]
+}

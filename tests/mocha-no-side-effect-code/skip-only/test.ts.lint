@@ -1,0 +1,17 @@
+describe('someTest', (): void => {
+
+    it.skip((): void => {
+    });
+
+    describe.skip((): void => {
+        it.skip((): void => {
+        });
+    });
+
+    it.only((): void => {
+    });
+    describe.only((): void => {
+        it.only((): void => {
+        });
+    });
+});

@@ -1,0 +1,13 @@
+class MyClass {
+    private static bar() {}
+    private static bar1() {}
+    private static myBar() {}
+    private static myBar1() {}
+}
+
+class MyClass {
+    protected static bar() {}
+    protected static bar1() {}
+    protected static myBar() {}
+    protected static myBar1() {}
+}

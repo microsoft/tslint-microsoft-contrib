@@ -1,0 +1,19 @@
+import crypto = require('crypto')
+Math.abs(x)
+crypto.randomBytes(2)
+window.crypto.getRandomValues()
+
+Math.random();
+~~~~~~~~~~~ [math]
+const x = Math.random;
+          ~~~~~~~~~~~ [math]
+
+import crypto = require('crypto')
+
+crypto.pseudoRandomBytes(0);
+~~~~~~~~~~~~~~~~~~~~~~~~ [crypto]
+const x = crypto.pseudoRandomBytes;
+          ~~~~~~~~~~~~~~~~~~~~~~~~ [crypto]
+
+[crypto]: crypto.pseudoRandomBytes produces insecure random numbers. Use crypto.randomBytes() instead
+[math]: Math.random produces insecure random numbers. Use crypto.randomBytes() or window.crypto.getRandomValues() instead

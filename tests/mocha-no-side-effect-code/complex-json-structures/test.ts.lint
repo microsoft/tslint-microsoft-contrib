@@ -1,0 +1,11 @@
+let searchItems: DTO.SearchItem[] = [
+    {'id': '4', 'name': 'All Search Topics', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '66', 'name': 'Products', 'parentId': '4', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '314012', 'name': 'Honey', 'parentId': '66', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '314072', 'name': 'Bonny', 'parentId': '66', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '65', 'name': 'Uncategorized', 'parentId': '4', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '216102', 'name': 'Blub', 'parentId': '65', owner: undefined, ownerName: '', createdDate: undefined},
+    {'id': '314022', 'name': 'Bnutsch', 'parentId': '65', owner: undefined, ownerName: '', createdDate: undefined}
+];
+describe('someTest', (): void => {
+});

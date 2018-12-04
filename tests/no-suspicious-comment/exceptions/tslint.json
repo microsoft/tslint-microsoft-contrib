@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-suspicious-comment": [true, ["https://example.com/*"]]
+    }
+}

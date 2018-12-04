@@ -1,0 +1,4 @@
+describe('someTest', (): void => {
+    const CONST1 = [];
+    const CONST2 = [ true, false, 1, 0, 'value', null];
+});

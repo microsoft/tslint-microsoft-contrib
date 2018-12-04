@@ -1,0 +1,21 @@
+describe('someTest', (): void => {
+    const VIOLATION1 = this.myMethod();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION1 = this.myMethod()]
+    const VIOLATION2 = new MyClass();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION2 = new MyClass()]
+
+    it((): void => {
+        const foo = someValue(); // OK
+    });
+
+    describe('someTest', (): void => {
+        const VIOLATION3 = true ? false : true;
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION3 = true ? false : ...]
+        const VIOLATION4 = x || 'some value';
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION4 = x || 'some value']
+
+        it((): void => {
+            const foo = someValue(); // OK
+        });
+    });
+});

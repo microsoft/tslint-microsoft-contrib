@@ -1,0 +1,6 @@
+describe('someTest', (): void => {
+
+    function doSomething() {
+        const x = doSomethingElse();
+    }
+});

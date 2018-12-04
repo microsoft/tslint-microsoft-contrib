@@ -1,0 +1,13 @@
+{
+    "rules": {
+        "function-name": [
+            true,
+            {
+                "method-regex": "^myMethod$",
+                "private-method-regex": "^myPrivateMethod$",
+                "static-method-regex": "^myStaticMethod$",
+                "function-regex": "^myFunction$"
+            }
+        ]
+    }
+}

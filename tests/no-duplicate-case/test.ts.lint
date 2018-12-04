@@ -1,0 +1,51 @@
+var a = 1;
+
+switch (a) {
+    case 1:
+        break;
+    case 2:
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case 1:
+        break;
+    case 1:
+    ~~~~~~~
+        break;
+~~~~~~~~~~~~~~ [0 % ('1')]
+    case 2:
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case "1":
+        break;
+    case "1":
+    ~~~~~~~~~
+        break;
+~~~~~~~~~~~~~~ [0 % ('"1"')]
+    case "2":
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case one:
+        break;
+    case one:
+    ~~~~~~~~~
+        break;
+~~~~~~~~~~~~~~ [0 % ('one')]
+    case two:
+        break;
+    default:
+        break;
+}
+
+[0]: Duplicate case found in switch statement: %s

@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "mocha-no-side-effect-code": [true]
+    }
+}

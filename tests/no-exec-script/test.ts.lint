@@ -1,0 +1,19 @@
+execScript('alert("hello world")');
+~~~~~~~~~~                           [0 % ('execScript')]
+this.execScript('alert("hello world")');
+~~~~~~~~~~~~~~~                           [0 % ('this.execScript')]
+window.execScript('alert("hello world")');
+~~~~~~~~~~~~~~~~~                           [0 % ('window.execScript')]
+(<any>window).execScript('alert("hello world")');
+~~~~~~~~~~~~~~~~~~~~~~~~                           [0 % ('(<any>window).execScript')]
+
+var a = execScript('alert("hello world")');
+        ~~~~~~~~~~                           [0 % ('execScript')]
+var b = this.execScript('alert("hello world")');
+        ~~~~~~~~~~~~~~~                           [0 % ('this.execScript')]
+var c = window.execScript('alert("hello world")');
+        ~~~~~~~~~~~~~~~~~                           [0 % ('window.execScript')]
+var d = (<any>window).execScript('alert("hello world")');
+        ~~~~~~~~~~~~~~~~~~~~~~~~                           [0 % ('(<any>window).execScript')]
+
+[0]: forbidden execScript: %s

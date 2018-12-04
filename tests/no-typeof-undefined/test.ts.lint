@@ -1,0 +1,33 @@
+if(x === undefined) {}
+if(x == undefined) {}
+if(x === null) {}
+if(x == null) {}
+
+if(x === 'undefined') {}
+if(x == 'undefined') {}
+
+if(typeof x === 'object') {}
+if(typeof x == 'object') {}
+
+if(undefined === x) {}
+if(undefined == x) {}
+if(null === x) {}
+if(null == x) {}
+
+if('undefined' === x) {}
+if('undefined' == x) {}
+
+if('object' === typeof x) {}
+if('object' == typeof) {}
+
+if(typeof x === 'undefined') {}
+   ~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ("typeof x === 'undefined'")]
+if('undefined' === typeof x) {}
+   ~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ("'undefined' === typeof x")]
+
+if(typeof x == 'undefined') {}
+   ~~~~~~~~~~~~~~~~~~~~~~~ [0 % ("typeof x == 'undefined'")]
+if('undefined' == typeof x) {}
+   ~~~~~~~~~~~~~~~~~~~~~~~ [0 % ("'undefined' == typeof x")]
+
+[0]: Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: %s

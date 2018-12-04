@@ -1,0 +1,16 @@
+var datetime = this.get('timestamp');
+this.set('modificationdate', datetime);
+
+model.get();
+model.get(someIdentifier);
+model.get('timestamp', 'someOtherValue');
+
+model.set();
+model.set('modificationdate');
+model.set('modificationdate', value1, value2);
+
+var datetime = model.get('timestamp');
+               ~~~~~~~~~~~~~~~~~~~~~~ [Backbone get() called outside of owning model: model.get('timestamp')]
+
+model.set('modificationdate', datetime);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Backbone set() called outside of owning model: model.set('modificationdate', datetime)]

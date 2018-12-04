@@ -1,0 +1,72 @@
+describe('some unit test', () => {
+    it('some test', () => {
+        // some test code
+    });
+
+    // these are not calls to mocha's it.only
+    it.only();
+    it.only('');
+    it.only(() => {});
+    it.only(something, () => {});
+    it.only('', something);
+    it.only(something, somethingElse);
+
+    // these are not calls to mocha's describe.only
+    describe.only();
+    describe.only('');
+    describe.only(() => {});
+    describe.only(something, () => {});
+    describe.only('', something);
+    describe.only(something, somethingElse);
+
+    // these are not calls to mocha's context.only
+    context.only();
+    context.only('');
+    context.only(() => {});
+    context.only(something, () => {});
+    context.only('', something);
+    context.only(something, somethingElse);
+});
+
+describe('some unit test', () => {
+    it.only('some test', () => {
+    ~~~~~~~ [0 % ('it')]
+        // some test code
+    });
+});
+
+context('some unit test', () => {
+    specify.only('some test', () => {
+    ~~~~~~~~~~~~ [0 % ('specify')]
+        // some test code
+    });
+});
+
+describe('some unit test', () => {
+    it.only('some test', function() {
+    ~~~~~~~ [0 % ('it')]
+        // some test code
+    });
+});
+
+describe.only('some unit test', () => {
+~~~~~~~~~~~~~ [0 % ('describe')]
+    // some test code
+});
+
+describe.only('some unit test', function() {
+~~~~~~~~~~~~~ [0 % ('describe')]
+    // some test code
+});
+
+context.only('some unit test', () => {
+~~~~~~~~~~~~ [0 % ('context')]
+    // some test code
+});
+
+context.only('some unit test', function() {
+~~~~~~~~~~~~ [0 % ('context')]
+    // some test code
+});
+
+[0]: Do not commit Mocha %s.only function call

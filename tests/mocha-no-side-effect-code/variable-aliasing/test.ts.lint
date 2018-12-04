@@ -1,0 +1,5 @@
+let expect: Chai.ExpectStatic = chai.expect;
+
+describe('someTest', (): void => {
+    let expect2: Chai.ExpectStatic = chai.expect;
+});

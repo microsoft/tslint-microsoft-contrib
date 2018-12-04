@@ -1,0 +1,12 @@
+var a = new RegExp('.');        // valid constructor
+var b = RegExp('.');            // this is the constructor as well
+var c = this.RegExp('[');       // clearly not the typescript RegExp object
+var d = new RegExp(whatever);   // non-string literal parameter
+
+new RegExp('\\') /*error Invalid regular expression: /\/: \ at end of pattern*/
+           ~~~~  [0 % ('/\\/', '\\ at end of pattern')]
+
+RegExp('[')
+       ~~~  [0 % ('/[/', 'Unterminated character class')]
+
+[0]: Invalid regular expression: %s: %s

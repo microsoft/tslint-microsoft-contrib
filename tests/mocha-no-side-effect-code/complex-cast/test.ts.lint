@@ -1,0 +1,4 @@
+describe('someTest', (): void => {
+    const publisher: DTO.Publisher = <any>doSomething();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): publisher: DTO.Publisher = <...]
+});

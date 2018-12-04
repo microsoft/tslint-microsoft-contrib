@@ -1,0 +1,21 @@
+console.log(document.domain);
+console.log(document.domain.value);
+let x = document.domain;
+let y = document.domain.value;
+
+document.domain.value = 'some value';
+model.domain = 'some model value';
+
+document.domain = 'some value';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ("document.domain = 'some value'")]
+
+document.domain = someValue;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('document.domain = someValue')]
+
+window.document.domain = someValue;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('window.document.domain = someValue')]
+
+let doc: Document = document;
+doc.domain = 'some value';
+
+[0]: Forbidden write to document.domain: %s

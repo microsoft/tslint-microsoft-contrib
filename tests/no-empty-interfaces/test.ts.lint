@@ -1,0 +1,20 @@
+interface MyInterface {
+    attribute: string;
+}
+
+interface MyInterface extends First, Second {
+}
+
+interface MyInterface extends First {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+}
+~ [0 % ('MyInterface')]
+
+interface MyInterface {
+~~~~~~~~~~~~~~~~~~~~~~~
+    // adding comments will not help you.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+}
+~ [0 % ('MyInterface')]
+
+[0]: Do not declare empty interfaces: '%s'

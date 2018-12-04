@@ -1,0 +1,4 @@
+context('someTest', (): void => {
+    expect(convertedTags).to.deep.equal(tags);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): expect(convertedTags).to.dee...]
+});

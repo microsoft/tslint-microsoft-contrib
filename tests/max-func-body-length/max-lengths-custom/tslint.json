@@ -1,0 +1,14 @@
+{
+    "rules": {
+        "max-func-body-length": [
+            true,
+            {
+                "arrow-body-length": 2,
+                "ctor-body-length": 3,
+                "func-body-length": 4,
+                "func-express-body-length": 7,
+                "method-body-length": 8
+            }
+        ]
+    }
+}

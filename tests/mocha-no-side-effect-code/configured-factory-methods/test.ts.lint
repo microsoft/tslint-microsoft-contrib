@@ -1,0 +1,7 @@
+const x = RestDataFactory.createSocialProfile()
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): x = RestDataFactory.createSo...]
+
+describe('someTest', (): void => {
+    const y = RestDataFactory.createSocialProfileToken()
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): y = RestDataFactory.createSo...]
+});

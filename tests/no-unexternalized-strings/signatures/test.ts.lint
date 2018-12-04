@@ -1,0 +1,43 @@
+let str = 'Hello Worlds';
+
+const script: string = 'let str = `Hello ${var} Worlds`;';
+
+let str = localize("key", "Hello Worlds");
+
+import nls = require('nls');
+let str = nls.localize("Key", "Hello World");
+
+import { localize } from "nls";
+let str = localize("Key", "Hello World");
+
+import nls = require("nls");
+let str = nls.localize("Key", "Hello World");
+
+var nls = require("nls");
+                  ~~~~~ [unexternalized % ('"nls"')]
+let str = nls.localize("Key", "Hello World");
+
+let str = my.localize('key', "Needs localization");
+                             ~~~~~~~~~~~~~~~~~~~~ [unexternalized % ('"Needs localization"')]
+
+let str = localize('key', foo("Needs localization"));
+                              ~~~~~~~~~~~~~~~~~~~~ [unexternalized % ('"Needs localization"')]
+
+let str = localize('key', this.foo("Needs localization"));
+                                   ~~~~~~~~~~~~~~~~~~~~ [unexternalized % ('"Needs localization"')]
+
+let str = "Needs localization";
+          ~~~~~~~~~~~~~~~~~~~~ [unexternalized % ('"Needs localization"')]
+
+let str: string = undefined;
+function foo() {
+    str = "Hello World";
+          ~~~~~~~~~~~~~ [unexternalized % ('"Hello World"')]
+}
+
+localize('key', "Hello " + "World");
+                ~~~~~~~~ [argument]
+                           ~~~~~~~ [argument]
+
+[argument]: Message argument to 'localize' must be a string literal.
+[unexternalized]: Unexternalized string found: %s

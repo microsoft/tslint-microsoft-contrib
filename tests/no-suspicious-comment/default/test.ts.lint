@@ -1,0 +1,109 @@
+// this comment is not suspicious
+
+/**
+ * This comment
+ * is not suspicious.
+ */
+
+/**
+ * This comment
+ * is not suspicious, even if it contains the word TODOlike.
+ */
+
+/**
+~~~
+ * TODO: add failing example and update assertions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+~~~ [0 % ('TODO')]
+
+/**
+~~~
+ * TODO: add failing example and update assertions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * See https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+~~~ [0 % ('TODO')]
+
+// todo add failing example and update assertions
+
+// BUG you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2 you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2 you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO: you should fix this
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO: you should fix this https://example.com/article/123
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// BUG: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// HACK: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// FIXME: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// LATER: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// LATER2: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// TODO: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+// bug: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('BUG')]
+// hack: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('HACK')]
+// fixme: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('FIXME')]
+// later: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER')]
+// later2: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('LATER2')]
+// todo: you should fix this (see https://example.com/article/123)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('TODO')]
+
+[0]: Suspicious comment found: %s

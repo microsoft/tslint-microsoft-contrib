@@ -1,0 +1,6 @@
+for (var i = 0; i < 100; i++) {}
+
+for (const item of array) {}
+
+for (name in object) {}
+~~~~~~~~~~~~~~~~~~~~~~~ [Do not use the 'for in' statement: 'for (name in object)'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.]

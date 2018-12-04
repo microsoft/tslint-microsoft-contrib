@@ -1,0 +1,10 @@
+describe('something', (): void => {
+    [ someCall() ].forEach((): void => {
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        it('test', (): void => {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        });
+~~~~~~~~~~~
+    });
+~~~~~~ [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): [ someCall() ].forEach((): v...]
+});

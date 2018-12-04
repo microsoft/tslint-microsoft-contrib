@@ -1,0 +1,7 @@
+const VIOLATION1 = new MyClass();
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~  [Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): VIOLATION1 = new MyClass()]
+
+describe('someTest', (): void => {
+    it((): void => {
+    });
+});

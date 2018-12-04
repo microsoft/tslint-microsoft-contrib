@@ -1,0 +1,17 @@
+class MyClass {
+    private static bar() {}
+    private static bar1() {}
+    private static BAR() {}
+                   ~~~ [private % ('BAR')]
+    private static BAR_1() {}
+                   ~~~~~ [private % ('BAR_1')]
+    protected static myBar() {}
+    protected static myBar1() {}
+    protected static MY_BAR() {}
+                     ~~~~~~ [protected % ('MY_BAR')]
+    protected static MY_BAR_1() {}
+                     ~~~~~~~~ [protected % ('MY_BAR_1')]
+}
+
+[private]: Private method name does not match /^[a-z][\w\d]+$/: %s
+[protected]: Protected method name does not match /^[a-z][\w\d]+$/: %s

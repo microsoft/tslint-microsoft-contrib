@@ -1,0 +1,6 @@
+var x = `some
+        ~~~~~
+        multiline
+~~~~~~~~~~~~~~~~~
+        string`;
+~~~~~~~~~~~~~~~ [Forbidden Multiline string: `some...]

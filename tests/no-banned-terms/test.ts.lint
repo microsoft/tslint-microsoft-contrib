@@ -1,0 +1,223 @@
+module Sample {
+    var caller;
+        ~~~~~~  [0 % ('caller')]
+}
+
+module Sample {
+    var callee;
+        ~~~~~~  [0 % ('callee')]
+}
+
+module Sample {
+    var arguments;
+        ~~~~~~~~~  [0 % ('arguments')]
+}
+
+module Sample {
+    var eval;
+        ~~~~  [0 % ('eval')]
+}
+
+module Sample {
+    function caller() {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+module Sample {
+    function callee() {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('callee')]
+}
+
+module Sample {
+    function arguments() {}
+    ~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('arguments')]
+}
+
+module Sample {
+    function eval() {}
+    ~~~~~~~~~~~~~~~~~~ [0 % ('eval')]
+}
+
+class Sample {
+    private caller;
+    ~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    private callee;
+    ~~~~~~~~~~~~~~~ [0 % ('callee')]
+}
+
+class Sample {
+    private arguments;
+    ~~~~~~~~~~~~~~~~~~ [0 % ('arguments')]
+}
+
+class Sample {
+    private eval;
+    ~~~~~~~~~~~~~ [0 % ('eval')]
+}
+
+class Sample {
+    private caller;
+    ~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    private var;
+    set caller(value) {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+    get caller() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    private var;
+    set callee(value) {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('callee')]
+    get callee() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('callee')]
+}
+
+class Sample {
+    private var;
+    set arguments(value) {}
+    ~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('arguments')]
+    get arguments() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('arguments')]
+}
+
+class Sample {
+    private var;
+    set eval(value) {}
+    ~~~~~~~~~~~~~~~~~~ [0 % ('eval')]
+    get eval() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('eval')]
+}
+
+class Sample {
+    private var;
+    set caller(value) {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+    get caller() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    private var;
+    set caller(value) {}
+    ~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+    get caller() { return var;}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    caller() {}
+    ~~~~~~~~~~~ [0 % ('caller')]
+}
+
+class Sample {
+    callee() {}
+    ~~~~~~~~~~~ [0 % ('callee')]
+}
+
+class Sample {
+    arguments() {}
+    ~~~~~~~~~~~~~~ [0 % ('arguments')]
+}
+
+class Sample {
+    eval() {}
+    ~~~~~~~~~ [0 % ('eval')]
+}
+
+class Sample {
+    method(caller) {}
+           ~~~~~~     [0 % ('caller')]
+}
+
+class Sample {
+    method(callee) {}
+           ~~~~~~     [0 % ('callee')]
+}
+
+class Sample {
+    method(arguments) {}
+           ~~~~~~~~~     [0 % ('arguments')]
+}
+
+class Sample {
+    method(eval) {}
+           ~~~~     [0 % ('eval')]
+}
+
+module Sample {
+    function method(caller) {}
+                    ~~~~~~     [0 % ('caller')]
+}
+
+module Sample {
+    function method(callee) {}
+                    ~~~~~~     [0 % ('callee')]
+}
+
+module Sample {
+    function method(arguments) {}
+                    ~~~~~~~~~     [0 % ('arguments')]
+}
+
+module Sample {
+    function method(eval) {}
+                    ~~~~     [0 % ('eval')]
+}
+
+module Sample {
+    var func = (caller) => {};
+                ~~~~~~         [0 % ('caller')]
+}
+
+module Sample {
+    var func = (callee) => {};
+                ~~~~~~         [0 % ('callee')]
+}
+
+module Sample {
+    var func = (arguments) => {};
+                ~~~~~~~~~         [0 % ('arguments')]
+}
+
+module Sample {
+    var func = (eval) => {};
+                ~~~~         [0 % ('eval')]
+}
+
+var caller;
+    ~~~~~~  [0 % ('caller')]
+var callee;
+    ~~~~~~  [0 % ('callee')]
+var arguments;
+    ~~~~~~~~~  [0 % ('arguments')]
+var eval;
+    ~~~~  [0 % ('eval')]
+
+interface Sample {
+    caller: any;
+    ~~~~~~~~~~~~ [0 % ('caller')]
+}
+
+interface Sample {
+    callee: any;
+    ~~~~~~~~~~~~ [0 % ('callee')]
+}
+
+interface Sample {
+    arguments: any;
+    ~~~~~~~~~~~~~~~ [0 % ('arguments')]
+}
+
+interface Sample {
+    eval: any;
+    ~~~~~~~~~~ [0 % ('eval')]
+}
+
+[0]: Forbidden reference to banned term: %s

@@ -5,7 +5,7 @@ import { AstUtils } from './utils/AstUtils';
 import { ChaiUtils } from './utils/ChaiUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const FAILURE_STRING: string = 'Found chai call with indexOf that can be converted to .contain assertion.';
+const FAILURE_STRING: string = 'Found chai call with indexOf that can be converted to .contain assertion:';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {

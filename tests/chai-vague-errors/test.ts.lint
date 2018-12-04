@@ -91,5 +91,5 @@ expect(something !== undefined).to.equal(true, 'something should not have been s
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [inequality]
 
 [explicit]: Found chai call with vague failure message. Please add an explicit failure message
-[equality]: Found chai call with vague failure message. Move the strict equality comparison from the expect call into the assertion value
+[equality]: Found chai call with vague failure message. Move the strict equality comparison from the expect call into the assertion value.
 [inequality]: Found chai call with vague failure message. Move the strict inequality comparison from the expect call into the assertion value

@@ -21,4 +21,4 @@ expect(targetUrl.indexOf(twitterAuthUrl)).not.to.equal(-1,'...');
 chai.expect(targetUrl.indexOf(twitterAuthUrl)).not.to.equal(-1,'...');
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
 
-[0]: Found chai call with indexOf that can be converted to .contain assertion.
+[0]: Found chai call with indexOf that can be converted to .contain assertion:

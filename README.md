@@ -941,16 +941,6 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
-        <code>use-simple-attributes</code>
-      </td>
-      <td>
-        Simpler attributes in JSX and TSX files helps keep code clean and readable.
-        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
-      </td>
-      <td>6.0.0</td>
-    </tr>
-    <tr>
-      <td>
         <code>react-a11y-props</code>
       </td>
       <td>
@@ -1200,6 +1190,16 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         This rule is similar to JSLint's <a href="https://jslinterrors.com/use-a-named-parameter">Use a named parameter</a> rule.
       </td>
       <td>0.0.3</td>
+    </tr>
+    <tr>
+      <td>
+        <code>use-simple-attributes</code>
+      </td>
+      <td>
+        Simpler attributes in JSX and TSX files helps keep code clean and readable.
+        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
+      </td>
+      <td>6.0.0</td>
     </tr>
     <tr>
       <td>

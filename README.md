@@ -931,6 +931,11 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         For accessibility of your website, enforce usage of onBlur over onChange on select menus.
+        References:
+        <ul>
+          <li><a href="http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php">OnChange Event Accessibility Issues</a></li>
+          <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#gl-own-interface">Guideline 8. Ensure direct accessibility of embedded user interfaces.</a></li>
+        </ul>
       </td>
       <td>6.0.0-beta</td>
     </tr>

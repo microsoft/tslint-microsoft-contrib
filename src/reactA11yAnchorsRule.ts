@@ -92,6 +92,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         const differentHrefSameText: IAnchorInfo[] = [];
 
         while (this.anchorInfoList.length > 0) {
+            // tslint:disable-next-line:no-non-null-assertion
             const current: IAnchorInfo = this.anchorInfoList.shift()!;
             this.anchorInfoList.forEach(
                 (anchorInfo: IAnchorInfo): void => {

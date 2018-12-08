@@ -20,7 +20,6 @@
         "no-inferrable-types": false,
         "no-internal-module": false,
         "no-namespace": false,
-        "no-non-null-assertion": false,
         "no-unbound-method": false,
         "no-unsafe-any": false,
         "prefer-for-of": false,

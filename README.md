@@ -880,7 +880,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <ul>
           <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent">Web Content Accessibility Guidelines 1.0</a></li>
           <li><a href="https://www.w3.org/TR/wai-aria/roles#presentation">ARIA Presentation Role</a></li>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>
         </ul>
       </td>
       <td>2.0.11</td>

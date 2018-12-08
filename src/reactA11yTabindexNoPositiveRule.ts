@@ -17,6 +17,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-tabindex-no-positive',
         type: 'maintainability',
         description: 'Enforce tabindex value is **not greater than zero**.',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#navigation-mechanisms-focus-order">WCAG 2.4.3 - Focus Order</a></li>
+          <li><a href="https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#tabindex-usage">Audit Rules - tabindex-usage</a></li>
+          <li><a href="https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_focus_03">Avoid positive integer values for tabIndex</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

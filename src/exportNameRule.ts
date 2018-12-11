@@ -86,12 +86,16 @@ function isExportStatement(node: ts.Statement): node is ExportStatement {
 function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
     if (ts.isExportAssignment(node)) {
         return [[node.expression.getText(), node.expression]];
-    } else {
+    } else if (node.exportClause) {
         const symbolAndNodes: [string, ts.Node][] = [];
-        node.exportClause!.elements.forEach(e => {
+        node.exportClause.elements.forEach(e => {
             symbolAndNodes.push([e.name.getText(), node]);
         });
         return symbolAndNodes;
+    } else {
+        // Re-exports `export * from ...` do not have export clause - no names to validate.
+        // Effectively will be skipped in check later.
+        return [];
     }
 }
 

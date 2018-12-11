@@ -14,6 +14,13 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-titles',
         type: 'functionality',
         description: 'For accessibility of your website, HTML title elements must be concise and non-empty.',
+        rationale: `References:
+        <ul>
+          <li><a href="http://www.w3.org/TR/WCAG20/#navigation-mechanisms-title">WCAG 2.0 - Requirement 2.4.2 Page Titled (Level A)</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/13">OAA-Accessibility Rule 13: Title element should not be empty</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/24">OAA-Accessibility Rule 24: Title content should be concise</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/25">OAA-Accessibility Rule 25: Title text must contain more than one word</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

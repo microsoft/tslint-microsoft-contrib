@@ -38,6 +38,14 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-event-has-role',
         type: 'maintainability',
         description: 'Elements with event handlers must have role attribute.',
+        rationale: `References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/94">WCAG Rule 94</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role">
+            Using the button role
+          </a></li>
+        </ul>
+        `,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

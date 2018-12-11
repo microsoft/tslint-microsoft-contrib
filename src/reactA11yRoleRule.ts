@@ -33,7 +33,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-role',
         type: 'maintainability',
-        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+        description: `Elements with aria roles must use a **valid**, **non-abstract** aria role.
+        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).`,
+        rationale: `References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

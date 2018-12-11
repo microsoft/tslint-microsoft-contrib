@@ -164,6 +164,18 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-lang',
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/WCAG20-TECHS/H58.html">
+            H58: Using language attributes to identify changes in the human language
+          </a></li>
+          <li><a href="https://dequeuniversity.com/rules/axe/1.1/valid-lang">
+            lang attribute must have a valid value
+          </a></li>
+          <li><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">
+            List of ISO 639-1 codes
+          </a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

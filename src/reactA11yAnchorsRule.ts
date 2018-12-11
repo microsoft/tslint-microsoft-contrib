@@ -29,6 +29,13 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-anchors',
         type: 'functionality',
         description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+        rationale: `References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/38">WCAG Rule 38: Link text should be as least four 4 characters long</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/39">WCAG Rule 39: Links with the same HREF should have the same link text</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/41">WCAG Rule 41: Links that point to different HREFs should have different link text</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/43">WCAG Rule 43: Links with images and text content, the alt attribute should be unique to the text content or empty</a></li>
+        </ul>`,
         options: {
             type: 'array',
             items: {

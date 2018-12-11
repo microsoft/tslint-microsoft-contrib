@@ -46,6 +46,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             'Enforce that an img element contains the non-empty alt attribute. ' +
             'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent">Web Content Accessibility Guidelines 1.0</a></li>
+          <li><a href="https://www.w3.org/TR/wai-aria/roles#presentation">ARIA Presentation Role</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>
+        </ul>`,
         optionsDescription: '',
         optionExamples: ['true', '[true, ["Image"]]'],
         typescriptOnly: true,

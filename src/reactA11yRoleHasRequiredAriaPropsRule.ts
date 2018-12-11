@@ -39,6 +39,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/wai-aria/roles#role_definitions">ARIA Definition of Roles</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/90">WCAG Rule 90: Required properties and states should be defined</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/91">WCAG Rule 91: Required properties and states must not be empty</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

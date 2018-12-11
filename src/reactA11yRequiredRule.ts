@@ -13,6 +13,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-required',
         type: 'functionality',
         description: 'Enforce that required input elements must have aria-required set to true',
+        rationale: `References:
+        <ul>
+          <li><a href="http://www.clarissapeterson.com/2012/11/html5-accessibility/">Acessibility in HTML5</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

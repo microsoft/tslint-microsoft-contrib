@@ -548,7 +548,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-reserved-keywords</code>
       </td>
       <td>
-        Deprecated - This rule can be replaced with TSLint's no-reserved-keywords.
+        Deprecated - This rule can be replaced with TSLint's variable-name.
         Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.
         Since version 2.0.9 this rule accepts a parameter called <code>allow-quoted-properties</code>.
         If true, interface properties in quotes will be ignored.

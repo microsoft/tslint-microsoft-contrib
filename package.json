@@ -73,7 +73,9 @@
     "watch:src": "tsc --watch"
   },
   "dependencies": {
-    "tsutils": "^2.27.2 <2.29.0"
+    "tslint": "^5.11.0",
+    "tsutils": "^3.5.2",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@types/chai": "4.1.7",
@@ -91,9 +93,7 @@
     "prettier": "1.15.0",
     "rimraf": "^2.6.2",
     "strip-json-comments": "^2.0.1",
-    "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
-    "typescript": "3.1.1",
     "underscore": "1.9.1"
   },
   "peerDependencies": {

@@ -5,6 +5,7 @@ function () {
 
 function () {
 
-~ [Opening brace cannot be followed by empty line]
+~nil
 }
+~nil [Opening brace cannot be followed by empty line]
 

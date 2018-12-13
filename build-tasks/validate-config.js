@@ -26,6 +26,7 @@ const disabledRules = new Set([
     'no-empty-interfaces',
     'no-empty-line-after-opening-brace',
     'no-multiline-string',
+    'no-reserved-keywords',
     'no-relative-imports',
     'no-stateless-class',
     'no-unexternalized-strings',

@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Mandatory',
-        group: 'Security',
+        group: 'Deprecated',
         commonWeaknessEnumeration: '398'
     };
 
@@ -89,7 +89,16 @@ export class Rule extends Lint.Rules.AbstractRule {
         'of'
     ];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn(
+                'Warning: no-duplicate-case rule is deprecated. Replace your usage with the TSLint no-duplicate-switch-case rule.'
+            );
+            Rule.isWarningShown = true;
+        }
+
         const walker: Lint.RuleWalker = new BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
         return this.applyWithWalker(walker);
     }

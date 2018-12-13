@@ -62,18 +62,25 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
             // tslint:disable-next-line:no-conditional-assignment
             while ((match = regex.exec(tokenText))) {
                 const browser = this.parseBrowserString(match[1]);
+                if (browser === undefined) {
+                    break;
+                }
+
                 this.findUnsupportedBrowserFailures(browser, range.pos, range.end - range.pos);
             }
         });
     }
 
-    private parseBrowserString(browser: string): BrowserVersion {
+    private parseBrowserString(browser: string): BrowserVersion | undefined {
         // This case-insensitive regex contains 3 capture groups:
         //     #1 looks for a browser name (combination of spaces and alpha)
         //     #2 looks for an optional comparison operator (>=, <=, etc)
         //     #3 looks for a version number
         const regex = /([a-zA-Z ]*)(>=|<=|<|>)?\s*(\d*)/i;
-        const match = browser.match(regex)!;
+        const match = browser.match(regex);
+        if (match === null) {
+            return undefined;
+        }
 
         return {
             name: match[1].trim(),
@@ -89,7 +96,9 @@ class NoUnsupportedBrowserCodeRuleWalker extends Lint.RuleWalker {
             if (option instanceof Array) {
                 option.forEach((browserString: string) => {
                     const browser = this.parseBrowserString(browserString);
-                    result[browser.name.toLowerCase()] = browser;
+                    if (browser !== undefined) {
+                        result[browser.name.toLowerCase()] = browser;
+                    }
                 });
             }
         });

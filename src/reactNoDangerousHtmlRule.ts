@@ -61,7 +61,6 @@ class NoDangerousHtmlWalker extends Lint.RuleWalker {
     }
 
     protected visitPropertyAssignment(node: ts.PropertyAssignment): void {
-        super.visitPropertyAssignment(node);
         const keyNode: ts.DeclarationName = node.name;
 
         if (keyNode.kind === ts.SyntaxKind.Identifier) {

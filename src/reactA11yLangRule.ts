@@ -216,7 +216,7 @@ class ReactA11yLangRuleWalker extends Lint.RuleWalker {
                     if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                         if (attribute.name.getText() === 'lang') {
                             langFound = true;
-                            if (attribute.initializer!.kind === ts.SyntaxKind.StringLiteral) {
+                            if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                                 const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
                                 if (LANGUAGE_CODES.indexOf(langText) === -1) {
                                     this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);

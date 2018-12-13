@@ -4,6 +4,7 @@ import * as Lint from 'tslint';
 import { Utils } from './utils/Utils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
+import { isImportEqualsDeclaration } from 'tsutils';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -142,8 +143,8 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (node.importClause!.name !== undefined) {
-            const name: string = node.importClause!.name!.text;
+        if (node.importClause !== undefined && node.importClause.name !== undefined) {
+            const name: string = node.importClause.name.text;
             if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
                 const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;
                 this.validateImport(node, name, moduleName);
@@ -157,17 +158,32 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
             return;
         }
+
         expectedImportedName = this.makeCamelCase(expectedImportedName);
-        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
-            const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
-            const nameNode =
-                node.kind === ts.SyntaxKind.ImportEqualsDeclaration
-                    ? (<ts.ImportEqualsDeclaration>node).name
-                    : (<ts.ImportDeclaration>node).importClause!.name;
-            const nameNodeStartPos = nameNode!.getStart();
-            const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, expectedImportedName);
-            this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
+        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node)) {
+            return;
         }
+
+        const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
+
+        const nameNode = this.getNameNodeFromImportNode(node);
+        if (nameNode === undefined) {
+            return;
+        }
+
+        const nameNodeStartPos = nameNode.getStart();
+        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedName);
+        this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
+    }
+
+    private getNameNodeFromImportNode(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration): ts.Node | undefined {
+        if (isImportEqualsDeclaration(node)) {
+            return node.name;
+        }
+
+        const importClause = node.importClause;
+
+        return importClause === undefined ? undefined : importClause.name;
     }
 
     private makeCamelCase(input: string): string {

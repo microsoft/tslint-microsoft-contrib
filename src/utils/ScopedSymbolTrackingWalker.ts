@@ -109,7 +109,11 @@ export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
 
     protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
         this.scope = new Scope(this.scope);
-        this.scope.addGlobalScope(node.body!, this.getSourceFile(), this.getOptions());
+
+        if (node.body !== undefined) {
+            this.scope.addGlobalScope(node.body, this.getSourceFile(), this.getOptions());
+        }
+
         super.visitModuleDeclaration(node);
         this.scope = this.scope.parent;
     }
@@ -181,11 +185,15 @@ export class ScopedSymbolTrackingWalker extends Lint.RuleWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
+        // this.scope is always set upon entering a source file, so we know it exists here
+        // tslint:disable:no-non-null-assertion
         if (AstUtils.isDeclarationFunctionType(node)) {
             this.scope!.addFunctionSymbol(node.name.getText());
         } else {
             this.scope!.addNonFunctionSymbol(node.name.getText());
         }
+        // tslint:enable:no-non-null-assertion
+
         super.visitVariableDeclaration(node);
     }
 }

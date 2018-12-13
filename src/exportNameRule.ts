@@ -130,13 +130,18 @@ export class ExportNameWalker extends Lint.RuleWalker {
     }
 
     private getExportStatementsWithinModules(moduleDeclaration: ts.ModuleDeclaration): ts.Statement[] | undefined {
-        if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleDeclaration) {
+        if (moduleDeclaration.body === undefined) {
+            return undefined;
+        }
+
+        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return this.getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
-        } else if (moduleDeclaration.body!.kind === ts.SyntaxKind.ModuleBlock) {
+        } else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
+
         return undefined;
     }
 
@@ -146,7 +151,7 @@ export class ExportNameWalker extends Lint.RuleWalker {
             const element = exportedElements[0];
             if (ts.isModuleDeclaration(element) || ts.isClassDeclaration(element) || ts.isFunctionDeclaration(element)) {
                 if (element.name !== undefined) {
-                    this.validateExport(element.name!.text, exportedElements[0]);
+                    this.validateExport(element.name.text, exportedElements[0]);
                 }
             } else if (exportedElements[0].kind === ts.SyntaxKind.VariableStatement) {
                 const variableStatement: ts.VariableStatement = <ts.VariableStatement>exportedElements[0];

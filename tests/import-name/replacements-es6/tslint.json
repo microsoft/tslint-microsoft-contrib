@@ -1,0 +1,13 @@
+{
+    "rules": {
+        "import-name": [
+            true,
+            {},
+            {
+                "fs/package-name": "pkg",
+                "abc-tag": "abc",
+                "myModule": "pqr"
+            }
+        ]
+    }
+}

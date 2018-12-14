@@ -1,0 +1,7 @@
+import pkg from "fs/package-name";
+import abc from "abc-tag";
+import pqr from "my-module"
+import what from "what-module"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Misnamed import. Import should be named 'whatModule' but found 'what']
+import Up from "up-module";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Misnamed import. Import should be named 'upModule' but found 'Up']

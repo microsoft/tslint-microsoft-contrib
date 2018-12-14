@@ -1,0 +1,14 @@
+{
+    "rules": {
+        "import-name": [
+            true,
+            {},
+            {
+                "backbone": "Backbone",
+                "react": "React",
+                "is-plain-object": "isPlainObject",
+                "BaseChartOptions": "baseChartOptions"
+            }
+        ]
+    }
+}

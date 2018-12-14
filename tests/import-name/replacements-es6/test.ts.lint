@@ -1,0 +1,3 @@
+import pkg from 'fs/package-name';
+import abc from 'abc-tag';
+import pqr from 'my-module';

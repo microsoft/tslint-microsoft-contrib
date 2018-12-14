@@ -14,9 +14,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
+        recommendation: 'false,',
         severity: 'Critical',
         level: 'Mandatory',
-        group: 'Security',
+        group: 'Deprecated',
         commonWeaknessEnumeration: '398'
     };
 
@@ -89,7 +90,14 @@ export class Rule extends Lint.Rules.AbstractRule {
         'of'
     ];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-reserved-keywords rule is deprecated. Replace your usage with the TSLint variable-name rule.');
+            Rule.isWarningShown = true;
+        }
+
         const walker: Lint.RuleWalker = new BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
         return this.applyWithWalker(walker);
     }

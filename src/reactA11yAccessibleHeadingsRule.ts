@@ -3,12 +3,13 @@ import * as Lint from 'tslint';
 import * as tsUtils from 'tsutils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const BAD_ORDER_HEADING_FAILURE_STRING: string = 'Heading elements should be used for structuring information on the page';
+const BAD_ORDER_HEADING_FAILURE_STRING: string = "Heading elements shouldn't increase by more then one level consecutively";
 const EMPTY_HEADING_FAILURE_STRING: string = 'Heading elements must not be empty';
 const BAD_HEADING_LENGTH_STRING: string = 'Heading content should be concise';
 const BAD_NUMBER_H1_HEADING_FAILURE_STRING: string = 'H1 heading cannot exceed 2 elements';
 const VALID_HEADING_TYPES: Set<string> = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 const MAX_NUMBER_OF_H1_HEADINGS: number = 2;
+const MAX_HEADING_LENGTH_DEFAULT: number = 60;
 const MAX_HEADING_LENGTH_ATTRIBUTE_NAME: string = 'maxHeadingLength';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -16,11 +17,11 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-accessible-headings',
         type: 'functionality',
         description:
-            'For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.',
+            "For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, shouldn't increase by more then one level consecutively and non-empty.",
         options: {
             maxHeadingLength: 'number'
         },
-        optionsDescription: 'Heading elements maximum text length',
+        optionsDescription: 'An optional number for a maximum text length of heading elements.',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
@@ -48,7 +49,18 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
         }
     }
 
+    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
+        this.validate(node);
+    }
+    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
+        this.validate(node);
+    }
+
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
+        this.validate(node);
+    }
+
+    private validate(node: ts.Node): void {
         const elements: ts.JsxElement[] = [];
         let h1HeadingCounter: number = 0;
         let previousHeadingNumber: number | undefined;
@@ -68,7 +80,7 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
             const headingNumber: number = parseInt(openingElement.tagName.getText()[1], 10);
             if (!previousHeadingNumber) {
                 previousHeadingNumber = headingNumber;
-            } else if (headingNumber !== previousHeadingNumber && headingNumber - 1 !== previousHeadingNumber) {
+            } else if (headingNumber > previousHeadingNumber && previousHeadingNumber + 1 !== headingNumber) {
                 this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), BAD_ORDER_HEADING_FAILURE_STRING);
             } else {
                 previousHeadingNumber = headingNumber;
@@ -88,27 +100,45 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
     }
 
     private validateHeadingText(headingNode: ts.JsxElement): void {
-        let headingText: string | undefined;
-        const innerNode = headingNode.children[0];
         if (headingNode.children.length === 0) {
             this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), EMPTY_HEADING_FAILURE_STRING);
         } else {
-            if (tsUtils.isJsxExpression(innerNode)) {
-                headingText = this.extractFromExpression(innerNode);
-            } else if (tsUtils.isJsxText(innerNode)) {
-                headingText = innerNode.getText();
-            }
+            const textResults: string[] = [];
+            this.getTextRecursive(headingNode, textResults);
 
-            if (headingText && this.maxHeadingTextLength && headingText.length > this.maxHeadingTextLength) {
-                this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), BAD_HEADING_LENGTH_STRING);
+            if (textResults.length) {
+                const maxHeadingLength = this.maxHeadingTextLength ? this.maxHeadingTextLength : MAX_HEADING_LENGTH_DEFAULT;
+                if (textResults.join('').length > maxHeadingLength) {
+                    this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), BAD_HEADING_LENGTH_STRING);
+                }
+            }
+        }
+    }
+
+    private getTextRecursive(node: ts.Node, textResults: string[] = []): void {
+        if (!node) {
+            return;
+        }
+        if (tsUtils.isJsxElement(node)) {
+            for (const childNode of node.children) {
+                let textResult: string | undefined;
+                if (tsUtils.isJsxExpression(childNode)) {
+                    textResult = this.extractFromExpression(childNode);
+                } else if (tsUtils.isJsxText(childNode)) {
+                    textResult = childNode.getText();
+                }
+                if (textResult) {
+                    textResults.push(textResult);
+                }
+                this.getTextRecursive(childNode, textResults);
             }
         }
     }
 
     private extractFromExpression(expressionNode: ts.JsxExpression): string | undefined {
-        if (!expressionNode || !expressionNode.expression) {
+        if (!expressionNode.expression || !tsUtils.isStringLiteral(expressionNode.expression)) {
             return undefined;
         }
-        return (<ts.StringLiteral>expressionNode.expression).text;
+        return expressionNode.expression.text;
     }
 }

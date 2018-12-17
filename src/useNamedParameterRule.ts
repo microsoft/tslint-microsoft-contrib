@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
-        typescriptOnly: true,
+        typescriptOnly: false,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',

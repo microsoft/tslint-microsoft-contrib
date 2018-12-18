@@ -13,6 +13,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: '${ruleName}',
         type: '${type}',
         description: '${description}',
+        // TODO: Fill in the options and options description, or leave them as they are if there are no options.
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         optionExamples: [], // TODO: Remove this property if the rule has no options

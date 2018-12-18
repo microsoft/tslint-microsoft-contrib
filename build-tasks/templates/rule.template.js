@@ -3,6 +3,12 @@ module.exports = ({ ruleName, walkerName }) =>
 import * as Lint from 'tslint';
 
 import {ExtendedMetadata} from './utils/ExtendedMetadata';
+// use (and contribute to) AstUtils for common AST functions // TODO: delete comment
+import {AstUtils} from './utils/AstUtils';
+// use Utils instead of Underscore functions // TODO: delete comment
+import {Utils} from './utils/Utils';
+
+const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -22,23 +28,16 @@ export class Rule extends Lint.Rules.AbstractRule {
         commonWeaknessEnumeration: '...'   // if possible, please map your rule to a CWE (see cwe_descriptions.json and https://cwe.mitre.org)
     };
 
-    public static FAILURE_STRING: string = 'Some error message: '; // Define an error message
-
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithFunction(sourceFile, walk);
+        return this.applyWithWalker(new %WALKER_NAME%(sourceFile, this.getOptions()));
     }
 }
 
-function walk(ctx: Lint.WalkContext<void>) {
-    function cb(node: ts.Node): void {
-        const failingExpressionCondition = true; //Customize condition to rule.
-        if (failingExpressionCondition) {
-            const msg: string = Rule.FAILURE_STRING;
-            ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
-        }
-        return ts.forEachChild(node, cb);
-    }
+class ${walkerName} extends Lint.RuleWalker {
 
-    return ts.forEachChild(ctx.sourceFile, cb);
+    protected visitNode(node: ts.Node): void {
+        console.log(ts.SyntaxKind[node.kind] + ' ' + node.getText());
+        super.visitNode(node);
+    }
 }
 `;

@@ -12,15 +12,13 @@ npm install
 npm test
 ```
 
-You can create new rule from template with `create-rule` script:
+You can create a new rule from a template with the `create-rule` script:
 
 ```shell
-npm run create-rule -- --rule-name=no-something-or-other
+npm run create-rule
 ```
 
-> NOTE: `--` is required before script arguments.
-
-This script will create file for rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
+This will prompt you to enter the details of the new rule. Once you're done, it will create a file for the rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
 
 More information about writing rule tests can be found in [TSLint documentation](https://palantir.github.io/tslint/develop/testing-rules/).
 

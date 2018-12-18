@@ -28,6 +28,12 @@ const questions = [
         }
     },
     {
+        name: 'typescriptOnly',
+        message: 'TypeScript only:',
+        type: 'confirm',
+        default: false
+    },
+    {
         name: 'type',
         message: 'Rule type:',
         type: 'list',
@@ -73,17 +79,17 @@ const questions = [
 
 inquirer.prompt(questions).then(answers => {
     const sourceFileName = createImplementationFile(answers);
-    const testFileName = createTestFiles(answers.name);
+    const testFileNames = createTestFiles(answers);
 
     console.log(`Rule '${answers.name}' created.`);
     console.log(`Source file: ${sourceFileName}`);
-    console.log(`Test file:   ${testFileName}`);
+    console.log(`Test files:   ${testFileNames.join(', ')}`);
 
     // If we're running in the VS Code terminal, try to open the
     // new files. If we can't do it, then it's not a big deal.
     if (process.env.VSCODE_CWD) {
         try {
-            execSync(`code "${testFileName}"`);
+            testFileNames.forEach(fileName => execSync(`code "${fileName}"`));
             execSync(`code "${sourceFileName}"`);
         } catch (ex) {
             // Couldn't open VS Code.
@@ -103,6 +109,7 @@ function createImplementationFile(answers) {
         walkerName,
         type: answers.type,
         description: answers.description,
+        typescriptOnly: answers.typescriptOnly,
         issueClass: answers.issueClass,
         issueType: answers.issueType,
         severity: answers.severity,
@@ -115,14 +122,15 @@ function createImplementationFile(answers) {
     return sourceFileName;
 }
 
-function createTestFiles(ruleName) {
-    const testsFolder = 'tests/' + ruleName;
-    const testFile = testsFolder + '/test.ts.lint';
+function createTestFiles(answers) {
+    const testFiles = [];
+    const name = answers.name;
+    const testsFolder = 'tests/' + name;
+    const tsTestFile = testsFolder + '/test.ts.lint';
     const lintFile = testsFolder + '/tslint.json';
-    const testContent = '// Code that should be checked by rule';
     const tslintContent = {
         rules: {
-            [ruleName]: true
+            [name]: true
         }
     };
 
@@ -130,10 +138,18 @@ function createTestFiles(ruleName) {
         fs.mkdirSync(testsFolder);
     }
 
-    writeFile(testFile, testContent);
+    writeFile(tsTestFile, '// TypeScript code that should be checked by the rule.');
+    testFiles.push(tsTestFile);
+
+    if (!answers.typescriptOnly) {
+        const jsTestFile = testsFolder + '/test.js.lint';
+        writeFile(jsTestFile, '// JavaScript code that should be checked by the rule.');
+        testFiles.push(jsTestFile);
+    }
+
     writeFile(lintFile, JSON.stringify(tslintContent, undefined, 4));
 
-    return testFile;
+    return testFiles;
 }
 
 function camelCase(input) {

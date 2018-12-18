@@ -1,4 +1,4 @@
-module.exports = ({ ruleName, walkerName, type, description, issueClass, issueType, severity, level, group }) =>
+module.exports = ({ ruleName, walkerName, type, description, typescriptOnly, issueClass, issueType, severity, level, group }) =>
     `import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         optionExamples: [], // TODO: Remove this property if the rule has no options
-        typescriptOnly: false,
+        typescriptOnly: ${typescriptOnly},
         issueClass: '${issueClass}',
         issueType: '${issueType}',
         severity: '${severity}',

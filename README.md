@@ -450,6 +450,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-increment-decrement</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>increment-decrement</code>.
         Avoid use of increment and decrement operators particularly as part of complicated expressions.
       </td>
       <td>0.0.1</td>

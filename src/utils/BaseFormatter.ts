@@ -17,9 +17,9 @@ export class BaseFormatter extends Formatters.AbstractFormatter {
     }
 
     public format(allFailures: RuleFailure[]): string {
-        /* tslint:disable:no-increment-decrement */
+        /* tslint:disable:increment-decrement */
         for (let index = allFailures.length - 1; index >= 0; index--) {
-            /* tslint:enable:no-increment-decrement */
+            /* tslint:enable:increment-decrement */
             const failure = allFailures[index];
             if (failure.getRuleName() === this.ruleName) {
                 this.applyFix(failure);

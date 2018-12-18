@@ -25,6 +25,13 @@
         "group": "Configurable",
         "recommendation": "false, // only enable this if you have some code pattern that you want to ban"
     },
+    "ban-ts-ignore": {
+        "issueClass": "Ignored",
+        "issueType": "Error",
+        "severity": "Critical",
+        "level": "Opportunity for Excellence",
+        "group": "Configurable"
+    },
     "class-name": {
         "issueClass": "Non-SDL",
         "issueType": "Error",
@@ -34,6 +41,14 @@
         "commonWeaknessEnumeration": "398, 710"
     },
     "comment-format": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Low",
+        "level": "Opportunity for Excellence",
+        "group": "Clarity",
+        "commonWeaknessEnumeration": "398, 710"
+    },
+    "comment-type": {
         "issueClass": "Non-SDL",
         "issueType": "Warning",
         "severity": "Low",
@@ -617,6 +632,22 @@
         "recommendation": "false,",
         "commonWeaknessEnumeration": "398, 710"
     },
+    "unnecessary-bind": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Moderate",
+        "level": "Opportunity for Excellence",
+        "group": "Correctness",
+        "commonWeaknessEnumeration": "398"
+    },
+    "unnecessary-constructor": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Moderate",
+        "level": "Opportunity for Excellence",
+        "group": "Correctness",
+        "commonWeaknessEnumeration": "398"
+    },
     "use-isnan": {
         "issueClass": "Non-SDL",
         "issueType": "Error",
@@ -688,6 +719,14 @@
         "recommendation": "false, // enable this rule only if you are legally required to add a file header",
         "level": "Opportunity for Excellence"
     },
+    "function-constructor": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Moderate",
+        "level": "Opportunity for Excellence",
+        "group": "Correctness",
+        "commonWeaknessEnumeration": "398"
+    },
     "max-classes-per-file": {
         "issueClass": "Non-SDL",
         "issueType": "Warning",
@@ -743,6 +782,14 @@
         "group": "Whitespace",
         "recommendation": "true,",
         "level": "Opportunity for Excellence"
+    },
+    "increment-decrement": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Moderate",
+        "level": "Opportunity for Excellence",
+        "group": "Correctness",
+        "commonWeaknessEnumeration": "398"
     },
     "interface-over-type-literal": {
         "issueClass": "Ignored",
@@ -945,6 +992,14 @@
         "level": "Opportunity for Excellence",
         "group": "Whitespace",
         "commonWeaknessEnumeration": "710"
+    },
+    "no-default-import": {
+        "issueClass": "Non-SDL",
+        "issueType": "Warning",
+        "severity": "Moderate",
+        "level": "Opportunity for Excellence",
+        "group": "Correctness",
+        "commonWeaknessEnumeration": "398"
     },
     "no-duplicate-super": {
         "issueClass": "Non-SDL",

@@ -39,7 +39,7 @@ type IgnoredList = string[];
 type ConfigKey = 'ignoreExternalModule';
 type Config = { [index in ConfigKey]: unknown };
 
-// This is for temporarily reolving type errors. Actual runtime Node, SourceFile object
+// This is for temporarily resolving type errors. Actual runtime Node, SourceFile object
 // has those properties.
 interface RuntimeSourceFile extends ts.SourceFile {
     resolvedModules: Map<string, ts.ResolvedModuleFull>;

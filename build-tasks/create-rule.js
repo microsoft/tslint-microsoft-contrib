@@ -85,17 +85,8 @@ inquirer.prompt(questions).then(answers => {
     console.log(`Source file: ${sourceFileName}`);
     console.log(`Test files:   ${testFileNames.join(', ')}`);
 
-    // If we're running in the VS Code terminal, try to open the
-    // new files. If we can't do it, then it's not a big deal.
-    if (process.env.VSCODE_CWD) {
-        try {
-            testFileNames.forEach(fileName => execSync(`code "${fileName}"`));
-            execSync(`code "${sourceFileName}"`);
-        } catch (ex) {
-            // Couldn't open VS Code.
-            console.log(ex);
-        }
-    }
+    // Attempt to open the files in the current editor.
+    tryOpenFiles([...testFileNames, sourceFileName]);
 });
 
 function createImplementationFile(answers) {
@@ -158,4 +149,32 @@ function camelCase(input) {
 
 function pascalCase(input) {
     return input.charAt(0).toUpperCase() + input.substr(1);
+}
+
+function tryOpenFiles(files) {
+    // Check if we're running in the VS Code terminal. If we
+    // are, then we can try to open the new files in VS Code.
+    // If we can't open the files, then it's not a big deal.
+    if (process.env.VSCODE_CWD) {
+        let exe;
+
+        // We need to check if we're running in normal VS Code or the Insiders version.
+        // The `TERM_PROGRAM_VERSION` environment variable will contain the version number
+        // of VS Code. For VS Code Insiders, that version will have the suffix "-insider".
+        const version = process.env.TERM_PROGRAM_VERSION || '';
+        if (version.endsWith('-insider')) {
+            exe = 'code-insiders';
+            console.log('Opening the new files in VS Code Insiders...');
+        } else {
+            exe = 'code';
+            console.log('Opening the new files in VS Code...');
+        }
+
+        try {
+            files.forEach(fileName => execSync(`${exe} "${fileName}"`));
+        } catch (ex) {
+            // Couldn't open VS Code.
+            console.log(ex);
+        }
+    }
 }

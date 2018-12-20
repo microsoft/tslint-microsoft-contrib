@@ -57,7 +57,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (Rule.isWarningShown === false) {
             console.warn(
-                'Warning: no-increment-decrement rule is deprecated. Replace your usage with the TSLint no-increment-decrement rule.'
+                'Warning: no-unnecessary-bind rule is deprecated. Replace your usage with the TSLint unnecessary-bind rule.'
             );
             Rule.isWarningShown = true;
         }

@@ -635,10 +635,10 @@
     "unnecessary-bind": {
         "issueClass": "Non-SDL",
         "issueType": "Warning",
-        "severity": "Moderate",
+        "severity": "Warning",
         "level": "Opportunity for Excellence",
         "group": "Correctness",
-        "commonWeaknessEnumeration": "398"
+        "commonWeaknessEnumeration": "398, 710"
     },
     "unnecessary-constructor": {
         "issueClass": "Non-SDL",
@@ -720,12 +720,12 @@
         "level": "Opportunity for Excellence"
     },
     "function-constructor": {
-        "issueClass": "Non-SDL",
-        "issueType": "Warning",
-        "severity": "Moderate",
-        "level": "Opportunity for Excellence",
-        "group": "Correctness",
-        "commonWeaknessEnumeration": "398"
+        "issueClass": "SDL",
+        "issueType": "Error",
+        "severity": "Critical",
+        "level": "Mandatory",
+        "group": "Security",
+        "commonWeaknessEnumeration": "95, 676, 242, 116"
     },
     "max-classes-per-file": {
         "issueClass": "Non-SDL",
@@ -786,10 +786,10 @@
     "increment-decrement": {
         "issueClass": "Non-SDL",
         "issueType": "Warning",
-        "severity": "Moderate",
+        "severity": "Low",
         "level": "Opportunity for Excellence",
         "group": "Correctness",
-        "commonWeaknessEnumeration": "398"
+        "commonWeaknessEnumeration": "398, 710"
     },
     "interface-over-type-literal": {
         "issueClass": "Ignored",

@@ -30,12 +30,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yIFramesRuleWalker(sourceFile, this.getOptions()))
+            ? this.applyWithWalker(new ReactA11yIframesRuleWalker(sourceFile, this.getOptions()))
             : [];
     }
 }
 
-class ReactA11yIFramesRuleWalker extends Lint.RuleWalker {
+class ReactA11yIframesRuleWalker extends Lint.RuleWalker {
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         this.validate(node);
     }

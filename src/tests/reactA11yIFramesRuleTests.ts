@@ -7,7 +7,7 @@ const IFRAME_EMPTY_TITLE_ERROR_STRING: string = 'An iframe element must have a n
 const IFRAME_EMPTY_OR_HIDDEN_ERROR_STRING: string = 'An iframe element should not be hidden or empty.';
 const IFRAME_UNIQUE_TITLE_ERROR_STRING: string = 'An iframe element must have a unique title.';
 
-describe('reactA11yIFramesRuleTests', (): void => {
+describe('reactA11yIframesRuleTests', (): void => {
     const ruleName: string = 'react-a11y-iframes';
     it('should pass if iframe title is not empty and iframe is not hidden or empty', (): void => {
         const script: string = `

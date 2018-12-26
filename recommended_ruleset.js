@@ -53,7 +53,6 @@ module.exports = {
         'no-constant-condition': true,
         'no-control-regex': true,
         'no-debugger': true,
-        'no-default-import': true,
         'no-duplicate-super': true,
         'no-duplicate-switch-case': true,
         'no-duplicate-variable': true,
@@ -186,7 +185,6 @@ module.exports = {
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
-        'react-a11y-accessible-headings': true,
         'react-a11y-anchors': true,
         'react-a11y-aria-unsupported-elements': true,
         'react-a11y-event-has-role': true,

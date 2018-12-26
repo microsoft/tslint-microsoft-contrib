@@ -28,6 +28,7 @@
     "ban-ts-ignore": {
         "issueClass": "Ignored",
         "issueType": "Error",
+        "recommendation": "false",
         "severity": "Critical",
         "level": "Opportunity for Excellence",
         "group": "Configurable"
@@ -54,7 +55,8 @@
         "severity": "Low",
         "level": "Opportunity for Excellence",
         "group": "Clarity",
-        "commonWeaknessEnumeration": "398, 710"
+        "commonWeaknessEnumeration": "398, 710",
+        "recommendation": "false"
     },
     "curly": {
         "issueClass": "Non-SDL",
@@ -999,7 +1001,8 @@
         "severity": "Moderate",
         "level": "Opportunity for Excellence",
         "group": "Correctness",
-        "commonWeaknessEnumeration": "398"
+        "commonWeaknessEnumeration": "398",
+        "recommendation": "false"
     },
     "no-duplicate-super": {
         "issueClass": "Non-SDL",

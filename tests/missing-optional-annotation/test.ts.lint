@@ -28,6 +28,8 @@ function function1(arg) {}
 function function2(arg1, arg2?) {}
 function function3(arg1, arg2?, arg3?) {}
 
+function something(data? : any, others: Object = {}) {
+
 function something(data : Object = {}, others: any) { }
                                        ~~~~~~           [0 % ('others: any')]
 

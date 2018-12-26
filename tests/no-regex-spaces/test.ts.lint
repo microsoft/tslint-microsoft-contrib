@@ -2,6 +2,9 @@ var re = /foo {3}bar/;
 
 var re = new RegExp("foo   bar");
 
+var re = /foo   bar/;
+         ~~~~~~~~~~~ [0 % ('3')]
+
 var re = /foobar/;
 
 var re = /  bar/;

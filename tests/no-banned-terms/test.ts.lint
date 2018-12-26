@@ -104,24 +104,6 @@ class Sample {
 }
 
 class Sample {
-    private var;
-    set caller(value) {}
-    ~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
-    get caller() { return var;}
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0 % ('caller')]
-}
-
-class Sample {
-    caller() {}
-    ~~~~~~~~~~~ [0 % ('caller')]
-}
-
-class Sample {
-    callee() {}
-    ~~~~~~~~~~~ [0 % ('callee')]
-}
-
-class Sample {
     arguments() {}
     ~~~~~~~~~~~~~~ [0 % ('arguments')]
 }

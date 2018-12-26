@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "no-constant-condition": [true, { "checkLoops": false }]
+    }
+}

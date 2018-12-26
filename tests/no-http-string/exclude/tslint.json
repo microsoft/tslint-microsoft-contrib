@@ -1,5 +1,5 @@
 {
     "rules": {
-        "no-http-string": [true, "http://www.allowed.com"]
+        "no-http-string": [true, "http://www\\.allowed\\.com/?"]
     }
 }

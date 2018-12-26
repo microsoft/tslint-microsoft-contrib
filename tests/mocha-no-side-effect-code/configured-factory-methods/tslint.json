@@ -1,5 +1,5 @@
 {
     "rules": {
-        "mocha-no-side-effect-code": [true]
+        "mocha-no-side-effect-code": [true, { "ignore": "^RestDataFactory\\.create.*" }]
     }
 }

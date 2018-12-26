@@ -53,7 +53,7 @@ class MyClassPrivate {
     private _foo() {}
             ~~~~ [private % ('_foo')]
     private FOO() {}
-            ~~~ [private % ('FOO)]
+            ~~~ [private % ('FOO')]
     private _FOO() {}
             ~~~~ [private % ('_FOO')]
     private _foo() {}
@@ -80,6 +80,7 @@ class MyClassBad {
            ~~~~ [static % ('_foo')]
     static _foo2() {}
            ~~~~~ [static % ('_foo2')]
+    static _FOO() {}
 }
 
 [public]: Method name does not match /^[a-z][\w\d]+$/: %s

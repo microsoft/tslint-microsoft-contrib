@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "no-unexternalized-strings": [
+            true,
+            {
+                "signatures": ["localize", "nls.localize"],
+                "messageIndex": 1,
+                "ignores": ["require"]
+            }
+        ]
+    }
+}

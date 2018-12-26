@@ -637,7 +637,7 @@
     "unnecessary-bind": {
         "issueClass": "Non-SDL",
         "issueType": "Warning",
-        "severity": "Warning",
+        "severity": "Important",
         "level": "Opportunity for Excellence",
         "group": "Correctness",
         "commonWeaknessEnumeration": "398, 710"

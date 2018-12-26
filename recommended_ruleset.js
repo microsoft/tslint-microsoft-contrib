@@ -53,6 +53,7 @@ module.exports = {
         'no-constant-condition': true,
         'no-control-regex': true,
         'no-debugger': true,
+        'no-default-import': false,
         'no-duplicate-super': true,
         'no-duplicate-switch-case': true,
         'no-duplicate-variable': true,
@@ -115,7 +116,7 @@ module.exports = {
         'chai-vague-errors': true,
         'class-name': true,
         'comment-format': true,
-        'comment-type': true,
+        'comment-type': false,
         'completed-docs': [true, 'classes'],
         'export-name': true,
         'file-name-casing': true,
@@ -185,6 +186,7 @@ module.exports = {
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
+        'react-a11y-accessible-headings': false,
         'react-a11y-anchors': true,
         'react-a11y-aria-unsupported-elements': true,
         'react-a11y-event-has-role': true,
@@ -237,7 +239,7 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         'ban': false, // only enable this if you have some code pattern that you want to ban
-        'ban-ts-ignore': true,
+        'ban-ts-ignore': false,
         'ban-types': true,
         'cyclomatic-complexity': true,
         'deprecation': false, // deprecated APIs are sometimes unavoidable

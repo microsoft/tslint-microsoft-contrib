@@ -8,6 +8,7 @@ module.exports = {
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
          */
+        'function-constructor': true,
         'insecure-random': true,
         'no-banned-terms': true,
         'no-cookies': true,
@@ -37,7 +38,6 @@ module.exports = {
          */
         'await-promise': true,
         'forin': true,
-        'function-constructor': true,
         'increment-decrement': true,
         'jquery-deferred-must-complete': true,
         'label-position': true,

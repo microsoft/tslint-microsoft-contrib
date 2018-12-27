@@ -416,6 +416,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-function-constructor-with-string-args</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>function-constructor</code>.
         Do not use the version of the Function constructor that accepts a string argument to define the body of the function.
       </td>
       <td>0.0.1</td>
@@ -450,6 +451,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-increment-decrement</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>increment-decrement</code>.
         Avoid use of increment and decrement operators particularly as part of complicated expressions.
       </td>
       <td>0.0.1</td>
@@ -655,6 +657,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-unnecessary-bind</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>unnecessary-bind</code>.
         Do not bind 'this' as the context for a function literal or lambda expression.
         If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind.
         If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas.

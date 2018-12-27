@@ -82,7 +82,7 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
     /**
      * Inspired from: https://gist.github.com/andrei-m/982927
      */
-    /* tslint:disable:no-increment-decrement */
+    /* tslint:disable:increment-decrement */
     private levenshteinDistance(a: string, b: string): number {
         if (a.length === 0) {
             return b.length;
@@ -120,5 +120,5 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
 
         return matrix[b.length][a.length];
     }
-    /* tslint:enable:no-increment-decrement */
+    /* tslint:enable:increment-decrement */
 }

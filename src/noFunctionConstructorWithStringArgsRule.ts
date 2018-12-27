@@ -16,13 +16,23 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Mandatory',
+        recommendation: 'false, // use tslint function-constructor rule intsead',
         group: 'Security',
         commonWeaknessEnumeration: '95, 676, 242, 116'
     };
 
     public static FAILURE_STRING: string = 'forbidden: Function constructor with string arguments ';
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn(
+                'Warning: no-function-constructor-with-string-args rule is deprecated. Replace your usage with the TSLint function-constructor rule.'
+            );
+            Rule.isWarningShown = true;
+        }
+
         return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions()));
     }
 }

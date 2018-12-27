@@ -2,6 +2,9 @@ const path = require('path');
 const glob = require('glob');
 const { readJSON } = require('./files');
 
+/**
+ * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/694
+ */
 const ignoredRulesNotYetAdded = ['banTsIgnoreRule.js', 'commentTypeRule.js', 'noDefaultImportRule.js', 'unnecessaryConstructorRule.js'];
 
 function getAllRules() {

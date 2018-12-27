@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -22,37 +23,28 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Argument following optional argument missing optional annotation: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MissingOptionalAnnotationWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class MissingOptionalAnnotationWalker extends Lint.RuleWalker {
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.validateParameters(node);
-        super.visitMethodDeclaration(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (
+            tsutils.isMethodDeclaration(node) ||
+            tsutils.isConstructorDeclaration(node) ||
+            tsutils.isArrowFunction(node) ||
+            tsutils.isFunctionDeclaration(node) ||
+            tsutils.isFunctionExpression(node)
+        ) {
+            validateParameters(node);
+        }
+
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-        this.validateParameters(node);
-        super.visitConstructorDeclaration(node);
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
-        this.validateParameters(node);
-        super.visitArrowFunction(node);
-    }
-
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        this.validateParameters(node);
-        super.visitFunctionDeclaration(node);
-    }
-
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        this.validateParameters(node);
-        super.visitFunctionExpression(node);
-    }
-
-    private validateParameters(node: ts.SignatureDeclaration) {
+    function validateParameters(node: ts.SignatureDeclaration) {
         let optionalParameterFound = false;
         if (node.parameters === undefined) {
             return;
@@ -64,7 +56,7 @@ class MissingOptionalAnnotationWalker extends Lint.RuleWalker {
                 } else if (optionalParameterFound && parameter.initializer === undefined) {
                     // we found a non-optional parameter that comes *after* an optional parameter
                     const msg = Rule.FAILURE_STRING + parameter.getFullText();
-                    this.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);
+                    ctx.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);
                 }
             }
         );

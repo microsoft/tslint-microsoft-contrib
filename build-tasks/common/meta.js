@@ -2,11 +2,21 @@ const path = require('path');
 const glob = require('glob');
 const { readJSON } = require('./files');
 
+const ignoredRulesNotYetAdded = ['banTsIgnoreRule.js', 'commentTypeRule.js', 'noDefaultImportRule.js', 'unnecessaryConstructorRule.js'];
+
 function getAllRules() {
     const contribRules = glob.sync('dist/build/*Rule.js');
     const baseRules = glob.sync('node_modules/tslint/lib/rules/*Rule.js');
 
-    return contribRules.concat(baseRules);
+    return contribRules.concat(baseRules).filter(ruleFilePath => {
+        for (const ignoredRuleName of ignoredRulesNotYetAdded) {
+            if (ruleFilePath.endsWith(ignoredRuleName)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
 }
 
 function getMetadataFromFile(ruleFile) {

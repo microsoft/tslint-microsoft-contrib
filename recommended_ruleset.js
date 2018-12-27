@@ -53,7 +53,6 @@ module.exports = {
         'no-constant-condition': true,
         'no-control-regex': true,
         'no-debugger': true,
-        'no-default-import': false,
         'no-duplicate-super': true,
         'no-duplicate-switch-case': true,
         'no-duplicate-variable': true,
@@ -97,7 +96,6 @@ module.exports = {
         'switch-final-break': true,
         'triple-equals': [true, 'allow-null-check'],
         'unnecessary-bind': true,
-        'unnecessary-constructor': true,
         'use-isnan': true,
         'use-named-parameter': true,
         'use-simple-attributes': true,
@@ -116,7 +114,6 @@ module.exports = {
         'chai-vague-errors': true,
         'class-name': true,
         'comment-format': true,
-        'comment-type': false,
         'completed-docs': [true, 'classes'],
         'export-name': true,
         'file-name-casing': true,
@@ -238,7 +235,6 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         'ban': false, // only enable this if you have some code pattern that you want to ban
-        'ban-ts-ignore': false,
         'ban-types': true,
         'cyclomatic-complexity': true,
         'deprecation': false, // deprecated APIs are sometimes unavoidable

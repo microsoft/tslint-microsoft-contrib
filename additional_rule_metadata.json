@@ -28,7 +28,6 @@
     "ban-ts-ignore": {
         "issueClass": "Ignored",
         "issueType": "Error",
-        "recommendation": "false,",
         "severity": "Critical",
         "level": "Opportunity for Excellence",
         "group": "Configurable"
@@ -1001,8 +1000,7 @@
         "severity": "Moderate",
         "level": "Opportunity for Excellence",
         "group": "Correctness",
-        "commonWeaknessEnumeration": "398",
-        "recommendation": "false,"
+        "commonWeaknessEnumeration": "398"
     },
     "no-duplicate-super": {
         "issueClass": "Non-SDL",

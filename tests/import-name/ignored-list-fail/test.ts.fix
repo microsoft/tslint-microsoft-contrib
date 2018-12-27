@@ -1,0 +1,5 @@
+import pkg from "fs/package-name";
+import abc from "abc-tag";
+import pqr from "my-module"
+import whatModule from "what-module"
+import upModule from "up-module";

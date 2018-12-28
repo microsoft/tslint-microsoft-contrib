@@ -92,12 +92,10 @@ inquirer.prompt(questions).then(answers => {
 function createImplementationFile(answers) {
     const ruleFile = camelCase(answers.name) + 'Rule';
     const sourceFileName = 'src/' + ruleFile + '.ts';
-    const walkerName = pascalCase(ruleFile) + 'Walker';
 
     const ruleTemplate = require('./templates/rule.template');
     const ruleSource = ruleTemplate({
         ruleName: answers.name,
-        walkerName,
         type: answers.type,
         description: answers.description,
         typescriptOnly: answers.typescriptOnly,
@@ -145,10 +143,6 @@ function createTestFiles(answers) {
 
 function camelCase(input) {
     return input.toLowerCase().replace(/-(.)/g, (match, group1) => group1.toUpperCase());
-}
-
-function pascalCase(input) {
-    return input.charAt(0).toUpperCase() + input.substr(1);
 }
 
 function tryOpenFiles(files) {

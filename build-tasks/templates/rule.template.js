@@ -1,4 +1,4 @@
-module.exports = ({ ruleName, walkerName, type, description, typescriptOnly, issueClass, issueType, severity, level, group }) =>
+module.exports = ({ ruleName, type, description, typescriptOnly, issueClass, issueType, severity, level, group }) =>
     `import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
@@ -27,13 +27,16 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ${walkerName}(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class ${walkerName} extends Lint.RuleWalker {
-    protected visitNode(node: ts.Node): void {
-        super.visitNode(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        // TODO: Implement the rule here.
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }
 `;

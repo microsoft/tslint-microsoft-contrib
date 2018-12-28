@@ -6,17 +6,25 @@ import { AstUtils } from './utils/AstUtils';
 import { Utils } from './utils/Utils';
 
 const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message
-
+<% if (hasOptions) { %>
+interface Options {
+    // TODO: Add option properties.
+}
+<% } %>
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: '<%- name %>',
         type: '<%- type %>',
-        description: '<%- description %>',
-        // TODO: Fill in the options and options description, or leave them as they are if there are no options.
+        description: '<%- description %>',<% if (hasOptions) { %>
+        options: {
+            // TODO: Fill in the options.
+        },
+        optionsDescription: '', // TODO: Fill in the options description.
+        optionExamples: [], // TODO: Add option examples.
+        <% } else { %>
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
-        optionExamples: [], // TODO: Remove this property if the rule has no options
-        typescriptOnly: <%- typescriptOnly %>,
+        <% } %>typescriptOnly: <%- typescriptOnly %>,
         issueClass: '<%- issueClass %>',
         issueType: '<%- issueType %>',
         severity: '<%- severity %>',
@@ -26,11 +34,11 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithFunction(sourceFile, walk);
+        return this.applyWithFunction(sourceFile, walk<% if (hasOptions) { %>, this.getOptions()<% } %>);
     }
 }
 
-function walk(ctx: Lint.WalkContext<void>) {
+function walk(ctx: Lint.WalkContext<<% if (hasOptions) { %>Options<% } else { %>void<% } %>>) {
     function cb(node: ts.Node): void {
         // TODO: Implement the rule here.
         return ts.forEachChild(node, cb);

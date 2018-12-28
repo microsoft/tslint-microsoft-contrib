@@ -30,6 +30,12 @@ const questions = [
         }
     },
     {
+        name: 'hasOptions',
+        message: 'Has options:',
+        type: 'confirm',
+        default: false
+    },
+    {
         name: 'typescriptOnly',
         message: 'TypeScript only:',
         type: 'confirm',

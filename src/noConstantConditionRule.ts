@@ -1,9 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
+
+interface Options {
+    checkLoops: boolean;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -24,73 +29,63 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Found constant conditional: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     }
 }
 
-class NoConstantConditionRuleWalker extends Lint.RuleWalker {
-    private readonly checkLoops: boolean;
+function parseOptions(options: Lint.IOptions): Options {
+    let value = true;
+    const keyName = 'checkLoops';
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.checkLoops = this.extractBoolean('checkLoops');
-    }
+    (options.ruleArguments || []).forEach((opt: unknown) => {
+        if (isObject(opt)) {
+            if (opt[keyName] === false || opt[keyName] === 'false') {
+                value = false;
+            }
+        }
+    });
 
-    private extractBoolean(keyName: string): boolean {
-        let result: boolean = true;
-        this.getOptions().forEach((opt: unknown) => {
-            if (isObject(opt)) {
-                if (opt[keyName] === false || opt[keyName] === 'false') {
-                    result = false;
+    return {
+        checkLoops: value
+    };
+}
+
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { checkLoops } = ctx.options;
+
+    function cb(node: ts.Node): void {
+        if (checkLoops && (tsutils.isWhileStatement(node) || tsutils.isDoStatement(node))) {
+            if (AstUtils.isConstantExpression(node.expression)) {
+                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+
+        if (tsutils.isIfStatement(node)) {
+            if (AstUtils.isConstantExpression(node.expression)) {
+                const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+
+        if (tsutils.isConditionalExpression(node)) {
+            if (AstUtils.isConstantExpression(node.condition)) {
+                const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+
+        if (tsutils.isForStatement(node)) {
+            if (checkLoops && node.condition) {
+                if (AstUtils.isConstantExpression(node.condition)) {
+                    const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), message);
                 }
             }
-        });
-        return result;
+        }
+
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitIfStatement(node: ts.IfStatement): void {
-        if (AstUtils.isConstantExpression(node.expression)) {
-            const message: string = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
-        }
-        super.visitIfStatement(node);
-    }
-
-    protected visitConditionalExpression(node: ts.ConditionalExpression): void {
-        if (AstUtils.isConstantExpression(node.condition)) {
-            const message: string = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
-        }
-        super.visitConditionalExpression(node);
-    }
-
-    protected visitWhileStatement(node: ts.WhileStatement): void {
-        if (this.checkLoops) {
-            if (AstUtils.isConstantExpression(node.expression)) {
-                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        super.visitWhileStatement(node);
-    }
-
-    protected visitDoStatement(node: ts.DoStatement): void {
-        if (this.checkLoops) {
-            if (AstUtils.isConstantExpression(node.expression)) {
-                const message: string = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        super.visitDoStatement(node);
-    }
-
-    protected visitForStatement(node: ts.ForStatement): void {
-        if (this.checkLoops && node.condition !== undefined) {
-            if (AstUtils.isConstantExpression(node.condition)) {
-                const message: string = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        super.visitForStatement(node);
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

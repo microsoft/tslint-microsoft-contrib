@@ -1,6 +1,8 @@
+const { execSync } = require('child_process');
+const ejs = require('ejs');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { execSync } = require('child_process');
+const path = require('path');
 const { writeFile } = require('./common/files');
 
 const questions = [
@@ -93,18 +95,8 @@ function createImplementationFile(answers) {
     const ruleFile = camelCase(answers.name) + 'Rule';
     const sourceFileName = 'src/' + ruleFile + '.ts';
 
-    const ruleTemplate = require('./templates/rule.template');
-    const ruleSource = ruleTemplate({
-        ruleName: answers.name,
-        type: answers.type,
-        description: answers.description,
-        typescriptOnly: answers.typescriptOnly,
-        issueClass: answers.issueClass,
-        issueType: answers.issueType,
-        severity: answers.severity,
-        level: answers.level,
-        group: answers.group
-    });
+    const ruleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/rule.template.ejs'), 'utf8');
+    const ruleSource = ejs.render(ruleTemplate, answers);
 
     writeFile(sourceFileName, ruleSource);
 

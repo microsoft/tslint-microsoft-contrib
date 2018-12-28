@@ -13,9 +13,9 @@ interface Options {
 <% } %>
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: '<%- name %>',
-        type: '<%- type %>',
-        description: '<%- description %>',<% if (hasOptions) { %>
+        ruleName: '<%= name %>',
+        type: '<%= type %>',
+        description: '<%= description %>',<% if (hasOptions) { %>
         options: {
             // TODO: Fill in the options.
         },
@@ -24,12 +24,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         <% } else { %>
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
-        <% } %>typescriptOnly: <%- typescriptOnly %>,
-        issueClass: '<%- issueClass %>',
-        issueType: '<%- issueType %>',
-        severity: '<%- severity %>',
-        level: '<%- level %>',
-        group: '<%- group %>',
+        <% } %>typescriptOnly: <%= typescriptOnly %>,
+        issueClass: '<%= issueClass %>',
+        issueType: '<%= issueType %>',
+        severity: '<%= severity %>',
+        level: '<%= level %>',
+        group: '<%= group %>',
         commonWeaknessEnumeration: '...' // if possible, please map your rule to a CWE (see cwe_descriptions.json and https://cwe.mitre.org)
     };
 

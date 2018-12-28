@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const ejs = require('ejs');
+const { template } = require('underscore');
 const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
@@ -101,8 +101,8 @@ function createImplementationFile(answers) {
     const ruleFile = camelCase(answers.name) + 'Rule';
     const sourceFileName = 'src/' + ruleFile + '.ts';
 
-    const ruleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/rule.template.ejs'), 'utf8');
-    const ruleSource = ejs.render(ruleTemplate, answers);
+    const ruleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/rule.template'), 'utf8');
+    const ruleSource = template(ruleTemplate)(answers);
 
     writeFile(sourceFileName, ruleSource);
 

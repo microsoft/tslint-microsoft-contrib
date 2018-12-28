@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import * as tsUtils from 'tsutils';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
@@ -38,6 +38,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class ReactA11yIframesRuleWalker extends Lint.RuleWalker {
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
         this.validate(node);
+        super.visitVariableDeclaration(node);
     }
 
     private validate(node: ts.Node) {
@@ -71,13 +72,13 @@ class ReactA11yIframesRuleWalker extends Lint.RuleWalker {
 
     private getJsxElements(node: ts.Node): (ts.JsxElement | ts.JsxSelfClosingElement)[] {
         const elements: (ts.JsxElement | ts.JsxSelfClosingElement)[] = [];
-        tsUtils.forEachToken(node, (childNode: ts.Node) => {
+        tsutils.forEachToken(node, (childNode: ts.Node) => {
             const parentNode = childNode.parent;
             if (childNode.getText() === IFRAME_ELEMENT_NAME) {
-                if (tsUtils.isJsxOpeningElement(parentNode)) {
+                if (tsutils.isJsxOpeningElement(parentNode)) {
                     elements.push(parentNode.parent);
                 }
-                if (tsUtils.isJsxSelfClosingElement(parentNode)) {
+                if (tsutils.isJsxSelfClosingElement(parentNode)) {
                     elements.push(parentNode);
                 }
             }
@@ -87,10 +88,10 @@ class ReactA11yIframesRuleWalker extends Lint.RuleWalker {
 
     private getAttributeText(attribute: ts.JsxAttribute): string | undefined {
         if (attribute && attribute.initializer) {
-            if (tsUtils.isJsxExpression(attribute.initializer)) {
+            if (tsutils.isJsxExpression(attribute.initializer)) {
                 return attribute.initializer.expression ? attribute.initializer.expression.getText() : undefined;
             }
-            if (tsUtils.isStringLiteral(attribute.initializer)) {
+            if (tsutils.isStringLiteral(attribute.initializer)) {
                 return attribute.initializer.text;
             }
         }

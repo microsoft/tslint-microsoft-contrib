@@ -156,9 +156,9 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>react-a11y-iframes</code>
       </td>
       <td>
-        Enforce that iframe elements are not empty, have title and are unique..
+        Enforce that iframe elements are not empty, have title, and are unique.
       </td>
-      <td>6.0.0</td>
+      <td>6.1.0</td>
     </tr>
     <tr>
       <td>

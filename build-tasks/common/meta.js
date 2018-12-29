@@ -3,7 +3,7 @@ const glob = require('glob');
 const { readJSON } = require('./files');
 
 function getAllRules() {
-    const contribRules = glob.sync('dist/build/*Rule.js');
+    const contribRules = glob.sync('dist/src/*Rule.js');
     const baseRules = glob.sync('node_modules/tslint/lib/rules/*Rule.js');
 
     return contribRules.concat(baseRules);

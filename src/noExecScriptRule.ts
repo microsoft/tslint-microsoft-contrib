@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -24,22 +25,23 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'forbidden execScript: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoEvalScriptWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression) {
-        this.validateExpression(node);
-        super.visitCallExpression(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            const expression: ts.Expression = node.expression;
+            const functionName: string = AstUtils.getFunctionName(node);
+            if (functionName === 'execScript') {
+                const msg: string = Rule.FAILURE_STRING + expression.getFullText().trim();
+                ctx.addFailureAt(expression.getStart(), expression.getWidth(), msg);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
     }
 
-    private validateExpression(node: ts.CallExpression): void {
-        const expression: ts.Expression = node.expression;
-        const functionName: string = AstUtils.getFunctionName(node);
-        if (functionName === 'execScript') {
-            const msg: string = Rule.FAILURE_STRING + expression.getFullText().trim();
-            this.addFailureAt(expression.getStart(), expression.getWidth(), msg);
-        }
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

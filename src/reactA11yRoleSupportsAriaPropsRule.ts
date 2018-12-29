@@ -40,10 +40,10 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-supports-aria-props',
         type: 'maintainability',
         description:
-        'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.' +
-        'Many aria attributes (states and properties) can only be used on elements with particular roles.' +
-        "Some elements have implicit roles, such as `<a href='hrefValue' />`, which will be resolved to `role='link'`." +
-        'A reference for the implicit roles can be found at [Default Implicit ARIA Semantics](https://www.w3.org/TR/html-aria/#sec-strong-native-semantics).',
+            'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`. ' +
+            'Many aria attributes (states and properties) can only be used on elements with particular roles. ' +
+            "Some elements have implicit roles, such as `<a href='hrefValue' />`, which will be resolved to `role='link'`. " +
+            'A reference for the implicit roles can be found at [Default Implicit ARIA Semantics](https://www.w3.org/TR/html-aria/#sec-strong-native-semantics).',
         rationale: `References:
         <ul>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/87">ARIA attributes can only be used with certain roles</a></li>

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
@@ -23,45 +24,47 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new UseSimpleAttributesRuleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class UseSimpleAttributesRuleWalker extends Lint.RuleWalker {
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.checkJsxOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.checkJsxOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement) {
+function walk(ctx: Lint.WalkContext<void>) {
+    function checkJsxOpeningElement(node: ts.JsxOpeningLikeElement) {
         const attributes = getJsxAttributesFromJsxElement(node);
         for (const key of Object.keys(attributes)) {
             const attribute = attributes[key];
 
             // Handle Binary Expressions
-            const binaryExpression = <ts.BinaryExpression>this.getNextNodeRecursive(attribute, ts.SyntaxKind.BinaryExpression);
-            if (binaryExpression && !this.isSimpleBinaryExpression(binaryExpression)) {
+            const binaryExpression = <ts.BinaryExpression>getNextNodeRecursive(attribute, ts.SyntaxKind.BinaryExpression);
+            if (binaryExpression && !isSimpleBinaryExpression(binaryExpression)) {
                 const binaryExpressionErrorMessage: string = 'Attribute contains a complex binary expression';
-                this.addFailureAt(node.getStart(), node.getWidth(), binaryExpressionErrorMessage);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), binaryExpressionErrorMessage);
             }
 
             // Handle Ternary Expression
-            const ternaryExpression = <ts.ConditionalExpression>this.getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
+            const ternaryExpression = <ts.ConditionalExpression>getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
             if (ternaryExpression) {
                 const ternaryExpressionErrorMessage: string = 'Attribute contains a ternary expression';
-                this.addFailureAt(node.getStart(), node.getWidth(), ternaryExpressionErrorMessage);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), ternaryExpressionErrorMessage);
             }
         }
     }
 
-    private isSimpleBinaryExpression(binaryExpression: ts.BinaryExpression): boolean {
+    function getNextNodeRecursive(node: ts.Node, kind: ts.SyntaxKind): ts.Node | undefined {
+        if (!node) {
+            return undefined;
+        }
+        const childNodes = node.getChildren();
+        let match = childNodes.find(cn => cn.kind === kind);
+        if (!match) {
+            for (const childNode of childNodes) {
+                match = getNextNodeRecursive(childNode, kind);
+            }
+        }
+        return match;
+    }
+
+    function isSimpleBinaryExpression(binaryExpression: ts.BinaryExpression): boolean {
         if (binaryExpression.kind !== ts.SyntaxKind.BinaryExpression) {
             return false;
         }
@@ -80,17 +83,15 @@ class UseSimpleAttributesRuleWalker extends Lint.RuleWalker {
         return leftTerm ? (rightTerm ? true : false) : false;
     }
 
-    private getNextNodeRecursive(node: ts.Node, kind: ts.SyntaxKind): ts.Node | undefined {
-        if (!node) {
-            return undefined;
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        } else if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
         }
-        const childNodes = node.getChildren();
-        let match = childNodes.find(cn => cn.kind === kind);
-        if (!match) {
-            for (const childNode of childNodes) {
-                match = this.getNextNodeRecursive(childNode, kind);
-            }
-        }
-        return match;
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

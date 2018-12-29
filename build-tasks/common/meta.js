@@ -46,7 +46,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
         return value;
     }
     value = value.replace(/^\n+/, ''); // strip leading newlines
-    value = value.replace(/\n/, ' '); // convert newlines
+    value = value.replace(/\n/g, ' '); // convert newlines
     if (value.indexOf(',') > -1) {
         return '"' + value + '"';
     } else {

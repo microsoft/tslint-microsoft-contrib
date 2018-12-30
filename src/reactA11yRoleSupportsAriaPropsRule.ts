@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
@@ -61,24 +62,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleSupportsAriaPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
-    public visitJsxElement(node: ts.JsxElement): void {
-        this.checkJsxElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.checkJsxElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private checkJsxElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function checkJsxElement(node: ts.JsxOpeningLikeElement): void {
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
         let roleValue: string | undefined;
@@ -128,7 +117,19 @@ class A11yRoleSupportsAriaPropsWalker extends Lint.RuleWalker {
         }
 
         if (invalidAttributeNamesInElement.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

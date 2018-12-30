@@ -21,9 +21,9 @@ describe('Utils', (): void => {
         });
 
         it('should handle objects', (): void => {
-            const obj1: Object = {};
-            const obj2: Object = {};
-            const obj3: Object = {};
+            const obj1: object = {};
+            const obj2: object = {};
+            const obj3: object = {};
             const objList = [obj1, obj2];
 
             chai.expect(Utils.contains(objList, obj1)).to.equal(true, 'object equality test for obj1');
@@ -53,10 +53,10 @@ describe('Utils', (): void => {
         });
 
         it('should handle objects', (): void => {
-            const obj1: Object = {};
-            const obj2: Object = {};
-            const obj3: Object = {};
-            const objList: Object[] = [obj1, obj2, obj3];
+            const obj1: object = {};
+            const obj2: object = {};
+            const obj3: object = {};
+            const objList: object[] = [obj1, obj2, obj3];
 
             chai.expect(Utils.removeAll(objList, [obj1])).to.deep.equal([obj2, obj2], 'removing object');
             chai.expect(Utils.removeAll(objList, [obj1, obj3])).to.deep.equal([obj2], 'removing two objects');

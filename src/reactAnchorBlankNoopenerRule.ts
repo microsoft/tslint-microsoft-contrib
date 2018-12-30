@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { Utils } from './utils/Utils';
@@ -7,6 +8,10 @@ import { Utils } from './utils/Utils';
 import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
 
 const OPTION_FORCE_REL_REDUNDANCY = 'force-rel-redundancy';
+
+interface Options {
+    forceRelRedundancy: boolean;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -37,50 +42,58 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactAnchorBlankNoopenerRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         } else {
             return [];
         }
     }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            forceRelRedundancy: false
+        };
+
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
+            parsed.forceRelRedundancy = options.ruleArguments.indexOf(OPTION_FORCE_REL_REDUNDANCY) > -1;
+        }
+
+        return parsed;
+    }
 }
 
-class ReactAnchorBlankNoopenerRuleWalker extends Lint.RuleWalker {
-    private readonly forceRelRedundancy: boolean = false;
-    private readonly failureString: string = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
+function walk(ctx: Lint.WalkContext<Options>) {
+    const failureString: string = ctx.options.forceRelRedundancy
+        ? 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"'
+        : 'Anchor tags with target="_blank" should also include rel="noreferrer"';
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
-            this.forceRelRedundancy = options.ruleArguments.indexOf(OPTION_FORCE_REL_REDUNDANCY) > -1;
-        }
-        if (this.forceRelRedundancy) {
-            this.failureString = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
-        }
-    }
-
-    protected visitJsxElement(node: ts.JsxElement): void {
-        const openingElement: ts.JsxOpeningElement = node.openingElement;
-        this.validateOpeningElement(openingElement);
-        super.visitJsxElement(node);
-    }
-
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private validateOpeningElement(openingElement: ts.JsxOpeningLikeElement): void {
+    function validateOpeningElement(openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
             const allAttributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
             /* tslint:disable:no-string-literal */
             const target: ts.JsxAttribute = allAttributes['target'];
             const rel: ts.JsxAttribute = allAttributes['rel'];
             /* tslint:enable:no-string-literal */
-            if (target !== undefined && getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel, this.forceRelRedundancy)) {
-                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), this.failureString);
+            if (
+                target !== undefined &&
+                getStringLiteral(target) === '_blank' &&
+                !isRelAttributeValue(rel, ctx.options.forceRelRedundancy)
+            ) {
+                ctx.addFailureAt(openingElement.getStart(), openingElement.getWidth(), failureString);
             }
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }
 
 function isRelAttributeValue(attribute: ts.JsxAttribute, forceRedundancy: boolean): boolean {

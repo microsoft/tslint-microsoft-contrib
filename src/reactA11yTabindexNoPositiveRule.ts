@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName, getStringLiteral, getNumericLiteral, isEmpty } from './utils/JsxAttribute';
@@ -34,29 +35,33 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yTabindexNoPositiveWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class A11yTabindexNoPositiveWalker extends Lint.RuleWalker {
-    public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name = getPropName(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxAttribute(node)) {
+            const name = getPropName(node);
 
-        if (!name || name.toLowerCase() !== 'tabindex') {
-            return;
+            if (!name || name.toLowerCase() !== 'tabindex') {
+                return;
+            }
+
+            const literalString = getNumericLiteral(node) || getStringLiteral(node);
+
+            // In case the attribute has no value of empty value.
+            if (literalString === '') {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
+            } else if (literalString && literalString !== '-1' && literalString !== '0') {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
+            } else if (isEmpty(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
+            }
         }
 
-        const literalString = getNumericLiteral(node) || getStringLiteral(node);
-
-        // In case the attribute has no value of empty value.
-        if (literalString === '') {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
-        } else if (literalString && literalString !== '-1' && literalString !== '0') {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
-        } else if (isEmpty(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString());
-        }
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

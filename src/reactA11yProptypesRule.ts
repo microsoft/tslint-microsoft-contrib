@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -48,191 +49,194 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yProptypesWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class ReactA11yProptypesWalker extends Lint.RuleWalker {
-    public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const propNameNode = getPropName(node);
-        if (propNameNode === undefined) {
-            return;
-        }
-
-        const propName = propNameNode.toLowerCase();
-
-        // If there is no aria-* attribute, skip it.
-        if (!aria[propName]) {
-            return;
-        }
-
-        const allowUndefined: boolean = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
-        const expectedType: string = aria[propName].type;
-        const permittedValues: string[] = aria[propName].values;
-        const propValue: string = getStringLiteral(node) || String(getBooleanLiteral(node));
-
-        if (this.isUndefined(node.initializer)) {
-            if (!allowUndefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxAttribute(node)) {
+            const propNameNode = getPropName(node);
+            if (propNameNode === undefined) {
+                return;
             }
-            return;
-        } else if (this.isComplexType(node.initializer)) {
-            return;
-        }
 
-        if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+            const propName = propNameNode.toLowerCase();
+
+            // If there is no aria-* attribute, skip it.
+            if (!aria[propName]) {
+                return;
+            }
+
+            const allowUndefined: boolean = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
+            const expectedType: string = aria[propName].type;
+            const permittedValues: string[] = aria[propName].values;
+            const propValue: string = getStringLiteral(node) || String(getBooleanLiteral(node));
+
+            if (isUndefined(node.initializer)) {
+                if (!allowUndefined) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+                }
+                return;
+            } else if (isComplexType(node.initializer)) {
+                return;
+            }
+
+            if (!validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+            }
+        } else {
+            return ts.forEachChild(node, cb);
         }
     }
 
-    private validityCheck(
-        propValueExpression: ts.Expression | undefined,
-        propValue: string,
-        expectedType: string,
-        permittedValues: string[]
-    ): boolean {
-        if (propValueExpression === undefined) {
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+
+function validityCheck(
+    propValueExpression: ts.Expression | undefined,
+    propValue: string,
+    expectedType: string,
+    permittedValues: string[]
+): boolean {
+    if (propValueExpression === undefined) {
+        return true;
+    }
+
+    switch (expectedType) {
+        case 'boolean':
+            return isBoolean(propValueExpression);
+        case 'tristate':
+            return isBoolean(propValueExpression) || isMixed(propValueExpression);
+        case 'integer':
+            return isInteger(propValueExpression);
+        case 'number':
+            return isNumber(propValueExpression);
+        case 'string':
+            return isString(propValueExpression);
+        case 'token':
+            return (
+                (isString(propValueExpression) || isBoolean(propValueExpression)) && permittedValues.indexOf(propValue.toLowerCase()) > -1
+            );
+        case 'tokenlist':
+            return (
+                (isString(propValueExpression) || isBoolean(propValueExpression)) &&
+                propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
+            );
+        default:
+            return false;
+    }
+}
+
+function isUndefined(node: ts.Expression | undefined): boolean {
+    if (!node) {
+        return true;
+    } else if (isJsxExpression(node)) {
+        const expression = node.expression;
+        if (!expression) {
+            return true;
+        } else if (AstUtils.isUndefined(expression)) {
+            return true;
+        } else if (isNullKeyword(expression)) {
             return true;
         }
-
-        switch (expectedType) {
-            case 'boolean':
-                return this.isBoolean(propValueExpression);
-            case 'tristate':
-                return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer':
-                return this.isInteger(propValueExpression);
-            case 'number':
-                return this.isNumber(propValueExpression);
-            case 'string':
-                return this.isString(propValueExpression);
-            case 'token':
-                return (
-                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    permittedValues.indexOf(propValue.toLowerCase()) > -1
-                );
-            case 'tokenlist':
-                return (
-                    (this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(' ').every(token => permittedValues.indexOf(token.toLowerCase()) > -1)
-                );
-            default:
-                return false;
-        }
     }
 
-    private isUndefined(node: ts.Expression | undefined): boolean {
-        if (!node) {
-            return true;
-        } else if (isJsxExpression(node)) {
-            const expression = node.expression;
-            if (!expression) {
-                return true;
-            } else if (AstUtils.isUndefined(expression)) {
-                return true;
-            } else if (isNullKeyword(expression)) {
-                return true;
-            }
-        }
+    return false;
+}
 
-        return false;
-    }
+/**
+ * For this case <div prop={ x + 1 } />
+ * we can't check the type of atrribute's expression until running time.
+ */
+function isComplexType(node: ts.Expression | undefined): boolean {
+    return node !== undefined && !isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
+}
 
-    /**
-     * For this case <div prop={ x + 1 } />
-     * we can't check the type of atrribute's expression until running time.
-     */
-    private isComplexType(node: ts.Expression | undefined): boolean {
-        return node !== undefined && !this.isUndefined(node) && isJsxExpression(node) && !AstUtils.isConstant(node.expression);
-    }
+function isBoolean(node: ts.Expression): boolean {
+    if (isStringLiteral(node)) {
+        const propValue: string = node.text.toLowerCase();
 
-    private isBoolean(node: ts.Expression): boolean {
-        if (isStringLiteral(node)) {
-            const propValue: string = node.text.toLowerCase();
-
-            return propValue === 'true' || propValue === 'false';
-        } else if (isJsxExpression(node)) {
-            const expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-
-            if (isStringLiteral(expression)) {
-                const propValue: string = expression.text.toLowerCase();
-
-                return propValue === 'true' || propValue === 'false';
-            } else {
-                return isFalseKeyword(expression) || isTrueKeyword(expression);
-            }
-        }
-
-        return false;
-    }
-
-    private isMixed(node: ts.Expression): boolean {
-        if (isStringLiteral(node)) {
-            return node.text.toLowerCase() === 'mixed';
-        } else if (isJsxExpression(node)) {
-            const expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-
-            return isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
-        }
-
-        return false;
-    }
-
-    private isNumber(node: ts.Expression): boolean {
-        if (isStringLiteral(node)) {
-            return !isNaN(Number(node.text));
-        } else if (isJsxExpression(node)) {
-            const expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-
-            if (isStringLiteral(expression)) {
-                return !isNaN(Number(expression.text));
-            } else {
-                return isNumericLiteral(expression);
-            }
-        }
-
-        return false;
-    }
-
-    private isInteger(node: ts.Expression): boolean {
-        if (isStringLiteral(node)) {
-            const value: number = Number(node.text);
-
-            return !isNaN(value) && Math.round(value) === value;
-        } else if (isJsxExpression(node)) {
-            const expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-
-            if (isStringLiteral(expression)) {
-                const value: number = Number(expression.text);
-
-                return !isNaN(value) && Math.round(value) === value;
-            } else if (isNumericLiteral(expression)) {
-                const value: number = Number(expression.text);
-
-                return Math.round(value) === value;
-            }
-
+        return propValue === 'true' || propValue === 'false';
+    } else if (isJsxExpression(node)) {
+        const expression = node.expression;
+        if (expression === undefined) {
             return false;
         }
 
+        if (isStringLiteral(expression)) {
+            const propValue: string = expression.text.toLowerCase();
+
+            return propValue === 'true' || propValue === 'false';
+        } else {
+            return isFalseKeyword(expression) || isTrueKeyword(expression);
+        }
+    }
+
+    return false;
+}
+
+function isMixed(node: ts.Expression): boolean {
+    if (isStringLiteral(node)) {
+        return node.text.toLowerCase() === 'mixed';
+    } else if (isJsxExpression(node)) {
+        const expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+
+        return isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
+    }
+
+    return false;
+}
+
+function isNumber(node: ts.Expression): boolean {
+    if (isStringLiteral(node)) {
+        return !isNaN(Number(node.text));
+    } else if (isJsxExpression(node)) {
+        const expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+
+        if (isStringLiteral(expression)) {
+            return !isNaN(Number(expression.text));
+        } else {
+            return isNumericLiteral(expression);
+        }
+    }
+
+    return false;
+}
+
+function isInteger(node: ts.Expression): boolean {
+    if (isStringLiteral(node)) {
+        const value: number = Number(node.text);
+
+        return !isNaN(value) && Math.round(value) === value;
+    } else if (isJsxExpression(node)) {
+        const expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+
+        if (isStringLiteral(expression)) {
+            const value: number = Number(expression.text);
+
+            return !isNaN(value) && Math.round(value) === value;
+        } else if (isNumericLiteral(expression)) {
+            const value: number = Number(expression.text);
+
+            return Math.round(value) === value;
+        }
+
         return false;
     }
 
-    private isString(node: ts.Expression): boolean {
-        return isStringLiteral(node) || (isJsxExpression(node) && node.expression !== undefined && isStringLiteral(node.expression));
-    }
+    return false;
+}
+
+function isString(node: ts.Expression): boolean {
+    return isStringLiteral(node) || (isJsxExpression(node) && node.expression !== undefined && isStringLiteral(node.expression));
 }

@@ -32,22 +32,18 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithFunction(sourceFile, walk, { exceptions: Rule.getExceptions(this.getOptions()) });
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
 
-    /**
-     * Exposed for testing.
-     */
-    /* tslint:disable:function-name */
-    public static getExceptions(options: Lint.IOptions): Exception[] | undefined {
-        /* tslint:enable:function-name */
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {};
+
         if (options.ruleArguments instanceof Array) {
-            return options.ruleArguments[0];
+            parsed.exceptions = options.ruleArguments[0];
+        } else if (options instanceof Array) {
+            parsed.exceptions = options;
         }
-        if (options instanceof Array) {
-            return options;
-        }
-        return undefined;
+        return parsed;
     }
 }
 

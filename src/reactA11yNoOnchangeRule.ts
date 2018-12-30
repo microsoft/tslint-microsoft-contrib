@@ -1,8 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
+
+interface Options {
+    additionalTagNames: string[];
+}
 
 /**
  * Implementation of the react-a11y-no-onchange rule.
@@ -31,29 +36,23 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yNoOnchangeRuleWalker(sourceFile, this.getOptions()))
+            ? this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()))
             : [];
+    }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        const args = options.ruleArguments;
+        return {
+            additionalTagNames: Array.isArray(args) && args.length > 0 ? args[0] : []
+        };
     }
 }
 
-class ReactA11yNoOnchangeRuleWalker extends Lint.RuleWalker {
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.checkJsxOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.checkJsxOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement) {
+function walk(ctx: Lint.WalkContext<Options>) {
+    function checkJsxOpeningElement(node: ts.JsxOpeningLikeElement) {
         const tagName: string = node.tagName.getText();
-        const options: unknown = this.getOptions();
 
-        const additionalTagNames: string[] = Array.isArray(options) && options.length > 0 ? options[0] : [];
-
-        const targetTagNames: string[] = ['select', ...additionalTagNames];
+        const targetTagNames: string[] = ['select', ...ctx.options.additionalTagNames];
 
         if (!tagName || targetTagNames.indexOf(tagName) === -1) {
             return;
@@ -62,7 +61,19 @@ class ReactA11yNoOnchangeRuleWalker extends Lint.RuleWalker {
         const attributes = getJsxAttributesFromJsxElement(node);
         if (attributes.hasOwnProperty('onchange')) {
             const errorMessage = `onChange event handler should not be used with the <${tagName}>. Please use onBlur instead.`;
-            this.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        } else if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

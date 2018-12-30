@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName } from './utils/JsxAttribute';
@@ -34,21 +35,25 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class A11yPropsWalker extends Lint.RuleWalker {
-    public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name = getPropName(node);
-        if (!name || !name.match(/^aria-/i)) {
-            return;
-        }
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxAttribute(node)) {
+            const name = getPropName(node);
+            if (!name || !name.match(/^aria-/i)) {
+                return;
+            }
 
-        if (!ARIA_SCHEMA[name.toLowerCase()]) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name));
+            if (!ARIA_SCHEMA[name.toLowerCase()]) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name));
+            }
+        } else {
+            return ts.forEachChild(node, cb);
         }
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

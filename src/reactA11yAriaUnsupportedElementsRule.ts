@@ -3,6 +3,7 @@
  */
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
@@ -37,24 +38,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yAriaUnsupportedElementsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
-    public visitJsxElement(node: ts.JsxElement): void {
-        this.validateOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
         if (!DOM_SCHEMA[tagName]) {
@@ -73,7 +62,19 @@ class ReactA11yAriaUnsupportedElementsWalker extends Lint.RuleWalker {
 
         if (invalidAttributeNames.length > 0) {
             const message: string = getFailureString(tagName, invalidAttributeNames);
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), message);
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

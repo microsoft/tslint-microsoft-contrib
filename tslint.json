@@ -10,7 +10,6 @@
 
         // Core rules we plan on enabling
         // See https://github.com/Microsoft/tslint-microsoft-contrib/issues/491
-        "ban-types": false,
         "deprecation": false,
         "eofline": false,
         "jsdoc-format": false,

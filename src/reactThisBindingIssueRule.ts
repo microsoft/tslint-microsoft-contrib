@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { Scope } from './utils/Scope';
@@ -10,6 +11,11 @@ import { isObject } from './utils/TypeGuard';
 const FAILURE_ANONYMOUS_LISTENER: string = 'A new instance of an anonymous method is passed as a JSX attribute: ';
 const FAILURE_DOUBLE_BIND: string = "A function is having its 'this' reference bound twice in the constructor: ";
 const FAILURE_UNBOUND_LISTENER: string = "A class method is passed as a JSX attribute without having the 'this' reference bound: ";
+
+interface Options {
+    allowAnonymousListeners: boolean;
+    allowedDecorators: Set<string>;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -46,77 +52,42 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactThisBindingIssueRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         } else {
             return [];
         }
     }
-}
 
-class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
-    private allowAnonymousListeners: boolean = false;
-    private allowedDecorators: Set<string> = new Set<string>();
-    private boundListeners: Set<string> = new Set<string>();
-    private declaredMethods: Set<string> = new Set<string>();
-    private scope: Scope | undefined;
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            allowAnonymousListeners: false,
+            allowedDecorators: new Set<string>()
+        };
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.getOptions().forEach((opt: unknown) => {
+        options.ruleArguments.forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
+                parsed.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
                 if (opt['bind-decorators']) {
                     const allowedDecorators: unknown = opt['bind-decorators'];
                     if (!Array.isArray(allowedDecorators) || allowedDecorators.some(decorator => typeof decorator !== 'string')) {
                         throw new Error('one or more members of bind-decorators is invalid, string required.');
                     }
                     // tslint:disable-next-line:prefer-type-cast
-                    this.allowedDecorators = new Set<string>(allowedDecorators);
+                    parsed.allowedDecorators = new Set<string>(allowedDecorators);
                 }
             }
         });
-    }
 
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        // reset all state when a class declaration is found because a SourceFile can contain multiple classes
-        this.boundListeners = new Set<string>();
-        // find all method names and prepend 'this.' to it so we can compare array elements to method names easily
-        this.declaredMethods = new Set<string>();
-        AstUtils.getDeclaredMethodNames(node).forEach(
-            (methodName: string): void => {
-                this.declaredMethods.add('this.' + methodName);
-            }
-        );
-        super.visitClassDeclaration(node);
+        return parsed;
     }
+}
 
-    protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-        this.boundListeners = this.getSelfBoundListeners(node);
-        super.visitConstructorDeclaration(node);
-    }
+function walk(ctx: Lint.WalkContext<Options>) {
+    let boundListeners: Set<string> = new Set<string>();
+    let declaredMethods: Set<string> = new Set<string>();
+    let scope: Scope | undefined;
 
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.visitJsxOpeningElement(node.openingElement); // a normal JSX element has-a OpeningElement
-        super.visitJsxElement(node);
-    }
-
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.visitJsxOpeningElement(node); // a self closing JSX element is-a OpeningElement
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        // reset variable scope when we encounter a method. Start tracking variables that are instantiated
-        // in scope so we can make sure new function instances are not passed as JSX attributes
-        if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
-            this.boundListeners = this.boundListeners.add('this.' + node.name.getText());
-        }
-        this.scope = new Scope(undefined);
-        super.visitMethodDeclaration(node);
-        this.scope = undefined;
-    }
-
-    private isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: Set<string>): boolean {
+    function isMethodBoundWithDecorators(node: ts.MethodDeclaration, allowedDecorators: Set<string>): boolean {
         if (!(allowedDecorators.size > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
@@ -126,95 +97,24 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
             }
             const source = node.getSourceFile();
             const text = decorator.expression.getText(source);
-            return this.allowedDecorators.has(text);
+            return ctx.options.allowedDecorators.has(text);
         });
     }
 
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
-        if (this.scope !== undefined) {
-            this.scope = new Scope(this.scope);
-        }
-        super.visitArrowFunction(node);
-        if (this.scope !== undefined) {
-            this.scope = this.scope.parent;
-        }
-    }
-
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        if (this.scope !== undefined) {
-            this.scope = new Scope(this.scope);
-        }
-        super.visitFunctionExpression(node);
-        if (this.scope !== undefined) {
-            this.scope = this.scope.parent;
-        }
-    }
-
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (this.scope !== undefined) {
-            if (node.name.kind === ts.SyntaxKind.Identifier) {
-                const variableName = (<ts.Identifier>node.name).text;
-                if (this.isExpressionAnonymousFunction(node.initializer)) {
-                    this.scope.addFunctionSymbol(variableName);
-                }
-            }
-        }
-        super.visitVariableDeclaration(node);
-    }
-
-    private visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
-        // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
-        node.attributes.properties.forEach(
-            (attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
-                if (this.isUnboundListener(attributeLikeElement)) {
-                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                    const jsxExpression = attribute.initializer;
-                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                        return;
-                    }
-                    const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
-                    const listenerText: string = propAccess.getText();
-                    if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
-                        const start: number = propAccess.getStart();
-                        const widget: number = propAccess.getWidth();
-                        const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
-                        this.addFailureAt(start, widget, message);
-                    }
-                } else if (this.isAttributeAnonymousFunction(attributeLikeElement)) {
-                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
-                    const jsxExpression = attribute.initializer;
-                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                        return;
-                    }
-
-                    const expression = jsxExpression.expression;
-                    if (expression === undefined) {
-                        return;
-                    }
-
-                    const start: number = expression.getStart();
-                    const widget: number = expression.getWidth();
-                    const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
-                    this.addFailureAt(start, widget, message);
-                }
-            }
-        );
-    }
-
-    private isAttributeAnonymousFunction(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
-        if (this.allowAnonymousListeners) {
+    function isAttributeAnonymousFunction(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
+        if (ctx.options.allowAnonymousListeners) {
             return false;
         }
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
             if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
-                return this.isExpressionAnonymousFunction(attribute.initializer.expression);
+                return isExpressionAnonymousFunction(attribute.initializer.expression);
             }
         }
         return false;
     }
 
-    private isExpressionAnonymousFunction(expression: ts.Expression | undefined): boolean {
+    function isExpressionAnonymousFunction(expression: ts.Expression | undefined): boolean {
         if (expression === undefined) {
             return false;
         }
@@ -231,14 +131,14 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                 return true; // bind functions on Function or _ create a new anonymous instance of a function
             }
         }
-        if (expression.kind === ts.SyntaxKind.Identifier && this.scope !== undefined) {
+        if (expression.kind === ts.SyntaxKind.Identifier && scope !== undefined) {
             const symbolText: string = expression.getText();
-            return this.scope.isFunctionSymbol(symbolText);
+            return scope.isFunctionSymbol(symbolText);
         }
         return false;
     }
 
-    private isUnboundListener(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
+    function isUnboundListener(attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): boolean {
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
             if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
@@ -249,7 +149,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                         const listenerText: string = propAccess.getText();
 
                         // an unbound listener is a class method reference that was not bound to 'this' in the constructor
-                        if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
+                        if (declaredMethods.has(listenerText) && !boundListeners.has(listenerText)) {
                             return true;
                         }
                     }
@@ -259,7 +159,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         return false;
     }
 
-    private getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
+    function getSelfBoundListeners(node: ts.ConstructorDeclaration): Set<string> {
         const result: Set<string> = new Set<string>();
         if (node.body !== undefined && node.body.statements !== undefined) {
             node.body.statements.forEach(
@@ -289,7 +189,7 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
                                                     const start = binaryExpression.getStart();
                                                     const width = binaryExpression.getWidth();
                                                     const msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
-                                                    this.addFailureAt(start, width, msg);
+                                                    ctx.addFailureAt(start, width, msg);
                                                 }
                                                 result.add(rightPropText);
                                             }
@@ -304,4 +204,110 @@ class ReactThisBindingIssueRuleWalker extends Lint.RuleWalker {
         }
         return result;
     }
+
+    function visitJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
+        // create violations if the listener is a reference to a class method that was not bound to 'this' in the constructor
+        node.attributes.properties.forEach(
+            (attributeLikeElement: ts.JsxAttribute | ts.JsxSpreadAttribute): void => {
+                if (isUnboundListener(attributeLikeElement)) {
+                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                    const jsxExpression = attribute.initializer;
+                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                        return;
+                    }
+                    const propAccess: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>jsxExpression.expression;
+                    const listenerText: string = propAccess.getText();
+                    if (declaredMethods.has(listenerText) && !boundListeners.has(listenerText)) {
+                        const start: number = propAccess.getStart();
+                        const widget: number = propAccess.getWidth();
+                        const message: string = FAILURE_UNBOUND_LISTENER + listenerText;
+                        ctx.addFailureAt(start, widget, message);
+                    }
+                } else if (isAttributeAnonymousFunction(attributeLikeElement)) {
+                    const attribute: ts.JsxAttribute = <ts.JsxAttribute>attributeLikeElement;
+                    const jsxExpression = attribute.initializer;
+                    if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                        return;
+                    }
+
+                    const expression = jsxExpression.expression;
+                    if (expression === undefined) {
+                        return;
+                    }
+
+                    const start: number = expression.getStart();
+                    const widget: number = expression.getWidth();
+                    const message: string = FAILURE_ANONYMOUS_LISTENER + Utils.trimTo(expression.getText(), 30);
+                    ctx.addFailureAt(start, widget, message);
+                }
+            }
+        );
+    }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isMethodDeclaration(node)) {
+            // reset variable scope when we encounter a method. Start tracking variables that are instantiated
+            // in scope so we can make sure new function instances are not passed as JSX attributes
+            if (isMethodBoundWithDecorators(node, ctx.options.allowedDecorators)) {
+                boundListeners = boundListeners.add('this.' + node.name.getText());
+            }
+            scope = new Scope(undefined);
+            ts.forEachChild(node, cb);
+            scope = undefined;
+            return;
+        }
+
+        if (tsutils.isArrowFunction(node)) {
+            if (scope !== undefined) {
+                scope = new Scope(scope);
+            }
+            ts.forEachChild(node, cb);
+            if (scope !== undefined) {
+                scope = scope.parent;
+            }
+            return;
+        }
+
+        if (tsutils.isFunctionExpression(node)) {
+            if (scope !== undefined) {
+                scope = new Scope(scope);
+            }
+            ts.forEachChild(node, cb);
+            if (scope !== undefined) {
+                scope = scope.parent;
+            }
+            return;
+        }
+
+        if (tsutils.isClassDeclaration(node)) {
+            // reset all state when a class declaration is found because a SourceFile can contain multiple classes
+            boundListeners = new Set<string>();
+            // find all method names and prepend 'this.' to it so we can compare array elements to method names easily
+            declaredMethods = new Set<string>();
+            AstUtils.getDeclaredMethodNames(node).forEach(
+                (methodName: string): void => {
+                    declaredMethods.add('this.' + methodName);
+                }
+            );
+        } else if (tsutils.isConstructorDeclaration(node)) {
+            boundListeners = getSelfBoundListeners(node);
+        } else if (tsutils.isJsxElement(node)) {
+            visitJsxOpeningElement(node.openingElement); // a normal JSX element has-a OpeningElement
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            visitJsxOpeningElement(node); // a self closing JSX element is-a OpeningElement
+        } else if (tsutils.isVariableDeclaration(node)) {
+            if (scope !== undefined) {
+                if (node.name.kind === ts.SyntaxKind.Identifier) {
+                    const variableName = (<ts.Identifier>node.name).text;
+                    if (isExpressionAnonymousFunction(node.initializer)) {
+                        scope.addFunctionSymbol(variableName);
+                    }
+                }
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

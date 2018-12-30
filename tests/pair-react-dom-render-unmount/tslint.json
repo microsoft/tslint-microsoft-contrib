@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "pair-react-dom-render-unmount": true
+    }
+}

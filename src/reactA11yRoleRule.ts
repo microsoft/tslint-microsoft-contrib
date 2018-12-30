@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getPropName, getStringLiteral, isEmpty } from './utils/JsxAttribute';
@@ -51,34 +52,36 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class A11yRoleRuleWalker extends Lint.RuleWalker {
-    public visitJsxAttribute(node: ts.JsxAttribute): void {
-        const name = getPropName(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxAttribute(node)) {
+            const name = getPropName(node);
 
-        if (!name || name.toLowerCase() !== 'role') {
-            return;
-        }
-
-        const roleValue = getStringLiteral(node);
-
-        if (roleValue) {
-            // Splitted by space doesn't mean the multiple role definition is correct,
-            // just because this rule is not checking if it is using multiple role definition.
-            const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
-
-            if (normalizedValues.some(value => !!(value && VALID_ROLES.indexOf(value) === -1))) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
+            if (!name || name.toLowerCase() !== 'role') {
+                return;
             }
-        } else if (roleValue === '' || isEmpty(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
+
+            const roleValue = getStringLiteral(node);
+
+            if (roleValue) {
+                // Splitted by space doesn't mean the multiple role definition is correct,
+                // just because this rule is not checking if it is using multiple role definition.
+                const normalizedValues: string[] = roleValue.toLowerCase().split(' ');
+
+                if (normalizedValues.some(value => !!(value && VALID_ROLES.indexOf(value) === -1))) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
+                }
+            } else if (roleValue === '' || isEmpty(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
+            }
         }
 
-        super.visitJsxAttribute(node);
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

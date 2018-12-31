@@ -1,0 +1,4 @@
+import * as ReactDOM from 'react-dom';
+
+ReactDOM.render();
+~~~~~~~~~~~~~~~~~  [Unmatched calls between ReactDOM.render ReactDOM.unmountComponentAtNode. Did you forget to unmount React element?]

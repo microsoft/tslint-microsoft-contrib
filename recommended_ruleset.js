@@ -86,6 +86,7 @@ module.exports = {
         'no-unused-expression': true,
         'no-use-before-declare': true,
         'no-with-statement': true,
+        'pair-react-dom-render-unmount': true,
         'promise-function-async': true,
         'promise-must-complete': true,
         'radix': true,

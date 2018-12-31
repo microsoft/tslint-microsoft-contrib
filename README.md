@@ -1206,6 +1206,17 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>pair-react-dom-render-unmount</code>
+      </td>
+      <td>
+        Ensures that the call on `ReactDOM.render` has properly release without memory leak.
+        This rules enforces the number of calls on `ReactDOM.render` must equals to the number of calls on `ReactDOM.unmountComponentAtNode` in the file.
+        Besides, if the returning value of `ReactDOM.render` is capture, the variable must release the reference somewhere in the file.
+      </td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>use-simple-attributes</code>
       </td>
       <td>

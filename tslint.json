@@ -152,6 +152,7 @@
         "use-default-type-parameter": false,
         "use-named-parameter": true,
         "use-simple-attributes": true,
+        "pair-react-dom-render-unmount": true,
 
         // tslint-microsoft-contrib rules disabled
         "missing-jsdoc": false,

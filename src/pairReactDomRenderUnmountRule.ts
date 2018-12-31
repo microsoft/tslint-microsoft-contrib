@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Correctness',
-        commonWeaknessEnumeration: '...' // if possible, please map your rule to a CWE (see cwe_descriptions.json and https://cwe.mitre.org)
+        commonWeaknessEnumeration: ''
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

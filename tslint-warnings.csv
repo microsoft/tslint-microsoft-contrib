@@ -235,6 +235,7 @@ CWE 710 - Coding Standards Violation"
 one-variable-per-declaration,Disallows multiple variable definitions in the same declaration statement.,TSLINTSULIR1,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 ordered-imports,Requires that import statements be alphabetized and grouped.,TSLINT1FC7VGF,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+pair-react-dom-render-unmount,Pair ReactDOM render and unmount calls in one file.,TSLINTU73AAA,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 possible-timing-attack,Avoid timing attacks by not making direct comaprisons to sensitive data,TSLINTHQC3QI,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"710,749","CWE 710 - Coding Standards Violation
 CWE 749 - Exposed Dangerous Method or Function"
 prefer-array-literal,Use array literal syntax when declaring or instantiating array types.,TSLINTCHFS93,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality

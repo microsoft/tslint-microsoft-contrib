@@ -6,6 +6,9 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 const UNMATCHED_FAILURE_STRING: string =
     'Unmatched calls between ReactDOM.render ReactDOM.unmountComponentAtNode. Did you forget to unmount React element?';
 
+const UNSET_FAILURE_STRING: string =
+    'Unreference ReactDOM.render captured variable, it leaks to memory leak. Did you forget to set it to undefined?';
+
 export class Rule extends Lint.Rules.AbstractRule {
     private reactDOMImportNamespaceName: undefined | string;
 
@@ -32,6 +35,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         const renderCalls: ts.Node[] = [];
         const unmountCalls: ts.Node[] = [];
 
+        const renderAssignedIdentifiers: ts.Node[] = [];
+        const unsetIdentifiers: Set<string> = new Set<string>();
+
         const callback = (node: ts.Node): void => {
             const reactDOMImportNamespaceName: undefined | string = this.getReactDOMImportNamespaceName(node);
             if (reactDOMImportNamespaceName) {
@@ -42,6 +48,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             const isRenderCallExpression: boolean = this.isReactDOMCallExpression(node, 'render');
             if (isRenderCallExpression) {
                 renderCalls.push(node);
+
+                const renderAssignExpression: undefined | [ts.Node, ts.Node] = this.getAssignExpression(node.parent);
+                if (renderAssignExpression && renderAssignExpression[1] === node) {
+                    renderAssignedIdentifiers.push(renderAssignExpression[0]);
+                }
+
                 return;
             }
 
@@ -49,6 +61,11 @@ export class Rule extends Lint.Rules.AbstractRule {
             if (isUnmountCallExpression) {
                 unmountCalls.push(node);
                 return;
+            }
+
+            const assignExpression: undefined | [ts.Node, ts.Node] = this.getAssignExpression(node);
+            if (assignExpression && this.isUnsetIdentifier(assignExpression[1])) {
+                unsetIdentifiers.add(assignExpression[0].getText());
             }
 
             ts.forEachChild(node, callback);
@@ -62,6 +79,13 @@ export class Rule extends Lint.Rules.AbstractRule {
                 ctx.addFailureAtNode(renderCallExpression, UNMATCHED_FAILURE_STRING);
             });
         }
+
+        // Verify the render assigned identifiers are unset somewhere in the file.
+        renderAssignedIdentifiers.forEach(identifier => {
+            if (!unsetIdentifiers.has(identifier.getText())) {
+                ctx.addFailureAtNode(identifier, UNSET_FAILURE_STRING);
+            }
+        });
     }
 
     private getReactDOMImportNamespaceName(node: ts.Node): undefined | string {
@@ -105,5 +129,29 @@ export class Rule extends Lint.Rules.AbstractRule {
 
         const propertyAccessor: ts.Identifier = <ts.Identifier>propertyAccessExpression.expression;
         return propertyAccessor.text === this.reactDOMImportNamespaceName && propertyAccessExpression.name.text === methodName;
+    }
+
+    private getAssignExpression(node: ts.Node): undefined | [ts.Node, ts.Node] {
+        if (node.kind === ts.SyntaxKind.BinaryExpression) {
+            const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>node;
+            return binaryExpression.operatorToken.kind === ts.SyntaxKind.EqualsToken
+                ? [binaryExpression.left, binaryExpression.right]
+                : undefined;
+        }
+
+        if (node.kind === ts.SyntaxKind.VariableDeclaration) {
+            const variableDeclaration: ts.VariableDeclaration = <ts.VariableDeclaration>node;
+            return variableDeclaration.initializer ? [variableDeclaration.name, variableDeclaration.initializer] : undefined;
+        }
+
+        return undefined;
+    }
+
+    private isUnsetIdentifier(node: ts.Node): boolean {
+        return (
+            node.kind === ts.SyntaxKind.NullKeyword ||
+            node.kind === ts.SyntaxKind.UndefinedKeyword ||
+            (node.kind === ts.SyntaxKind.Identifier && node.getText() === 'undefined')
+        );
     }
 }

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -29,27 +30,30 @@ export class Rule extends Lint.Rules.AbstractRule {
             console.warn('Warning: no-empty-interfaces rule is deprecated. Replace your usage with the TSLint no-empty-interface rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoEmptyInterfacesRuleWalker extends Lint.RuleWalker {
-    protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
-        // do we have an empty interface?
-        if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + "'" + node.name.getText() + "'");
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isInterfaceDeclaration(node) && isInterfaceEmpty(node) && !hasMultipleParents(node)) {
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + "'" + node.name.getText() + "'");
         }
-        super.visitInterfaceDeclaration(node);
+
+        return ts.forEachChild(node, cb);
     }
 
-    private isInterfaceEmpty(node: ts.InterfaceDeclaration): boolean {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function isInterfaceEmpty(node: ts.InterfaceDeclaration): boolean {
         return node.members === undefined || node.members.length === 0;
     }
 
-    private hasMultipleParents(node: ts.InterfaceDeclaration): boolean {
+    function hasMultipleParents(node: ts.InterfaceDeclaration): boolean {
         if (node.heritageClauses === undefined || node.heritageClauses.length === 0) {
             return false;
         }
+
         return node.heritageClauses[0].types.length >= 2;
     }
 }

@@ -8,6 +8,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string = 'Input elements must include default, place-holding characters if empty';
 export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string =
     'Textarea elements must include default, place-holding characters if empty';
+const EXCLUDED_INPUT_TYPES = ['checkbox', 'radio', 'file'];
 
 /**
  * Implementation of the react-a11y-input-elements rule.
@@ -45,17 +46,34 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+function isExcludedInputType(node: ts.JsxSelfClosingElement): boolean {
+    let isExcludedType = false;
+    node.attributes.properties.forEach(
+        (attribute: ts.JsxAttributeLike): void => {
+            if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
+                if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
+                    const attributeText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
+                    if (EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                        isExcludedType = true;
+                    }
+                }
+            }
+        }
+    );
+    return isExcludedType;
+}
+
 function walk(ctx: Lint.WalkContext<void>) {
     function cb(node: ts.Node): void {
         if (tsutils.isJsxSelfClosingElement(node)) {
             const tagName = node.tagName.getText();
 
-            if (tagName === 'input') {
+            if (tagName === 'input' && !isExcludedInputType(node)) {
                 const attributes = getJsxAttributesFromJsxElement(node);
                 if (isEmpty(attributes.value) && isEmpty(attributes.placeholder)) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }
-            } else if (tagName === 'textarea') {
+            } else if (tagName === 'textarea' && !isExcludedInputType(node)) {
                 const attributes = getJsxAttributesFromJsxElement(node);
                 if (isEmpty(attributes.placeholder)) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);

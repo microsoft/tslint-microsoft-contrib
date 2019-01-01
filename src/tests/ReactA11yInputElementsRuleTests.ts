@@ -20,10 +20,21 @@ describe('reactA11yInputElementsRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
+    it('should pass on input elements without placeholder of type radio, checkbox, file', (): void => {
+        const script: string = `
+            import React = require('react');
+            const a = <input type="radio" />;
+            const b = <input type="checkbox" />;
+            const c = <input type="file" />;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
     it('should fail on empty input elements without placeholder', (): void => {
         const script: string = `
             import React = require('react');
-            const a = <input />;
+            const a = <input type="button" />;
             const b = <textarea />;
             const c = <textarea></textarea>;
         `;

@@ -47,20 +47,18 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 function isExcludedInputType(node: ts.JsxSelfClosingElement): boolean {
-    let isExcludedType = false;
-
     for (const attribute of node.attributes.properties) {
         if (tsutils.isJsxAttribute(attribute)) {
+            const isInputAttributeType = getJsxAttributesFromJsxElement(node).type;
             if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
                 const attributeText = attribute.initializer.text;
-                if (EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
-                    isExcludedType = true;
-                    return isExcludedType;
+                if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                    return true;
                 }
             }
         }
     }
-    return isExcludedType;
+    return false;
 }
 
 function walk(ctx: Lint.WalkContext<void>) {
@@ -68,9 +66,11 @@ function walk(ctx: Lint.WalkContext<void>) {
         if (tsutils.isJsxSelfClosingElement(node)) {
             const tagName = node.tagName.getText();
 
-            if (tagName === 'input' && !isExcludedInputType(node)) {
+            if (tagName === 'input') {
                 const attributes = getJsxAttributesFromJsxElement(node);
-                if (isEmpty(attributes.value) && isEmpty(attributes.placeholder)) {
+                const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInputType(node);
+                const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInputType(node);
+                if ((isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }
             } else if (tagName === 'textarea') {

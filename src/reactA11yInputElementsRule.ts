@@ -46,10 +46,10 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-function isExcludedInputType(node: ts.JsxSelfClosingElement): boolean {
+function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
     for (const attribute of node.attributes.properties) {
         if (tsutils.isJsxAttribute(attribute)) {
-            const isInputAttributeType = getJsxAttributesFromJsxElement(node).type;
+            const isInputAttributeType = attributes.type;
             if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
                 const attributeText = attribute.initializer.text;
                 if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
@@ -68,8 +68,9 @@ function walk(ctx: Lint.WalkContext<void>) {
 
             if (tagName === 'input') {
                 const attributes = getJsxAttributesFromJsxElement(node);
-                const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInputType(node);
-                const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInputType(node);
+                const isExcludedInput = isExcludedInputType(node, attributes);
+                const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInput;
+                const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInput;
                 if ((isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }

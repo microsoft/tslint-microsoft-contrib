@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -19,33 +20,28 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoInvalidRegexpRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoInvalidRegexpRuleWalker extends Lint.RuleWalker {
-    protected visitNewExpression(node: ts.NewExpression): void {
-        this.validateCall(node);
-        super.visitNewExpression(node);
-    }
-
-    protected visitCallExpression(node: ts.CallExpression): void {
-        this.validateCall(node);
-        super.visitCallExpression(node);
-    }
-
-    private validateCall(expression: ts.CallExpression | ts.NewExpression): void {
-        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
-            const arg1: ts.Expression = expression.arguments[0];
-            if (arg1.kind === ts.SyntaxKind.StringLiteral) {
-                const regexpText: string = (<ts.StringLiteral>arg1).text;
-                try {
-                    // tslint:disable-next-line:no-unused-expression
-                    new RegExp(regexpText);
-                } catch (e) {
-                    this.addFailureAt(arg1.getStart(), arg1.getWidth(), e.message);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isNewExpression(node) || tsutils.isCallExpression(node)) {
+            if (node.expression.getText() === 'RegExp' && node.arguments && node.arguments.length > 0) {
+                const arg: ts.Expression = node.arguments[0];
+                if (tsutils.isStringLiteral(arg)) {
+                    try {
+                        // tslint:disable-next-line:no-unused-expression
+                        new RegExp(arg.text);
+                    } catch (e) {
+                        ctx.addFailureAt(arg.getStart(), arg.getWidth(), e.message);
+                    }
                 }
             }
         }
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

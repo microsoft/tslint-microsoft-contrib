@@ -8,6 +8,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string = 'Input elements must include default, place-holding characters if empty';
 export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string =
     'Textarea elements must include default, place-holding characters if empty';
+const EXCLUDED_INPUT_TYPES = ['checkbox', 'radio', 'file'];
 
 /**
  * Implementation of the react-a11y-input-elements rule.
@@ -45,6 +46,21 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
+    for (const attribute of node.attributes.properties) {
+        if (tsutils.isJsxAttribute(attribute)) {
+            const isInputAttributeType = attributes.type;
+            if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
+                const attributeText = attribute.initializer.text;
+                if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 function walk(ctx: Lint.WalkContext<void>) {
     function cb(node: ts.Node): void {
         if (tsutils.isJsxSelfClosingElement(node)) {
@@ -52,7 +68,10 @@ function walk(ctx: Lint.WalkContext<void>) {
 
             if (tagName === 'input') {
                 const attributes = getJsxAttributesFromJsxElement(node);
-                if (isEmpty(attributes.value) && isEmpty(attributes.placeholder)) {
+                const isExcludedInput = isExcludedInputType(node, attributes);
+                const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInput;
+                const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInput;
+                if ((isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }
             } else if (tagName === 'textarea') {

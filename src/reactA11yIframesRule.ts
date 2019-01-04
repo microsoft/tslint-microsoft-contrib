@@ -42,7 +42,7 @@ class ReactA11yIframesRuleWalker extends Lint.RuleWalker {
     }
 
     private validate(node: ts.Node) {
-        const titles: Set<String> = new Set();
+        const titles: Set<string> = new Set();
 
         this.getJsxElements(node).forEach((element: ts.Node) => {
             const attributes = getJsxAttributesFromJsxElement(element);

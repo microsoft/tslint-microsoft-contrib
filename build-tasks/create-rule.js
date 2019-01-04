@@ -1,6 +1,8 @@
+const { execSync } = require('child_process');
+const { template } = require('underscore');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { execSync } = require('child_process');
+const path = require('path');
 const { writeFile } = require('./common/files');
 
 const questions = [
@@ -26,6 +28,12 @@ const questions = [
             }
             return 'Please enter a description for the rule.';
         }
+    },
+    {
+        name: 'hasOptions',
+        message: 'Has options:',
+        type: 'confirm',
+        default: false
     },
     {
         name: 'typescriptOnly',
@@ -92,21 +100,9 @@ inquirer.prompt(questions).then(answers => {
 function createImplementationFile(answers) {
     const ruleFile = camelCase(answers.name) + 'Rule';
     const sourceFileName = 'src/' + ruleFile + '.ts';
-    const walkerName = pascalCase(ruleFile) + 'Walker';
 
-    const ruleTemplate = require('./templates/rule.template');
-    const ruleSource = ruleTemplate({
-        ruleName: answers.name,
-        walkerName,
-        type: answers.type,
-        description: answers.description,
-        typescriptOnly: answers.typescriptOnly,
-        issueClass: answers.issueClass,
-        issueType: answers.issueType,
-        severity: answers.severity,
-        level: answers.level,
-        group: answers.group
-    });
+    const ruleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/rule.template'), 'utf8');
+    const ruleSource = template(ruleTemplate)(answers);
 
     writeFile(sourceFileName, ruleSource);
 
@@ -145,10 +141,6 @@ function createTestFiles(answers) {
 
 function camelCase(input) {
     return input.toLowerCase().replace(/-(.)/g, (match, group1) => group1.toUpperCase());
-}
-
-function pascalCase(input) {
-    return input.charAt(0).toUpperCase() + input.substr(1);
 }
 
 function tryOpenFiles(files) {

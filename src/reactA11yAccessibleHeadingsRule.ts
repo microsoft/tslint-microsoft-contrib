@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import * as tsUtils from 'tsutils';
+import * as tsutils from 'tsutils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 const BAD_ORDER_HEADING_FAILURE_STRING: string = "Heading elements shouldn't increase by more then one level consecutively";
@@ -11,6 +11,10 @@ const VALID_HEADING_TYPES: Set<string> = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 
 const MAX_NUMBER_OF_H1_HEADINGS: number = 2;
 const MAX_HEADING_LENGTH_DEFAULT: number = 60;
 const MAX_HEADING_LENGTH_ATTRIBUTE_NAME: string = 'maxHeadingLength';
+
+interface Options {
+    maxHeadingTextLength?: number;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -32,43 +36,32 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactA11yAccessibleHeadingsWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         } else {
             return [];
         }
     }
-}
 
-class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
-    private readonly maxHeadingTextLength: number | undefined;
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {};
         const option = options.ruleArguments.find(a => a.hasOwnProperty(MAX_HEADING_LENGTH_ATTRIBUTE_NAME));
         if (option && typeof option[MAX_HEADING_LENGTH_ATTRIBUTE_NAME] === 'number') {
-            this.maxHeadingTextLength = option[MAX_HEADING_LENGTH_ATTRIBUTE_NAME];
+            parsed.maxHeadingTextLength = option[MAX_HEADING_LENGTH_ATTRIBUTE_NAME];
         }
+        return parsed;
     }
+}
 
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        this.validate(node);
-    }
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.validate(node);
-    }
-
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        this.validate(node);
-    }
-
-    private validate(node: ts.Node): void {
+function walk(ctx: Lint.WalkContext<Options>) {
+    function validate(node: ts.Node): void {
         const elements: ts.JsxElement[] = [];
         let h1HeadingCounter: number = 0;
         let previousHeadingNumber: number | undefined;
 
         // Get JsxElements in scope
-        tsUtils.forEachToken(node, (childNode: ts.Node) => {
+        tsutils.forEachToken(node, (childNode: ts.Node) => {
             const parentNode = childNode.parent;
-            if (tsUtils.isJsxOpeningElement(parentNode) && VALID_HEADING_TYPES.has(childNode.getText())) {
+            if (tsutils.isJsxOpeningElement(parentNode) && VALID_HEADING_TYPES.has(childNode.getText())) {
                 elements.push(parentNode.parent);
             }
         });
@@ -81,7 +74,7 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
             if (!previousHeadingNumber) {
                 previousHeadingNumber = headingNumber;
             } else if (headingNumber > previousHeadingNumber && previousHeadingNumber + 1 !== headingNumber) {
-                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), BAD_ORDER_HEADING_FAILURE_STRING);
+                ctx.addFailureAt(openingElement.getStart(), openingElement.getWidth(), BAD_ORDER_HEADING_FAILURE_STRING);
             } else {
                 previousHeadingNumber = headingNumber;
             }
@@ -90,55 +83,69 @@ class ReactA11yAccessibleHeadingsWalker extends Lint.RuleWalker {
             if (openingElement.tagName.getText().toLowerCase() === 'h1') {
                 h1HeadingCounter += 1;
                 if (h1HeadingCounter > MAX_NUMBER_OF_H1_HEADINGS) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), BAD_NUMBER_H1_HEADING_FAILURE_STRING);
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), BAD_NUMBER_H1_HEADING_FAILURE_STRING);
                 }
             }
 
             // Validate heading text
-            this.validateHeadingText(element);
+            validateHeadingText(element);
         });
     }
 
-    private validateHeadingText(headingNode: ts.JsxElement): void {
+    function validateHeadingText(headingNode: ts.JsxElement): void {
         if (headingNode.children.length === 0) {
-            this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), EMPTY_HEADING_FAILURE_STRING);
+            ctx.addFailureAt(headingNode.getStart(), headingNode.getWidth(), EMPTY_HEADING_FAILURE_STRING);
         } else {
             const textResults: string[] = [];
-            this.getTextRecursive(headingNode, textResults);
+            getTextRecursive(headingNode, textResults);
 
             if (textResults.length) {
-                const maxHeadingLength = this.maxHeadingTextLength ? this.maxHeadingTextLength : MAX_HEADING_LENGTH_DEFAULT;
+                const maxHeadingLength = ctx.options.maxHeadingTextLength ? ctx.options.maxHeadingTextLength : MAX_HEADING_LENGTH_DEFAULT;
                 if (textResults.join('').length > maxHeadingLength) {
-                    this.addFailureAt(headingNode.getStart(), headingNode.getWidth(), BAD_HEADING_LENGTH_STRING);
+                    ctx.addFailureAt(headingNode.getStart(), headingNode.getWidth(), BAD_HEADING_LENGTH_STRING);
                 }
             }
         }
     }
 
-    private getTextRecursive(node: ts.Node, textResults: string[] = []): void {
+    function getTextRecursive(node: ts.Node, textResults: string[] = []): void {
         if (!node) {
             return;
         }
-        if (tsUtils.isJsxElement(node)) {
+        if (tsutils.isJsxElement(node)) {
             for (const childNode of node.children) {
                 let textResult: string | undefined;
-                if (tsUtils.isJsxExpression(childNode)) {
-                    textResult = this.extractFromExpression(childNode);
-                } else if (tsUtils.isJsxText(childNode)) {
+                if (tsutils.isJsxExpression(childNode)) {
+                    textResult = extractFromExpression(childNode);
+                } else if (tsutils.isJsxText(childNode)) {
                     textResult = childNode.getText();
                 }
                 if (textResult) {
                     textResults.push(textResult);
                 }
-                this.getTextRecursive(childNode, textResults);
+                getTextRecursive(childNode, textResults);
             }
         }
     }
 
-    private extractFromExpression(expressionNode: ts.JsxExpression): string | undefined {
-        if (!expressionNode.expression || !tsUtils.isStringLiteral(expressionNode.expression)) {
+    function extractFromExpression(expressionNode: ts.JsxExpression): string | undefined {
+        if (!expressionNode.expression || !tsutils.isStringLiteral(expressionNode.expression)) {
             return undefined;
         }
         return expressionNode.expression.text;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isFunctionDeclaration(node)) {
+            validate(node);
+        } else if (tsutils.isMethodDeclaration(node)) {
+            validate(node);
+        } else if (tsutils.isVariableDeclaration(node)) {
+            validate(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

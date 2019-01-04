@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -22,20 +23,25 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Use a named parameter instead: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new UseNamedParameterWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class UseNamedParameterWalker extends Lint.RuleWalker {
-    protected visitElementAccessExpression(node: ts.ElementAccessExpression): void {
-        if (node.argumentExpression !== undefined) {
-            if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
-                if (node.expression.getText() === 'arguments') {
-                    const failureString = Rule.FAILURE_STRING + "'" + node.getText() + "'";
-                    this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isElementAccessExpression(node)) {
+            if (node.argumentExpression !== undefined) {
+                if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
+                    if (node.expression.getText() === 'arguments') {
+                        const failureString = Rule.FAILURE_STRING + "'" + node.getText() + "'";
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                    }
                 }
             }
         }
-        super.visitElementAccessExpression(node);
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

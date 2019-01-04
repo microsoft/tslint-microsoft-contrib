@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -25,17 +26,21 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new InsecureRandomRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class InsecureRandomRuleWalker extends Lint.RuleWalker {
-    protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
-        if (node.expression.getText() === 'Math' && node.name.text === 'random') {
-            this.addFailureAt(node.getStart(), node.getWidth(), MATH_FAIL_STRING);
-        } else if (node.name.text === 'pseudoRandomBytes') {
-            this.addFailureAt(node.getStart(), node.getWidth(), NODE_FAIL_STRING);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isPropertyAccessExpression(node)) {
+            if (node.expression.getText() === 'Math' && node.name.text === 'random') {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), MATH_FAIL_STRING);
+            } else if (node.name.text === 'pseudoRandomBytes') {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), NODE_FAIL_STRING);
+            }
         }
-        super.visitPropertyAccessExpression(node);
+
+        return ts.forEachChild(node, cb);
     }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

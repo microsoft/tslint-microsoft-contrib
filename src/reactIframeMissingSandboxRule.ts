@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -42,25 +43,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         } else {
             return [];
         }
     }
 }
 
-class ReactIframeMissingSandboxRuleWalker extends Lint.RuleWalker {
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.handleJsxOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.handleJsxOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function handleJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         if (node.tagName.getText() !== 'iframe') {
             return;
         }
@@ -74,7 +65,7 @@ class ReactIframeMissingSandboxRuleWalker extends Lint.RuleWalker {
                     if (attributeName === 'sandbox') {
                         sandboxAttributeFound = true;
                         if (jsxAttribute.initializer !== undefined && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
-                            this.validateSandboxValue(<ts.StringLiteral>jsxAttribute.initializer);
+                            validateSandboxValue(<ts.StringLiteral>jsxAttribute.initializer);
                         }
                     }
                 }
@@ -82,18 +73,18 @@ class ReactIframeMissingSandboxRuleWalker extends Lint.RuleWalker {
         );
 
         if (!sandboxAttributeFound) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
         }
     }
 
-    private validateSandboxValue(node: ts.StringLiteral): void {
+    function validateSandboxValue(node: ts.StringLiteral): void {
         const values: string[] = node.text.split(' ');
         let allowScripts: boolean = false;
         let allowSameOrigin: boolean = false;
         values.forEach(
             (attributeValue: string): void => {
                 if (ALLOWED_VALUES.indexOf(attributeValue) === -1) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
                 }
                 if (attributeValue === 'allow-scripts') {
                     allowScripts = true;
@@ -104,7 +95,19 @@ class ReactIframeMissingSandboxRuleWalker extends Lint.RuleWalker {
             }
         );
         if (allowScripts && allowSameOrigin) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            handleJsxOpeningElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            handleJsxOpeningElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -14,7 +14,11 @@
             "name": "Run TSLint Tests",
             "program": "${workspaceFolder}/node_modules/tslint/bin/tslint",
             "args": ["--test", "-r", "dist/src", "tests/**"],
-            "outputCapture": "std"
+            "outputCapture": "std",
+            "sourceMaps": true,
+            "outFiles": ["${workspaceRoot}/dist/src/**/*.js"],
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": ["--nolazy"]
         }
     ]
 }

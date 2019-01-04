@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -71,6 +72,10 @@ const FUNCTION_NAMES: string[] = [
     'range'
 ];
 
+interface Options {
+    style: 'static' | 'instance';
+}
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'underscore-consistent-invocation',
@@ -88,37 +93,28 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new UnderscoreConsistentInvocationRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
-}
 
-class UnderscoreConsistentInvocationRuleWalker extends Lint.RuleWalker {
-    private style: string = 'instance';
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            style: 'instance'
+        };
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.getOptions().forEach((opt: unknown) => {
+        options.ruleArguments.forEach((opt: unknown) => {
             if (isObject(opt)) {
                 if (opt.style === 'static') {
-                    this.style = 'static';
+                    parsed.style = 'static';
                 }
             }
         });
+
+        return parsed;
     }
+}
 
-    protected visitCallExpression(node: ts.CallExpression): void {
-        const functionName: string = AstUtils.getFunctionName(node);
-
-        if (this.style === 'instance' && this.isStaticUnderscoreInvocation(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName);
-        }
-        if (this.style === 'static' && this.isStaticUnderscoreInstanceInvocation(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText());
-        }
-        super.visitCallExpression(node);
-    }
-
-    private isStaticUnderscoreInstanceInvocation(node: ts.CallExpression) {
+function walk(ctx: Lint.WalkContext<Options>) {
+    function isStaticUnderscoreInstanceInvocation(node: ts.CallExpression) {
         if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExpression: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>node.expression;
             if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
@@ -134,7 +130,7 @@ class UnderscoreConsistentInvocationRuleWalker extends Lint.RuleWalker {
         return false;
     }
 
-    private isStaticUnderscoreInvocation(node: ts.CallExpression) {
+    function isStaticUnderscoreInvocation(node: ts.CallExpression) {
         const target = AstUtils.getFunctionTarget(node);
         if (target !== '_') {
             return false;
@@ -142,4 +138,21 @@ class UnderscoreConsistentInvocationRuleWalker extends Lint.RuleWalker {
         const functionName: string = AstUtils.getFunctionName(node);
         return FUNCTION_NAMES.indexOf(functionName) > -1;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            const functionName: string = AstUtils.getFunctionName(node);
+
+            if (ctx.options.style === 'instance' && isStaticUnderscoreInvocation(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName);
+            }
+            if (ctx.options.style === 'static' && isStaticUnderscoreInstanceInvocation(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText());
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -3,7 +3,7 @@ import * as path from 'path';
 /**
  * Control flow functions.
  */
-/* tslint:disable:no-increment-decrement */
+/* tslint:disable:increment-decrement */
 export namespace Utils {
     /**
      * Logical 'any' or 'exists' function.
@@ -76,4 +76,4 @@ export namespace Utils {
         return path.basename(relativePath);
     }
 }
-/* tslint:enable:no-increment-decrement */
+/* tslint:enable:increment-decrement */

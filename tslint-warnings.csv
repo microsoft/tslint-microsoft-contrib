@@ -15,8 +15,6 @@ class-name,Enforces PascalCased class and interface names.,TSLINT65UF71,tslint,N
 CWE 710 - Coding Standards Violation"
 comment-format,Enforces formatting rules for single-line comments.,TSLINT1T6OE84,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-comment-type,Allows a limited set of comment types,TSLINT78JBS7,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
-CWE 710 - Coding Standards Violation"
 completed-docs,Enforces JSDoc comments for important items be filled out.,TSLINTTVUOIS,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 curly,Enforces braces for `if`/`for`/`do`/`while` statements.,TSLINTT90EOE,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"483, 710","CWE 483 - Incorrect Block Delimitation
 CWE 710 - Coding Standards Violation"
@@ -92,7 +90,6 @@ CWE 565 - Reliance on Cookies without Validation and Integrity Checking
 CWE 614 - Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
 no-debugger,Disallows `debugger` statements.,TSLINT2KSM9E,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-no-default-import,Disallows importing default members from certain ES6-style modules.,TSLINTL8SKVU,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 no-delete-expression,Do not delete expressions. Only properties should be deleted,TSLINTM33ICD,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 no-disable-auto-sanitization,Do not disable auto-sanitization of HTML because this opens up your page to an XSS attack. ,TSLINT1915L5R,tslint,SDL,Error,Critical,Mandatory,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"157, 159, 75, 79, 85, 749, 676","CWE 157 - Failure to Sanitize Paired Delimiters
 CWE 159 - Failure to Sanitize Special Element
@@ -319,7 +316,6 @@ CWE 710 - Coding Standards Violation"
 unified-signatures,Warns for any two overloads that could be unified into one by using a union or an optional/rest parameter.,TSLINT1I85C1L,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 unnecessary-bind,Prevents unnecessary and/or misleading scope bindings on functions.,TSLINT1LICM7J,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
-unnecessary-constructor,"Prevents blank constructors, as they are redundant.",TSLINT38S2K4,tslint,Non-SDL,Warning,Moderate,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 use-default-type-parameter,Warns if an explicitly specified type argument is the default for that type parameter.,TSLINTLMNGTP,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"
 use-isnan,Enforces use of the `isNaN()` function to check for NaN references instead of a comparison to the `NaN` constant.,TSLINTPUV7LC,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,398,"CWE 398 - Indicator of Poor Code Quality"
 use-named-parameter,"Do not reference the arguments object by numerical index; instead, use a named parameter.",TSLINTKPEHQG,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,710,"CWE 710 - Coding Standards Violation"

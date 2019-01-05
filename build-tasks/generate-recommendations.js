@@ -8,30 +8,41 @@ const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common
 const groupedRows = {};
 const warnings = [];
 
-getAllRules().forEach(ruleFile => {
-    const metadata = getMetadataFromFile(ruleFile);
+/**
+ * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/694
+ */
+const ignoredRulesNotYetAdded = new Set(
+    ['banTsIgnore', 'commentType', 'noDefaultImport', 'unnecessaryConstructor'].map(
+        ruleName => `node_modules/tslint/lib/rules/${ruleName}Rule.js`
+    )
+);
 
-    const groupName = getMetadataValue(metadata, 'group');
-    if (groupName === 'Ignored') {
-        return;
-    }
-    if (groupName === '') {
-        warnings.push('Could not generate recommendation for rule file: ' + ruleFile);
-    }
-    if (groupedRows[groupName] === undefined) {
-        groupedRows[groupName] = [];
-    }
+getAllRules()
+    .filter(ruleFilePath => !ignoredRulesNotYetAdded.has(ruleFilePath))
+    .forEach(ruleFile => {
+        const metadata = getMetadataFromFile(ruleFile);
 
-    let recommendation = getMetadataValue(metadata, 'recommendation', true, true);
-    if (recommendation === '') {
-        recommendation = 'true,';
-    }
-    // Replace double quotes with single quote
-    recommendation = recommendation.replace(/"/g, "'");
+        const groupName = getMetadataValue(metadata, 'group');
+        if (groupName === 'Ignored') {
+            return;
+        }
+        if (groupName === '') {
+            warnings.push('Could not generate recommendation for rule file: ' + ruleFile);
+        }
+        if (groupedRows[groupName] === undefined) {
+            groupedRows[groupName] = [];
+        }
 
-    const ruleName = getMetadataValue(metadata, 'ruleName');
-    groupedRows[groupName].push(`        '${ruleName}': ${recommendation}`);
-});
+        let recommendation = getMetadataValue(metadata, 'recommendation', true, true);
+        if (recommendation === '') {
+            recommendation = 'true,';
+        }
+        // Replace double quotes with single quote
+        recommendation = recommendation.replace(/"/g, "'");
+
+        const ruleName = getMetadataValue(metadata, 'ruleName');
+        groupedRows[groupName].push(`        '${ruleName}': ${recommendation}`);
+    });
 
 if (warnings.length > 0) {
     console.log('\n' + red(warnings.join('\n')));

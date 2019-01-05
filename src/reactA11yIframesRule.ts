@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-iframes',
         type: 'functionality',
-        description: 'Enforce that iframe elements are not empty, have title and are unique.',
+        description: 'Enforce that iframe elements are not empty, have title, and are unique.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: false,

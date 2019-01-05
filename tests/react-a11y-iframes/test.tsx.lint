@@ -1,23 +1,25 @@
 
-const someComponent = () => <iframe title="I'm a non empty title" src="http://someSource.com"/>;
+const SomeComponent = () => <iframe title="I'm a non empty title" src="http://someSource.com"/>;
 
-const someComponent = () => <iframe title={"hello there"} src="http://someSource.com"/>;
+const SomeComponent = () => <iframe title={"hello there"} src="http://someSource.com"/>;
 
-const someComponent = () => <iframe title="" src="http://someSource.com"/>;
+const SomeComponent = () => <iframe title="" src="http://someSource.com"/>;
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a non-empty title.]
-const someComponent = () => <iframe src="http://someSource.com" />;
+const SomeComponent = () => <iframe src="http://someSource.com" />;
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a non-empty title.]
-const someComponent = () => <iframe title="hi there"></iframe>;
+const SomeComponent = () => <iframe title="hi there"></iframe>;
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
-const someComponent = () => <iframe title="hi there" src=""/>;
+const SomeComponent = () => <iframe title="hi there" src=""/>;
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
-const someComponent = () => <iframe title="hi there" src="http://someSource.com" hidden></iframe>;
+const SomeComponent = () => <iframe title="hi there" src="http://someSource.com" hidden></iframe>;
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
-const someComponent = () => <>
+const SomeComponent = () =>
+        <>
             <iframe title="hi there" src="http://someSource.com"></iframe>
             <iframe title="hello there" src="http://someSource.com"></iframe>
         </>
-const someComponent = () => <>
+const SomeComponent = () =>
+        <>
             <iframe title="hi there" src="http://someSource.com"></iframe>
             <iframe title="hi there" src="http://someSource.com"></iframe>
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a unique title.]

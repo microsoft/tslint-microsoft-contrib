@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -21,25 +22,29 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Variables should not be deleted: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        const noDeleteExpression = new NoDeleteExpression(sourceFile, this.getOptions());
-        return this.applyWithWalker(noDeleteExpression);
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoDeleteExpression extends Lint.RuleWalker {
-    public visitExpressionStatement(node: ts.ExpressionStatement) {
-        super.visitExpressionStatement(node);
-        if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
-            // first child is delete keyword, second one is what is being deleted.
-            const deletedObject: ts.Node = node.expression.getChildren()[1];
-            if (deletedObject !== undefined && deletedObject.kind === ts.SyntaxKind.Identifier) {
-                this.addNoDeleteFailure(deletedObject);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isExpressionStatement(node)) {
+            if (tsutils.isDeleteExpression(node.expression)) {
+                // first child is delete keyword, second one is what is being deleted.
+                const deletedObject: ts.Node = node.expression.getChildren()[1];
+                if (deletedObject && tsutils.isIdentifier(deletedObject)) {
+                    addNoDeleteFailure(deletedObject);
+                }
             }
         }
+
+        return ts.forEachChild(node, cb);
     }
 
-    public addNoDeleteFailure(deletedObject: ts.Node): void {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function addNoDeleteFailure(deletedObject: ts.Node): void {
         const msg: string = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-        this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
+        ctx.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
     }
 }

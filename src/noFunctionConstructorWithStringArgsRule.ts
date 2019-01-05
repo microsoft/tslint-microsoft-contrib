@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -33,20 +34,21 @@ export class Rule extends Lint.Rules.AbstractRule {
             Rule.isWarningShown = true;
         }
 
-        return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoFunctionConstructorWithStringArgsWalker extends Lint.RuleWalker {
-    public constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isNewExpression(node)) {
+            const functionName = AstUtils.getFunctionName(node);
+            if (functionName === 'Function' && node.arguments && node.arguments.length > 0) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitNewExpression(node: ts.NewExpression): void {
-        const functionName = AstUtils.getFunctionName(node);
-        if (functionName === 'Function' && node.arguments !== undefined && node.arguments.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-        }
-        super.visitNewExpression(node);
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

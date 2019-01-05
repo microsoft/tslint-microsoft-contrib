@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { getJsxAttributesFromJsxElement, isEmpty } from './utils/JsxAttribute';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -7,6 +8,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string = 'Input elements must include default, place-holding characters if empty';
 export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string =
     'Textarea elements must include default, place-holding characters if empty';
+const EXCLUDED_INPUT_TYPES = ['checkbox', 'radio', 'file'];
 
 /**
  * Implementation of the react-a11y-input-elements rule.
@@ -37,40 +39,60 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactA11yInputElementsRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         } else {
             return [];
         }
     }
 }
 
-class ReactA11yInputElementsRuleWalker extends Lint.RuleWalker {
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        const tagName = node.tagName.getText();
-
-        if (tagName === 'input') {
-            const attributes = getJsxAttributesFromJsxElement(node);
-            if (isEmpty(attributes.value) && isEmpty(attributes.placeholder)) {
-                this.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
-            }
-        } else if (tagName === 'textarea') {
-            const attributes = getJsxAttributesFromJsxElement(node);
-            if (isEmpty(attributes.placeholder)) {
-                this.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);
+function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
+    for (const attribute of node.attributes.properties) {
+        if (tsutils.isJsxAttribute(attribute)) {
+            const isInputAttributeType = attributes.type;
+            if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
+                const attributeText = attribute.initializer.text;
+                if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                    return true;
+                }
             }
         }
-        super.visitJsxSelfClosingElement(node);
     }
+    return false;
+}
 
-    protected visitJsxElement(node: ts.JsxElement): void {
-        const tagName = node.openingElement.tagName.getText();
-        const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            const tagName = node.tagName.getText();
 
-        if (tagName === 'textarea') {
-            if (node.children.length === 0 && isEmpty(attributes.placeholder)) {
-                this.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);
+            if (tagName === 'input') {
+                const attributes = getJsxAttributesFromJsxElement(node);
+                const isExcludedInput = isExcludedInputType(node, attributes);
+                const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInput;
+                const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInput;
+                if ((isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
+                }
+            } else if (tagName === 'textarea') {
+                const attributes = getJsxAttributesFromJsxElement(node);
+                if (isEmpty(attributes.placeholder)) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);
+                }
+            }
+        } else if (tsutils.isJsxElement(node)) {
+            const tagName = node.openingElement.tagName.getText();
+            const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
+
+            if (tagName === 'textarea') {
+                if (node.children.length === 0 && isEmpty(attributes.placeholder)) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING);
+                }
             }
         }
-        super.visitJsxElement(node);
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

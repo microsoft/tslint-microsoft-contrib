@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -23,16 +24,21 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Forbidden call to ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoDisableAutoSanitizationWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoDisableAutoSanitizationWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        const functionName: string = AstUtils.getFunctionName(node);
-        if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            const functionName: string = AstUtils.getFunctionName(node);
+            if (functionName === 'execUnsafeLocalFunction' || functionName === 'setInnerHTMLUnsafe') {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + functionName);
+            }
         }
-        super.visitCallExpression(node);
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

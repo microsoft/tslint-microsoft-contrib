@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -23,15 +24,21 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Do not use comma separated variable declarations: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoMultipleVarDeclRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoMultipleVarDeclRuleWalker extends Lint.RuleWalker {
-    protected visitVariableStatement(node: ts.VariableStatement): void {
-        if (node.declarationList.declarations.length > 1) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.declarationList.declarations[0].getText() + ',');
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isVariableStatement(node)) {
+            const declarations: ts.NodeArray<ts.VariableDeclaration> = node.declarationList.declarations;
+            if (declarations.length > 1) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + declarations[0].getText() + ',');
+            }
         }
-        super.visitVariableStatement(node);
+
+        ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

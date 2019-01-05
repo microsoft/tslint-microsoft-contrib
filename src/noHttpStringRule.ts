@@ -1,8 +1,13 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { Utils } from './utils/Utils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
+
+interface Options {
+    allExceptions?: string[] | undefined;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -26,53 +31,55 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Forbidden http url in string: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     }
 }
 
-class NoHttpStringWalker extends Lint.RuleWalker {
-    protected visitStringLiteral(node: ts.StringLiteral): void {
-        this.visitLiteralExpression(node);
-        super.visitStringLiteral(node);
+function parseOptions(options: Lint.IOptions): Options {
+    let value;
+
+    if (options.ruleArguments instanceof Array) {
+        value = options.ruleArguments;
+    } else if (options instanceof Array) {
+        value = options;
     }
 
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
-            this.visitLiteralExpression(<ts.NoSubstitutionTemplateLiteral>node);
+    return {
+        allExceptions: value
+    };
+}
+
+function walk(ctx: Lint.WalkContext<Options>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isTextualLiteral(node)) {
+            visitLiteralExpression(node);
         } else if (node.kind === ts.SyntaxKind.TemplateHead) {
-            this.visitLiteralExpression(<ts.TemplateHead>node);
+            visitLiteralExpression(<ts.TemplateHead>node);
         }
-        super.visitNode(node);
+
+        return ts.forEachChild(node, cb);
     }
 
-    private visitLiteralExpression(node: ts.LiteralExpression | ts.LiteralLikeNode): void {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function visitLiteralExpression(node: ts.LiteralExpression | ts.LiteralLikeNode): void {
         const stringText: string = node.text;
         // tslint:disable-next-line no-http-string
         if (stringText.indexOf('http:') === 0) {
-            if (!this.isSuppressed(stringText)) {
+            if (!isSuppressed(stringText)) {
                 const failureString = Rule.FAILURE_STRING + "'" + stringText + "'";
-                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
     }
 
-    private isSuppressed(stringText: string): boolean {
-        const allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
+    function isSuppressed(stringText: string): boolean {
+        const { allExceptions } = ctx.options;
         return Utils.exists(
             allExceptions,
             (exception: string): boolean => {
                 return new RegExp(exception).test(stringText);
             }
         );
-    }
-
-    private static getExceptions(options: Lint.IOptions): string[] | undefined {
-        if (options.ruleArguments instanceof Array) {
-            return options.ruleArguments[0];
-        }
-        if (options instanceof Array) {
-            return options;
-        }
-        return undefined;
     }
 }

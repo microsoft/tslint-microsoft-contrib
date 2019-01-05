@@ -1,0 +1,48 @@
+import * as ts from 'typescript';
+import * as Lint from 'tslint';
+
+import { ExtendedMetadata } from './utils/ExtendedMetadata';
+import { AstUtils } from './utils/AstUtils';
+import { Utils } from './utils/Utils';
+
+const FAILURE_STRING: string = 'Some error message: '; // TODO: Define an error message
+<% if (hasOptions) { %>
+interface Options {
+    // TODO: Add option properties.
+}
+<% } %>
+export class Rule extends Lint.Rules.AbstractRule {
+    public static metadata: ExtendedMetadata = {
+        ruleName: '<%= name %>',
+        type: '<%= type %>',
+        description: '<%= description %>',<% if (hasOptions) { %>
+        options: {
+            // TODO: Fill in the options.
+        },
+        optionsDescription: '', // TODO: Fill in the options description.
+        optionExamples: [], // TODO: Add option examples.
+        <% } else { %>
+        options: null, // tslint:disable-line:no-null-keyword
+        optionsDescription: '',
+        <% } %>typescriptOnly: <%= typescriptOnly %>,
+        issueClass: '<%= issueClass %>',
+        issueType: '<%= issueType %>',
+        severity: '<%= severity %>',
+        level: '<%= level %>',
+        group: '<%= group %>',
+        commonWeaknessEnumeration: '...' // if possible, please map your rule to a CWE (see cwe_descriptions.json and https://cwe.mitre.org)
+    };
+
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithFunction(sourceFile, walk<% if (hasOptions) { %>, this.getOptions()<% } %>);
+    }
+}
+
+function walk(ctx: Lint.WalkContext<<% if (hasOptions) { %>Options<% } else { %>void<% } %>>) {
+    function cb(node: ts.Node): void {
+        // TODO: Implement the rule here.
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
+}

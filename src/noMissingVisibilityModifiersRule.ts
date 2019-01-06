@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -22,36 +23,40 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MissingVisibilityModifierWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class MissingVisibilityModifierWalker extends Lint.RuleWalker {
-    protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        if (this.isMissingVisibilityModifier(node)) {
-            const failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        super.visitPropertyDeclaration(node);
-    }
-
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        if (this.isMissingVisibilityModifier(node)) {
-            const failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        super.visitMethodDeclaration(node);
-    }
-
-    private isMissingVisibilityModifier(node: ts.Declaration): boolean {
+function walk(ctx: Lint.WalkContext<void>) {
+    function isMissingVisibilityModifier(node: ts.Declaration): boolean {
         return !(AstUtils.isPrivate(node) || AstUtils.isProtected(node) || AstUtils.isPublic(node));
     }
 
-    private getFailureCodeSnippet(node: ts.Node) {
+    function getFailureCodeSnippet(node: ts.Node) {
         const message: string = node.getText();
         if (message.indexOf('\n') > 0) {
             return message.substr(0, message.indexOf('\n'));
         }
         return message;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isPropertyDeclaration(node)) {
+            if (isMissingVisibilityModifier(node)) {
+                const failureString = 'Field missing visibility modifier: ' + getFailureCodeSnippet(node);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+
+        if (tsutils.isMethodDeclaration(node)) {
+            if (isMissingVisibilityModifier(node)) {
+                const failureString = 'Method missing visibility modifier: ' + getFailureCodeSnippet(node);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

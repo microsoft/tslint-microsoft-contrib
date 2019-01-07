@@ -22,15 +22,16 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Forbidden with statement';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoWithStatementWalker extends Lint.RuleWalker {
-    protected visitNode(node: ts.Node): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
         if (node.kind === ts.SyntaxKind.WithStatement) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
-        super.visitNode(node);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

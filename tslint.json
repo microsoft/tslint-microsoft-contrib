@@ -112,6 +112,7 @@
         "no-unnecessary-type-assertion": false,
         "no-unsupported-browser-code": true,
         "no-useless-files": true,
+        "no-void-zero": true,
         "no-with-statement": true,
         "non-literal-fs-path": true,
         "non-literal-require": true,

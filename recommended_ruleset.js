@@ -162,6 +162,7 @@ module.exports = {
         'no-var-keyword': true,
         'no-var-requires': true,
         'no-void-expression': true,
+        'no-void-zero': true,
         'number-literal-format': true,
         'object-literal-sort-keys': false, // turn object-literal-sort-keys off and sort keys in a meaningful manner
         'one-variable-per-declaration': true,

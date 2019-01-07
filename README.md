@@ -724,6 +724,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>no-void-zero</code>
+      </td>
+      <td>
+        Avoid using <code>void 0</code>; use undefined instead.
+      </td>
+      <td>6.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>no-var-self</code>
       </td>
       <td>

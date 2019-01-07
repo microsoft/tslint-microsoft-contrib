@@ -1,10 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
+interface Options {
+    allowTypeParameters: boolean;
+}
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-array-literal',
@@ -25,38 +29,56 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static CONSTRUCTOR_FAILURE_STRING: string = 'Replace Array constructor with an array literal: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoGenericArrayWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        let value: boolean = false;
+        let ruleOptions: any[] = [];
+
+        if (options.ruleArguments instanceof Array) {
+            ruleOptions = options.ruleArguments;
+        }
+
+        if (options instanceof Array) {
+            ruleOptions = options;
+        }
+
+        ruleOptions.forEach((opt: unknown) => {
+            if (isObject(opt)) {
+                value = opt['allow-type-parameters'] === true;
+            }
+        });
+
+        return {
+            allowTypeParameters: value
+        };
     }
 }
 
-class NoGenericArrayWalker extends Lint.RuleWalker {
-    private allowTypeParameters: boolean = false;
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { allowTypeParameters } = ctx.options;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.getOptions().forEach((opt: unknown) => {
-            if (isObject(opt)) {
-                this.allowTypeParameters = opt['allow-type-parameters'] === true;
-            }
-        });
-    }
-
-    protected visitTypeReference(node: ts.TypeReferenceNode): void {
-        if (this.allowTypeParameters === false) {
-            if ((<ts.Identifier>node.typeName).text === 'Array') {
-                const failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+    function cb(node: ts.Node): void {
+        if (tsutils.isTypeReferenceNode(node)) {
+            if (!allowTypeParameters) {
+                if ((<ts.Identifier>node.typeName).text === 'Array') {
+                    const failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                }
             }
         }
-        super.visitTypeReference(node);
+
+        if (tsutils.isNewExpression(node)) {
+            const functionName = AstUtils.getFunctionName(node);
+            if (functionName === 'Array') {
+                const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitNewExpression(node: ts.NewExpression): void {
-        const functionName = AstUtils.getFunctionName(node);
-        if (functionName === 'Array') {
-            const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        super.visitNewExpression(node);
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

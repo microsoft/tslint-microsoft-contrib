@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { Utils } from './utils/Utils';
@@ -24,32 +25,33 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new PossibleTimingAttackRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class PossibleTimingAttackRuleWalker extends Lint.RuleWalker {
-    protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (
-            node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken
-        ) {
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isBinaryExpression(node)) {
             if (
-                (SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) &&
-                node.left.getText() !== 'null' &&
-                node.right.getText() !== 'null' &&
-                node.left.getText() !== 'undefined' &&
-                node.right.getText() !== 'undefined'
+                node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken
             ) {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils.trimTo(node.getText(), 20));
-            } else {
-                super.visitBinaryExpression(node);
+                if (
+                    (SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) &&
+                    node.left.getText() !== 'null' &&
+                    node.right.getText() !== 'null' &&
+                    node.left.getText() !== 'undefined' &&
+                    node.right.getText() !== 'undefined'
+                ) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils.trimTo(node.getText(), 20));
+                }
             }
-        } else {
-            // be sure not to post duplicate errors
-            super.visitBinaryExpression(node);
         }
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

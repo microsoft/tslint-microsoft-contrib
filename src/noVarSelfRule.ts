@@ -1,7 +1,12 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
+
+interface Options {
+    bannedVariableNames: RegExp;
+}
 
 const FAILURE_STRING: string = 'Assigning this reference to local variable: ';
 
@@ -29,29 +34,40 @@ export class Rule extends Lint.Rules.AbstractRule {
             console.warn('Warning: no-var-self rule is deprecated. Replace your usage with the TSLint no-this-assignment rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoVarSelfRuleWalker(sourceFile, this.getOptions()));
+
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        const opt: Options = {
+            bannedVariableNames: /.*/
+        };
+
+        if (options.ruleArguments && options.ruleArguments.length > 0) {
+            opt.bannedVariableNames = new RegExp(options.ruleArguments[0]);
+        }
+
+        return opt;
     }
 }
 
-class NoVarSelfRuleWalker extends Lint.RuleWalker {
-    private readonly bannedVariableNames: RegExp = /.*/; // default is to ban everything
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { bannedVariableNames } = ctx.options;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
-            this.bannedVariableNames = new RegExp(options.ruleArguments[0]);
-        }
-    }
-
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (node.initializer !== undefined && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
-            if (node.name.kind === ts.SyntaxKind.Identifier) {
-                const identifier: ts.Identifier = <ts.Identifier>node.name;
-                if (this.bannedVariableNames.test(identifier.text)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
+    function cb(node: ts.Node): void {
+        if (tsutils.isVariableDeclaration(node)) {
+            if (node.initializer && node.initializer.kind === ts.SyntaxKind.ThisKeyword) {
+                if (tsutils.isIdentifier(node.name)) {
+                    const identifier: ts.Identifier = node.name;
+                    if (bannedVariableNames.test(identifier.text)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
+                    }
                 }
             }
         }
-        super.visitVariableDeclaration(node);
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -4,15 +4,15 @@ const SomeComponent = () => <iframe title="I'm a non empty title" src="http://so
 const SomeComponent = () => <iframe title={"hello there"} src="http://someSource.com"/>;
 
 const SomeComponent = () => <iframe title="" src="http://someSource.com"/>;
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a non-empty title.]
+                             ~~~~~~ [An iframe element must have a non-empty title.]
 const SomeComponent = () => <iframe src="http://someSource.com" />;
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a non-empty title.]
+                             ~~~~~~ [An iframe element must have a non-empty title.]
 const SomeComponent = () => <iframe title="hi there"></iframe>;
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
+                             ~~~~~~ [An iframe element should not be hidden or empty.]
 const SomeComponent = () => <iframe title="hi there" src=""/>;
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
+                             ~~~~~~ [An iframe element should not be hidden or empty.]
 const SomeComponent = () => <iframe title="hi there" src="http://someSource.com" hidden></iframe>;
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element should not be hidden or empty.]
+                             ~~~~~~ [An iframe element should not be hidden or empty.]
 const SomeComponent = () =>
         <>
             <iframe title="hi there" src="http://someSource.com"></iframe>
@@ -22,5 +22,42 @@ const SomeComponent = () =>
         <>
             <iframe title="hi there" src="http://someSource.com"></iframe>
             <iframe title="hi there" src="http://someSource.com"></iframe>
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [An iframe element must have a unique title.]
+             ~~~~~~ [An iframe element must have a unique title.]
         </>
+class AmazingComponent extends React.Component {
+    render() {
+        return (
+            <>
+                <iframe src="http://someSource.com" />
+                 ~~~~~~ [An iframe element must have a non-empty title.]
+                <iframe title="Our sponsors" src="" />
+                 ~~~~~~ [An iframe element should not be hidden or empty.]
+                <iframe title="i'm so great" src="http://someSource.com" hidden></iframe>
+                 ~~~~~~ [An iframe element should not be hidden or empty.]
+                <iframe title="i'm so great" src="http://someSource.com" />
+                 ~~~~~~ [An iframe element must have a unique title.]
+            </>
+        )
+    }
+}
+function AmazingComponent() {
+    const someElement = () =>
+            <>
+                <iframe title="i'm so great" src="http://someSource.com" hidden></iframe>
+                 ~~~~~~ [An iframe element should not be hidden or empty.]
+                <iframe title="i'm so great" src="http://someSource.com" />
+                 ~~~~~~ [An iframe element must have a unique title.]
+            </>
+    return (
+        <>
+            <iframe src="http://someSource.com" />
+             ~~~~~~ [An iframe element must have a non-empty title.]
+            <iframe title="Our sponsors" src="" />
+             ~~~~~~ [An iframe element should not be hidden or empty.]
+            <iframe title="i'm so great" src="http://someSource.com" hidden></iframe>
+             ~~~~~~ [An iframe element should not be hidden or empty.]
+            <iframe title="i'm so great" src="http://someSource.com" />
+             ~~~~~~ [An iframe element must have a unique title.]
+        </>
+    )
+}

@@ -11,9 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'void-zero',
         type: 'maintainability',
         description: 'Avoid using void 0; use undefined instead.',
-        rationale:
-            'void 0, which resolves to undefined, can be confusing to newcomers.\
-            Exclusively use undefined to reduce ambiguity.',
+        rationale: 'void 0, which resolves to undefined, can be confusing to newcomers. Exclusively use undefined to reduce ambiguity.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,

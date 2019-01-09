@@ -724,10 +724,10 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
-        <code>no-void-zero</code>
+        <code>void-zero</code>
       </td>
       <td>
-        Avoid using <code>void 0</code>; use undefined instead.
+        <code>void 0</code>, which resolves to <code>undefined</code>, can be confusing newcomers. Exclusively use <code>undefined</code> to reduce ambiguity.
       </td>
       <td>6.0.0</td>
     </tr>

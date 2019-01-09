@@ -8,9 +8,12 @@ const FAILURE_STRING: string = 'Replace void 0 with undefined';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
-        ruleName: 'no-void-zero',
+        ruleName: 'void-zero',
         type: 'maintainability',
-        description: 'Avoid using void 0, prefer undefined',
+        description: 'Avoid using void 0; use undefined instead.',
+        rationale:
+            'void 0, which resolves to undefined, can be confusing to newcomers.\
+            Exclusively use undefined to reduce ambiguity.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
@@ -33,26 +36,6 @@ function walk(ctx: Lint.WalkContext<void>) {
             if (node.expression !== undefined && node.expression.getText() === '0') {
                 ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
             }
-        }
-        if (
-            tsutils.isMethodDeclaration(node) ||
-            tsutils.isConstructorDeclaration(node) ||
-            tsutils.isArrowFunction(node) ||
-            tsutils.isFunctionDeclaration(node) ||
-            tsutils.isFunctionExpression(node)
-        ) {
-            node.parameters.forEach(
-                (parameter: ts.ParameterDeclaration): void => {
-                    const parameterName: string = parameter.name.getText();
-                    if (parameterName === '') {
-                        const sourceFile: ts.SourceFile = ctx.sourceFile;
-                        const isVoidZeroInText: boolean = sourceFile.getText().indexOf('void 0') !== -1;
-                        if (isVoidZeroInText) {
-                            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
-                        }
-                    }
-                }
-            );
         }
         return ts.forEachChild(node, cb);
     }

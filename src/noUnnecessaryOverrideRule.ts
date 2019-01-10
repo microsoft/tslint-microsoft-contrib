@@ -59,9 +59,9 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
         }
 
         const allParameters: ReadonlyArray<ts.ParameterDeclaration> = node.parameters;
-        /* tslint:disable:no-increment-decrement */
+        /* tslint:disable:increment-decrement */
         for (let i = 0; i < allParameters.length; i++) {
-            /* tslint:enable:no-increment-decrement */
+            /* tslint:enable:increment-decrement */
             const parameter: ts.ParameterDeclaration = allParameters[i];
             const argument: ts.Expression = call.arguments[i];
             if (argument.kind !== ts.SyntaxKind.Identifier) {

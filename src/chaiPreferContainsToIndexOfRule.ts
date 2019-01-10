@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ChaiUtils } from './utils/ChaiUtils';
@@ -24,46 +25,46 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ChaiPreferContainsToIndexOfRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class ChaiPreferContainsToIndexOfRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (ChaiUtils.isExpectInvocation(node)) {
-            if (this.isFirstArgumentIndexOfResult(node)) {
-                if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                    if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
-                        if (this.isFirstArgumentNegative1(node)) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            if (ChaiUtils.isExpectInvocation(node)) {
+                if (isFirstArgumentIndexOfResult(node)) {
+                    if (tsutils.isPropertyAccessExpression(node.expression)) {
+                        if (ChaiUtils.isEqualsInvocation(node.expression)) {
+                            if (isFirstArgumentNegative1(node)) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                            }
                         }
                     }
                 }
             }
         }
-        super.visitCallExpression(node);
+        return ts.forEachChild(node, cb);
     }
 
-    private isFirstArgumentNegative1(node: ts.CallExpression): boolean {
-        if (node.arguments !== undefined && node.arguments.length > 0) {
+    function isFirstArgumentNegative1(node: ts.CallExpression): boolean {
+        if (node.arguments && node.arguments.length > 0) {
             const firstArgument: ts.Expression = node.arguments[0];
-            if (firstArgument.getText() === '-1') {
-                return true;
+            return firstArgument.getText() === '-1';
+        }
+        return false;
+    }
+
+    function isFirstArgumentIndexOfResult(node: ts.CallExpression): boolean {
+        const expectCall = ChaiUtils.getLeftMostCallExpression(node);
+        if (expectCall && expectCall.arguments && expectCall.arguments.length > 0) {
+            const firstArgument: ts.Expression = expectCall.arguments[0];
+            if (tsutils.isCallExpression(firstArgument)) {
+                return AstUtils.getFunctionName(firstArgument) === 'indexOf';
             }
         }
         return false;
     }
 
-    private isFirstArgumentIndexOfResult(node: ts.CallExpression): boolean {
-        const expectCall = ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall !== undefined && expectCall.arguments !== undefined && expectCall.arguments.length > 0) {
-            const firstArgument: ts.Expression = expectCall.arguments[0];
-            if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
-                if (AstUtils.getFunctionName(<ts.CallExpression>firstArgument) === 'indexOf') {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

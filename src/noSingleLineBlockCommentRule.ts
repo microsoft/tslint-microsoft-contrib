@@ -23,35 +23,37 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoSingleLineBlockCommentRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoSingleLineBlockCommentRuleWalker extends Lint.RuleWalker {
-    public visitSourceFile(node: ts.SourceFile) {
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
         forEachTokenWithTrivia(node, (fullText, tokenSyntaxKind, range: ts.TextRange) => {
             const tokenText = fullText.substring(range.pos, range.end);
             if (
                 tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia &&
-                this.isSingleLineComment(tokenText) &&
-                !this.isTsLintSuppression(tokenText) &&
-                !this.isFollowedByMoreCodeOnSameLine(fullText, range)
+                isSingleLineComment(tokenText) &&
+                !isTsLintSuppression(tokenText) &&
+                !isFollowedByMoreCodeOnSameLine(fullText, range)
             ) {
-                this.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
+                ctx.addFailureAt(range.pos, range.end - range.pos, FAILURE_STRING);
             }
         });
     }
 
-    private isSingleLineComment(commentText: string): boolean {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function isSingleLineComment(commentText: string): boolean {
         const lines: string[] = commentText.split(/\r?\n/);
         return lines.length === 1;
     }
 
-    private isTsLintSuppression(commentText: string): boolean {
+    function isTsLintSuppression(commentText: string): boolean {
         return /\/*\s*tslint:(enable|disable):.*/.test(commentText);
     }
 
-    private isFollowedByMoreCodeOnSameLine(fullText: string, range: ts.TextRange): boolean {
+    function isFollowedByMoreCodeOnSameLine(fullText: string, range: ts.TextRange): boolean {
         const restOfText: string = fullText.substring(range.end);
         return /^\s*\r?\n/.test(restOfText) === false;
     }

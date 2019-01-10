@@ -8,6 +8,7 @@ module.exports = {
          * Security Rules. The following rules should be turned on because they find security issues
          * or are recommended in the Microsoft Secure Development Lifecycle (SDL)
          */
+        'function-constructor': true,
         'insecure-random': true,
         'no-banned-terms': true,
         'no-cookies': true,
@@ -17,11 +18,10 @@ module.exports = {
         'no-document-write': true,
         'no-eval': true,
         'no-exec-script': true,
-        'no-function-constructor-with-string-args': true,
+        'no-function-constructor-with-string-args': false, // use tslint function-constructor rule intsead
         'no-http-string': [true, 'http://www.example.com/?.*', 'http://localhost:?.*'],
         'no-inner-html': true,
         'no-octal-literal': true,
-        'no-reserved-keywords': true,
         'no-string-based-set-immediate': true,
         'no-string-based-set-interval': true,
         'no-string-based-set-timeout': true,
@@ -38,6 +38,7 @@ module.exports = {
          */
         'await-promise': true,
         'forin': true,
+        'increment-decrement': true,
         'jquery-deferred-must-complete': true,
         'label-position': true,
         'match-default-export-name': true,
@@ -52,6 +53,7 @@ module.exports = {
         'no-constant-condition': true,
         'no-control-regex': true,
         'no-debugger': true,
+        'no-default-import': false,
         'no-duplicate-super': true,
         'no-duplicate-switch-case': true,
         'no-duplicate-variable': true,
@@ -60,7 +62,7 @@ module.exports = {
         'no-for-in-array': true,
         'no-implicit-dependencies': true,
         'no-import-side-effect': true,
-        'no-increment-decrement': true,
+        'no-increment-decrement': false, // use tslint increment-decrement rule instead
         'no-invalid-regexp': true,
         'no-invalid-template-strings': true,
         'no-invalid-this': true,
@@ -75,7 +77,7 @@ module.exports = {
         'no-string-literal': true,
         'no-string-throw': true,
         'no-submodule-imports': true,
-        'no-unnecessary-bind': true,
+        'no-unnecessary-bind': false, // use tslint unnecessary-bind rule instead
         'no-unnecessary-callback-wrapper': true,
         'no-unnecessary-initializer': true,
         'no-unnecessary-override': true,
@@ -94,6 +96,8 @@ module.exports = {
         'switch-default': true,
         'switch-final-break': true,
         'triple-equals': [true, 'allow-null-check'],
+        'unnecessary-bind': true,
+        'unnecessary-constructor': true,
         'use-isnan': true,
         'use-named-parameter': true,
         'use-simple-attributes': true,
@@ -112,6 +116,7 @@ module.exports = {
         'chai-vague-errors': true,
         'class-name': true,
         'comment-format': true,
+        'comment-type': false,
         'completed-docs': [true, 'classes'],
         'export-name': true,
         'file-name-casing': true,
@@ -176,11 +181,13 @@ module.exports = {
         'unified-signatures': true,
         'use-default-type-parameter': true,
         'variable-name': true,
+        'void-zero': true,
 
         /**
          * Accessibility. The following rules should be turned on to guarantee the best user
          * experience for keyboard and screen reader users.
          */
+        'react-a11y-accessible-headings': true,
         'react-a11y-anchors': true,
         'react-a11y-aria-unsupported-elements': true,
         'react-a11y-event-has-role': true,
@@ -233,6 +240,7 @@ module.exports = {
          * Controversial/Configurable rules.
          */
         'ban': false, // only enable this if you have some code pattern that you want to ban
+        'ban-ts-ignore': false,
         'ban-types': true,
         'cyclomatic-complexity': true,
         'deprecation': false, // deprecated APIs are sometimes unavoidable
@@ -264,6 +272,7 @@ module.exports = {
         'no-empty-interfaces': false, // use tslint no-empty-interface rule instead
         'no-missing-visibility-modifiers': false, // use tslint member-access rule instead
         'no-multiple-var-decl': false, // use tslint one-variable-per-declaration rule instead
+        'no-reserved-keywords': false,
         'no-stateless-class': false,
         'no-switch-case-fall-through': false, // now supported by TypeScript compiler
         'no-unnecessary-class': true,

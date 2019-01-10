@@ -144,6 +144,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-accessible-headings</code>
+      </td>
+      <td>
+        For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.
+      </td>
+      <td>6.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>informative-docs</code>
       </td>
       <td>
@@ -407,6 +416,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-function-constructor-with-string-args</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>function-constructor</code>.
         Do not use the version of the Function constructor that accepts a string argument to define the body of the function.
       </td>
       <td>0.0.1</td>
@@ -441,6 +451,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-increment-decrement</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>increment-decrement</code>.
         Avoid use of increment and decrement operators particularly as part of complicated expressions.
       </td>
       <td>0.0.1</td>
@@ -548,6 +559,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-reserved-keywords</code>
       </td>
       <td>
+        Deprecated - This rule can be replaced with TSLint's variable-name.
         Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.
         Since version 2.0.9 this rule accepts a parameter called <code>allow-quoted-properties</code>.
         If true, interface properties in quotes will be ignored.
@@ -645,6 +657,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-unnecessary-bind</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>unnecessary-bind</code>.
         Do not bind 'this' as the context for a function literal or lambda expression.
         If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind.
         If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas.
@@ -708,6 +721,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         Avoid keeping files around that only contain commented out code, are completely empty, or only contain whitespace characters.
       </td>
       <td>4.0.2</td>
+    </tr>
+    <tr>
+      <td>
+        <code>void-zero</code>
+      </td>
+      <td>
+        <code>void 0</code>, which resolves to <code>undefined</code>, can be confusing to newcomers. Exclusively use <code>undefined</code> to reduce ambiguity.
+      </td>
+      <td>6.1.0</td>
     </tr>
     <tr>
       <td>
@@ -880,7 +902,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <ul>
           <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent">Web Content Accessibility Guidelines 1.0</a></li>
           <li><a href="https://www.w3.org/TR/wai-aria/roles#presentation">ARIA Presentation Role</a></li>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>
         </ul>
       </td>
       <td>2.0.11</td>
@@ -931,18 +953,13 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         For accessibility of your website, enforce usage of onBlur over onChange on select menus.
+        References:
+        <ul>
+          <li><a href="http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php">OnChange Event Accessibility Issues</a></li>
+          <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#gl-own-interface">Guideline 8. Ensure direct accessibility of embedded user interfaces.</a></li>
+        </ul>
       </td>
       <td>6.0.0-beta</td>
-    </tr>
-    <tr>
-      <td>
-        <code>use-simple-attributes</code>
-      </td>
-      <td>
-        Simpler attributes in JSX and TSX files helps keep code clean and readable.
-        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
-      </td>
-      <td>6.0.0</td>
     </tr>
     <tr>
       <td>
@@ -1195,6 +1212,16 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         This rule is similar to JSLint's <a href="https://jslinterrors.com/use-a-named-parameter">Use a named parameter</a> rule.
       </td>
       <td>0.0.3</td>
+    </tr>
+    <tr>
+      <td>
+        <code>use-simple-attributes</code>
+      </td>
+      <td>
+        Simpler attributes in JSX and TSX files helps keep code clean and readable.
+        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
+      </td>
+      <td>6.0.0</td>
     </tr>
     <tr>
       <td>

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -22,49 +23,40 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Duplicate parameter name: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoDuplicateParameterNamesWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoDuplicateParameterNamesWalker extends Lint.RuleWalker {
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.validateParameterNames(node);
-        super.visitMethodDeclaration(node);
-    }
-
-    protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-        this.validateParameterNames(node);
-        super.visitConstructorDeclaration(node);
-    }
-
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
-        this.validateParameterNames(node);
-        super.visitArrowFunction(node);
-    }
-
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        this.validateParameterNames(node);
-        super.visitFunctionDeclaration(node);
-    }
-
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        this.validateParameterNames(node);
-        super.visitFunctionExpression(node);
-    }
-
-    private validateParameterNames(node: ts.SignatureDeclaration) {
-        const seenNames: { [index: string]: boolean } = {};
-        node.parameters.forEach(
-            (parameter: ts.ParameterDeclaration): void => {
-                const parameterName: string = parameter.name.getText(); // how does one check if the union type is Identifier?
-                if (parameterName !== undefined) {
-                    if (seenNames[parameterName]) {
-                        this.addFailureAt(parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + "'" + parameterName + "'");
-                    } else {
-                        seenNames[parameterName] = true;
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (
+            tsutils.isMethodDeclaration(node) ||
+            tsutils.isConstructorDeclaration(node) ||
+            tsutils.isArrowFunction(node) ||
+            tsutils.isFunctionDeclaration(node) ||
+            tsutils.isFunctionExpression(node)
+        ) {
+            const seenNames: { [index: string]: boolean } = {};
+            node.parameters.forEach(
+                (parameter: ts.ParameterDeclaration): void => {
+                    const parameterName: string = parameter.name.getText(); // how does one check if the union type is Identifier?
+                    if (parameterName !== undefined) {
+                        if (seenNames[parameterName]) {
+                            ctx.addFailureAt(
+                                parameter.name.getStart(),
+                                parameterName.length,
+                                Rule.FAILURE_STRING + "'" + parameterName + "'"
+                            );
+                        } else {
+                            seenNames[parameterName] = true;
+                        }
                     }
                 }
-            }
-        );
+            );
+        }
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { Utils } from './utils/Utils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -10,6 +11,11 @@ const STATE_REGEX = 'state-interface-regex';
 
 const FAILURE_UNUSED_PROP: string = 'Unused React property defined in interface: ';
 const FAILURE_UNUSED_STATE: string = 'Unused React state defined in interface: ';
+
+interface Options {
+    propsInterfaceRegex: RegExp;
+    stateInterfaceRegex: RegExp;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -29,32 +35,26 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactUnusedPropsAndStateRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         } else {
             return [];
         }
     }
-}
 
-class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
-    private propNames: string[] = [];
-    private propNodes: { [index: string]: ts.TypeElement } = {};
-    private stateNames: string[] = [];
-    private stateNodes: { [index: string]: ts.TypeElement } = {};
-    private readonly classDeclarations: ts.ClassDeclaration[] = [];
-    private propsAlias: string | undefined;
-    private stateAlias: string | undefined;
-    private propsInterfaceRegex: RegExp = /^Props$/;
-    private stateInterfaceRegex: RegExp = /^State$/;
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed = {
+            propsInterfaceRegex: /^Props$/,
+            stateInterfaceRegex: /^State$/
+        };
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.getOptions().forEach((opt: unknown) => {
+        options.ruleArguments.forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, this.propsInterfaceRegex);
-                this.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, this.stateInterfaceRegex);
+                parsed.propsInterfaceRegex = this.getOptionOrDefault(opt, PROPS_REGEX, parsed.propsInterfaceRegex);
+                parsed.stateInterfaceRegex = this.getOptionOrDefault(opt, STATE_REGEX, parsed.stateInterfaceRegex);
             }
         });
+
+        return parsed;
     }
 
     private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
@@ -70,130 +70,18 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
         }
         return defaultValue;
     }
+}
 
-    protected visitSourceFile(node: ts.SourceFile): void {
-        super.visitSourceFile(node);
+function walk(ctx: Lint.WalkContext<Options>) {
+    let propNames: string[] = [];
+    let propNodes: { [index: string]: ts.TypeElement } = {};
+    let stateNames: string[] = [];
+    let stateNodes: { [index: string]: ts.TypeElement } = {};
+    const classDeclarations: ts.ClassDeclaration[] = [];
+    let propsAlias: string | undefined;
+    let stateAlias: string | undefined;
 
-        // if no Props or State interface is declared then don't bother scanning the class
-        if (this.propNames.length > 0 || this.stateNames.length > 0) {
-            this.classDeclarations.forEach(this.walkChildren, this);
-        }
-
-        this.propNames.forEach(
-            (propName: string): void => {
-                const typeElement: ts.TypeElement = this.propNodes[propName];
-                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
-            }
-        );
-        this.stateNames.forEach(
-            (stateName: string): void => {
-                const typeElement: ts.TypeElement = this.stateNodes[stateName];
-                this.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
-            }
-        );
-    }
-
-    /**
-     * Accumulate class declarations here and only analyze them *after* all interfaces have been analyzed.
-     */
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        this.classDeclarations.push(node);
-    }
-
-    protected visitInterfaceDeclaration(node: ts.InterfaceDeclaration): void {
-        if (this.propsInterfaceRegex.test(node.name.text)) {
-            this.propNodes = this.getTypeElementData(node);
-            this.propNames = Object.keys(this.propNodes);
-        }
-        if (this.stateInterfaceRegex.test(node.name.text)) {
-            this.stateNodes = this.getTypeElementData(node);
-            this.stateNames = Object.keys(this.stateNodes);
-        }
-        super.visitInterfaceDeclaration(node);
-    }
-
-    protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
-        const referencedPropertyName: string = node.getText();
-        if (/this\.props\..*/.test(referencedPropertyName)) {
-            this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(11));
-        } else if (/this\.state\..*/.test(referencedPropertyName)) {
-            this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(11));
-        }
-        if (this.propsAlias !== undefined) {
-            if (new RegExp(this.propsAlias + '\\..*').test(referencedPropertyName)) {
-                this.propNames = Utils.remove(this.propNames, referencedPropertyName.substring(this.propsAlias.length + 1));
-            }
-        }
-        if (this.stateAlias !== undefined) {
-            if (new RegExp(this.stateAlias + '\\..*').test(referencedPropertyName)) {
-                this.stateNames = Utils.remove(this.stateNames, referencedPropertyName.substring(this.stateAlias.length + 1));
-            }
-        }
-        if (node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression) {
-            if (referencedPropertyName === 'this.props') {
-                // this props reference has escaped the function
-                this.propNames = [];
-            } else if (referencedPropertyName === 'this.state') {
-                // this state reference has escaped the function
-                this.stateNames = [];
-            }
-        }
-        super.visitPropertyAccessExpression(node);
-    }
-
-    protected visitIdentifier(node: ts.Identifier): void {
-        if (this.propsAlias !== undefined) {
-            if (
-                node.text === this.propsAlias &&
-                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
-                node.parent.kind !== ts.SyntaxKind.Parameter &&
-                this.isParentNodeSuperCall(node) === false
-            ) {
-                // this props reference has escaped the constructor
-                this.propNames = [];
-            }
-        }
-        if (this.stateAlias !== undefined) {
-            if (
-                node.text === this.stateAlias &&
-                node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
-                node.parent.kind !== ts.SyntaxKind.Parameter
-            ) {
-                // this state reference has escaped the constructor
-                this.stateNames = [];
-            }
-        }
-        super.visitIdentifier(node);
-    }
-
-    /**
-     * Props can be aliased to some other name within the constructor.
-     */
-    protected visitConstructorDeclaration(node: ts.ConstructorDeclaration): void {
-        if (node.parameters.length > 0) {
-            this.propsAlias = (<ts.Identifier>node.parameters[0].name).text;
-        }
-        super.visitConstructorDeclaration(node);
-        this.propsAlias = undefined;
-    }
-
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        const methodName: string = (<ts.Identifier>node.name).text;
-        if (
-            /componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) &&
-            node.parameters.length > 0
-        ) {
-            this.propsAlias = (<ts.Identifier>node.parameters[0].name).text;
-        }
-        if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) && node.parameters.length > 1) {
-            this.stateAlias = (<ts.Identifier>node.parameters[1].name).text;
-        }
-        super.visitMethodDeclaration(node);
-        this.propsAlias = undefined;
-        this.stateAlias = undefined;
-    }
-
-    private getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
+    function getTypeElementData(node: ts.InterfaceDeclaration): { [index: string]: ts.TypeElement } {
         const result: { [index: string]: ts.TypeElement } = {};
         node.members.forEach(
             (typeElement: ts.TypeElement): void => {
@@ -208,11 +96,131 @@ class ReactUnusedPropsAndStateRuleWalker extends Lint.RuleWalker {
         return result;
     }
 
-    private isParentNodeSuperCall(node: ts.Node): boolean {
+    function isParentNodeSuperCall(node: ts.Node): boolean {
         if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }
         return false;
     }
+
+    function cb(node: ts.Node): void {
+        // Accumulate class declarations here and only analyze
+        // them *after* all interfaces have been analyzed.
+        if (tsutils.isClassDeclaration(node)) {
+            classDeclarations.push(node);
+            return;
+        }
+
+        // Props can be aliased to some other name within the constructor.
+        if (tsutils.isConstructorDeclaration(node)) {
+            if (node.parameters.length > 0) {
+                propsAlias = (<ts.Identifier>node.parameters[0].name).text;
+            }
+            ts.forEachChild(node, cb);
+            propsAlias = undefined;
+            return;
+        }
+
+        if (tsutils.isMethodDeclaration(node)) {
+            const methodName: string = (<ts.Identifier>node.name).text;
+            if (
+                /componentWillReceiveProps|shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) &&
+                node.parameters.length > 0
+            ) {
+                propsAlias = (<ts.Identifier>node.parameters[0].name).text;
+            }
+            if (/shouldComponentUpdate|componentWillUpdate|componentDidUpdate/.test(methodName) && node.parameters.length > 1) {
+                stateAlias = (<ts.Identifier>node.parameters[1].name).text;
+            }
+            ts.forEachChild(node, cb);
+            propsAlias = undefined;
+            stateAlias = undefined;
+            return;
+        }
+
+        // For all other node types, we can walk the children as the
+        // last thing we do, so we don't need any special handling.
+        if (tsutils.isInterfaceDeclaration(node)) {
+            if (ctx.options.propsInterfaceRegex.test(node.name.text)) {
+                propNodes = getTypeElementData(node);
+                propNames = Object.keys(propNodes);
+            }
+            if (ctx.options.stateInterfaceRegex.test(node.name.text)) {
+                stateNodes = getTypeElementData(node);
+                stateNames = Object.keys(stateNodes);
+            }
+        } else if (tsutils.isPropertyAccessExpression(node)) {
+            const referencedPropertyName: string = node.getText();
+            if (/this\.props\..*/.test(referencedPropertyName)) {
+                propNames = Utils.remove(propNames, referencedPropertyName.substring(11));
+            } else if (/this\.state\..*/.test(referencedPropertyName)) {
+                stateNames = Utils.remove(stateNames, referencedPropertyName.substring(11));
+            }
+            if (propsAlias !== undefined) {
+                if (new RegExp(propsAlias + '\\..*').test(referencedPropertyName)) {
+                    propNames = Utils.remove(propNames, referencedPropertyName.substring(propsAlias.length + 1));
+                }
+            }
+            if (stateAlias !== undefined) {
+                if (new RegExp(stateAlias + '\\..*').test(referencedPropertyName)) {
+                    stateNames = Utils.remove(stateNames, referencedPropertyName.substring(stateAlias.length + 1));
+                }
+            }
+            if (node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+                if (referencedPropertyName === 'this.props') {
+                    // this props reference has escaped the function
+                    propNames = [];
+                } else if (referencedPropertyName === 'this.state') {
+                    // this state reference has escaped the function
+                    stateNames = [];
+                }
+            }
+        } else if (tsutils.isIdentifier(node)) {
+            if (propsAlias !== undefined) {
+                if (
+                    node.text === propsAlias &&
+                    node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                    node.parent.kind !== ts.SyntaxKind.Parameter &&
+                    isParentNodeSuperCall(node) === false
+                ) {
+                    // this props reference has escaped the constructor
+                    propNames = [];
+                }
+            }
+            if (stateAlias !== undefined) {
+                if (
+                    node.text === stateAlias &&
+                    node.parent.kind !== ts.SyntaxKind.PropertyAccessExpression &&
+                    node.parent.kind !== ts.SyntaxKind.Parameter
+                ) {
+                    // this state reference has escaped the constructor
+                    stateNames = [];
+                }
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    ts.forEachChild(ctx.sourceFile, cb);
+
+    // If there are Props or State interfaces, then scan the classes now.
+    if (propNames.length > 0 || stateNames.length > 0) {
+        classDeclarations.forEach(c => ts.forEachChild(c, cb));
+    }
+
+    propNames.forEach(
+        (propName): void => {
+            const typeElement: ts.TypeElement = propNodes[propName];
+            ctx.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_PROP + propName);
+        }
+    );
+
+    stateNames.forEach(
+        (stateName): void => {
+            const typeElement: ts.TypeElement = stateNodes[stateName];
+            ctx.addFailureAt(typeElement.getStart(), typeElement.getWidth(), FAILURE_UNUSED_STATE + stateName);
+        }
+    );
 }

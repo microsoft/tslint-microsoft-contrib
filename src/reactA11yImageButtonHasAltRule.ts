@@ -3,6 +3,7 @@
  */
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
@@ -29,24 +30,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yImageButtonHasAltWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
-    public visitJsxElement(node: ts.JsxElement): void {
-        this.validateOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function validateOpeningElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
 
         if (tagName !== 'input') {
@@ -56,22 +45,33 @@ class ReactA11yImageButtonHasAltWalker extends Lint.RuleWalker {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const typeAttribute: ts.JsxAttribute = attributes[TYPE_STRING];
 
-        if (
-            !typeAttribute ||
-            typeAttribute.initializer === undefined ||
-            !isStringLiteral(typeAttribute.initializer) ||
-            getStringLiteral(typeAttribute) === undefined ||
-            getStringLiteral(typeAttribute)!.toLowerCase() !== 'image'
-        ) {
+        if (!typeAttribute || typeAttribute.initializer === undefined || !isStringLiteral(typeAttribute.initializer)) {
+            return;
+        }
+
+        const stringLiteral = getStringLiteral(typeAttribute);
+        if (stringLiteral === undefined || stringLiteral.toLowerCase() !== 'image') {
             return;
         }
 
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
         if (!altAttribute) {
-            this.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
         } else if (isEmpty(altAttribute) || !getStringLiteral(altAttribute)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

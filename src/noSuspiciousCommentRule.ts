@@ -4,6 +4,10 @@ import * as Lint from 'tslint';
 import { forEachTokenWithTrivia } from 'tsutils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
+interface Options {
+    exceptionRegex: RegExp[];
+}
+
 const FAILURE_STRING: string = 'Suspicious comment found: ';
 const SUSPICIOUS_WORDS = ['BUG', 'HACK', 'FIXME', 'LATER', 'LATER2', 'TODO'];
 const FAILURE_STRING_OPTION: string = 'To disable this warning, the comment should include one of the following regex: ';
@@ -32,57 +36,62 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoSuspiciousCommentRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     }
 }
 
-class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
-    private readonly exceptionRegex: RegExp[] = [];
+function parseOptions(options: Lint.IOptions): Options {
+    const value: RegExp[] = [];
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
-            options.ruleArguments.forEach((regexStr: string) => {
-                this.exceptionRegex.push(new RegExp(regexStr));
-            });
-        }
-    }
+    (options.ruleArguments || []).forEach((regexStr: string) => {
+        value.push(new RegExp(regexStr));
+    });
 
-    public visitSourceFile(node: ts.SourceFile) {
+    return {
+        exceptionRegex: value
+    };
+}
+
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { exceptionRegex } = ctx.options;
+
+    function cb(node: ts.Node): void {
         forEachTokenWithTrivia(node, (text, tokenSyntaxKind, range) => {
             if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia || tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
-                this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
+                scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
     }
 
-    private scanCommentForSuspiciousWords(startPosition: number, commentText: string): void {
-        if (this.commentContainsExceptionRegex(this.exceptionRegex, commentText)) {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function scanCommentForSuspiciousWords(startPosition: number, commentText: string): void {
+        if (commentContainsExceptionRegex(exceptionRegex, commentText)) {
             return;
         }
         SUSPICIOUS_WORDS.forEach((suspiciousWord: string) => {
-            this.scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition);
+            scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition);
         });
     }
 
-    private scanCommentForSuspiciousWord(suspiciousWord: string, commentText: string, startPosition: number) {
+    function scanCommentForSuspiciousWord(suspiciousWord: string, commentText: string, startPosition: number) {
         const regexExactCaseNoColon = new RegExp('\\b' + suspiciousWord + '\\b');
         const regexCaseInsensistiveWithColon = new RegExp('\\b' + suspiciousWord + '\\b:', 'i');
         if (regexExactCaseNoColon.test(commentText) || regexCaseInsensistiveWithColon.test(commentText)) {
-            this.foundSuspiciousComment(startPosition, commentText, suspiciousWord);
+            foundSuspiciousComment(startPosition, commentText, suspiciousWord);
         }
     }
 
-    private foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
+    function foundSuspiciousComment(startPosition: number, commentText: string, suspiciousWord: string) {
         let errorMessage: string = FAILURE_STRING + suspiciousWord;
-        if (this.exceptionRegex.length > 0) {
-            errorMessage += '. ' + this.getFailureMessageWithExceptionRegexOption();
+        if (exceptionRegex.length > 0) {
+            errorMessage += '. ' + getFailureMessageWithExceptionRegexOption();
         }
-        this.addFailureAt(startPosition, commentText.length, errorMessage);
+        ctx.addFailureAt(startPosition, commentText.length, errorMessage);
     }
 
-    private commentContainsExceptionRegex(exceptionRegex: RegExp[], commentText: string): boolean {
-        for (const regex of exceptionRegex) {
+    function commentContainsExceptionRegex(exceptionRegexes: RegExp[], commentText: string): boolean {
+        for (const regex of exceptionRegexes) {
             if (regex.test(commentText)) {
                 return true;
             }
@@ -90,9 +99,9 @@ class NoSuspiciousCommentRuleWalker extends Lint.RuleWalker {
         return false;
     }
 
-    private getFailureMessageWithExceptionRegexOption(): string {
+    function getFailureMessageWithExceptionRegexOption(): string {
         let message: string = FAILURE_STRING_OPTION;
-        this.exceptionRegex.forEach((regex: RegExp) => {
+        exceptionRegex.forEach((regex: RegExp) => {
             message += regex.toString();
         });
         return message;

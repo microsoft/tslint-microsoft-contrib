@@ -16,6 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
+        recommendation: 'false, // use tslint unnecessary-bind rule instead',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -51,7 +52,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     ];
     public static UNDERSCORE_TERNARY_FUNCTION_NAMES: string[] = ['foldl', 'foldr', 'inject', 'reduce', 'reduceRight'];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-unnecessary-bind rule is deprecated. Replace your usage with the TSLint unnecessary-bind rule.');
+            Rule.isWarningShown = true;
+        }
+
         return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
     }
 }

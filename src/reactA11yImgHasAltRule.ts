@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getAllAttributesFromJsxElement, getJsxAttributesFromJsxElement, getStringLiteral, isEmpty } from './utils/JsxAttribute';
@@ -35,6 +36,11 @@ export function getFailureStringAltIsImageFileName(tagName: string): string {
     return `The value of alt attribute in <${tagName}> tag is an image file name. Give meaningful value to the alt attribute `;
 }
 
+interface Options {
+    additionalTagNames: string[];
+    allowNonEmptyAltWithRolePresentation: boolean;
+}
+
 /**
  * Enforces that img elements have alt text.
  */
@@ -46,6 +52,12 @@ export class Rule extends Lint.Rules.AbstractRule {
             'Enforce that an img element contains the non-empty alt attribute. ' +
             'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent">Web Content Accessibility Guidelines 1.0</a></li>
+          <li><a href="https://www.w3.org/TR/wai-aria/roles#presentation">ARIA Presentation Role</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>
+        </ul>`,
         optionsDescription: '',
         optionExamples: ['true', '[true, ["Image"]]'],
         typescriptOnly: true,
@@ -58,33 +70,28 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ImgHasAltWalker(sourceFile, this.getOptions()))
+            ? this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()))
             : [];
+    }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        const args = options.ruleArguments;
+        return {
+            // The additionalTagNames are specified by tslint config to check not only 'img' tag but also customized tag.
+            // @example checking a customized component 'Image' which should require 'alt' attribute.
+            additionalTagNames: args.length > 0 ? args[0] : [],
+            allowNonEmptyAltWithRolePresentation: args.length > 1 ? args[1].allowNonEmptyAltWithRolePresentation : false
+        };
     }
 }
 
-class ImgHasAltWalker extends Lint.RuleWalker {
-    public visitJsxElement(node: ts.JsxElement): void {
-        this.checkJsxOpeningElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.checkJsxOpeningElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<Options>) {
+    function checkJsxOpeningElement(node: ts.JsxOpeningLikeElement): void {
         // Tag name is sensitive on lowercase or uppercase, we shoudn't normalize tag names in this rule.
         const tagName: string = node.tagName.getText();
-        const options: any[] = this.getOptions(); // tslint:disable-line:no-any
-
-        // The additionalTagNames are specified by tslint config to check not only 'img' tag but also customized tag.
-        // @example checking a customized component 'Image' which should require 'alt' attribute.
-        const additionalTagNames: string[] = options.length > 0 ? options[0] : [];
 
         // The targetTagNames is the list of tag names we want to check.
-        const targetTagNames: string[] = ['img'].concat(additionalTagNames);
+        const targetTagNames: string[] = ['img'].concat(ctx.options.additionalTagNames);
 
         if (!tagName || targetTagNames.indexOf(tagName) === -1) {
             return;
@@ -100,7 +107,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
         const altAttribute: ts.JsxAttribute = attributes[ALT_STRING];
 
         if (!altAttribute) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
+            ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
         } else {
             const roleAttribute: ts.JsxAttribute = attributes[ROLE_STRING];
             const roleAttributeValue = roleAttribute ? getStringLiteral(roleAttribute) : '';
@@ -110,20 +117,30 @@ class ImgHasAltWalker extends Lint.RuleWalker {
                 .match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
             const isEmptyTitle: boolean = isEmpty(titleAttribute) || getStringLiteral(titleAttribute) === '';
-            const allowNonEmptyAltWithRolePresentation: boolean =
-                options.length > 1 ? options[1].allowNonEmptyAltWithRolePresentation : false;
             const isAltImageFileName: boolean = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(getStringLiteral(altAttribute) || '');
             // <img alt='altValue' role='presentation' />
-            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
+            if (!isEmptyAlt && isPresentationRole && !ctx.options.allowNonEmptyAltWithRolePresentation && !titleAttribute) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
             } else if (isEmptyAlt && !isPresentationRole && !titleAttribute) {
                 // <img alt='' />
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
             } else if (isEmptyAlt && titleAttribute && !isEmptyTitle) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
             } else if (isAltImageFileName) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
             }
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

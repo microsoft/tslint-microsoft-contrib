@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { MochaUtils } from './utils/MochaUtils';
@@ -25,38 +26,46 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING_CONTEXT: string = 'Do not commit Mocha context.only function call';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class MochaAvoidOnlyRuleWalker extends Lint.RuleWalker {
-    protected visitSourceFile(node: ts.SourceFile): void {
-        if (MochaUtils.isMochaTest(node)) {
-            super.visitSourceFile(node);
-        }
-    }
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            if (tsutils.isPropertyAccessExpression(node.expression)) {
+                if (node.arguments.length === 2) {
+                    if (tsutils.isStringLiteral(node.arguments[0])) {
+                        if (tsutils.isFunctionExpression(node.arguments[1]) || tsutils.isArrowFunction(node.arguments[1])) {
+                            const text = node.expression.getText();
+                            switch (text) {
+                                case 'it.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_IT);
+                                    break;
 
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            if (node.arguments.length === 2) {
-                if (node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                    if (
-                        node.arguments[1].kind === ts.SyntaxKind.FunctionExpression ||
-                        node.arguments[1].kind === ts.SyntaxKind.ArrowFunction
-                    ) {
-                        if (node.expression.getText() === 'it.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_IT);
-                        } else if (node.expression.getText() === 'specify.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_SPECIFY);
-                        } else if (node.expression.getText() === 'describe.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_DESCRIBE);
-                        } else if (node.expression.getText() === 'context.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_CONTEXT);
+                                case 'specify.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_SPECIFY);
+                                    break;
+
+                                case 'describe.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_DESCRIBE);
+                                    break;
+
+                                case 'context.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_CONTEXT);
+                                    break;
+
+                                default: // required per tslint rules for switch statements.
+                            }
                         }
                     }
                 }
             }
         }
-        super.visitCallExpression(node);
+        return ts.forEachChild(node, cb);
+    }
+
+    if (MochaUtils.isMochaTest(ctx.sourceFile)) {
+        return ts.forEachChild(ctx.sourceFile, cb);
     }
 }

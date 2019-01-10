@@ -1,7 +1,12 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
+
+interface Options {
+    allowSiblings: boolean;
+}
 
 const OPTION_ALLOW_SIBLINGS = 'allow-siblings';
 
@@ -41,48 +46,30 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoRelativeImportsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    }
+
+    private parseOptions(options: Lint.IOptions): Options {
+        return {
+            allowSiblings: options.ruleArguments.indexOf(OPTION_ALLOW_SIBLINGS) > -1
+        };
     }
 }
 
-class NoRelativeImportsRuleWalker extends Lint.RuleWalker {
-    private readonly allowSiblings: boolean;
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { allowSiblings } = ctx.options;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-
-        this.allowSiblings = options.ruleArguments.indexOf(OPTION_ALLOW_SIBLINGS) > -1;
-    }
-
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
-            const moduleExpression: ts.Expression = (<ts.ExternalModuleReference>node).expression;
-            const errorBody = this.getValidationErrorBody(moduleExpression);
-            if (errorBody !== undefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), `External ${errorBody}: ${node.getText()}`);
-            }
-        } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
-            const moduleExpression: ts.Expression = (<ts.ImportDeclaration>node).moduleSpecifier;
-            const errorBody = this.getValidationErrorBody(moduleExpression);
-            if (errorBody !== undefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), `Imported ${errorBody}: ${node.getText()}`);
-            }
-        }
-        super.visitNode(node);
-    }
-
-    private getValidationErrorBody(expression: ts.Expression): string | undefined {
-        if (expression.kind === ts.SyntaxKind.StringLiteral) {
-            const moduleName: ts.StringLiteral = <ts.StringLiteral>expression;
-            const path = moduleName.text;
+    function getValidationErrorBody(expression: ts.Expression): string | undefined {
+        if (tsutils.isStringLiteral(expression)) {
+            const path = expression.text;
 
             // when no siblings allowed path cannot start with '.' (relative)
-            if (!this.allowSiblings && path[0] === '.') {
+            if (!allowSiblings && path[0] === '.') {
                 return FAILURE_BODY_RELATIVE;
             }
 
             // when siblings allowed path cannot start '..' (reference to parent directory)
-            if (this.allowSiblings && path.indexOf('..') === 0) {
+            if (allowSiblings && path.indexOf('..') === 0) {
                 return FAILURE_BODY_SIBLINGS;
             }
 
@@ -95,4 +82,22 @@ class NoRelativeImportsRuleWalker extends Lint.RuleWalker {
         // explicitly return undefined when path is valid or not a literal
         return undefined;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isExternalModuleReference(node)) {
+            const errorBody = getValidationErrorBody(node.expression);
+            if (errorBody !== undefined) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), `External ${errorBody}: ${node.getText()}`);
+            }
+        } else if (tsutils.isImportDeclaration(node)) {
+            const errorBody = getValidationErrorBody(node.moduleSpecifier);
+            if (errorBody !== undefined) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), `Imported ${errorBody}: ${node.getText()}`);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -21,18 +22,22 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Spaces in regular expressions are hard to count. Use ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoRegexSpacesRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoRegexSpacesRuleWalker extends Lint.RuleWalker {
-    protected visitRegularExpressionLiteral(node: ts.Node): void {
-        const match = /( {2,})+?/.exec(node.getText());
-        if (match !== null) {
-            const replacement: string = '{' + match[0].length + '}';
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isRegularExpressionLiteral(node)) {
+            const match = /( {2,})+?/.exec(node.getText());
+            if (match !== null) {
+                const replacement: string = '{' + match[0].length + '}';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
+            }
         }
 
-        super.visitRegularExpressionLiteral(node);
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

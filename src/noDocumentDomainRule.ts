@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -23,24 +24,27 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Forbidden write to document.domain: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoDocumentDomainRuleWalker extends Lint.RuleWalker {
-    protected visitBinaryExpression(node: ts.BinaryExpression): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
         if (
+            tsutils.isBinaryExpression(node) &&
             node.operatorToken.getText() === '=' &&
-            node.left.kind === ts.SyntaxKind.PropertyAccessExpression &&
-            this.isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)
+            tsutils.isPropertyAccessExpression(node.left) &&
+            isDocumentDomainProperty(<ts.PropertyAccessExpression>node.left)
         ) {
             const msg: string = Rule.FAILURE_STRING + node.getFullText().trim();
-            this.addFailureAt(node.getStart(), node.getWidth(), msg);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
-        super.visitBinaryExpression(node);
+        return ts.forEachChild(node, cb);
     }
 
-    private isDocumentDomainProperty(node: ts.PropertyAccessExpression): boolean {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function isDocumentDomainProperty(node: ts.PropertyAccessExpression): boolean {
         if (node.name.text !== 'domain') {
             return false;
         }

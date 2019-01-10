@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -164,6 +165,18 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-lang',
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/WCAG20-TECHS/H58.html">
+            H58: Using language attributes to identify changes in the human language
+          </a></li>
+          <li><a href="https://dequeuniversity.com/rules/axe/1.1/valid-lang">
+            lang attribute must have a valid value
+          </a></li>
+          <li><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">
+            List of ISO 639-1 codes
+          </a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
@@ -176,25 +189,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactA11yLangRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         } else {
             return [];
         }
     }
 }
 
-class ReactA11yLangRuleWalker extends Lint.RuleWalker {
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateOpeningElement(node, node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.validateOpeningElement(node, node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    private validateOpeningElement(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function validateOpeningElement(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'html') {
             const attributes: ts.JsxAttributes = openingElement.attributes;
             let langFound: boolean = false;
@@ -204,10 +207,10 @@ class ReactA11yLangRuleWalker extends Lint.RuleWalker {
                     if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                         if (attribute.name.getText() === 'lang') {
                             langFound = true;
-                            if (attribute.initializer!.kind === ts.SyntaxKind.StringLiteral) {
+                            if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                                 const langText: string = (<ts.StringLiteral>(<ts.JsxAttribute>attribute).initializer).text;
                                 if (LANGUAGE_CODES.indexOf(langText) === -1) {
-                                    this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
+                                    ctx.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
                                 }
                             }
                         }
@@ -215,8 +218,20 @@ class ReactA11yLangRuleWalker extends Lint.RuleWalker {
                 }
             );
             if (!langFound) {
-                this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
+                ctx.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
             }
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node, node);
+        } else if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node, node.openingElement);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

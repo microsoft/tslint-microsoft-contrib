@@ -11,7 +11,7 @@ const warnings = [];
 /**
  * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/694
  */
-const ignoredRulesNotYetAdded = new Set(['banTsIgnore', 'commentType', 'noDefaultImport', 'unnecessaryConstructor']);
+const ignoredRulesNotYetAdded = new Set(['ban-ts-ignore', 'comment-type', 'no-default-import', 'unnecessary-constructor']);
 
 getAllRules().forEach(ruleFile => {
     const metadata = getMetadataFromFile(ruleFile);

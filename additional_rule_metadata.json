@@ -54,8 +54,7 @@
         "severity": "Low",
         "level": "Opportunity for Excellence",
         "group": "Clarity",
-        "commonWeaknessEnumeration": "398, 710",
-        "recommendation": "false,"
+        "commonWeaknessEnumeration": "398, 710"
     },
     "curly": {
         "issueClass": "Non-SDL",

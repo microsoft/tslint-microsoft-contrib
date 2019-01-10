@@ -11,6 +11,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'void-zero',
         type: 'maintainability',
         description: 'Avoid using void 0; use undefined instead.',
+        hasFix: true,
         rationale: 'void 0, which resolves to undefined, can be confusing to newcomers. Exclusively use undefined to reduce ambiguity.',
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
@@ -32,7 +33,11 @@ function walk(ctx: Lint.WalkContext<void>) {
     function cb(node: ts.Node): void {
         if (tsutils.isVoidExpression(node)) {
             if (node.expression !== undefined && node.expression.getText() === '0') {
-                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                const nodeStart = node.getStart();
+                const nodeWidth = node.getWidth();
+                const fix = new Lint.Replacement(nodeStart, nodeWidth, 'undefined');
+
+                ctx.addFailureAt(nodeStart, nodeWidth, FAILURE_STRING, fix);
             }
         }
         return ts.forEachChild(node, cb);

@@ -1,0 +1,22 @@
+new Array(undefined);
+function mockFunction(arg1: undefined, arg2: string) {}
+mockFunction(undefined, 'arg2String')
+const bar = undefined;
+const foo = {
+    bar: undefined,
+};
+class MockClass {
+    private foo = undefined
+    static bar = undefined
+}
+
+new Array(undefined);
+mockFunction(undefined, 'arg2String')
+const bar = undefined;
+const foo = {
+    bar: undefined,
+};
+class MockClass {
+    private foo = undefined
+    static bar = undefined
+}

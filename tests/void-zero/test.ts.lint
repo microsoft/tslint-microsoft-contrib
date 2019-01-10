@@ -26,4 +26,3 @@ class MockClass {
     static bar = void 0
                  ~~~~~~ [Replace void 0 with undefined]
 }
-

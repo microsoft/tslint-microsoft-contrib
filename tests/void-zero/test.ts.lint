@@ -1,0 +1,28 @@
+new Array(undefined);
+function mockFunction(arg1: undefined, arg2: string) {}
+mockFunction(undefined, 'arg2String')
+const bar = undefined;
+const foo = {
+    bar: undefined,
+};
+class MockClass {
+    private foo = undefined
+    static bar = undefined
+}
+
+new Array(void 0);
+          ~~~~~~ [Replace void 0 with undefined]
+mockFunction(void 0, 'arg2String')
+             ~~~~~~ [Replace void 0 with undefined]
+const bar = void 0;
+            ~~~~~~ [Replace void 0 with undefined]
+const foo = {
+    bar: void 0,
+         ~~~~~~ [Replace void 0 with undefined]
+};
+class MockClass {
+    private foo = void 0
+                  ~~~~~~ [Replace void 0 with undefined]
+    static bar = void 0
+                 ~~~~~~ [Replace void 0 with undefined]
+}

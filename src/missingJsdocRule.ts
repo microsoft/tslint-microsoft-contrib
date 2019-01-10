@@ -28,15 +28,13 @@ export class Rule extends Lint.Rules.AbstractRule {
             console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint missing-jsdoc rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class MissingJSDocWalker extends Lint.RuleWalker {
-    protected visitSourceFile(node: ts.SourceFile): void {
-        if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-        }
-        // do not continue walking
+function walk(ctx: Lint.WalkContext<void>) {
+    const node: ts.SourceFile = ctx.sourceFile;
+    if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
+        ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
     }
 }

@@ -148,6 +148,7 @@
         "switch-final-break": true,
         "type-literal-delimiter": false,
         "underscore-consistent-invocation": true,
+        "void-zero": true,
         "use-default-type-parameter": false,
         "use-named-parameter": true,
         "use-simple-attributes": true,

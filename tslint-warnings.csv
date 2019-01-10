@@ -319,5 +319,6 @@ use-simple-attributes,Enforce usage of only simple attribute types.,TSLINT1PG0L9
 valid-typeof,Ensures that the results of typeof are compared against a valid string.,TSLINT1IB59P1,tslint,Non-SDL,Error,Critical,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,,
 variable-name,Checks variable names for various errors.,TSLINT1CIV7K3,tslint,Non-SDL,Warning,Important,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"
+void-zero,Avoid using void 0; use undefined instead.,TSLINT1BDGNG2,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,480,"CWE 480 - Use of Incorrect Operator"
 whitespace,Enforces whitespace style conventions.,TSLINTC35UUS,tslint,Non-SDL,Warning,Low,Opportunity for Excellence,See description on the tslint or tslint-microsoft-contrib website,TSLint Procedure,"398, 710","CWE 398 - Indicator of Poor Code Quality
 CWE 710 - Coding Standards Violation"

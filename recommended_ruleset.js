@@ -181,6 +181,7 @@ module.exports = {
         'unified-signatures': true,
         'use-default-type-parameter': true,
         'variable-name': true,
+        'void-zero': true,
 
         /**
          * Accessibility. The following rules should be turned on to guarantee the best user

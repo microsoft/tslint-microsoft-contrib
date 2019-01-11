@@ -8,8 +8,18 @@ const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common
 const groupedRows = {};
 const warnings = [];
 
+/**
+ * @see https://github.com/Microsoft/tslint-microsoft-contrib/issues/694
+ */
+const ignoredRulesNotYetAdded = new Set(['ban-ts-ignore', 'comment-type', 'no-default-import', 'unnecessary-constructor']);
+
 getAllRules().forEach(ruleFile => {
     const metadata = getMetadataFromFile(ruleFile);
+
+    const ruleName = getMetadataValue(metadata, 'ruleName');
+    if (ignoredRulesNotYetAdded.has(ruleName)) {
+        return;
+    }
 
     const groupName = getMetadataValue(metadata, 'group');
     if (groupName === 'Ignored') {
@@ -29,7 +39,6 @@ getAllRules().forEach(ruleFile => {
     // Replace double quotes with single quote
     recommendation = recommendation.replace(/"/g, "'");
 
-    const ruleName = getMetadataValue(metadata, 'ruleName');
     groupedRows[groupName].push(`        '${ruleName}': ${recommendation}`);
 });
 

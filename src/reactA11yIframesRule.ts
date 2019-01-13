@@ -36,12 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 function walk(ctx: Lint.WalkContext<void>) {
     const previousTitles: Set<string> = new Set();
     function cb(node: ts.Node): void {
-        if (
-            tsutils.isJsxFragment(node) ||
-            tsutils.isVariableDeclaration(node) ||
-            tsutils.isMethodDeclaration(node) ||
-            tsutils.isFunctionDeclaration(node)
-        ) {
+        if (tsutils.isVariableDeclaration(node) || tsutils.isMethodDeclaration(node) || tsutils.isFunctionDeclaration(node)) {
             previousTitles.clear();
         }
         if (tsutils.isJsxOpeningElement(node) || tsutils.isJsxSelfClosingElement(node)) {

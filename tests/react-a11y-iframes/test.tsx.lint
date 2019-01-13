@@ -43,9 +43,9 @@ class AmazingComponent extends React.Component {
 function AmazingComponent() {
     const someElement = () =>
             <>
-                <iframe title="i'm so great" src="http://someSource.com" hidden></iframe>
+                <iframe title="some title" src="http://someSource.com" hidden></iframe>
                  ~~~~~~ [An iframe element should not be hidden or empty.]
-                <iframe title="i'm so great" src="http://someSource.com" />
+                <iframe title="some title" src="http://someSource.com" />
                  ~~~~~~ [An iframe element must have a unique title.]
             </>
     return (

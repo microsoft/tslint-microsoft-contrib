@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -22,41 +23,32 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoUnnecessarySemicolonsWalker extends Lint.RuleWalker {
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.EmptyStatement) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isEmptyStatement(node)) {
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
-        super.visitNode(node);
-    }
 
-    protected visitForStatement(node: ts.ForStatement): void {
-        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
-            // walk everything but the statement
-            if (node.initializer) {
-                this.visitNode(node.initializer);
+        if (tsutils.isForStatement(node)) {
+            if (tsutils.isEmptyStatement(node.statement)) {
+                const expression: ts.Expression | ts.VariableDeclarationList | undefined =
+                    node.initializer || node.condition || node.incrementor;
+                if (expression) {
+                    return ts.forEachChild(expression, cb);
+                }
             }
-            if (node.condition) {
-                this.visitNode(node.condition);
+        }
+
+        if (tsutils.isWhileStatement(node)) {
+            if (tsutils.isEmptyStatement(node.statement)) {
+                return ts.forEachChild(node.expression, cb);
             }
-            if (node.incrementor) {
-                this.visitNode(node.incrementor);
-            }
-        } else {
-            super.visitForStatement(node);
         }
     }
 
-    protected visitWhileStatement(node: ts.WhileStatement): void {
-        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
-            // walk the expression but not the empty statement
-            this.visitNode(node.expression);
-        } else {
-            super.visitWhileStatement(node);
-        }
-    }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

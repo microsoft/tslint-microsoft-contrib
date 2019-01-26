@@ -1153,7 +1153,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li>if a function instantiated in local scope is passed as a JSX attribute</li>
         </ul>
         This rule can be configured via the "allow-anonymous-listeners" parameter.
-        If you want to suppress violations for the anonymous listener scenarios then configure that rule like this: <code>"react-this-binding-issue": [ true, { 'allow-anonymous-listeners': true } ]</code>, you can also pass in array of string which can act as bind method decorators: <code>"react-this-bind-issue": [true, {'bind-decorators': ['autobind']}]</code></td>
+        If you want to suppress violations for the anonymous listener scenarios then configure that rule like this: <code>"react-this-binding-issue": [ true, { 'allow-anonymous-listeners': true } ]</code>, you can also pass in array of string which can act as bind method decorators: <code>"react-this-binding-issue": [true, {'bind-decorators': ['autobind']}]</code></td>
       <td>2.0.8, 2.0.9</td>
     </tr>
     <tr>

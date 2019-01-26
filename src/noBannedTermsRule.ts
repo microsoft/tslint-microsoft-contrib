@@ -2,7 +2,9 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { BannedTermWalker } from './utils/BannedTermWalker';
+import { bannedTermWalker, BannedTermOptions } from './utils/BannedTermWalker';
+
+import { isObject } from './utils/TypeGuard';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -24,7 +26,24 @@ export class Rule extends Lint.Rules.AbstractRule {
     private static readonly BANNED_TERMS: string[] = ['caller', 'callee', 'arguments', 'eval'];
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        const walker: Lint.RuleWalker = new BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
-        return this.applyWithWalker(walker);
+        return this.applyWithFunction(sourceFile, bannedTermWalker, this.parseOptions(this.getOptions()));
+    }
+
+    private parseOptions(options: Lint.IOptions): BannedTermOptions {
+        let allowQuotedProperties: boolean = false;
+
+        if (options.ruleArguments instanceof Array) {
+            options.ruleArguments.forEach(opt => {
+                if (isObject(opt)) {
+                    allowQuotedProperties = opt['allow-quoted-properties'] === true;
+                }
+            });
+        }
+
+        return {
+            failureString: Rule.FAILURE_STRING,
+            bannedTerms: Rule.BANNED_TERMS,
+            allowQuotedProperties
+        };
     }
 }

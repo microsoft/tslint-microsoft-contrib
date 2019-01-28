@@ -47,39 +47,21 @@ export function createNoStringParameterToFunctionWalker(
                 );
                 ts.forEachChild(node, cb);
                 scope = scope.parent;
-            } else if (tsutils.isFunctionDeclaration(node)) {
-                scope = new Scope(scope);
-                scope.addParameters(node.parameters);
-                ts.forEachChild(node, cb);
-                scope = scope.parent;
-            } else if (tsutils.isConstructorDeclaration(node)) {
-                scope = new Scope(scope);
-                scope.addParameters(node.parameters);
-                ts.forEachChild(node, cb);
-                scope = scope.parent;
-            } else if (tsutils.isMethodDeclaration(node)) {
-                scope = new Scope(scope);
-                scope.addParameters(node.parameters);
-                ts.forEachChild(node, cb);
-                scope = scope.parent;
-            } else if (tsutils.isArrowFunction(node)) {
-                scope = new Scope(scope);
-                scope.addParameters(node.parameters);
-                ts.forEachChild(node, cb);
-                scope = scope.parent;
-            } else if (tsutils.isFunctionExpression(node)) {
-                scope = new Scope(scope);
-                scope.addParameters(node.parameters);
-                ts.forEachChild(node, cb);
-                scope = scope.parent;
-            } else if (tsutils.isSetAccessorDeclaration(node)) {
+            } else if (
+                tsutils.isFunctionDeclaration(node) ||
+                tsutils.isConstructorDeclaration(node) ||
+                tsutils.isMethodDeclaration(node) ||
+                tsutils.isArrowFunction(node) ||
+                tsutils.isFunctionExpression(node) ||
+                tsutils.isSetAccessorDeclaration(node)
+            ) {
                 scope = new Scope(scope);
                 scope.addParameters(node.parameters);
                 ts.forEachChild(node, cb);
                 scope = scope.parent;
             } else {
                 if (tsutils.isVariableDeclaration(node)) {
-                    // this.scope is always set upon entering a source file, so we know it exists here
+                    // scope is always set upon entering a source file, so we know it exists here
                     // tslint:disable:no-non-null-assertion
                     if (AstUtils.isDeclarationFunctionType(node)) {
                         scope!.addFunctionSymbol(node.name.getText());

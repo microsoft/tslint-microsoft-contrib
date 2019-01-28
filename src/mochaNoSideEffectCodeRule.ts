@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { AstUtils } from './utils/AstUtils';
@@ -8,6 +9,10 @@ import { Utils } from './utils/Utils';
 import { isObject } from './utils/TypeGuard';
 
 const FAILURE_STRING: string = 'Mocha test contains dangerous variable initialization. Move to before()/beforeEach(): ';
+
+interface Options {
+    ignoreRegex: RegExp | undefined;
+}
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -25,88 +30,29 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MochaNoSideEffectCodeRuleWalker(sourceFile, this.getOptions()));
-    }
-}
-
-class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
-    private isInDescribe: boolean = false;
-    private ignoreRegex!: RegExp;
-
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.parseOptions();
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
 
-    private parseOptions() {
-        this.getOptions().forEach((opt: unknown) => {
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            ignoreRegex: undefined
+        };
+
+        options.ruleArguments.forEach((opt: unknown) => {
             if (isObject(opt)) {
                 if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
-                    this.ignoreRegex = new RegExp(opt.ignore);
+                    parsed.ignoreRegex = new RegExp(opt.ignore);
                 }
             }
         });
+        return parsed;
     }
+}
 
-    protected visitSourceFile(node: ts.SourceFile): void {
-        if (MochaUtils.isMochaTest(node)) {
-            node.statements.forEach(
-                (statement: ts.Statement): void => {
-                    // validate variable declarations in global scope
-                    if (statement.kind === ts.SyntaxKind.VariableStatement) {
-                        const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
-                        declarationList.declarations.forEach(
-                            (declaration: ts.VariableDeclaration): void => {
-                                if (declaration.initializer !== undefined) {
-                                    this.validateExpression(declaration.initializer, declaration);
-                                }
-                            }
-                        );
-                    }
+function walk(ctx: Lint.WalkContext<Options>) {
+    let isInDescribe: boolean = false;
 
-                    // walk into the describe calls
-                    if (MochaUtils.isStatementDescribeCall(statement)) {
-                        const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
-                        const call: ts.CallExpression = <ts.CallExpression>expression;
-                        this.visitCallExpression(call);
-                    }
-                }
-            );
-        }
-    }
-
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (this.isInDescribe === true && node.initializer !== undefined) {
-            this.validateExpression(node.initializer, node);
-        }
-    }
-
-    protected visitFunctionDeclaration(): void {
-        // never walk into function declarations. new scopes are inherently safe
-    }
-
-    protected visitClassDeclaration(): void {
-        // never walk into class declarations. new scopes are inherently safe
-    }
-
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (MochaUtils.isDescribe(node)) {
-            const nestedSubscribe = this.isInDescribe;
-            this.isInDescribe = true;
-            super.visitCallExpression(node);
-            if (nestedSubscribe === false) {
-                this.isInDescribe = false;
-            }
-        } else if (MochaUtils.isLifecycleMethod(node)) {
-            // variable initialization is allowed inside the lifecycle methods, so do not visit them
-            return;
-        } else if (this.isInDescribe) {
-            // raw CallExpressions should be banned inside a describe that are *not* inside a lifecycle method
-            this.validateExpression(node, node);
-        }
-    }
-
-    private validateExpression(initializer: ts.Expression, parentNode: ts.Node): void {
+    function validateExpression(initializer: ts.Expression, parentNode: ts.Node): void {
         if (initializer === undefined) {
             return;
         }
@@ -123,7 +69,7 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
             const arrayLiteral: ts.ArrayLiteralExpression = <ts.ArrayLiteralExpression>initializer;
             arrayLiteral.elements.forEach(
                 (expression: ts.Expression): void => {
-                    this.validateExpression(expression, parentNode);
+                    validateExpression(expression, parentNode);
                 }
             );
             return;
@@ -135,7 +81,7 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
         // type assertions are OK, but check the initializer
         if (initializer.kind === ts.SyntaxKind.TypeAssertionExpression) {
             const assertion: ts.TypeAssertion = <ts.TypeAssertion>initializer;
-            this.validateExpression(assertion.expression, parentNode);
+            validateExpression(assertion.expression, parentNode);
             return;
         }
         // Property aliasing is OK
@@ -154,7 +100,7 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
                 (element: ts.ObjectLiteralElement): void => {
                     if (element.kind === ts.SyntaxKind.PropertyAssignment) {
                         const assignment: ts.PropertyAssignment = <ts.PropertyAssignment>element;
-                        this.validateExpression(assignment.initializer, parentNode);
+                        validateExpression(assignment.initializer, parentNode);
                     }
                 }
             );
@@ -190,10 +136,10 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
                     if (propExp.name.getText() === 'forEach') {
                         // The forEach() call is OK, but check the contents of the array and the parameters
                         // to the forEach call because they could contain code with side effects.
-                        this.validateExpression(propExp.expression, parentNode);
+                        validateExpression(propExp.expression, parentNode);
                         callExp.arguments.forEach(
                             (arg: ts.Expression): void => {
-                                super.visitNode(arg);
+                                cb(arg);
                             }
                         );
                         return;
@@ -202,7 +148,7 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
             }
         }
         // ignore anything matching our ignore regex
-        if (this.ignoreRegex !== undefined && this.ignoreRegex.test(initializer.getText())) {
+        if (ctx.options.ignoreRegex !== undefined && ctx.options.ignoreRegex.test(initializer.getText())) {
             return;
         }
 
@@ -211,6 +157,62 @@ class MochaNoSideEffectCodeRuleWalker extends Lint.RuleWalker {
         }
         //console.log(ts.SyntaxKind[initializer.kind] + ' ' + initializer.getText());
         const message: string = FAILURE_STRING + Utils.trimTo(parentNode.getText(), 30);
-        this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
+        ctx.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
+    }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isFunctionDeclaration(node) || tsutils.isClassDeclaration(node)) {
+            // never walk into function or class declarations. new scopes are inherently safe
+            return;
+        }
+
+        if (tsutils.isVariableDeclaration(node)) {
+            if (isInDescribe === true && node.initializer !== undefined) {
+                validateExpression(node.initializer, node);
+            }
+        } else if (tsutils.isCallExpression(node)) {
+            if (MochaUtils.isDescribe(node)) {
+                const nestedSubscribe = isInDescribe;
+                isInDescribe = true;
+                ts.forEachChild(node, cb);
+                if (nestedSubscribe === false) {
+                    isInDescribe = false;
+                }
+            } else if (MochaUtils.isLifecycleMethod(node)) {
+                // variable initialization is allowed inside the lifecycle methods, so do not visit them
+                return;
+            } else if (isInDescribe) {
+                // raw CallExpressions should be banned inside a describe that are *not* inside a lifecycle method
+                validateExpression(node, node);
+            }
+        } else {
+            // Step down into all other node types.
+            ts.forEachChild(node, cb);
+        }
+    }
+
+    if (MochaUtils.isMochaTest(ctx.sourceFile)) {
+        ctx.sourceFile.statements.forEach(
+            (statement: ts.Statement): void => {
+                // validate variable declarations in global scope
+                if (statement.kind === ts.SyntaxKind.VariableStatement) {
+                    const declarationList: ts.VariableDeclarationList = (<ts.VariableStatement>statement).declarationList;
+                    declarationList.declarations.forEach(
+                        (declaration: ts.VariableDeclaration): void => {
+                            if (declaration.initializer !== undefined) {
+                                validateExpression(declaration.initializer, declaration);
+                            }
+                        }
+                    );
+                }
+
+                // walk into the describe calls
+                if (MochaUtils.isStatementDescribeCall(statement)) {
+                    const expression: ts.Expression = (<ts.ExpressionStatement>statement).expression;
+                    const call: ts.CallExpression = <ts.CallExpression>expression;
+                    cb(call);
+                }
+            }
+        );
     }
 }

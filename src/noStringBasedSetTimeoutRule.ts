@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
-import { NoStringParameterToFunctionCallWalker } from './utils/NoStringParameterToFunctionCallWalker';
+import { createNoStringParameterToFunctionWalker } from './utils/createNoStringParameterToFunctionWalker';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
 export class Rule extends Lint.Rules.OptionallyTypedRule {
@@ -25,7 +25,6 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
     }
 
     public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program | undefined): Lint.RuleFailure[] {
-        const walker: Lint.RuleWalker = new NoStringParameterToFunctionCallWalker(sourceFile, 'setTimeout', this.getOptions(), program);
-        return this.applyWithWalker(walker);
+        return this.applyWithFunction(sourceFile, createNoStringParameterToFunctionWalker('setTimeout', this.getOptions(), program));
     }
 }

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -23,63 +24,60 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Use arrow function instead of function expression';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoFunctionExpressionRuleWalker extends Lint.RuleWalker {
-    private readonly allowGenericFunctionExpression: boolean = false;
+function walk(ctx: Lint.WalkContext<void>) {
+    const allowGenericFunctionExpression = AstUtils.getLanguageVariant(ctx.sourceFile) === ts.LanguageVariant.JSX;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
+    function cb(node: ts.Node): void {
+        if (tsutils.isFunctionExpression(node)) {
+            const walker = new SingleFunctionWalker();
+            node.getChildren().forEach((child: ts.Node) => {
+                walker.walk(child);
+            });
 
-        if (AstUtils.getLanguageVariant(sourceFile) === ts.LanguageVariant.JSX) {
-            this.allowGenericFunctionExpression = true;
-        }
-    }
-
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        const walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
-        node.getChildren().forEach((child: ts.Node) => {
-            walker.walk(child);
-        });
-
-        const isGenericFunctionInTSX = this.allowGenericFunctionExpression && walker.isGenericFunction;
-        // function expression that access 'this' is allowed
-        if (
-            !walker.isAccessingThis &&
-            !node.asteriskToken &&
-            // generic function expression in .tsx file is allowed
-            !isGenericFunctionInTSX
-        ) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            const isGenericFunctionInTSX = allowGenericFunctionExpression && walker.isGenericFunction;
+            // function expression that access 'this' is allowed
+            if (
+                !walker.isAccessingThis &&
+                !node.asteriskToken &&
+                // generic function expression in .tsx file is allowed
+                !isGenericFunctionInTSX
+            ) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            }
         }
 
-        super.visitFunctionExpression(node);
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }
 
-class SingleFunctionWalker extends Lint.RuleWalker {
+class SingleFunctionWalker {
     public isAccessingThis: boolean = false;
     public isGenericFunction: boolean = false;
-    protected visitNode(node: ts.Node): void {
-        if (node.getText() === 'this') {
-            this.isAccessingThis = true;
-        }
-        super.visitNode(node);
-    }
 
-    protected visitTypeReference(node: ts.TypeReferenceNode): void {
-        this.isGenericFunction = true;
-        super.visitTypeReference(node);
-    }
+    public walk(root: ts.Node) {
+        const cb = (node: ts.Node) => {
+            if (node.getText() === 'this') {
+                this.isAccessingThis = true;
+            }
 
-    /* tslint:disable:no-empty */
-    protected visitFunctionExpression(): void {
-        // do not visit inner blocks
+            if (tsutils.isFunctionExpression(node) || tsutils.isArrowFunction(node)) {
+                // do not visit inner blocks
+                return;
+            }
+
+            if (tsutils.isTypeReferenceNode(node)) {
+                this.isGenericFunction = true;
+            }
+
+            ts.forEachChild(node, cb);
+        };
+
+        cb(root);
     }
-    protected visitArrowFunction(): void {
-        // do not visit inner blocks
-    }
-    /* tslint:enable:no-empty */
 }

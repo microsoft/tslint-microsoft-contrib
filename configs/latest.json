@@ -1,0 +1,6 @@
+{
+    "extends": ["./stable.json"],
+    "rules": {
+        "react-a11y-iframes": true
+    }
+}

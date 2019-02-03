@@ -1,3 +1,5 @@
+# Changelog
+
 ## [6.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/6.0.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.0.0)
@@ -153,14 +155,14 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#484](https://github.com/Microsoft/tslint-microsoft-contrib/issues/484) Replaced Grunt dependency with npm scripts
 -   [#461](https://github.com/Microsoft/tslint-microsoft-contrib/issues/461) Used TypeScript's `--strict` mode in source code
 
-## 5.2.1
+## [5.2.1](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.2.1)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.1)
 
 -   [#479](https://github.com/Microsoft/tslint-microsoft-contrib/issues/479) Source control improvement: repository forces `\n` endline style on Windows
 -   [#485](https://github.com/Microsoft/tslint-microsoft-contrib/issues/485) Adjusted `tsutils` peer dependency to not allow versions that break either TypeScript 2.X or 3.X
 
-## 5.2.0
+## [5.2.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.2.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.2.0)
 
@@ -171,7 +173,7 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#475](https://github.com/Microsoft/tslint-microsoft-contrib/issues/475) Added TypeScript@3 as allowed peer dependency
 -   [#476](https://github.com/Microsoft/tslint-microsoft-contrib/issues/476) Fixed react-a11y-image-button-has-alt crashes on expression types
 
-## 5.1.0
+## [5.1.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.1.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.1.0)
 
@@ -190,7 +192,7 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#447](https://github.com/Microsoft/tslint-microsoft-contrib/pull/447) Update broken accessibility link in README.md
 -   [#449](https://github.com/Microsoft/tslint-microsoft-contrib/pull/449) Removed invalid examples.com domain from recommended ruleset
 
-## 5.0.3
+## [5.0.3](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.0.3)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.3)
 
@@ -200,7 +202,7 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#405](https://github.com/Microsoft/tslint-microsoft-contrib/issues/405) Deprecated several rules that are now duplicates
 -   [#410](https://github.com/Microsoft/tslint-microsoft-contrib/issues/410) Removed default configuration of deprecated rules.
 
-## 5.0.2
+## [5.0.2](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.0.2)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.2)
 
@@ -214,7 +216,7 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#386](https://github.com/Microsoft/tslint-microsoft-contrib/issues/386) Add 'typescript' to peer dependencies
 -   [#379](https://github.com/Microsoft/tslint-microsoft-contrib/issues/379) The use-isnan rule is fully removed
 
-## 5.0.1
+## [5.0.1](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.0.1)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.1)
 
@@ -224,7 +226,7 @@ Thanks so much to our many contributors, both during #hacktoberfest and in the s
 -   [#372](https://github.com/Microsoft/tslint-microsoft-contrib/issues/372) Remove the use-isnan rule
 -   [#370](https://github.com/Microsoft/tslint-microsoft-contrib/issues/370) Fix no-http-string. Do not ignore template strings
 
-## 5.0.0
+## [5.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/5.0.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A5.0.0)
 

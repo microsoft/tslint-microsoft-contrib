@@ -144,24 +144,6 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
-        <code>react-a11y-accessible-headings</code>
-      </td>
-      <td>
-        For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.
-      </td>
-      <td>6.0.0</td>
-    </tr>
-    <tr>
-      <td>
-        <code>react-a11y-iframes</code>
-      </td>
-      <td>
-        Enforce that iframe elements are not empty, have title, and are unique.
-      </td>
-      <td>6.1.0</td>
-    </tr>
-    <tr>
-      <td>
         <code>informative-docs</code>
       </td>
       <td>
@@ -733,15 +715,6 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
-        <code>void-zero</code>
-      </td>
-      <td>
-        <code>void 0</code>, which resolves to <code>undefined</code>, can be confusing to newcomers. Exclusively use <code>undefined</code> to reduce ambiguity.
-      </td>
-      <td>6.1.0</td>
-    </tr>
-    <tr>
-      <td>
         <code>no-var-self</code>
       </td>
       <td>
@@ -841,6 +814,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-accessible-headings</code>
+      </td>
+      <td>
+        For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.
+      </td>
+      <td>6.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-anchors</code>
       </td>
       <td>
@@ -885,6 +867,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         </ul>
       </td>
       <td>2.0.11</td>
+    </tr>
+    <tr>
+      <td>
+        <code>react-a11y-iframes</code>
+      </td>
+      <td>
+        Enforce that iframe elements are not empty, have title, and are unique.
+      </td>
+      <td>6.1.0</td>
     </tr>
     <tr>
       <td>
@@ -1006,6 +997,21 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-role</code>
+      </td>
+      <td>
+        For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
+        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
+        <br />
+        References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>
+        </ul>
+      </td>
+      <td>2.0.11</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-role-has-required-aria-props</code>
       </td>
       <td>
@@ -1035,21 +1041,6 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li><a href="http://oaa-accessibility.org/wcag20/rule/87">ARIA attributes can only be used with certain roles</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/84">Check aria properties and states for valid roles and properties</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/93">Check that 'ARIA-' attributes are valid properties and states</a></li>
-        </ul>
-      </td>
-      <td>2.0.11</td>
-    </tr>
-    <tr>
-      <td>
-        <code>react-a11y-role</code>
-      </td>
-      <td>
-        For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
-        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
-        <br />
-        References:
-        <ul>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>
         </ul>
       </td>
       <td>2.0.11</td>
@@ -1243,6 +1234,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         Similar to the <a href="https://eslint.org/docs/rules/valid-typeof">valid-typeof ESLint rule</a>.
       </td>
       <td>1.0</td>
+    </tr>
+    <tr>
+      <td>
+        <code>void-zero</code>
+      </td>
+      <td>
+        <code>void 0</code>, which resolves to <code>undefined</code>, can be confusing to newcomers. Exclusively use <code>undefined</code> to reduce ambiguity.
+      </td>
+      <td>6.1.0</td>
     </tr>
   </tbody>
 </table>

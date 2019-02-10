@@ -1,1 +1,0 @@
-Check GitHub [Releases](https://github.com/Microsoft/tslint-microsoft-contrib/releases) for individual release notes or [CHANGELOG.md](https://github.com/Microsoft/tslint-microsoft-contrib/blob/master/CHANGELOG.md) for full project changelog.

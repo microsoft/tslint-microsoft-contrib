@@ -4,22 +4,87 @@ Together TypeScript, TSLint, and tslint-microsoft-contrib have automated most of
 
 Enable these rules in order to be compliant with the SDL:
 
-| Rule Name                                  | From                     | Description                                                                                                                                                                                                              |
-| :----------------------------------------- | :----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `no-eval`                                  | tslint                   | Do not use the 'eval' function or its functional equivalents.                                                                                                                                                            |
-| `use-strict`                               | tslint                   | Always enable strict mode when possible.                                                                                                                                                                                 |
-| `no-octal-literal`                         | tslint-microsoft-contrib | Do not use octal literals or escaped octal sequences in  strict-mode compatible code.                                                                                                                                    |
-| `no-duplicate-parameter-names`             | tslint-microsoft-contrib | Do not duplicate parameter names.                                                                                                                                                                                        |
-| `no-delete-expression`                     | tslint-microsoft-contrib | Do not delete expressions.                                                                                                                                                                                               |
-| `no-disable-auto-sanitization`             | tslint-microsoft-contrib | Do not disable auto-sanitization in frameworks or application helper code.                                                                                                                                               |
-| `no-exec-script`                           | tslint-microsoft-contrib | Banned term - execScript.                                                                                                                                                                                                |
-| `no-string-based-set-timeout`              | tslint-microsoft-contrib | Do not use the version of setTimeout that accepts code as a string argument. However, it is acceptable to use the version of setTimeout where a direct reference to a function is provided as the callback argument.     |
-| `no-string-based-set-interval`             | tslint-microsoft-contrib | Do not use the version of setInterval that accepts code as a string argument. However, it is acceptable to use the version of setInterval where a direct reference to a function is provided as the callback argument.   |
-| `no-string-based-set-immediate`            | tslint-microsoft-contrib | Do not use the version of setImmediate that accepts code as a string argument. However, it is acceptable to use the version of setImmediate where a direct reference to a function is provided as the callback argument. |
-| `no-function-constructor-with-string-args` | tslint-microsoft-contrib | Do not use the version of the Function constructor that accepts a string argument to define the body of the function.                                                                                                    |
-| `no-banned-terms`                          | tslint-microsoft-contrib | Do not access terms or variables that create ambiguity or are banned in strict mode.                                                                                                                                     |
-| `no-reserved-keywords`                     | tslint-microsoft-contrib | Do not use reserved and future reserved keywords as identifiers.                                                                                                                                                         |
-| `no-document-domain`                       | tslint-microsoft-contrib | Do not write to document.domain. Scripts setting document.domain to any value should be validated to ensure that the value is on a list of allowed sites.                                                                |
+<table>
+    <thead>
+    <tr>
+        <th>Rule Name</th>
+        <th>From</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><code>no-eval</code></td>
+        <td>tslint</td>
+        <td>Do not use the `eval` function or its functional equivalents.</td>
+    </tr>
+    <tr>
+        <td><code>use-strict</code></td>
+        <td>tslint</td>
+        <td>Always enable strict mode when possible.</td>
+    </tr>
+    <tr>
+        <td><code>no-octal-literal</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use octal literals or escaped octal sequences in strict-mode compatible code.</td>
+    </tr>
+    <tr>
+        <td><code>no-duplicate-parameter-names</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not duplicate parameter names.</td>
+    </tr>
+    <tr>
+        <td><code>no-delete-expression</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not delete expressions.</td>
+    </tr>
+    <tr>
+        <td><code>no-disable-auto-sanitization</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not disable auto-sanitization in frameworks or application helper code.</td>
+    </tr>
+    <tr>
+        <td><code>no-exec-script</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Banned term - `execScript`.</td>
+    </tr>
+    <tr>
+        <td><code>no-string-based-set-timeout</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use the version of `setTimeout` that accepts code as a string argument. However, it is acceptable to use the version of `setTimeout` where a direct reference to a function is provided as the callback argument.</td>
+    </tr>
+    <tr>
+        <td><code>no-string-based-set-interval</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use the version of `setInterval` that accepts code as a string argument. However, it is acceptable to use the version of `setInterval` where a direct reference to a function is provided as the callback argument.</td>
+    </tr>
+    <tr>
+        <td><code>no-string-based-set-immediate</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use the version of `setImmediate` that accepts code as a string argument. However, it is acceptable to use the version of ``setImmediate` where a direct reference to a function is provided as the callback argument.</td>
+    </tr>
+    <tr>
+        <td><code>no-function-constructor-with-string-args</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use the version of the Function constructor that accepts a string argument to define the body of the function.</td>
+    </tr>
+    <tr>
+        <td><code>no-banned-terms</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not access terms or variables that create ambiguity or are banned in strict mode.</td>
+    </tr>
+    <tr>
+        <td><code>no-reserved-keywords</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not use reserved and future reserved keywords as identifiers.</td>
+    </tr>
+    <tr>
+        <td><code>no-document-domain</code></td>
+        <td>tslint-microsoft-contrib</td>
+        <td>Do not write to `document.domain`. Scripts setting `document.domain` to any value should be validated to ensure that the value is on a list of allowed sites.</td>
+    </tr>
+    </tbody>
+</table>
 
 You will want your tslint ruleset defined similarly to this if you'd like to enable all of these rules:
 

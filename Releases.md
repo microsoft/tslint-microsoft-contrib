@@ -11,7 +11,7 @@
 * Open the next milestone
 * Update `CHANGELOG.md`. Stable releases should contain list of new changes as well as full list of changes since previous stable release.
 * Make sure `package.json` and `package-lock.json` contain the version you wish to publish
-* Update `README.md` to have the correct links and version numbers for new rules (replace `@next` placeholder with next version)
+* Update `README.md` to have the correct version numbers and links
 * Pull any recent git changes and rebuild:
 
 ```shell

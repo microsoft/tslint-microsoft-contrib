@@ -5,8 +5,8 @@ Many aria attributes (states and properties) can only be used on elements with p
 
 ## References
 
-- [AX_ARIA_10](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_10)
-- [Supported States & Properties](https://www.w3.org/TR/wai-aria-1.1/#states_and_properties)
+-   [AX_ARIA_10](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_10)
+-   [Supported States & Properties](https://www.w3.org/TR/wai-aria-1.1/#states_and_properties)
 
 ## Rule options
 
@@ -25,6 +25,7 @@ This rule takes no arguments.
 ```
 
 ### Good
+
 ```tsx
 // The explicit checkbox role does support the aria-checked attribute.
 <div role='checkbox' aria-checked='true' />
@@ -42,12 +43,12 @@ For example:
 
 ```tsx
 // The <input> element explicit role is button, it does not support aria-checked attribute.
-<input role='button' type='checkbox' aria-checked='true' />
+<input role="button" type="checkbox" aria-checked="true" />
 ```
 
 ### Good
 
 ```tsx
 // The <input> element explicit role is checkbox, it supports aria-checked attribute.
-<input role='checkbox' type='button' aria-checked='true' />
+<input role="checkbox" type="button" aria-checked="true" />
 ```

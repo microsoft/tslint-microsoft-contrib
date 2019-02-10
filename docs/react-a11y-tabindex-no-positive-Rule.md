@@ -5,7 +5,7 @@ Avoid positive tabindex attribute values to synchronize the flow of the page wit
 
 ## References
 
-- [AX_FOCUS_03](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_focus_03)
+-   [AX_FOCUS_03](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_focus_03)
 
 ## Rule options
 

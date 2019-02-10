@@ -71,6 +71,7 @@
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "validate:config": "node build-tasks/validate-config.js",
     "validate:documentation": "node build-tasks/validate-documentation.js",
+    "validate:rules-order": "node build-tasks/validate-rules-order.js",
     "watch:run-tests": "node build-tasks/watch-run-tests.js",
     "watch:src": "tsc --watch"
   },

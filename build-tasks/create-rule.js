@@ -4,6 +4,8 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
 const { writeFile } = require('./common/files');
+const readmeTemplate = require('./templates/readme-rule-entry.template');
+const { addNewRule } = require('./common/readme-rules');
 
 const questions = [
     {
@@ -88,13 +90,15 @@ const questions = [
 inquirer.prompt(questions).then(answers => {
     const sourceFileName = createImplementationFile(answers);
     const testFileNames = createTestFiles(answers);
+    const readmePosition = createReadmeEntry(answers);
 
     console.log(`Rule '${answers.name}' created.`);
     console.log(`Source file: ${sourceFileName}`);
-    console.log(`Test files:   ${testFileNames.join(', ')}`);
+    console.log(`Test files:   ${testFileNames.join(' ')}`);
+    console.log(`README.md entry: ${readmePosition}`);
 
     // Attempt to open the files in the current editor.
-    tryOpenFiles([...testFileNames, sourceFileName]);
+    tryOpenFiles([...testFileNames, sourceFileName, readmePosition]);
 });
 
 function createImplementationFile(answers) {
@@ -137,6 +141,11 @@ function createTestFiles(answers) {
     writeFile(lintFile, JSON.stringify(tslintContent, undefined, 4));
 
     return testFiles;
+}
+
+function createReadmeEntry(answers) {
+    const content = readmeTemplate(answers);
+    return addNewRule(answers.name, content);
 }
 
 function camelCase(input) {

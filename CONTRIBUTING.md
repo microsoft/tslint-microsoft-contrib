@@ -18,7 +18,9 @@ You can create a new rule from a template with the `create-rule` script:
 npm run create-rule
 ```
 
-This will prompt you to enter the details of the new rule. Once you're done, it will create a file for the rule implementation (inside `src`) as well as folder with rule tests (inside `test`).
+This will prompt you to enter the details of the new rule. Once you're done, it will create a file for the rule implementation (inside `src`), folder with rule tests (inside `test`), and will add rule info to `README.md`.
+
+You should update rule entry in `README.md` with information about available options, more detailed description, and examples if needed. New rules should have `@next` placeholder in version column, which will be replaced with proper version during release process.
 
 More information about writing rule tests can be found in [TSLint documentation](https://palantir.github.io/tslint/develop/testing-rules/).
 

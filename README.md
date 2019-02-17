@@ -1251,3 +1251,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
 ## Development
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Release notes
+
+Check GitHub [Releases](https://github.com/Microsoft/tslint-microsoft-contrib/releases) for individual release notes or [CHANGELOG.md](./CHANGELOG.md) for full project changelog.

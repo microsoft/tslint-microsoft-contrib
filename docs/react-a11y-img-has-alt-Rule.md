@@ -1,11 +1,11 @@
 # react-a11y-img-has-alt
 
-Enforce that an `img` element contains the `alt` attribute. For decorative images, using empty alt attribute and role="presentation". All images must have `alt` text to convey their purpose and meaning to **screen reader users**.
+Enforce that an `img` element contains the `alt` attribute. For decorative images, using empty `alt` attribute and `role="presentation"`. All images must have `alt` text to convey their purpose and meaning to **screen reader users**.
 Besides, the `alt` attribute specifies an alternate text for an image, if the image cannot be displayed.
 
 ## References
 
-- [presentation (role)](https://www.w3.org/TR/wai-aria-1.1/#presentation)
+-   [presentation (role)](https://www.w3.org/TR/wai-aria-1.1/#presentation)
 
 ## Rule options
 
@@ -32,13 +32,14 @@ public render(): JSX.Element {
 }
 
 ```
+
 To make this plugin check your `Image` element, specify the following configuration in your `tslint.json` file:
 
 ```json
 {
-  "rules": {
-    "a11y-img-has-alt": [true, ["Image"]]
-  }
+    "rules": {
+        "a11y-img-has-alt": [true, ["Image"]]
+    }
 }
 ```
 

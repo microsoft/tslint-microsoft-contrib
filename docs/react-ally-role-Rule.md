@@ -5,8 +5,8 @@ A reference to role defintions can be found at [WAI-ARIA roles](https://www.w3.o
 
 ## References
 
-- [AX_ARIA_01](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_01)
-- [DPUB-ARIA roles](https://www.w3.org/TR/dpub-aria-1.0/)
+-   [AX_ARIA_01](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_01)
+-   [DPUB-ARIA roles](https://www.w3.org/TR/dpub-aria-1.0/)
 
 ## Rule options
 

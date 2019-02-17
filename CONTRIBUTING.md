@@ -69,4 +69,4 @@ You can use `npm start` watcher that will rebuild TS files from `src` before lau
 
 ## Creating a new Release
 
-Refer to the [Releases Wiki Page](https://github.com/Microsoft/tslint-microsoft-contrib/wiki/Releases).
+Refer to the [Releases doc](./docs/Releases.md).

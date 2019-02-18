@@ -54,7 +54,7 @@
     "copy:meta": "cpy README.md dist/build --parents",
     "copy:package": "cpy \"**/*.js\" \"**/*.json\" \"!tests/**\" \"!references.js\" \"tests/TestHelper.js\" \"tests/TestHelper.d.ts\" ../build --cwd=\"dist/src\" --parents",
     "create-rule": "node build-tasks/create-rule.js",
-    "generate:stable-config": "node build-tasks/generate-stable-config.js",
+    "generate:latest-config": "node build-tasks/generate-latest-config.js",
     "generate:sdl-report": "node build-tasks/generate-sdl-report.js",
     "generate:rule-metadata": "node build-tasks/generate-rule-metadata.js",
     "generate:package-json-for-npm": "node build-tasks/generate-package-json-for-npm.js",

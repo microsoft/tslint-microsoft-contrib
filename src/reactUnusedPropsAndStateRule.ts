@@ -98,6 +98,36 @@ function walk(ctx: Lint.WalkContext<Options>) {
         return result;
     }
 
+    function getTypeLiteralData(node: ts.TypeLiteralNode): { [index: string]: ts.TypeElement } {
+        const result: { [index: string]: ts.TypeElement } = {};
+        node.members.forEach(
+            (typeElement: ts.TypeElement): void => {
+                if (typeElement.name !== undefined) {
+                    const text = typeElement.name.getText();
+                    if (text !== undefined) {
+                        result[text] = typeElement;
+                    }
+                }
+            }
+        );
+        return result;
+    }
+
+    function getObjectBindingData(node: ts.ObjectBindingPattern): { [index: string]: ts.BindingElement } {
+        const result: { [index: string]: ts.BindingElement } = {};
+        node.elements.forEach(
+            (element: ts.BindingElement): void => {
+                if (element.name !== undefined) {
+                    const text = element.name.getText();
+                    if (text !== undefined) {
+                        result[text] = element;
+                    }
+                }
+            }
+        );
+        return result;
+    }
+
     function isParentNodeSuperCall(node: ts.Node): boolean {
         if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;

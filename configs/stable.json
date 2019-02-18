@@ -49,7 +49,7 @@
         "non-literal-require": true,
         "possible-timing-attack": true,
         "prefer-array-literal": true,
-        "prefer-type-cast": true, // pick either type-cast format and use it consistently
+        "prefer-type-cast": true,
         "promise-must-complete": true,
         "react-a11y-accessible-headings": true,
         "react-a11y-anchors": true,

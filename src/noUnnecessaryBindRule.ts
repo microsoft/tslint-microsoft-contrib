@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
-        recommendation: 'false, // use tslint unnecessary-bind rule instead',
+        recommendation: 'false',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };

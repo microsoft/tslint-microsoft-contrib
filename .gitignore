@@ -2,6 +2,13 @@
 node_modules
 npm-debug.log
 
+# IDEA
+.idea
+tslint-microsoft-contrib.iml
+
+# vim swap files
+*.sw*
+
 # Generated for builds
 **/dist/
 rule-metadata.json

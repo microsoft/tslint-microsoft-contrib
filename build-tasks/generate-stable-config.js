@@ -3,15 +3,13 @@
  * The `recommended` metadata for each rule is added there, except if...
  *  - ...the rule's `metadata.group` is `'Ignored'`
  *  - ...the rule is also mentioned in config/latest.json (which would be a breaking change)
- *  - ...the recommended setting is `false` (the rule is likely deprecated)
+ *  - ...the recommended setting starts with `false` (the rule is likely deprecated)
  */
 
-const { red } = require('chalk');
 const { writeFile } = require('./common/files');
 const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common/meta');
 
 const recommendations = [];
-const warnings = [];
 
 const latestRules = new Set(Object.keys(require('../configs/latest.json').rules));
 
@@ -28,7 +26,7 @@ getAllRules({
 
     let recommendation = getMetadataValue(metadata, 'recommendation', true, true);
     if (recommendation === '') {
-        recommendation = 'true,';
+        recommendation = 'true';
     }
 
     // Don't mention rules recommended as disabled
@@ -43,11 +41,6 @@ getAllRules({
 
     recommendations.push(`        "${ruleName}": ${recommendation}`);
 });
-
-if (warnings.length > 0) {
-    console.log('\n' + red(warnings.join('\n')));
-    process.exit(1);
-}
 
 const stableTemplate = require('./templates/stable.json.template');
 

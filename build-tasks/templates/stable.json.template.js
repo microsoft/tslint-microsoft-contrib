@@ -1,6 +1,7 @@
 module.exports = recommendations => `{
     "rulesDirectory": ["../"],
     "rules": {
-${[...recommendations].sort().join('\n')}
+${[...recommendations].sort().join(',\n')}
     }
-}`;
+}
+`;

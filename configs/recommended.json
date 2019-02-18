@@ -281,6 +281,6 @@
         "no-var-self": false,
         "react-tsx-curly-spacing": false,
         "typeof-compare": false, // the valid-typeof rule is currently superior to this version
-        "valid-typeof": false,
+        "valid-typeof": false
     }
-};
+}

@@ -76,7 +76,6 @@
         "react-unused-props-and-state": true,
         "underscore-consistent-invocation": true,
         "use-named-parameter": true,
-        "use-simple-attributes": true,
-        "void-zero": true
+        "use-simple-attributes": true
     }
 }

@@ -148,13 +148,17 @@ function walk(ctx: Lint.WalkContext<Options>) {
     function lookForReactSpecificArrowFunction(node: ts.TypeReferenceNode): void {
         const nodeTypeText = node.typeName.getText();
 
-        const isFunctionComponent =
+        const isReactFunctionComponentType =
             nodeTypeText === 'React.SFC' ||
+            nodeTypeText === 'SFC' ||
             nodeTypeText === 'React.FC' ||
+            nodeTypeText === 'FC' ||
             nodeTypeText === 'React.StatelessComponent' ||
-            nodeTypeText === 'React.FunctionComponent';
+            nodeTypeText === 'StatelessComponent' ||
+            nodeTypeText === 'React.FunctionComponent' ||
+            nodeTypeText === 'FunctionComponent';
 
-        if (!isFunctionComponent) {
+        if (!isReactFunctionComponentType) {
             return;
         }
 

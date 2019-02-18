@@ -1,0 +1,28 @@
+import React = require('react');
+
+module VideoContainer {
+    export interface Props {
+        myProp1: boolean;
+        myProp2: boolean;
+    }
+    export interface State {
+        myState1: boolean;
+        myState2: boolean;
+    }
+}
+
+class VideoContainer extends React.Component<VideoContainer.Props, VideoContainer.State> {
+
+    constructor(props: VideoContainer.Props) {
+        super(props);
+    }
+
+    public render(): ReactTypes.ReactElement<any> {
+        console.log(this.props.myProp1);
+        console.log(this.props.myProp2);
+        console.log(this.state.myState1);
+        console.log(this.state.myState2);
+        return null;
+    }
+}
+export = VideoContainer;

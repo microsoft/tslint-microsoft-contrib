@@ -1,0 +1,31 @@
+import React = require('react');
+
+module VideoContainer {
+    export interface Props {
+        prop1: boolean;
+        prop2: boolean;
+        prop3: boolean;
+        prop4: boolean;
+    }
+}
+
+class VideoContainer extends React.Component<VideoContainer.Props, {}> {
+    public componentWillReceiveProps(nextProps: P, nextContext: any): void {
+        console.log(nextProps.prop1);
+    }
+    public shouldComponentUpdate(nextProps: P, nextState: S, nextContext: any): boolean {
+        console.log(nextProps.prop2);
+        return true;
+    }
+    public componentWillUpdate(nextProps: P, nextState: S, nextContext: any): void {
+        console.log(nextProps.prop3);
+    }
+    public componentDidUpdate(prevProps: P, prevState: S, prevContext: any): void {
+        console.log(prevProps.prop4);
+    }
+
+    public render(): ReactTypes.ReactElement<any> {
+        return null;
+    }
+}
+export = VideoContainer;

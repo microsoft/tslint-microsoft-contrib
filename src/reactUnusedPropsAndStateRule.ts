@@ -78,6 +78,8 @@ function walk(ctx: Lint.WalkContext<Options>) {
     let stateNames: string[] = [];
     let stateNodes: { [index: string]: ts.TypeElement } = {};
     const classDeclarations: ts.ClassDeclaration[] = [];
+    const arrowFunctions: ts.ArrowFunction[] = [];
+    const functionComponents: ts.FunctionBody[] = [];
     let propsAlias: string | undefined;
     let stateAlias: string | undefined;
 
@@ -208,6 +210,8 @@ function walk(ctx: Lint.WalkContext<Options>) {
     // If there are Props or State interfaces, then scan the classes now.
     if (propNames.length > 0 || stateNames.length > 0) {
         classDeclarations.forEach(c => ts.forEachChild(c, cb));
+        arrowFunctions.forEach(c => ts.forEachChild(c.body, cb));
+        functionComponents.forEach(f => ts.forEachChild(f, cb));
     }
 
     propNames.forEach(

@@ -1,5 +1,5 @@
 module.exports = recommendations => `{
-    "extends": ["./stable.json"],
+    "extends": ["./recommended.json"],
     "rulesDirectory": ["../"],
     "rules": {
 ${[...recommendations].sort().join(',\n')}

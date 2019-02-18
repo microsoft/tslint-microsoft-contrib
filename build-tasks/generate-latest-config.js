@@ -2,7 +2,7 @@
  * Generates config/latest.json.
  * The `recommended` metadata for each rule is added there, except if...
  *  - ...the rule's `metadata.group` is `'Ignored'`
- *  - ...the rule is also mentioned in config/stable.json
+ *  - ...the rule is also mentioned in config/recommended.json
  *  - ...the recommended setting starts with `false` (the rule is likely deprecated)
  */
 
@@ -11,7 +11,7 @@ const { getAllRules, getMetadataFromFile, getMetadataValue } = require('./common
 
 const recommendations = [];
 
-const stableRules = new Set(Object.keys(require('../configs/stable.json').rules));
+const recommendedRules = new Set(Object.keys(require('../configs/recommended.json').rules));
 
 getAllRules({
     ignoreTslintRules: true
@@ -34,14 +34,14 @@ getAllRules({
         return;
     }
 
-    // Don't redundantly mention rules added to the 'stable' preset
-    if (stableRules.has(ruleName)) {
+    // Don't redundantly mention rules added to the 'recommended' preset
+    if (recommendedRules.has(ruleName)) {
         return;
     }
 
     recommendations.push(`        "${ruleName}": ${recommendation}`);
 });
 
-const stableTemplate = require('./templates/latest.json.template');
+const latestTemplate = require('./templates/latest.json.template');
 
-writeFile('configs/latest.json', stableTemplate(recommendations));
+writeFile('configs/latest.json', latestTemplate(recommendations));

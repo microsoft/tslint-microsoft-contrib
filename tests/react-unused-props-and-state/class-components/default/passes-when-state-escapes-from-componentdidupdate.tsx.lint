@@ -1,0 +1,19 @@
+import React = require('react');
+
+module VideoContainer {
+    export interface State {
+        state1: boolean;
+        state2: boolean;
+    }
+}
+
+class VideoContainer extends React.Component<{}, VideoContainer.State> {
+    public componentDidUpdate(prevProps: P, prevState: S, prevContext: any): void {
+        console.log(prevState);
+    }
+    public render(): ReactTypes.ReactElement<any> {
+        return null;
+    }
+}
+
+export = VideoContainer;

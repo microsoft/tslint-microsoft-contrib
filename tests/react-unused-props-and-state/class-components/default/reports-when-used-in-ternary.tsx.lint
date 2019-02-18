@@ -1,0 +1,27 @@
+import React = require('react');
+
+module AssigneePicker {
+
+    export interface State {
+        myState1: boolean;
+        myState2: boolean;
+        ~~~~~~~~~~~~~~~~~~ [Unused React state defined in interface: myState2]
+    }
+
+    export interface Props {
+        myProps1: string;
+        myProps2: string;
+        ~~~~~~~~~~~~~~~~~ [Unused React property defined in interface: myProps2]
+    }
+}
+
+abstract class AssigneePicker<P extends AssigneePicker.Props, S extends AssigneePicker.State> extends BaseReactComponent<P, S> {
+
+    public render(): ReactTypes.ReactElement<ReactTypes.HTMLAttributes> {
+        const foo = this.state.myState1 ? null : null;
+        const bar = this.props.myProps1 ? null : null;
+        return null;
+    }
+}
+
+export = AssigneePicker;

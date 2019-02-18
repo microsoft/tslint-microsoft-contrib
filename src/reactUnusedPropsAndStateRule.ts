@@ -136,6 +136,109 @@ function walk(ctx: Lint.WalkContext<Options>) {
         return false;
     }
 
+    function inspectPropUsageInObjectBinding(name: ts.ObjectBindingPattern): void {
+        const bindingElements = getObjectBindingData(name);
+        const foundPropNames = Object.keys(bindingElements);
+
+        for (const propName of foundPropNames) {
+            propNames = Utils.remove(propNames, propName);
+        }
+    }
+
+    function lookForReactSpecificArrowFunction(node: ts.TypeReferenceNode): void {
+        const nodeTypeText = node.typeName.getText();
+
+        const isFunctionComponent =
+            nodeTypeText === 'React.SFC' ||
+            nodeTypeText === 'React.FC' ||
+            nodeTypeText === 'React.StatelessComponent' ||
+            nodeTypeText === 'React.FunctionComponent';
+
+        if (!isFunctionComponent) {
+            return;
+        }
+
+        if (!node.typeArguments || node.typeArguments.length !== 1) {
+            return;
+        }
+
+        const typeArgument = node.typeArguments[0];
+
+        if (tsutils.isTypeLiteralNode(typeArgument)) {
+            propNodes = getTypeLiteralData(typeArgument);
+            propNames = Object.keys(propNodes);
+        } else {
+            // we have a TypeReference here which we expect to have been parsed
+            // previously in the AST
+        }
+
+        // the arrow function should be a sibling of this type reference node
+        const arrowFunction = tsutils.getChildOfKind(node.parent, ts.SyntaxKind.ArrowFunction);
+
+        if (!arrowFunction || !tsutils.isArrowFunction(arrowFunction)) {
+            return;
+        }
+
+        lookForArrowFunction(arrowFunction);
+    }
+
+    function lookForArrowFunction(node: ts.ArrowFunction): void {
+        // expect one parameter for the function
+        const parameters = node.parameters;
+        if (parameters.length !== 1) {
+            return;
+        }
+
+        const firstParameter = parameters[0];
+        const { name, type } = firstParameter;
+        if (type && tsutils.isTypeReferenceNode(type)) {
+            const typeName = type.typeName.getText();
+            // skip any type that doesn't match the expected regex
+            if (!ctx.options.propsInterfaceRegex.test(typeName)) {
+                return;
+            }
+        }
+
+        if (tsutils.isIdentifier(name)) {
+            propsAlias = name.getText();
+        } else if (tsutils.isObjectBindingPattern(name)) {
+            inspectPropUsageInObjectBinding(name);
+        }
+
+        arrowFunctions.push(node);
+    }
+
+    function lookForFunctionComponent(node: ts.FunctionDeclaration | ts.FunctionExpression): void {
+        // if no body found, no need to traverse
+        if (!node.body) {
+            return;
+        }
+
+        // expect one parameter for the function
+        const parameters = node.parameters;
+        if (parameters.length !== 1) {
+            return;
+        }
+
+        const firstParameter = parameters[0];
+        const { name, type } = firstParameter;
+        if (type && tsutils.isTypeReferenceNode(type)) {
+            const typeName = type.typeName.getText();
+            // skip any type that doesn't match the expected regex
+            if (!ctx.options.propsInterfaceRegex.test(typeName)) {
+                return;
+            }
+        }
+
+        if (tsutils.isIdentifier(name)) {
+            propsAlias = name.getText();
+        } else if (tsutils.isObjectBindingPattern(name)) {
+            inspectPropUsageInObjectBinding(name);
+        }
+
+        functionComponents.push(node.body);
+    }
+
     function cb(node: ts.Node): void {
         // Accumulate class declarations here and only analyze
         // them *after* all interfaces have been analyzed.
@@ -230,6 +333,14 @@ function walk(ctx: Lint.WalkContext<Options>) {
                     stateNames = [];
                 }
             }
+        } else if (tsutils.isTypeReferenceNode(node)) {
+            lookForReactSpecificArrowFunction(node);
+        } else if (tsutils.isArrowFunction(node)) {
+            lookForArrowFunction(node);
+        } else if (tsutils.isFunctionDeclaration(node)) {
+            lookForFunctionComponent(node);
+        } else if (tsutils.isFunctionExpression(node)) {
+            lookForFunctionComponent(node);
         }
 
         return ts.forEachChild(node, cb);

@@ -47,11 +47,11 @@ If you extend from one of the following configurations, `rulesDirectory` will ha
 
 #### Stable
 
-To start, you can enable our "stable" defaults that come with tslint-microsoft-contrib ([configs/stable.json](./configs/stable.json)) by adding `"tslint-microsoft-contrib/configs/stable"` under `"extends"` in your `tslint.json`:
+To start, you can enable our "stable" defaults that come with tslint-microsoft-contrib ([stable.json](./stable.json)) by adding `"tslint-microsoft-contrib/stable"` under `"extends"` in your `tslint.json`:
 
 ```json
 {
-    "extends": ["tslint-microsoft-contrib/configs/stable.json"]
+    "extends": ["tslint-microsoft-contrib/stable"]
     // ...
 }
 ```
@@ -60,11 +60,11 @@ These rules will not be added to in minor or patch releases, but will be in majo
 
 #### Latest
 
-To run with the latest and greatest rules ([configs/latest.json](./configs/latest.json)), extend from `tslint-microsoft-contrib/configs/latest`:
+To run with the latest and greatest rules ([latest.json](./latest.json)), extend from `tslint-microsoft-contrib/latest`:
 
 ```json
 {
-    "extends": ["tslint-microsoft-contrib/configs/latest.json"]
+    "extends": ["tslint-microsoft-contrib/latest"]
     // ...
 }
 ```
@@ -75,7 +75,7 @@ These rules will not be added to in patch releases, but will be in minor release
 
 The "recommended" ruleset that ships by extending `tslint-microsoft-contrib` itself contains a list of rules that includes core TSLint rules.
 
-To start, you can enable our recommended defaults ([configs/recommended.json](./configs/recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+To start, you can enable our recommended defaults ([recommended.json](./recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
 
 ```json
 {

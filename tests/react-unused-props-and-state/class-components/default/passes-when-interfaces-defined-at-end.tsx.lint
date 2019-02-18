@@ -1,0 +1,18 @@
+module SomeModule {
+    export class SomeComponent extends SomeBaseComponent<Props, State> {
+        public render() {
+            console.log(this.props.myProp);
+            console.log(this.state.myState);
+            return null;
+        }
+    }
+
+    export interface Props {
+        myProp: string;
+    }
+
+    export interface State {
+        myState: string;
+    }
+}
+export = SomeModule;

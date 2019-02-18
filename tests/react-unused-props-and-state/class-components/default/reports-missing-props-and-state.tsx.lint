@@ -1,0 +1,27 @@
+import React = require('react');
+
+module VideoContainer {
+    export interface Props {
+        myProp1: boolean;
+        ~~~~~~~~~~~~~~~~~ [Unused React property defined in interface: myProp1]
+        myProp2: boolean;
+        ~~~~~~~~~~~~~~~~~ [Unused React property defined in interface: myProp2]
+    }
+    export interface State {
+        myState1: boolean;
+        ~~~~~~~~~~~~~~~~~~ [Unused React state defined in interface: myState1]
+        myState2: boolean;
+        ~~~~~~~~~~~~~~~~~~ [Unused React state defined in interface: myState2]
+    }
+}
+
+class VideoContainer extends React.Component<VideoContainer.Props, VideoContainer.State> {
+    constructor(props: VideoContainer.Props) {
+        super(props);
+    }
+
+    public render(): ReactTypes.ReactElement<any> {
+        return null;
+    }
+}
+export = VideoContainer;

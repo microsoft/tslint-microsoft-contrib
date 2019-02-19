@@ -352,7 +352,8 @@ function walk(ctx: Lint.WalkContext<Options>) {
 
     ts.forEachChild(ctx.sourceFile, cb);
 
-    // If there are Props or State interfaces, then scan the classes now.
+    // if there are Props or State interfaces, traverse the identified components
+    // to find any usage of the members in these interfaces
     if (propNames.length > 0 || stateNames.length > 0) {
         classDeclarations.forEach(c => ts.forEachChild(c, cb));
         arrowFunctions.forEach(c => ts.forEachChild(c.body, cb));

@@ -78,6 +78,8 @@ function walk(ctx: Lint.WalkContext<Options>) {
     let stateNames: string[] = [];
     let stateNodes: { [index: string]: ts.TypeElement } = {};
     const classDeclarations: ts.ClassDeclaration[] = [];
+    const arrowFunctions: ts.ArrowFunction[] = [];
+    const functionComponents: ts.FunctionBody[] = [];
     let propsAlias: string | undefined;
     let stateAlias: string | undefined;
 
@@ -96,12 +98,149 @@ function walk(ctx: Lint.WalkContext<Options>) {
         return result;
     }
 
+    function getTypeLiteralData(node: ts.TypeLiteralNode): { [index: string]: ts.TypeElement } {
+        const result: { [index: string]: ts.TypeElement } = {};
+        node.members.forEach(
+            (typeElement: ts.TypeElement): void => {
+                if (typeElement.name !== undefined) {
+                    const text = typeElement.name.getText();
+                    if (text !== undefined) {
+                        result[text] = typeElement;
+                    }
+                }
+            }
+        );
+        return result;
+    }
+
+    function getObjectBindingData(node: ts.ObjectBindingPattern): { [index: string]: ts.BindingElement } {
+        const result: { [index: string]: ts.BindingElement } = {};
+        node.elements.forEach(
+            (element: ts.BindingElement): void => {
+                if (element.name !== undefined) {
+                    const text = element.name.getText();
+                    if (text !== undefined) {
+                        result[text] = element;
+                    }
+                }
+            }
+        );
+        return result;
+    }
+
     function isParentNodeSuperCall(node: ts.Node): boolean {
         if (node.parent !== undefined && node.parent.kind === ts.SyntaxKind.CallExpression) {
             const call: ts.CallExpression = <ts.CallExpression>node.parent;
             return call.expression.getText() === 'super';
         }
         return false;
+    }
+
+    function inspectPropUsageInObjectBinding(name: ts.ObjectBindingPattern): void {
+        const bindingElements = getObjectBindingData(name);
+        const foundPropNames = Object.keys(bindingElements);
+
+        for (const propName of foundPropNames) {
+            propNames = Utils.remove(propNames, propName);
+        }
+    }
+
+    function lookForReactSpecificArrowFunction(node: ts.TypeReferenceNode): void {
+        const nodeTypeText = node.typeName.getText();
+
+        const isReactFunctionComponentType =
+            nodeTypeText === 'React.SFC' ||
+            nodeTypeText === 'SFC' ||
+            nodeTypeText === 'React.FC' ||
+            nodeTypeText === 'FC' ||
+            nodeTypeText === 'React.StatelessComponent' ||
+            nodeTypeText === 'StatelessComponent' ||
+            nodeTypeText === 'React.FunctionComponent' ||
+            nodeTypeText === 'FunctionComponent';
+
+        if (!isReactFunctionComponentType) {
+            return;
+        }
+
+        if (!node.typeArguments || node.typeArguments.length !== 1) {
+            return;
+        }
+
+        const typeArgument = node.typeArguments[0];
+
+        if (tsutils.isTypeLiteralNode(typeArgument)) {
+            propNodes = getTypeLiteralData(typeArgument);
+            propNames = Object.keys(propNodes);
+        } else {
+            // we have a TypeReference here which we expect to have been parsed
+            // previously in the AST
+        }
+
+        // the arrow function should be a sibling of this type reference node
+        const arrowFunction = tsutils.getChildOfKind(node.parent, ts.SyntaxKind.ArrowFunction);
+
+        if (!arrowFunction || !tsutils.isArrowFunction(arrowFunction)) {
+            return;
+        }
+
+        lookForArrowFunction(arrowFunction);
+    }
+
+    function lookForArrowFunction(node: ts.ArrowFunction): void {
+        // expect one parameter for the function
+        const parameters = node.parameters;
+        if (parameters.length !== 1) {
+            return;
+        }
+
+        const firstParameter = parameters[0];
+        const { name, type } = firstParameter;
+        if (type && tsutils.isTypeReferenceNode(type)) {
+            const typeName = type.typeName.getText();
+            // skip any type that doesn't match the expected regex
+            if (!ctx.options.propsInterfaceRegex.test(typeName)) {
+                return;
+            }
+        }
+
+        if (tsutils.isIdentifier(name)) {
+            propsAlias = name.getText();
+        } else if (tsutils.isObjectBindingPattern(name)) {
+            inspectPropUsageInObjectBinding(name);
+        }
+
+        arrowFunctions.push(node);
+    }
+
+    function lookForFunctionComponent(node: ts.FunctionDeclaration | ts.FunctionExpression): void {
+        // if no body found, no need to traverse
+        if (!node.body) {
+            return;
+        }
+
+        // expect one parameter for the function
+        const parameters = node.parameters;
+        if (parameters.length !== 1) {
+            return;
+        }
+
+        const firstParameter = parameters[0];
+        const { name, type } = firstParameter;
+        if (type && tsutils.isTypeReferenceNode(type)) {
+            const typeName = type.typeName.getText();
+            // skip any type that doesn't match the expected regex
+            if (!ctx.options.propsInterfaceRegex.test(typeName)) {
+                return;
+            }
+        }
+
+        if (tsutils.isIdentifier(name)) {
+            propsAlias = name.getText();
+        } else if (tsutils.isObjectBindingPattern(name)) {
+            inspectPropUsageInObjectBinding(name);
+        }
+
+        functionComponents.push(node.body);
     }
 
     function cb(node: ts.Node): void {
@@ -198,6 +337,14 @@ function walk(ctx: Lint.WalkContext<Options>) {
                     stateNames = [];
                 }
             }
+        } else if (tsutils.isTypeReferenceNode(node)) {
+            lookForReactSpecificArrowFunction(node);
+        } else if (tsutils.isArrowFunction(node)) {
+            lookForArrowFunction(node);
+        } else if (tsutils.isFunctionDeclaration(node)) {
+            lookForFunctionComponent(node);
+        } else if (tsutils.isFunctionExpression(node)) {
+            lookForFunctionComponent(node);
         }
 
         return ts.forEachChild(node, cb);
@@ -205,9 +352,12 @@ function walk(ctx: Lint.WalkContext<Options>) {
 
     ts.forEachChild(ctx.sourceFile, cb);
 
-    // If there are Props or State interfaces, then scan the classes now.
+    // if there are Props or State interfaces, traverse the identified components
+    // to find any usage of the members in these interfaces
     if (propNames.length > 0 || stateNames.length > 0) {
         classDeclarations.forEach(c => ts.forEachChild(c, cb));
+        arrowFunctions.forEach(c => ts.forEachChild(c.body, cb));
+        functionComponents.forEach(f => ts.forEachChild(f, cb));
     }
 
     propNames.forEach(

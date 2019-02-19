@@ -1,0 +1,11 @@
+import React = require('react');
+
+interface Props {
+    text: string;
+    wrap?: boolean;
+    ~~~~~~~~~~~~~~~ [Unused React property defined in interface: wrap]
+}
+
+export const SampleArrowFunction = ({ text }: Props) => {
+    return <span>{text}</span>;
+};

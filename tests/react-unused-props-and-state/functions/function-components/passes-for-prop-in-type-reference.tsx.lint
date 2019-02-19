@@ -1,0 +1,9 @@
+import React = require('react');
+
+interface Props {
+    readonly text: string
+}
+
+export const SpanWithText: React.FunctionComponent<Props> = (props: Props) => (
+    <span>{props.text}</span>
+)

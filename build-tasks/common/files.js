@@ -2,6 +2,15 @@ const { red } = require('chalk');
 const fs = require('fs');
 const stripJsonComments = require('strip-json-comments');
 
+function readDirectory(directoryName) {
+    try {
+        return fs.readdirSync(directoryName);
+    } catch (e) {
+        console.log(red(`Unable to read directory: ${directoryName}. Error code: ${e.code}`));
+        process.exit(1);
+    }
+}
+
 function readFile(fileName) {
     try {
         return fs.readFileSync(fileName, { encoding: 'utf8' });
@@ -39,6 +48,7 @@ function readJSONWithComments(fileName) {
 }
 
 module.exports = {
+    readDirectory,
     readFile,
     readJSON,
     readJSONWithComments,

@@ -40,23 +40,59 @@ Add `"node_modules/tslint-microsoft-contrib"` under your `"rulesDirectory"` conf
 ### Which Rules Should I Turn On?
 
 There certainly are a lot of options!
-To start, you can enable our recommended defaults ([recommended_ruleset.js](recommended_ruleset.js)) by adding `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+
+If you extend from one of the following configurations, `rulesDirectory` will have `node_modules/tslint-microsoft-contrib` included for you.
+
+> Please note, some of the default ruleset rules require the `--project` TSLint option.
+
+#### Recommended
+
+To start, you can enable our stable "recommended" defaults that come with tslint-microsoft-contrib ([recommended.json](./recommended.json)) by adding `"tslint-microsoft-contrib/recommended"` under `"extends"` in your `tslint.json`:
 
 ```json
 {
-    "extends": ["tslint-microsoft-contrib"],
-    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
-    "rules": {
-        // ...
-    }
+    "extends": ["tslint-microsoft-contrib/recommended"]
+    // ...
 }
 ```
 
-You can then disable rules you don't find useful.
+These rules will not be added to in minor or patch releases, but will be in major releases.
 
-Please note, some of the default rules require the `--project` TSLint option.
+#### Latest
 
-Also, please note that adding a rule to the recommended ruleset is considered backwards compatible.
+To run with the latest and greatest rules ([latest.json](./latest.json)), extend from `tslint-microsoft-contrib/latest`:
+
+```json
+{
+    "extends": ["tslint-microsoft-contrib/latest"]
+    // ...
+}
+```
+
+These rules will not be added to in patch releases, but will be in minor releases.
+
+#### Legacy
+
+The old "recommended" ruleset that ships by extending `tslint-microsoft-contrib` itself contains a list of rules that includes core TSLint rules.
+
+To start, you can enable our recommended defaults ([recommended.json](./recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+
+```json
+{
+    "extends": ["tslint-microsoft-contrib"]
+    // ...
+}
+```
+
+**This ruleset is considered legacy**; it is generally preferable to extend from the 'recommended' or 'latest' rulesets.
+We recommend you instead explicitly include `tslint:recommended`, `tslint:latest`, or `tslint:all` in your `tslint.json` rather than enable core rules through this configuration.
+
+In the next major version of TSLint, this will instead be an alis for `"tslint-microsoft-contrib/recommended"`.
+
+### Overriding Configurations
+
+You can [disable rules](https://palantir.github.io/tslint/usage/rule-flags) you don't find useful.
+
 If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
 We recommend you specify exact versions of lint libraries, including `tslint-microsoft-contrib`, in your `package.json`.
 

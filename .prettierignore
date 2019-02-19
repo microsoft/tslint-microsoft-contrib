@@ -1,15 +1,11 @@
 # Build directory
 dist/
 
+# Configuration and npm settings
+*.json
+
 # Definition files
 *.d.ts
 
-# NPM files
-package.json
-package-lock.json
-
 # Test files
 test-data/NoUnnecessarySemicolonsTestInput.ts
-
-# Generated files
-recommended_ruleset.js

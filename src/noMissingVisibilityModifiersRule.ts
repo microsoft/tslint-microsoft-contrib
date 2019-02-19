@@ -18,7 +18,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // use tslint member-access rule instead',
+        recommendation: 'false',
         commonWeaknessEnumeration: '398, 710'
     };
 

@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // use tslint no-empty-interface rule instead',
+        recommendation: 'false',
         commonWeaknessEnumeration: '398, 710'
     };
 

@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Mandatory',
-        recommendation: 'false, // use tslint function-constructor rule intsead',
+        recommendation: 'false',
         group: 'Security',
         commonWeaknessEnumeration: '95, 676, 242, 116'
     };

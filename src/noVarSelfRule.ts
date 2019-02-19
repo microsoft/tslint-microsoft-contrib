@@ -23,7 +23,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Important',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false,',
+        recommendation: 'false',
         commonWeaknessEnumeration: '398, 710'
     };
 

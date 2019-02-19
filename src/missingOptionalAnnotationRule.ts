@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // now supported by TypeScript compiler'
+        recommendation: 'false'
     };
 
     public static FAILURE_STRING: string = 'Argument following optional argument missing optional annotation: ';

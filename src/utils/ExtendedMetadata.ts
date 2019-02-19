@@ -30,6 +30,6 @@ export type Severity = 'Critical' | 'Important' | 'Moderate' | 'Low';
 export type Level = 'Mandatory' | 'Opportunity for Excellence';
 
 /**
- * Ignored - Use this value to exclude the rule from recommended.json.
+ * Ignored - Use this value to exclude the rule from configuration files.
  */
 export type Group = 'Ignored' | 'Security' | 'Correctness' | 'Accessibility' | 'Clarity' | 'Whitespace' | 'Configurable' | 'Deprecated';

@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: 'false,',
+        recommendation: 'false',
         commonWeaknessEnumeration: '710'
     };
 

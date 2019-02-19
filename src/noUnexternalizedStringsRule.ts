@@ -17,7 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'false, // the VS Code team has a specific localization process that this rule enforces'
+        recommendation: 'false'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {

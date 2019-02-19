@@ -16,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         typescriptOnly: true,
         issueClass: 'SDL',
         issueType: 'Error',
-        recommendation: 'false,',
+        recommendation: 'false',
         severity: 'Critical',
         level: 'Mandatory',
         group: 'Deprecated',

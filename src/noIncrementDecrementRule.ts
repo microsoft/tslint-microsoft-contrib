@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        recommendation: 'false, // use tslint increment-decrement rule instead',
+        recommendation: 'false',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };

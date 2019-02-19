@@ -1,0 +1,11 @@
+import * as React, { StatelessComponent } from 'react';
+
+interface Props {
+    readonly text: string
+    readonly wrap?: boolean;
+    ~~~~~~~~~~~~~~~~~~~~~~~~ [Unused React property defined in interface: wrap]
+}
+
+export const SpanWithText: StatelessComponent<Props> = (props: Props) => (
+    <span>{props.text}</span>
+)

@@ -1,0 +1,14 @@
+import React = require('react');
+
+interface Props {
+    heading: string;
+    className?: string;
+}
+
+export function TestComponent(p: Props) {
+    return (
+        <div className={p.className}>
+            <h3>{p.heading}</h3>
+        </div>
+    )
+}

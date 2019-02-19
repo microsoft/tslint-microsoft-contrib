@@ -1,0 +1,10 @@
+import React = require('react');
+
+interface SampleProps {
+    text: string;
+    wrap?: boolean;
+}
+
+export const SampleFunctionExpression = function ({ text, wrap }: SampleProps) {
+    return wrap ? <span>{text}</span> : text;
+};

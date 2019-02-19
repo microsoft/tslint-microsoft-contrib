@@ -1,0 +1,18 @@
+import React = require('react');
+
+interface Props {
+    children?: React.ReactNode;
+    heading: string;
+    className?: string;
+}
+
+export function TestComponent(props: Props) {
+    return (
+        <div className={props.className || ''}>
+            <h3>{props.heading}</h3>
+            {props.children}
+        </div>
+    )
+}
+
+export default TestComponent;

@@ -1,0 +1,16 @@
+import React = require('react');
+
+interface Props {
+    children: JSX.Element | JSX.Element[];
+    className: string;
+}
+
+const ButtonGroup: React.SFC<Props> = (props: Props) => {
+    const container = (
+        <div className={props.className}>
+        {props.children}
+        </div>
+    );
+
+    return container;
+};

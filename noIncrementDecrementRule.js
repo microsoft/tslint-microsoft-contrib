@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var OPTION_ALLOW_FOR_LOOPS = 'allow-for-loops';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,16 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoIncrementDecrementWalker(sourceFile, this.getOptions()));
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-increment-decrement rule is deprecated. Replace your usage with the TSLint increment-decrement rule.');
+            Rule.isWarningShown = true;
+        }
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        return {
+            allowForLoops: options.ruleArguments.indexOf(OPTION_ALLOW_FOR_LOOPS) > -1
+        };
     };
     Rule.metadata = {
         ruleName: 'no-increment-decrement',
@@ -43,49 +53,47 @@ var Rule = (function (_super) {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
+        recommendation: 'false',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoIncrementDecrementWalker = (function (_super) {
-    __extends(NoIncrementDecrementWalker, _super);
-    function NoIncrementDecrementWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowForLoops = options.ruleArguments.indexOf(OPTION_ALLOW_FOR_LOOPS) > -1;
-        return _this;
-    }
-    NoIncrementDecrementWalker.prototype.visitForStatement = function (node) {
-        if (this.allowForLoops) {
-            _super.prototype.visitNode.call(this, node.statement);
-            if (node.initializer) {
-                _super.prototype.visitNode.call(this, node.initializer);
-            }
-            if (node.condition) {
-                _super.prototype.visitNode.call(this, node.condition);
-            }
-        }
-        else {
-            _super.prototype.visitForStatement.call(this, node);
-        }
-    };
-    NoIncrementDecrementWalker.prototype.visitPostfixUnaryExpression = function (node) {
-        this.validateUnaryExpression(node);
-        _super.prototype.visitPostfixUnaryExpression.call(this, node);
-    };
-    NoIncrementDecrementWalker.prototype.visitPrefixUnaryExpression = function (node) {
-        this.validateUnaryExpression(node);
-        _super.prototype.visitPrefixUnaryExpression.call(this, node);
-    };
-    NoIncrementDecrementWalker.prototype.validateUnaryExpression = function (node) {
+function walk(ctx) {
+    function validateUnaryExpression(node) {
         if (node.operator === ts.SyntaxKind.PlusPlusToken) {
-            this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden ++ operator');
+            ctx.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden ++ operator');
         }
         else if (node.operator === ts.SyntaxKind.MinusMinusToken) {
-            this.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden -- operator');
+            ctx.addFailureAt(node.getStart(), node.getWidth(), 'Forbidden -- operator');
         }
-    };
-    return NoIncrementDecrementWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isForStatement(node)) {
+            if (ctx.options.allowForLoops) {
+                cb(node.statement);
+                if (node.initializer) {
+                    cb(node.initializer);
+                }
+                if (node.condition) {
+                    cb(node.condition);
+                }
+            }
+            else {
+                ts.forEachChild(node, cb);
+            }
+            return;
+        }
+        if (tsutils.isPostfixUnaryExpression(node)) {
+            validateUnaryExpression(node);
+        }
+        else if (tsutils.isPrefixUnaryExpression(node)) {
+            validateUnaryExpression(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noIncrementDecrementRule.js.map

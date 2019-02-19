@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils_1 = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoMultilineStringWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-multiline-string',
@@ -35,27 +36,23 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: 'false,',
+        recommendation: 'false',
         commonWeaknessEnumeration: '710'
     };
     Rule.FAILURE_STRING = 'Forbidden Multiline string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoMultilineStringWalker = (function (_super) {
-    __extends(NoMultilineStringWalker, _super);
-    function NoMultilineStringWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoMultilineStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils_1.isNoSubstitutionTemplateLiteral(node)) {
             var fullText = node.getFullText();
             var firstLine = fullText.substring(0, fullText.indexOf('\n'));
             var trimmed = firstLine.substring(0, 40).trim();
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...');
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + trimmed + '...');
         }
-        _super.prototype.visitNode.call(this, node);
-    };
-    return NoMultilineStringWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noMultilineStringRule.js.map

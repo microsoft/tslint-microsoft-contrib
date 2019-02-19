@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
-var NoStringParameterToFunctionCallWalker_1 = require("./utils/NoStringParameterToFunctionCallWalker");
+var createNoStringParameterToFunctionWalker_1 = require("./utils/createNoStringParameterToFunctionWalker");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -24,8 +24,7 @@ var Rule = (function (_super) {
         return this.applyWithProgram(sourceFile, undefined);
     };
     Rule.prototype.applyWithProgram = function (sourceFile, program) {
-        var walker = new NoStringParameterToFunctionCallWalker_1.NoStringParameterToFunctionCallWalker(sourceFile, 'setImmediate', this.getOptions(), program);
-        return this.applyWithWalker(walker);
+        return this.applyWithFunction(sourceFile, createNoStringParameterToFunctionWalker_1.createNoStringParameterToFunctionWalker('setImmediate', this.getOptions(), program));
     };
     Rule.metadata = {
         ruleName: 'no-string-based-set-immediate',

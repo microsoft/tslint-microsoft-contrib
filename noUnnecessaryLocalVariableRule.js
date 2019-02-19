@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
 var tsutils = require("tsutils");
 var FAILURE_STRING = 'Unnecessary local variable: ';
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new UnnecessaryLocalVariableRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-unnecessary-local-variable',
@@ -41,43 +42,16 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var UnnecessaryLocalVariableRuleWalker = (function (_super) {
-    __extends(UnnecessaryLocalVariableRuleWalker, _super);
-    function UnnecessaryLocalVariableRuleWalker() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.variableUsages = tsutils.collectVariableUsage(_this.getSourceFile());
-        return _this;
-    }
-    UnnecessaryLocalVariableRuleWalker.prototype.visitBlock = function (node) {
-        this.validateStatementArray(node.statements);
-        _super.prototype.visitBlock.call(this, node);
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.visitSourceFile = function (node) {
-        this.validateStatementArray(node.statements);
-        _super.prototype.visitSourceFile.call(this, node);
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.visitCaseClause = function (node) {
-        this.validateStatementArray(node.statements);
-        _super.prototype.visitCaseClause.call(this, node);
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.visitDefaultClause = function (node) {
-        this.validateStatementArray(node.statements);
-        _super.prototype.visitDefaultClause.call(this, node);
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.visitModuleDeclaration = function (node) {
-        if (node.body !== undefined && tsutils.isModuleBlock(node.body)) {
-            this.validateStatementArray(node.body.statements);
-        }
-        _super.prototype.visitModuleDeclaration.call(this, node);
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.validateStatementArray = function (statements) {
+function walk(ctx) {
+    var variableUsages = tsutils.collectVariableUsage(ctx.sourceFile);
+    function validateStatementArray(statements) {
         if (statements === undefined || statements.length < 2) {
             return;
         }
         var lastStatement = statements[statements.length - 1];
         var nextToLastStatement = statements[statements.length - 2];
-        var returnedVariableName = this.tryToGetReturnedVariableName(lastStatement);
-        var declaredVariableIdentifier = this.tryToGetDeclaredVariable(nextToLastStatement);
+        var returnedVariableName = tryToGetReturnedVariableName(lastStatement);
+        var declaredVariableIdentifier = tryToGetDeclaredVariable(nextToLastStatement);
         if (declaredVariableIdentifier === undefined) {
             return;
         }
@@ -85,33 +59,44 @@ var UnnecessaryLocalVariableRuleWalker = (function (_super) {
         if (returnedVariableName !== undefined &&
             declaredVariableName !== undefined &&
             returnedVariableName === declaredVariableName &&
-            this.variableIsOnlyUsedOnce(declaredVariableIdentifier)) {
-            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
+            variableIsOnlyUsedOnce(declaredVariableIdentifier)) {
+            ctx.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
         }
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.tryToGetDeclaredVariable = function (statement) {
+    }
+    function tryToGetDeclaredVariable(statement) {
         if (statement !== undefined && tsutils.isVariableStatement(statement)) {
             if (statement.declarationList.declarations.length === 1) {
                 var declaration = statement.declarationList.declarations[0];
-                if (declaration.name !== undefined && tsutils.isIdentifier(declaration.name)) {
+                if (declaration.name && tsutils.isIdentifier(declaration.name)) {
                     return declaration.name;
                 }
             }
         }
         return undefined;
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.tryToGetReturnedVariableName = function (statement) {
+    }
+    function tryToGetReturnedVariableName(statement) {
         if (statement !== undefined && tsutils.isReturnStatement(statement)) {
-            if (statement.expression !== undefined && tsutils.isIdentifier(statement.expression)) {
+            if (statement.expression && tsutils.isIdentifier(statement.expression)) {
                 return statement.expression.text;
             }
         }
         return undefined;
-    };
-    UnnecessaryLocalVariableRuleWalker.prototype.variableIsOnlyUsedOnce = function (declaredVariableIdentifier) {
-        var usage = this.variableUsages.get(declaredVariableIdentifier);
+    }
+    function variableIsOnlyUsedOnce(declaredVariableIdentifier) {
+        var usage = variableUsages.get(declaredVariableIdentifier);
         return usage !== undefined && usage.uses.length === 1;
-    };
-    return UnnecessaryLocalVariableRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isBlock(node) || tsutils.isSourceFile(node) || tsutils.isCaseClause(node) || tsutils.isDefaultClause(node)) {
+            validateStatementArray(node.statements);
+        }
+        if (tsutils.isModuleDeclaration(node)) {
+            if (node.body && tsutils.isModuleBlock(node.body)) {
+                validateStatementArray(node.body.statements);
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noUnnecessaryLocalVariableRule.js.map

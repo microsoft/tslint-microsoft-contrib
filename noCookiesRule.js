@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.applyWithProgram = function (sourceFile, program) {
-        return this.applyWithWalker(new NoCookiesWalker(sourceFile, this.getOptions(), program));
+        return this.applyWithFunction(sourceFile, walk, undefined, program);
     };
     Rule.metadata = {
         ruleName: 'no-cookies',
@@ -41,32 +42,29 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.TypedRule));
 exports.Rule = Rule;
-var NoCookiesWalker = (function (_super) {
-    __extends(NoCookiesWalker, _super);
-    function NoCookiesWalker(sourceFile, options, program) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.typeChecker = program.getTypeChecker();
-        return _this;
-    }
-    NoCookiesWalker.prototype.visitPropertyAccessExpression = function (node) {
-        var propertyName = node.name.text;
-        if (propertyName === 'cookie') {
-            var leftSide = node.expression;
-            try {
-                var leftSideType = this.typeChecker.getTypeAtLocation(leftSide);
-                var typeAsString = this.typeChecker.typeToString(leftSideType);
-                if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
-                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
+function walk(ctx, program) {
+    var typeChecker = program.getTypeChecker();
+    function cb(node) {
+        if (tsutils.isPropertyAccessExpression(node)) {
+            var propertyName = node.name.text;
+            if (propertyName === 'cookie') {
+                var leftSide = node.expression;
+                try {
+                    var leftSideType = typeChecker.getTypeAtLocation(leftSide);
+                    var typeAsString = typeChecker.typeToString(leftSideType);
+                    if (leftSideType.flags === ts.TypeFlags.Any || typeAsString === 'Document') {
+                        ctx.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
+                    }
                 }
-            }
-            catch (e) {
-                if (leftSide.getFullText().trim() === 'document') {
-                    this.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
+                catch (e) {
+                    if (leftSide.getFullText().trim() === 'document') {
+                        ctx.addFailureAt(leftSide.getStart(), leftSide.getWidth(), Rule.FAILURE_STRING);
+                    }
                 }
             }
         }
-        _super.prototype.visitPropertyAccessExpression.call(this, node);
-    };
-    return NoCookiesWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noCookiesRule.js.map

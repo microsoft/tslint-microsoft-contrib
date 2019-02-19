@@ -15,13 +15,32 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
+var Spacing;
+(function (Spacing) {
+    Spacing[Spacing["always"] = 0] = "always";
+    Spacing[Spacing["never"] = 1] = "never";
+})(Spacing || (Spacing = {}));
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            spacing: Spacing.always,
+            allowMultiline: false
+        };
+        if (options.ruleArguments[0] === 'never') {
+            parsed.spacing = Spacing.never;
+        }
+        if (options.ruleArguments[1] !== undefined) {
+            parsed.allowMultiline = options.ruleArguments[1].allowMultiline !== false;
+        }
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'react-tsx-curly-spacing',
@@ -34,70 +53,35 @@ var Rule = (function (_super) {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated'
     };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var Spacing;
-(function (Spacing) {
-    Spacing[Spacing["always"] = 0] = "always";
-    Spacing[Spacing["never"] = 1] = "never";
-})(Spacing || (Spacing = {}));
-var TsxCurlySpacingWalker = (function (_super) {
-    __extends(TsxCurlySpacingWalker, _super);
-    function TsxCurlySpacingWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
-        _this.allowMultiline = false;
-        if (options.ruleArguments[1] !== undefined) {
-            _this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
-        }
-        return _this;
-    }
-    TsxCurlySpacingWalker.prototype.visitJsxExpression = function (node) {
-        var childrenCount = node.getChildCount();
-        if (childrenCount > 2) {
-            var first = node.getFirstToken();
-            var last = node.getLastToken();
-            var second = node.getChildAt(1);
-            var penultimate = node.getChildAt(childrenCount - 2);
-            this.validateBraceSpacing(node, first, second, first);
-            this.validateBraceSpacing(node, penultimate, last, last);
-        }
-    };
-    TsxCurlySpacingWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.JsxExpression) {
-            this.visitJsxExpression(node);
-            this.walkChildren(node);
-        }
-        else {
-            _super.prototype.visitNode.call(this, node);
-        }
-    };
-    TsxCurlySpacingWalker.prototype.validateBraceSpacing = function (node, first, second, violationRoot) {
+function walk(ctx) {
+    function validateBraceSpacing(node, first, second, violationRoot) {
         if (first === undefined || second === undefined || violationRoot === undefined) {
             return;
         }
-        if (this.isMultiline(first, second)) {
-            if (!this.allowMultiline) {
-                this.reportFailure(node, violationRoot, this.getFailureForNewLine(first, violationRoot));
+        if (isMultiline(first, second)) {
+            if (!ctx.options.allowMultiline) {
+                reportFailure(node, violationRoot, getFailureForNewLine(first, violationRoot));
             }
         }
-        else if (this.spacing === Spacing.always) {
-            if (!this.isSpaceBetweenTokens(first, second)) {
-                this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
+        else if (ctx.options.spacing === Spacing.always) {
+            if (!isSpaceBetweenTokens(first, second)) {
+                reportFailure(node, violationRoot, getFailureForSpace(first, violationRoot));
             }
         }
         else {
-            if (this.isSpaceBetweenTokens(first, second)) {
-                this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
+            if (isSpaceBetweenTokens(first, second)) {
+                reportFailure(node, violationRoot, getFailureForSpace(first, violationRoot));
             }
         }
-    };
-    TsxCurlySpacingWalker.prototype.getFailureForSpace = function (first, violationRoot) {
-        if (this.spacing === Spacing.always) {
+    }
+    function getFailureForSpace(first, violationRoot) {
+        if (ctx.options.spacing === Spacing.always) {
             if (first === violationRoot) {
                 return "A space is required after '" + violationRoot.getText() + "'";
             }
@@ -113,30 +97,42 @@ var TsxCurlySpacingWalker = (function (_super) {
                 return "There should be no space before '" + violationRoot.getText() + "'";
             }
         }
-    };
-    TsxCurlySpacingWalker.prototype.getFailureForNewLine = function (first, violationRoot) {
+    }
+    function getFailureForNewLine(first, violationRoot) {
         if (first === violationRoot) {
             return "There should be no newline after '" + violationRoot.getText() + "'";
         }
         else {
             return "There should be no newline before '" + violationRoot.getText() + "'";
         }
-    };
-    TsxCurlySpacingWalker.prototype.reportFailure = function (start, endNode, failure) {
-        this.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
-    };
-    TsxCurlySpacingWalker.prototype.isSpaceBetweenTokens = function (left, right) {
-        var text = this.getSourceFile()
-            .getText()
-            .slice(left.getEnd(), right.getStart());
+    }
+    function reportFailure(start, endNode, failure) {
+        ctx.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
+    }
+    function isSpaceBetweenTokens(left, right) {
+        var text = ctx.sourceFile.getText().slice(left.getEnd(), right.getStart());
         return /\s/.test(text.replace(/\/\*.*?\*\//g, ''));
-    };
-    TsxCurlySpacingWalker.prototype.isMultiline = function (left, right) {
-        var sourceFile = this.getSourceFile();
+    }
+    function isMultiline(left, right) {
+        var sourceFile = ctx.sourceFile;
         var leftLine = sourceFile.getLineAndCharacterOfPosition(left.getStart()).line;
         var rightLine = sourceFile.getLineAndCharacterOfPosition(right.getStart()).line;
         return leftLine !== rightLine;
-    };
-    return TsxCurlySpacingWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxExpression(node)) {
+            var childrenCount = node.getChildCount();
+            if (childrenCount > 2) {
+                var first = node.getFirstToken();
+                var last = node.getLastToken();
+                var second = node.getChildAt(1);
+                var penultimate = node.getChildAt(childrenCount - 2);
+                validateBraceSpacing(node, first, second, first);
+                validateBraceSpacing(node, penultimate, last, last);
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactTsxCurlySpacingRule.js.map

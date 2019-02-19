@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var Rule = (function (_super) {
@@ -22,7 +24,25 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoGenericArrayWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var value = false;
+        var ruleOptions = [];
+        if (options.ruleArguments instanceof Array) {
+            ruleOptions = options.ruleArguments;
+        }
+        if (options instanceof Array) {
+            ruleOptions = options;
+        }
+        ruleOptions.forEach(function (opt) {
+            if (TypeGuard_1.isObject(opt)) {
+                value = opt['allow-type-parameters'] === true;
+            }
+        });
+        return {
+            allowTypeParameters: value
+        };
     };
     Rule.metadata = {
         ruleName: 'prefer-array-literal',
@@ -43,35 +63,26 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoGenericArrayWalker = (function (_super) {
-    __extends(NoGenericArrayWalker, _super);
-    function NoGenericArrayWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowTypeParameters = false;
-        _this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                _this.allowTypeParameters = opt['allow-type-parameters'] === true;
+function walk(ctx) {
+    var allowTypeParameters = ctx.options.allowTypeParameters;
+    function cb(node) {
+        if (tsutils.isTypeReferenceNode(node)) {
+            if (!allowTypeParameters) {
+                if (node.typeName.text === 'Array') {
+                    var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                }
             }
-        });
-        return _this;
+        }
+        if (tsutils.isNewExpression(node)) {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (functionName === 'Array') {
+                var failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+        return ts.forEachChild(node, cb);
     }
-    NoGenericArrayWalker.prototype.visitTypeReference = function (node) {
-        if (this.allowTypeParameters === false) {
-            if (node.typeName.text === 'Array') {
-                var failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-            }
-        }
-        _super.prototype.visitTypeReference.call(this, node);
-    };
-    NoGenericArrayWalker.prototype.visitNewExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (functionName === 'Array') {
-            var failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        _super.prototype.visitNewExpression.call(this, node);
-    };
-    return NoGenericArrayWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=preferArrayLiteralRule.js.map

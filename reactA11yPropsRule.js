@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ARIA_SCHEMA = require('./utils/attributes/ariaSchema.json');
 function getFailureString(name) {
@@ -27,9 +28,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-props',
@@ -47,20 +46,21 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var A11yPropsWalker = (function (_super) {
-    __extends(A11yPropsWalker, _super);
-    function A11yPropsWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isJsxAttribute(node)) {
+            var name_1 = JsxAttribute_1.getPropName(node);
+            if (!name_1 || !name_1.match(/^aria-/i)) {
+                return;
+            }
+            if (!ARIA_SCHEMA[name_1.toLowerCase()]) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name_1));
+            }
+        }
+        else {
+            return ts.forEachChild(node, cb);
+        }
     }
-    A11yPropsWalker.prototype.visitJsxAttribute = function (node) {
-        var name = JsxAttribute_1.getPropName(node);
-        if (!name || !name.match(/^aria-/i)) {
-            return;
-        }
-        if (!ARIA_SCHEMA[name.toLowerCase()]) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(name));
-        }
-    };
-    return A11yPropsWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yPropsRule.js.map

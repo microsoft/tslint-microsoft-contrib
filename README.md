@@ -40,23 +40,59 @@ Add `"node_modules/tslint-microsoft-contrib"` under your `"rulesDirectory"` conf
 ### Which Rules Should I Turn On?
 
 There certainly are a lot of options!
-To start, you can enable our recommended defaults ([recommended_ruleset.js](recommended_ruleset.js)) by adding `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+
+If you extend from one of the following configurations, `rulesDirectory` will have `node_modules/tslint-microsoft-contrib` included for you.
+
+> Please note, some of the default ruleset rules require the `--project` TSLint option.
+
+#### Recommended
+
+To start, you can enable our stable "recommended" defaults that come with tslint-microsoft-contrib ([recommended.json](./recommended.json)) by adding `"tslint-microsoft-contrib/recommended"` under `"extends"` in your `tslint.json`:
 
 ```json
 {
-    "extends": ["tslint-microsoft-contrib"],
-    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
-    "rules": {
-        // ...
-    }
+    "extends": ["tslint-microsoft-contrib/recommended"]
+    // ...
 }
 ```
 
-You can then disable rules you don't find useful.
+These rules will not be added to in minor or patch releases, but will be in major releases.
 
-Please note, some of the default rules require the `--project` TSLint option.
+#### Latest
 
-Also, please note that adding a rule to the recommended ruleset is considered backwards compatible.
+To run with the latest and greatest rules ([latest.json](./latest.json)), extend from `tslint-microsoft-contrib/latest`:
+
+```json
+{
+    "extends": ["tslint-microsoft-contrib/latest"]
+    // ...
+}
+```
+
+These rules will not be added to in patch releases, but will be in minor releases.
+
+#### Legacy
+
+The old "recommended" ruleset that ships by extending `tslint-microsoft-contrib` itself contains a list of rules that includes core TSLint rules.
+
+To start, you can enable our recommended defaults ([recommended.json](./recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+
+```json
+{
+    "extends": ["tslint-microsoft-contrib"]
+    // ...
+}
+```
+
+**This ruleset is considered legacy**; it is generally preferable to extend from the 'recommended' or 'latest' rulesets.
+We recommend you instead explicitly include `tslint:recommended`, `tslint:latest`, or `tslint:all` in your `tslint.json` rather than enable core rules through this configuration.
+
+In the next major version of TSLint, this will instead be an alis for `"tslint-microsoft-contrib/recommended"`.
+
+### Overriding Configurations
+
+You can [disable rules](https://palantir.github.io/tslint/usage/rule-flags) you don't find useful.
+
 If you rely on version ranges in your dependencies then you may find that new rules being added to the product create violations and fail your build.
 We recommend you specify exact versions of lint libraries, including `tslint-microsoft-contrib`, in your `package.json`.
 
@@ -407,6 +443,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-function-constructor-with-string-args</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>function-constructor</code>.
         Do not use the version of the Function constructor that accepts a string argument to define the body of the function.
       </td>
       <td>0.0.1</td>
@@ -441,6 +478,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-increment-decrement</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>increment-decrement</code>.
         Avoid use of increment and decrement operators particularly as part of complicated expressions.
       </td>
       <td>0.0.1</td>
@@ -548,6 +586,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-reserved-keywords</code>
       </td>
       <td>
+        Deprecated - This rule can be replaced with TSLint's variable-name.
         Do not use reserved keywords as names of local variables, fields, functions, or other identifiers.
         Since version 2.0.9 this rule accepts a parameter called <code>allow-quoted-properties</code>.
         If true, interface properties in quotes will be ignored.
@@ -645,6 +684,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>no-unnecessary-bind</code>
       </td>
       <td>
+        Deprecated - This rule is in the TSLint product as <code>unnecessary-bind</code>.
         Do not bind 'this' as the context for a function literal or lambda expression.
         If you bind 'this' as the context to a function literal, then you should just use a lambda without the bind.
         If you bind 'this' as the context to a lambda, then you can remove the bind call because 'this' is already the context for lambdas.
@@ -810,6 +850,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-accessible-headings</code>
+      </td>
+      <td>
+        For accessibility of your website, there should be no more than 2 H1 heading elements, HTML heading elements must be concise, used for structuring information on the page and non-empty.
+      </td>
+      <td>6.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-anchors</code>
       </td>
       <td>
@@ -857,6 +906,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-iframes</code>
+      </td>
+      <td>
+        Enforce that iframe elements are not empty, have title, and are unique.
+      </td>
+      <td>6.1.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-image-button-has-alt</code>
       </td>
       <td>
@@ -880,7 +938,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <ul>
           <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent">Web Content Accessibility Guidelines 1.0</a></li>
           <li><a href="https://www.w3.org/TR/wai-aria/roles#presentation">ARIA Presentation Role</a></li>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/31">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>
         </ul>
       </td>
       <td>2.0.11</td>
@@ -931,18 +989,13 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         For accessibility of your website, enforce usage of onBlur over onChange on select menus.
+        References:
+        <ul>
+          <li><a href="http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php">OnChange Event Accessibility Issues</a></li>
+          <li><a href="https://www.w3.org/TR/WCAG10/wai-pageauth.html#gl-own-interface">Guideline 8. Ensure direct accessibility of embedded user interfaces.</a></li>
+        </ul>
       </td>
       <td>6.0.0-beta</td>
-    </tr>
-    <tr>
-      <td>
-        <code>use-simple-attributes</code>
-      </td>
-      <td>
-        Simpler attributes in JSX and TSX files helps keep code clean and readable.
-        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
-      </td>
-      <td>6.0.0</td>
     </tr>
     <tr>
       <td>
@@ -980,6 +1033,21 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-role</code>
+      </td>
+      <td>
+        For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
+        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
+        <br />
+        References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>
+        </ul>
+      </td>
+      <td>2.0.11</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-role-has-required-aria-props</code>
       </td>
       <td>
@@ -1009,21 +1077,6 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li><a href="http://oaa-accessibility.org/wcag20/rule/87">ARIA attributes can only be used with certain roles</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/84">Check aria properties and states for valid roles and properties</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/93">Check that 'ARIA-' attributes are valid properties and states</a></li>
-        </ul>
-      </td>
-      <td>2.0.11</td>
-    </tr>
-    <tr>
-      <td>
-        <code>react-a11y-role</code>
-      </td>
-      <td>
-        For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
-        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
-        <br />
-        References:
-        <ul>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>
         </ul>
       </td>
       <td>2.0.11</td>
@@ -1127,7 +1180,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
           <li>if a function instantiated in local scope is passed as a JSX attribute</li>
         </ul>
         This rule can be configured via the "allow-anonymous-listeners" parameter.
-        If you want to suppress violations for the anonymous listener scenarios then configure that rule like this: <code>"react-this-binding-issue": [ true, { 'allow-anonymous-listeners': true } ]</code>, you can also pass in array of string which can act as bind method decorators: <code>"react-this-bind-issue": [true, {'bind-decorators': ['autobind']}]</code></td>
+        If you want to suppress violations for the anonymous listener scenarios then configure that rule like this: <code>"react-this-binding-issue": [ true, { 'allow-anonymous-listeners': true } ]</code>, you can also pass in array of string which can act as bind method decorators: <code>"react-this-binding-issue": [true, {'bind-decorators': ['autobind']}]</code></td>
       <td>2.0.8, 2.0.9</td>
     </tr>
     <tr>
@@ -1198,6 +1251,16 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>use-simple-attributes</code>
+      </td>
+      <td>
+        Simpler attributes in JSX and TSX files helps keep code clean and readable.
+        Separate complex expressions into their own line and use clear variable names to make your code more understandable.
+      </td>
+      <td>6.0.0</td>
+    </tr>
+    <tr>
+      <td>
         <code>valid-typeof</code>
       </td>
       <td>
@@ -1208,9 +1271,22 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>1.0</td>
     </tr>
+    <tr>
+      <td>
+        <code>void-zero</code>
+      </td>
+      <td>
+        <code>void 0</code>, which resolves to <code>undefined</code>, can be confusing to newcomers. Exclusively use <code>undefined</code> to reduce ambiguity.
+      </td>
+      <td>6.1.0</td>
+    </tr>
   </tbody>
 </table>
 
 ## Development
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Release notes
+
+Check GitHub [Releases](https://github.com/Microsoft/tslint-microsoft-contrib/releases) for individual release notes or [CHANGELOG.md](./CHANGELOG.md) for full project changelog.

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var PATH_PARAMETER_POSITIONS = {
     appendFile: [0],
@@ -73,7 +74,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NonLiteralFsPathRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'non-literal-fs-path',
@@ -92,33 +93,30 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NonLiteralFsPathRuleWalker = (function (_super) {
-    __extends(NonLiteralFsPathRuleWalker, _super);
-    function NonLiteralFsPathRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NonLiteralFsPathRuleWalker.prototype.visitCallExpression = function (node) {
-        var _this = this;
-        if (AstUtils_1.AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
-            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-            var positions = PATH_PARAMETER_POSITIONS[functionName];
-            if (positions !== undefined && node.arguments.length >= positions.length) {
-                positions.forEach(function (position) {
-                    var argument = node.arguments[position];
-                    if (argument.kind !== ts.SyntaxKind.StringLiteral) {
-                        _this.fail(AstUtils_1.AstUtils.getFunctionName(node), argument);
-                    }
-                });
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            if (AstUtils_1.AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
+                var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+                var positions = PATH_PARAMETER_POSITIONS[functionName];
+                if (positions && node.arguments.length >= positions.length) {
+                    positions.forEach(function (position) {
+                        var argument = node.arguments[position];
+                        if (!tsutils.isStringLiteral(argument)) {
+                            fail(AstUtils_1.AstUtils.getFunctionName(node), argument);
+                        }
+                    });
+                }
             }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    NonLiteralFsPathRuleWalker.prototype.fail = function (functionName, argument) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function fail(functionName, argument) {
         var start = argument.getStart();
         var width = argument.getWidth();
         var message = "Non-literal (insecure) path passed to fs." + functionName + ": " + argument.getText();
-        this.addFailureAt(start, width, message);
-    };
-    return NonLiteralFsPathRuleWalker;
-}(Lint.RuleWalker));
+        ctx.addFailureAt(start, width, message);
+    }
+}
 //# sourceMappingURL=nonLiteralFsPathRule.js.map

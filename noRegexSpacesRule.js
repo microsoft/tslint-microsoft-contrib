@@ -13,14 +13,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoRegexSpacesRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-regex-spaces',
@@ -39,19 +41,17 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoRegexSpacesRuleWalker = (function (_super) {
-    __extends(NoRegexSpacesRuleWalker, _super);
-    function NoRegexSpacesRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoRegexSpacesRuleWalker.prototype.visitRegularExpressionLiteral = function (node) {
-        var match = /( {2,})+?/.exec(node.getText());
-        if (match !== null) {
-            var replacement = '{' + match[0].length + '}';
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isRegularExpressionLiteral(node)) {
+            var match = /( {2,})+?/.exec(node.getText());
+            if (match !== null) {
+                var replacement = '{' + match[0].length + '}';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + replacement);
+            }
         }
-        _super.prototype.visitRegularExpressionLiteral.call(this, node);
-    };
-    return NoRegexSpacesRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noRegexSpacesRule.js.map

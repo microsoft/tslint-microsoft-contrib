@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -21,7 +23,11 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoFunctionConstructorWithStringArgsWalker(sourceFile, this.getOptions()));
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-function-constructor-with-string-args rule is deprecated. Replace your usage with the TSLint function-constructor rule.');
+            Rule.isWarningShown = true;
+        }
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-function-constructor-with-string-args',
@@ -34,25 +40,25 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Mandatory',
+        recommendation: 'false',
         group: 'Security',
         commonWeaknessEnumeration: '95, 676, 242, 116'
     };
     Rule.FAILURE_STRING = 'forbidden: Function constructor with string arguments ';
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoFunctionConstructorWithStringArgsWalker = (function (_super) {
-    __extends(NoFunctionConstructorWithStringArgsWalker, _super);
-    function NoFunctionConstructorWithStringArgsWalker(sourceFile, options) {
-        return _super.call(this, sourceFile, options) || this;
-    }
-    NoFunctionConstructorWithStringArgsWalker.prototype.visitNewExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (functionName === 'Function' && node.arguments !== undefined && node.arguments.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isNewExpression(node)) {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (functionName === 'Function' && node.arguments && node.arguments.length > 0) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            }
         }
-        _super.prototype.visitNewExpression.call(this, node);
-    };
-    return NoFunctionConstructorWithStringArgsWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noFunctionConstructorWithStringArgsRule.js.map

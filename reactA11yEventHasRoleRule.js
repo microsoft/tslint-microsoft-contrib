@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var getImplicitRole_1 = require("./utils/getImplicitRole");
 var DOM_SCHEMA = require('./utils/attributes/domSchema.json');
@@ -46,14 +47,13 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yEventHasRoleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-event-has-role',
         type: 'maintainability',
         description: 'Elements with event handlers must have role attribute.',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/94\">WCAG Rule 94</a></li>\n          <li><a href=\"https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role\">\n            Using the button role\n          </a></li>\n        </ul>\n        ",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -66,20 +66,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yEventHasRoleWalker = (function (_super) {
-    __extends(ReactA11yEventHasRoleWalker, _super);
-    function ReactA11yEventHasRoleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yEventHasRoleWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yEventHasRoleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yEventHasRoleWalker.prototype.checkJsxOpeningElement = function (node) {
+function walk(ctx) {
+    function checkJsxOpeningElement(node) {
         var tagName = node.tagName.getText();
         if (!DOM_SCHEMA[tagName]) {
             return;
@@ -88,9 +76,18 @@ var ReactA11yEventHasRoleWalker = (function (_super) {
         var events = TARGET_EVENTS.filter(function (eventName) { return !!attributes[eventName]; });
         var hasAriaRole = !!attributes[ROLE_STRING] || !!getImplicitRole_1.getImplicitRole(node);
         if (events.length > 0 && !hasAriaRole) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
-    };
-    return ReactA11yEventHasRoleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yEventHasRoleRule.js.map

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_INNER = 'Writing a string to the innerHTML property is insecure: ';
 var FAILURE_OUTER = 'Writing a string to the outerHTML property is insecure: ';
@@ -25,7 +26,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoInnerHtmlRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     };
     Rule.metadata = {
         ruleName: 'no-inner-html',
@@ -44,44 +45,49 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoInnerHtmlRuleWalker = (function (_super) {
-    __extends(NoInnerHtmlRuleWalker, _super);
-    function NoInnerHtmlRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.htmlLibExpressionRegex = /^(jquery|[$])/i;
-        var opt = _this.getOptions();
-        if (typeof opt[1] === 'object' && opt[1]['html-lib-matcher']) {
-            _this.htmlLibExpressionRegex = new RegExp(opt[1]['html-lib-matcher']);
-        }
-        return _this;
+function parseOptions(options) {
+    var value = /^(jquery|[$])/i;
+    var args = options.ruleArguments;
+    if (args && typeof args[1] === 'object' && args[1]['html-lib-matcher']) {
+        value = new RegExp(args[1]['html-lib-matcher']);
     }
-    NoInnerHtmlRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
-            if (node.left.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                var propAccess = node.left;
-                var propName = propAccess.name.text;
-                if (propName === 'innerHTML') {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText());
-                }
-                else if (propName === 'outerHTML') {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText());
+    else if (options instanceof Array && typeof options[1] === 'object' && options[1]['html-lib-matcher']) {
+        value = new RegExp(options[1]['html-lib-matcher']);
+    }
+    return {
+        htmlLibExpressionRegex: value
+    };
+}
+function walk(ctx) {
+    var htmlLibExpressionRegex = ctx.options.htmlLibExpressionRegex;
+    function cb(node) {
+        if (tsutils.isBinaryExpression(node)) {
+            if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+                if (tsutils.isPropertyAccessExpression(node.left)) {
+                    var propAccess = node.left;
+                    var propName = propAccess.name.text;
+                    if (propName === 'innerHTML') {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INNER + node.getText());
+                    }
+                    else if (propName === 'outerHTML') {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_OUTER + node.getText());
+                    }
                 }
             }
         }
-        _super.prototype.visitBinaryExpression.call(this, node);
-    };
-    NoInnerHtmlRuleWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (functionName === 'html') {
-            if (node.arguments.length > 0) {
-                var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
-                if (functionTarget !== undefined && this.htmlLibExpressionRegex.test(functionTarget)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
+        if (tsutils.isCallExpression(node)) {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (functionName === 'html') {
+                if (node.arguments.length > 0) {
+                    var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
+                    if (functionTarget !== undefined && htmlLibExpressionRegex.test(functionTarget)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_HTML_LIB + node.getText());
+                    }
                 }
             }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    return NoInnerHtmlRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noInnerHtmlRule.js.map

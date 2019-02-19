@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_UNDEFINED_INIT = 'Unnecessary field initialization. Field explicitly initialized to undefined: ';
 var FAILURE_UNDEFINED_DUPE = 'Unnecessary field initialization. Field value already initialized in declaration: ';
@@ -24,7 +25,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new UnnecessaryFieldInitializationRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-unnecessary-field-initialization',
@@ -43,71 +44,35 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
-    __extends(UnnecessaryFieldInitializationRuleWalker, _super);
-    function UnnecessaryFieldInitializationRuleWalker() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.fieldInitializations = {};
-        return _this;
-    }
-    UnnecessaryFieldInitializationRuleWalker.prototype.visitClassDeclaration = function (node) {
-        var _this = this;
-        this.fieldInitializations = {};
-        node.members.forEach(function (member) {
-            if (member.kind === ts.SyntaxKind.PropertyDeclaration) {
-                _this.visitPropertyDeclaration(member);
-            }
-            else if (member.kind === ts.SyntaxKind.Constructor) {
-                _this.visitConstructorDeclaration(member);
-            }
-        });
-        this.fieldInitializations = {};
-    };
-    UnnecessaryFieldInitializationRuleWalker.prototype.visitPropertyDeclaration = function (node) {
-        var initializer = node.initializer;
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            var fieldName = 'this.' + node.name.getText();
-            if (initializer === undefined) {
-                this.fieldInitializations[fieldName] = undefined;
-            }
-            else if (AstUtils_1.AstUtils.isConstant(initializer)) {
-                this.fieldInitializations[fieldName] = initializer.getText();
-            }
-        }
-        if (initializer !== undefined && AstUtils_1.AstUtils.isUndefined(initializer)) {
-            var start = initializer.getStart();
-            var width = initializer.getWidth();
-            this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + node.name.getText());
-        }
-    };
-    UnnecessaryFieldInitializationRuleWalker.prototype.visitConstructorDeclaration = function (node) {
-        var _this = this;
+function walk(ctx) {
+    var fieldInitializations = {};
+    function visitConstructorDeclaration(node) {
         if (node.body !== undefined) {
             node.body.statements.forEach(function (statement) {
-                if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
+                if (tsutils.isExpressionStatement(statement)) {
                     var expression = statement.expression;
-                    if (expression.kind === ts.SyntaxKind.BinaryExpression) {
+                    if (tsutils.isBinaryExpression(expression)) {
                         var binaryExpression = expression;
                         var property = binaryExpression.left;
                         var propertyName = property.getText();
-                        if (Object.keys(_this.fieldInitializations).indexOf(propertyName) > -1) {
+                        if (Object.keys(fieldInitializations).indexOf(propertyName) > -1) {
                             if (AstUtils_1.AstUtils.isUndefined(binaryExpression.right)) {
-                                if (Object.keys(_this.fieldInitializations).indexOf(propertyName) > -1) {
-                                    var fieldInitValue = _this.fieldInitializations[propertyName];
+                                if (Object.keys(fieldInitializations).indexOf(propertyName) > -1) {
+                                    var fieldInitValue = fieldInitializations[propertyName];
                                     if (fieldInitValue === undefined) {
                                         var start = property.getStart();
                                         var width = property.getWidth();
-                                        _this.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());
+                                        ctx.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + property.getText());
                                     }
                                 }
                             }
                             else if (AstUtils_1.AstUtils.isConstant(binaryExpression.right)) {
-                                var fieldInitValue = _this.fieldInitializations[propertyName];
+                                var fieldInitValue = fieldInitializations[propertyName];
                                 if (fieldInitValue === binaryExpression.right.getText()) {
                                     var start = binaryExpression.getStart();
                                     var width = binaryExpression.getWidth();
                                     var message = FAILURE_UNDEFINED_DUPE + binaryExpression.getText();
-                                    _this.addFailureAt(start, width, message);
+                                    ctx.addFailureAt(start, width, message);
                                 }
                             }
                         }
@@ -115,7 +80,38 @@ var UnnecessaryFieldInitializationRuleWalker = (function (_super) {
                 }
             });
         }
-    };
-    return UnnecessaryFieldInitializationRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function visitPropertyDeclaration(node) {
+        var initializer = node.initializer;
+        if (tsutils.isIdentifier(node.name)) {
+            var fieldName = 'this.' + node.name.getText();
+            if (initializer === undefined) {
+                fieldInitializations[fieldName] = undefined;
+            }
+            else if (AstUtils_1.AstUtils.isConstant(initializer)) {
+                fieldInitializations[fieldName] = initializer.getText();
+            }
+        }
+        if (initializer !== undefined && AstUtils_1.AstUtils.isUndefined(initializer)) {
+            var start = initializer.getStart();
+            var width = initializer.getWidth();
+            ctx.addFailureAt(start, width, FAILURE_UNDEFINED_INIT + node.name.getText());
+        }
+    }
+    function cb(node) {
+        if (tsutils.isClassDeclaration(node)) {
+            fieldInitializations = {};
+            node.members.forEach(function (member) {
+                if (tsutils.isPropertyDeclaration(member)) {
+                    visitPropertyDeclaration(member);
+                }
+                else if (tsutils.isConstructorDeclaration(member)) {
+                    visitConstructorDeclaration(member);
+                }
+            });
+            fieldInitializations = {};
+        }
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noUnnecessaryFieldInitializationRule.js.map

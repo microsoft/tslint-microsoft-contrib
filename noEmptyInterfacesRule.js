@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -24,7 +26,7 @@ var Rule = (function (_super) {
             console.warn('Warning: no-empty-interfaces rule is deprecated. Replace your usage with the TSLint no-empty-interface rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoEmptyInterfacesRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-empty-interfaces',
@@ -38,7 +40,7 @@ var Rule = (function (_super) {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // use tslint no-empty-interface rule instead',
+        recommendation: 'false',
         commonWeaknessEnumeration: '398, 710'
     };
     Rule.FAILURE_STRING = 'Do not declare empty interfaces: ';
@@ -46,26 +48,22 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoEmptyInterfacesRuleWalker = (function (_super) {
-    __extends(NoEmptyInterfacesRuleWalker, _super);
-    function NoEmptyInterfacesRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoEmptyInterfacesRuleWalker.prototype.visitInterfaceDeclaration = function (node) {
-        if (this.isInterfaceEmpty(node) && !this.hasMultipleParents(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + "'" + node.name.getText() + "'");
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isInterfaceDeclaration(node) && isInterfaceEmpty(node) && !hasMultipleParents(node)) {
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + "'" + node.name.getText() + "'");
         }
-        _super.prototype.visitInterfaceDeclaration.call(this, node);
-    };
-    NoEmptyInterfacesRuleWalker.prototype.isInterfaceEmpty = function (node) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function isInterfaceEmpty(node) {
         return node.members === undefined || node.members.length === 0;
-    };
-    NoEmptyInterfacesRuleWalker.prototype.hasMultipleParents = function (node) {
+    }
+    function hasMultipleParents(node) {
         if (node.heritageClauses === undefined || node.heritageClauses.length === 0) {
             return false;
         }
         return node.heritageClauses[0].types.length >= 2;
-    };
-    return NoEmptyInterfacesRuleWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noEmptyInterfacesRule.js.map

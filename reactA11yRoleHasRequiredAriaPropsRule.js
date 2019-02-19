@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var getImplicitRole_1 = require("./utils/getImplicitRole");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLES_SCHEMA = require('./utils/attributes/roleSchema.json');
@@ -36,14 +37,13 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleHasRequiredAriaPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
+        rationale: "References:\n        <ul>\n          <li><a href=\"https://www.w3.org/TR/wai-aria/roles#role_definitions\">ARIA Definition of Roles</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/90\">WCAG Rule 90: Required properties and states should be defined</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/91\">WCAG Rule 91: Required properties and states must not be empty</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -56,20 +56,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
-    __extends(A11yRoleHasRequiredAriaPropsWalker, _super);
-    function A11yRoleHasRequiredAriaPropsWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    A11yRoleHasRequiredAriaPropsWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    A11yRoleHasRequiredAriaPropsWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    A11yRoleHasRequiredAriaPropsWalker.prototype.checkJsxElement = function (node) {
+function walk(ctx) {
+    function checkJsxElement(node) {
         var tagName = node.tagName.getText();
         var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var roleProp = attributesInElement[ROLE_STRING];
@@ -91,11 +79,20 @@ var A11yRoleHasRequiredAriaPropsWalker = (function (_super) {
             .concat(TAGS_WITH_ARIA_LEVEL.indexOf(tagName) === -1 ? [] : ['aria-level']);
         var missingAttributes = requiredAttributeNames.filter(function (attributeName) { return attributeNamesInElement.indexOf(attributeName) === -1; });
         if (missingAttributes.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), isImplicitRole
+            ctx.addFailureAt(node.getStart(), node.getWidth(), isImplicitRole
                 ? getFailureStringForImplicitRole(node.tagName.getText(), normalizedRoles[0], missingAttributes)
                 : getFailureStringForNotImplicitRole(normalizedRoles, missingAttributes));
         }
-    };
-    return A11yRoleHasRequiredAriaPropsWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yRoleHasRequiredAriaPropsRule.js.map

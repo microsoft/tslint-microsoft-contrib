@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var TypeGuard_1 = require("./utils/TypeGuard");
@@ -42,9 +43,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yProptypesWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-proptypes',
@@ -62,159 +61,159 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yProptypesWalker = (function (_super) {
-    __extends(ReactA11yProptypesWalker, _super);
-    function ReactA11yProptypesWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isJsxAttribute(node)) {
+            var propNameNode = JsxAttribute_1.getPropName(node);
+            if (propNameNode === undefined) {
+                return;
+            }
+            var propName = propNameNode.toLowerCase();
+            if (!aria[propName]) {
+                return;
+            }
+            var allowUndefined = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
+            var expectedType = aria[propName].type;
+            var permittedValues = aria[propName].values;
+            var propValue = JsxAttribute_1.getStringLiteral(node) || String(JsxAttribute_1.getBooleanLiteral(node));
+            if (isUndefined(node.initializer)) {
+                if (!allowUndefined) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+                }
+                return;
+            }
+            else if (isComplexType(node.initializer)) {
+                return;
+            }
+            if (!validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
+            }
+        }
+        else {
+            return ts.forEachChild(node, cb);
+        }
     }
-    ReactA11yProptypesWalker.prototype.visitJsxAttribute = function (node) {
-        var propNameNode = JsxAttribute_1.getPropName(node);
-        if (propNameNode === undefined) {
-            return;
-        }
-        var propName = propNameNode.toLowerCase();
-        if (!aria[propName]) {
-            return;
-        }
-        var allowUndefined = aria[propName].allowUndefined !== undefined ? aria[propName].allowUndefined : false;
-        var expectedType = aria[propName].type;
-        var permittedValues = aria[propName].values;
-        var propValue = JsxAttribute_1.getStringLiteral(node) || String(JsxAttribute_1.getBooleanLiteral(node));
-        if (this.isUndefined(node.initializer)) {
-            if (!allowUndefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
-            }
-            return;
-        }
-        else if (this.isComplexType(node.initializer)) {
-            return;
-        }
-        if (!this.validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
-        }
-    };
-    ReactA11yProptypesWalker.prototype.validityCheck = function (propValueExpression, propValue, expectedType, permittedValues) {
-        if (propValueExpression === undefined) {
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+function validityCheck(propValueExpression, propValue, expectedType, permittedValues) {
+    if (propValueExpression === undefined) {
+        return true;
+    }
+    switch (expectedType) {
+        case 'boolean':
+            return isBoolean(propValueExpression);
+        case 'tristate':
+            return isBoolean(propValueExpression) || isMixed(propValueExpression);
+        case 'integer':
+            return isInteger(propValueExpression);
+        case 'number':
+            return isNumber(propValueExpression);
+        case 'string':
+            return isString(propValueExpression);
+        case 'token':
+            return ((isString(propValueExpression) || isBoolean(propValueExpression)) && permittedValues.indexOf(propValue.toLowerCase()) > -1);
+        case 'tokenlist':
+            return ((isString(propValueExpression) || isBoolean(propValueExpression)) &&
+                propValue.split(' ').every(function (token) { return permittedValues.indexOf(token.toLowerCase()) > -1; }));
+        default:
+            return false;
+    }
+}
+function isUndefined(node) {
+    if (!node) {
+        return true;
+    }
+    else if (TypeGuard_1.isJsxExpression(node)) {
+        var expression = node.expression;
+        if (!expression) {
             return true;
         }
-        switch (expectedType) {
-            case 'boolean':
-                return this.isBoolean(propValueExpression);
-            case 'tristate':
-                return this.isBoolean(propValueExpression) || this.isMixed(propValueExpression);
-            case 'integer':
-                return this.isInteger(propValueExpression);
-            case 'number':
-                return this.isNumber(propValueExpression);
-            case 'string':
-                return this.isString(propValueExpression);
-            case 'token':
-                return ((this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    permittedValues.indexOf(propValue.toLowerCase()) > -1);
-            case 'tokenlist':
-                return ((this.isString(propValueExpression) || this.isBoolean(propValueExpression)) &&
-                    propValue.split(' ').every(function (token) { return permittedValues.indexOf(token.toLowerCase()) > -1; }));
-            default:
-                return false;
-        }
-    };
-    ReactA11yProptypesWalker.prototype.isUndefined = function (node) {
-        if (!node) {
+        else if (AstUtils_1.AstUtils.isUndefined(expression)) {
             return true;
         }
-        else if (TypeGuard_1.isJsxExpression(node)) {
-            var expression = node.expression;
-            if (!expression) {
-                return true;
-            }
-            else if (AstUtils_1.AstUtils.isUndefined(expression)) {
-                return true;
-            }
-            else if (TypeGuard_1.isNullKeyword(expression)) {
-                return true;
-            }
+        else if (TypeGuard_1.isNullKeyword(expression)) {
+            return true;
         }
-        return false;
-    };
-    ReactA11yProptypesWalker.prototype.isComplexType = function (node) {
-        return node !== undefined && !this.isUndefined(node) && TypeGuard_1.isJsxExpression(node) && !AstUtils_1.AstUtils.isConstant(node.expression);
-    };
-    ReactA11yProptypesWalker.prototype.isBoolean = function (node) {
-        if (TypeGuard_1.isStringLiteral(node)) {
-            var propValue = node.text.toLowerCase();
-            return propValue === 'true' || propValue === 'false';
-        }
-        else if (TypeGuard_1.isJsxExpression(node)) {
-            var expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-            if (TypeGuard_1.isStringLiteral(expression)) {
-                var propValue = expression.text.toLowerCase();
-                return propValue === 'true' || propValue === 'false';
-            }
-            else {
-                return TypeGuard_1.isFalseKeyword(expression) || TypeGuard_1.isTrueKeyword(expression);
-            }
-        }
-        return false;
-    };
-    ReactA11yProptypesWalker.prototype.isMixed = function (node) {
-        if (TypeGuard_1.isStringLiteral(node)) {
-            return node.text.toLowerCase() === 'mixed';
-        }
-        else if (TypeGuard_1.isJsxExpression(node)) {
-            var expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-            return TypeGuard_1.isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
-        }
-        return false;
-    };
-    ReactA11yProptypesWalker.prototype.isNumber = function (node) {
-        if (TypeGuard_1.isStringLiteral(node)) {
-            return !isNaN(Number(node.text));
-        }
-        else if (TypeGuard_1.isJsxExpression(node)) {
-            var expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-            if (TypeGuard_1.isStringLiteral(expression)) {
-                return !isNaN(Number(expression.text));
-            }
-            else {
-                return TypeGuard_1.isNumericLiteral(expression);
-            }
-        }
-        return false;
-    };
-    ReactA11yProptypesWalker.prototype.isInteger = function (node) {
-        if (TypeGuard_1.isStringLiteral(node)) {
-            var value = Number(node.text);
-            return !isNaN(value) && Math.round(value) === value;
-        }
-        else if (TypeGuard_1.isJsxExpression(node)) {
-            var expression = node.expression;
-            if (expression === undefined) {
-                return false;
-            }
-            if (TypeGuard_1.isStringLiteral(expression)) {
-                var value = Number(expression.text);
-                return !isNaN(value) && Math.round(value) === value;
-            }
-            else if (TypeGuard_1.isNumericLiteral(expression)) {
-                var value = Number(expression.text);
-                return Math.round(value) === value;
-            }
+    }
+    return false;
+}
+function isComplexType(node) {
+    return node !== undefined && !isUndefined(node) && TypeGuard_1.isJsxExpression(node) && !AstUtils_1.AstUtils.isConstant(node.expression);
+}
+function isBoolean(node) {
+    if (TypeGuard_1.isStringLiteral(node)) {
+        var propValue = node.text.toLowerCase();
+        return propValue === 'true' || propValue === 'false';
+    }
+    else if (TypeGuard_1.isJsxExpression(node)) {
+        var expression = node.expression;
+        if (expression === undefined) {
             return false;
         }
+        if (TypeGuard_1.isStringLiteral(expression)) {
+            var propValue = expression.text.toLowerCase();
+            return propValue === 'true' || propValue === 'false';
+        }
+        else {
+            return TypeGuard_1.isFalseKeyword(expression) || TypeGuard_1.isTrueKeyword(expression);
+        }
+    }
+    return false;
+}
+function isMixed(node) {
+    if (TypeGuard_1.isStringLiteral(node)) {
+        return node.text.toLowerCase() === 'mixed';
+    }
+    else if (TypeGuard_1.isJsxExpression(node)) {
+        var expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+        return TypeGuard_1.isStringLiteral(expression) && expression.text.toLowerCase() === 'mixed';
+    }
+    return false;
+}
+function isNumber(node) {
+    if (TypeGuard_1.isStringLiteral(node)) {
+        return !isNaN(Number(node.text));
+    }
+    else if (TypeGuard_1.isJsxExpression(node)) {
+        var expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+        if (TypeGuard_1.isStringLiteral(expression)) {
+            return !isNaN(Number(expression.text));
+        }
+        else {
+            return TypeGuard_1.isNumericLiteral(expression);
+        }
+    }
+    return false;
+}
+function isInteger(node) {
+    if (TypeGuard_1.isStringLiteral(node)) {
+        var value = Number(node.text);
+        return !isNaN(value) && Math.round(value) === value;
+    }
+    else if (TypeGuard_1.isJsxExpression(node)) {
+        var expression = node.expression;
+        if (expression === undefined) {
+            return false;
+        }
+        if (TypeGuard_1.isStringLiteral(expression)) {
+            var value = Number(expression.text);
+            return !isNaN(value) && Math.round(value) === value;
+        }
+        else if (TypeGuard_1.isNumericLiteral(expression)) {
+            var value = Number(expression.text);
+            return Math.round(value) === value;
+        }
         return false;
-    };
-    ReactA11yProptypesWalker.prototype.isString = function (node) {
-        return TypeGuard_1.isStringLiteral(node) || (TypeGuard_1.isJsxExpression(node) && node.expression !== undefined && TypeGuard_1.isStringLiteral(node.expression));
-    };
-    return ReactA11yProptypesWalker;
-}(Lint.RuleWalker));
+    }
+    return false;
+}
+function isString(node) {
+    return TypeGuard_1.isStringLiteral(node) || (TypeGuard_1.isJsxExpression(node) && node.expression !== undefined && TypeGuard_1.isStringLiteral(node.expression));
+}
 //# sourceMappingURL=reactA11yProptypesRule.js.map

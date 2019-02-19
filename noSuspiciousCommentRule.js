@@ -25,7 +25,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoSuspiciousCommentRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     };
     Rule.metadata = {
         ruleName: 'no-suspicious-comment',
@@ -49,65 +49,62 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoSuspiciousCommentRuleWalker = (function (_super) {
-    __extends(NoSuspiciousCommentRuleWalker, _super);
-    function NoSuspiciousCommentRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.exceptionRegex = [];
-        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
-            options.ruleArguments.forEach(function (regexStr) {
-                _this.exceptionRegex.push(new RegExp(regexStr));
-            });
-        }
-        return _this;
-    }
-    NoSuspiciousCommentRuleWalker.prototype.visitSourceFile = function (node) {
-        var _this = this;
+function parseOptions(options) {
+    var value = [];
+    (options.ruleArguments || []).forEach(function (regexStr) {
+        value.push(new RegExp(regexStr));
+    });
+    return {
+        exceptionRegex: value
+    };
+}
+function walk(ctx) {
+    var exceptionRegex = ctx.options.exceptionRegex;
+    function cb(node) {
         tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind, range) {
             if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia || tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
-                _this.scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
+                scanCommentForSuspiciousWords(range.pos, text.substring(range.pos, range.end));
             }
         });
-    };
-    NoSuspiciousCommentRuleWalker.prototype.scanCommentForSuspiciousWords = function (startPosition, commentText) {
-        var _this = this;
-        if (this.commentContainsExceptionRegex(this.exceptionRegex, commentText)) {
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function scanCommentForSuspiciousWords(startPosition, commentText) {
+        if (commentContainsExceptionRegex(exceptionRegex, commentText)) {
             return;
         }
         SUSPICIOUS_WORDS.forEach(function (suspiciousWord) {
-            _this.scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition);
+            scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition);
         });
-    };
-    NoSuspiciousCommentRuleWalker.prototype.scanCommentForSuspiciousWord = function (suspiciousWord, commentText, startPosition) {
+    }
+    function scanCommentForSuspiciousWord(suspiciousWord, commentText, startPosition) {
         var regexExactCaseNoColon = new RegExp('\\b' + suspiciousWord + '\\b');
         var regexCaseInsensistiveWithColon = new RegExp('\\b' + suspiciousWord + '\\b:', 'i');
         if (regexExactCaseNoColon.test(commentText) || regexCaseInsensistiveWithColon.test(commentText)) {
-            this.foundSuspiciousComment(startPosition, commentText, suspiciousWord);
+            foundSuspiciousComment(startPosition, commentText, suspiciousWord);
         }
-    };
-    NoSuspiciousCommentRuleWalker.prototype.foundSuspiciousComment = function (startPosition, commentText, suspiciousWord) {
+    }
+    function foundSuspiciousComment(startPosition, commentText, suspiciousWord) {
         var errorMessage = FAILURE_STRING + suspiciousWord;
-        if (this.exceptionRegex.length > 0) {
-            errorMessage += '.' + this.getFailureMessageWithExceptionRegexOption();
+        if (exceptionRegex.length > 0) {
+            errorMessage += '.' + getFailureMessageWithExceptionRegexOption();
         }
-        this.addFailureAt(startPosition, commentText.length, errorMessage);
-    };
-    NoSuspiciousCommentRuleWalker.prototype.commentContainsExceptionRegex = function (exceptionRegex, commentText) {
-        for (var _i = 0, exceptionRegex_1 = exceptionRegex; _i < exceptionRegex_1.length; _i++) {
-            var regex = exceptionRegex_1[_i];
+        ctx.addFailureAt(startPosition, commentText.length, errorMessage);
+    }
+    function commentContainsExceptionRegex(exceptionRegexes, commentText) {
+        for (var _i = 0, exceptionRegexes_1 = exceptionRegexes; _i < exceptionRegexes_1.length; _i++) {
+            var regex = exceptionRegexes_1[_i];
             if (regex.test(commentText)) {
                 return true;
             }
         }
         return false;
-    };
-    NoSuspiciousCommentRuleWalker.prototype.getFailureMessageWithExceptionRegexOption = function () {
+    }
+    function getFailureMessageWithExceptionRegexOption() {
         var message = FAILURE_STRING_OPTION;
-        this.exceptionRegex.forEach(function (regex) {
+        exceptionRegex.forEach(function (regex) {
             message += regex.toString();
         });
         return message;
-    };
-    return NoSuspiciousCommentRuleWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noSuspiciousCommentRule.js.map

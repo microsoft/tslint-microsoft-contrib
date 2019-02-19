@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ROLES = ROLE_SCHEMA.roles;
@@ -34,14 +35,14 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleRuleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-role',
         type: 'maintainability',
-        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role.',
+        description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role. ' +
+            'A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/92\">WCAG Rule 92: Role value must be valid</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -54,28 +55,26 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var A11yRoleRuleWalker = (function (_super) {
-    __extends(A11yRoleRuleWalker, _super);
-    function A11yRoleRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    A11yRoleRuleWalker.prototype.visitJsxAttribute = function (node) {
-        var name = JsxAttribute_1.getPropName(node);
-        if (!name || name.toLowerCase() !== 'role') {
-            return;
-        }
-        var roleValue = JsxAttribute_1.getStringLiteral(node);
-        if (roleValue) {
-            var normalizedValues = roleValue.toLowerCase().split(' ');
-            if (normalizedValues.some(function (value) { return !!(value && VALID_ROLES.indexOf(value) === -1); })) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isJsxAttribute(node)) {
+            var name_1 = JsxAttribute_1.getPropName(node);
+            if (!name_1 || name_1.toLowerCase() !== 'role') {
+                return;
+            }
+            var roleValue = JsxAttribute_1.getStringLiteral(node);
+            if (roleValue) {
+                var normalizedValues = roleValue.toLowerCase().split(' ');
+                if (normalizedValues.some(function (value) { return !!(value && VALID_ROLES.indexOf(value) === -1); })) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringInvalidRole(roleValue));
+                }
+            }
+            else if (roleValue === '' || JsxAttribute_1.isEmpty(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
             }
         }
-        else if (roleValue === '' || JsxAttribute_1.isEmpty(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringUndefinedRole());
-        }
-        _super.prototype.visitJsxAttribute.call(this, node);
-    };
-    return A11yRoleRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yRoleRule.js.map

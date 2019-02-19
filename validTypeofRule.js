@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,7 +26,7 @@ var Rule = (function (_super) {
             console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'valid-typeof',
@@ -38,7 +39,7 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated'
     };
     Rule.FAILURE_STRING = 'Invalid comparison in typeof. Did you mean ';
@@ -47,40 +48,19 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ValidTypeofRuleWalker = (function (_super) {
-    __extends(ValidTypeofRuleWalker, _super);
-    function ValidTypeofRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ValidTypeofRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
-            this.validateTypeOf(node.right);
-        }
-        else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
-            this.validateTypeOf(node.left);
-        }
-        _super.prototype.visitBinaryExpression.call(this, node);
-    };
-    ValidTypeofRuleWalker.prototype.validateTypeOf = function (node) {
-        if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
-            var start = node.getStart();
-            var width = node.getWidth();
-            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?');
-        }
-    };
-    ValidTypeofRuleWalker.prototype.getClosestTerm = function (term) {
-        var _this = this;
+function walk(ctx) {
+    function getClosestTerm(term) {
         var closestMatch = 99999999;
         return Rule.VALID_TERMS.reduce(function (closestTerm, thisTerm) {
-            var distance = _this.levenshteinDistance(term, thisTerm);
+            var distance = levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
                 closestTerm = thisTerm;
             }
             return closestTerm;
         }, '');
-    };
-    ValidTypeofRuleWalker.prototype.levenshteinDistance = function (a, b) {
+    }
+    function levenshteinDistance(a, b) {
         if (a.length === 0) {
             return b.length;
         }
@@ -109,7 +89,25 @@ var ValidTypeofRuleWalker = (function (_super) {
             }
         }
         return matrix[b.length][a.length];
-    };
-    return ValidTypeofRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function validateTypeOf(node) {
+        if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
+            var start = node.getStart();
+            var width = node.getWidth();
+            ctx.addFailureAt(start, width, Rule.FAILURE_STRING + getClosestTerm(node.text) + '?');
+        }
+    }
+    function cb(node) {
+        if (tsutils.isBinaryExpression(node)) {
+            if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
+                validateTypeOf(node.right);
+            }
+            else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
+                validateTypeOf(node.left);
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=validTypeofRule.js.map

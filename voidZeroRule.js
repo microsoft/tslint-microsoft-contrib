@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
 var tsutils = require("tsutils");
+var FAILURE_STRING = 'Replace void 0 with undefined';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,38 +26,36 @@ var Rule = (function (_super) {
         return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
-        ruleName: 'no-invalid-regexp',
+        ruleName: 'void-zero',
         type: 'maintainability',
-        description: 'Do not use invalid regular expression strings in the RegExp constructor.',
+        description: 'Avoid using void 0; use undefined instead.',
+        hasFix: true,
+        rationale: 'void 0, which resolves to undefined, can be confusing to newcomers. Exclusively use undefined to reduce ambiguity.',
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
         issueClass: 'Non-SDL',
-        issueType: 'Error',
-        severity: 'Critical',
+        issueType: 'Warning',
+        severity: 'Low',
         level: 'Opportunity for Excellence',
-        group: 'Correctness'
+        group: 'Clarity',
+        commonWeaknessEnumeration: '480'
     };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
 function walk(ctx) {
     function cb(node) {
-        if (tsutils.isNewExpression(node) || tsutils.isCallExpression(node)) {
-            if (node.expression.getText() === 'RegExp' && node.arguments && node.arguments.length > 0) {
-                var arg = node.arguments[0];
-                if (tsutils.isStringLiteral(arg)) {
-                    try {
-                        new RegExp(arg.text);
-                    }
-                    catch (e) {
-                        ctx.addFailureAt(arg.getStart(), arg.getWidth(), e.message);
-                    }
-                }
+        if (tsutils.isVoidExpression(node)) {
+            if (node.expression !== undefined && node.expression.getText() === '0') {
+                var nodeStart = node.getStart();
+                var nodeWidth = node.getWidth();
+                var fix = new Lint.Replacement(nodeStart, nodeWidth, 'undefined');
+                ctx.addFailureAt(nodeStart, nodeWidth, FAILURE_STRING, fix);
             }
         }
         return ts.forEachChild(node, cb);
     }
     return ts.forEachChild(ctx.sourceFile, cb);
 }
-//# sourceMappingURL=noInvalidRegexpRule.js.map
+//# sourceMappingURL=voidZeroRule.js.map

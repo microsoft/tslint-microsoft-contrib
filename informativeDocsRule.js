@@ -56,7 +56,7 @@ var Rule = (function (_super) {
         severity: 'Moderate',
         level: 'Opportunity for Excellence',
         group: 'Clarity',
-        recommendation: 'true,',
+        recommendation: 'true',
         ruleName: 'informative-docs',
         type: 'maintainability',
         typescriptOnly: false

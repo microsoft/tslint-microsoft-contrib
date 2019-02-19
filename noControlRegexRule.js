@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoControlRegexRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-control-regex',
@@ -40,36 +41,29 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoControlRegexRuleWalker = (function (_super) {
-    __extends(NoControlRegexRuleWalker, _super);
-    function NoControlRegexRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoControlRegexRuleWalker.prototype.visitNewExpression = function (node) {
-        this.validateCall(node);
-        _super.prototype.visitNewExpression.call(this, node);
-    };
-    NoControlRegexRuleWalker.prototype.visitCallExpression = function (node) {
-        this.validateCall(node);
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    NoControlRegexRuleWalker.prototype.visitRegularExpressionLiteral = function (node) {
-        if (/(\\x[0-1][0-9a-f])/.test(node.getText())) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isNewExpression(node) || tsutils.isCallExpression(node)) {
+            validateCall(node);
         }
-        _super.prototype.visitRegularExpressionLiteral.call(this, node);
-    };
-    NoControlRegexRuleWalker.prototype.validateCall = function (expression) {
-        if (expression.expression.getText() === 'RegExp' && expression.arguments !== undefined && expression.arguments.length > 0) {
-            var arg1 = expression.arguments[0];
-            if (arg1.kind === ts.SyntaxKind.StringLiteral) {
-                var regexpText = arg1.text;
+        if (tsutils.isRegularExpressionLiteral(node)) {
+            if (/(\\x[0-1][0-9a-f])/.test(node.getText())) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function validateCall(expression) {
+        if (expression.expression.getText() === 'RegExp' && expression.arguments && expression.arguments.length > 0) {
+            var arg = expression.arguments[0];
+            if (tsutils.isStringLiteral(arg)) {
+                var regexpText = arg.text;
                 if (/[\x00-\x1f]/.test(regexpText)) {
-                    this.addFailureAt(arg1.getStart(), arg1.getWidth(), Rule.FAILURE_STRING);
+                    ctx.addFailureAt(arg.getStart(), arg.getWidth(), Rule.FAILURE_STRING);
                 }
             }
         }
-    };
-    return NoControlRegexRuleWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noControlRegexRule.js.map

@@ -15,14 +15,29 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lint = require("tslint");
 var BannedTermWalker_1 = require("./utils/BannedTermWalker");
+var TypeGuard_1 = require("./utils/TypeGuard");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        var walker = new BannedTermWalker_1.BannedTermWalker(sourceFile, this.getOptions(), Rule.FAILURE_STRING, Rule.BANNED_TERMS);
-        return this.applyWithWalker(walker);
+        return this.applyWithFunction(sourceFile, BannedTermWalker_1.bannedTermWalker, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var allowQuotedProperties = false;
+        if (options.ruleArguments instanceof Array) {
+            options.ruleArguments.forEach(function (opt) {
+                if (TypeGuard_1.isObject(opt)) {
+                    allowQuotedProperties = opt['allow-quoted-properties'] === true;
+                }
+            });
+        }
+        return {
+            failureString: Rule.FAILURE_STRING,
+            bannedTerms: Rule.BANNED_TERMS,
+            allowQuotedProperties: allowQuotedProperties
+        };
     };
     Rule.metadata = {
         ruleName: 'no-banned-terms',

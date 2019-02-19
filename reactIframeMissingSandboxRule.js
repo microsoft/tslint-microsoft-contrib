@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var FAILURE_NOT_FOUND = 'An iframe element requires a sandbox attribute';
 var FAILURE_INVALID_ENTRY = 'An iframe element defines an invalid sandbox attribute: ';
 var FAILURE_INVALID_COMBINATION = 'An iframe element defines a sandbox with both allow-scripts and allow-same-origin';
@@ -37,7 +38,7 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactIframeMissingSandboxRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         }
         else {
             return [];
@@ -60,21 +61,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactIframeMissingSandboxRuleWalker = (function (_super) {
-    __extends(ReactIframeMissingSandboxRuleWalker, _super);
-    function ReactIframeMissingSandboxRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactIframeMissingSandboxRuleWalker.prototype.visitJsxElement = function (node) {
-        this.handleJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactIframeMissingSandboxRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.handleJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactIframeMissingSandboxRuleWalker.prototype.handleJsxOpeningElement = function (node) {
-        var _this = this;
+function walk(ctx) {
+    function handleJsxOpeningElement(node) {
         if (node.tagName.getText() !== 'iframe') {
             return;
         }
@@ -86,23 +74,22 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
                 if (attributeName === 'sandbox') {
                     sandboxAttributeFound = true;
                     if (jsxAttribute.initializer !== undefined && jsxAttribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
-                        _this.validateSandboxValue(jsxAttribute.initializer);
+                        validateSandboxValue(jsxAttribute.initializer);
                     }
                 }
             }
         });
         if (!sandboxAttributeFound) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_NOT_FOUND);
         }
-    };
-    ReactIframeMissingSandboxRuleWalker.prototype.validateSandboxValue = function (node) {
-        var _this = this;
+    }
+    function validateSandboxValue(node) {
         var values = node.text.split(' ');
         var allowScripts = false;
         var allowSameOrigin = false;
         values.forEach(function (attributeValue) {
             if (ALLOWED_VALUES.indexOf(attributeValue) === -1) {
-                _this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_ENTRY + attributeValue);
             }
             if (attributeValue === 'allow-scripts') {
                 allowScripts = true;
@@ -112,9 +99,18 @@ var ReactIframeMissingSandboxRuleWalker = (function (_super) {
             }
         });
         if (allowScripts && allowSameOrigin) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INVALID_COMBINATION);
         }
-    };
-    return ReactIframeMissingSandboxRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            handleJsxOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            handleJsxOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactIframeMissingSandboxRule.js.map

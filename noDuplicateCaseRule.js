@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -25,7 +26,7 @@ var Rule = (function (_super) {
             console.warn('Warning: no-duplicate-case rule is deprecated. Replace your usage with the TSLint no-duplicate-switch-case rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-duplicate-case',
@@ -38,7 +39,7 @@ var Rule = (function (_super) {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -47,30 +48,27 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoDuplicateCaseRuleWalker = (function (_super) {
-    __extends(NoDuplicateCaseRuleWalker, _super);
-    function NoDuplicateCaseRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoDuplicateCaseRuleWalker.prototype.visitSwitchStatement = function (node) {
-        var _this = this;
-        var seenLabels = [];
-        node.caseBlock.clauses.forEach(function (clauseOrDefault) {
-            if (clauseOrDefault.kind === ts.SyntaxKind.CaseClause) {
-                var clause = clauseOrDefault;
-                if (clause.expression !== undefined) {
-                    var caseText = clause.expression.getText();
-                    if (seenLabels.indexOf(caseText) > -1) {
-                        _this.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
-                    }
-                    else {
-                        seenLabels.push(caseText);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isSwitchStatement(node)) {
+            var seenLabels_1 = [];
+            node.caseBlock.clauses.forEach(function (clauseOrDefault) {
+                if (tsutils.isCaseClause(clauseOrDefault)) {
+                    var clause = clauseOrDefault;
+                    if (clause.expression) {
+                        var caseText = clause.expression.getText();
+                        if (seenLabels_1.indexOf(caseText) > -1) {
+                            ctx.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
+                        }
+                        else {
+                            seenLabels_1.push(caseText);
+                        }
                     }
                 }
-            }
-        });
-        _super.prototype.visitSwitchStatement.call(this, node);
-    };
-    return NoDuplicateCaseRuleWalker;
-}(Lint.RuleWalker));
+            });
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noDuplicateCaseRule.js.map

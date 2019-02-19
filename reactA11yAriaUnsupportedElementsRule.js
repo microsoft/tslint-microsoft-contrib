@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var DOM_SCHEMA = require('./utils/attributes/domSchema.json');
 var ARIA_SCHEMA = require('./utils/attributes/ariaSchema.json');
@@ -29,9 +30,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yAriaUnsupportedElementsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-aria-unsupported-elements',
@@ -49,20 +48,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
-    __extends(ReactA11yAriaUnsupportedElementsWalker, _super);
-    function ReactA11yAriaUnsupportedElementsWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yAriaUnsupportedElementsWalker.prototype.visitJsxElement = function (node) {
-        this.validateOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yAriaUnsupportedElementsWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yAriaUnsupportedElementsWalker.prototype.validateOpeningElement = function (node) {
+function walk(ctx) {
+    function validateOpeningElement(node) {
         var tagName = node.tagName.getText();
         if (!DOM_SCHEMA[tagName]) {
             return;
@@ -76,9 +63,18 @@ var ReactA11yAriaUnsupportedElementsWalker = (function (_super) {
         var invalidAttributeNames = checkAttributeNames.filter(function (attributeName) { return !!attributes[attributeName]; });
         if (invalidAttributeNames.length > 0) {
             var message = getFailureString(tagName, invalidAttributeNames);
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), message);
         }
-    };
-    return ReactA11yAriaUnsupportedElementsWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yAriaUnsupportedElementsRule.js.map

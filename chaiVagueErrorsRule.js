@@ -15,18 +15,19 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var ChaiUtils_1 = require("./utils/ChaiUtils");
-var BASE_ERROR = 'Found chai call with vague failure message. ';
-var FAILURE_STRING = BASE_ERROR + 'Please add an explicit failure message';
-var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
-var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
+var BASE_ERROR = 'Found chai call with vague failure message;';
+var FAILURE_STRING = BASE_ERROR + " please add an explicit failure message";
+var FAILURE_STRING_COMPARE_TRUE = BASE_ERROR + " move the strict equality comparison from the expect call into the assertion value";
+var FAILURE_STRING_COMPARE_FALSE = BASE_ERROR + " move the strict inequality comparison from the expect call into the assertion value";
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new ChaiVagueErrorsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'chai-vague-errors',
@@ -45,51 +46,47 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ChaiVagueErrorsRuleWalker = (function (_super) {
-    __extends(ChaiVagueErrorsRuleWalker, _super);
-    function ChaiVagueErrorsRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ChaiVagueErrorsRuleWalker.prototype.visitPropertyAccessExpression = function (node) {
-        if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
-            if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                var expectInvocation = ChaiUtils_1.ChaiUtils.getExpectInvocation(node);
-                if (!expectInvocation || expectInvocation.arguments.length !== 2) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isPropertyAccessExpression(node)) {
+            if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
+                if (/ok|true|false|undefined|null/.test(node.name.getText())) {
+                    var expectInvocation = ChaiUtils_1.ChaiUtils.getExpectInvocation(node);
+                    if (!expectInvocation || expectInvocation.arguments.length !== 2) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                    }
                 }
             }
         }
-        _super.prototype.visitPropertyAccessExpression.call(this, node);
-    };
-    ChaiVagueErrorsRuleWalker.prototype.visitCallExpression = function (node) {
-        if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
-            if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
-                    if (node.arguments.length === 1) {
-                        if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+        if (tsutils.isCallExpression(node)) {
+            if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
+                if (tsutils.isPropertyAccessExpression(node.expression)) {
+                    if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
+                        if (node.arguments.length === 1) {
+                            if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                            }
+                        }
+                    }
+                }
+                var actualValue = ChaiUtils_1.ChaiUtils.getFirstExpectCallParameter(node);
+                if (actualValue && tsutils.isBinaryExpression(actualValue)) {
+                    var expectedValue = ChaiUtils_1.ChaiUtils.getFirstExpectationParameter(node);
+                    if (expectedValue) {
+                        var operator = actualValue.operatorToken.getText();
+                        var expectingBooleanKeyword = expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+                        if (operator === '===' && expectingBooleanKeyword) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
+                        }
+                        else if (operator === '!==' && expectingBooleanKeyword) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
                         }
                     }
                 }
             }
-            var actualValue = ChaiUtils_1.ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue !== undefined && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
-                var expectedValue = ChaiUtils_1.ChaiUtils.getFirstExpectationParameter(node);
-                if (expectedValue !== undefined) {
-                    var binaryExpression = actualValue;
-                    var operator = binaryExpression.operatorToken.getText();
-                    var expectingBooleanKeyword = expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
-                    if (operator === '===' && expectingBooleanKeyword) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
-                    }
-                    else if (operator === '!==' && expectingBooleanKeyword) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
-                    }
-                }
-            }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    return ChaiVagueErrorsRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=chaiVagueErrorsRule.js.map

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,9 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new UseSimpleAttributesRuleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'use-simple-attributes',
@@ -44,37 +43,39 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var UseSimpleAttributesRuleWalker = (function (_super) {
-    __extends(UseSimpleAttributesRuleWalker, _super);
-    function UseSimpleAttributesRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UseSimpleAttributesRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    UseSimpleAttributesRuleWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    UseSimpleAttributesRuleWalker.prototype.checkJsxOpeningElement = function (node) {
+function walk(ctx) {
+    function checkJsxOpeningElement(node) {
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         for (var _i = 0, _a = Object.keys(attributes); _i < _a.length; _i++) {
             var key = _a[_i];
             var attribute = attributes[key];
-            var binaryExpression = this.getNextNodeRecursive(attribute, ts.SyntaxKind.BinaryExpression);
-            if (binaryExpression && !this.isSimpleBinaryExpression(binaryExpression)) {
+            var binaryExpression = getNextNodeRecursive(attribute, ts.SyntaxKind.BinaryExpression);
+            if (binaryExpression && !isSimpleBinaryExpression(binaryExpression)) {
                 var binaryExpressionErrorMessage = 'Attribute contains a complex binary expression';
-                this.addFailureAt(node.getStart(), node.getWidth(), binaryExpressionErrorMessage);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), binaryExpressionErrorMessage);
             }
-            var ternaryExpression = this.getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
+            var ternaryExpression = getNextNodeRecursive(attribute, ts.SyntaxKind.ConditionalExpression);
             if (ternaryExpression) {
                 var ternaryExpressionErrorMessage = 'Attribute contains a ternary expression';
-                this.addFailureAt(node.getStart(), node.getWidth(), ternaryExpressionErrorMessage);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), ternaryExpressionErrorMessage);
             }
         }
-    };
-    UseSimpleAttributesRuleWalker.prototype.isSimpleBinaryExpression = function (binaryExpression) {
+    }
+    function getNextNodeRecursive(node, kind) {
+        if (!node) {
+            return undefined;
+        }
+        var childNodes = node.getChildren();
+        var match = childNodes.find(function (cn) { return cn.kind === kind; });
+        if (!match) {
+            for (var _i = 0, childNodes_1 = childNodes; _i < childNodes_1.length; _i++) {
+                var childNode = childNodes_1[_i];
+                match = getNextNodeRecursive(childNode, kind);
+            }
+        }
+        return match;
+    }
+    function isSimpleBinaryExpression(binaryExpression) {
         if (binaryExpression.kind !== ts.SyntaxKind.BinaryExpression) {
             return false;
         }
@@ -88,21 +89,16 @@ var UseSimpleAttributesRuleWalker = (function (_super) {
         var leftTerm = allowedBinaryNodes.find(function (kind) { return kind === binaryExpression.left.kind; });
         var rightTerm = allowedBinaryNodes.find(function (kind) { return kind === binaryExpression.right.kind; });
         return leftTerm ? (rightTerm ? true : false) : false;
-    };
-    UseSimpleAttributesRuleWalker.prototype.getNextNodeRecursive = function (node, kind) {
-        if (!node) {
-            return undefined;
+    }
+    function cb(node) {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
         }
-        var childNodes = node.getChildren();
-        var match = childNodes.find(function (cn) { return cn.kind === kind; });
-        if (!match) {
-            for (var _i = 0, childNodes_1 = childNodes; _i < childNodes_1.length; _i++) {
-                var childNode = childNodes_1[_i];
-                match = this.getNextNodeRecursive(childNode, kind);
-            }
+        else if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
         }
-        return match;
-    };
-    return UseSimpleAttributesRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=useSimpleAttributesRule.js.map

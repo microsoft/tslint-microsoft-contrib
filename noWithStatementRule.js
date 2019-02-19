@@ -21,7 +21,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoWithStatementWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-with-statement',
@@ -41,17 +41,12 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoWithStatementWalker = (function (_super) {
-    __extends(NoWithStatementWalker, _super);
-    function NoWithStatementWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoWithStatementWalker.prototype.visitNode = function (node) {
+function walk(ctx) {
+    function cb(node) {
         if (node.kind === ts.SyntaxKind.WithStatement) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
         }
-        _super.prototype.visitNode.call(this, node);
-    };
-    return NoWithStatementWalker;
-}(Lint.RuleWalker));
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noWithStatementRule.js.map

@@ -13,14 +13,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoDuplicateParameterNamesWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-duplicate-parameter-names',
@@ -34,52 +36,34 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // now supported by TypeScript compiler'
+        recommendation: 'false'
     };
     Rule.FAILURE_STRING = 'Duplicate parameter name: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoDuplicateParameterNamesWalker = (function (_super) {
-    __extends(NoDuplicateParameterNamesWalker, _super);
-    function NoDuplicateParameterNamesWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node) ||
+            tsutils.isConstructorDeclaration(node) ||
+            tsutils.isArrowFunction(node) ||
+            tsutils.isFunctionDeclaration(node) ||
+            tsutils.isFunctionExpression(node)) {
+            var seenNames_1 = {};
+            node.parameters.forEach(function (parameter) {
+                var parameterName = parameter.name.getText();
+                if (parameterName !== undefined) {
+                    if (seenNames_1[parameterName]) {
+                        ctx.addFailureAt(parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + "'" + parameterName + "'");
+                    }
+                    else {
+                        seenNames_1[parameterName] = true;
+                    }
+                }
+            });
+        }
+        return ts.forEachChild(node, cb);
     }
-    NoDuplicateParameterNamesWalker.prototype.visitMethodDeclaration = function (node) {
-        this.validateParameterNames(node);
-        _super.prototype.visitMethodDeclaration.call(this, node);
-    };
-    NoDuplicateParameterNamesWalker.prototype.visitConstructorDeclaration = function (node) {
-        this.validateParameterNames(node);
-        _super.prototype.visitConstructorDeclaration.call(this, node);
-    };
-    NoDuplicateParameterNamesWalker.prototype.visitArrowFunction = function (node) {
-        this.validateParameterNames(node);
-        _super.prototype.visitArrowFunction.call(this, node);
-    };
-    NoDuplicateParameterNamesWalker.prototype.visitFunctionDeclaration = function (node) {
-        this.validateParameterNames(node);
-        _super.prototype.visitFunctionDeclaration.call(this, node);
-    };
-    NoDuplicateParameterNamesWalker.prototype.visitFunctionExpression = function (node) {
-        this.validateParameterNames(node);
-        _super.prototype.visitFunctionExpression.call(this, node);
-    };
-    NoDuplicateParameterNamesWalker.prototype.validateParameterNames = function (node) {
-        var _this = this;
-        var seenNames = {};
-        node.parameters.forEach(function (parameter) {
-            var parameterName = parameter.name.getText();
-            if (parameterName !== undefined) {
-                if (seenNames[parameterName]) {
-                    _this.addFailureAt(parameter.name.getStart(), parameterName.length, Rule.FAILURE_STRING + "'" + parameterName + "'");
-                }
-                else {
-                    seenNames[parameterName] = true;
-                }
-            }
-        });
-    };
-    return NoDuplicateParameterNamesWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noDuplicateParameterNamesRule.js.map

@@ -22,7 +22,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-empty-line-after-opening-brace',
@@ -36,41 +36,31 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Whitespace',
-        recommendation: 'false,',
+        recommendation: 'false',
         commonWeaknessEnumeration: '710'
     };
     Rule.FAILURE_STRING = 'Opening brace cannot be followed by empty line';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoEmptyLineAfterOpeningBraceWalker = (function (_super) {
-    __extends(NoEmptyLineAfterOpeningBraceWalker, _super);
-    function NoEmptyLineAfterOpeningBraceWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.scanner = ts.createScanner(1, false, 0, sourceFile.text);
-        return _this;
-    }
-    NoEmptyLineAfterOpeningBraceWalker.prototype.visitSourceFile = function (node) {
-        this.scanAllTokens(node);
-        _super.prototype.visitSourceFile.call(this, node);
-    };
-    NoEmptyLineAfterOpeningBraceWalker.prototype.scanAllTokens = function (node) {
-        var _this = this;
-        this.scanner.setTextPos(0);
+function walk(ctx) {
+    function cb(node) {
+        var scanner = ts.createScanner(1, false, 0, ctx.sourceFile.text);
+        scanner.setTextPos(0);
         var previous;
         var previousPrevious;
         tsutils_1.forEachTokenWithTrivia(node, function (_a, tokenSyntaxKind, range) {
             if (previousPrevious === ts.SyntaxKind.OpenBraceToken &&
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia) {
-                _this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
+                ctx.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
             if (tokenSyntaxKind !== ts.SyntaxKind.WhitespaceTrivia) {
                 previousPrevious = previous;
                 previous = tokenSyntaxKind;
             }
         });
-    };
-    return NoEmptyLineAfterOpeningBraceWalker;
-}(Lint.RuleWalker));
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noEmptyLineAfterOpeningBraceRule.js.map

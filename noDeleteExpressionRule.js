@@ -15,14 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        var noDeleteExpression = new NoDeleteExpression(sourceFile, this.getOptions());
-        return this.applyWithWalker(noDeleteExpression);
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-delete-expression',
@@ -41,24 +41,22 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoDeleteExpression = (function (_super) {
-    __extends(NoDeleteExpression, _super);
-    function NoDeleteExpression() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoDeleteExpression.prototype.visitExpressionStatement = function (node) {
-        _super.prototype.visitExpressionStatement.call(this, node);
-        if (node.expression.kind === ts.SyntaxKind.DeleteExpression) {
-            var deletedObject = node.expression.getChildren()[1];
-            if (deletedObject !== undefined && deletedObject.kind === ts.SyntaxKind.Identifier) {
-                this.addNoDeleteFailure(deletedObject);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isExpressionStatement(node)) {
+            if (tsutils.isDeleteExpression(node.expression)) {
+                var deletedObject = node.expression.getChildren()[1];
+                if (deletedObject && tsutils.isIdentifier(deletedObject)) {
+                    addNoDeleteFailure(deletedObject);
+                }
             }
         }
-    };
-    NoDeleteExpression.prototype.addNoDeleteFailure = function (deletedObject) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function addNoDeleteFailure(deletedObject) {
         var msg = Rule.FAILURE_STRING + deletedObject.getFullText().trim();
-        this.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
-    };
-    return NoDeleteExpression;
-}(Lint.RuleWalker));
+        ctx.addFailureAt(deletedObject.getStart(), deletedObject.getWidth(), msg);
+    }
+}
 //# sourceMappingURL=noDeleteExpressionRule.js.map

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var NO_ALT_ATTRIBUTE_FAILURE_STRING = 'Inputs element with type="image" must have alt attribute.';
@@ -27,9 +28,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yImageButtonHasAltWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-image-button-has-alt',
@@ -47,41 +46,38 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yImageButtonHasAltWalker = (function (_super) {
-    __extends(ReactA11yImageButtonHasAltWalker, _super);
-    function ReactA11yImageButtonHasAltWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yImageButtonHasAltWalker.prototype.visitJsxElement = function (node) {
-        this.validateOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yImageButtonHasAltWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yImageButtonHasAltWalker.prototype.validateOpeningElement = function (node) {
+function walk(ctx) {
+    function validateOpeningElement(node) {
         var tagName = node.tagName.getText();
         if (tagName !== 'input') {
             return;
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var typeAttribute = attributes[TYPE_STRING];
-        if (!typeAttribute ||
-            typeAttribute.initializer === undefined ||
-            !TypeGuard_1.isStringLiteral(typeAttribute.initializer) ||
-            JsxAttribute_1.getStringLiteral(typeAttribute) === undefined ||
-            JsxAttribute_1.getStringLiteral(typeAttribute).toLowerCase() !== 'image') {
+        if (!typeAttribute || typeAttribute.initializer === undefined || !TypeGuard_1.isStringLiteral(typeAttribute.initializer)) {
+            return;
+        }
+        var stringLiteral = JsxAttribute_1.getStringLiteral(typeAttribute);
+        if (stringLiteral === undefined || stringLiteral.toLowerCase() !== 'image') {
             return;
         }
         var altAttribute = attributes[ALT_STRING];
         if (!altAttribute) {
-            this.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), NO_ALT_ATTRIBUTE_FAILURE_STRING);
         }
         else if (JsxAttribute_1.isEmpty(altAttribute) || !JsxAttribute_1.getStringLiteral(altAttribute)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), EMPTY_ALT_ATTRIBUTE_FAILURE_STRING);
         }
-    };
-    return ReactA11yImageButtonHasAltWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yImageButtonHasAltRule.js.map

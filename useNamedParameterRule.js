@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new UseNamedParameterWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'use-named-parameter',
@@ -29,7 +30,7 @@ var Rule = (function (_super) {
         description: 'Do not reference the arguments object by numerical index; instead, use a named parameter.',
         options: null,
         optionsDescription: '',
-        typescriptOnly: true,
+        typescriptOnly: false,
         issueClass: 'Non-SDL',
         issueType: 'Warning',
         severity: 'Important',
@@ -41,22 +42,20 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var UseNamedParameterWalker = (function (_super) {
-    __extends(UseNamedParameterWalker, _super);
-    function UseNamedParameterWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UseNamedParameterWalker.prototype.visitElementAccessExpression = function (node) {
-        if (node.argumentExpression !== undefined) {
-            if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
-                if (node.expression.getText() === 'arguments') {
-                    var failureString = Rule.FAILURE_STRING + "'" + node.getText() + "'";
-                    this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isElementAccessExpression(node)) {
+            if (node.argumentExpression !== undefined) {
+                if (node.argumentExpression.kind === ts.SyntaxKind.NumericLiteral) {
+                    if (node.expression.getText() === 'arguments') {
+                        var failureString = Rule.FAILURE_STRING + "'" + node.getText() + "'";
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                    }
                 }
             }
         }
-        _super.prototype.visitElementAccessExpression.call(this, node);
-    };
-    return UseNamedParameterWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=useNamedParameterRule.js.map

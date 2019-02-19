@@ -17,7 +17,9 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
     return cooked;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var METHOD_REGEX = 'method-regex';
@@ -29,31 +31,58 @@ var VALIDATE_PRIVATE_STATICS_AS_PRIVATE = 'validate-private-statics-as-private';
 var VALIDATE_PRIVATE_STATICS_AS_STATIC = 'validate-private-statics-as-static';
 var VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
 var VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
-function parseOptions(ruleArguments) {
-    if (ruleArguments.length === 0) {
-        return {
-            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
-        };
-    }
-    var staticsValidateOption = ruleArguments[1];
-    if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
-        return {
-            validateStatics: staticsValidateOption
-        };
-    }
-    else {
-        return {
-            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
-        };
-    }
-}
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new FunctionNameRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var _this = this;
+        var methodRegex = /^[a-z][\w\d]+$/;
+        var privateMethodRegex = methodRegex;
+        var protectedMethodRegex = privateMethodRegex;
+        var staticMethodRegex = /^[A-Z_\d]+$/;
+        var functionRegex = /^[a-z][\w\d]+$/;
+        var validateStatics = VALIDATE_PRIVATE_STATICS_AS_PRIVATE;
+        var ruleArguments = options.ruleArguments;
+        if (ruleArguments.length > 1) {
+            var staticsValidateOption = ruleArguments[1];
+            if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
+                validateStatics = staticsValidateOption;
+            }
+        }
+        ruleArguments.forEach(function (opt) {
+            if (TypeGuard_1.isObject(opt)) {
+                methodRegex = _this.getOptionOrDefault(opt, METHOD_REGEX, methodRegex);
+                privateMethodRegex = _this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, privateMethodRegex);
+                protectedMethodRegex = _this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, protectedMethodRegex);
+                staticMethodRegex = _this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, staticMethodRegex);
+                functionRegex = _this.getOptionOrDefault(opt, FUNCTION_REGEX, functionRegex);
+            }
+        });
+        return {
+            validateStatics: validateStatics,
+            methodRegex: methodRegex,
+            privateMethodRegex: privateMethodRegex,
+            protectedMethodRegex: protectedMethodRegex,
+            staticMethodRegex: staticMethodRegex,
+            functionRegex: functionRegex
+        };
+    };
+    Rule.prototype.getOptionOrDefault = function (option, key, defaultValue) {
+        try {
+            var value = option[key];
+            if (value !== undefined && (typeof value === 'string' || value instanceof RegExp)) {
+                return new RegExp(value);
+            }
+        }
+        catch (e) {
+            console.error('Could not read ' + key + ' within function-name configuration');
+        }
+        return defaultValue;
     };
     Rule.metadata = {
         ruleName: 'function-name',
@@ -88,73 +117,43 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var FunctionNameRuleWalker = (function (_super) {
-    __extends(FunctionNameRuleWalker, _super);
-    function FunctionNameRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.methodRegex = /^[a-z][\w\d]+$/;
-        _this.privateMethodRegex = _this.methodRegex;
-        _this.protectedMethodRegex = _this.privateMethodRegex;
-        _this.staticMethodRegex = /^[A-Z_\d]+$/;
-        _this.functionRegex = /^[a-z][\w\d]+$/;
-        _this.args = parseOptions(options.ruleArguments);
-        _this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                _this.methodRegex = _this.getOptionOrDefault(opt, METHOD_REGEX, _this.methodRegex);
-                _this.privateMethodRegex = _this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, _this.privateMethodRegex);
-                _this.protectedMethodRegex = _this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, _this.protectedMethodRegex);
-                _this.staticMethodRegex = _this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, _this.staticMethodRegex);
-                _this.functionRegex = _this.getOptionOrDefault(opt, FUNCTION_REGEX, _this.functionRegex);
+function walk(ctx) {
+    var _a = ctx.options, validateStatics = _a.validateStatics, methodRegex = _a.methodRegex, privateMethodRegex = _a.privateMethodRegex, protectedMethodRegex = _a.protectedMethodRegex, staticMethodRegex = _a.staticMethodRegex, functionRegex = _a.functionRegex;
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node)) {
+            var name_1 = node.name.getText();
+            if (AstUtils_1.AstUtils.hasComputedName(node)) {
             }
-        });
-        return _this;
+            else if (AstUtils_1.AstUtils.isPrivate(node)) {
+                if (!privateMethodRegex.test(name_1) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + privateMethodRegex + ": " + name_1);
+                }
+            }
+            else if (AstUtils_1.AstUtils.isProtected(node)) {
+                if (!protectedMethodRegex.test(name_1) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), "Protected method name does not match " + protectedMethodRegex + ": " + name_1);
+                }
+            }
+            else if (AstUtils_1.AstUtils.isStatic(node)) {
+                if (!staticMethodRegex.test(name_1)) {
+                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), "Static method name does not match " + staticMethodRegex + ": " + name_1);
+                }
+            }
+            else if (!methodRegex.test(name_1)) {
+                ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), "Method name does not match " + methodRegex + ": " + name_1);
+            }
+        }
+        if (tsutils.isFunctionDeclaration(node)) {
+            if (node.name !== undefined) {
+                var name_2 = node.name.text;
+                if (!functionRegex.test(name_2)) {
+                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), "Function name does not match " + functionRegex + ": " + name_2);
+                }
+            }
+        }
+        return ts.forEachChild(node, cb);
     }
-    FunctionNameRuleWalker.prototype.visitMethodDeclaration = function (node) {
-        var name = node.name.getText();
-        if (AstUtils_1.AstUtils.hasComputedName(node)) {
-        }
-        else if (AstUtils_1.AstUtils.isPrivate(node)) {
-            if (!this.privateMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Private method name does not match " + this.privateMethodRegex + ": " + name);
-            }
-        }
-        else if (AstUtils_1.AstUtils.isProtected(node)) {
-            if (!this.protectedMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Protected method name does not match " + this.protectedMethodRegex + ": " + name);
-            }
-        }
-        else if (AstUtils_1.AstUtils.isStatic(node)) {
-            if (!this.staticMethodRegex.test(name)) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Static method name does not match " + this.staticMethodRegex + ": " + name);
-            }
-        }
-        else if (!this.methodRegex.test(name)) {
-            this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Method name does not match " + this.methodRegex + ": " + name);
-        }
-        _super.prototype.visitMethodDeclaration.call(this, node);
-    };
-    FunctionNameRuleWalker.prototype.visitFunctionDeclaration = function (node) {
-        if (node.name !== undefined) {
-            var name_1 = node.name.text;
-            if (!this.functionRegex.test(name_1)) {
-                this.addFailureAt(node.name.getStart(), node.name.getWidth(), "Function name does not match " + this.functionRegex + ": " + name_1);
-            }
-        }
-        _super.prototype.visitFunctionDeclaration.call(this, node);
-    };
-    FunctionNameRuleWalker.prototype.getOptionOrDefault = function (option, key, defaultValue) {
-        try {
-            var value = option[key];
-            if (value !== undefined && (typeof value === 'string' || value instanceof RegExp)) {
-                return new RegExp(value);
-            }
-        }
-        catch (e) {
-            console.error('Could not read ' + key + ' within function-name configuration');
-        }
-        return defaultValue;
-    };
-    return FunctionNameRuleWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 var templateObject_1;
 //# sourceMappingURL=functionNameRule.js.map

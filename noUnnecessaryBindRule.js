@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,11 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-unnecessary-bind rule is deprecated. Replace your usage with the TSLint unnecessary-bind rule.');
+            Rule.isWarningShown = true;
+        }
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-unnecessary-bind',
@@ -35,6 +40,7 @@ var Rule = (function (_super) {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
+        recommendation: 'false',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -67,42 +73,40 @@ var Rule = (function (_super) {
         'unique'
     ];
     Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES = ['foldl', 'foldr', 'inject', 'reduce', 'reduceRight'];
+    Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoUnnecessaryBindRuleWalker = (function (_super) {
-    __extends(NoUnnecessaryBindRuleWalker, _super);
-    function NoUnnecessaryBindRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            var analyzers = [
+                new TypeScriptFunctionAnalyzer(),
+                new UnderscoreStaticAnalyzer(),
+                new UnderscoreInstanceAnalyzer()
+            ];
+            analyzers.forEach(function (analyzer) {
+                if (analyzer.canHandle(node)) {
+                    var contextArgument = analyzer.getContextArgument(node);
+                    var functionArgument = analyzer.getFunctionArgument(node);
+                    if (contextArgument === undefined || functionArgument === undefined) {
+                        return;
+                    }
+                    if (contextArgument.getText() === 'this') {
+                        if (isArrowFunction(functionArgument)) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
+                        }
+                        else if (isFunctionLiteral(functionArgument)) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
+                        }
+                    }
+                }
+            });
+        }
+        return ts.forEachChild(node, cb);
     }
-    NoUnnecessaryBindRuleWalker.prototype.visitCallExpression = function (node) {
-        var _this = this;
-        var analyzers = [
-            new TypeScriptFunctionAnalyzer(),
-            new UnderscoreStaticAnalyzer(),
-            new UnderscoreInstanceAnalyzer()
-        ];
-        analyzers.forEach(function (analyzer) {
-            if (analyzer.canHandle(node)) {
-                var contextArgument = analyzer.getContextArgument(node);
-                var functionArgument = analyzer.getFunctionArgument(node);
-                if (contextArgument === undefined || functionArgument === undefined) {
-                    return;
-                }
-                if (contextArgument.getText() === 'this') {
-                    if (isArrowFunction(functionArgument)) {
-                        _this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
-                    }
-                    else if (isFunctionLiteral(functionArgument)) {
-                        _this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
-                    }
-                }
-            }
-        });
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    return NoUnnecessaryBindRuleWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 var TypeScriptFunctionAnalyzer = (function () {
     function TypeScriptFunctionAnalyzer() {
     }

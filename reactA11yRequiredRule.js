@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var FAILURE_STRING = 'Required input elements must have an aria-required set to true';
 var REQUIRED_STRING = 'required';
@@ -25,14 +26,13 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yRequiredRuleWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-required',
         type: 'functionality',
         description: 'Enforce that required input elements must have aria-required set to true',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://www.clarissapeterson.com/2012/11/html5-accessibility/\">Acessibility in HTML5</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -45,20 +45,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yRequiredRuleWalker = (function (_super) {
-    __extends(ReactA11yRequiredRuleWalker, _super);
-    function ReactA11yRequiredRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yRequiredRuleWalker.prototype.visitJsxElement = function (node) {
-        this.validateOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yRequiredRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yRequiredRuleWalker.prototype.validateOpeningElement = function (node) {
+function walk(ctx) {
+    function validateOpeningElement(node) {
         var tagName = node.tagName.getText();
         if (tagName !== 'input') {
             return;
@@ -70,9 +58,18 @@ var ReactA11yRequiredRuleWalker = (function (_super) {
         }
         var ariaRequiredAttribute = attributes[ARIA_REQUIRED_STRING];
         if (!ariaRequiredAttribute || JsxAttribute_1.isEmpty(ariaRequiredAttribute) || !JsxAttribute_1.getBooleanLiteral(ariaRequiredAttribute)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
         }
-    };
-    return ReactA11yRequiredRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yRequiredRule.js.map

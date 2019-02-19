@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var FAILURE_STATIC_FOUND = 'Static invocation of underscore function found. Prefer instance version instead: ';
@@ -87,7 +88,20 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new UnderscoreConsistentInvocationRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            style: 'instance'
+        };
+        options.ruleArguments.forEach(function (opt) {
+            if (TypeGuard_1.isObject(opt)) {
+                if (opt.style === 'static') {
+                    parsed.style = 'static';
+                }
+            }
+        });
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'underscore-consistent-invocation',
@@ -106,31 +120,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
-    __extends(UnderscoreConsistentInvocationRuleWalker, _super);
-    function UnderscoreConsistentInvocationRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.style = 'instance';
-        _this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                if (opt.style === 'static') {
-                    _this.style = 'static';
-                }
-            }
-        });
-        return _this;
-    }
-    UnderscoreConsistentInvocationRuleWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (this.style === 'instance' && this.isStaticUnderscoreInvocation(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName);
-        }
-        if (this.style === 'static' && this.isStaticUnderscoreInstanceInvocation(node)) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText());
-        }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    UnderscoreConsistentInvocationRuleWalker.prototype.isStaticUnderscoreInstanceInvocation = function (node) {
+function walk(ctx) {
+    function isStaticUnderscoreInstanceInvocation(node) {
         if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             var propExpression = node.expression;
             if (propExpression.expression.kind === ts.SyntaxKind.CallExpression) {
@@ -144,15 +135,27 @@ var UnderscoreConsistentInvocationRuleWalker = (function (_super) {
             }
         }
         return false;
-    };
-    UnderscoreConsistentInvocationRuleWalker.prototype.isStaticUnderscoreInvocation = function (node) {
+    }
+    function isStaticUnderscoreInvocation(node) {
         var target = AstUtils_1.AstUtils.getFunctionTarget(node);
         if (target !== '_') {
             return false;
         }
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         return FUNCTION_NAMES.indexOf(functionName) > -1;
-    };
-    return UnderscoreConsistentInvocationRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (ctx.options.style === 'instance' && isStaticUnderscoreInvocation(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STATIC_FOUND + '_.' + functionName);
+            }
+            if (ctx.options.style === 'static' && isStaticUnderscoreInstanceInvocation(node)) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_INSTANCE_FOUND + node.expression.getText());
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=underscoreConsistentInvocationRule.js.map

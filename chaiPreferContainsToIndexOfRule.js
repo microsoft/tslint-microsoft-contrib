@@ -15,16 +15,17 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var ChaiUtils_1 = require("./utils/ChaiUtils");
-var FAILURE_STRING = 'Found chai call with indexOf that can be converted to .contain assertion: ';
+var FAILURE_STRING = 'Found chai call with indexOf that can be converted to .contain assertion';
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new ChaiPreferContainsToIndexOfRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'chai-prefer-contains-to-index-of',
@@ -43,46 +44,40 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ChaiPreferContainsToIndexOfRuleWalker = (function (_super) {
-    __extends(ChaiPreferContainsToIndexOfRuleWalker, _super);
-    function ChaiPreferContainsToIndexOfRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ChaiPreferContainsToIndexOfRuleWalker.prototype.visitCallExpression = function (node) {
-        if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
-            if (this.isFirstArgumentIndexOfResult(node)) {
-                if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                    if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
-                        if (this.isFirstArgumentNegative1(node)) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            if (ChaiUtils_1.ChaiUtils.isExpectInvocation(node)) {
+                if (isFirstArgumentIndexOfResult(node)) {
+                    if (tsutils.isPropertyAccessExpression(node.expression)) {
+                        if (ChaiUtils_1.ChaiUtils.isEqualsInvocation(node.expression)) {
+                            if (isFirstArgumentNegative1(node)) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                            }
                         }
                     }
                 }
             }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    ChaiPreferContainsToIndexOfRuleWalker.prototype.isFirstArgumentNegative1 = function (node) {
-        if (node.arguments !== undefined && node.arguments.length > 0) {
+        return ts.forEachChild(node, cb);
+    }
+    function isFirstArgumentNegative1(node) {
+        if (node.arguments && node.arguments.length > 0) {
             var firstArgument = node.arguments[0];
-            if (firstArgument.getText() === '-1') {
-                return true;
-            }
+            return firstArgument.getText() === '-1';
         }
         return false;
-    };
-    ChaiPreferContainsToIndexOfRuleWalker.prototype.isFirstArgumentIndexOfResult = function (node) {
+    }
+    function isFirstArgumentIndexOfResult(node) {
         var expectCall = ChaiUtils_1.ChaiUtils.getLeftMostCallExpression(node);
-        if (expectCall !== undefined && expectCall.arguments !== undefined && expectCall.arguments.length > 0) {
+        if (expectCall && expectCall.arguments && expectCall.arguments.length > 0) {
             var firstArgument = expectCall.arguments[0];
-            if (firstArgument.kind === ts.SyntaxKind.CallExpression) {
-                if (AstUtils_1.AstUtils.getFunctionName(firstArgument) === 'indexOf') {
-                    return true;
-                }
+            if (tsutils.isCallExpression(firstArgument)) {
+                return AstUtils_1.AstUtils.getFunctionName(firstArgument) === 'indexOf';
             }
         }
         return false;
-    };
-    return ChaiPreferContainsToIndexOfRuleWalker;
-}(Lint.RuleWalker));
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=chaiPreferContainsToIndexOfRule.js.map

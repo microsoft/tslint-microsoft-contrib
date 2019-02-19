@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Utils_1 = require("./utils/Utils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoHttpStringWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     };
     Rule.metadata = {
         ruleName: 'no-http-string',
@@ -36,55 +37,50 @@ var Rule = (function (_super) {
         severity: 'Critical',
         level: 'Mandatory',
         group: 'Security',
-        recommendation: '[true, "http://www.example.com/?.*", "http://localhost:?.*"],',
+        recommendation: '[true, "http://www.example.com/?.*", "http://localhost:?.*"]',
         commonWeaknessEnumeration: '319'
     };
     Rule.FAILURE_STRING = 'Forbidden http url in string: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoHttpStringWalker = (function (_super) {
-    __extends(NoHttpStringWalker, _super);
-    function NoHttpStringWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function parseOptions(options) {
+    var value;
+    if (options.ruleArguments instanceof Array) {
+        value = options.ruleArguments;
     }
-    NoHttpStringWalker.prototype.visitStringLiteral = function (node) {
-        this.visitLiteralExpression(node);
-        _super.prototype.visitStringLiteral.call(this, node);
+    else if (options instanceof Array) {
+        value = options;
+    }
+    return {
+        allExceptions: value
     };
-    NoHttpStringWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
-            this.visitLiteralExpression(node);
+}
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isTextualLiteral(node)) {
+            visitLiteralExpression(node);
         }
         else if (node.kind === ts.SyntaxKind.TemplateHead) {
-            this.visitLiteralExpression(node);
+            visitLiteralExpression(node);
         }
-        _super.prototype.visitNode.call(this, node);
-    };
-    NoHttpStringWalker.prototype.visitLiteralExpression = function (node) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function visitLiteralExpression(node) {
         var stringText = node.text;
         if (stringText.indexOf('http:') === 0) {
-            if (!this.isSuppressed(stringText)) {
+            if (!isSuppressed(stringText)) {
                 var failureString = Rule.FAILURE_STRING + "'" + stringText + "'";
-                this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }
-    };
-    NoHttpStringWalker.prototype.isSuppressed = function (stringText) {
-        var allExceptions = NoHttpStringWalker.getExceptions(this.getOptions());
+    }
+    function isSuppressed(stringText) {
+        var allExceptions = ctx.options.allExceptions;
         return Utils_1.Utils.exists(allExceptions, function (exception) {
             return new RegExp(exception).test(stringText);
         });
-    };
-    NoHttpStringWalker.getExceptions = function (options) {
-        if (options.ruleArguments instanceof Array) {
-            return options.ruleArguments[0];
-        }
-        if (options instanceof Array) {
-            return options;
-        }
-        return undefined;
-    };
-    return NoHttpStringWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noHttpStringRule.js.map

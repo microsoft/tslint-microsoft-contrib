@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoFunctionExpressionRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-function-expression',
@@ -42,53 +43,46 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoFunctionExpressionRuleWalker = (function (_super) {
-    __extends(NoFunctionExpressionRuleWalker, _super);
-    function NoFunctionExpressionRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowGenericFunctionExpression = false;
-        if (AstUtils_1.AstUtils.getLanguageVariant(sourceFile) === ts.LanguageVariant.JSX) {
-            _this.allowGenericFunctionExpression = true;
+function walk(ctx) {
+    var allowGenericFunctionExpression = AstUtils_1.AstUtils.getLanguageVariant(ctx.sourceFile) === ts.LanguageVariant.JSX;
+    function cb(node) {
+        if (tsutils.isFunctionExpression(node)) {
+            var walker_1 = new SingleFunctionWalker();
+            node.getChildren().forEach(function (child) {
+                walker_1.walk(child);
+            });
+            var isGenericFunctionInTSX = allowGenericFunctionExpression && walker_1.isGenericFunction;
+            if (!walker_1.isAccessingThis &&
+                !node.asteriskToken &&
+                !isGenericFunctionInTSX) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+            }
         }
-        return _this;
+        return ts.forEachChild(node, cb);
     }
-    NoFunctionExpressionRuleWalker.prototype.visitFunctionExpression = function (node) {
-        var walker = new SingleFunctionWalker(this.getSourceFile(), this.getOptions());
-        node.getChildren().forEach(function (child) {
-            walker.walk(child);
-        });
-        var isGenericFunctionInTSX = this.allowGenericFunctionExpression && walker.isGenericFunction;
-        if (!walker.isAccessingThis &&
-            !node.asteriskToken &&
-            !isGenericFunctionInTSX) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-        }
-        _super.prototype.visitFunctionExpression.call(this, node);
-    };
-    return NoFunctionExpressionRuleWalker;
-}(Lint.RuleWalker));
-var SingleFunctionWalker = (function (_super) {
-    __extends(SingleFunctionWalker, _super);
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+var SingleFunctionWalker = (function () {
     function SingleFunctionWalker() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.isAccessingThis = false;
-        _this.isGenericFunction = false;
-        return _this;
+        this.isAccessingThis = false;
+        this.isGenericFunction = false;
     }
-    SingleFunctionWalker.prototype.visitNode = function (node) {
-        if (node.getText() === 'this') {
-            this.isAccessingThis = true;
-        }
-        _super.prototype.visitNode.call(this, node);
-    };
-    SingleFunctionWalker.prototype.visitTypeReference = function (node) {
-        this.isGenericFunction = true;
-        _super.prototype.visitTypeReference.call(this, node);
-    };
-    SingleFunctionWalker.prototype.visitFunctionExpression = function () {
-    };
-    SingleFunctionWalker.prototype.visitArrowFunction = function () {
+    SingleFunctionWalker.prototype.walk = function (root) {
+        var _this = this;
+        var cb = function (node) {
+            if (node.getText() === 'this') {
+                _this.isAccessingThis = true;
+            }
+            if (tsutils.isFunctionExpression(node) || tsutils.isArrowFunction(node)) {
+                return;
+            }
+            if (tsutils.isTypeReferenceNode(node)) {
+                _this.isGenericFunction = true;
+            }
+            ts.forEachChild(node, cb);
+        };
+        cb(root);
     };
     return SingleFunctionWalker;
-}(Lint.RuleWalker));
+}());
 //# sourceMappingURL=noFunctionExpressionRule.js.map

@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -23,7 +25,7 @@ var Rule = (function (_super) {
         return "Do not use the 'for in' statement: 'for (" + initializer + " in " + expression + ")'. If this is an object, use 'Object.keys' instead. If this is an array use a standard 'for' loop instead.";
     };
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-for-in',
@@ -42,17 +44,16 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoForInRuleWalker = (function (_super) {
-    __extends(NoForInRuleWalker, _super);
-    function NoForInRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isForInStatement(node)) {
+            var initializer = node.initializer.getText();
+            var expression = node.expression.getText();
+            var msg = Rule.FAILURE_STRING_FACTORY(initializer, expression);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+        }
+        return ts.forEachChild(node, cb);
     }
-    NoForInRuleWalker.prototype.visitForInStatement = function (node) {
-        var initializer = node.initializer.getText();
-        var expression = node.expression.getText();
-        var msg = Rule.FAILURE_STRING_FACTORY(initializer, expression);
-        this.addFailureAt(node.getStart(), node.getWidth(), msg);
-    };
-    return NoForInRuleWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noForInRule.js.map

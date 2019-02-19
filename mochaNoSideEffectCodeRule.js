@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var MochaUtils_1 = require("./utils/MochaUtils");
 var Utils_1 = require("./utils/Utils");
@@ -26,7 +27,20 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new MochaNoSideEffectCodeRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            ignoreRegex: undefined
+        };
+        options.ruleArguments.forEach(function (opt) {
+            if (TypeGuard_1.isObject(opt)) {
+                if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
+                    parsed.ignoreRegex = new RegExp(opt.ignore);
+                }
+            }
+        });
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'mocha-no-side-effect-code',
@@ -44,71 +58,9 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MochaNoSideEffectCodeRuleWalker = (function (_super) {
-    __extends(MochaNoSideEffectCodeRuleWalker, _super);
-    function MochaNoSideEffectCodeRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.isInDescribe = false;
-        _this.parseOptions();
-        return _this;
-    }
-    MochaNoSideEffectCodeRuleWalker.prototype.parseOptions = function () {
-        var _this = this;
-        this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                if (opt.ignore !== undefined && (typeof opt.ignore === 'string' || opt.ignore instanceof RegExp)) {
-                    _this.ignoreRegex = new RegExp(opt.ignore);
-                }
-            }
-        });
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitSourceFile = function (node) {
-        var _this = this;
-        if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
-            node.statements.forEach(function (statement) {
-                if (statement.kind === ts.SyntaxKind.VariableStatement) {
-                    var declarationList = statement.declarationList;
-                    declarationList.declarations.forEach(function (declaration) {
-                        if (declaration.initializer !== undefined) {
-                            _this.validateExpression(declaration.initializer, declaration);
-                        }
-                    });
-                }
-                if (MochaUtils_1.MochaUtils.isStatementDescribeCall(statement)) {
-                    var expression = statement.expression;
-                    var call = expression;
-                    _this.visitCallExpression(call);
-                }
-            });
-        }
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitVariableDeclaration = function (node) {
-        if (this.isInDescribe === true && node.initializer !== undefined) {
-            this.validateExpression(node.initializer, node);
-        }
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitFunctionDeclaration = function () {
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitClassDeclaration = function () {
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.visitCallExpression = function (node) {
-        if (MochaUtils_1.MochaUtils.isDescribe(node)) {
-            var nestedSubscribe = this.isInDescribe;
-            this.isInDescribe = true;
-            _super.prototype.visitCallExpression.call(this, node);
-            if (nestedSubscribe === false) {
-                this.isInDescribe = false;
-            }
-        }
-        else if (MochaUtils_1.MochaUtils.isLifecycleMethod(node)) {
-            return;
-        }
-        else if (this.isInDescribe) {
-            this.validateExpression(node, node);
-        }
-    };
-    MochaNoSideEffectCodeRuleWalker.prototype.validateExpression = function (initializer, parentNode) {
-        var _this = this;
+function walk(ctx) {
+    var isInDescribe = false;
+    function validateExpression(initializer, parentNode) {
         if (initializer === undefined) {
             return;
         }
@@ -121,7 +73,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         if (initializer.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             var arrayLiteral = initializer;
             arrayLiteral.elements.forEach(function (expression) {
-                _this.validateExpression(expression, parentNode);
+                validateExpression(expression, parentNode);
             });
             return;
         }
@@ -130,7 +82,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
         }
         if (initializer.kind === ts.SyntaxKind.TypeAssertionExpression) {
             var assertion = initializer;
-            this.validateExpression(assertion.expression, parentNode);
+            validateExpression(assertion.expression, parentNode);
             return;
         }
         if (initializer.kind === ts.SyntaxKind.PropertyAccessExpression) {
@@ -144,7 +96,7 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
             literal.properties.forEach(function (element) {
                 if (element.kind === ts.SyntaxKind.PropertyAssignment) {
                     var assignment = element;
-                    _this.validateExpression(assignment.initializer, parentNode);
+                    validateExpression(assignment.initializer, parentNode);
                 }
             });
             return;
@@ -170,24 +122,69 @@ var MochaNoSideEffectCodeRuleWalker = (function (_super) {
                 var propExp = callExp.expression;
                 if (propExp.expression.kind === ts.SyntaxKind.ArrayLiteralExpression) {
                     if (propExp.name.getText() === 'forEach') {
-                        this.validateExpression(propExp.expression, parentNode);
+                        validateExpression(propExp.expression, parentNode);
                         callExp.arguments.forEach(function (arg) {
-                            _super.prototype.visitNode.call(_this, arg);
+                            cb(arg);
                         });
                         return;
                     }
                 }
             }
         }
-        if (this.ignoreRegex !== undefined && this.ignoreRegex.test(initializer.getText())) {
+        if (ctx.options.ignoreRegex !== undefined && ctx.options.ignoreRegex.test(initializer.getText())) {
             return;
         }
         if (AstUtils_1.AstUtils.isConstantExpression(initializer)) {
             return;
         }
         var message = FAILURE_STRING + Utils_1.Utils.trimTo(parentNode.getText(), 30);
-        this.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
-    };
-    return MochaNoSideEffectCodeRuleWalker;
-}(Lint.RuleWalker));
+        ctx.addFailureAt(parentNode.getStart(), parentNode.getWidth(), message);
+    }
+    function cb(node) {
+        if (tsutils.isFunctionDeclaration(node) || tsutils.isClassDeclaration(node)) {
+            return;
+        }
+        if (tsutils.isVariableDeclaration(node)) {
+            if (isInDescribe === true && node.initializer !== undefined) {
+                validateExpression(node.initializer, node);
+            }
+        }
+        else if (tsutils.isCallExpression(node)) {
+            if (MochaUtils_1.MochaUtils.isDescribe(node)) {
+                var nestedSubscribe = isInDescribe;
+                isInDescribe = true;
+                ts.forEachChild(node, cb);
+                if (nestedSubscribe === false) {
+                    isInDescribe = false;
+                }
+            }
+            else if (MochaUtils_1.MochaUtils.isLifecycleMethod(node)) {
+                return;
+            }
+            else if (isInDescribe) {
+                validateExpression(node, node);
+            }
+        }
+        else {
+            ts.forEachChild(node, cb);
+        }
+    }
+    if (MochaUtils_1.MochaUtils.isMochaTest(ctx.sourceFile)) {
+        ctx.sourceFile.statements.forEach(function (statement) {
+            if (statement.kind === ts.SyntaxKind.VariableStatement) {
+                var declarationList = statement.declarationList;
+                declarationList.declarations.forEach(function (declaration) {
+                    if (declaration.initializer !== undefined) {
+                        validateExpression(declaration.initializer, declaration);
+                    }
+                });
+            }
+            if (MochaUtils_1.MochaUtils.isStatementDescribeCall(statement)) {
+                var expression = statement.expression;
+                var call = expression;
+                cb(call);
+            }
+        });
+    }
+}
 //# sourceMappingURL=mochaNoSideEffectCodeRule.js.map

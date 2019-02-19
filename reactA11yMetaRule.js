@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var FAILURE_STRING = 'Do not use http-equiv="refresh"';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -23,7 +24,7 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactA11yMetaRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         }
         else {
             return [];
@@ -45,50 +46,48 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yMetaRuleWalker = (function (_super) {
-    __extends(ReactA11yMetaRuleWalker, _super);
-    function ReactA11yMetaRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yMetaRuleWalker.prototype.visitJsxElement = function (node) {
-        this.validateOpeningElement(node, node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yMetaRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node, node);
-    };
-    ReactA11yMetaRuleWalker.prototype.validateOpeningElement = function (parent, openElement) {
-        var _this = this;
+function walk(ctx) {
+    function validateOpeningElement(parent, openElement) {
         if (openElement.tagName.getText() === 'meta') {
             var attributes = openElement.attributes;
             attributes.properties.forEach(function (parameter) {
                 if (parameter.kind === ts.SyntaxKind.JsxAttribute) {
                     var attribute = parameter;
                     if (attribute.name.getText() === 'http-equiv') {
-                        if (attribute.initializer !== undefined && _this.isStringLiteral(attribute.initializer, 'refresh')) {
-                            _this.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
+                        if (attribute.initializer !== undefined && isStringLiteral(attribute.initializer, 'refresh')) {
+                            ctx.addFailureAt(parent.getStart(), openElement.getWidth(), FAILURE_STRING);
                         }
                     }
                 }
             });
         }
-    };
-    ReactA11yMetaRuleWalker.prototype.isStringLiteral = function (expression, literal) {
-        if (expression !== undefined) {
-            if (expression.kind === ts.SyntaxKind.StringLiteral) {
-                var value = expression.text;
+    }
+    function cb(node) {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node, node);
+            return;
+        }
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node, node.openingElement);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+function isStringLiteral(expression, literal) {
+    if (expression !== undefined) {
+        if (expression.kind === ts.SyntaxKind.StringLiteral) {
+            var value = expression.text;
+            return value === literal;
+        }
+        else if (expression.kind === ts.SyntaxKind.JsxExpression) {
+            var exp = expression;
+            if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
+                var value = exp.expression.text;
                 return value === literal;
             }
-            else if (expression.kind === ts.SyntaxKind.JsxExpression) {
-                var exp = expression;
-                if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
-                    var value = exp.expression.text;
-                    return value === literal;
-                }
-            }
         }
-        return undefined;
-    };
-    return ReactA11yMetaRuleWalker;
-}(Lint.RuleWalker));
+    }
+    return undefined;
+}
 //# sourceMappingURL=reactA11yMetaRule.js.map

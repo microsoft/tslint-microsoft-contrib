@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var Rule = (function (_super) {
@@ -22,7 +24,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoConstantConditionRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, parseOptions(this.getOptions()));
     };
     Rule.metadata = {
         ruleName: 'no-constant-condition',
@@ -42,65 +44,51 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoConstantConditionRuleWalker = (function (_super) {
-    __extends(NoConstantConditionRuleWalker, _super);
-    function NoConstantConditionRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.checkLoops = _this.extractBoolean('checkLoops');
-        return _this;
-    }
-    NoConstantConditionRuleWalker.prototype.extractBoolean = function (keyName) {
-        var result = true;
-        this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                if (opt[keyName] === false || opt[keyName] === 'false') {
-                    result = false;
+function parseOptions(options) {
+    var value = true;
+    var keyName = 'checkLoops';
+    (options.ruleArguments || []).forEach(function (opt) {
+        if (TypeGuard_1.isObject(opt)) {
+            if (opt[keyName] === false || opt[keyName] === 'false') {
+                value = false;
+            }
+        }
+    });
+    return {
+        checkLoops: value
+    };
+}
+function walk(ctx) {
+    var checkLoops = ctx.options.checkLoops;
+    function cb(node) {
+        if (checkLoops && (tsutils.isWhileStatement(node) || tsutils.isDoStatement(node))) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
+                var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+        if (tsutils.isIfStatement(node)) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
+                var message = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+        if (tsutils.isConditionalExpression(node)) {
+            if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
+                var message = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
+                ctx.addFailureAt(node.getStart(), node.getWidth(), message);
+            }
+        }
+        if (tsutils.isForStatement(node)) {
+            if (checkLoops && node.condition) {
+                if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
+                    var message = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), message);
                 }
             }
-        });
-        return result;
-    };
-    NoConstantConditionRuleWalker.prototype.visitIfStatement = function (node) {
-        if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
-            var message = Rule.FAILURE_STRING + 'if (' + node.expression.getText() + ')';
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
         }
-        _super.prototype.visitIfStatement.call(this, node);
-    };
-    NoConstantConditionRuleWalker.prototype.visitConditionalExpression = function (node) {
-        if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
-            var message = Rule.FAILURE_STRING + node.condition.getText() + ' ?';
-            this.addFailureAt(node.getStart(), node.getWidth(), message);
-        }
-        _super.prototype.visitConditionalExpression.call(this, node);
-    };
-    NoConstantConditionRuleWalker.prototype.visitWhileStatement = function (node) {
-        if (this.checkLoops) {
-            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
-                var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        _super.prototype.visitWhileStatement.call(this, node);
-    };
-    NoConstantConditionRuleWalker.prototype.visitDoStatement = function (node) {
-        if (this.checkLoops) {
-            if (AstUtils_1.AstUtils.isConstantExpression(node.expression)) {
-                var message = Rule.FAILURE_STRING + 'while (' + node.expression.getText() + ')';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        _super.prototype.visitDoStatement.call(this, node);
-    };
-    NoConstantConditionRuleWalker.prototype.visitForStatement = function (node) {
-        if (this.checkLoops && node.condition !== undefined) {
-            if (AstUtils_1.AstUtils.isConstantExpression(node.condition)) {
-                var message = Rule.FAILURE_STRING + ';' + node.condition.getText() + ';';
-                this.addFailureAt(node.getStart(), node.getWidth(), message);
-            }
-        }
-        _super.prototype.visitForStatement.call(this, node);
-    };
-    return NoConstantConditionRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noConstantConditionRule.js.map

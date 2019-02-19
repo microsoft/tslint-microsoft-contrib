@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoDocumentDomainRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-document-domain',
@@ -41,26 +42,23 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoDocumentDomainRuleWalker = (function (_super) {
-    __extends(NoDocumentDomainRuleWalker, _super);
-    function NoDocumentDomainRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoDocumentDomainRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.getText() === '=' &&
-            node.left.kind === ts.SyntaxKind.PropertyAccessExpression &&
-            this.isDocumentDomainProperty(node.left)) {
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isBinaryExpression(node) &&
+            node.operatorToken.getText() === '=' &&
+            tsutils.isPropertyAccessExpression(node.left) &&
+            isDocumentDomainProperty(node.left)) {
             var msg = Rule.FAILURE_STRING + node.getFullText().trim();
-            this.addFailureAt(node.getStart(), node.getWidth(), msg);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
         }
-        _super.prototype.visitBinaryExpression.call(this, node);
-    };
-    NoDocumentDomainRuleWalker.prototype.isDocumentDomainProperty = function (node) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function isDocumentDomainProperty(node) {
         if (node.name.text !== 'domain') {
             return false;
         }
         return node.expression.getText() === 'document' || node.expression.getText() === 'window.document';
-    };
-    return NoDocumentDomainRuleWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noDocumentDomainRule.js.map

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -23,13 +24,20 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ReactA11yNoOnchangeRuleWalker(sourceFile, this.getOptions()))
+            ? this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()))
             : [];
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var args = options.ruleArguments;
+        return {
+            additionalTagNames: Array.isArray(args) && args.length > 0 ? args[0] : []
+        };
     };
     Rule.metadata = {
         ruleName: 'react-a11y-no-onchange',
         type: 'functionality',
         description: 'For accessibility of your website, enforce usage of onBlur over onChange on select menus.',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php\">OnChange Event Accessibility Issues</a></li>\n          <li><a href=\"https://www.w3.org/TR/WCAG10/wai-pageauth.html#gl-own-interface\">Guideline 8. Ensure direct accessibility of embedded user interfaces.</a></li>\n        </ul>\n        ",
         options: 'string[]',
         optionsDescription: 'Additional tag names to validate.',
         optionExamples: ['true', '[true, ["Select"]]'],
@@ -43,33 +51,28 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yNoOnchangeRuleWalker = (function (_super) {
-    __extends(ReactA11yNoOnchangeRuleWalker, _super);
-    function ReactA11yNoOnchangeRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yNoOnchangeRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yNoOnchangeRuleWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yNoOnchangeRuleWalker.prototype.checkJsxOpeningElement = function (node) {
+function walk(ctx) {
+    function checkJsxOpeningElement(node) {
         var tagName = node.tagName.getText();
-        var options = this.getOptions();
-        var additionalTagNames = Array.isArray(options) && options.length > 0 ? options[0] : [];
-        var targetTagNames = ['select'].concat(additionalTagNames);
+        var targetTagNames = ['select'].concat(ctx.options.additionalTagNames);
         if (!tagName || targetTagNames.indexOf(tagName) === -1) {
             return;
         }
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         if (attributes.hasOwnProperty('onchange')) {
             var errorMessage = "onChange event handler should not be used with the <" + tagName + ">. Please use onBlur instead.";
-            this.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
         }
-    };
-    return ReactA11yNoOnchangeRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        }
+        else if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yNoOnchangeRule.js.map

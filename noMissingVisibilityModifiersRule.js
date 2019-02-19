@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -21,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new MissingVisibilityModifierWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-missing-visibility-modifiers',
@@ -35,41 +37,38 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // use tslint member-access rule instead',
+        recommendation: 'false',
         commonWeaknessEnumeration: '398, 710'
     };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MissingVisibilityModifierWalker = (function (_super) {
-    __extends(MissingVisibilityModifierWalker, _super);
-    function MissingVisibilityModifierWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MissingVisibilityModifierWalker.prototype.visitPropertyDeclaration = function (node) {
-        if (this.isMissingVisibilityModifier(node)) {
-            var failureString = 'Field missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        _super.prototype.visitPropertyDeclaration.call(this, node);
-    };
-    MissingVisibilityModifierWalker.prototype.visitMethodDeclaration = function (node) {
-        if (this.isMissingVisibilityModifier(node)) {
-            var failureString = 'Method missing visibility modifier: ' + this.getFailureCodeSnippet(node);
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
-        }
-        _super.prototype.visitMethodDeclaration.call(this, node);
-    };
-    MissingVisibilityModifierWalker.prototype.isMissingVisibilityModifier = function (node) {
+function walk(ctx) {
+    function isMissingVisibilityModifier(node) {
         return !(AstUtils_1.AstUtils.isPrivate(node) || AstUtils_1.AstUtils.isProtected(node) || AstUtils_1.AstUtils.isPublic(node));
-    };
-    MissingVisibilityModifierWalker.prototype.getFailureCodeSnippet = function (node) {
+    }
+    function getFailureCodeSnippet(node) {
         var message = node.getText();
         if (message.indexOf('\n') > 0) {
             return message.substr(0, message.indexOf('\n'));
         }
         return message;
-    };
-    return MissingVisibilityModifierWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isPropertyDeclaration(node)) {
+            if (isMissingVisibilityModifier(node)) {
+                var failureString = 'Field missing visibility modifier: ' + getFailureCodeSnippet(node);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+        if (tsutils.isMethodDeclaration(node)) {
+            if (isMissingVisibilityModifier(node)) {
+                var failureString = 'Method missing visibility modifier: ' + getFailureCodeSnippet(node);
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noMissingVisibilityModifiersRule.js.map

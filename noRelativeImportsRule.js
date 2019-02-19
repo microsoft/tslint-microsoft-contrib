@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var OPTION_ALLOW_SIBLINGS = 'allow-siblings';
 var FAILURE_BODY_RELATIVE = 'module is being loaded from a relative path. Please use an absolute path';
 var FAILURE_BODY_SIBLINGS = 'module path starts with reference to parent directory. Please use an absolute path or sibling files/folders';
@@ -26,7 +27,12 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoRelativeImportsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+    };
+    Rule.prototype.parseOptions = function (options) {
+        return {
+            allowSiblings: options.ruleArguments.indexOf(OPTION_ALLOW_SIBLINGS) > -1
+        };
     };
     Rule.metadata = {
         ruleName: 'no-relative-imports',
@@ -53,38 +59,15 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoRelativeImportsRuleWalker = (function (_super) {
-    __extends(NoRelativeImportsRuleWalker, _super);
-    function NoRelativeImportsRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowSiblings = options.ruleArguments.indexOf(OPTION_ALLOW_SIBLINGS) > -1;
-        return _this;
-    }
-    NoRelativeImportsRuleWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.ExternalModuleReference) {
-            var moduleExpression = node.expression;
-            var errorBody = this.getValidationErrorBody(moduleExpression);
-            if (errorBody !== undefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), "External " + errorBody + ": " + node.getText());
-            }
-        }
-        else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
-            var moduleExpression = node.moduleSpecifier;
-            var errorBody = this.getValidationErrorBody(moduleExpression);
-            if (errorBody !== undefined) {
-                this.addFailureAt(node.getStart(), node.getWidth(), "Imported " + errorBody + ": " + node.getText());
-            }
-        }
-        _super.prototype.visitNode.call(this, node);
-    };
-    NoRelativeImportsRuleWalker.prototype.getValidationErrorBody = function (expression) {
-        if (expression.kind === ts.SyntaxKind.StringLiteral) {
-            var moduleName = expression;
-            var path = moduleName.text;
-            if (!this.allowSiblings && path[0] === '.') {
+function walk(ctx) {
+    var allowSiblings = ctx.options.allowSiblings;
+    function getValidationErrorBody(expression) {
+        if (tsutils.isStringLiteral(expression)) {
+            var path = expression.text;
+            if (!allowSiblings && path[0] === '.') {
                 return FAILURE_BODY_RELATIVE;
             }
-            if (this.allowSiblings && path.indexOf('..') === 0) {
+            if (allowSiblings && path.indexOf('..') === 0) {
                 return FAILURE_BODY_SIBLINGS;
             }
             if (illegalInsideRegex.test(path)) {
@@ -92,7 +75,22 @@ var NoRelativeImportsRuleWalker = (function (_super) {
             }
         }
         return undefined;
-    };
-    return NoRelativeImportsRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isExternalModuleReference(node)) {
+            var errorBody = getValidationErrorBody(node.expression);
+            if (errorBody !== undefined) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), "External " + errorBody + ": " + node.getText());
+            }
+        }
+        else if (tsutils.isImportDeclaration(node)) {
+            var errorBody = getValidationErrorBody(node.moduleSpecifier);
+            if (errorBody !== undefined) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), "Imported " + errorBody + ": " + node.getText());
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noRelativeImportsRule.js.map

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Scope_1 = require("./utils/Scope");
 var Utils_1 = require("./utils/Utils");
@@ -29,11 +30,30 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactThisBindingIssueRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
         else {
             return [];
         }
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            allowAnonymousListeners: false,
+            allowedDecorators: new Set()
+        };
+        options.ruleArguments.forEach(function (opt) {
+            if (TypeGuard_1.isObject(opt)) {
+                parsed.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
+                if (opt['bind-decorators']) {
+                    var allowedDecorators = opt['bind-decorators'];
+                    if (!Array.isArray(allowedDecorators) || allowedDecorators.some(function (decorator) { return typeof decorator !== 'string'; })) {
+                        throw new Error('one or more members of bind-decorators is invalid, string required.');
+                    }
+                    parsed.allowedDecorators = new Set(allowedDecorators);
+                }
+            }
+        });
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'react-this-binding-issue',
@@ -68,59 +88,11 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactThisBindingIssueRuleWalker = (function (_super) {
-    __extends(ReactThisBindingIssueRuleWalker, _super);
-    function ReactThisBindingIssueRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.allowAnonymousListeners = false;
-        _this.allowedDecorators = new Set();
-        _this.boundListeners = new Set();
-        _this.declaredMethods = new Set();
-        _this.getOptions().forEach(function (opt) {
-            if (TypeGuard_1.isObject(opt)) {
-                _this.allowAnonymousListeners = opt['allow-anonymous-listeners'] === true;
-                if (opt['bind-decorators']) {
-                    var allowedDecorators = opt['bind-decorators'];
-                    if (!Array.isArray(allowedDecorators) || allowedDecorators.some(function (decorator) { return typeof decorator !== 'string'; })) {
-                        throw new Error('one or more members of bind-decorators is invalid, string required.');
-                    }
-                    _this.allowedDecorators = new Set(allowedDecorators);
-                }
-            }
-        });
-        return _this;
-    }
-    ReactThisBindingIssueRuleWalker.prototype.visitClassDeclaration = function (node) {
-        var _this = this;
-        this.boundListeners = new Set();
-        this.declaredMethods = new Set();
-        AstUtils_1.AstUtils.getDeclaredMethodNames(node).forEach(function (methodName) {
-            _this.declaredMethods.add('this.' + methodName);
-        });
-        _super.prototype.visitClassDeclaration.call(this, node);
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitConstructorDeclaration = function (node) {
-        this.boundListeners = this.getSelfBoundListeners(node);
-        _super.prototype.visitConstructorDeclaration.call(this, node);
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitJsxElement = function (node) {
-        this.visitJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.visitJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitMethodDeclaration = function (node) {
-        if (this.isMethodBoundWithDecorators(node, this.allowedDecorators)) {
-            this.boundListeners = this.boundListeners.add('this.' + node.name.getText());
-        }
-        this.scope = new Scope_1.Scope(undefined);
-        _super.prototype.visitMethodDeclaration.call(this, node);
-        this.scope = undefined;
-    };
-    ReactThisBindingIssueRuleWalker.prototype.isMethodBoundWithDecorators = function (node, allowedDecorators) {
-        var _this = this;
+function walk(ctx) {
+    var boundListeners = new Set();
+    var declaredMethods = new Set();
+    var scope;
+    function isMethodBoundWithDecorators(node, allowedDecorators) {
         if (!(allowedDecorators.size > 0 && node.decorators && node.decorators.length > 0)) {
             return false;
         }
@@ -130,86 +102,22 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
             }
             var source = node.getSourceFile();
             var text = decorator.expression.getText(source);
-            return _this.allowedDecorators.has(text);
+            return ctx.options.allowedDecorators.has(text);
         });
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitArrowFunction = function (node) {
-        if (this.scope !== undefined) {
-            this.scope = new Scope_1.Scope(this.scope);
-        }
-        _super.prototype.visitArrowFunction.call(this, node);
-        if (this.scope !== undefined) {
-            this.scope = this.scope.parent;
-        }
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitFunctionExpression = function (node) {
-        if (this.scope !== undefined) {
-            this.scope = new Scope_1.Scope(this.scope);
-        }
-        _super.prototype.visitFunctionExpression.call(this, node);
-        if (this.scope !== undefined) {
-            this.scope = this.scope.parent;
-        }
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitVariableDeclaration = function (node) {
-        if (this.scope !== undefined) {
-            if (node.name.kind === ts.SyntaxKind.Identifier) {
-                var variableName = node.name.text;
-                if (this.isExpressionAnonymousFunction(node.initializer)) {
-                    this.scope.addFunctionSymbol(variableName);
-                }
-            }
-        }
-        _super.prototype.visitVariableDeclaration.call(this, node);
-    };
-    ReactThisBindingIssueRuleWalker.prototype.visitJsxOpeningElement = function (node) {
-        var _this = this;
-        node.attributes.properties.forEach(function (attributeLikeElement) {
-            if (_this.isUnboundListener(attributeLikeElement)) {
-                var attribute = attributeLikeElement;
-                var jsxExpression = attribute.initializer;
-                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                    return;
-                }
-                var propAccess = jsxExpression.expression;
-                var listenerText = propAccess.getText();
-                if (_this.declaredMethods.has(listenerText) && !_this.boundListeners.has(listenerText)) {
-                    var start = propAccess.getStart();
-                    var widget = propAccess.getWidth();
-                    var message = FAILURE_UNBOUND_LISTENER + listenerText;
-                    _this.addFailureAt(start, widget, message);
-                }
-            }
-            else if (_this.isAttributeAnonymousFunction(attributeLikeElement)) {
-                var attribute = attributeLikeElement;
-                var jsxExpression = attribute.initializer;
-                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
-                    return;
-                }
-                var expression = jsxExpression.expression;
-                if (expression === undefined) {
-                    return;
-                }
-                var start = expression.getStart();
-                var widget = expression.getWidth();
-                var message = FAILURE_ANONYMOUS_LISTENER + Utils_1.Utils.trimTo(expression.getText(), 30);
-                _this.addFailureAt(start, widget, message);
-            }
-        });
-    };
-    ReactThisBindingIssueRuleWalker.prototype.isAttributeAnonymousFunction = function (attributeLikeElement) {
-        if (this.allowAnonymousListeners) {
+    }
+    function isAttributeAnonymousFunction(attributeLikeElement) {
+        if (ctx.options.allowAnonymousListeners) {
             return false;
         }
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             var attribute = attributeLikeElement;
             if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
-                return this.isExpressionAnonymousFunction(attribute.initializer.expression);
+                return isExpressionAnonymousFunction(attribute.initializer.expression);
             }
         }
         return false;
-    };
-    ReactThisBindingIssueRuleWalker.prototype.isExpressionAnonymousFunction = function (expression) {
+    }
+    function isExpressionAnonymousFunction(expression) {
         if (expression === undefined) {
             return false;
         }
@@ -223,13 +131,13 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                 return true;
             }
         }
-        if (expression.kind === ts.SyntaxKind.Identifier && this.scope !== undefined) {
+        if (expression.kind === ts.SyntaxKind.Identifier && scope !== undefined) {
             var symbolText = expression.getText();
-            return this.scope.isFunctionSymbol(symbolText);
+            return scope.isFunctionSymbol(symbolText);
         }
         return false;
-    };
-    ReactThisBindingIssueRuleWalker.prototype.isUnboundListener = function (attributeLikeElement) {
+    }
+    function isUnboundListener(attributeLikeElement) {
         if (attributeLikeElement.kind === ts.SyntaxKind.JsxAttribute) {
             var attribute = attributeLikeElement;
             if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.JsxExpression) {
@@ -238,7 +146,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                     var propAccess = jsxExpression.expression;
                     if (propAccess.expression.getText() === 'this') {
                         var listenerText = propAccess.getText();
-                        if (this.declaredMethods.has(listenerText) && !this.boundListeners.has(listenerText)) {
+                        if (declaredMethods.has(listenerText) && !boundListeners.has(listenerText)) {
                             return true;
                         }
                     }
@@ -246,9 +154,8 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
             }
         }
         return false;
-    };
-    ReactThisBindingIssueRuleWalker.prototype.getSelfBoundListeners = function (node) {
-        var _this = this;
+    }
+    function getSelfBoundListeners(node) {
         var result = new Set();
         if (node.body !== undefined && node.body.statements !== undefined) {
             node.body.statements.forEach(function (statement) {
@@ -273,7 +180,7 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
                                                 var start = binaryExpression.getStart();
                                                 var width = binaryExpression.getWidth();
                                                 var msg = FAILURE_DOUBLE_BIND + binaryExpression.getText();
-                                                _this.addFailureAt(start, width, msg);
+                                                ctx.addFailureAt(start, width, msg);
                                             }
                                             result.add(rightPropText);
                                         }
@@ -286,7 +193,99 @@ var ReactThisBindingIssueRuleWalker = (function (_super) {
             });
         }
         return result;
-    };
-    return ReactThisBindingIssueRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function visitJsxOpeningElement(node) {
+        node.attributes.properties.forEach(function (attributeLikeElement) {
+            if (isUnboundListener(attributeLikeElement)) {
+                var attribute = attributeLikeElement;
+                var jsxExpression = attribute.initializer;
+                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                    return;
+                }
+                var propAccess = jsxExpression.expression;
+                var listenerText = propAccess.getText();
+                if (declaredMethods.has(listenerText) && !boundListeners.has(listenerText)) {
+                    var start = propAccess.getStart();
+                    var widget = propAccess.getWidth();
+                    var message = FAILURE_UNBOUND_LISTENER + listenerText;
+                    ctx.addFailureAt(start, widget, message);
+                }
+            }
+            else if (isAttributeAnonymousFunction(attributeLikeElement)) {
+                var attribute = attributeLikeElement;
+                var jsxExpression = attribute.initializer;
+                if (jsxExpression === undefined || jsxExpression.kind === ts.SyntaxKind.StringLiteral) {
+                    return;
+                }
+                var expression = jsxExpression.expression;
+                if (expression === undefined) {
+                    return;
+                }
+                var start = expression.getStart();
+                var widget = expression.getWidth();
+                var message = FAILURE_ANONYMOUS_LISTENER + Utils_1.Utils.trimTo(expression.getText(), 30);
+                ctx.addFailureAt(start, widget, message);
+            }
+        });
+    }
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node)) {
+            if (isMethodBoundWithDecorators(node, ctx.options.allowedDecorators)) {
+                boundListeners = boundListeners.add('this.' + node.name.getText());
+            }
+            scope = new Scope_1.Scope(undefined);
+            ts.forEachChild(node, cb);
+            scope = undefined;
+            return;
+        }
+        if (tsutils.isArrowFunction(node)) {
+            if (scope !== undefined) {
+                scope = new Scope_1.Scope(scope);
+            }
+            ts.forEachChild(node, cb);
+            if (scope !== undefined) {
+                scope = scope.parent;
+            }
+            return;
+        }
+        if (tsutils.isFunctionExpression(node)) {
+            if (scope !== undefined) {
+                scope = new Scope_1.Scope(scope);
+            }
+            ts.forEachChild(node, cb);
+            if (scope !== undefined) {
+                scope = scope.parent;
+            }
+            return;
+        }
+        if (tsutils.isClassDeclaration(node)) {
+            boundListeners = new Set();
+            declaredMethods = new Set();
+            AstUtils_1.AstUtils.getDeclaredMethodNames(node).forEach(function (methodName) {
+                declaredMethods.add('this.' + methodName);
+            });
+        }
+        else if (tsutils.isConstructorDeclaration(node)) {
+            boundListeners = getSelfBoundListeners(node);
+        }
+        else if (tsutils.isJsxElement(node)) {
+            visitJsxOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            visitJsxOpeningElement(node);
+        }
+        else if (tsutils.isVariableDeclaration(node)) {
+            if (scope !== undefined) {
+                if (node.name.kind === ts.SyntaxKind.Identifier) {
+                    var variableName = node.name.text;
+                    if (isExpressionAnonymousFunction(node.initializer)) {
+                        scope.addFunctionSymbol(variableName);
+                    }
+                }
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactThisBindingIssueRule.js.map

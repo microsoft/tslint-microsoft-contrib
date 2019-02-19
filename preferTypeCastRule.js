@@ -23,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new PreferTypeCastRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'prefer-type-cast',
@@ -37,28 +37,21 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'true, // pick either type-cast format and use it consistently',
+        recommendation: 'true',
         commonWeaknessEnumeration: '398, 710'
     };
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var PreferTypeCastRuleWalker = (function (_super) {
-    __extends(PreferTypeCastRuleWalker, _super);
-    function PreferTypeCastRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    PreferTypeCastRuleWalker.prototype.visitSourceFile = function (node) {
-        if (AstUtils_1.AstUtils.getLanguageVariant(node) === ts.LanguageVariant.Standard) {
-            _super.prototype.visitSourceFile.call(this, node);
-        }
-    };
-    PreferTypeCastRuleWalker.prototype.visitNode = function (node) {
+function walk(ctx) {
+    function cb(node) {
         if (node.kind === ts.SyntaxKind.AsExpression) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
-        _super.prototype.visitNode.call(this, node);
-    };
-    return PreferTypeCastRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    if (AstUtils_1.AstUtils.getLanguageVariant(ctx.sourceFile) === ts.LanguageVariant.Standard) {
+        return ts.forEachChild(ctx.sourceFile, cb);
+    }
+}
 //# sourceMappingURL=preferTypeCastRule.js.map

@@ -1,0 +1,8 @@
+{
+    "extends": ["./recommended.json"],
+    "rulesDirectory": ["./"],
+    "rules": {
+        "react-a11y-iframes": true,
+        "void-zero": true
+    }
+}

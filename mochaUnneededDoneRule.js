@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Utils_1 = require("./utils/Utils");
 var MochaUtils_1 = require("./utils/MochaUtils");
 var FAILURE_STRING = 'Unneeded Mocha Done. Parameter can be safely removed: ';
@@ -24,7 +25,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new MochaUnneededDoneRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'mocha-unneeded-done',
@@ -42,39 +43,21 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MochaUnneededDoneRuleWalker = (function (_super) {
-    __extends(MochaUnneededDoneRuleWalker, _super);
-    function MochaUnneededDoneRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MochaUnneededDoneRuleWalker.prototype.visitSourceFile = function (node) {
-        if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
-            _super.prototype.visitSourceFile.call(this, node);
-        }
-    };
-    MochaUnneededDoneRuleWalker.prototype.visitArrowFunction = function (node) {
-        this.validateMochaDoneUsage(node);
-        _super.prototype.visitArrowFunction.call(this, node);
-    };
-    MochaUnneededDoneRuleWalker.prototype.visitFunctionExpression = function (node) {
-        this.validateMochaDoneUsage(node);
-        _super.prototype.visitFunctionExpression.call(this, node);
-    };
-    MochaUnneededDoneRuleWalker.prototype.validateMochaDoneUsage = function (node) {
-        var doneIdentifier = this.maybeGetMochaDoneParameter(node);
+function walk(ctx) {
+    function validateMochaDoneUsage(node) {
+        var doneIdentifier = maybeGetMochaDoneParameter(node);
         if (doneIdentifier === undefined) {
             return;
         }
-        if (!this.isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
+        if (!isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
             return;
         }
-        var walker = new IdentifierReferenceCountWalker(this.getSourceFile(), this.getOptions(), doneIdentifier);
-        var count = walker.getReferenceCount(node.body);
+        var count = getReferenceCount(doneIdentifier, node.body);
         if (count === 1) {
-            this.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
+            ctx.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
         }
-    };
-    MochaUnneededDoneRuleWalker.prototype.isIdentifierInvokedDirectlyInBody = function (doneIdentifier, node) {
+    }
+    function isIdentifierInvokedDirectlyInBody(doneIdentifier, node) {
         if (node.body === undefined || node.body.kind !== ts.SyntaxKind.Block) {
             return false;
         }
@@ -89,8 +72,8 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
             }
             return false;
         });
-    };
-    MochaUnneededDoneRuleWalker.prototype.maybeGetMochaDoneParameter = function (node) {
+    }
+    function maybeGetMochaDoneParameter(node) {
         if (node.parameters.length === 0) {
             return undefined;
         }
@@ -104,30 +87,29 @@ var MochaUnneededDoneRuleWalker = (function (_super) {
             return undefined;
         }
         return allDones[0].name;
-    };
-    return MochaUnneededDoneRuleWalker;
-}(Lint.RuleWalker));
-var IdentifierReferenceCountWalker = (function (_super) {
-    __extends(IdentifierReferenceCountWalker, _super);
-    function IdentifierReferenceCountWalker(sourceFile, options, identifier) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.identifierText = identifier.getText();
-        return _this;
     }
-    IdentifierReferenceCountWalker.prototype.getReferenceCount = function (body) {
-        var _this = this;
-        this.count = 0;
-        body.statements.forEach(function (statement) {
-            _this.walk(statement);
-        });
-        return this.count;
-    };
-    IdentifierReferenceCountWalker.prototype.visitIdentifier = function (node) {
-        if (node.getText() === this.identifierText) {
-            this.count = this.count + 1;
+    function cb(node) {
+        if (tsutils.isArrowFunction(node) || tsutils.isFunctionExpression(node)) {
+            validateMochaDoneUsage(node);
         }
-        _super.prototype.visitIdentifier.call(this, node);
-    };
-    return IdentifierReferenceCountWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    if (MochaUtils_1.MochaUtils.isMochaTest(ctx.sourceFile)) {
+        ts.forEachChild(ctx.sourceFile, cb);
+    }
+}
+function getReferenceCount(identifier, body) {
+    var count = 0;
+    var identifierText = identifier.getText();
+    function cb(node) {
+        if (tsutils.isIdentifier(node)) {
+            if (node.getText() === identifierText) {
+                count += 1;
+            }
+        }
+        ts.forEachChild(node, cb);
+    }
+    body.statements.forEach(cb);
+    return count;
+}
 //# sourceMappingURL=mochaUnneededDoneRule.js.map

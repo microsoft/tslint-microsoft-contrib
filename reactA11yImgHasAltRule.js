@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var TypeGuard_1 = require("./utils/TypeGuard");
 var ROLE_STRING = 'role';
@@ -48,8 +49,15 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new ImgHasAltWalker(sourceFile, this.getOptions()))
+            ? this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()))
             : [];
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var args = options.ruleArguments;
+        return {
+            additionalTagNames: args.length > 0 ? args[0] : [],
+            allowNonEmptyAltWithRolePresentation: args.length > 1 ? args[1].allowNonEmptyAltWithRolePresentation : false
+        };
     };
     Rule.metadata = {
         ruleName: 'react-a11y-img-has-alt',
@@ -57,6 +65,7 @@ var Rule = (function (_super) {
         description: 'Enforce that an img element contains the non-empty alt attribute. ' +
             'For decorative images, using empty alt attribute and role="presentation".',
         options: 'string[]',
+        rationale: "References:\n        <ul>\n          <li><a href=\"https://www.w3.org/TR/WCAG10/wai-pageauth.html#tech-text-equivalent\">Web Content Accessibility Guidelines 1.0</a></li>\n          <li><a href=\"https://www.w3.org/TR/wai-aria/roles#presentation\">ARIA Presentation Role</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/31\">WCAG Rule 31: If an image has an alt or title attribute, it should not have a presentation role</a></li>\n        </ul>",
         optionsDescription: '',
         optionExamples: ['true', '[true, ["Image"]]'],
         typescriptOnly: true,
@@ -69,24 +78,10 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ImgHasAltWalker = (function (_super) {
-    __extends(ImgHasAltWalker, _super);
-    function ImgHasAltWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ImgHasAltWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ImgHasAltWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ImgHasAltWalker.prototype.checkJsxOpeningElement = function (node) {
+function walk(ctx) {
+    function checkJsxOpeningElement(node) {
         var tagName = node.tagName.getText();
-        var options = this.getOptions();
-        var additionalTagNames = options.length > 0 ? options[0] : [];
-        var targetTagNames = ['img'].concat(additionalTagNames);
+        var targetTagNames = ['img'].concat(ctx.options.additionalTagNames);
         if (!tagName || targetTagNames.indexOf(tagName) === -1) {
             return;
         }
@@ -97,7 +92,7 @@ var ImgHasAltWalker = (function (_super) {
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var altAttribute = attributes[ALT_STRING];
         if (!altAttribute) {
-            this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
+            ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNoAlt(tagName));
         }
         else {
             var roleAttribute = attributes[ROLE_STRING];
@@ -108,22 +103,30 @@ var ImgHasAltWalker = (function (_super) {
                 .match(/\bpresentation\b/);
             var isEmptyAlt = JsxAttribute_1.isEmpty(altAttribute) || JsxAttribute_1.getStringLiteral(altAttribute) === '';
             var isEmptyTitle = JsxAttribute_1.isEmpty(titleAttribute) || JsxAttribute_1.getStringLiteral(titleAttribute) === '';
-            var allowNonEmptyAltWithRolePresentation = options.length > 1 ? options[1].allowNonEmptyAltWithRolePresentation : false;
             var isAltImageFileName = !isEmptyAlt && IMAGE_FILENAME_REGEX.test(JsxAttribute_1.getStringLiteral(altAttribute) || '');
-            if (!isEmptyAlt && isPresentationRole && !allowNonEmptyAltWithRolePresentation && !titleAttribute) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
+            if (!isEmptyAlt && isPresentationRole && !ctx.options.allowNonEmptyAltWithRolePresentation && !titleAttribute) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringNonEmptyAltAndPresentationRole(tagName));
             }
             else if (isEmptyAlt && !isPresentationRole && !titleAttribute) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotPresentationRole(tagName));
             }
             else if (isEmptyAlt && titleAttribute && !isEmptyTitle) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringEmptyAltAndNotEmptyTitle(tagName));
             }
             else if (isAltImageFileName) {
-                this.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
+                ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureStringAltIsImageFileName(tagName));
             }
         }
-    };
-    return ImgHasAltWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yImgHasAltRule.js.map

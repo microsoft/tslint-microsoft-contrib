@@ -13,7 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -21,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoEvalScriptWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-exec-script',
@@ -41,23 +43,18 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoEvalScriptWalker = (function (_super) {
-    __extends(NoEvalScriptWalker, _super);
-    function NoEvalScriptWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoEvalScriptWalker.prototype.visitCallExpression = function (node) {
-        this.validateExpression(node);
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    NoEvalScriptWalker.prototype.validateExpression = function (node) {
-        var expression = node.expression;
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (functionName === 'execScript') {
-            var msg = Rule.FAILURE_STRING + expression.getFullText().trim();
-            this.addFailureAt(expression.getStart(), expression.getWidth(), msg);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            var expression = node.expression;
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (functionName === 'execScript') {
+                var msg = Rule.FAILURE_STRING + expression.getFullText().trim();
+                ctx.addFailureAt(expression.getStart(), expression.getWidth(), msg);
+            }
         }
-    };
-    return NoEvalScriptWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noExecScriptRule.js.map

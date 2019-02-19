@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var MochaUtils_1 = require("./utils/MochaUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new MochaAvoidOnlyRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'mocha-avoid-only',
@@ -44,40 +45,38 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MochaAvoidOnlyRuleWalker = (function (_super) {
-    __extends(MochaAvoidOnlyRuleWalker, _super);
-    function MochaAvoidOnlyRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MochaAvoidOnlyRuleWalker.prototype.visitSourceFile = function (node) {
-        if (MochaUtils_1.MochaUtils.isMochaTest(node)) {
-            _super.prototype.visitSourceFile.call(this, node);
-        }
-    };
-    MochaAvoidOnlyRuleWalker.prototype.visitCallExpression = function (node) {
-        if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-            if (node.arguments.length === 2) {
-                if (node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                    if (node.arguments[1].kind === ts.SyntaxKind.FunctionExpression ||
-                        node.arguments[1].kind === ts.SyntaxKind.ArrowFunction) {
-                        if (node.expression.getText() === 'it.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_IT);
-                        }
-                        else if (node.expression.getText() === 'specify.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_SPECIFY);
-                        }
-                        else if (node.expression.getText() === 'describe.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_DESCRIBE);
-                        }
-                        else if (node.expression.getText() === 'context.only') {
-                            this.addFailureAt(node.getStart(), node.expression.getText().length, Rule.FAILURE_STRING_CONTEXT);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            if (tsutils.isPropertyAccessExpression(node.expression)) {
+                if (node.arguments.length === 2) {
+                    if (tsutils.isStringLiteral(node.arguments[0])) {
+                        if (tsutils.isFunctionExpression(node.arguments[1]) || tsutils.isArrowFunction(node.arguments[1])) {
+                            var text = node.expression.getText();
+                            switch (text) {
+                                case 'it.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_IT);
+                                    break;
+                                case 'specify.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_SPECIFY);
+                                    break;
+                                case 'describe.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_DESCRIBE);
+                                    break;
+                                case 'context.only':
+                                    ctx.addFailureAt(node.getStart(), text.length, Rule.FAILURE_STRING_CONTEXT);
+                                    break;
+                                default:
+                            }
                         }
                     }
                 }
             }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    return MochaAvoidOnlyRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    if (MochaUtils_1.MochaUtils.isMochaTest(ctx.sourceFile)) {
+        return ts.forEachChild(ctx.sourceFile, cb);
+    }
+}
 //# sourceMappingURL=mochaAvoidOnlyRule.js.map

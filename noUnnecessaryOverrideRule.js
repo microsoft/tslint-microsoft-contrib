@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var FAILURE_STRING = 'Unnecessary method override. A method that only calls super can be removed: ';
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoUnnecessaryOverrideRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-unnecessary-override',
@@ -41,30 +42,15 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoUnnecessaryOverrideRuleWalker = (function (_super) {
-    __extends(NoUnnecessaryOverrideRuleWalker, _super);
-    function NoUnnecessaryOverrideRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoUnnecessaryOverrideRuleWalker.prototype.visitMethodDeclaration = function (node) {
-        if (node.body !== undefined) {
-            var statement = this.getSingleStatement(node.body);
-            if (statement !== undefined) {
-                if (this.isSuperCall(node, statement) && this.isMatchingArgumentList(node, statement)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node));
-                }
-            }
-        }
-        _super.prototype.visitMethodDeclaration.call(this, node);
-    };
-    NoUnnecessaryOverrideRuleWalker.prototype.getSingleStatement = function (block) {
+function walk(ctx) {
+    function getSingleStatement(block) {
         if (block.statements.length === 1) {
             return block.statements[0];
         }
         return undefined;
-    };
-    NoUnnecessaryOverrideRuleWalker.prototype.isMatchingArgumentList = function (node, statement) {
-        var call = this.getCallExpressionFromStatement(statement);
+    }
+    function isMatchingArgumentList(node, statement) {
+        var call = getCallExpressionFromStatement(statement);
         if (call === undefined) {
             return false;
         }
@@ -78,10 +64,10 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         for (var i = 0; i < allParameters.length; i++) {
             var parameter = allParameters[i];
             var argument = call.arguments[i];
-            if (argument.kind !== ts.SyntaxKind.Identifier) {
+            if (!tsutils.isIdentifier(argument)) {
                 return false;
             }
-            if (parameter.name.kind !== ts.SyntaxKind.Identifier) {
+            if (!tsutils.isIdentifier(parameter.name)) {
                 return false;
             }
             var argumentName = argument.text;
@@ -91,29 +77,29 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
             }
         }
         return true;
-    };
-    NoUnnecessaryOverrideRuleWalker.prototype.isSuperCall = function (node, statement) {
-        var call = this.getCallExpressionFromStatement(statement);
+    }
+    function isSuperCall(node, statement) {
+        var call = getCallExpressionFromStatement(statement);
         if (call === undefined) {
             return false;
         }
-        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+        if (!tsutils.isPropertyAccessExpression(call.expression)) {
             return false;
         }
         var propAccess = call.expression;
         if (propAccess.expression.kind !== ts.SyntaxKind.SuperKeyword) {
             return false;
         }
-        var declaredMethodName = this.getMethodName(node);
+        var declaredMethodName = getMethodName(node);
         var methodName = propAccess.name.text;
         return methodName === declaredMethodName;
-    };
-    NoUnnecessaryOverrideRuleWalker.prototype.getCallExpressionFromStatement = function (statement) {
+    }
+    function getCallExpressionFromStatement(statement) {
         var expression;
-        if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
+        if (tsutils.isExpressionStatement(statement)) {
             expression = statement.expression;
         }
-        else if (statement.kind === ts.SyntaxKind.ReturnStatement) {
+        else if (tsutils.isReturnStatement(statement)) {
             expression = statement.expression;
             if (expression === undefined) {
                 return undefined;
@@ -122,22 +108,35 @@ var NoUnnecessaryOverrideRuleWalker = (function (_super) {
         else {
             return undefined;
         }
-        if (expression.kind !== ts.SyntaxKind.CallExpression) {
+        if (!tsutils.isCallExpression(expression)) {
             return undefined;
         }
         var call = expression;
-        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+        if (!tsutils.isPropertyAccessExpression(call.expression)) {
             return undefined;
         }
         return call;
-    };
-    NoUnnecessaryOverrideRuleWalker.prototype.getMethodName = function (node) {
+    }
+    function getMethodName(node) {
         var nameNode = node.name;
-        if (nameNode.kind === ts.SyntaxKind.Identifier) {
+        if (tsutils.isIdentifier(nameNode)) {
             return nameNode.text;
         }
         return '<unknown>';
-    };
-    return NoUnnecessaryOverrideRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node)) {
+            if (node.body !== undefined) {
+                var statement = getSingleStatement(node.body);
+                if (statement !== undefined) {
+                    if (isSuperCall(node, statement) && isMatchingArgumentList(node, statement)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + getMethodName(node));
+                    }
+                }
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noUnnecessaryOverrideRule.js.map

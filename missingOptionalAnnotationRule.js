@@ -13,14 +13,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new MissingOptionalAnnotationWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'missing-optional-annotation',
@@ -34,39 +36,25 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // now supported by TypeScript compiler'
+        recommendation: 'false'
     };
     Rule.FAILURE_STRING = 'Argument following optional argument missing optional annotation: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MissingOptionalAnnotationWalker = (function (_super) {
-    __extends(MissingOptionalAnnotationWalker, _super);
-    function MissingOptionalAnnotationWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node) ||
+            tsutils.isConstructorDeclaration(node) ||
+            tsutils.isArrowFunction(node) ||
+            tsutils.isFunctionDeclaration(node) ||
+            tsutils.isFunctionExpression(node)) {
+            validateParameters(node);
+        }
+        return ts.forEachChild(node, cb);
     }
-    MissingOptionalAnnotationWalker.prototype.visitMethodDeclaration = function (node) {
-        this.validateParameters(node);
-        _super.prototype.visitMethodDeclaration.call(this, node);
-    };
-    MissingOptionalAnnotationWalker.prototype.visitConstructorDeclaration = function (node) {
-        this.validateParameters(node);
-        _super.prototype.visitConstructorDeclaration.call(this, node);
-    };
-    MissingOptionalAnnotationWalker.prototype.visitArrowFunction = function (node) {
-        this.validateParameters(node);
-        _super.prototype.visitArrowFunction.call(this, node);
-    };
-    MissingOptionalAnnotationWalker.prototype.visitFunctionDeclaration = function (node) {
-        this.validateParameters(node);
-        _super.prototype.visitFunctionDeclaration.call(this, node);
-    };
-    MissingOptionalAnnotationWalker.prototype.visitFunctionExpression = function (node) {
-        this.validateParameters(node);
-        _super.prototype.visitFunctionExpression.call(this, node);
-    };
-    MissingOptionalAnnotationWalker.prototype.validateParameters = function (node) {
-        var _this = this;
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function validateParameters(node) {
         var optionalParameterFound = false;
         if (node.parameters === undefined) {
             return;
@@ -77,10 +65,9 @@ var MissingOptionalAnnotationWalker = (function (_super) {
             }
             else if (optionalParameterFound && parameter.initializer === undefined) {
                 var msg = Rule.FAILURE_STRING + parameter.getFullText();
-                _this.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);
+                ctx.addFailureAt(parameter.name.getStart(), parameter.name.getWidth(), msg);
             }
         });
-    };
-    return MissingOptionalAnnotationWalker;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=missingOptionalAnnotationRule.js.map

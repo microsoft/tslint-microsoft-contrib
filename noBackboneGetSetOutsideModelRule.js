@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoBackboneGetSetOutsideModelRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-backbone-get-set-outside-model',
@@ -43,25 +44,23 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoBackboneGetSetOutsideModelRuleWalker = (function (_super) {
-    __extends(NoBackboneGetSetOutsideModelRuleWalker, _super);
-    function NoBackboneGetSetOutsideModelRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoBackboneGetSetOutsideModelRuleWalker.prototype.visitCallExpression = function (node) {
-        if (AstUtils_1.AstUtils.getFunctionTarget(node) !== 'this') {
-            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-            if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                var msg = Rule.GET_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getEnd(), msg);
-            }
-            if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                var msg = Rule.SET_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getEnd(), msg);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            if (AstUtils_1.AstUtils.getFunctionTarget(node) !== 'this') {
+                var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+                if (functionName === 'get' && node.arguments.length === 1 && tsutils.isStringLiteral(node.arguments[0])) {
+                    var msg = Rule.GET_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+                }
+                if (functionName === 'set' && node.arguments.length === 2 && tsutils.isStringLiteral(node.arguments[0])) {
+                    var msg = Rule.SET_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+                }
             }
         }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    return NoBackboneGetSetOutsideModelRuleWalker;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noBackboneGetSetOutsideModelRule.js.map

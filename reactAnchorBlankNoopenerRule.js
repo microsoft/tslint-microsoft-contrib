@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Utils_1 = require("./utils/Utils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var OPTION_FORCE_REL_REDUNDANCY = 'force-rel-redundancy';
@@ -25,11 +26,20 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactAnchorBlankNoopenerRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
         else {
             return [];
         }
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            forceRelRedundancy: false
+        };
+        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
+            parsed.forceRelRedundancy = options.ruleArguments.indexOf(OPTION_FORCE_REL_REDUNDANCY) > -1;
+        }
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'react-anchor-blank-noopener',
@@ -56,41 +66,33 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactAnchorBlankNoopenerRuleWalker = (function (_super) {
-    __extends(ReactAnchorBlankNoopenerRuleWalker, _super);
-    function ReactAnchorBlankNoopenerRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.forceRelRedundancy = false;
-        _this.failureString = 'Anchor tags with target="_blank" should also include rel="noreferrer"';
-        if (options.ruleArguments !== undefined && options.ruleArguments.length > 0) {
-            _this.forceRelRedundancy = options.ruleArguments.indexOf(OPTION_FORCE_REL_REDUNDANCY) > -1;
-        }
-        if (_this.forceRelRedundancy) {
-            _this.failureString = 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"';
-        }
-        return _this;
-    }
-    ReactAnchorBlankNoopenerRuleWalker.prototype.visitJsxElement = function (node) {
-        var openingElement = node.openingElement;
-        this.validateOpeningElement(openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactAnchorBlankNoopenerRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactAnchorBlankNoopenerRuleWalker.prototype.validateOpeningElement = function (openingElement) {
+function walk(ctx) {
+    var failureString = ctx.options.forceRelRedundancy
+        ? 'Anchor tags with target="_blank" should also include rel="noopener noreferrer"'
+        : 'Anchor tags with target="_blank" should also include rel="noreferrer"';
+    function validateOpeningElement(openingElement) {
         if (openingElement.tagName.getText() === 'a') {
             var allAttributes = JsxAttribute_1.getJsxAttributesFromJsxElement(openingElement);
             var target = allAttributes['target'];
             var rel = allAttributes['rel'];
-            if (target !== undefined && JsxAttribute_1.getStringLiteral(target) === '_blank' && !isRelAttributeValue(rel, this.forceRelRedundancy)) {
-                this.addFailureAt(openingElement.getStart(), openingElement.getWidth(), this.failureString);
+            if (target !== undefined &&
+                JsxAttribute_1.getStringLiteral(target) === '_blank' &&
+                !isRelAttributeValue(rel, ctx.options.forceRelRedundancy)) {
+                ctx.addFailureAt(openingElement.getStart(), openingElement.getWidth(), failureString);
             }
         }
-    };
-    return ReactAnchorBlankNoopenerRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 function isRelAttributeValue(attribute, forceRedundancy) {
     if (JsxAttribute_1.isEmpty(attribute)) {
         return false;

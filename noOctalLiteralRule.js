@@ -15,14 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        var noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
-        return this.applyWithWalker(noOctalLiteral);
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-octal-literal',
@@ -41,18 +41,15 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoOctalLiteral = (function (_super) {
-    __extends(NoOctalLiteral, _super);
-    function NoOctalLiteral() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoOctalLiteral.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
-            this.failOnOctalString(node);
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isStringLiteral(node) || node.kind === ts.SyntaxKind.FirstTemplateToken) {
+            failOnOctalString(node);
         }
-        _super.prototype.visitNode.call(this, node);
-    };
-    NoOctalLiteral.prototype.failOnOctalString = function (node) {
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+    function failOnOctalString(node) {
         var match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9]))(?:.|\n|\t|\u2028|\u2029)*(?:\1)/g.exec(node.getText());
         if (match) {
             var octalValue = match[2];
@@ -61,10 +58,9 @@ var NoOctalLiteral = (function (_super) {
                 octalValue = octalValue.substr(backslashCount - 1);
                 var startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
                 var width = octalValue.length;
-                this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+                ctx.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
             }
         }
-    };
-    return NoOctalLiteral;
-}(Lint.RuleWalker));
+    }
+}
 //# sourceMappingURL=noOctalLiteralRule.js.map

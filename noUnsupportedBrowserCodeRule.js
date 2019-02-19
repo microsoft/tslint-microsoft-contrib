@@ -27,7 +27,24 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoUnsupportedBrowserCodeRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseSupportedBrowsers(this.getOptions()));
+    };
+    Rule.prototype.parseSupportedBrowsers = function (options) {
+        var result = {};
+        var ruleArguments = options.ruleArguments;
+        (ruleArguments || []).forEach(function (option) {
+            if (option instanceof Array) {
+                option.forEach(function (browserString) {
+                    var browser = parseBrowserString(browserString);
+                    if (browser !== undefined) {
+                        result[browser.name.toLowerCase()] = browser;
+                    }
+                });
+            }
+        });
+        return {
+            supportedBrowsers: result
+        };
     };
     Rule.metadata = {
         ruleName: 'no-unsupported-browser-code',
@@ -45,61 +62,33 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
-    __extends(NoUnsupportedBrowserCodeRuleWalker, _super);
-    function NoUnsupportedBrowserCodeRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.supportedBrowsers = _this.parseSupportedBrowsers();
-        return _this;
+function parseBrowserString(browser) {
+    var regex = /([a-zA-Z ]*)(>=|<=|<|>)?\s*(\d*)/i;
+    var match = browser.match(regex);
+    if (match === null) {
+        return undefined;
     }
-    NoUnsupportedBrowserCodeRuleWalker.prototype.visitSourceFile = function (node) {
-        var _this = this;
-        tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind, range) {
-            var regex;
-            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
-                regex = new RegExp(JSDOC_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
-            }
-            else if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia) {
-                regex = new RegExp(COMMENT_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
-            }
-            else {
-                return;
-            }
-            var match;
-            var tokenText = text.substring(range.pos, range.end);
-            while ((match = regex.exec(tokenText))) {
-                var browser = _this.parseBrowserString(match[1]);
-                _this.findUnsupportedBrowserFailures(browser, range.pos, range.end - range.pos);
-            }
-        });
+    return {
+        name: match[1].trim(),
+        comparison: match[2] || '=',
+        version: parseInt(match[3], 10) || UNSPECIFIED_BROWSER_VERSION
     };
-    NoUnsupportedBrowserCodeRuleWalker.prototype.parseBrowserString = function (browser) {
-        var regex = /([a-zA-Z ]*)(>=|<=|<|>)?\s*(\d*)/i;
-        var match = browser.match(regex);
-        return {
-            name: match[1].trim(),
-            comparison: match[2] || '=',
-            version: parseInt(match[3], 10) || UNSPECIFIED_BROWSER_VERSION
-        };
-    };
-    NoUnsupportedBrowserCodeRuleWalker.prototype.parseSupportedBrowsers = function () {
-        var _this = this;
-        var result = {};
-        this.getOptions().forEach(function (option) {
-            if (option instanceof Array) {
-                option.forEach(function (browserString) {
-                    var browser = _this.parseBrowserString(browserString);
-                    result[browser.name.toLowerCase()] = browser;
-                });
-            }
-        });
-        return result;
-    };
-    NoUnsupportedBrowserCodeRuleWalker.prototype.isSupportedBrowser = function (targetBrowser) {
-        return targetBrowser.name.toLowerCase() in this.supportedBrowsers;
-    };
-    NoUnsupportedBrowserCodeRuleWalker.prototype.isSupportedBrowserVersion = function (targetBrowser) {
-        var supportedBrowser = this.supportedBrowsers[targetBrowser.name.toLowerCase()];
+}
+function walk(ctx) {
+    var supportedBrowsers = ctx.options.supportedBrowsers;
+    function findUnsupportedBrowserFailures(targetBrowser, startPos, length) {
+        if (!isSupportedBrowser(targetBrowser)) {
+            ctx.addFailureAt(startPos, length, FAILURE_BROWSER_STRING + ": " + targetBrowser.name);
+        }
+        else if (!isSupportedBrowserVersion(targetBrowser)) {
+            ctx.addFailureAt(startPos, length, FAILURE_VERSION_STRING + ": " + targetBrowser.name + " " + targetBrowser.version);
+        }
+    }
+    function isSupportedBrowser(targetBrowser) {
+        return targetBrowser.name.toLowerCase() in supportedBrowsers;
+    }
+    function isSupportedBrowserVersion(targetBrowser) {
+        var supportedBrowser = supportedBrowsers[targetBrowser.name.toLowerCase()];
         if (supportedBrowser.version === UNSPECIFIED_BROWSER_VERSION) {
             return true;
         }
@@ -117,15 +106,30 @@ var NoUnsupportedBrowserCodeRuleWalker = (function (_super) {
             default:
                 return false;
         }
-    };
-    NoUnsupportedBrowserCodeRuleWalker.prototype.findUnsupportedBrowserFailures = function (targetBrowser, startPos, length) {
-        if (!this.isSupportedBrowser(targetBrowser)) {
-            this.addFailureAt(startPos, length, FAILURE_BROWSER_STRING + ": " + targetBrowser.name);
-        }
-        else if (!this.isSupportedBrowserVersion(targetBrowser)) {
-            this.addFailureAt(startPos, length, FAILURE_VERSION_STRING + ": " + targetBrowser.name + " " + targetBrowser.version);
-        }
-    };
-    return NoUnsupportedBrowserCodeRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        tsutils_1.forEachTokenWithTrivia(node, function (text, tokenSyntaxKind, range) {
+            var regex;
+            if (tokenSyntaxKind === ts.SyntaxKind.MultiLineCommentTrivia) {
+                regex = new RegExp(JSDOC_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
+            }
+            else if (tokenSyntaxKind === ts.SyntaxKind.SingleLineCommentTrivia) {
+                regex = new RegExp(COMMENT_BROWSERSPECIFIC + "\\s*(.*)", 'gi');
+            }
+            else {
+                return;
+            }
+            var match;
+            var tokenText = text.substring(range.pos, range.end);
+            while ((match = regex.exec(tokenText))) {
+                var browser = parseBrowserString(match[1]);
+                if (browser === undefined) {
+                    break;
+                }
+                findUnsupportedBrowserFailures(browser, range.pos, range.end - range.pos);
+            }
+        });
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noUnsupportedBrowserCodeRule.js.map

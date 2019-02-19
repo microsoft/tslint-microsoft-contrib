@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var getImplicitRole_1 = require("./utils/getImplicitRole");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
@@ -39,14 +40,16 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleSupportsAriaPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-role-supports-aria-props',
         type: 'maintainability',
-        description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`.',
+        description: 'Enforce that elements with explicit or implicit roles defined contain only `aria-*` properties supported by that `role`. ' +
+            'Many aria attributes (states and properties) can only be used on elements with particular roles. ' +
+            "Some elements have implicit roles, such as `<a href='hrefValue' />`, which will be resolved to `role='link'`. " +
+            'A reference for the implicit roles can be found at [Default Implicit ARIA Semantics](https://www.w3.org/TR/html-aria/#sec-strong-native-semantics).',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/87\">ARIA attributes can only be used with certain roles</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/84\">Check aria properties and states for valid roles and properties</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/93\">Check that 'ARIA-' attributes are valid properties and states</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -59,20 +62,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var A11yRoleSupportsAriaPropsWalker = (function (_super) {
-    __extends(A11yRoleSupportsAriaPropsWalker, _super);
-    function A11yRoleSupportsAriaPropsWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    A11yRoleSupportsAriaPropsWalker.prototype.visitJsxElement = function (node) {
-        this.checkJsxElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    A11yRoleSupportsAriaPropsWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.checkJsxElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    A11yRoleSupportsAriaPropsWalker.prototype.checkJsxElement = function (node) {
+function walk(ctx) {
+    function checkJsxElement(node) {
         var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(node);
         var roleProp = attributesInElement[ROLE_STRING];
         var roleValue;
@@ -110,9 +101,18 @@ var A11yRoleSupportsAriaPropsWalker = (function (_super) {
             failureString = getFailureStringForNotImplicitRole(normalizedRoles, invalidAttributeNamesInElement);
         }
         if (invalidAttributeNamesInElement.length > 0) {
-            this.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
         }
-    };
-    return A11yRoleSupportsAriaPropsWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yRoleSupportsAriaPropsRule.js.map

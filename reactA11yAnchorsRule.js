@@ -19,6 +19,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Utils_1 = require("./utils/Utils");
 var getImplicitRole_1 = require("./utils/getImplicitRole");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
@@ -41,17 +42,30 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            var rule = new ReactA11yAnchorsRuleWalker(sourceFile, this.getOptions());
-            this.applyWithWalker(rule);
-            rule.validateAllAnchors();
-            return rule.getFailures();
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
         return [];
+    };
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {
+            ignoreCase: false,
+            ignoreWhitespace: ''
+        };
+        options.ruleArguments.forEach(function (opt) {
+            if (typeof opt === 'string' && opt === exports.OPTION_IGNORE_CASE) {
+                parsed.ignoreCase = true;
+            }
+            if (TypeGuard_1.isObject(opt)) {
+                parsed.ignoreWhitespace = opt[exports.OPTION_IGNORE_WHITESPACE];
+            }
+        });
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'react-a11y-anchors',
         type: 'functionality',
         description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+        rationale: "References:\n        <ul>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/38\">WCAG Rule 38: Link text should be as least four 4 characters long</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/39\">WCAG Rule 39: Links with the same HREF should have the same link text</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/41\">WCAG Rule 41: Links that point to different HREFs should have different link text</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/43\">WCAG Rule 43: Links with images and text content, the alt attribute should be unique to the text content or empty</a></li>\n        </ul>",
         options: {
             type: 'array',
             items: {
@@ -72,72 +86,51 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yAnchorsRuleWalker = (function (_super) {
-    __extends(ReactA11yAnchorsRuleWalker, _super);
-    function ReactA11yAnchorsRuleWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.ignoreCase = false;
-        _this.ignoreWhitespace = '';
-        _this.anchorInfoList = [];
-        _this.parseOptions();
-        return _this;
-    }
-    ReactA11yAnchorsRuleWalker.prototype.parseOptions = function () {
-        var _this = this;
-        this.getOptions().forEach(function (opt) {
-            if (typeof opt === 'string' && opt === exports.OPTION_IGNORE_CASE) {
-                _this.ignoreCase = true;
-            }
-            if (TypeGuard_1.isObject(opt)) {
-                _this.ignoreWhitespace = opt[exports.OPTION_IGNORE_WHITESPACE];
-            }
-        });
-    };
-    ReactA11yAnchorsRuleWalker.prototype.validateAllAnchors = function () {
-        var _this = this;
+function walk(ctx) {
+    var anchorInfoList = [];
+    function validateAllAnchors() {
         var sameHrefDifferentTexts = [];
         var differentHrefSameText = [];
         var _loop_1 = function () {
-            var current = this_1.anchorInfoList.shift();
-            this_1.anchorInfoList.forEach(function (anchorInfo) {
+            var current = anchorInfoList.shift();
+            anchorInfoList.forEach(function (anchorInfo) {
                 if (current.href &&
                     current.href === anchorInfo.href &&
-                    !_this.compareAnchorsText(current, anchorInfo) &&
+                    !compareAnchorsText(current, anchorInfo) &&
                     !Utils_1.Utils.contains(sameHrefDifferentTexts, anchorInfo)) {
                     sameHrefDifferentTexts.push(anchorInfo);
-                    _this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.SAME_HREF_SAME_TEXT_FAILURE_STRING + _this.firstPosition(current));
+                    ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.SAME_HREF_SAME_TEXT_FAILURE_STRING + firstPosition(current));
                 }
                 if (current.href !== anchorInfo.href &&
-                    _this.compareAnchorsText(current, anchorInfo) &&
+                    compareAnchorsText(current, anchorInfo) &&
                     !Utils_1.Utils.contains(differentHrefSameText, anchorInfo)) {
                     differentHrefSameText.push(anchorInfo);
-                    _this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + _this.firstPosition(current));
+                    ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + firstPosition(current));
                 }
             });
         };
-        var this_1 = this;
-        while (this.anchorInfoList.length > 0) {
+        while (anchorInfoList.length > 0) {
             _loop_1();
         }
-    };
-    ReactA11yAnchorsRuleWalker.prototype.compareAnchorsText = function (anchor1, anchor2) {
+    }
+    function compareAnchorsText(anchor1, anchor2) {
         var text1 = anchor1.text;
         var text2 = anchor2.text;
         var altText1 = anchor1.altText;
         var altText2 = anchor2.altText;
-        if (this.ignoreCase) {
+        if (ctx.options.ignoreCase) {
             text1 = text1.toLowerCase();
             text2 = text2.toLowerCase();
             altText1 = altText1.toLowerCase();
             altText2 = altText2.toLowerCase();
         }
-        if (this.ignoreWhitespace === 'trim') {
+        if (ctx.options.ignoreWhitespace === 'trim') {
             text1 = text1.trim();
             text2 = text2.trim();
             altText1 = altText1.trim();
             altText2 = altText2.trim();
         }
-        if (this.ignoreWhitespace === 'all') {
+        if (ctx.options.ignoreWhitespace === 'all') {
             var regex = /\s/g;
             text1 = text1.replace(regex, '');
             text2 = text2.replace(regex, '');
@@ -145,60 +138,49 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             altText2 = altText2.replace(regex, '');
         }
         return text1 === text2 && altText1 === altText2;
-    };
-    ReactA11yAnchorsRuleWalker.prototype.firstPosition = function (anchorInfo) {
-        var startPosition = this.createFailure(anchorInfo.start, anchorInfo.width, '')
-            .getStartPosition()
-            .getLineAndCharacter();
+    }
+    function firstPosition(anchorInfo) {
+        var startPosition = ctx.sourceFile.getLineAndCharacterOfPosition(Math.min(anchorInfo.start, ctx.sourceFile.end));
         var character = startPosition.character + 1;
         var line = startPosition.line + 1;
         return " First link at character: " + character + " line: " + line;
-    };
-    ReactA11yAnchorsRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateAnchor(node, node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yAnchorsRuleWalker.prototype.visitJsxElement = function (node) {
-        this.validateAnchor(node, node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yAnchorsRuleWalker.prototype.validateAnchor = function (parent, openingElement) {
+    }
+    function validateAnchor(parent, openingElement) {
         if (openingElement.tagName.getText() === 'a') {
-            var hrefAttribute = this.getAttribute(openingElement, 'href');
+            var hrefAttribute = getAttribute(openingElement, 'href');
             var anchorInfo = {
                 href: hrefAttribute ? JsxAttribute_1.getStringLiteral(hrefAttribute) || '' : '',
-                text: this.anchorText(parent),
-                altText: this.imageAlt(parent),
-                hasAriaHiddenCount: this.jsxElementAriaHidden(parent),
+                text: anchorText(parent),
+                altText: imageAlt(parent),
+                hasAriaHiddenCount: jsxElementAriaHidden(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
             if (JsxAttribute_1.isEmpty(hrefAttribute)) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.MISSING_HREF_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.MISSING_HREF_FAILURE_STRING);
             }
             if (anchorInfo.href === '#') {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.NO_HASH_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.NO_HASH_FAILURE_STRING);
             }
             if (anchorInfo.hasAriaHiddenCount > 0) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING);
             }
             if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.UNIQUE_ALT_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.UNIQUE_ALT_FAILURE_STRING);
             }
             var anchorInfoTextLength = anchorInfo.text ? anchorInfo.text.length : 0;
             var anchorImageAltTextLength = anchorInfo.altText ? anchorInfo.altText.length : 0;
-            if (this.anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING);
+            if (anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, exports.LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
-            this.anchorInfoList.push(anchorInfo);
+            anchorInfoList.push(anchorInfo);
         }
-    };
-    ReactA11yAnchorsRuleWalker.prototype.getAttribute = function (openingElement, attributeName) {
+    }
+    function getAttribute(openingElement, attributeName) {
         var attributes = JsxAttribute_1.getJsxAttributesFromJsxElement(openingElement);
         return attributes[attributeName];
-    };
-    ReactA11yAnchorsRuleWalker.prototype.anchorText = function (root, isChild) {
-        var _this = this;
+    }
+    function anchorText(root, isChild) {
         if (isChild === void 0) { isChild = false; }
         var title = '';
         if (root === undefined) {
@@ -207,7 +189,7 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         else if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
             jsxElement.children.forEach(function (child) {
-                title += _this.anchorText(child, true);
+                title += anchorText(child, true);
             });
         }
         else if (root.kind === ts.SyntaxKind.JsxText) {
@@ -220,7 +202,7 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
         }
         else if (root.kind === ts.SyntaxKind.JsxExpression) {
             var expression = root;
-            title += this.anchorText(expression.expression);
+            title += anchorText(expression.expression);
         }
         else if (isChild && root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             var jsxSelfClosingElement = root;
@@ -232,55 +214,63 @@ var ReactA11yAnchorsRuleWalker = (function (_super) {
             title += '<unknown>';
         }
         return title;
-    };
-    ReactA11yAnchorsRuleWalker.prototype.anchorRole = function (root) {
+    }
+    function anchorRole(root) {
         var attributesInElement = JsxAttribute_1.getJsxAttributesFromJsxElement(root);
         var roleProp = attributesInElement[ROLE_STRING];
         return roleProp ? JsxAttribute_1.getStringLiteral(roleProp) : getImplicitRole_1.getImplicitRole(root);
-    };
-    ReactA11yAnchorsRuleWalker.prototype.imageAltAttribute = function (openingElement) {
+    }
+    function imageAltAttribute(openingElement) {
         if (openingElement.tagName.getText() === 'img') {
-            var altAttribute = JsxAttribute_1.getStringLiteral(this.getAttribute(openingElement, 'alt'));
+            var altAttribute = JsxAttribute_1.getStringLiteral(getAttribute(openingElement, 'alt'));
             return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
         return '';
-    };
-    ReactA11yAnchorsRuleWalker.prototype.imageAlt = function (root) {
-        var _this = this;
+    }
+    function imageAlt(root) {
         var altText = '';
         if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
-            altText += this.imageAltAttribute(jsxElement.openingElement);
+            altText += imageAltAttribute(jsxElement.openingElement);
             jsxElement.children.forEach(function (child) {
-                altText += _this.imageAlt(child);
+                altText += imageAlt(child);
             });
         }
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             var jsxSelfClosingElement = root;
-            altText += this.imageAltAttribute(jsxSelfClosingElement);
+            altText += imageAltAttribute(jsxSelfClosingElement);
         }
         return altText;
-    };
-    ReactA11yAnchorsRuleWalker.prototype.ariaHiddenAttribute = function (openingElement) {
-        return this.getAttribute(openingElement, 'aria-hidden') === undefined;
-    };
-    ReactA11yAnchorsRuleWalker.prototype.jsxElementAriaHidden = function (root) {
-        var _this = this;
+    }
+    function ariaHiddenAttribute(openingElement) {
+        return getAttribute(openingElement, 'aria-hidden') === undefined;
+    }
+    function jsxElementAriaHidden(root) {
         var hasAriaHiddenCount = 0;
         if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
-            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
+            hasAriaHiddenCount += ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
             jsxElement.children.forEach(function (child) {
-                hasAriaHiddenCount += _this.jsxElementAriaHidden(child);
+                hasAriaHiddenCount += jsxElementAriaHidden(child);
             });
         }
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             var jsxSelfClosingElement = root;
-            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxSelfClosingElement) ? 0 : 1;
+            hasAriaHiddenCount += ariaHiddenAttribute(jsxSelfClosingElement) ? 0 : 1;
         }
         return hasAriaHiddenCount;
-    };
-    return ReactA11yAnchorsRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            validateAnchor(node, node);
+        }
+        else if (tsutils.isJsxElement(node)) {
+            validateAnchor(node, node.openingElement);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    ts.forEachChild(ctx.sourceFile, cb);
+    validateAllAnchors();
+}
 var templateObject_1;
 //# sourceMappingURL=reactA11yAnchorsRule.js.map

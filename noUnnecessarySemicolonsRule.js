@@ -15,13 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoUnnecessarySemicolonsWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.FAILURE_STRING = 'unnecessary semi-colon';
     Rule.metadata = {
@@ -41,41 +42,25 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoUnnecessarySemicolonsWalker = (function (_super) {
-    __extends(NoUnnecessarySemicolonsWalker, _super);
-    function NoUnnecessarySemicolonsWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isEmptyStatement(node)) {
+            ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
+        }
+        if (tsutils.isForStatement(node)) {
+            if (tsutils.isEmptyStatement(node.statement)) {
+                var expression = node.initializer || node.condition || node.incrementor;
+                if (expression) {
+                    return ts.forEachChild(expression, cb);
+                }
+            }
+        }
+        if (tsutils.isWhileStatement(node)) {
+            if (tsutils.isEmptyStatement(node.statement)) {
+                return ts.forEachChild(node.expression, cb);
+            }
+        }
     }
-    NoUnnecessarySemicolonsWalker.prototype.visitNode = function (node) {
-        if (node.kind === ts.SyntaxKind.EmptyStatement) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-        }
-        _super.prototype.visitNode.call(this, node);
-    };
-    NoUnnecessarySemicolonsWalker.prototype.visitForStatement = function (node) {
-        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
-            if (node.initializer) {
-                this.visitNode(node.initializer);
-            }
-            if (node.condition) {
-                this.visitNode(node.condition);
-            }
-            if (node.incrementor) {
-                this.visitNode(node.incrementor);
-            }
-        }
-        else {
-            _super.prototype.visitForStatement.call(this, node);
-        }
-    };
-    NoUnnecessarySemicolonsWalker.prototype.visitWhileStatement = function (node) {
-        if (node.statement.kind === ts.SyntaxKind.EmptyStatement) {
-            this.visitNode(node.expression);
-        }
-        else {
-            _super.prototype.visitWhileStatement.call(this, node);
-        }
-    };
-    return NoUnnecessarySemicolonsWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noUnnecessarySemicolonsRule.js.map

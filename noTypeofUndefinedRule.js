@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var FAILURE_STRING = "Avoid typeof x === 'undefined' comparisons. Prefer x == undefined or x === undefined: ";
 var Rule = (function (_super) {
     __extends(Rule, _super);
@@ -22,7 +23,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoTypeofUndefinedRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-typeof-undefined',
@@ -42,29 +43,27 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoTypeofUndefinedRuleWalker = (function (_super) {
-    __extends(NoTypeofUndefinedRuleWalker, _super);
-    function NoTypeofUndefinedRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoTypeofUndefinedRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if ((this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right)) ||
-            (this.isUndefinedString(node.right) && this.isTypeOfExpression(node.left))) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
-        }
-        _super.prototype.visitBinaryExpression.call(this, node);
-    };
-    NoTypeofUndefinedRuleWalker.prototype.isTypeOfExpression = function (node) {
+function walk(ctx) {
+    function isTypeOfExpression(node) {
         return node.kind === ts.SyntaxKind.TypeOfExpression;
-    };
-    NoTypeofUndefinedRuleWalker.prototype.isUndefinedString = function (node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
+    }
+    function isUndefinedString(node) {
+        if (tsutils.isStringLiteral(node)) {
             if (node.text === 'undefined') {
                 return true;
             }
         }
         return false;
-    };
-    return NoTypeofUndefinedRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isBinaryExpression(node)) {
+            if ((isUndefinedString(node.left) && isTypeOfExpression(node.right)) ||
+                (isUndefinedString(node.right) && isTypeOfExpression(node.left))) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noTypeofUndefinedRule.js.map

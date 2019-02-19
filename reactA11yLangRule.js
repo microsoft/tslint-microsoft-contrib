@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var FAILURE_MISSING_LANG = 'An html element is missing the lang attribute';
 var FAILURE_WRONG_LANG_CODE = 'Lang attribute does not have a valid value. Found: ';
 var LANGUAGE_CODES = [
@@ -176,7 +177,7 @@ var Rule = (function (_super) {
     }
     Rule.prototype.apply = function (sourceFile) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            return this.applyWithWalker(new ReactA11yLangRuleWalker(sourceFile, this.getOptions()));
+            return this.applyWithFunction(sourceFile, walk);
         }
         else {
             return [];
@@ -186,6 +187,7 @@ var Rule = (function (_super) {
         ruleName: 'react-a11y-lang',
         type: 'functionality',
         description: 'For accessibility of your website, html elements must have a valid lang attribute.',
+        rationale: "References:\n        <ul>\n          <li><a href=\"https://www.w3.org/TR/WCAG20-TECHS/H58.html\">\n            H58: Using language attributes to identify changes in the human language\n          </a></li>\n          <li><a href=\"https://dequeuniversity.com/rules/axe/1.1/valid-lang\">\n            lang attribute must have a valid value\n          </a></li>\n          <li><a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">\n            List of ISO 639-1 codes\n          </a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,
@@ -198,21 +200,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var ReactA11yLangRuleWalker = (function (_super) {
-    __extends(ReactA11yLangRuleWalker, _super);
-    function ReactA11yLangRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ReactA11yLangRuleWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.validateOpeningElement(node, node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    ReactA11yLangRuleWalker.prototype.visitJsxElement = function (node) {
-        this.validateOpeningElement(node, node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    ReactA11yLangRuleWalker.prototype.validateOpeningElement = function (parent, openingElement) {
-        var _this = this;
+function walk(ctx) {
+    function validateOpeningElement(parent, openingElement) {
         if (openingElement.tagName.getText() === 'html') {
             var attributes = openingElement.attributes;
             var langFound_1 = false;
@@ -220,20 +209,29 @@ var ReactA11yLangRuleWalker = (function (_super) {
                 if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                     if (attribute.name.getText() === 'lang') {
                         langFound_1 = true;
-                        if (attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                        if (attribute.initializer !== undefined && attribute.initializer.kind === ts.SyntaxKind.StringLiteral) {
                             var langText = attribute.initializer.text;
                             if (LANGUAGE_CODES.indexOf(langText) === -1) {
-                                _this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
+                                ctx.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_WRONG_LANG_CODE + langText);
                             }
                         }
                     }
                 }
             });
             if (!langFound_1) {
-                this.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
+                ctx.addFailureAt(parent.getStart(), parent.getWidth(), FAILURE_MISSING_LANG);
             }
         }
-    };
-    return ReactA11yLangRuleWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            validateOpeningElement(node, node);
+        }
+        else if (tsutils.isJsxElement(node)) {
+            validateOpeningElement(node, node.openingElement);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactA11yLangRule.js.map

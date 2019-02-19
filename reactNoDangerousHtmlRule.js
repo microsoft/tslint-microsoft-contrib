@@ -16,22 +16,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Utils_1 = require("./utils/Utils");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoDangerousHtmlWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     };
-    Rule.getExceptions = function (options) {
+    Rule.prototype.parseOptions = function (options) {
+        var parsed = {};
         if (options.ruleArguments instanceof Array) {
-            return options.ruleArguments[0];
+            parsed.exceptions = options.ruleArguments[0];
         }
-        if (options instanceof Array) {
-            return options;
+        else if (options instanceof Array) {
+            parsed.exceptions = options;
         }
-        return undefined;
+        return parsed;
     };
     Rule.metadata = {
         ruleName: 'react-no-dangerous-html',
@@ -50,69 +52,38 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoDangerousHtmlWalker = (function (_super) {
-    __extends(NoDangerousHtmlWalker, _super);
-    function NoDangerousHtmlWalker(sourceFile, options) {
-        var _this = _super.call(this, sourceFile, options) || this;
-        _this.currentMethodName = '<unknown>';
-        return _this;
-    }
-    NoDangerousHtmlWalker.prototype.visitMethodDeclaration = function (node) {
-        this.currentMethodName = node.name.getText();
-        _super.prototype.visitMethodDeclaration.call(this, node);
-        this.currentMethodName = '<unknown>';
-    };
-    NoDangerousHtmlWalker.prototype.visitPropertyAssignment = function (node) {
-        _super.prototype.visitPropertyAssignment.call(this, node);
-        var keyNode = node.name;
-        if (keyNode.kind === ts.SyntaxKind.Identifier) {
-            if (keyNode.text === 'dangerouslySetInnerHTML') {
-                this.addFailureIfNotSuppressed(node, keyNode);
-            }
-        }
-        _super.prototype.visitPropertyAssignment.call(this, node);
-    };
-    NoDangerousHtmlWalker.prototype.visitJsxElement = function (node) {
-        this.handleJsxOpeningElement(node.openingElement);
-        _super.prototype.visitJsxElement.call(this, node);
-    };
-    NoDangerousHtmlWalker.prototype.visitJsxSelfClosingElement = function (node) {
-        this.handleJsxOpeningElement(node);
-        _super.prototype.visitJsxSelfClosingElement.call(this, node);
-    };
-    NoDangerousHtmlWalker.prototype.handleJsxOpeningElement = function (node) {
-        var _this = this;
+function walk(ctx) {
+    var currentMethodName = '<unknown>';
+    function handleJsxOpeningElement(node) {
         node.attributes.properties.forEach(function (attribute) {
             if (attribute.kind === ts.SyntaxKind.JsxAttribute) {
                 var jsxAttribute = attribute;
                 var attributeName = jsxAttribute.name.text;
                 if (attributeName === 'dangerouslySetInnerHTML') {
-                    _this.addFailureIfNotSuppressed(node, jsxAttribute.name);
+                    addFailureIfNotSuppressed(node, jsxAttribute.name);
                 }
             }
         });
-    };
-    NoDangerousHtmlWalker.prototype.addFailureIfNotSuppressed = function (parent, node) {
-        if (!this.isSuppressed(this.currentMethodName)) {
+    }
+    function addFailureIfNotSuppressed(parent, node) {
+        if (!isSuppressed(currentMethodName)) {
             var failureString = 'Invalid call to dangerouslySetInnerHTML in method "' +
-                this.currentMethodName +
+                currentMethodName +
                 '".\n' +
                 '    Do *NOT* add a suppression for this warning. If you absolutely must use this API then you need\n' +
                 '    to review the usage with a security expert/QE representative. If they decide that this is an\n' +
                 '    acceptable usage then add the exception to xss_exceptions.json';
             var position = parent.getStart();
-            this.addFailureAt(position, node.text.length, failureString);
+            ctx.addFailureAt(position, node.text.length, failureString);
         }
-    };
-    NoDangerousHtmlWalker.prototype.isSuppressed = function (methodName) {
-        var _this = this;
-        var exceptions = Rule.getExceptions(this.getOptions());
-        if (exceptions === undefined || exceptions.length === 0) {
+    }
+    function isSuppressed(methodName) {
+        if (ctx.options.exceptions === undefined || ctx.options.exceptions.length === 0) {
             return false;
         }
         var found = false;
-        exceptions.forEach(function (exception) {
-            if (Utils_1.Utils.absolutePath(exception.file) === _this.getSourceFile().fileName) {
+        ctx.options.exceptions.forEach(function (exception) {
+            if (Utils_1.Utils.absolutePath(exception.file) === ctx.sourceFile.fileName) {
                 if (exception.method === methodName) {
                     if (exception.comment !== undefined) {
                         found = true;
@@ -121,7 +92,30 @@ var NoDangerousHtmlWalker = (function (_super) {
             }
         });
         return found;
-    };
-    return NoDangerousHtmlWalker;
-}(Lint.RuleWalker));
+    }
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node)) {
+            currentMethodName = node.name.getText();
+            ts.forEachChild(node, cb);
+            currentMethodName = '<unknown>';
+            return;
+        }
+        if (tsutils.isPropertyAssignment(node)) {
+            var keyNode = node.name;
+            if (keyNode.kind === ts.SyntaxKind.Identifier) {
+                if (keyNode.text === 'dangerouslySetInnerHTML') {
+                    addFailureIfNotSuppressed(node, keyNode);
+                }
+            }
+        }
+        else if (tsutils.isJsxElement(node)) {
+            handleJsxOpeningElement(node.openingElement);
+        }
+        else if (tsutils.isJsxSelfClosingElement(node)) {
+            handleJsxOpeningElement(node);
+        }
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=reactNoDangerousHtmlRule.js.map

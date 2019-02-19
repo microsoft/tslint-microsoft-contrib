@@ -13,14 +13,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoMultipleVarDeclRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-multiple-var-decl',
@@ -34,24 +36,23 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false, // use tslint one-variable-per-declaration rule instead',
+        recommendation: 'false',
         commonWeaknessEnumeration: '710'
     };
     Rule.FAILURE_STRING = 'Do not use comma separated variable declarations: ';
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoMultipleVarDeclRuleWalker = (function (_super) {
-    __extends(NoMultipleVarDeclRuleWalker, _super);
-    function NoMultipleVarDeclRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoMultipleVarDeclRuleWalker.prototype.visitVariableStatement = function (node) {
-        if (node.declarationList.declarations.length > 1) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + node.declarationList.declarations[0].getText() + ',');
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isVariableStatement(node)) {
+            var declarations = node.declarationList.declarations;
+            if (declarations.length > 1) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + declarations[0].getText() + ',');
+            }
         }
-        _super.prototype.visitVariableStatement.call(this, node);
-    };
-    return NoMultipleVarDeclRuleWalker;
-}(Lint.RuleWalker));
+        ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=noMultipleVarDeclRule.js.map

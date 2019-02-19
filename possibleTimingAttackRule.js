@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var Utils_1 = require("./utils/Utils");
 var FAILURE_STRING = 'Possible timing attack detected. Direct comparison found: ';
 var SENSITIVE_VAR_NAME = /^(password|secret|api|apiKey|token|auth|pass|hash)$/im;
@@ -24,7 +25,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new PossibleTimingAttackRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'possible-timing-attack',
@@ -43,31 +44,24 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var PossibleTimingAttackRuleWalker = (function (_super) {
-    __extends(PossibleTimingAttackRuleWalker, _super);
-    function PossibleTimingAttackRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    function cb(node) {
+        if (tsutils.isBinaryExpression(node)) {
+            if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken ||
+                node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
+                if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) &&
+                    node.left.getText() !== 'null' &&
+                    node.right.getText() !== 'null' &&
+                    node.left.getText() !== 'undefined' &&
+                    node.right.getText() !== 'undefined') {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20));
+                }
+            }
+        }
+        return ts.forEachChild(node, cb);
     }
-    PossibleTimingAttackRuleWalker.prototype.visitBinaryExpression = function (node) {
-        if (node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsToken ||
-            node.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
-            if ((SENSITIVE_VAR_NAME.test(node.left.getText()) || SENSITIVE_VAR_NAME.test(node.right.getText())) &&
-                node.left.getText() !== 'null' &&
-                node.right.getText() !== 'null' &&
-                node.left.getText() !== 'undefined' &&
-                node.right.getText() !== 'undefined') {
-                this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + Utils_1.Utils.trimTo(node.getText(), 20));
-            }
-            else {
-                _super.prototype.visitBinaryExpression.call(this, node);
-            }
-        }
-        else {
-            _super.prototype.visitBinaryExpression.call(this, node);
-        }
-    };
-    return PossibleTimingAttackRuleWalker;
-}(Lint.RuleWalker));
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 //# sourceMappingURL=possibleTimingAttackRule.js.map

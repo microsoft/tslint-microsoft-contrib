@@ -24,7 +24,7 @@ var Rule = (function (_super) {
             console.warn('Warning: missing-jsdoc rule is deprecated. Replace your usage with the TSLint missing-jsdoc rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new MissingJSDocWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'missing-jsdoc',
@@ -38,23 +38,17 @@ var Rule = (function (_super) {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Deprecated',
-        recommendation: 'false,'
+        recommendation: 'false'
     };
     Rule.FAILURE_STRING = 'File missing JSDoc comment at the top-level.';
     Rule.isWarningShown = false;
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var MissingJSDocWalker = (function (_super) {
-    __extends(MissingJSDocWalker, _super);
-    function MissingJSDocWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+function walk(ctx) {
+    var node = ctx.sourceFile;
+    if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
+        ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
     }
-    MissingJSDocWalker.prototype.visitSourceFile = function (node) {
-        if (!/^\/\*\*\s*$/gm.test(node.getFullText())) {
-            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_STRING);
-        }
-    };
-    return MissingJSDocWalker;
-}(Lint.RuleWalker));
+}
 //# sourceMappingURL=missingJsdocRule.js.map

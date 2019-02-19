@@ -1,5 +1,44 @@
 # Changelog
 
+## [6.1.0-beta](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/6.1.0-beta)
+
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.1.0-beta)
+
+-   [#816](https://github.com/Microsoft/tslint-microsoft-contrib/issues/816) Make strict order of rules in README.md
+-   [#815](https://github.com/Microsoft/tslint-microsoft-contrib/issues/815) export-name throwing an error
+-   [#808](https://github.com/Microsoft/tslint-microsoft-contrib/issues/808) Move documentation from the wiki into ./docs
+-   [#778](https://github.com/Microsoft/tslint-microsoft-contrib/issues/778) No-relative-imports - allow-siblings flag not working
+-   [#751](https://github.com/Microsoft/tslint-microsoft-contrib/issues/751) Suggest rule: pair-react-dom-render-unmount
+-   [#749](https://github.com/Microsoft/tslint-microsoft-contrib/issues/749) Rule `react-a11y-input-elements` incorrectly requiring placeholder for radio, checkbox, and file inputs
+-   [#716](https://github.com/Microsoft/tslint-microsoft-contrib/issues/716) Stop including library-specific rules in the recommended ruleset
+-   [#710](https://github.com/Microsoft/tslint-microsoft-contrib/issues/710) src/.baseDir.ts is no longer needed
+-   [#707](https://github.com/Microsoft/tslint-microsoft-contrib/issues/707) Separate microsoft contrib ruleset from tslint core rules
+-   [#703](https://github.com/Microsoft/tslint-microsoft-contrib/issues/703) Unable to debug rules using the Run TSLint Tests template
+-   [#697](https://github.com/Microsoft/tslint-microsoft-contrib/issues/697) Remove TSLint@5.12.0 rules from the recommended ruleset (before the next release)
+-   [#696](https://github.com/Microsoft/tslint-microsoft-contrib/issues/696) react-a11y-accessible-headings is missing from recommended_ruleset.js
+-   [#693](https://github.com/Microsoft/tslint-microsoft-contrib/issues/693) Rule suggestion: void-zero
+-   [#687](https://github.com/Microsoft/tslint-microsoft-contrib/issues/687) Mark TSLint@5.12.0 rules as deprecated
+-   [#685](https://github.com/Microsoft/tslint-microsoft-contrib/issues/685) Update to TSLint 5.12.0
+-   [#684](https://github.com/Microsoft/tslint-microsoft-contrib/issues/684) PR builds on Node 6 fail during linting
+-   [#677](https://github.com/Microsoft/tslint-microsoft-contrib/issues/677) Stop extending from TSLint's ruleset in the published ruleset
+-   [#675](https://github.com/Microsoft/tslint-microsoft-contrib/issues/675) Odd whitespace characters in tslint-warnings.csv
+-   [#673](https://github.com/Microsoft/tslint-microsoft-contrib/issues/673) use-named-parameter shouldn't be marked as TypeScript-only
+-   [#671](https://github.com/Microsoft/tslint-microsoft-contrib/issues/671) import-name rule is missing tests for `import "some-name";`
+-   [#664](https://github.com/Microsoft/tslint-microsoft-contrib/issues/664) export-name: crashes with "Cannot read property 'elements' of undefined"
+-   [#662](https://github.com/Microsoft/tslint-microsoft-contrib/issues/662) no-backbone-get-set-outside-model has obscenely long rule warnings
+-   [#654](https://github.com/Microsoft/tslint-microsoft-contrib/issues/654) No changelog
+-   [#652](https://github.com/Microsoft/tslint-microsoft-contrib/issues/652) Mark no-reserved-keywords as deprecated"
+-   [#648](https://github.com/Microsoft/tslint-microsoft-contrib/issues/648) Better describe and suggest new rules' version options
+-   [#586](https://github.com/Microsoft/tslint-microsoft-contrib/issues/586) Use a `walk` function instead of extending AbstractRule in our new-rule templates
+-   [#585](https://github.com/Microsoft/tslint-microsoft-contrib/issues/585) Tracking for a post-Hacktoberfest version: 6.0
+-   [#358](https://github.com/Microsoft/tslint-microsoft-contrib/issues/358) Rule request: no-implicit-null-types
+-   [#357](https://github.com/Microsoft/tslint-microsoft-contrib/issues/357) Rule request: no-improper-passed-nulls
+-   [#356](https://github.com/Microsoft/tslint-microsoft-contrib/issues/356) Rule request: no-implicit-null-return-types
+-   [#339](https://github.com/Microsoft/tslint-microsoft-contrib/issues/339) react-unused-props-and-state fails with SFC's
+-   [#274](https://github.com/Microsoft/tslint-microsoft-contrib/issues/274) new a11y rule: accessible headings
+-   [#258](https://github.com/Microsoft/tslint-microsoft-contrib/issues/258) Create a rule generator by using a micro-generator f/w
+-   [#204](https://github.com/Microsoft/tslint-microsoft-contrib/issues/204) new rule: react-a11y-iframe
+
 ## [6.0.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/6.0.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.0.0)

@@ -31,7 +31,7 @@ strategy:
       node_version: '11.x'
 
 pool:
-  vmImage: ($imageName)
+  vmImage: $(imageName)
 
 steps:
 - task: NodeTool@0

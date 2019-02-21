@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -17,26 +18,13 @@ const VALIDATE_PRIVATE_STATICS_AS_EITHER = 'validate-private-statics-as-either';
 
 const VALID_ARGS = [VALIDATE_PRIVATE_STATICS_AS_PRIVATE, VALIDATE_PRIVATE_STATICS_AS_STATIC, VALIDATE_PRIVATE_STATICS_AS_EITHER];
 
-function parseOptions(ruleArguments: unknown[]): Options {
-    if (ruleArguments.length === 0) {
-        return {
-            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
-        };
-    }
-    const staticsValidateOption: string = <string>ruleArguments[1];
-    if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
-        return {
-            validateStatics: staticsValidateOption
-        };
-    } else {
-        return {
-            validateStatics: VALIDATE_PRIVATE_STATICS_AS_PRIVATE
-        };
-    }
-}
-
 interface Options {
     readonly validateStatics: string;
+    readonly methodRegex: RegExp;
+    readonly privateMethodRegex: RegExp;
+    readonly protectedMethodRegex: RegExp;
+    readonly staticMethodRegex: RegExp;
+    readonly functionRegex: RegExp;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -79,78 +67,44 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new FunctionNameRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
-}
 
-class FunctionNameRuleWalker extends Lint.RuleWalker {
-    private methodRegex: RegExp = /^[a-z][\w\d]+$/;
-    private privateMethodRegex: RegExp = this.methodRegex;
-    private protectedMethodRegex: RegExp = this.privateMethodRegex;
-    private staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
-    private functionRegex: RegExp = /^[a-z][\w\d]+$/;
-    private readonly args: Options;
+    private parseOptions(options: Lint.IOptions): Options {
+        let methodRegex: RegExp = /^[a-z][\w\d]+$/;
+        let privateMethodRegex: RegExp = methodRegex;
+        let protectedMethodRegex: RegExp = privateMethodRegex;
+        let staticMethodRegex: RegExp = /^[A-Z_\d]+$/;
+        let functionRegex: RegExp = /^[a-z][\w\d]+$/;
+        let validateStatics: string = VALIDATE_PRIVATE_STATICS_AS_PRIVATE;
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.args = parseOptions(options.ruleArguments);
-        this.getOptions().forEach((opt: unknown) => {
+        const ruleArguments: unknown[] = options.ruleArguments;
+
+        if (ruleArguments.length > 1) {
+            const staticsValidateOption: string = <string>ruleArguments[1];
+            if (VALID_ARGS.indexOf(staticsValidateOption) > -1) {
+                validateStatics = staticsValidateOption;
+            }
+        }
+
+        ruleArguments.forEach((opt: unknown) => {
             if (isObject(opt)) {
-                this.methodRegex = this.getOptionOrDefault(opt, METHOD_REGEX, this.methodRegex);
-                this.privateMethodRegex = this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, this.privateMethodRegex);
-                this.protectedMethodRegex = this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, this.protectedMethodRegex);
-                this.staticMethodRegex = this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, this.staticMethodRegex);
-                this.functionRegex = this.getOptionOrDefault(opt, FUNCTION_REGEX, this.functionRegex);
+                methodRegex = this.getOptionOrDefault(opt, METHOD_REGEX, methodRegex);
+                privateMethodRegex = this.getOptionOrDefault(opt, PRIVATE_METHOD_REGEX, privateMethodRegex);
+                protectedMethodRegex = this.getOptionOrDefault(opt, PROTECTED_METHOD_REGEX, protectedMethodRegex);
+                staticMethodRegex = this.getOptionOrDefault(opt, STATIC_METHOD_REGEX, staticMethodRegex);
+                functionRegex = this.getOptionOrDefault(opt, FUNCTION_REGEX, functionRegex);
             }
         });
-    }
 
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        const name: string = node.name.getText();
-        if (AstUtils.hasComputedName(node)) {
-            // allow computed names
-        } else if (AstUtils.isPrivate(node)) {
-            if (!this.privateMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                this.addFailureAt(
-                    node.name.getStart(),
-                    node.name.getWidth(),
-                    `Private method name does not match ${this.privateMethodRegex}: ${name}`
-                );
-            }
-        } else if (AstUtils.isProtected(node)) {
-            if (!this.protectedMethodRegex.test(name) && this.args.validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                this.addFailureAt(
-                    node.name.getStart(),
-                    node.name.getWidth(),
-                    `Protected method name does not match ${this.protectedMethodRegex}: ${name}`
-                );
-            }
-        } else if (AstUtils.isStatic(node)) {
-            if (!this.staticMethodRegex.test(name)) {
-                this.addFailureAt(
-                    node.name.getStart(),
-                    node.name.getWidth(),
-                    `Static method name does not match ${this.staticMethodRegex}: ${name}`
-                );
-            }
-        } else if (!this.methodRegex.test(name)) {
-            this.addFailureAt(node.name.getStart(), node.name.getWidth(), `Method name does not match ${this.methodRegex}: ${name}`);
-        }
-        super.visitMethodDeclaration(node);
-    }
-
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        if (node.name !== undefined) {
-            const name: string = node.name.text;
-            if (!this.functionRegex.test(name)) {
-                this.addFailureAt(
-                    node.name.getStart(),
-                    node.name.getWidth(),
-                    `Function name does not match ${this.functionRegex}: ${name}`
-                );
-            }
-        }
-        super.visitFunctionDeclaration(node);
+        return {
+            validateStatics,
+            methodRegex,
+            privateMethodRegex,
+            protectedMethodRegex,
+            staticMethodRegex,
+            functionRegex
+        };
     }
 
     private getOptionOrDefault(option: { [key: string]: unknown }, key: string, defaultValue: RegExp): RegExp {
@@ -166,4 +120,56 @@ class FunctionNameRuleWalker extends Lint.RuleWalker {
         }
         return defaultValue;
     }
+}
+
+function walk(ctx: Lint.WalkContext<Options>) {
+    const { validateStatics, methodRegex, privateMethodRegex, protectedMethodRegex, staticMethodRegex, functionRegex } = ctx.options;
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isMethodDeclaration(node)) {
+            const name: string = node.name.getText();
+            if (AstUtils.hasComputedName(node)) {
+                // allow computed names
+            } else if (AstUtils.isPrivate(node)) {
+                if (!privateMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                    ctx.addFailureAt(
+                        node.name.getStart(),
+                        node.name.getWidth(),
+                        `Private method name does not match ${privateMethodRegex}: ${name}`
+                    );
+                }
+            } else if (AstUtils.isProtected(node)) {
+                if (!protectedMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+                    ctx.addFailureAt(
+                        node.name.getStart(),
+                        node.name.getWidth(),
+                        `Protected method name does not match ${protectedMethodRegex}: ${name}`
+                    );
+                }
+            } else if (AstUtils.isStatic(node)) {
+                if (!staticMethodRegex.test(name)) {
+                    ctx.addFailureAt(
+                        node.name.getStart(),
+                        node.name.getWidth(),
+                        `Static method name does not match ${staticMethodRegex}: ${name}`
+                    );
+                }
+            } else if (!methodRegex.test(name)) {
+                ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), `Method name does not match ${methodRegex}: ${name}`);
+            }
+        }
+
+        if (tsutils.isFunctionDeclaration(node)) {
+            if (node.name !== undefined) {
+                const name: string = node.name.text;
+                if (!functionRegex.test(name)) {
+                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), `Function name does not match ${functionRegex}: ${name}`);
+                }
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

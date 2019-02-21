@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -15,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated'
     };
 
@@ -30,32 +31,15 @@ export class Rule extends Lint.Rules.AbstractRule {
             console.warn('Warning: valid-typeof rule is deprecated. Replace your usage with the TSLint typeof-compare rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new ValidTypeofRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class ValidTypeofRuleWalker extends Lint.RuleWalker {
-    protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
-            this.validateTypeOf(<ts.StringLiteral>node.right);
-        } else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
-            this.validateTypeOf(<ts.StringLiteral>node.left);
-        }
-        super.visitBinaryExpression(node);
-    }
-
-    private validateTypeOf(node: ts.StringLiteral): void {
-        if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
-            const start: number = node.getStart();
-            const width: number = node.getWidth();
-            this.addFailureAt(start, width, Rule.FAILURE_STRING + this.getClosestTerm(node.text) + '?');
-        }
-    }
-
-    private getClosestTerm(term: string): string {
+function walk(ctx: Lint.WalkContext<void>) {
+    function getClosestTerm(term: string): string {
         let closestMatch: number = 99999999;
         return Rule.VALID_TERMS.reduce((closestTerm: string, thisTerm: string): string => {
-            const distance = this.levenshteinDistance(term, thisTerm);
+            const distance = levenshteinDistance(term, thisTerm);
             if (distance < closestMatch) {
                 closestMatch = distance;
                 closestTerm = thisTerm;
@@ -82,8 +66,8 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
     /**
      * Inspired from: https://gist.github.com/andrei-m/982927
      */
-    /* tslint:disable:no-increment-decrement */
-    private levenshteinDistance(a: string, b: string): number {
+    /* tslint:disable:increment-decrement */
+    function levenshteinDistance(a: string, b: string): number {
         if (a.length === 0) {
             return b.length;
         }
@@ -120,5 +104,27 @@ class ValidTypeofRuleWalker extends Lint.RuleWalker {
 
         return matrix[b.length][a.length];
     }
-    /* tslint:enable:no-increment-decrement */
+    /* tslint:enable:increment-decrement */
+
+    function validateTypeOf(node: ts.StringLiteral): void {
+        if (Rule.VALID_TERMS.indexOf(node.text) === -1) {
+            const start: number = node.getStart();
+            const width: number = node.getWidth();
+            ctx.addFailureAt(start, width, Rule.FAILURE_STRING + getClosestTerm(node.text) + '?');
+        }
+    }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isBinaryExpression(node)) {
+            if (node.left.kind === ts.SyntaxKind.TypeOfExpression && node.right.kind === ts.SyntaxKind.StringLiteral) {
+                validateTypeOf(<ts.StringLiteral>node.right);
+            } else if (node.right.kind === ts.SyntaxKind.TypeOfExpression && node.left.kind === ts.SyntaxKind.StringLiteral) {
+                validateTypeOf(<ts.StringLiteral>node.left);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

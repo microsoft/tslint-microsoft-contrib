@@ -1,6 +1,18 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
+
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
+
+enum Spacing {
+    always,
+    never
+}
+
+interface Options {
+    spacing: Spacing;
+    allowMultiline: boolean;
+}
 
 /**
  * TSX curly spacing rule.
@@ -19,61 +31,34 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Low',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new TsxCurlySpacingWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
-}
 
-enum Spacing {
-    always,
-    never
-}
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            spacing: Spacing.always,
+            allowMultiline: false
+        };
 
-class TsxCurlySpacingWalker extends Lint.RuleWalker {
-    private readonly spacing: Spacing;
-    private readonly allowMultiline: boolean;
+        if (options.ruleArguments[0] === 'never') {
+            parsed.spacing = Spacing.never;
+        }
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        // default value is always
-        this.spacing = options.ruleArguments[0] === 'never' ? Spacing.never : Spacing.always;
-        // default value is to not allow multiline
-        this.allowMultiline = false;
         if (options.ruleArguments[1] !== undefined) {
-            this.allowMultiline = !(options.ruleArguments[1].allowMultiline === false);
+            parsed.allowMultiline = options.ruleArguments[1].allowMultiline !== false;
         }
+
+        return parsed;
     }
+}
 
-    public visitJsxExpression(node: ts.JsxExpression): void {
-        const childrenCount: number = node.getChildCount();
-
-        if (childrenCount > 2) {
-            // not empty code block (eg. only comments)
-            const first = node.getFirstToken(); // '{' sign
-            const last = node.getLastToken(); // '}' sign
-            const second: ts.Node = node.getChildAt(1); // after '{' sign
-            const penultimate: ts.Node = node.getChildAt(childrenCount - 2); // before '}' sign
-            this.validateBraceSpacing(node, first, second, first);
-            this.validateBraceSpacing(node, penultimate, last, last);
-        }
-    }
-
-    protected visitNode(node: ts.Node): void {
-        // This is hacked to visit JSX Expression. See https://github.com/palantir/tslint/pull/1292
-        // newer versions of tslint have a public visitJsxExpression but older versions do not
-        if (node.kind === ts.SyntaxKind.JsxExpression) {
-            this.visitJsxExpression(<ts.JsxExpression>node);
-            this.walkChildren(node);
-        } else {
-            super.visitNode(node);
-        }
-    }
-
-    private validateBraceSpacing(
+function walk(ctx: Lint.WalkContext<Options>) {
+    function validateBraceSpacing(
         node: ts.Node,
         first: ts.Node | undefined,
         second: ts.Node | undefined,
@@ -83,24 +68,24 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
             return;
         }
 
-        if (this.isMultiline(first, second)) {
-            if (!this.allowMultiline) {
-                this.reportFailure(node, violationRoot, this.getFailureForNewLine(first, violationRoot));
+        if (isMultiline(first, second)) {
+            if (!ctx.options.allowMultiline) {
+                reportFailure(node, violationRoot, getFailureForNewLine(first, violationRoot));
             }
-        } else if (this.spacing === Spacing.always) {
-            if (!this.isSpaceBetweenTokens(first, second)) {
-                this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
+        } else if (ctx.options.spacing === Spacing.always) {
+            if (!isSpaceBetweenTokens(first, second)) {
+                reportFailure(node, violationRoot, getFailureForSpace(first, violationRoot));
             }
         } else {
             // never space
-            if (this.isSpaceBetweenTokens(first, second)) {
-                this.reportFailure(node, violationRoot, this.getFailureForSpace(first, violationRoot));
+            if (isSpaceBetweenTokens(first, second)) {
+                reportFailure(node, violationRoot, getFailureForSpace(first, violationRoot));
             }
         }
     }
 
-    private getFailureForSpace(first: ts.Node, violationRoot: ts.Node): string {
-        if (this.spacing === Spacing.always) {
+    function getFailureForSpace(first: ts.Node, violationRoot: ts.Node): string {
+        if (ctx.options.spacing === Spacing.always) {
             if (first === violationRoot) {
                 return `A space is required after '${violationRoot.getText()}'`;
             } else {
@@ -115,7 +100,7 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         }
     }
 
-    private getFailureForNewLine(first: ts.Node, violationRoot: ts.Node): string {
+    function getFailureForNewLine(first: ts.Node, violationRoot: ts.Node): string {
         if (first === violationRoot) {
             return `There should be no newline after '${violationRoot.getText()}'`;
         } else {
@@ -123,22 +108,40 @@ class TsxCurlySpacingWalker extends Lint.RuleWalker {
         }
     }
 
-    private reportFailure(start: ts.Node, endNode: ts.Node, failure: string): void {
-        this.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
+    function reportFailure(start: ts.Node, endNode: ts.Node, failure: string): void {
+        ctx.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);
     }
 
-    private isSpaceBetweenTokens(left: ts.Node, right: ts.Node): boolean {
+    function isSpaceBetweenTokens(left: ts.Node, right: ts.Node): boolean {
         // Inspired from https://github.com/eslint/eslint/blob/master/lib/util/source-code.js#L296
-        const text: string = this.getSourceFile()
-            .getText()
-            .slice(left.getEnd(), right.getStart());
+        const text: string = ctx.sourceFile.getText().slice(left.getEnd(), right.getStart());
         return /\s/.test(text.replace(/\/\*.*?\*\//g, ''));
     }
 
-    private isMultiline(left: ts.Node, right: ts.Node): boolean {
-        const sourceFile: ts.SourceFile = this.getSourceFile();
+    function isMultiline(left: ts.Node, right: ts.Node): boolean {
+        const sourceFile: ts.SourceFile = ctx.sourceFile;
         const leftLine: number = sourceFile.getLineAndCharacterOfPosition(left.getStart()).line;
         const rightLine: number = sourceFile.getLineAndCharacterOfPosition(right.getStart()).line;
         return leftLine !== rightLine;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxExpression(node)) {
+            const childrenCount: number = node.getChildCount();
+
+            if (childrenCount > 2) {
+                // not empty code block (eg. only comments)
+                const first = node.getFirstToken(); // '{' sign
+                const last = node.getLastToken(); // '}' sign
+                const second: ts.Node = node.getChildAt(1); // after '{' sign
+                const penultimate: ts.Node = node.getChildAt(childrenCount - 2); // before '}' sign
+                validateBraceSpacing(node, first, second, first);
+                validateBraceSpacing(node, penultimate, last, last);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

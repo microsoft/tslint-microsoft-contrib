@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -24,23 +25,29 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static SET_FAILURE_STRING: string = 'Backbone set() called outside of owning model: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoBackboneGetSetOutsideModelRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoBackboneGetSetOutsideModelRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (AstUtils.getFunctionTarget(node) !== 'this') {
-            const functionName: string = AstUtils.getFunctionName(node);
-            if (functionName === 'get' && node.arguments.length === 1 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                const msg: string = Rule.GET_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getEnd(), msg);
-            }
-            if (functionName === 'set' && node.arguments.length === 2 && node.arguments[0].kind === ts.SyntaxKind.StringLiteral) {
-                const msg: string = Rule.SET_FAILURE_STRING + node.getText();
-                this.addFailureAt(node.getStart(), node.getEnd(), msg);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            if (AstUtils.getFunctionTarget(node) !== 'this') {
+                const functionName: string = AstUtils.getFunctionName(node);
+
+                if (functionName === 'get' && node.arguments.length === 1 && tsutils.isStringLiteral(node.arguments[0])) {
+                    const msg: string = Rule.GET_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+                }
+
+                if (functionName === 'set' && node.arguments.length === 2 && tsutils.isStringLiteral(node.arguments[0])) {
+                    const msg: string = Rule.SET_FAILURE_STRING + node.getText();
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+                }
             }
         }
-        super.visitCallExpression(node);
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

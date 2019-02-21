@@ -1,6 +1,7 @@
 *.csv eol=lf
 *.js eol=lf
 *.jsx eol=lf
+*.fix eol=lf
 *.lint eol=lf
 *.ts eol=lf
 *.tsx eol=lf

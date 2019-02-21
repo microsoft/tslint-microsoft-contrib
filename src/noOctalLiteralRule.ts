@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -21,20 +22,22 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING: string = 'Octal literals should not be used: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        const noOctalLiteral = new NoOctalLiteral(sourceFile, this.getOptions());
-        return this.applyWithWalker(noOctalLiteral);
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoOctalLiteral extends Lint.RuleWalker {
-    public visitNode(node: ts.Node) {
-        if (node.kind === ts.SyntaxKind.StringLiteral || node.kind === ts.SyntaxKind.FirstTemplateToken) {
-            this.failOnOctalString(<ts.LiteralExpression>node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isStringLiteral(node) || node.kind === ts.SyntaxKind.FirstTemplateToken) {
+            failOnOctalString(<ts.LiteralExpression>node);
         }
-        super.visitNode(node);
+
+        return ts.forEachChild(node, cb);
     }
 
-    private failOnOctalString(node: ts.LiteralExpression) {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function failOnOctalString(node: ts.LiteralExpression) {
         const match = /("|'|`)[^\\]*(\\+-?[0-7]{1,3}(?![0-9]))(?:.|\n|\t|\u2028|\u2029)*(?:\1)/g.exec(node.getText());
 
         if (match) {
@@ -47,7 +50,7 @@ class NoOctalLiteral extends Lint.RuleWalker {
                 const startOfMatch = node.getStart() + node.getText().indexOf(octalValue);
                 const width = octalValue.length;
 
-                this.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
+                ctx.addFailureAt(startOfMatch, width, Rule.FAILURE_STRING + octalValue);
             }
         }
     }

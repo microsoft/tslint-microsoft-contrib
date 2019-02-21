@@ -4,6 +4,7 @@
 
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { getImplicitRole } from './utils/getImplicitRole';
@@ -39,6 +40,12 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
+        rationale: `References:
+        <ul>
+          <li><a href="https://www.w3.org/TR/wai-aria/roles#role_definitions">ARIA Definition of Roles</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/90">WCAG Rule 90: Required properties and states should be defined</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/91">WCAG Rule 91: Required properties and states must not be empty</a></li>
+        </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',
         typescriptOnly: true,
@@ -50,24 +57,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return sourceFile.languageVariant === ts.LanguageVariant.JSX
-            ? this.applyWithWalker(new A11yRoleHasRequiredAriaPropsWalker(sourceFile, this.getOptions()))
-            : [];
+        return sourceFile.languageVariant === ts.LanguageVariant.JSX ? this.applyWithFunction(sourceFile, walk) : [];
     }
 }
 
-class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
-    public visitJsxElement(node: ts.JsxElement): void {
-        this.checkJsxElement(node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.checkJsxElement(node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    private checkJsxElement(node: ts.JsxOpeningLikeElement): void {
+function walk(ctx: Lint.WalkContext<void>) {
+    function checkJsxElement(node: ts.JsxOpeningLikeElement): void {
         const tagName: string = node.tagName.getText();
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(node);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
@@ -101,7 +96,7 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
         );
 
         if (missingAttributes.length > 0) {
-            this.addFailureAt(
+            ctx.addFailureAt(
                 node.getStart(),
                 node.getWidth(),
                 isImplicitRole
@@ -110,4 +105,16 @@ class A11yRoleHasRequiredAriaPropsWalker extends Lint.RuleWalker {
             );
         }
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxElement(node)) {
+            checkJsxElement(node.openingElement);
+        } else if (tsutils.isJsxSelfClosingElement(node)) {
+            checkJsxElement(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

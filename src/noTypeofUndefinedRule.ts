@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -24,31 +25,35 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoTypeofUndefinedRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoTypeofUndefinedRuleWalker extends Lint.RuleWalker {
-    protected visitBinaryExpression(node: ts.BinaryExpression): void {
-        if (
-            (this.isUndefinedString(node.left) && this.isTypeOfExpression(node.right)) ||
-            (this.isUndefinedString(node.right) && this.isTypeOfExpression(node.left))
-        ) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
-        }
-        super.visitBinaryExpression(node);
-    }
-
-    private isTypeOfExpression(node: ts.Node): boolean {
+function walk(ctx: Lint.WalkContext<void>) {
+    function isTypeOfExpression(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.TypeOfExpression;
     }
 
-    private isUndefinedString(node: ts.Node): boolean {
-        if (node.kind === ts.SyntaxKind.StringLiteral) {
-            if ((<ts.StringLiteral>node).text === 'undefined') {
+    function isUndefinedString(node: ts.Node): boolean {
+        if (tsutils.isStringLiteral(node)) {
+            if (node.text === 'undefined') {
                 return true;
             }
         }
         return false;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isBinaryExpression(node)) {
+            if (
+                (isUndefinedString(node.left) && isTypeOfExpression(node.right)) ||
+                (isUndefinedString(node.right) && isTypeOfExpression(node.left))
+            ) {
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
+            }
+        }
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

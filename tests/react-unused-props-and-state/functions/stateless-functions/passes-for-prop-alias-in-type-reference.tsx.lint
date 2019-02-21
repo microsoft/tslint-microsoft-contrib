@@ -1,0 +1,9 @@
+import React = require('react');
+
+interface Props {
+    readonly text: string
+}
+
+export const SpanWithText: React.SFC<Props> = (p: Props) => (
+    <span>{p.text}</span>
+)

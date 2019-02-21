@@ -1,0 +1,24 @@
+import * as chai from "chai";
+const { expect } = chai;
+
+const targetUrl = "...";
+
+expect(targetUrl).to.contain(twitterAuthUrl, '...');
+chai.expect(targetUrl).to.contain(twitterAuthUrl, '...');
+
+expect(targetUrl).to.not.contain(twitterAuthUrl,'...');
+chai.expect(targetUrl).to.not.contain(twitterAuthUrl,'...');
+
+expect(targetUrl.indexOf(twitterAuthUrl)).to.equal(-1,'...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+chai.expect(targetUrl.indexOf(twitterAuthUrl)).to.equal(-1,'...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+expect(targetUrl.indexOf(twitterAuthUrl)).not.to.equal(-1,'...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+chai.expect(targetUrl.indexOf(twitterAuthUrl)).not.to.equal(-1,'...');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [0]
+
+[0]: Found chai call with indexOf that can be converted to .contain assertion

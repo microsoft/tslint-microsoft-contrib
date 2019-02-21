@@ -1,79 +1,181 @@
+const { execSync } = require('child_process');
+const { template } = require('underscore');
 const fs = require('fs');
-const { red } = require('chalk');
-const { readJSON, writeFile } = require('./common/files');
+const inquirer = require('inquirer');
+const path = require('path');
+const { writeFile } = require('./common/files');
+const readmeTemplate = require('./templates/readme-rule-entry.template');
+const { addNewRule } = require('./common/readme-rules');
 
-const ruleName = getRuleName();
-validateAguments();
+const questions = [
+    {
+        name: 'name',
+        message: 'Name:',
+        type: 'input',
+        validate: value => {
+            if (!/^[a-z0-9]+(\-[a-z0-9]+)*$/.test(value)) {
+                return 'The name should consist of lowercase letters and numbers separated with "-" character.';
+            }
 
-const ruleFile = camelCase(ruleName) + 'Rule';
-const sourceFileName = 'src/' + ruleFile + '.ts';
-const testsFolder = 'tests/' + ruleName;
-const testFile = testsFolder + '/test.ts.lint';
-const lintFile = testsFolder + '/tslint.json';
+            return true;
+        }
+    },
+    {
+        name: 'description',
+        message: 'Description:',
+        type: 'input',
+        validate: value => {
+            if (!!value && !!value.trim()) {
+                return true;
+            }
+            return 'Please enter a description for the rule.';
+        }
+    },
+    {
+        name: 'hasOptions',
+        message: 'Has options:',
+        type: 'confirm',
+        default: false
+    },
+    {
+        name: 'typescriptOnly',
+        message: 'TypeScript only:',
+        type: 'confirm',
+        default: false
+    },
+    {
+        name: 'type',
+        message: 'Rule type:',
+        type: 'list',
+        choices: ['functionality', 'maintainability', 'style', 'typescript'],
+        default: 'maintainability'
+    },
+    {
+        name: 'issueClass',
+        message: 'Issue class:',
+        type: 'list',
+        choices: ['SDL', 'Non-SDL', 'Ignored'],
+        default: 'Non-SDL'
+    },
+    {
+        name: 'issueType',
+        message: 'Issue type:',
+        type: 'list',
+        choices: ['Error', 'Warning'],
+        default: 'Warning'
+    },
+    {
+        name: 'severity',
+        message: 'Severity:',
+        type: 'list',
+        choices: ['Critical', 'Important', 'Moderate', 'Low'],
+        default: 'Low'
+    },
+    {
+        name: 'level',
+        message: 'Level:',
+        type: 'list',
+        choices: ['Mandatory', 'Opportunity for Excellence'],
+        default: 'Opportunity for Excellence'
+    },
+    {
+        name: 'group',
+        message: 'Group:',
+        type: 'list',
+        choices: ['Clarity', 'Configurable', 'Correctness', 'Deprecated', 'Ignored', 'Security', 'Whitespace'],
+        default: 'Clarity'
+    }
+];
 
-createImplementationFile();
-createTestFiles();
-addToConfig();
+inquirer.prompt(questions).then(answers => {
+    const sourceFileName = createImplementationFile(answers);
+    const testFileNames = createTestFiles(answers);
+    const readmePosition = createReadmeEntry(answers);
 
-console.log('Rule created');
-console.log('Rule source: ' + sourceFileName);
-console.log('Test file: ' + testFile);
+    console.log(`Rule '${answers.name}' created.`);
+    console.log(`Source file: ${sourceFileName}`);
+    console.log(`Test files:   ${testFileNames.join(' ')}`);
+    console.log(`README.md entry: ${readmePosition}`);
 
-function getRuleName() {
-    const option = process.argv.find(str => str.startsWith('--rule-name'));
+    // Attempt to open the files in the current editor.
+    tryOpenFiles([...testFileNames, sourceFileName, readmePosition]);
+});
 
-    if (!option) {
-        return;
+function createImplementationFile(answers) {
+    const ruleFile = camelCase(answers.name) + 'Rule';
+    const sourceFileName = 'src/' + ruleFile + '.ts';
+
+    const ruleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/rule.template'), 'utf8');
+    const ruleSource = template(ruleTemplate)(answers);
+
+    writeFile(sourceFileName, ruleSource);
+
+    return sourceFileName;
+}
+
+function createTestFiles(answers) {
+    const testFiles = [];
+    const name = answers.name;
+    const testsFolder = 'tests/' + name;
+    const tsTestFile = testsFolder + '/test.ts.lint';
+    const lintFile = testsFolder + '/tslint.json';
+    const tslintContent = {
+        rules: {
+            [name]: true
+        }
+    };
+
+    if (!fs.existsSync(testsFolder)) {
+        fs.mkdirSync(testsFolder);
     }
 
-    return option.split('=')[1];
+    writeFile(tsTestFile, '// TypeScript code that should be checked by the rule.');
+    testFiles.push(tsTestFile);
+
+    if (!answers.typescriptOnly) {
+        const jsTestFile = testsFolder + '/test.js.lint';
+        writeFile(jsTestFile, '// JavaScript code that should be checked by the rule.');
+        testFiles.push(jsTestFile);
+    }
+
+    writeFile(lintFile, JSON.stringify(tslintContent, undefined, 4));
+
+    return testFiles;
+}
+
+function createReadmeEntry(answers) {
+    const content = readmeTemplate(answers);
+    return addNewRule(answers.name, content);
 }
 
 function camelCase(input) {
     return input.toLowerCase().replace(/-(.)/g, (match, group1) => group1.toUpperCase());
 }
 
-function validateAguments() {
-    const USAGE_EXAMPLE = '\nUsage example:\nnpm run create-rule -- --rule-name=no-something-or-other\n';
+function tryOpenFiles(files) {
+    // Check if we're running in the VS Code terminal. If we
+    // are, then we can try to open the new files in VS Code.
+    // If we can't open the files, then it's not a big deal.
+    if (process.env.VSCODE_CWD) {
+        let exe;
 
-    if (!ruleName) {
-        console.log(red('--rule-name parameter is required.' + USAGE_EXAMPLE));
-        process.exit(1);
-    }
-
-    if (!/^[a-z0-9]+(\-[a-z0-9]+)*$/.test(ruleName)) {
-        console.log(red('Rule name should consist of lowercase letters and numbers separated with "-" character.' + USAGE_EXAMPLE));
-        process.exit(1);
-    }
-}
-
-function createImplementationFile() {
-    const walkerName = ruleFile.charAt(0).toUpperCase() + ruleFile.substr(1) + 'Walker';
-
-    const ruleTemplate = require('./templates/rule.template');
-    const ruleSource = ruleTemplate({ ruleName, walkerName });
-
-    writeFile(sourceFileName, ruleSource);
-}
-
-function createTestFiles() {
-    const testContent = '// Code that should be checked by rule';
-    const tslintContent = {
-        rules: {
-            [ruleName]: true
+        // We need to check if we're running in normal VS Code or the Insiders version.
+        // The `TERM_PROGRAM_VERSION` environment variable will contain the version number
+        // of VS Code. For VS Code Insiders, that version will have the suffix "-insider".
+        const version = process.env.TERM_PROGRAM_VERSION || '';
+        if (version.endsWith('-insider')) {
+            exe = 'code-insiders';
+            console.log('Opening the new files in VS Code Insiders...');
+        } else {
+            exe = 'code';
+            console.log('Opening the new files in VS Code...');
         }
-    };
 
-    fs.mkdirSync(testsFolder);
-
-    writeFile(testFile, testContent);
-    writeFile(lintFile, JSON.stringify(tslintContent, undefined, 4));
-}
-
-function addToConfig() {
-    const currentRuleset = readJSON('tslint.json');
-
-    currentRuleset.rules[ruleName] = true;
-
-    writeFile('tslint.json', JSON.stringify(currentRuleset, undefined, 4));
+        try {
+            files.forEach(fileName => execSync(`${exe} "${fileName}"`));
+        } catch (ex) {
+            // Couldn't open VS Code.
+            console.log(ex);
+        }
+    }
 }

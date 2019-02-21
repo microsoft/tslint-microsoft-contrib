@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -25,16 +26,21 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoForInRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoForInRuleWalker extends Lint.RuleWalker {
-    protected visitForInStatement(node: ts.ForInStatement): void {
-        const initializer: string = node.initializer.getText();
-        const expression: string = node.expression.getText();
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isForInStatement(node)) {
+            const initializer: string = node.initializer.getText();
+            const expression: string = node.expression.getText();
 
-        const msg: string = Rule.FAILURE_STRING_FACTORY(initializer, expression);
-        this.addFailureAt(node.getStart(), node.getWidth(), msg);
+            const msg: string = Rule.FAILURE_STRING_FACTORY(initializer, expression);
+            ctx.addFailureAt(node.getStart(), node.getWidth(), msg);
+        }
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

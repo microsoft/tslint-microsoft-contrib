@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { Utils } from './utils/Utils';
@@ -23,48 +24,27 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MochaUnneededDoneRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
-    protected visitSourceFile(node: ts.SourceFile): void {
-        if (MochaUtils.isMochaTest(node)) {
-            super.visitSourceFile(node);
-        }
-    }
-
-    protected visitArrowFunction(node: ts.ArrowFunction): void {
-        this.validateMochaDoneUsage(node);
-        super.visitArrowFunction(node);
-    }
-
-    protected visitFunctionExpression(node: ts.FunctionExpression): void {
-        this.validateMochaDoneUsage(node);
-        super.visitFunctionExpression(node);
-    }
-
-    private validateMochaDoneUsage(node: ts.FunctionLikeDeclaration): void {
-        const doneIdentifier = this.maybeGetMochaDoneParameter(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function validateMochaDoneUsage(node: ts.FunctionLikeDeclaration): void {
+        const doneIdentifier = maybeGetMochaDoneParameter(node);
         if (doneIdentifier === undefined) {
             return;
         }
-        if (!this.isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
+        if (!isIdentifierInvokedDirectlyInBody(doneIdentifier, node)) {
             return;
         }
 
-        const walker: IdentifierReferenceCountWalker = new IdentifierReferenceCountWalker(
-            this.getSourceFile(),
-            this.getOptions(),
-            doneIdentifier
-        );
-        const count: number = walker.getReferenceCount(<ts.Block>node.body);
+        const count: number = getReferenceCount(doneIdentifier, <ts.Block>node.body);
         if (count === 1) {
-            this.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
+            ctx.addFailureAt(doneIdentifier.getStart(), doneIdentifier.getWidth(), FAILURE_STRING + doneIdentifier.getText());
         }
     }
 
-    private isIdentifierInvokedDirectlyInBody(doneIdentifier: ts.Identifier, node: ts.FunctionLikeDeclaration): boolean {
+    function isIdentifierInvokedDirectlyInBody(doneIdentifier: ts.Identifier, node: ts.FunctionLikeDeclaration): boolean {
         if (node.body === undefined || node.body.kind !== ts.SyntaxKind.Block) {
             return false;
         }
@@ -85,7 +65,7 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
         );
     }
 
-    private maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | undefined {
+    function maybeGetMochaDoneParameter(node: ts.FunctionLikeDeclaration): ts.Identifier | undefined {
         if (node.parameters.length === 0) {
             return undefined;
         }
@@ -103,31 +83,35 @@ class MochaUnneededDoneRuleWalker extends Lint.RuleWalker {
         }
         return <ts.Identifier>allDones[0].name;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isArrowFunction(node) || tsutils.isFunctionExpression(node)) {
+            validateMochaDoneUsage(node);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    if (MochaUtils.isMochaTest(ctx.sourceFile)) {
+        ts.forEachChild(ctx.sourceFile, cb);
+    }
 }
 
-class IdentifierReferenceCountWalker extends Lint.RuleWalker {
-    private readonly identifierText: string;
-    private count!: number;
+function getReferenceCount(identifier: ts.Identifier, body: ts.Block): number {
+    let count = 0;
+    const identifierText = identifier.getText();
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, identifier: ts.Identifier) {
-        super(sourceFile, options);
-        this.identifierText = identifier.getText();
-    }
-
-    public getReferenceCount(body: ts.Block): number {
-        this.count = 0;
-        body.statements.forEach(
-            (statement: ts.Statement): void => {
-                this.walk(statement);
+    function cb(node: ts.Node) {
+        if (tsutils.isIdentifier(node)) {
+            if (node.getText() === identifierText) {
+                count += 1;
             }
-        );
-        return this.count;
+        }
+
+        ts.forEachChild(node, cb);
     }
 
-    protected visitIdentifier(node: ts.Identifier): void {
-        if (node.getText() === this.identifierText) {
-            this.count = this.count + 1;
-        }
-        super.visitIdentifier(node);
-    }
+    body.statements.forEach(cb);
+
+    return count;
 }

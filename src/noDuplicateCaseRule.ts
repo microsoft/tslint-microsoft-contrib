@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -15,7 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Error',
         severity: 'Critical',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -31,28 +32,33 @@ export class Rule extends Lint.Rules.AbstractRule {
             );
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoDuplicateCaseRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoDuplicateCaseRuleWalker extends Lint.RuleWalker {
-    protected visitSwitchStatement(node: ts.SwitchStatement): void {
-        const seenLabels: string[] = [];
-        node.caseBlock.clauses.forEach(
-            (clauseOrDefault: ts.CaseOrDefaultClause): void => {
-                if (clauseOrDefault.kind === ts.SyntaxKind.CaseClause) {
-                    const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;
-                    if (clause.expression !== undefined) {
-                        const caseText = clause.expression.getText();
-                        if (seenLabels.indexOf(caseText) > -1) {
-                            this.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
-                        } else {
-                            seenLabels.push(caseText);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isSwitchStatement(node)) {
+            const seenLabels: string[] = [];
+            node.caseBlock.clauses.forEach(
+                (clauseOrDefault: ts.CaseOrDefaultClause): void => {
+                    if (tsutils.isCaseClause(clauseOrDefault)) {
+                        const clause: ts.CaseClause = <ts.CaseClause>clauseOrDefault;
+                        if (clause.expression) {
+                            const caseText = clause.expression.getText();
+                            if (seenLabels.indexOf(caseText) > -1) {
+                                ctx.addFailureAt(clause.getStart(), clause.getWidth(), Rule.FAILURE_STRING + caseText);
+                            } else {
+                                seenLabels.push(caseText);
+                            }
                         }
                     }
                 }
-            }
-        );
-        super.visitSwitchStatement(node);
+            );
+        }
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -16,6 +17,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
+        recommendation: 'false',
         group: 'Correctness',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -51,41 +53,52 @@ export class Rule extends Lint.Rules.AbstractRule {
     ];
     public static UNDERSCORE_TERNARY_FUNCTION_NAMES: string[] = ['foldl', 'foldr', 'inject', 'reduce', 'reduceRight'];
 
+    private static isWarningShown: boolean = false;
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoUnnecessaryBindRuleWalker(sourceFile, this.getOptions()));
+        if (Rule.isWarningShown === false) {
+            console.warn('Warning: no-unnecessary-bind rule is deprecated. Replace your usage with the TSLint unnecessary-bind rule.');
+            Rule.isWarningShown = true;
+        }
+
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoUnnecessaryBindRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        const analyzers: CallAnalyzer[] = [
-            new TypeScriptFunctionAnalyzer(),
-            new UnderscoreStaticAnalyzer(),
-            new UnderscoreInstanceAnalyzer()
-        ];
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            const analyzers: CallAnalyzer[] = [
+                new TypeScriptFunctionAnalyzer(),
+                new UnderscoreStaticAnalyzer(),
+                new UnderscoreInstanceAnalyzer()
+            ];
 
-        analyzers.forEach(
-            (analyzer: CallAnalyzer): void => {
-                if (analyzer.canHandle(node)) {
-                    const contextArgument = analyzer.getContextArgument(node);
-                    const functionArgument = analyzer.getFunctionArgument(node);
-                    if (contextArgument === undefined || functionArgument === undefined) {
-                        return;
-                    }
-                    if (contextArgument.getText() === 'this') {
-                        if (isArrowFunction(functionArgument)) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
-                        } else if (isFunctionLiteral(functionArgument)) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
+            analyzers.forEach(
+                (analyzer: CallAnalyzer): void => {
+                    if (analyzer.canHandle(node)) {
+                        const contextArgument = analyzer.getContextArgument(node);
+                        const functionArgument = analyzer.getFunctionArgument(node);
+                        if (contextArgument === undefined || functionArgument === undefined) {
+                            return;
+                        }
+                        if (contextArgument.getText() === 'this') {
+                            if (isArrowFunction(functionArgument)) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_ARROW_WITH_BIND);
+                            } else if (isFunctionLiteral(functionArgument)) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), Rule.FAILURE_FUNCTION_WITH_BIND);
+                            }
                         }
                     }
                 }
-            }
-        );
-        super.visitCallExpression(node);
-    }
-}
+            );
+        }
 
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
 interface CallAnalyzer {
     canHandle(node: ts.CallExpression): boolean;
     getContextArgument(node: ts.CallExpression): ts.Expression | undefined;

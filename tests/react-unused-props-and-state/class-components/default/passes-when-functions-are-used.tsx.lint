@@ -1,0 +1,19 @@
+import React = require('react');
+
+module VideoContainer {
+    export interface Props {
+        myProp: ();
+    }
+    export interface State {
+        myState: ();
+    }
+}
+
+class VideoContainer extends React.Component<VideoContainer.Props, VideoContainer.State> {
+    public render(): ReactTypes.ReactElement<any> {
+        console.log(this.props.myProp());
+        console.log(this.state.myState());
+        return null;
+    }
+}
+export = VideoContainer;

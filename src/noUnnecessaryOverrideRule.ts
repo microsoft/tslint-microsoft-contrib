@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -22,32 +23,20 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoUnnecessaryOverrideRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        if (node.body !== undefined) {
-            const statement = this.getSingleStatement(node.body);
-            if (statement !== undefined) {
-                if (this.isSuperCall(node, statement) && this.isMatchingArgumentList(node, statement)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + this.getMethodName(node));
-                }
-            }
-        }
-        super.visitMethodDeclaration(node);
-    }
-
-    private getSingleStatement(block: ts.Block): ts.Statement | undefined {
+function walk(ctx: Lint.WalkContext<void>) {
+    function getSingleStatement(block: ts.Block): ts.Statement | undefined {
         if (block.statements.length === 1) {
             return block.statements[0];
         }
         return undefined;
     }
 
-    private isMatchingArgumentList(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
-        const call = this.getCallExpressionFromStatement(statement);
+    function isMatchingArgumentList(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
+        const call = getCallExpressionFromStatement(statement);
         if (call === undefined) {
             return false;
         }
@@ -59,15 +48,15 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
         }
 
         const allParameters: ReadonlyArray<ts.ParameterDeclaration> = node.parameters;
-        /* tslint:disable:no-increment-decrement */
+        /* tslint:disable:increment-decrement */
         for (let i = 0; i < allParameters.length; i++) {
-            /* tslint:enable:no-increment-decrement */
+            /* tslint:enable:increment-decrement */
             const parameter: ts.ParameterDeclaration = allParameters[i];
             const argument: ts.Expression = call.arguments[i];
-            if (argument.kind !== ts.SyntaxKind.Identifier) {
+            if (!tsutils.isIdentifier(argument)) {
                 return false;
             }
-            if (parameter.name.kind !== ts.SyntaxKind.Identifier) {
+            if (!tsutils.isIdentifier(parameter.name)) {
                 return false;
             }
             const argumentName: string = (<ts.Identifier>argument).text;
@@ -80,12 +69,12 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
         return true;
     }
 
-    private isSuperCall(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
-        const call = this.getCallExpressionFromStatement(statement);
+    function isSuperCall(node: ts.MethodDeclaration, statement: ts.Statement): boolean {
+        const call = getCallExpressionFromStatement(statement);
         if (call === undefined) {
             return false;
         }
-        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+        if (!tsutils.isPropertyAccessExpression(call.expression)) {
             return false;
         }
 
@@ -94,17 +83,17 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
             return false;
         }
 
-        const declaredMethodName = this.getMethodName(node);
+        const declaredMethodName = getMethodName(node);
         const methodName: string = propAccess.name.text;
         return methodName === declaredMethodName;
     }
 
-    private getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression | undefined {
+    function getCallExpressionFromStatement(statement: ts.Statement): ts.CallExpression | undefined {
         let expression: ts.Expression | undefined;
-        if (statement.kind === ts.SyntaxKind.ExpressionStatement) {
-            expression = (<ts.ExpressionStatement>statement).expression;
-        } else if (statement.kind === ts.SyntaxKind.ReturnStatement) {
-            expression = (<ts.ReturnStatement>statement).expression;
+        if (tsutils.isExpressionStatement(statement)) {
+            expression = statement.expression;
+        } else if (tsutils.isReturnStatement(statement)) {
+            expression = statement.expression;
             if (expression === undefined) {
                 return undefined; // return statements do not have to have an expression
             }
@@ -112,22 +101,39 @@ class NoUnnecessaryOverrideRuleWalker extends Lint.RuleWalker {
             return undefined;
         }
 
-        if (expression.kind !== ts.SyntaxKind.CallExpression) {
+        if (!tsutils.isCallExpression(expression)) {
             return undefined;
         }
 
         const call: ts.CallExpression = <ts.CallExpression>expression;
-        if (call.expression.kind !== ts.SyntaxKind.PropertyAccessExpression) {
+        if (!tsutils.isPropertyAccessExpression(call.expression)) {
             return undefined;
         }
         return call;
     }
 
-    private getMethodName(node: ts.MethodDeclaration): string {
+    function getMethodName(node: ts.MethodDeclaration): string {
         const nameNode: ts.Identifier | ts.LiteralExpression | ts.ComputedPropertyName = node.name;
-        if (nameNode.kind === ts.SyntaxKind.Identifier) {
-            return (<ts.Identifier>nameNode).text;
+        if (tsutils.isIdentifier(nameNode)) {
+            return nameNode.text;
         }
         return '<unknown>';
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isMethodDeclaration(node)) {
+            if (node.body !== undefined) {
+                const statement = getSingleStatement(node.body);
+                if (statement !== undefined) {
+                    if (isSuperCall(node, statement) && isMatchingArgumentList(node, statement)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + getMethodName(node));
+                    }
+                }
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

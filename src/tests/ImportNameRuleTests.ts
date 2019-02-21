@@ -260,4 +260,15 @@ describe('importNameRule', (): void => {
 
         TestHelper.assertViolations(ruleName, script, []);
     });
+
+    it('should pass on importing modules without a name', () => {
+        const script = `
+            import 'mocha';
+            import '../../path';
+            import './polyfills';
+            import 'rxjs/add/operator/switchMap';
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
 });

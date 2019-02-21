@@ -2,9 +2,9 @@ const path = require('path');
 const glob = require('glob');
 const { readJSON } = require('./files');
 
-function getAllRules() {
+function getAllRules({ ignoreTslintRules = false } = {}) {
     const contribRules = glob.sync('dist/build/*Rule.js');
-    const baseRules = glob.sync('node_modules/tslint/lib/rules/*Rule.js');
+    const baseRules = ignoreTslintRules ? [] : glob.sync('node_modules/tslint/lib/rules/*Rule.js');
 
     return contribRules.concat(baseRules);
 }
@@ -46,7 +46,7 @@ function getMetadataValue(metadata, name, allowEmpty, doNotEscape) {
         return value;
     }
     value = value.replace(/^\n+/, ''); // strip leading newlines
-    value = value.replace(/\n/, ' '); // convert newlines
+    value = value.replace(/\n/g, ' '); // convert newlines
     if (value.indexOf(',') > -1) {
         return '"' + value + '"';
     } else {

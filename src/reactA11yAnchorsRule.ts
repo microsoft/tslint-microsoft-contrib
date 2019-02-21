@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { Utils } from './utils/Utils';
@@ -24,11 +25,23 @@ export const DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING: string = 'Links that 
 export const ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING: string =
     'Link content can not be hidden for screen-readers by using aria-hidden attribute.';
 
+interface Options {
+    ignoreCase: boolean;
+    ignoreWhitespace: string;
+}
+
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'react-a11y-anchors',
         type: 'functionality',
         description: 'For accessibility of your website, anchor elements must have a href different from # and a text longer than 4.',
+        rationale: `References:
+        <ul>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/38">WCAG Rule 38: Link text should be as least four 4 characters long</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/39">WCAG Rule 39: Links with the same HREF should have the same link text</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/41">WCAG Rule 41: Links that point to different HREFs should have different link text</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/43">WCAG Rule 43: Links with images and text content, the alt attribute should be unique to the text content or empty</a></li>
+        </ul>`,
         options: {
             type: 'array',
             items: {
@@ -54,73 +67,65 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
-            const rule: ReactA11yAnchorsRuleWalker = new ReactA11yAnchorsRuleWalker(sourceFile, this.getOptions());
-            this.applyWithWalker(rule);
-            rule.validateAllAnchors();
-
-            return rule.getFailures();
+            return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
 
         return [];
     }
-}
 
-class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
-    private ignoreCase: boolean = false;
-    private ignoreWhitespace: string = '';
-    private readonly anchorInfoList: IAnchorInfo[] = [];
+    private parseOptions(options: Lint.IOptions): Options {
+        const parsed: Options = {
+            ignoreCase: false,
+            ignoreWhitespace: ''
+        };
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.parseOptions();
-    }
-
-    private parseOptions(): void {
-        this.getOptions().forEach((opt: unknown) => {
+        options.ruleArguments.forEach((opt: unknown) => {
             if (typeof opt === 'string' && opt === OPTION_IGNORE_CASE) {
-                this.ignoreCase = true;
+                parsed.ignoreCase = true;
             }
 
             if (isObject(opt)) {
-                this.ignoreWhitespace = <string>opt[OPTION_IGNORE_WHITESPACE];
+                parsed.ignoreWhitespace = <string>opt[OPTION_IGNORE_WHITESPACE];
             }
         });
+        return parsed;
     }
+}
 
-    public validateAllAnchors(): void {
+function walk(ctx: Lint.WalkContext<Options>) {
+    const anchorInfoList: IAnchorInfo[] = [];
+
+    function validateAllAnchors(): void {
         const sameHrefDifferentTexts: IAnchorInfo[] = [];
         const differentHrefSameText: IAnchorInfo[] = [];
 
-        while (this.anchorInfoList.length > 0) {
-            const current: IAnchorInfo = this.anchorInfoList.shift()!;
-            this.anchorInfoList.forEach(
+        while (anchorInfoList.length > 0) {
+            // tslint:disable-next-line:no-non-null-assertion
+            const current: IAnchorInfo = anchorInfoList.shift()!;
+            anchorInfoList.forEach(
                 (anchorInfo: IAnchorInfo): void => {
                     if (
                         current.href &&
                         current.href === anchorInfo.href &&
-                        !this.compareAnchorsText(current, anchorInfo) &&
+                        !compareAnchorsText(current, anchorInfo) &&
                         !Utils.contains(sameHrefDifferentTexts, anchorInfo)
                     ) {
                         // Same href - different text...
                         sameHrefDifferentTexts.push(anchorInfo);
-                        this.addFailureAt(
-                            anchorInfo.start,
-                            anchorInfo.width,
-                            SAME_HREF_SAME_TEXT_FAILURE_STRING + this.firstPosition(current)
-                        );
+                        ctx.addFailureAt(anchorInfo.start, anchorInfo.width, SAME_HREF_SAME_TEXT_FAILURE_STRING + firstPosition(current));
                     }
 
                     if (
                         current.href !== anchorInfo.href &&
-                        this.compareAnchorsText(current, anchorInfo) &&
+                        compareAnchorsText(current, anchorInfo) &&
                         !Utils.contains(differentHrefSameText, anchorInfo)
                     ) {
                         // Different href - same text...
                         differentHrefSameText.push(anchorInfo);
-                        this.addFailureAt(
+                        ctx.addFailureAt(
                             anchorInfo.start,
                             anchorInfo.width,
-                            DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + this.firstPosition(current)
+                            DIFFERENT_HREF_DIFFERENT_TEXT_FAILURE_STRING + firstPosition(current)
                         );
                     }
                 }
@@ -128,27 +133,27 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         }
     }
 
-    private compareAnchorsText(anchor1: IAnchorInfo, anchor2: IAnchorInfo): boolean {
+    function compareAnchorsText(anchor1: IAnchorInfo, anchor2: IAnchorInfo): boolean {
         let text1: string = anchor1.text;
         let text2: string = anchor2.text;
         let altText1: string = anchor1.altText;
         let altText2: string = anchor2.altText;
 
-        if (this.ignoreCase) {
+        if (ctx.options.ignoreCase) {
             text1 = text1.toLowerCase();
             text2 = text2.toLowerCase();
             altText1 = altText1.toLowerCase();
             altText2 = altText2.toLowerCase();
         }
 
-        if (this.ignoreWhitespace === 'trim') {
+        if (ctx.options.ignoreWhitespace === 'trim') {
             text1 = text1.trim();
             text2 = text2.trim();
             altText1 = altText1.trim();
             altText2 = altText2.trim();
         }
 
-        if (this.ignoreWhitespace === 'all') {
+        if (ctx.options.ignoreWhitespace === 'all') {
             const regex: RegExp = /\s/g;
             text1 = text1.replace(regex, '');
             text2 = text2.replace(regex, '');
@@ -159,10 +164,8 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         return text1 === text2 && altText1 === altText2;
     }
 
-    private firstPosition(anchorInfo: IAnchorInfo): string {
-        const startPosition: ts.LineAndCharacter = this.createFailure(anchorInfo.start, anchorInfo.width, '')
-            .getStartPosition()
-            .getLineAndCharacter();
+    function firstPosition(anchorInfo: IAnchorInfo): string {
+        const startPosition = ctx.sourceFile.getLineAndCharacterOfPosition(Math.min(anchorInfo.start, ctx.sourceFile.end));
 
         // Position is zero based - add 1...
         const character: number = startPosition.character + 1;
@@ -171,57 +174,47 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         return ` First link at character: ${character} line: ${line}`;
     }
 
-    protected visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement): void {
-        this.validateAnchor(node, node);
-        super.visitJsxSelfClosingElement(node);
-    }
-
-    protected visitJsxElement(node: ts.JsxElement): void {
-        this.validateAnchor(node, node.openingElement);
-        super.visitJsxElement(node);
-    }
-
-    private validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
+    function validateAnchor(parent: ts.Node, openingElement: ts.JsxOpeningLikeElement): void {
         if (openingElement.tagName.getText() === 'a') {
-            const hrefAttribute = this.getAttribute(openingElement, 'href');
+            const hrefAttribute = getAttribute(openingElement, 'href');
 
             const anchorInfo: IAnchorInfo = {
                 href: hrefAttribute ? getStringLiteral(hrefAttribute) || '' : '',
-                text: this.anchorText(parent),
-                altText: this.imageAlt(parent),
-                hasAriaHiddenCount: this.jsxElementAriaHidden(parent),
+                text: anchorText(parent),
+                altText: imageAlt(parent),
+                hasAriaHiddenCount: jsxElementAriaHidden(parent),
                 start: parent.getStart(),
                 width: parent.getWidth()
             };
 
             if (isEmpty(hrefAttribute)) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, MISSING_HREF_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, MISSING_HREF_FAILURE_STRING);
             }
 
             if (anchorInfo.href === '#') {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, NO_HASH_FAILURE_STRING);
             }
 
             if (anchorInfo.hasAriaHiddenCount > 0) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, ACCESSIBLE_HIDDEN_CONTENT_FAILURE_STRING);
             }
 
             if (anchorInfo.altText && anchorInfo.altText === anchorInfo.text) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING);
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, UNIQUE_ALT_FAILURE_STRING);
             }
 
             const anchorInfoTextLength: number = anchorInfo.text ? anchorInfo.text.length : 0;
             const anchorImageAltTextLength: number = anchorInfo.altText ? anchorInfo.altText.length : 0;
 
-            if (this.anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
-                this.addFailureAt(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING);
+            if (anchorRole(openingElement) === 'link' && anchorInfoTextLength < 4 && anchorImageAltTextLength < 4) {
+                ctx.addFailureAt(anchorInfo.start, anchorInfo.width, LINK_TEXT_TOO_SHORT_FAILURE_STRING);
             }
 
-            this.anchorInfoList.push(anchorInfo);
+            anchorInfoList.push(anchorInfo);
         }
     }
 
-    private getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): ts.JsxAttribute {
+    function getAttribute(openingElement: ts.JsxOpeningLikeElement, attributeName: string): ts.JsxAttribute {
         const attributes: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(openingElement);
         return attributes[attributeName];
     }
@@ -229,7 +222,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
     /**
      * Return a string which contains literal text and text in 'alt' attribute.
      */
-    private anchorText(root: ts.Node | undefined, isChild: boolean = false): string {
+    function anchorText(root: ts.Node | undefined, isChild: boolean = false): string {
         let title: string = '';
         if (root === undefined) {
             return title;
@@ -237,7 +230,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             jsxElement.children.forEach(
                 (child: ts.JsxChild): void => {
-                    title += this.anchorText(child, true);
+                    title += anchorText(child, true);
                 }
             );
         } else if (root.kind === ts.SyntaxKind.JsxText) {
@@ -248,7 +241,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
             title += literal.text;
         } else if (root.kind === ts.SyntaxKind.JsxExpression) {
             const expression: ts.JsxExpression = <ts.JsxExpression>root;
-            title += this.anchorText(expression.expression);
+            title += anchorText(expression.expression);
         } else if (isChild && root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             const jsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
             if (jsxSelfClosingElement.tagName.getText() !== 'img') {
@@ -261,7 +254,7 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         return title;
     }
 
-    private anchorRole(root: ts.Node): string | undefined {
+    function anchorRole(root: ts.Node): string | undefined {
         const attributesInElement: { [propName: string]: ts.JsxAttribute } = getJsxAttributesFromJsxElement(root);
         const roleProp: ts.JsxAttribute = attributesInElement[ROLE_STRING];
 
@@ -269,61 +262,75 @@ class ReactA11yAnchorsRuleWalker extends Lint.RuleWalker {
         return roleProp ? getStringLiteral(roleProp) : getImplicitRole(root);
     }
 
-    private imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
+    function imageAltAttribute(openingElement: ts.JsxOpeningLikeElement): string {
         if (openingElement.tagName.getText() === 'img') {
-            const altAttribute = getStringLiteral(this.getAttribute(openingElement, 'alt'));
+            const altAttribute = getStringLiteral(getAttribute(openingElement, 'alt'));
             return altAttribute === undefined ? '<unknown>' : altAttribute;
         }
 
         return '';
     }
 
-    private imageAlt(root: ts.Node): string {
+    function imageAlt(root: ts.Node): string {
         let altText: string = '';
         if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
-            altText += this.imageAltAttribute(jsxElement.openingElement);
+            altText += imageAltAttribute(jsxElement.openingElement);
 
             jsxElement.children.forEach(
                 (child: ts.JsxChild): void => {
-                    altText += this.imageAlt(child);
+                    altText += imageAlt(child);
                 }
             );
         }
 
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             const jsxSelfClosingElement: ts.JsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
-            altText += this.imageAltAttribute(jsxSelfClosingElement);
+            altText += imageAltAttribute(jsxSelfClosingElement);
         }
 
         return altText;
     }
 
-    private ariaHiddenAttribute(openingElement: ts.JsxOpeningLikeElement): boolean {
-        return this.getAttribute(openingElement, 'aria-hidden') === undefined;
+    function ariaHiddenAttribute(openingElement: ts.JsxOpeningLikeElement): boolean {
+        return getAttribute(openingElement, 'aria-hidden') === undefined;
     }
 
-    private jsxElementAriaHidden(root: ts.Node): number {
+    function jsxElementAriaHidden(root: ts.Node): number {
         let hasAriaHiddenCount: number = 0;
 
         if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
-            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
+            hasAriaHiddenCount += ariaHiddenAttribute(jsxElement.openingElement) ? 0 : 1;
 
             jsxElement.children.forEach(
                 (child: ts.JsxChild): void => {
-                    hasAriaHiddenCount += this.jsxElementAriaHidden(child);
+                    hasAriaHiddenCount += jsxElementAriaHidden(child);
                 }
             );
         }
 
         if (root.kind === ts.SyntaxKind.JsxSelfClosingElement) {
             const jsxSelfClosingElement: ts.JsxSelfClosingElement = <ts.JsxSelfClosingElement>root;
-            hasAriaHiddenCount += this.ariaHiddenAttribute(jsxSelfClosingElement) ? 0 : 1;
+            hasAriaHiddenCount += ariaHiddenAttribute(jsxSelfClosingElement) ? 0 : 1;
         }
 
         return hasAriaHiddenCount;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isJsxSelfClosingElement(node)) {
+            validateAnchor(node, node);
+        } else if (tsutils.isJsxElement(node)) {
+            validateAnchor(node, node.openingElement);
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    ts.forEachChild(ctx.sourceFile, cb);
+
+    validateAllAnchors();
 }
 
 interface IAnchorInfo {

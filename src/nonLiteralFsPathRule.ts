@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { AstUtils } from './utils/AstUtils';
@@ -73,35 +74,39 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NonLiteralFsPathRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NonLiteralFsPathRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
-            const functionName = AstUtils.getFunctionName(node);
-            const positions = PATH_PARAMETER_POSITIONS[functionName];
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            if (AstUtils.getFunctionTarget(node) === 'fs' && node.arguments.length > 0) {
+                const functionName = AstUtils.getFunctionName(node);
+                const positions = PATH_PARAMETER_POSITIONS[functionName];
 
-            if (positions !== undefined && node.arguments.length >= positions.length) {
-                positions.forEach(position => {
-                    const argument = node.arguments[position];
+                if (positions && node.arguments.length >= positions.length) {
+                    positions.forEach(position => {
+                        const argument = node.arguments[position];
 
-                    if (argument.kind !== ts.SyntaxKind.StringLiteral) {
-                        this.fail(AstUtils.getFunctionName(node), argument);
-                    }
-                });
+                        if (!tsutils.isStringLiteral(argument)) {
+                            fail(AstUtils.getFunctionName(node), argument);
+                        }
+                    });
+                }
             }
         }
 
-        super.visitCallExpression(node);
+        return ts.forEachChild(node, cb);
     }
 
-    private fail(functionName: string, argument: ts.Expression): void {
+    return ts.forEachChild(ctx.sourceFile, cb);
+
+    function fail(functionName: string, argument: ts.Expression): void {
         const start: number = argument.getStart();
         const width: number = argument.getWidth();
         const message: string = `Non-literal (insecure) path passed to fs.${functionName}: ${argument.getText()}`;
 
-        this.addFailureAt(start, width, message);
+        ctx.addFailureAt(start, width, message);
     }
 }

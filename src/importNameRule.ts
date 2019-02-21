@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { Utils } from './utils/Utils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
@@ -29,39 +30,10 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ImportNameRuleWalker(sourceFile, this.getOptions()));
-    }
-}
-
-type Replacement = { [index: string]: string };
-type IgnoredList = string[];
-type ConfigKey = 'ignoreExternalModule';
-type Config = { [index in ConfigKey]: unknown };
-
-// This is for temporarily reolving type errors. Actual runtime Node, SourceFile object
-// has those properties.
-interface RuntimeSourceFile extends ts.SourceFile {
-    resolvedModules: Map<string, ts.ResolvedModuleFull>;
-}
-interface RuntimeNode extends ts.Node {
-    parent: RuntimeSourceFile;
-}
-
-type Option = {
-    replacements: Replacement;
-    ignoredList: IgnoredList;
-    config: Config;
-};
-
-class ImportNameRuleWalker extends Lint.RuleWalker {
-    private readonly option: Option;
-
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.option = this.extractOptions();
+        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
     }
 
-    private extractOptions(): Option {
+    private parseOptions(options: Lint.IOptions): Option {
         const result: Option = {
             replacements: {},
             ignoredList: [],
@@ -70,19 +42,21 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
             }
         };
 
-        this.getOptions().forEach((opt: unknown, index: number) => {
-            if (index === 1 && isObject(opt)) {
-                result.replacements = this.extractReplacements(opt);
-            }
+        if (options.ruleArguments instanceof Array) {
+            options.ruleArguments.forEach((opt: unknown, index: number) => {
+                if (index === 1 && isObject(opt)) {
+                    result.replacements = this.extractReplacements(opt);
+                }
 
-            if (index === 2 && Array.isArray(opt)) {
-                result.ignoredList = this.extractIgnoredList(opt);
-            }
+                if (index === 2 && Array.isArray(opt)) {
+                    result.ignoredList = this.extractIgnoredList(opt);
+                }
 
-            if (index === 3 && isObject(opt)) {
-                result.config = this.extractConfig(opt);
-            }
-        });
+                if (index === 3 && isObject(opt)) {
+                    result.config = this.extractConfig(opt);
+                }
+            });
+        }
 
         return result;
     }
@@ -123,91 +97,62 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         }
         return result;
     }
+}
 
-    protected visitImportEqualsDeclaration(node: ts.ImportEqualsDeclaration): void {
-        const name: string = node.name.text;
+type Replacement = { [index: string]: string };
+type IgnoredList = string[];
+type ConfigKey = 'ignoreExternalModule';
+type Config = { [index in ConfigKey]: unknown };
 
-        if (node.moduleReference.kind === ts.SyntaxKind.ExternalModuleReference) {
-            const moduleRef: ts.ExternalModuleReference = <ts.ExternalModuleReference>node.moduleReference;
-            if (moduleRef.expression.kind === ts.SyntaxKind.StringLiteral) {
-                const moduleName: string = (<ts.StringLiteral>moduleRef.expression).text;
-                this.validateImport(node, name, moduleName);
-            }
-        } else if (node.moduleReference.kind === ts.SyntaxKind.QualifiedName) {
-            let moduleName = node.moduleReference.getText();
-            moduleName = moduleName.replace(/.*\./, ''); // chop off the qualified parts
-            this.validateImport(node, name, moduleName);
+// This is for temporarily resolving type errors. Actual runtime Node, SourceFile object
+// has those properties.
+interface RuntimeSourceFile extends ts.SourceFile {
+    resolvedModules: Map<string, ts.ResolvedModuleFull>;
+}
+interface RuntimeNode extends ts.Node {
+    parent: RuntimeSourceFile;
+}
+
+type Option = {
+    replacements: Replacement;
+    ignoredList: IgnoredList;
+    config: Config;
+};
+
+function walk(ctx: Lint.WalkContext<Option>) {
+    const option = ctx.options;
+
+    function getNameNodeFromImportNode(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration): ts.Node | undefined {
+        if (tsutils.isImportEqualsDeclaration(node)) {
+            return node.name;
         }
-        super.visitImportEqualsDeclaration(node);
+
+        const importClause = node.importClause;
+
+        return importClause === undefined ? undefined : importClause.name;
     }
 
-    protected visitImportDeclaration(node: ts.ImportDeclaration): void {
-        if (node.importClause!.name !== undefined) {
-            const name: string = node.importClause!.name!.text;
-            if (node.moduleSpecifier.kind === ts.SyntaxKind.StringLiteral) {
-                const moduleName: string = (<ts.StringLiteral>node.moduleSpecifier).text;
-                this.validateImport(node, name, moduleName);
-            }
+    // Ignore NPM installed modules by checking its module path at runtime
+    function checkIgnoreExternalModule(moduleName: string, node: unknown, opt: Config): boolean {
+        const runtimeNode: RuntimeNode = <RuntimeNode>node;
+        if (opt.ignoreExternalModule === true && runtimeNode.parent !== undefined && runtimeNode.parent.resolvedModules !== undefined) {
+            let ignoreThisExternalModule = false;
+            runtimeNode.parent.resolvedModules.forEach((value: ts.ResolvedModuleFull, key: string) => {
+                if (key === moduleName && value.isExternalLibraryImport === true) {
+                    ignoreThisExternalModule = true;
+                }
+            });
+            return ignoreThisExternalModule;
         }
-        super.visitImportDeclaration(node);
-    }
-
-    private validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
-        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
-        if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
-            return;
-        }
-        expectedImportedName = this.makeCamelCase(expectedImportedName);
-        if (this.isImportNameValid(importedName, expectedImportedName, moduleName, node) === false) {
-            const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
-            const nameNode =
-                node.kind === ts.SyntaxKind.ImportEqualsDeclaration
-                    ? (<ts.ImportEqualsDeclaration>node).name
-                    : (<ts.ImportDeclaration>node).importClause!.name;
-            const nameNodeStartPos = nameNode!.getStart();
-            const fix = new Lint.Replacement(nameNodeStartPos, nameNode!.end - nameNodeStartPos, expectedImportedName);
-            this.addFailureAt(node.getStart(), node.getWidth(), message, fix);
-        }
-    }
-
-    private makeCamelCase(input: string): string {
-        return input.replace(
-            /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
-            (_match: string, group1: string): string => {
-                return group1.toUpperCase();
-            }
-        );
-    }
-
-    private isImportNameValid(
-        importedName: string,
-        expectedImportedName: string,
-        moduleName: string,
-        node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
-    ): boolean {
-        if (expectedImportedName === importedName) {
-            return true;
-        }
-
-        const isReplacementsExist = this.checkReplacementsExist(importedName, expectedImportedName, moduleName, this.option.replacements);
-        if (isReplacementsExist) {
-            return true;
-        }
-
-        const isIgnoredModuleExist = this.checkIgnoredListExists(moduleName, this.option.ignoredList);
-        if (isIgnoredModuleExist) {
-            return true;
-        }
-
-        const ignoreThisExternalModule = this.checkIgnoreExternalModule(moduleName, node, this.option.config);
-        if (ignoreThisExternalModule) {
-            return true;
-        }
-
         return false;
     }
 
-    private checkReplacementsExist(
+    // Ignore array of strings that comes from third argument.
+    function checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
+        return ignoredList.filter((ignoredModule: string) => ignoredModule === moduleName).length >= 1;
+    }
+
+    function checkReplacementsExist(
         importedName: string,
         expectedImportedName: string,
         moduleName: string,
@@ -232,23 +177,95 @@ class ImportNameRuleWalker extends Lint.RuleWalker {
         );
     }
 
-    // Ignore array of strings that comes from third argument.
-    private checkIgnoredListExists(moduleName: string, ignoredList: IgnoredList): boolean {
-        return ignoredList.filter((ignoredModule: string) => ignoredModule === moduleName).length >= 1;
-    }
-
-    // Ignore NPM installed modules by checking its module path at runtime
-    private checkIgnoreExternalModule(moduleName: string, node: unknown, opt: Config): boolean {
-        const runtimeNode: RuntimeNode = <RuntimeNode>node;
-        if (opt.ignoreExternalModule === true && runtimeNode.parent !== undefined && runtimeNode.parent.resolvedModules !== undefined) {
-            let ignoreThisExternalModule = false;
-            runtimeNode.parent.resolvedModules.forEach((value: ts.ResolvedModuleFull, key: string) => {
-                if (key === moduleName && value.isExternalLibraryImport === true) {
-                    ignoreThisExternalModule = true;
-                }
-            });
-            return ignoreThisExternalModule;
+    function isImportNameValid(
+        importedName: string,
+        expectedImportedName: string,
+        moduleName: string,
+        node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
+    ): boolean {
+        if (expectedImportedName === importedName) {
+            return true;
         }
+
+        const isReplacementsExist = checkReplacementsExist(importedName, expectedImportedName, moduleName, option.replacements);
+        if (isReplacementsExist) {
+            return true;
+        }
+
+        const isIgnoredModuleExist = checkIgnoredListExists(moduleName, option.ignoredList);
+        if (isIgnoredModuleExist) {
+            return true;
+        }
+
+        const ignoreThisExternalModule = checkIgnoreExternalModule(moduleName, node, option.config);
+        if (ignoreThisExternalModule) {
+            return true;
+        }
+
         return false;
     }
+
+    function makeCamelCase(input: string): string {
+        return input.replace(
+            /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
+            (_match: string, group1: string): string => {
+                return group1.toUpperCase();
+            }
+        );
+    }
+
+    function validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
+        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
+            return;
+        }
+
+        expectedImportedName = makeCamelCase(expectedImportedName);
+        if (isImportNameValid(importedName, expectedImportedName, moduleName, node)) {
+            return;
+        }
+
+        const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
+
+        const nameNode = getNameNodeFromImportNode(node);
+        if (nameNode === undefined) {
+            return;
+        }
+
+        const nameNodeStartPos = nameNode.getStart();
+        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedName);
+        ctx.addFailureAt(node.getStart(), node.getWidth(), message, fix);
+    }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isImportEqualsDeclaration(node)) {
+            const name: string = node.name.text;
+
+            if (tsutils.isExternalModuleReference(node.moduleReference)) {
+                const moduleRef: ts.ExternalModuleReference = node.moduleReference;
+                if (tsutils.isStringLiteral(moduleRef.expression)) {
+                    const moduleName: string = moduleRef.expression.text;
+                    validateImport(node, name, moduleName);
+                }
+            } else if (tsutils.isQualifiedName(node.moduleReference)) {
+                let moduleName = node.moduleReference.getText();
+                moduleName = moduleName.replace(/.*\./, ''); // chop off the qualified parts
+                validateImport(node, name, moduleName);
+            }
+        }
+
+        if (tsutils.isImportDeclaration(node)) {
+            if (node.importClause !== undefined && node.importClause.name !== undefined) {
+                const name: string = node.importClause.name.text;
+                if (tsutils.isStringLiteral(node.moduleSpecifier)) {
+                    const moduleName: string = node.moduleSpecifier.text;
+                    validateImport(node, name, moduleName);
+                }
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

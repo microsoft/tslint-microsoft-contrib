@@ -1,12 +1,6 @@
+.npm_cache
 node_modules
 npm-debug.log
-
-# TypeScrit temporary/cache files
-**/.baseDir.ts
-**/.tscache/
-tscommand-*.tmp.txt
-
-**/dist/
 
 # IDEA
 .idea
@@ -15,12 +9,8 @@ tslint-microsoft-contrib.iml
 # vim swap files
 *.sw*
 
-**/tags
-
-# local npm cache
-.npm_cache
-
-out.html
+# Generated for builds
+**/dist/
 rule-metadata.json
 
 # test results

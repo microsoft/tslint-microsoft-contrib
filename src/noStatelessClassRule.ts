@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { AstUtils } from './utils/AstUtils';
 import { Utils } from './utils/Utils';
@@ -19,7 +20,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         issueType: 'Warning',
         severity: 'Important',
         level: 'Opportunity for Excellence',
-        recommendation: 'false,',
+        recommendation: 'false',
         group: 'Deprecated',
         commonWeaknessEnumeration: '398, 710'
     };
@@ -31,35 +32,23 @@ export class Rule extends Lint.Rules.AbstractRule {
             console.warn('Warning: no-stateless-class rule is deprecated. Replace your usage with the TSLint no-unnecessary-class rule.');
             Rule.isWarningShown = true;
         }
-        return this.applyWithWalker(new NoStatelessClassRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoStatelessClassRuleWalker extends Lint.RuleWalker {
-    protected visitClassDeclaration(node: ts.ClassDeclaration): void {
-        if (!this.isClassStateful(node)) {
-            const className: string = node.name === undefined ? '<unknown>' : node.name.text;
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
-        }
-        super.visitClassDeclaration(node);
-    }
-
-    private isClassStateful(node: ts.ClassDeclaration): boolean {
-        if (this.classExtendsSomething(node)) {
+function walk(ctx: Lint.WalkContext<void>) {
+    function isClassStateful(node: ts.ClassDeclaration): boolean {
+        if (classExtendsSomething(node) || classDeclaresConstructorProperties(node)) {
             return true;
         }
         if (node.members.length === 0) {
             return false;
         }
 
-        if (this.classDeclaresConstructorProperties(node)) {
-            return true;
-        }
-
-        return this.classDeclaresInstanceData(node);
+        return classDeclaresInstanceData(node);
     }
 
-    private classDeclaresInstanceData(node: ts.ClassDeclaration): boolean {
+    function classDeclaresInstanceData(node: ts.ClassDeclaration): boolean {
         return Utils.exists(
             node.members,
             (classElement: ts.ClassElement): boolean => {
@@ -74,19 +63,19 @@ class NoStatelessClassRuleWalker extends Lint.RuleWalker {
         );
     }
 
-    private classDeclaresConstructorProperties(node: ts.ClassDeclaration): boolean {
+    function classDeclaresConstructorProperties(node: ts.ClassDeclaration): boolean {
         return Utils.exists(
             node.members,
             (element: ts.ClassElement): boolean => {
                 if (element.kind === ts.SyntaxKind.Constructor) {
-                    return this.constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
+                    return constructorDeclaresProperty(<ts.ConstructorDeclaration>element);
                 }
                 return false;
             }
         );
     }
 
-    private constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
+    function constructorDeclaresProperty(ctor: ts.ConstructorDeclaration): boolean {
         return Utils.exists(
             ctor.parameters,
             (param: ts.ParameterDeclaration): boolean => {
@@ -104,7 +93,7 @@ class NoStatelessClassRuleWalker extends Lint.RuleWalker {
         );
     }
 
-    private classExtendsSomething(node: ts.ClassDeclaration): boolean {
+    function classExtendsSomething(node: ts.ClassDeclaration): boolean {
         return Utils.exists(
             node.heritageClauses,
             (clause: ts.HeritageClause): boolean => {
@@ -112,4 +101,17 @@ class NoStatelessClassRuleWalker extends Lint.RuleWalker {
             }
         );
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isClassDeclaration(node)) {
+            if (!isClassStateful(node)) {
+                const className: string = node.name === undefined ? '<unknown>' : node.name.text;
+                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + className);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

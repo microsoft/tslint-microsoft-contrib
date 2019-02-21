@@ -1,15 +1,14 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
 
 import { ChaiUtils } from './utils/ChaiUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const BASE_ERROR: string = 'Found chai call with vague failure message. ';
-const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE: string =
-    BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE: string =
-    BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
+const BASE_ERROR = 'Found chai call with vague failure message;';
+const FAILURE_STRING = `${BASE_ERROR} please add an explicit failure message`;
+const FAILURE_STRING_COMPARE_TRUE = `${BASE_ERROR} move the strict equality comparison from the expect call into the assertion value`;
+const FAILURE_STRING_COMPARE_FALSE = `${BASE_ERROR} move the strict inequality comparison from the expect call into the assertion value`;
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {
@@ -28,52 +27,55 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new ChaiVagueErrorsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class ChaiVagueErrorsRuleWalker extends Lint.RuleWalker {
-    protected visitPropertyAccessExpression(node: ts.PropertyAccessExpression): void {
-        if (ChaiUtils.isExpectInvocation(node)) {
-            if (/ok|true|false|undefined|null/.test(node.name.getText())) {
-                const expectInvocation = ChaiUtils.getExpectInvocation(node);
-                if (!expectInvocation || expectInvocation.arguments.length !== 2) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (tsutils.isPropertyAccessExpression(node)) {
+            if (ChaiUtils.isExpectInvocation(node)) {
+                if (/ok|true|false|undefined|null/.test(node.name.getText())) {
+                    const expectInvocation = ChaiUtils.getExpectInvocation(node);
+                    if (!expectInvocation || expectInvocation.arguments.length !== 2) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                    }
                 }
             }
         }
-        super.visitPropertyAccessExpression(node);
-    }
 
-    protected visitCallExpression(node: ts.CallExpression): void {
-        if (ChaiUtils.isExpectInvocation(node)) {
-            if (node.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
-                if (ChaiUtils.isEqualsInvocation(<ts.PropertyAccessExpression>node.expression)) {
-                    if (node.arguments.length === 1) {
-                        if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
-                            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+        if (tsutils.isCallExpression(node)) {
+            if (ChaiUtils.isExpectInvocation(node)) {
+                if (tsutils.isPropertyAccessExpression(node.expression)) {
+                    if (ChaiUtils.isEqualsInvocation(node.expression)) {
+                        if (node.arguments.length === 1) {
+                            if (/true|false|null|undefined/.test(node.arguments[0].getText())) {
+                                ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING);
+                            }
+                        }
+                    }
+                }
+
+                const actualValue = ChaiUtils.getFirstExpectCallParameter(node);
+                if (actualValue && tsutils.isBinaryExpression(actualValue)) {
+                    const expectedValue = ChaiUtils.getFirstExpectationParameter(node);
+                    if (expectedValue) {
+                        const operator: string = actualValue.operatorToken.getText();
+                        const expectingBooleanKeyword: boolean =
+                            expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
+
+                        if (operator === '===' && expectingBooleanKeyword) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
+                        } else if (operator === '!==' && expectingBooleanKeyword) {
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
                         }
                     }
                 }
             }
-
-            const actualValue = ChaiUtils.getFirstExpectCallParameter(node);
-            if (actualValue !== undefined && actualValue.kind === ts.SyntaxKind.BinaryExpression) {
-                const expectedValue = ChaiUtils.getFirstExpectationParameter(node);
-                if (expectedValue !== undefined) {
-                    const binaryExpression: ts.BinaryExpression = <ts.BinaryExpression>actualValue;
-                    const operator: string = binaryExpression.operatorToken.getText();
-                    const expectingBooleanKeyword: boolean =
-                        expectedValue.kind === ts.SyntaxKind.TrueKeyword || expectedValue.kind === ts.SyntaxKind.FalseKeyword;
-
-                    if (operator === '===' && expectingBooleanKeyword) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_TRUE);
-                    } else if (operator === '!==' && expectingBooleanKeyword) {
-                        this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPARE_FALSE);
-                    }
-                }
-            }
         }
-        super.visitCallExpression(node);
+
+        return ts.forEachChild(node, cb);
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

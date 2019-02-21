@@ -3,13 +3,40 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+strategy:
+  matrix:
+    node6_windows:
+      imageName: 'vs2017-win2016'
+      node_version: '6.x'
+    node6_linux:
+      imageName: 'Ubuntu 16.04'
+      node_version: '6.x'
+    node8_windows:
+      imageName: 'vs2017-win2016'
+      node_version: '8.x'
+    node8_linux:
+      imageName: 'Ubuntu 16.04'
+      node_version:  '8.x'
+    node10_windows:
+      imageName: 'vs2017-win2016'
+      node_version: '10.x'
+    node10_linux:
+      imageName: 'Ubuntu 16.04'
+      node_version: '10.x'
+    node11_windows:
+      imageName: 'vs2017-win2016'
+      node_version: '11.x'
+    node11_linux:
+      imageName: 'Ubuntu 16.04'
+      node_version: '11.x'
+
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: ($imageName)
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '8.x'
+    versionSpec: $(node_version)
   displayName: 'Install Node.js'
 
 - script: |

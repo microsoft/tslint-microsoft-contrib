@@ -21,14 +21,8 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
-      Node11:
-        NODE_VERSION: '11.x'
-      Lint10:
+      Lint:
         NODE_VERSION: '10.x'
-        LINT: true
-        SKIP_TESTS: true
-      Lint11:
-        NODE_VERSION: '11.x'
         LINT: true
         SKIP_TESTS: true
   steps:
@@ -47,14 +41,8 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
-      Node11:
-        NODE_VERSION: '11.x'
-      Lint10:
+      Lint:
         NODE_VERSION: '10.x'
-        LINT: true
-        SKIP_TESTS: true
-      Lint11:
-        NODE_VERSION: '11.x'
         LINT: true
         SKIP_TESTS: true
   steps:

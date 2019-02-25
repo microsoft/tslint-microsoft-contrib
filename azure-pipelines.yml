@@ -21,6 +21,8 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
+      Node11:
+        NODE_VERSION: '11.x'
 
   steps:
     - template: .azure-pipelines-steps.yml
@@ -38,6 +40,8 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
+      Node11:
+        NODE_VERSION: '11.x'
 
   steps:
     - template: .azure-pipelines-steps.yml

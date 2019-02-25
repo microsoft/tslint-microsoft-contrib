@@ -22,7 +22,7 @@ steps:
     displayName: 'Install dependencies (npm install)'
     condition: variables.NPM_INSTALL
 
-  - script: npm run test
+  - script: npm run test-junit
     displayName: 'Run tests'
     condition: not(variables.SKIP_TESTS)
 

@@ -29,5 +29,5 @@ steps:
   - task: PublishTestResults@2
     inputs:
       testRunner: JUnit
-      testResultsFiles: '**/TEST-*.xml'
+      testResultsFiles: 'test-results-mocha.xml'
     displayName: 'Publishing Mocha test results'

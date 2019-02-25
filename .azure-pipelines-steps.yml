@@ -22,10 +22,6 @@ steps:
     displayName: 'Install dependencies (npm install)'
     condition: variables.NPM_INSTALL
 
-  - script: npm run lint
-    displayName: 'Run lint'
-    condition: variables.LINT
-
   - script: npm run test
     displayName: 'Run tests'
     condition: not(variables.SKIP_TESTS)

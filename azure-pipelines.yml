@@ -21,10 +21,7 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
-      Lint:
-        NODE_VERSION: '10.x'
-        LINT: true
-        SKIP_TESTS: true
+
   steps:
     - template: .azure-pipelines-steps.yml
 
@@ -41,9 +38,6 @@ jobs:
         NPM_INSTALL: true
       Node10:
         NODE_VERSION: '10.x'
-      Lint:
-        NODE_VERSION: '10.x'
-        LINT: true
-        SKIP_TESTS: true
+
   steps:
     - template: .azure-pipelines-steps.yml

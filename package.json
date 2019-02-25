@@ -66,7 +66,7 @@
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package copy:meta generate:*",
     "test-ci": "npm-run-all test test-junit",
-    "test-junit": "mocha \"dist/src/tests/**/*.ts\" --timeout 5000 --reporter mocha-junit-reporter --'./TEST-RESULTS.xml'",
+    "test-junit": "mocha \"dist/src/tests/*.ts\" --timeout 5000 --reporter mocha-junit-reporter --'./TEST-RESULTS.xml'",
     "tsc:src": "tsc",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "validate:documentation": "node build-tasks/validate-documentation.js",

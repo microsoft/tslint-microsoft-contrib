@@ -62,7 +62,7 @@
     "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "start": "npm-run-all clean copy:json watch:src",
-    "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000 --reporter mocha-junit-reporter mochaFile=./TEST-RESULTS.xml",
+    "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000 --reporter mocha-junit-reporter",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package copy:meta generate:*",
     "test-ci": "npm-run-all test test-junit",

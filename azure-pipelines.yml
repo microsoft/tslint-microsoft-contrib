@@ -3,22 +3,45 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-pool:
-  vmImage: 'Ubuntu 16.04'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
+trigger:
+- master
 
-- script: |
-    npm install
-    npm run test-ci
-  displayName: 'npm install and build'
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  strategy:
+    matrix:
+      Node6:
+        NODE_VERSION: '6.x'
+        NPM_INSTALL: true
+      Node8:
+        NODE_VERSION: '8.x'
+        NPM_INSTALL: true
+      Node10:
+        NODE_VERSION: '10.x'
+      Node11:
+        NODE_VERSION: '11.x'
 
-- task: PublishTestResults@2
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: ./test-results.xml
-  displayName: 'Publishing Mocha test results'
+  steps:
+    - template: .azure-pipelines-steps.yml
+
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  strategy:
+    matrix:
+      Node6:
+        NODE_VERSION: '6.x'
+        NPM_INSTALL: true
+      Node8:
+        NODE_VERSION: '8.x'
+        NPM_INSTALL: true
+      Node10:
+        NODE_VERSION: '10.x'
+      Node11:
+        NODE_VERSION: '11.x'
+
+  steps:
+    - template: .azure-pipelines-steps.yml

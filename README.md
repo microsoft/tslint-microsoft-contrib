@@ -87,7 +87,7 @@ To start, you can enable our recommended defaults ([recommended.json](./recommen
 **This ruleset is considered legacy**; it is generally preferable to extend from the 'recommended' or 'latest' rulesets.
 We recommend you instead explicitly include `tslint:recommended`, `tslint:latest`, or `tslint:all` in your `tslint.json` rather than enable core rules through this configuration.
 
-In the next major version of TSLint, this will instead be an alis for `"tslint-microsoft-contrib/recommended"`.
+In the next major version of TSLint, this will instead be an alias for `"tslint-microsoft-contrib/recommended"`.
 
 ### Overriding Configurations
 

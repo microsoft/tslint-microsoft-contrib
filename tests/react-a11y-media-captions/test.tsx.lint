@@ -1,0 +1,5 @@
+
+const SomeComponent = () =>
+    <video>
+        <track kind="caption"/>
+    </video>;

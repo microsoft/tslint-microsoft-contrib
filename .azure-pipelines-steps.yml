@@ -1,5 +1,5 @@
 #
-# Steps for building and testing tslint. See jobs defined in .azure-pipelines.yml.
+# Steps for building and testing tslint-microsoft-contrib. See jobs defined in .azure-pipelines.yml.
 #
 
 steps:

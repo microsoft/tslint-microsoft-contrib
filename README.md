@@ -47,7 +47,7 @@ If you extend from one of the following configurations, `rulesDirectory` will ha
 
 #### Recommended
 
-To start, you can enable our stable "recommended" defaults that come with tslint-microsoft-contrib ([recommended.json](./recommended.json)) by adding `"tslint-microsoft-contrib/recommended"` under `"extends"` in your `tslint.json`:
+To start, you can enable our stable "recommended" defaults that come with tslint-microsoft-contrib ([recommended.json](./configs/recommended.json)) by adding `"tslint-microsoft-contrib/recommended"` under `"extends"` in your `tslint.json`:
 
 ```json
 {
@@ -60,7 +60,7 @@ These rules will not be added to in minor or patch releases, but will be in majo
 
 #### Latest
 
-To run with the latest and greatest rules ([latest.json](./latest.json)), extend from `tslint-microsoft-contrib/latest`:
+To run with the latest and greatest rules ([latest.json](./configs/latest.json)), extend from `tslint-microsoft-contrib/latest`:
 
 ```json
 {
@@ -75,7 +75,7 @@ These rules will not be added to in patch releases, but will be in minor release
 
 The old "recommended" ruleset that ships by extending `tslint-microsoft-contrib` itself contains a list of rules that includes core TSLint rules.
 
-To start, you can enable our recommended defaults ([recommended.json](./recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
+To start, you can enable our recommended defaults ([recommended.json](./configs/recommended.json)) by adding just `"tslint-microsoft-contrib"` under `"extends"` in your `tslint.json`:
 
 ```json
 {
@@ -87,7 +87,7 @@ To start, you can enable our recommended defaults ([recommended.json](./recommen
 **This ruleset is considered legacy**; it is generally preferable to extend from the 'recommended' or 'latest' rulesets.
 We recommend you instead explicitly include `tslint:recommended`, `tslint:latest`, or `tslint:all` in your `tslint.json` rather than enable core rules through this configuration.
 
-In the next major version of TSLint, this will instead be an alis for `"tslint-microsoft-contrib/recommended"`.
+In the next major version of TSLint, this will instead be an alias for `"tslint-microsoft-contrib/recommended"`.
 
 ### Overriding Configurations
 

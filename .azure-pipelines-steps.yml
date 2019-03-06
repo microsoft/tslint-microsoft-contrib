@@ -22,14 +22,5 @@ steps:
     displayName: 'Install dependencies (npm install)'
     condition: variables.NPM_INSTALL
 
-  - bash: |
-      npm install -g mocha-junit-reporter
-      npm config set tslint-microsoft-contrib:mocha_reporter mocha-junit-reporter
-      npm run test
+  - script: npm run test
     displayName: 'Run tests'
-
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: 'test-results.xml'
-      testRunTitle: $(TEST_TITLE)
-    displayName: 'Publishing test results'

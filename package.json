@@ -47,9 +47,6 @@
       "git add"
     ]
   },
-  "config": {
-    "mocha_reporter": "spec"
-  },
   "scripts": {
     "clean": "rimraf dist",
     "copy:config-json": "node build-tasks/copy-config-json.js",
@@ -65,7 +62,7 @@
     "lint:tests": "tslint -p tsconfig.json -t stylish -c src/tests/tslint.json -e src/tests/references.ts \"src/tests/**/*.ts\"",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "start": "npm-run-all clean copy:json watch:src",
-    "test:mocha": "cross-var mocha \"dist/src/tests/**/*.js\" --timeout 5000 --reporter $npm_package_config_mocha_reporter",
+    "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
     "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package generate:* copy:meta copy:config-json",
     "tsc:src": "tsc",
@@ -86,14 +83,12 @@
     "chalk": "^2.4.1",
     "chokidar": "^2.0.4",
     "cpy-cli": "^2.0.0",
-    "cross-var": "^1.1.0",
     "glob": "^7.1.3",
     "husky": "^1.1.3",
     "inquirer": "^6.2.1",
     "lint-staged": "^8.0.4",
     "mkdirp": "^0.5.1",
     "mocha": "5.2.0",
-    "mocha-junit-reporter": "^1.18.0",
     "npm-run-all": "^4.1.5",
     "prettier": "1.15.0",
     "rimraf": "^2.6.2",

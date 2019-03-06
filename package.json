@@ -47,6 +47,9 @@
       "git add"
     ]
   },
+  "config": {
+    "mocha_reporter": "spec"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "copy:config-json": "node build-tasks/copy-config-json.js",

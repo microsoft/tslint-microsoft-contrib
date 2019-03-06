@@ -1,9 +1,3 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
-
 trigger:
 - master
 
@@ -16,13 +10,17 @@ jobs:
       Node6:
         NODE_VERSION: '6.x'
         NPM_INSTALL: true
+        TEST_TITLE: 'Linux node 6'
       Node8:
         NODE_VERSION: '8.x'
         NPM_INSTALL: true
+        TEST_TITLE: 'Linux node 8'
       Node10:
         NODE_VERSION: '10.x'
+        TEST_TITLE: 'Linux node 10'
       Node11:
         NODE_VERSION: '11.x'
+        TEST_TITLE: 'Linux node 11'
 
   steps:
     - template: .azure-pipelines-steps.yml
@@ -35,13 +33,17 @@ jobs:
       Node6:
         NODE_VERSION: '6.x'
         NPM_INSTALL: true
+        TEST_TITLE: 'Windows node 6'
       Node8:
         NODE_VERSION: '8.x'
         NPM_INSTALL: true
+        TEST_TITLE: 'Windows node 8'
       Node10:
         NODE_VERSION: '10.x'
+        TEST_TITLE: 'Windows node 10'
       Node11:
         NODE_VERSION: '11.x'
+        TEST_TITLE: 'Windows node 11'
 
   steps:
     - template: .azure-pipelines-steps.yml

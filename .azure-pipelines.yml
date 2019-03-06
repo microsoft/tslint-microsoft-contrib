@@ -1,0 +1,49 @@
+trigger:
+- master
+
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  strategy:
+    matrix:
+      Node6:
+        NODE_VERSION: '6.x'
+        NPM_INSTALL: true
+        TEST_TITLE: 'Linux node 6'
+      Node8:
+        NODE_VERSION: '8.x'
+        NPM_INSTALL: true
+        TEST_TITLE: 'Linux node 8'
+      Node10:
+        NODE_VERSION: '10.x'
+        TEST_TITLE: 'Linux node 10'
+      Node11:
+        NODE_VERSION: '11.x'
+        TEST_TITLE: 'Linux node 11'
+
+  steps:
+    - template: .azure-pipelines-steps.yml
+
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  strategy:
+    matrix:
+      Node6:
+        NODE_VERSION: '6.x'
+        NPM_INSTALL: true
+        TEST_TITLE: 'Windows node 6'
+      Node8:
+        NODE_VERSION: '8.x'
+        NPM_INSTALL: true
+        TEST_TITLE: 'Windows node 8'
+      Node10:
+        NODE_VERSION: '10.x'
+        TEST_TITLE: 'Windows node 10'
+      Node11:
+        NODE_VERSION: '11.x'
+        TEST_TITLE: 'Windows node 11'
+
+  steps:
+    - template: .azure-pipelines-steps.yml

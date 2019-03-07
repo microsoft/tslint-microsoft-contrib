@@ -4,7 +4,7 @@
     "recommendations": [
         // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
         "EditorConfig.EditorConfig",
-        "eg2.tslint",
+        "ms-vscode.vscode-typescript-tslint-plugin",
         "esbenp.prettier-vscode"
     ]
 }

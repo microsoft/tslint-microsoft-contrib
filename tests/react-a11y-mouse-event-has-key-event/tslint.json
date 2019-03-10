@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "react-a11y-mouse-event-has-key-event": true
+    }
+}

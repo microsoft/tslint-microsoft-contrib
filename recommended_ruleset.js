@@ -195,6 +195,7 @@ module.exports = {
         'react-a11y-input-elements': true,
         'react-a11y-lang': true,
         'react-a11y-meta': true,
+        "react-a11y-mouse-event-has-key-event": true,
         'react-a11y-no-onchange': true,
         'react-a11y-props': true,
         'react-a11y-proptypes': true,

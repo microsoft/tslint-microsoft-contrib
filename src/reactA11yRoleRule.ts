@@ -19,7 +19,7 @@ const VALID_ROLES: string[] = Object.keys(ROLES).filter(role => ROLES[role].isAb
 
 export function getFailureStringUndefinedRole(): string {
     return (
-        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, " +
+        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
         'or simply remove this attribute'
     );
 }
@@ -27,7 +27,7 @@ export function getFailureStringUndefinedRole(): string {
 export function getFailureStringInvalidRole(invalidRoleName: string): string {
     return `Invalid role attribute value '${invalidRoleName}', elements with ARIA roles must use a valid, \
 non-abstract ARIA role. A reference to role definitions can be found at \
-https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
+https://www.w3.org/TR/wai-aria-1.1/#role_definitions.`;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -36,7 +36,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         type: 'maintainability',
         description:
             'Elements with aria roles must use a **valid**, **non-abstract** aria role. ' +
-            'A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).',
+            'A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria-1.1/#role_definitions).',
         rationale: `References:
         <ul>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/92">WCAG Rule 92: Role value must be valid</a></li>

@@ -1037,7 +1037,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
-        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
+        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria-1.1/#role_definitions).
         <br />
         References:
         <ul>
@@ -1055,7 +1055,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <br />
         References:
         <ul>
-          <li><a href="https://www.w3.org/TR/wai-aria/roles#role_definitions">ARIA Definition of Roles</a></li>
+          <li><a href="https://www.w3.org/TR/wai-aria-1.1/#role_definitions">ARIA Definition of Roles</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/90">WCAG Rule 90: Required properties and states should be defined</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/91">WCAG Rule 91: Required properties and states must not be empty</a></li>
         </ul>

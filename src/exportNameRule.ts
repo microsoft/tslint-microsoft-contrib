@@ -156,13 +156,20 @@ function walk(ctx: Lint.WalkContext<Options>) {
         const flags = ignoreCase ? 'i' : '';
         const regex: RegExp = new RegExp(`^${exportedName}\\..+`, flags); // filename must be exported name plus any extension
         const fileName = Utils.fileBasename(ctx.sourceFile.fileName);
+        const fileNameAsCamelCase = convertSnakeOrKebabCaseName(fileName);
 
-        if (!regex.test(fileName)) {
+        if (!regex.test(fileNameAsCamelCase)) {
             if (!isSuppressed(exportedName)) {
                 const failureString: string = Rule.FAILURE_STRING + fileName + ' and ' + exportedName;
                 ctx.addFailureAt(tsNode.getStart(), tsNode.getWidth(), failureString);
             }
         }
+    }
+
+    function convertSnakeOrKebabCaseName(rawName: string): string {
+        const snakeOrKebabRegex = /((\-|\_)\w)/g;
+
+        return rawName.replace(snakeOrKebabRegex, (match: string): string => match[1].toUpperCase());
     }
 
     function isSuppressed(exportedName: string): boolean {

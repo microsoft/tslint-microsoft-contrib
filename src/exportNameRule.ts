@@ -101,17 +101,19 @@ function isExportStatement(node: ts.Statement): node is ExportStatement {
 function getExportsFromStatement(node: ExportStatement): [string, ts.Node][] {
     if (ts.isExportAssignment(node)) {
         return [[node.expression.getText(), node.expression]];
-    } else if (node.exportClause) {
+    }
+
+    if (node.exportClause) {
         const symbolAndNodes: [string, ts.Node][] = [];
         node.exportClause.elements.forEach(e => {
             symbolAndNodes.push([e.name.getText(), node]);
         });
         return symbolAndNodes;
-    } else {
-        // Re-exports `export * from ...` do not have export clause - no names to validate.
-        // Effectively will be skipped in check later.
-        return [];
     }
+
+    // Re-exports `export * from ...` do not have export clause - no names to validate.
+    // Effectively will be skipped in check later.
+    return [];
 }
 
 function walk(ctx: Lint.WalkContext<Options>) {
@@ -125,7 +127,9 @@ function walk(ctx: Lint.WalkContext<Options>) {
         if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             // modules may be nested so recur into the structure
             return getExportStatementsWithinModules(<ts.ModuleDeclaration>moduleDeclaration.body);
-        } else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
+        }
+
+        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
             const moduleBlock: ts.ModuleBlock = <ts.ModuleBlock>moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }

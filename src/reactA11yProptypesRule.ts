@@ -78,7 +78,9 @@ function walk(ctx: Lint.WalkContext<void>) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), getFailureString(propName, expectedType, permittedValues));
                 }
                 return;
-            } else if (isComplexType(node.initializer)) {
+            }
+
+            if (isComplexType(node.initializer)) {
                 return;
             }
 
@@ -131,13 +133,19 @@ function validityCheck(
 function isUndefined(node: ts.Expression | undefined): boolean {
     if (!node) {
         return true;
-    } else if (isJsxExpression(node)) {
+    }
+
+    if (isJsxExpression(node)) {
         const expression = node.expression;
         if (!expression) {
             return true;
-        } else if (AstUtils.isUndefined(expression)) {
+        }
+
+        if (AstUtils.isUndefined(expression)) {
             return true;
-        } else if (isNullKeyword(expression)) {
+        }
+
+        if (isNullKeyword(expression)) {
             return true;
         }
     }
@@ -158,7 +166,9 @@ function isBoolean(node: ts.Expression): boolean {
         const propValue: string = node.text.toLowerCase();
 
         return propValue === 'true' || propValue === 'false';
-    } else if (isJsxExpression(node)) {
+    }
+
+    if (isJsxExpression(node)) {
         const expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -168,9 +178,9 @@ function isBoolean(node: ts.Expression): boolean {
             const propValue: string = expression.text.toLowerCase();
 
             return propValue === 'true' || propValue === 'false';
-        } else {
-            return isFalseKeyword(expression) || isTrueKeyword(expression);
         }
+
+        return isFalseKeyword(expression) || isTrueKeyword(expression);
     }
 
     return false;
@@ -179,7 +189,9 @@ function isBoolean(node: ts.Expression): boolean {
 function isMixed(node: ts.Expression): boolean {
     if (isStringLiteral(node)) {
         return node.text.toLowerCase() === 'mixed';
-    } else if (isJsxExpression(node)) {
+    }
+
+    if (isJsxExpression(node)) {
         const expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -194,7 +206,9 @@ function isMixed(node: ts.Expression): boolean {
 function isNumber(node: ts.Expression): boolean {
     if (isStringLiteral(node)) {
         return !isNaN(Number(node.text));
-    } else if (isJsxExpression(node)) {
+    }
+
+    if (isJsxExpression(node)) {
         const expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -202,9 +216,9 @@ function isNumber(node: ts.Expression): boolean {
 
         if (isStringLiteral(expression)) {
             return !isNaN(Number(expression.text));
-        } else {
-            return isNumericLiteral(expression);
         }
+
+        return isNumericLiteral(expression);
     }
 
     return false;
@@ -215,7 +229,9 @@ function isInteger(node: ts.Expression): boolean {
         const value: number = Number(node.text);
 
         return !isNaN(value) && Math.round(value) === value;
-    } else if (isJsxExpression(node)) {
+    }
+
+    if (isJsxExpression(node)) {
         const expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -225,7 +241,9 @@ function isInteger(node: ts.Expression): boolean {
             const value: number = Number(expression.text);
 
             return !isNaN(value) && Math.round(value) === value;
-        } else if (isNumericLiteral(expression)) {
+        }
+
+        if (isNumericLiteral(expression)) {
             const value: number = Number(expression.text);
 
             return Math.round(value) === value;

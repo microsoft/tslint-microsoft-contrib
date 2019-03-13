@@ -181,7 +181,9 @@ function walk(ctx: Lint.WalkContext<Options>) {
             } else if (MochaUtils.isLifecycleMethod(node)) {
                 // variable initialization is allowed inside the lifecycle methods, so do not visit them
                 return;
-            } else if (isInDescribe) {
+            }
+
+            if (isInDescribe) {
                 // raw CallExpressions should be banned inside a describe that are *not* inside a lifecycle method
                 validateExpression(node, node);
             }

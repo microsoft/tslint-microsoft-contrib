@@ -21,9 +21,9 @@ export namespace ChaiUtils {
 
         if (/.*\.?expect/.test(callExpression.expression.getText())) {
             return callExpression;
-        } else {
-            return undefined;
         }
+
+        return undefined;
     }
 
     export function getLeftMostCallExpression(
@@ -34,13 +34,15 @@ export namespace ChaiUtils {
         while (leftSide !== undefined) {
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide;
-            } else if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            }
+
+            if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 leftSide = (<ts.PropertyAccessExpression>leftSide).expression;
             } else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide.parent;
-            } else {
-                return undefined; // cannot walk any further left in the property expression
             }
+
+            return undefined; // cannot walk any further left in the property expression
         }
         return undefined;
     }

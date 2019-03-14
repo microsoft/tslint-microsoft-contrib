@@ -58,11 +58,11 @@ export class Rule extends Lint.Rules.AbstractRule {
         ruleName: 'react-a11y-mouse-event-has-key-event',
         type: 'maintainability',
         description:
-            'For accessibility purposes, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.',
+            'For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.',
         rationale: `References:
         <ul>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/59/">Focusable elements with MouseOver should also have OnFocus event handlers.</a></li>
-          <li><a href="http://oaa-accessibility.org/wcag20/rule/60/">Focusable elements with an OnMouseOut should also have OnBlur event handlers</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/59/">Focusable elements with mouseOver should also have onFocus event handlers.</a></li>
+          <li><a href="http://oaa-accessibility.org/wcag20/rule/60/">Focusable elements with onMouseOut should also have onBlur event handlers.</a></li>
         </ul>`,
         options: null, // tslint:disable-line:no-null-keyword
         optionsDescription: '',

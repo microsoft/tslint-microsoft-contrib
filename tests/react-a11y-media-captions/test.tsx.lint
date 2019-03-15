@@ -1,5 +1,9 @@
 
 const SomeComponent = () =>
-    <video>
-        <track kind="caption"/>
+    <video width="320" height="240" controls>
+        <source src="sitting_and_smiling_234.mp4" type="video/mp4">
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English">
+        <track src="sitting_and_smiling_234.vtt" kind="captions" srclang="en" label="English">
+        <track src="myvideo_en.vtt" kind="description" srclang="en" label="English">
     </video>;
+

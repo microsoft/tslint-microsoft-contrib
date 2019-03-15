@@ -74,15 +74,16 @@ function validateMediaType(node: ts.JsxOpeningElement, ctx: Lint.WalkContext<voi
     let foundCaptions = false;
     let foundDescription = false;
     function cb(childNode: ts.Node): void {
-        if (tsutils.isJsxElement(childNode)) {
-            if (childNode.openingElement.tagName.getText() === TRACK_ELEMENT_NAME) {
-                const kindAttribute = getJsxAttributesFromJsxElement(childNode.openingElement)[KIND_ATTRIBUTE_NAME];
-                if (!foundCaptions) {
-                    foundCaptions = !!(kindAttribute && getAttributeText(kindAttribute) === CAPTIONS_KIND_NAME);
-                }
-                if (!foundDescription && validateDescription) {
-                    foundDescription = !!(kindAttribute && getAttributeText(kindAttribute) === DESCRIPTION_KIND_NAME);
-                }
+        if (
+            (tsutils.isJsxElement(childNode) && childNode.openingElement.tagName.getText() === TRACK_ELEMENT_NAME) ||
+            (tsutils.isJsxSelfClosingElement(childNode) && childNode.tagName.getText() === TRACK_ELEMENT_NAME)
+        ) {
+            const kindAttribute = getJsxAttributesFromJsxElement(childNode)[KIND_ATTRIBUTE_NAME];
+            if (!foundCaptions) {
+                foundCaptions = !!(kindAttribute && getAttributeText(kindAttribute) === CAPTIONS_KIND_NAME);
+            }
+            if (!foundDescription && validateDescription) {
+                foundDescription = !!(kindAttribute && getAttributeText(kindAttribute) === DESCRIPTION_KIND_NAME);
             }
         }
         return ts.forEachChild(childNode, cb);

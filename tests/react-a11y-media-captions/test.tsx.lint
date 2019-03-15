@@ -1,9 +1,45 @@
 
 const SomeComponent = () =>
-    <video width="320" height="240" controls>
-        <source src="sitting_and_smiling_234.mp4" type="video/mp4">
-        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English">
-        <track src="sitting_and_smiling_234.vtt" kind="captions" srclang="en" label="English">
-        <track src="myvideo_en.vtt" kind="description" srclang="en" label="English">
+    <video width="320" height="240">
+        <source src="sitting_and_smiling_234.mp4" type="video/mp4"/>
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>
+        <track src="sitting_and_smiling_234.vtt" kind="captions" srclang="en" label="English"/>
+        <track src="myvideo_en.vtt" kind="description" srclang="en" label="English"/>
     </video>;
+
+const SomeComponent = () =>
+    <audio>
+        <source src="beck_loser.mp3" type="video/mp4"/>
+        <track src="beck_loser.vtt" kind="captions" srclang="en" label="English"/>
+    </audio>;
+
+const SomeComponent = () =>
+    <video width="320" height="240">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Video elements must have an audio description track]
+        <source src="sitting_and_smiling_230.mp4" type="video/mp4"/>
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>
+        <track src="sitting_and_smiling_230.vtt" kind="captions" srclang="en" label="English"/>
+    </video>;
+
+const SomeComponent = () =>
+    <video width="320" height="240">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Video and audio elements must have a captions track]
+        <source src="sitting_and_smiling_236.mp4" type="video/mp4"/>
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>
+        <track src="sitting_and_smiling_236.vtt" kind="description" srclang="en" label="English"/>
+    </video>;
+
+const SomeComponent = () =>
+    <video width="320" height="240">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Video and audio elements must have a captions track]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Video elements must have an audio description track]
+        <source src="sitting_and_smiling_224.mp4" type="video/mp4"/>
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>
+    </video>;
+
+const SomeComponent = () =>
+    <audio>
+    ~~~~~~~ [Video and audio elements must have a captions track]
+        <source src="beck_loser.mp3" type="video/mp4"/>
+    </audio>;
 

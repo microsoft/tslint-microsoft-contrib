@@ -98,40 +98,40 @@ const e = <div role={undefined} /> `;
             TestHelper.assertViolations(ruleName, fileName, [
                 {
                     failure:
-                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
-                        '_definitions, or simply remove this attribute',
+                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
+                        'or simply remove this attribute',
                     name: Utils.absolutePath('file.tsx'),
                     ruleName: 'react-a11y-role',
                     startPosition: { character: 16, line: 6 }
                 },
                 {
                     failure:
-                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
-                        '_definitions, or simply remove this attribute',
+                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
+                        'or simply remove this attribute',
                     name: Utils.absolutePath('file.tsx'),
                     ruleName: 'react-a11y-role',
                     startPosition: { character: 16, line: 7 }
                 },
                 {
                     failure:
-                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
-                        '_definitions, or simply remove this attribute',
+                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
+                        'or simply remove this attribute',
                     name: Utils.absolutePath('file.tsx'),
                     ruleName: 'react-a11y-role',
                     startPosition: { character: 16, line: 8 }
                 },
                 {
                     failure:
-                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
-                        '_definitions, or simply remove this attribute',
+                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
+                        'or simply remove this attribute',
                     name: Utils.absolutePath('file.tsx'),
                     ruleName: 'react-a11y-role',
                     startPosition: { character: 16, line: 9 }
                 },
                 {
                     failure:
-                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role" +
-                        '_definitions, or simply remove this attribute',
+                        "'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
+                        'or simply remove this attribute',
                     name: Utils.absolutePath('file.tsx'),
                     ruleName: 'react-a11y-role',
                     startPosition: { character: 16, line: 10 }

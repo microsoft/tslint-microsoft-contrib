@@ -26,13 +26,13 @@ const TAGS_WITH_ARIA_LEVEL: string[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 export function getFailureStringForNotImplicitRole(roleNamesInElement: string[], missingProps: string[]): string {
     return `Element with ARIA role(s) '${roleNamesInElement.join(', ')}' \
 are missing required attribute(s): ${missingProps.join(', ')}. \
-A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
+A reference to role definitions can be found at https://www.w3.org/TR/wai-aria-1.1/#role_definitions.`;
 }
 
 export function getFailureStringForImplicitRole(tagName: string, roleNamesInElement: string, missingProps: string[]): string {
     return `Tag '${tagName}' has implicit role '${roleNamesInElement}'. \
 It requires aria-* attributes: ${missingProps.join(', ')} that are missing in the element. \
-A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.`;
+A reference to role definitions can be found at https://www.w3.org/TR/wai-aria-1.1/#role_definitions.`;
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -42,7 +42,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         description: 'Elements with aria roles must have all required attributes according to the role.',
         rationale: `References:
         <ul>
-          <li><a href="https://www.w3.org/TR/wai-aria/roles#role_definitions">ARIA Definition of Roles</a></li>
+          <li><a href="https://www.w3.org/TR/wai-aria-1.1/#role_definitions">ARIA Definition of Roles</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/90">WCAG Rule 90: Required properties and states should be defined</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/91">WCAG Rule 91: Required properties and states must not be empty</a></li>
         </ul>`,

@@ -23,41 +23,14 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new UnnecessaryLocalVariableRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
-    private readonly variableUsages: Map<ts.Identifier, tsutils.VariableInfo> = tsutils.collectVariableUsage(this.getSourceFile());
+function walk(ctx: Lint.WalkContext<void>) {
+    const variableUsages: Map<ts.Identifier, tsutils.VariableInfo> = tsutils.collectVariableUsage(ctx.sourceFile);
 
-    protected visitBlock(node: ts.Block): void {
-        this.validateStatementArray(node.statements);
-        super.visitBlock(node);
-    }
-
-    protected visitSourceFile(node: ts.SourceFile): void {
-        this.validateStatementArray(node.statements);
-        super.visitSourceFile(node);
-    }
-
-    protected visitCaseClause(node: ts.CaseClause): void {
-        this.validateStatementArray(node.statements);
-        super.visitCaseClause(node);
-    }
-
-    protected visitDefaultClause(node: ts.DefaultClause): void {
-        this.validateStatementArray(node.statements);
-        super.visitDefaultClause(node);
-    }
-
-    protected visitModuleDeclaration(node: ts.ModuleDeclaration): void {
-        if (node.body !== undefined && tsutils.isModuleBlock(node.body)) {
-            this.validateStatementArray(node.body.statements);
-        }
-        super.visitModuleDeclaration(node);
-    }
-
-    private validateStatementArray(statements: ts.NodeArray<ts.Statement>): void {
+    function validateStatementArray(statements: ts.NodeArray<ts.Statement>): void {
         if (statements === undefined || statements.length < 2) {
             return; // one liners are always valid
         }
@@ -65,8 +38,8 @@ class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
         const lastStatement = statements[statements.length - 1];
         const nextToLastStatement = statements[statements.length - 2];
 
-        const returnedVariableName = this.tryToGetReturnedVariableName(lastStatement);
-        const declaredVariableIdentifier = this.tryToGetDeclaredVariable(nextToLastStatement);
+        const returnedVariableName = tryToGetReturnedVariableName(lastStatement);
+        const declaredVariableIdentifier = tryToGetDeclaredVariable(nextToLastStatement);
         if (declaredVariableIdentifier === undefined) {
             return;
         }
@@ -77,17 +50,17 @@ class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
             returnedVariableName !== undefined &&
             declaredVariableName !== undefined &&
             returnedVariableName === declaredVariableName &&
-            this.variableIsOnlyUsedOnce(declaredVariableIdentifier)
+            variableIsOnlyUsedOnce(declaredVariableIdentifier)
         ) {
-            this.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
+            ctx.addFailureAt(nextToLastStatement.getStart(), nextToLastStatement.getWidth(), FAILURE_STRING + returnedVariableName);
         }
     }
 
-    private tryToGetDeclaredVariable(statement: ts.Statement): ts.Identifier | undefined {
+    function tryToGetDeclaredVariable(statement: ts.Statement): ts.Identifier | undefined {
         if (statement !== undefined && tsutils.isVariableStatement(statement)) {
             if (statement.declarationList.declarations.length === 1) {
                 const declaration: ts.VariableDeclaration = statement.declarationList.declarations[0];
-                if (declaration.name !== undefined && tsutils.isIdentifier(declaration.name)) {
+                if (declaration.name && tsutils.isIdentifier(declaration.name)) {
                     return declaration.name;
                 }
             }
@@ -95,18 +68,33 @@ class UnnecessaryLocalVariableRuleWalker extends Lint.RuleWalker {
         return undefined;
     }
 
-    private tryToGetReturnedVariableName(statement: ts.Statement): string | undefined {
+    function tryToGetReturnedVariableName(statement: ts.Statement): string | undefined {
         if (statement !== undefined && tsutils.isReturnStatement(statement)) {
-            if (statement.expression !== undefined && tsutils.isIdentifier(statement.expression)) {
+            if (statement.expression && tsutils.isIdentifier(statement.expression)) {
                 return statement.expression.text;
             }
         }
         return undefined;
     }
 
-    private variableIsOnlyUsedOnce(declaredVariableIdentifier: ts.Identifier) {
-        const usage = this.variableUsages.get(declaredVariableIdentifier);
-
+    function variableIsOnlyUsedOnce(declaredVariableIdentifier: ts.Identifier) {
+        const usage = variableUsages.get(declaredVariableIdentifier);
         return usage !== undefined && usage.uses.length === 1;
     }
+
+    function cb(node: ts.Node): void {
+        if (tsutils.isBlock(node) || tsutils.isSourceFile(node) || tsutils.isCaseClause(node) || tsutils.isDefaultClause(node)) {
+            validateStatementArray(node.statements);
+        }
+
+        if (tsutils.isModuleDeclaration(node)) {
+            if (node.body && tsutils.isModuleBlock(node.body)) {
+                validateStatementArray(node.body.statements);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
+    }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -1,87 +1,59 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import { isObject, isNamed } from './TypeGuard';
+import * as tsutils from 'tsutils';
 
-export class BannedTermWalker extends Lint.RuleWalker {
-    private readonly failureString: string;
-    private readonly bannedTerms: string[];
-    private allowQuotedProperties: boolean = false;
+import { isNamed } from './TypeGuard';
 
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions, failureString: string, bannedTerms: string[]) {
-        super(sourceFile, options);
-        this.failureString = failureString;
-        this.bannedTerms = bannedTerms;
-        this.getOptions().forEach((opt: unknown) => {
-            if (isObject(opt)) {
-                this.allowQuotedProperties = opt['allow-quoted-properties'] === true;
-            }
-        });
+export interface BannedTermOptions {
+    readonly failureString: string;
+    readonly bannedTerms: string[];
+    allowQuotedProperties: boolean;
+}
+
+export function bannedTermWalker(ctx: Lint.WalkContext<BannedTermOptions>) {
+    const { failureString, bannedTerms, allowQuotedProperties } = ctx.options;
+
+    function isBannedTerm(text: string): boolean {
+        return bannedTerms.indexOf(text) !== -1;
     }
 
-    protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        this.validateNode(node);
-        super.visitVariableDeclaration(node);
-    }
-
-    protected visitFunctionDeclaration(node: ts.FunctionDeclaration): void {
-        this.validateNode(node);
-        super.visitFunctionDeclaration(node);
-    }
-
-    protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        this.validateNode(node);
-        super.visitPropertyDeclaration(node);
-    }
-
-    protected visitPropertySignature(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.PropertySignature) {
-            const signature: ts.PropertySignature = <ts.PropertySignature>node;
-            const propertyName = signature.name;
-            // ignore StringLiteral property names if that option is set
-            if (this.allowQuotedProperties === false || propertyName.kind !== ts.SyntaxKind.StringLiteral) {
-                this.validateNode(node);
-            }
-        } else {
-            this.validateNode(node);
-        }
-        super.visitPropertySignature(node);
-    }
-
-    protected visitSetAccessor(node: ts.AccessorDeclaration): void {
-        this.validateNode(node);
-        super.visitSetAccessor(node);
-    }
-
-    protected visitGetAccessor(node: ts.AccessorDeclaration): void {
-        this.validateNode(node);
-        super.visitGetAccessor(node);
-    }
-
-    protected visitMethodDeclaration(node: ts.MethodDeclaration): void {
-        this.validateNode(node);
-        super.visitMethodDeclaration(node);
-    }
-
-    protected visitParameterDeclaration(node: ts.ParameterDeclaration): void {
-        // typescript 2.0 introduces function level 'this' types
-        if (node.name.getText() !== 'this') {
-            this.validateNode(node);
-        }
-        super.visitParameterDeclaration(node);
-    }
-
-    private validateNode(node: ts.Node): void {
+    function validateNode(node: ts.Node): void {
         if (isNamed(node)) {
             const text: string = node.name.getText();
             if (text !== undefined) {
-                if (this.isBannedTerm(text)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), this.failureString + text);
+                if (isBannedTerm(text)) {
+                    ctx.addFailureAt(node.getStart(), node.getWidth(), failureString + text);
                 }
             }
         }
     }
 
-    private isBannedTerm(text: string): boolean {
-        return this.bannedTerms.indexOf(text) !== -1;
+    function cb(node: ts.Node): void {
+        if (
+            tsutils.isVariableDeclaration(node) ||
+            tsutils.isFunctionDeclaration(node) ||
+            tsutils.isPropertyDeclaration(node) ||
+            tsutils.isAccessorDeclaration(node) ||
+            tsutils.isMethodDeclaration(node)
+        ) {
+            validateNode(node);
+        }
+
+        if (tsutils.isParameterDeclaration(node)) {
+            // typescript 2.0 introduces function level 'this' types
+            if (node.name.getText() !== 'this') {
+                validateNode(node);
+            }
+        }
+
+        if (tsutils.isPropertySignature(node)) {
+            // ignore StringLiteral property names if that option is set
+            if (allowQuotedProperties === false || !tsutils.isStringLiteral(node.name)) {
+                validateNode(node);
+            }
+        }
+
+        return ts.forEachChild(node, cb);
     }
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

@@ -1,0 +1,11 @@
+import * as React, { FunctionComponent } from 'react';
+
+interface Props {
+    readonly text: string
+    readonly wrap?: boolean;
+    ~~~~~~~~~~~~~~~~~~~~~~~~ [Unused React property defined in interface: wrap]
+}
+
+export const SpanWithText: FunctionComponent<Props> = (props: Props) => (
+    <span>{props.text}</span>
+)

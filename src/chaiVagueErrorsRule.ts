@@ -5,12 +5,10 @@ import * as tsutils from 'tsutils';
 import { ChaiUtils } from './utils/ChaiUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
-const BASE_ERROR: string = 'Found chai call with vague failure message. ';
-const FAILURE_STRING: string = BASE_ERROR + 'Please add an explicit failure message';
-const FAILURE_STRING_COMPARE_TRUE: string =
-    BASE_ERROR + 'Move the strict equality comparison from the expect call into the assertion value';
-const FAILURE_STRING_COMPARE_FALSE: string =
-    BASE_ERROR + 'Move the strict inequality comparison from the expect call into the assertion value. ';
+const BASE_ERROR = 'Found chai call with vague failure message;';
+const FAILURE_STRING = `${BASE_ERROR} please add an explicit failure message`;
+const FAILURE_STRING_COMPARE_TRUE = `${BASE_ERROR} move the strict equality comparison from the expect call into the assertion value`;
+const FAILURE_STRING_COMPARE_FALSE = `${BASE_ERROR} move the strict inequality comparison from the expect call into the assertion value`;
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static metadata: ExtendedMetadata = {

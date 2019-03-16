@@ -17,32 +17,21 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Whitespace',
-        recommendation: 'false,',
+        recommendation: 'false',
         commonWeaknessEnumeration: '710'
     };
 
     public static FAILURE_STRING: string = 'Opening brace cannot be followed by empty line';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoEmptyLineAfterOpeningBraceWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
-    private readonly scanner: ts.Scanner;
-
-    constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
-        super(sourceFile, options);
-        this.scanner = ts.createScanner(1, false, 0, sourceFile.text);
-    }
-
-    public visitSourceFile(node: ts.SourceFile): void {
-        this.scanAllTokens(node);
-        super.visitSourceFile(node);
-    }
-
-    private scanAllTokens(node: ts.SourceFile): void {
-        this.scanner.setTextPos(0);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        const scanner: ts.Scanner = ts.createScanner(1, false, 0, ctx.sourceFile.text);
+        scanner.setTextPos(0);
         let previous: ts.SyntaxKind;
         let previousPrevious: ts.SyntaxKind;
 
@@ -52,7 +41,7 @@ class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
                 previous === ts.SyntaxKind.NewLineTrivia &&
                 tokenSyntaxKind === ts.SyntaxKind.NewLineTrivia
             ) {
-                this.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
+                ctx.addFailureAt(range.pos, 1, Rule.FAILURE_STRING);
             }
 
             //ignore empty spaces
@@ -62,4 +51,6 @@ class NoEmptyLineAfterOpeningBraceWalker extends Lint.RuleWalker {
             }
         });
     }
+
+    return ts.forEachChild(ctx.sourceFile, cb);
 }

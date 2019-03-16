@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "react-unused-props-and-state": true
+    }
+}

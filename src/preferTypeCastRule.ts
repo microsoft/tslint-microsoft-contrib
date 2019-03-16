@@ -19,26 +19,25 @@ export class Rule extends Lint.Rules.AbstractRule {
         severity: 'Low',
         level: 'Opportunity for Excellence',
         group: 'Configurable',
-        recommendation: 'true, // pick either type-cast format and use it consistently',
+        recommendation: 'true',
         commonWeaknessEnumeration: '398, 710'
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new PreferTypeCastRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class PreferTypeCastRuleWalker extends Lint.RuleWalker {
-    protected visitSourceFile(node: ts.SourceFile): void {
-        if (AstUtils.getLanguageVariant(node) === ts.LanguageVariant.Standard) {
-            super.visitSourceFile(node);
+function walk(ctx: Lint.WalkContext<void>) {
+    function cb(node: ts.Node): void {
+        if (node.kind === ts.SyntaxKind.AsExpression) {
+            ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
         }
+
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitNode(node: ts.Node): void {
-        if (node.kind === ts.SyntaxKind.AsExpression) {
-            this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING + node.getText());
-        }
-        super.visitNode(node);
+    if (AstUtils.getLanguageVariant(ctx.sourceFile) === ts.LanguageVariant.Standard) {
+        return ts.forEachChild(ctx.sourceFile, cb);
     }
 }

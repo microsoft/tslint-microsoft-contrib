@@ -234,6 +234,16 @@ describe('exportNameRule', (): void => {
 
             TestHelper.assertViolations(ruleName, script, []);
         });
+
+        it('when file name is in kebab case', (): void => {
+            const inputFile: string = 'test-data/ExportName/export-name-rule-passing-test-input-3.tsx';
+            TestHelper.assertViolations(ruleName, inputFile, []);
+        });
+
+        it('when file name is in snake case', (): void => {
+            const inputFile: string = 'test-data/ExportName/export_name_rule_passing_test_input_4.tsx';
+            TestHelper.assertViolations(ruleName, inputFile, []);
+        });
     });
 
     describe('should fail', (): void => {

@@ -1,5 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import * as tsutils from 'tsutils';
+
 import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 
@@ -23,31 +25,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     }
 }
 
-class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
-    protected visitCallExpression(node: ts.CallExpression): void {
-        const functionName: string = AstUtils.getFunctionName(node);
-        if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
-            const firstArg: ts.Expression = node.arguments[0];
-            if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
-                if (this.isComplexHtmlElement(<ts.StringLiteral>firstArg)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText());
-                }
-            } else {
-                const finder = new HtmlLikeStringLiteralFinder(this.getSourceFile(), this.getOptions());
-                finder.walk(node.arguments[0]);
-                if (finder.isFound()) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_MANIPULATION + node.getText());
-                }
-            }
-        }
-        super.visitCallExpression(node);
-    }
-
-    private isComplexHtmlElement(literal: ts.StringLiteral): boolean {
+function walk(ctx: Lint.WalkContext<void>) {
+    function isComplexHtmlElement(literal: ts.StringLiteral): boolean {
         const text: string = literal.text.trim();
         if (/^<.*>$/.test(text) === false) {
             // element does not look like an html tag
@@ -73,20 +56,32 @@ class NoJqueryRawElementsRuleWalker extends Lint.RuleWalker {
         }
         return true;
     }
-}
 
-class HtmlLikeStringLiteralFinder extends Lint.RuleWalker {
-    private found: boolean = false;
+    function cb(node: ts.Node): void {
+        if (tsutils.isCallExpression(node)) {
+            const functionName: string = AstUtils.getFunctionName(node);
+            if (AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
+                const firstArg: ts.Expression = node.arguments[0];
+                if (tsutils.isStringLiteral(firstArg)) {
+                    if (isComplexHtmlElement(<ts.StringLiteral>firstArg)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText());
+                    }
+                } else {
+                    htmlLikeStringLiteralFinder(ctx, node);
+                }
+            }
+        }
 
-    public isFound(): boolean {
-        return this.found;
+        return ts.forEachChild(node, cb);
     }
 
-    protected visitStringLiteral(node: ts.StringLiteral): void {
-        if (node.text.indexOf('<') > -1 || node.text.indexOf('>') > -1) {
-            this.found = true;
-        } else {
-            super.visitStringLiteral(node);
-        }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+
+function htmlLikeStringLiteralFinder(ctx: Lint.WalkContext<void>, expr: ts.CallExpression) {
+    const node = expr.arguments[0];
+    const textExpr = node.getText();
+    if (textExpr.indexOf('<') > -1 || textExpr.indexOf('>') > -1) {
+        ctx.addFailureAt(expr.getStart(), expr.getWidth(), FAILURE_STRING_MANIPULATION + expr.getText());
     }
 }

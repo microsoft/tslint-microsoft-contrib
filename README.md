@@ -992,7 +992,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.
       </td>
-      <td>6.1.0</td>
+      <td>@next</td>
     </tr>
     <tr>
       <td>

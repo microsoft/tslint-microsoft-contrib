@@ -91,8 +91,8 @@ function walk(ctx: Lint.WalkContext<void>) {
                 return;
             }
 
-            const attributeKeys = Object.keys(attributes);
-            if (attributeKeys.indexOf(mouseEvent.value) !== -1 && attributeKeys.indexOf(focusEvent.value) === -1) {
+            const attributeKeys = new Set(Object.keys(attributes));
+            if (attributeKeys.has(mouseEvent.value) && !attributeKeys.has(focusEvent.value)) {
                 const errorMessage = getFailureString(mouseEvent.jsxValue, focusEvent.jsxValue);
                 ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
             }

@@ -38,7 +38,10 @@ export namespace ChaiUtils {
 
             if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 leftSide = (<ts.PropertyAccessExpression>leftSide).expression;
-            } else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
+                continue;
+            }
+
+            if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return <ts.CallExpression>leftSide.parent;
             }
 

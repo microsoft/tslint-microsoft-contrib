@@ -48,6 +48,12 @@ const FOCUS_EVENTS: {
 type MouseEvents = keyof typeof MOUSE_EVENTS;
 type FocusEvents = keyof typeof FOCUS_EVENTS;
 type AttributeType = { [propName: string]: ts.JsxAttribute };
+interface CheckMouseEventArgs {
+    mouseEvent: typeof MOUSE_EVENTS.onMouseOver | typeof MOUSE_EVENTS.onMouseOut;
+    focusEvent: typeof FOCUS_EVENTS.onBlur | typeof FOCUS_EVENTS.onFocus;
+    node: ts.Node;
+    ctx: Lint.WalkContext<void>;
+}
 
 function getFailureString(mouseEvent: MouseEvents, focusEvent: FocusEvents) {
     return `${mouseEvent} must be accompanied by ${focusEvent}.`;
@@ -78,29 +84,25 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithFunction(sourceFile, walk);
     }
 }
+function checkMouseEventForFocus({ mouseEvent, focusEvent, node, ctx }: CheckMouseEventArgs): void {
+    const attributes: AttributeType = getJsxAttributesFromJsxElement(node);
+
+    if (attributes === undefined) {
+        return;
+    }
+
+    const attributeKeys = new Set(Object.keys(attributes));
+    if (attributeKeys.has(mouseEvent.value) && !attributeKeys.has(focusEvent.value)) {
+        const errorMessage = getFailureString(mouseEvent.jsxValue, focusEvent.jsxValue);
+        ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
+    }
+}
 
 function walk(ctx: Lint.WalkContext<void>) {
     function cb(node: ts.Node): void {
-        function checkMouseEventForFocus(
-            mouseEvent: typeof MOUSE_EVENTS.onMouseOver | typeof MOUSE_EVENTS.onMouseOut,
-            focusEvent: typeof FOCUS_EVENTS.onBlur | typeof FOCUS_EVENTS.onFocus
-        ): void {
-            const attributes: AttributeType = getJsxAttributesFromJsxElement(node);
-
-            if (attributes === undefined) {
-                return;
-            }
-
-            const attributeKeys = new Set(Object.keys(attributes));
-            if (attributeKeys.has(mouseEvent.value) && !attributeKeys.has(focusEvent.value)) {
-                const errorMessage = getFailureString(mouseEvent.jsxValue, focusEvent.jsxValue);
-                ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
-            }
-        }
-
         if (tsutils.isJsxSelfClosingElement(node) || tsutils.isJsxOpeningElement(node)) {
-            checkMouseEventForFocus(MOUSE_EVENTS.onMouseOver, FOCUS_EVENTS.onFocus);
-            checkMouseEventForFocus(MOUSE_EVENTS.onMouseOut, FOCUS_EVENTS.onBlur);
+            checkMouseEventForFocus({ mouseEvent: MOUSE_EVENTS.onMouseOver, focusEvent: FOCUS_EVENTS.onFocus, node, ctx });
+            checkMouseEventForFocus({ mouseEvent: MOUSE_EVENTS.onMouseOut, focusEvent: FOCUS_EVENTS.onBlur, node, ctx });
         }
         return ts.forEachChild(node, cb);
     }

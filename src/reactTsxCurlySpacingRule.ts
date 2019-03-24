@@ -88,24 +88,24 @@ function walk(ctx: Lint.WalkContext<Options>) {
         if (ctx.options.spacing === Spacing.always) {
             if (first === violationRoot) {
                 return `A space is required after '${violationRoot.getText()}'`;
-            } else {
-                return `A space is required before '${violationRoot.getText()}'`;
             }
-        } else {
-            if (first === violationRoot) {
-                return `There should be no space after '${violationRoot.getText()}'`;
-            } else {
-                return `There should be no space before '${violationRoot.getText()}'`;
-            }
+
+            return `A space is required before '${violationRoot.getText()}'`;
         }
+
+        if (first === violationRoot) {
+            return `There should be no space after '${violationRoot.getText()}'`;
+        }
+
+        return `There should be no space before '${violationRoot.getText()}'`;
     }
 
     function getFailureForNewLine(first: ts.Node, violationRoot: ts.Node): string {
         if (first === violationRoot) {
             return `There should be no newline after '${violationRoot.getText()}'`;
-        } else {
-            return `There should be no newline before '${violationRoot.getText()}'`;
         }
+
+        return `There should be no newline before '${violationRoot.getText()}'`;
     }
 
     function reportFailure(start: ts.Node, endNode: ts.Node, failure: string): void {

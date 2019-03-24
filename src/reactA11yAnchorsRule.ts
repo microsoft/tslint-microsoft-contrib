@@ -226,7 +226,9 @@ function walk(ctx: Lint.WalkContext<Options>) {
         let title: string = '';
         if (root === undefined) {
             return title;
-        } else if (root.kind === ts.SyntaxKind.JsxElement) {
+        }
+
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             const jsxElement: ts.JsxElement = <ts.JsxElement>root;
             jsxElement.children.forEach(
                 (child: ts.JsxChild): void => {

@@ -40,18 +40,24 @@ export function getStringLiteral(node: ts.JsxAttribute | ts.JsxSpreadAttribute):
     if (!initializer) {
         // <tag attribute/>
         return '';
-    } else if (isStringLiteral(initializer)) {
+    }
+
+    if (isStringLiteral(initializer)) {
         // <tag attribute='value' />
         return initializer.text.trim();
-    } else if (isJsxExpression(initializer) && initializer.expression !== undefined && isStringLiteral(initializer.expression)) {
+    }
+
+    if (isJsxExpression(initializer) && initializer.expression !== undefined && isStringLiteral(initializer.expression)) {
         // <tag attribute={'value'} />
         return (<ts.StringLiteral>initializer.expression).text;
-    } else if (isJsxExpression(initializer) && !initializer.expression) {
+    }
+
+    if (isJsxExpression(initializer) && !initializer.expression) {
         // <tag attribute={} />
         return '';
-    } else {
-        return undefined;
     }
+
+    return undefined;
 }
 
 /**
@@ -76,31 +82,39 @@ export function getBooleanLiteral(node: ts.JsxAttribute): boolean | undefined {
     const getBooleanFromString: (value: string) => boolean | undefined = (value: string) => {
         if (value.toLowerCase() === 'true') {
             return true;
-        } else if (value.toLowerCase() === 'false') {
-            return false;
-        } else {
-            return undefined;
         }
+
+        if (value.toLowerCase() === 'false') {
+            return false;
+        }
+
+        return undefined;
     };
 
     if (isStringLiteral(initializer)) {
         return getBooleanFromString(initializer.text);
-    } else if (isJsxExpression(initializer)) {
+    }
+
+    if (isJsxExpression(initializer)) {
         const expression = initializer.expression;
 
         if (expression === undefined) {
             return undefined;
-        } else if (isStringLiteral(expression)) {
-            return getBooleanFromString(expression.text);
-        } else {
-            if (isTrueKeyword(expression)) {
-                return true;
-            } else if (isFalseKeyword(expression)) {
-                return false;
-            } else {
-                return undefined;
-            }
         }
+
+        if (isStringLiteral(expression)) {
+            return getBooleanFromString(expression.text);
+        }
+
+        if (isTrueKeyword(expression)) {
+            return true;
+        }
+
+        if (isFalseKeyword(expression)) {
+            return false;
+        }
+
+        return undefined;
     }
 
     return false;
@@ -111,16 +125,23 @@ export function isEmpty(node: ts.JsxAttribute): boolean {
 
     if (initializer === undefined) {
         return true;
-    } else if (isStringLiteral(initializer)) {
+    }
+
+    if (isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
-    } else if (initializer.expression !== undefined) {
+    }
+
+    if (initializer.expression !== undefined) {
         const expression: ts.Expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
-        } else if (expression.kind === ts.SyntaxKind.NullKeyword) {
+        }
+
+        if (expression.kind === ts.SyntaxKind.NullKeyword) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -154,7 +175,9 @@ export function getAllAttributesFromJsxElement(node: ts.Node): ts.NodeArray<ts.J
 
     if (node === undefined) {
         return attributes;
-    } else if (isJsxElement(node)) {
+    }
+
+    if (isJsxElement(node)) {
         attributes = node.openingElement.attributes.properties;
     } else if (isJsxSelfClosingElement(node)) {
         attributes = node.attributes.properties;
@@ -206,9 +229,13 @@ export function getJsxElementFromCode(code: string, exceptTagName: string): ts.J
 function delintNode(node: ts.Node, tagName: string): ts.JsxElement | ts.JsxSelfClosingElement | undefined {
     if (isJsxElement(node) && node.openingElement.tagName.getText() === tagName) {
         return node;
-    } else if (isJsxSelfClosingElement(node) && node.tagName.getText() === tagName) {
+    }
+
+    if (isJsxSelfClosingElement(node) && node.tagName.getText() === tagName) {
         return node;
-    } else if (!node || node.getChildCount() === 0) {
+    }
+
+    if (!node || node.getChildCount() === 0) {
         return undefined;
     }
 
@@ -228,7 +255,7 @@ export function getAncestorNode(node: ts.Node, ancestorTagName: string): ts.JsxE
 
     if (isJsxElement(ancestorNode) && ancestorNode.openingElement.tagName.getText() === ancestorTagName) {
         return ancestorNode;
-    } else {
-        return getAncestorNode(ancestorNode, ancestorTagName);
     }
+
+    return getAncestorNode(ancestorNode, ancestorTagName);
 }

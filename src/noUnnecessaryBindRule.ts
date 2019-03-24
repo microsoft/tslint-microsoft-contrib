@@ -137,15 +137,23 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
 
     public getContextArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
+
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
-        } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        }
+
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[3];
-        } else if (functionName === 'sortedIndex') {
+        }
+
+        if (functionName === 'sortedIndex') {
             return node.arguments[3];
-        } else if (functionName === 'bind') {
+        }
+
+        if (functionName === 'bind') {
             return node.arguments[1];
         }
+
         return undefined;
     }
 
@@ -153,11 +161,17 @@ class UnderscoreStaticAnalyzer implements CallAnalyzer {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
-        } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        }
+
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
-        } else if (functionName === 'sortedIndex') {
+        }
+
+        if (functionName === 'sortedIndex') {
             return node.arguments[2];
-        } else if (functionName === 'bind') {
+        }
+
+        if (functionName === 'bind') {
             return node.arguments[0];
         }
         return undefined;
@@ -178,13 +192,19 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
 
     public getContextArgument(node: ts.CallExpression): ts.Expression | undefined {
         const functionName: string = AstUtils.getFunctionName(node);
+
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
-        } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
-            return node.arguments[2];
-        } else if (functionName === 'sortedIndex') {
+        }
+
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
         }
+
+        if (functionName === 'sortedIndex') {
+            return node.arguments[2];
+        }
+
         return undefined;
     }
 
@@ -192,11 +212,16 @@ class UnderscoreInstanceAnalyzer implements CallAnalyzer {
         const functionName: string = AstUtils.getFunctionName(node);
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
-        } else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        }
+
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
-        } else if (functionName === 'sortedIndex') {
+        }
+
+        if (functionName === 'sortedIndex') {
             return node.arguments[1];
         }
+
         return undefined;
     }
 }

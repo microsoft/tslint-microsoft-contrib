@@ -10,7 +10,7 @@ import * as ts from 'typescript';
 export namespace TestHelper {
     let program: ts.Program;
 
-    /* tslint:disable:prefer-const */
+    /* tslint:disable:variable-name */
     /**
      * This setting must point to your rule .js files. 3rd party libraries may reuse this class and change value.
      */
@@ -25,7 +25,7 @@ export namespace TestHelper {
      * You must specify an encoding for file read/writes. 3rd party libraries may reuse this class and change value.
      */
     export let FILE_ENCODING: string = 'utf8';
-    /* tslint:enable:prefer-const */
+    /* tslint:enable:variable-name */
 
     export interface FailurePosition {
         character: number;

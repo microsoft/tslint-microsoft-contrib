@@ -12,6 +12,11 @@ describe('reactThisBindingIssueRule', (): void => {
         TestHelper.assertNoViolationWithOptions(ruleName, [true, { 'bind-decorators': ['autobind'] }], fileWithDecorator);
     });
 
+    it('should pass even if a decorated method declared after usage', (): void => {
+        const file: string = 'test-data/ReactThisBinding/ReactThisBindingIssueWithDecoratorDeclaredAfterUsage-passing.tsx';
+        TestHelper.assertNoViolationWithOptions(ruleName, [true, { 'bind-decorators': ['autobind'] }], file);
+    });
+
     it('should fail if decorator is not whitelisted in config', () => {
         const fileWithDecorator: string = 'test-data/ReactThisBinding/ReactThisBindingIssueWithDecorator-passing.tsx';
         const expectedMsg = `A class method is passed as a JSX attribute without having the 'this' reference bound: `;

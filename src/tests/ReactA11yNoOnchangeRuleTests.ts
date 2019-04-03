@@ -35,6 +35,15 @@ describe('reactA11yNoOnchangeRule', (): void => {
         ]);
     });
 
+    it('should not fail if select element attributes contains onBlur event even if it also contains onChange event', (): void => {
+        const script: string = `
+            import React = require('react');
+            const selectElementWithOnChange = <select  onChange={} onBlur={} />\`;
+        `;
+
+        TestHelper.assertNoViolation(ruleName, script);
+    });
+
     it('should fail if additional tag name specified in options contains onChange event', () => {
         const script: string = `
             import React = require('react');

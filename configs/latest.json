@@ -2,6 +2,7 @@
     "extends": ["./recommended.json"],
     "rulesDirectory": ["../"],
     "rules": {
+        "detect-child-process": true,
         "react-a11y-iframes": true,
         "void-zero": true
     }

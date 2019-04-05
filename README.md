@@ -983,7 +983,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         Enforce that video and audio elements have captions and descriptions.
       </td>
-      <td>6.1.0</td>
+      <td>@next</td>
     </tr>
     <tr>
       <td>

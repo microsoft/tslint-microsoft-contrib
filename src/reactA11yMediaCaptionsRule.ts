@@ -41,6 +41,7 @@ function walk(ctx: Lint.WalkContext<void>) {
         }
         if (tsutils.isJsxElement(node) && (isVideoElement(node.openingElement.tagName) || isAudioElement(node.openingElement.tagName))) {
             validateMediaType(node.openingElement, ctx);
+            return;
         }
         return ts.forEachChild(node, cb);
     }
@@ -70,7 +71,7 @@ function getAttributeText(attribute: ts.JsxAttribute): string | undefined {
 }
 
 function validateMediaType(node: ts.JsxOpeningElement, ctx: Lint.WalkContext<void>): void {
-    const validateDescription = isVideoElement(node.tagName) ? true : false;
+    const validateDescription = isVideoElement(node.tagName);
     let foundCaptions = false;
     let foundDescription = false;
     function cb(childNode: ts.Node): void {

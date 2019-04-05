@@ -3,6 +3,7 @@
     "rulesDirectory": ["../"],
     "rules": {
         "react-a11y-iframes": true,
+        "react-a11y-media-captions": true,
         "void-zero": true
     }
 }

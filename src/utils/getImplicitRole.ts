@@ -15,7 +15,9 @@ export function getImplicitRole(node: ts.Node | undefined): string | undefined {
 
     if (node === undefined) {
         return undefined;
-    } else if (isJsxElement(node)) {
+    }
+
+    if (isJsxElement(node)) {
         tagName = node.openingElement.tagName.getText();
     } else if (isJsxSelfClosingElement(node)) {
         tagName = node.tagName.getText();

@@ -180,7 +180,9 @@ function walk(ctx: Lint.WalkContext<Options>) {
         const funcTypeText = getFuncTypeText(node.kind);
         if (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)) {
             return ` in ${funcTypeText} ${node.name ? node.name.getText() : ''}()`;
-        } else if (node.kind === ts.SyntaxKind.Constructor) {
+        }
+
+        if (node.kind === ts.SyntaxKind.Constructor) {
             return ` in class ${currentClassName}`;
         }
         return '';

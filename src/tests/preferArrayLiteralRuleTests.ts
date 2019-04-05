@@ -78,4 +78,16 @@ describe('preferArrayLiteralRule', (): void => {
             }
         ]);
     });
+
+    it('should ban Array function', (): void => {
+        const inputScript: string = 'Array(2)';
+        TestHelper.assertViolations(ruleName, inputScript, [
+            {
+                failure: 'Replace Array function with an array literal: Array(2)',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'prefer-array-literal',
+                startPosition: { character: 1, line: 1 }
+            }
+        ]);
+    });
 });

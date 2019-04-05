@@ -59,7 +59,7 @@ function walk(ctx: Lint.WalkContext<Options>) {
         }
 
         const attributes = getJsxAttributesFromJsxElement(node);
-        if (attributes.hasOwnProperty('onchange')) {
+        if (attributes.hasOwnProperty('onchange') && !attributes.hasOwnProperty('onblur')) {
             const errorMessage = `onChange event handler should not be used with the <${tagName}>. Please use onBlur instead.`;
             ctx.addFailureAt(node.getStart(), node.getWidth(), errorMessage);
         }

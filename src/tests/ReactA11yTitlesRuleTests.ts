@@ -49,7 +49,7 @@ describe('reactA11yTitlesRule', (): void => {
     });
 
     it('should fail on longer than 60 charactes title', (): void => {
-        const title: string = Array(61).join('a');
+        const title: string = 'a'.repeat(60);
         const script: string = `
             import React = require('react');
 
@@ -70,7 +70,7 @@ describe('reactA11yTitlesRule', (): void => {
     });
 
     it('should pass on shorter than 60 characters title', (): void => {
-        const title: string = Array(5).join('a');
+        const title: string = 'a'.repeat(5);
         const script: string = `
             import React = require('react');
 

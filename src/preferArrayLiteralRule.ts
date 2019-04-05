@@ -27,6 +27,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal: ';
     public static CONSTRUCTOR_FAILURE_STRING: string = 'Replace Array constructor with an array literal: ';
+    public static FUNCTION_FAILURE_STRING: string = 'Replace Array function with an array literal: ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
@@ -73,6 +74,14 @@ function walk(ctx: Lint.WalkContext<Options>) {
             const functionName = AstUtils.getFunctionName(node);
             if (functionName === 'Array') {
                 const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            }
+        }
+
+        if (tsutils.isCallExpression(node)) {
+            const expr = node.expression;
+            if (expr.getText() === 'Array') {
+                const failureString = Rule.FUNCTION_FAILURE_STRING + node.getText();
                 ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
             }
         }

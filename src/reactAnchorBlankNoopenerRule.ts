@@ -43,9 +43,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     private parseOptions(options: Lint.IOptions): Options {

@@ -24,9 +24,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk);
-        } else {
-            return [];
         }
+
+        return [];
     }
 }
 
@@ -70,7 +70,9 @@ function isStringLiteral(expression: ts.Expression, literal: string): boolean | 
         if (expression.kind === ts.SyntaxKind.StringLiteral) {
             const value: string = (<ts.StringLiteral>expression).text;
             return value === literal;
-        } else if (expression.kind === ts.SyntaxKind.JsxExpression) {
+        }
+
+        if (expression.kind === ts.SyntaxKind.JsxExpression) {
             const exp: ts.JsxExpression = <ts.JsxExpression>expression;
             if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                 const value: string = (<ts.StringLiteral>exp.expression).text;

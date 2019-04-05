@@ -53,9 +53,9 @@ export class Rule extends Lint.Rules.AbstractRule {
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     private parseOptions(options: Lint.IOptions): Options {
@@ -244,13 +244,20 @@ function walk(ctx: Lint.WalkContext<Options>) {
         );
     }
 
+    function visitClassMember(node: ts.Node) {
+        if (tsutils.isConstructorDeclaration(node)) {
+            boundListeners = getSelfBoundListeners(node);
+        } else if (tsutils.isMethodDeclaration(node)) {
+            if (isMethodBoundWithDecorators(node, ctx.options.allowedDecorators)) {
+                boundListeners = boundListeners.add('this.' + node.name.getText());
+            }
+        }
+    }
+
     function cb(node: ts.Node): void {
         if (tsutils.isMethodDeclaration(node)) {
             // reset variable scope when we encounter a method. Start tracking variables that are instantiated
             // in scope so we can make sure new function instances are not passed as JSX attributes
-            if (isMethodBoundWithDecorators(node, ctx.options.allowedDecorators)) {
-                boundListeners = boundListeners.add('this.' + node.name.getText());
-            }
             scope = new Scope(undefined);
             ts.forEachChild(node, cb);
             scope = undefined;
@@ -289,8 +296,7 @@ function walk(ctx: Lint.WalkContext<Options>) {
                     declaredMethods.add('this.' + methodName);
                 }
             );
-        } else if (tsutils.isConstructorDeclaration(node)) {
-            boundListeners = getSelfBoundListeners(node);
+            node.members.forEach(visitClassMember);
         } else if (tsutils.isJsxElement(node)) {
             visitJsxOpeningElement(node.openingElement); // a normal JSX element has-a OpeningElement
         } else if (tsutils.isJsxSelfClosingElement(node)) {

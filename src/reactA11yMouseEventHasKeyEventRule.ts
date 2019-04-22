@@ -3,7 +3,8 @@ import * as Lint from 'tslint';
 import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
+import { getAllAttributesFromJsxElement, getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
+import { isJsxSpreadAttribute } from './utils/TypeGuard';
 
 const MOUSE_EVENTS: {
     onMouseOver: {
@@ -84,10 +85,20 @@ export class Rule extends Lint.Rules.AbstractRule {
         return this.applyWithFunction(sourceFile, walk);
     }
 }
+
+function isSpreadAttribute(node: ts.Node): boolean {
+    const nodeAttributes = getAllAttributesFromJsxElement(node);
+    return nodeAttributes !== undefined && nodeAttributes.some(isJsxSpreadAttribute);
+}
+
 function checkMouseEventForFocus({ mouseEvent, focusEvent, node, ctx }: CheckMouseEventArgs): void {
     const attributes: AttributeType = getJsxAttributesFromJsxElement(node);
 
     if (attributes === undefined) {
+        return;
+    }
+
+    if (isSpreadAttribute(node)) {
         return;
     }
 

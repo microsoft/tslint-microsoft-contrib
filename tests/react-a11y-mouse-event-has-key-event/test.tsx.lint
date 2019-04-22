@@ -8,9 +8,7 @@ const elementSelfClosing = (<div onMouseOut={() => {}}/>)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [onMouseOut must be accompanied by onBlur.]
 
 const Foo = (<div onMouseOver={() => {}} {...props} />)
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [onMouseOver must be accompanied by onFocus.]
 const Bar = (<div onMouseOut={() => {}} {...props} />)
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [onMouseOut must be accompanied by onBlur.]
 const Baz = <div />
 const Foobar = <div {...props} />
 const elementWithFocus = <div onMouseOut={() => {}} onBlur={() => {}}>click</div>

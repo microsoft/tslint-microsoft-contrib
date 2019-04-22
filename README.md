@@ -987,6 +987,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-mouse-event-has-key-event</code>
+      </td>
+      <td>
+        For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.
+      </td>
+      <td>@next</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-no-onchange</code>
       </td>
       <td>

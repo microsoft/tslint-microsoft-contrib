@@ -133,6 +133,18 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>detect-child-process</code>
+      </td>
+      <td>
+        Detects usages of child_process and especially child_process.exec() with a non-literal first argument.
+        It is dangerous to pass a string constructed at runtime as the first argument to the <code>child_process.exec()</code>.
+        <code>child_process.exec(cmd)</code> runs <code>cmd</code> as a shell command which could allow an attacker to execute malicious code injected into <code>cmd</code>.
+        Instead of <code>child_process.exec(cmd)</code> you should use <code>child_process.spawn(cmd)</code> or specify the command as a literal, e.g. <code>child_process.exec('ls')</code>.
+      </td>
+      <td>@next</td>
+    </tr>
+    <tr>
+      <td>
         <code>export-name</code>
       </td>
       <td>

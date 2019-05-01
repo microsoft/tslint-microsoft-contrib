@@ -8,7 +8,7 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 export const MISSING_PLACEHOLDER_INPUT_FAILURE_STRING: string = 'Input elements must include default, place-holding characters if empty';
 export const MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING: string =
     'Textarea elements must include default, place-holding characters if empty';
-const EXCLUDED_INPUT_TYPES = ['checkbox', 'radio', 'file'];
+const EXCLUDED_INPUT_TYPES = ['checkbox', 'radio'];
 
 /**
  * Implementation of the react-a11y-input-elements rule.
@@ -61,6 +61,21 @@ function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [prop
     return false;
 }
 
+function isInputTypeFile(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
+    for (const attribute of node.attributes.properties) {
+        if (tsutils.isJsxAttribute(attribute)) {
+            const isInputAttributeType = attributes.type;
+            if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
+                const attributeText = attribute.initializer.text;
+                if (isInputAttributeType !== undefined && attributeText === 'file') {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 function walk(ctx: Lint.WalkContext<void>) {
     function cb(node: ts.Node): void {
         if (tsutils.isJsxSelfClosingElement(node)) {
@@ -71,6 +86,11 @@ function walk(ctx: Lint.WalkContext<void>) {
                 const isExcludedInput = isExcludedInputType(node, attributes);
                 const isExcludedInputTypeValueEmpty = isEmpty(attributes.value) && isExcludedInput;
                 const isPlaceholderEmpty = isEmpty(attributes.placeholder) && !isExcludedInput;
+
+                if (isInputTypeFile(node, attributes)) {
+                    return;
+                }
+
                 if ((isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }

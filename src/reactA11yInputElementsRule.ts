@@ -51,12 +51,14 @@ function isTypeMatchedTo(
     attributes: { [propName: string]: ts.JsxAttribute },
     condition: (attributeText: string) => boolean
 ): boolean {
+    if (attributes.type === undefined) {
+        return false;
+    }
     for (const attribute of node.attributes.properties) {
         if (tsutils.isJsxAttribute(attribute)) {
-            const isInputAttributeType = attributes.type;
             if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
                 const attributeText = attribute.initializer.text;
-                if (isInputAttributeType !== undefined && condition(attributeText)) {
+                if (condition(attributeText)) {
                     return true;
                 }
             }

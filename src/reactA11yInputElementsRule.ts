@@ -46,13 +46,17 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
-function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
+function isTypeMatchedTo(
+    node: ts.JsxSelfClosingElement,
+    attributes: { [propName: string]: ts.JsxAttribute },
+    condition: (attributeText: string) => boolean
+): boolean {
     for (const attribute of node.attributes.properties) {
         if (tsutils.isJsxAttribute(attribute)) {
             const isInputAttributeType = attributes.type;
             if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
                 const attributeText = attribute.initializer.text;
-                if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                if (isInputAttributeType !== undefined && condition(attributeText)) {
                     return true;
                 }
             }
@@ -61,19 +65,12 @@ function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [prop
     return false;
 }
 
+function isExcludedInputType(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
+    return isTypeMatchedTo(node, attributes, attributeText => EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1);
+}
+
 function isInputTypeFile(node: ts.JsxSelfClosingElement, attributes: { [propName: string]: ts.JsxAttribute }): boolean {
-    for (const attribute of node.attributes.properties) {
-        if (tsutils.isJsxAttribute(attribute)) {
-            const isInputAttributeType = attributes.type;
-            if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
-                const attributeText = attribute.initializer.text;
-                if (isInputAttributeType !== undefined && attributeText === 'file') {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
+    return isTypeMatchedTo(node, attributes, attributeText => attributeText === 'file');
 }
 
 function walk(ctx: Lint.WalkContext<void>) {

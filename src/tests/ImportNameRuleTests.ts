@@ -341,5 +341,19 @@ describe('importNameRule', (): void => {
                 ]);
             });
         });
+
+        describe('any-case', () => {
+            it('should pass on PascalCase and camelCase', () => {
+                const script: string = `
+                    import App from 'app';
+                    import app from 'app';
+                    import App from 'x/y/z/App';
+                    import GraphqlTag from 'x/y/z/graphql-tag';
+                    import graphqlTag from 'x/y/z/graphql-tag';
+                `;
+                const options = [true, {}, {}, { case: 'any-case' }];
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+            });
+        });
     });
 });

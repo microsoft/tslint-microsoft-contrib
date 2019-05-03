@@ -101,6 +101,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 enum StringCase {
+    any = 'any-case',
     pascal = 'PascalCase',
     camel = 'camelCase'
 }
@@ -196,7 +197,11 @@ function walk(ctx: Lint.WalkContext<Option>) {
         moduleName: string,
         node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
     ): boolean {
-        if (transformName(expectedImportedName) === importedName) {
+        if (option.config.case === StringCase.any) {
+            if (makeCamelCase(expectedImportedName) === importedName || makePascalCase(expectedImportedName) === importedName) {
+                return true;
+            }
+        } else if (transformName(expectedImportedName) === importedName) {
             return true;
         }
 
@@ -224,8 +229,10 @@ function walk(ctx: Lint.WalkContext<Option>) {
                 return makeCamelCase(input);
             case StringCase.pascal:
                 return makePascalCase(input);
+            case StringCase.any:
+                return `${makeCamelCase(input)} or ${makePascalCase(input)}`;
             default:
-                throw new Error(`Unknown case for import-name rule ${option.config.case}`);
+                throw new Error(`Unknown case for import-name rule: "${option.config.case}"`);
         }
     }
 

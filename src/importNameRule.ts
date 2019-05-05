@@ -83,11 +83,11 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     private extractConfig(opt: unknown): Config {
         const result: Config = { ignoreExternalModule: true, case: StringCase.camel };
-        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule', 'case'];
+        const configKeyList: ConfigKey[] = ['ignoreExternalModule', 'case'];
         if (isObject(opt)) {
             return Object.keys(opt).reduce(
                 (accum: Config, key: string) => {
-                    if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
+                    if (configKeyList.filter((configKey: string) => configKey === key).length >= 1) {
                         accum[<ConfigKey>key] = <boolean | StringCase>opt[key];
                         return accum;
                     }
@@ -201,7 +201,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
             if (makeCamelCase(expectedImportedName) === importedName || makePascalCase(expectedImportedName) === importedName) {
                 return true;
             }
-        } else if (transformName(expectedImportedName) === importedName) {
+        } else if (transformName(expectedImportedName).includes(importedName)) {
             return true;
         }
 
@@ -226,11 +226,11 @@ function walk(ctx: Lint.WalkContext<Option>) {
     function transformName(input: string) {
         switch (option.config.case) {
             case StringCase.camel:
-                return makeCamelCase(input);
+                return [makeCamelCase(input)];
             case StringCase.pascal:
-                return makePascalCase(input);
+                return [makePascalCase(input)];
             case StringCase.any:
-                return `${makeCamelCase(input)} or ${makePascalCase(input)}`;
+                return [makeCamelCase(input), makePascalCase(input)];
             default:
                 throw new Error(`Unknown case for import-name rule: "${option.config.case}"`);
         }
@@ -250,15 +250,16 @@ function walk(ctx: Lint.WalkContext<Option>) {
     }
 
     function validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
-        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        const expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
         if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
             return;
         }
         if (isImportNameValid(importedName, expectedImportedName, moduleName, node)) {
             return;
         }
-        expectedImportedName = transformName(expectedImportedName);
-        const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
+        const expectedImportedNames = transformName(expectedImportedName);
+        const expectedNames = expectedImportedNames.map(name => `'${name}'`).join(' or ');
+        const message: string = `Misnamed import. Import should be named ${expectedNames} but found '${importedName}'`;
 
         const nameNode = getNameNodeFromImportNode(node);
         if (nameNode === undefined) {
@@ -266,7 +267,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
         }
 
         const nameNodeStartPos = nameNode.getStart();
-        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedName);
+        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedNames[0]);
         ctx.addFailureAt(node.getStart(), node.getWidth(), message, fix);
     }
 

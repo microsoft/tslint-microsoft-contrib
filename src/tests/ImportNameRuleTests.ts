@@ -354,6 +354,30 @@ describe('importNameRule', (): void => {
                 const options = [true, {}, {}, { case: 'any-case' }];
                 TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
             });
+
+            it('should fail', () => {
+                const script: string = `
+                    import gTag from 'x/y/z/graphql-tag';
+                `;
+                const options = [true, {}, {}, { case: 'any-case' }];
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+                    {
+                        failure: "Misnamed import. Import should be named 'graphqlTag' or 'GraphqlTag' but found 'gTag'",
+                        fix: {
+                            innerStart: 28,
+                            innerLength: 4,
+                            innerText: 'graphqlTag'
+                        },
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'import-name',
+                        ruleSeverity: 'ERROR',
+                        startPosition: {
+                            character: 21,
+                            line: 2
+                        }
+                    }
+                ]);
+            });
         });
     });
 });

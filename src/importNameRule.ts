@@ -38,7 +38,8 @@ export class Rule extends Lint.Rules.AbstractRule {
             replacements: {},
             ignoredList: [],
             config: {
-                ignoreExternalModule: true
+                ignoreExternalModule: true,
+                case: StringCase.camel
             }
         };
 
@@ -81,28 +82,36 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 
     private extractConfig(opt: unknown): Config {
-        const result: Config = { ignoreExternalModule: true };
-        const configKeyLlist: ConfigKey[] = ['ignoreExternalModule'];
+        const result: Config = { ignoreExternalModule: true, case: StringCase.camel };
+        const configKeyList: ConfigKey[] = ['ignoreExternalModule', 'case'];
         if (isObject(opt)) {
             return Object.keys(opt).reduce(
                 (accum: Config, key: string) => {
-                    if (configKeyLlist.filter((configKey: string) => configKey === key).length >= 1) {
-                        accum[<ConfigKey>key] = opt[key];
+                    if (configKeyList.filter((configKey: string) => configKey === key).length >= 1) {
+                        accum[<ConfigKey>key] = <boolean | StringCase>opt[key];
                         return accum;
                     }
                     return accum;
                 },
-                { ignoreExternalModule: true }
+                { ignoreExternalModule: true, case: StringCase.camel }
             );
         }
         return result;
     }
 }
 
+enum StringCase {
+    any = 'any-case',
+    pascal = 'PascalCase',
+    camel = 'camelCase'
+}
 type Replacement = { [index: string]: string };
 type IgnoredList = string[];
-type ConfigKey = 'ignoreExternalModule';
-type Config = { [index in ConfigKey]: unknown };
+type ConfigKey = 'ignoreExternalModule' | 'case';
+type Config = {
+    ignoreExternalModule: boolean;
+    case: StringCase;
+};
 
 // This is for temporarily resolving type errors. Actual runtime Node, SourceFile object
 // has those properties.
@@ -163,7 +172,12 @@ function walk(ctx: Lint.WalkContext<Option>) {
         // Example: for below import statement
         // `import cgi from 'fs-util/cgi-common'`
         // The Valid specifiers are: [cgiCommon, fs-util/cgi-common, cgi-common]
-        const allowedReplacementKeys: string[] = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
+        const allowedReplacementKeys: string[] = [
+            makeCamelCase(expectedImportedName),
+            makePascalCase(expectedImportedName),
+            moduleName,
+            moduleName.replace(/.*\//, '')
+        ];
         return Utils.exists(
             Object.keys(replacements),
             (replacementKey: string): boolean => {
@@ -183,7 +197,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
         moduleName: string,
         node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
     ): boolean {
-        if (expectedImportedName === importedName) {
+        if (transformName(expectedImportedName).indexOf(importedName) > -1) {
             return true;
         }
 
@@ -205,6 +219,19 @@ function walk(ctx: Lint.WalkContext<Option>) {
         return false;
     }
 
+    function transformName(input: string) {
+        switch (option.config.case) {
+            case StringCase.camel:
+                return [makeCamelCase(input)];
+            case StringCase.pascal:
+                return [makePascalCase(input)];
+            case StringCase.any:
+                return [makeCamelCase(input), makePascalCase(input)];
+            default:
+                throw new Error(`Unknown case for import-name rule: "${option.config.case}"`);
+        }
+    }
+
     function makeCamelCase(input: string): string {
         return input.replace(
             /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
@@ -214,18 +241,21 @@ function walk(ctx: Lint.WalkContext<Option>) {
         );
     }
 
+    function makePascalCase(input: string): string {
+        return input.replace(/(?:^|[-|\.|_|])([a-z])/g, (_, group1) => group1.toUpperCase());
+    }
+
     function validateImport(node: ts.ImportEqualsDeclaration | ts.ImportDeclaration, importedName: string, moduleName: string): void {
-        let expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
+        const expectedImportedName = moduleName.replace(/.*\//, ''); // chop off the path
         if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
             return;
         }
-
-        expectedImportedName = makeCamelCase(expectedImportedName);
         if (isImportNameValid(importedName, expectedImportedName, moduleName, node)) {
             return;
         }
-
-        const message: string = `Misnamed import. Import should be named '${expectedImportedName}' but found '${importedName}'`;
+        const expectedImportedNames = transformName(expectedImportedName);
+        const expectedNames = expectedImportedNames.map(name => `'${name}'`).join(' or ');
+        const message: string = `Misnamed import. Import should be named ${expectedNames} but found '${importedName}'`;
 
         const nameNode = getNameNodeFromImportNode(node);
         if (nameNode === undefined) {
@@ -233,7 +263,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
         }
 
         const nameNodeStartPos = nameNode.getStart();
-        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedName);
+        const fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedNames[0]);
         ctx.addFailureAt(node.getStart(), node.getWidth(), message, fix);
     }
 

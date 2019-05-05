@@ -197,11 +197,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
         moduleName: string,
         node: ts.ImportEqualsDeclaration | ts.ImportDeclaration
     ): boolean {
-        if (option.config.case === StringCase.any) {
-            if (makeCamelCase(expectedImportedName) === importedName || makePascalCase(expectedImportedName) === importedName) {
-                return true;
-            }
-        } else if (transformName(expectedImportedName).indexOf(importedName) > -1) {
+        if (transformName(expectedImportedName).indexOf(importedName) > -1) {
             return true;
         }
 

@@ -201,7 +201,7 @@ function walk(ctx: Lint.WalkContext<Option>) {
             if (makeCamelCase(expectedImportedName) === importedName || makePascalCase(expectedImportedName) === importedName) {
                 return true;
             }
-        } else if (transformName(expectedImportedName).includes(importedName)) {
+        } else if (transformName(expectedImportedName).indexOf(importedName) > -1) {
             return true;
         }
 

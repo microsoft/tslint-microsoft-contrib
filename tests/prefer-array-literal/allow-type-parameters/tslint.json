@@ -1,5 +1,5 @@
 {
     "rules": {
-        "prefer-array-literal": [true, "allow-type-parameters"]
+        "prefer-array-literal": [true, {"allow-type-parameters": true}]
     }
 }

@@ -85,10 +85,10 @@ export function createNoStringParameterToFunctionWalker(
     function validateExpression(node: ts.CallExpression, ctx: Lint.WalkContext<void>): void {
         const functionName = AstUtils.getFunctionName(node);
         const functionTarget = AstUtils.getFunctionTarget(node);
-        const functionTargetType = getFunctionTargetType(node);
         const firstArg: ts.Expression = node.arguments[0];
         if (functionName === targetFunctionName && firstArg !== undefined) {
             if (functionTarget) {
+                const functionTargetType = getFunctionTargetType(node);
                 if (functionTargetType) {
                     if (!functionTargetType.match(/^(any|Window|Worker)$/)) {
                         return;

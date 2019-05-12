@@ -25,7 +25,7 @@ export namespace AstUtils {
         return '';
     }
 
-    export function getFunctionTarget(expression: ts.CallExpression): string | undefined {
+    export function getFunctionTarget(expression: ts.CallExpression | ts.NewExpression): string | undefined {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
             const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
             return propExp.expression.getText();

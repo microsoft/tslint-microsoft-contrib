@@ -22,5 +22,24 @@ var h = new Array(4);
 var i = Array(2);
         ~~~~~~~~  [function % ("Array(2)")]
 
+// calls to Array function/constructor on global objects is forbidden
+var nc1 = window.Array(1);
+          ~~~~~~~~~~~~~~~  [function % ("window.Array(1)")]
+var nc2 = global.Array(2);
+          ~~~~~~~~~~~~~~~  [function % ("global.Array(2)")]
+var nc3 = globalThis.Array(3);
+          ~~~~~~~~~~~~~~~~~~~  [function % ("globalThis.Array(3)")]
+
+var nn1 = new window.Array(1);
+          ~~~~~~~~~~~~~~~~~~~  [constructor % ("new window.Array(1)")]
+var nn2 = new global.Array(2);
+          ~~~~~~~~~~~~~~~~~~~  [constructor % ("new global.Array(2)")]
+var nn3 = new globalThis.Array(3);
+          ~~~~~~~~~~~~~~~~~~~~~~~  [constructor % ("new globalThis.Array(3)")]
+
+// calls to Array function/constructor from namespaces are valid
+import { Types } from 'mongoose';
+export const foo: Types.Array<number> = new Types.Array();
+
 [constructor]: Replace Array constructor with an array literal: %s
 [function]: Replace Array function with an array literal: %s

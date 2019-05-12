@@ -6,6 +6,14 @@ import { AstUtils } from './utils/AstUtils';
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
+// undefined for case when function/constructor is called directly without namespace
+const RESTRICTED_NAMESPACES = [undefined, 'window', 'global', 'globalThis'];
+
+function inRestrictedNamespace(node: ts.NewExpression | ts.CallExpression): boolean {
+    const functionTarget = AstUtils.getFunctionTarget(node);
+    return RESTRICTED_NAMESPACES.indexOf(functionTarget) > -1;
+}
+
 interface Options {
     allowTypeParameters: boolean;
 }
@@ -60,6 +68,14 @@ export class Rule extends Lint.Rules.AbstractRule {
 function walk(ctx: Lint.WalkContext<Options>) {
     const { allowTypeParameters } = ctx.options;
 
+    function checkExpression(failureStart: string, node: ts.CallExpression | ts.NewExpression): void {
+        const functionName = AstUtils.getFunctionName(node);
+        if (functionName === 'Array' && inRestrictedNamespace(node)) {
+            const failureString = failureStart + node.getText();
+            ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+        }
+    }
+
     function cb(node: ts.Node): void {
         if (tsutils.isTypeReferenceNode(node)) {
             if (!allowTypeParameters) {
@@ -71,19 +87,11 @@ function walk(ctx: Lint.WalkContext<Options>) {
         }
 
         if (tsutils.isNewExpression(node)) {
-            const functionName = AstUtils.getFunctionName(node);
-            if (functionName === 'Array') {
-                const failureString = Rule.CONSTRUCTOR_FAILURE_STRING + node.getText();
-                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
-            }
+            checkExpression(Rule.CONSTRUCTOR_FAILURE_STRING, node);
         }
 
         if (tsutils.isCallExpression(node)) {
-            const expr = node.expression;
-            if (expr.getText() === 'Array') {
-                const failureString = Rule.FUNCTION_FAILURE_STRING + node.getText();
-                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
-            }
+            checkExpression(Rule.FUNCTION_FAILURE_STRING, node);
         }
 
         return ts.forEachChild(node, cb);

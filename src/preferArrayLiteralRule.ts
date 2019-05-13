@@ -14,10 +14,14 @@ function inRestrictedNamespace(node: ts.NewExpression | ts.CallExpression): bool
     return RESTRICTED_NAMESPACES.indexOf(functionTarget) > -1;
 }
 
+type InvocationType = 'constructor' | 'function';
+
 interface Options {
+    allowSingleArgument: boolean;
     allowTypeParameters: boolean;
 }
-export class Rule extends Lint.Rules.AbstractRule {
+
+export class Rule extends Lint.Rules.OptionallyTypedRule {
     public static metadata: ExtendedMetadata = {
         ruleName: 'prefer-array-literal',
         type: 'maintainability',
@@ -34,15 +38,26 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal: ';
-    public static CONSTRUCTOR_FAILURE_STRING: string = 'Replace Array constructor with an array literal: ';
-    public static FUNCTION_FAILURE_STRING: string = 'Replace Array function with an array literal: ';
+    public static getReplaceFailureString = (type: InvocationType, nodeText: string) =>
+        `Replace Array ${type} with an array literal: ${nodeText}`;
+    public static getSingleParamFailureString = (type: InvocationType, nodeText: string) =>
+        `To create an array of given length you should use non-negative integer. Otherwise replace Array ${type} with an array literal: ${nodeText}`;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
+        return this.applyWithProgram(sourceFile, /* program */ undefined);
+    }
+    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program | undefined): Lint.RuleFailure[] {
+        return this.applyWithFunction(
+            sourceFile,
+            walk,
+            this.parseOptions(this.getOptions()),
+            program ? program.getTypeChecker() : undefined
+        );
     }
 
     private parseOptions(options: Lint.IOptions): Options {
-        let value: boolean = false;
+        let allowSingleArgument: boolean = false;
+        let allowTypeParameters: boolean = false;
         let ruleOptions: any[] = [];
 
         if (options.ruleArguments instanceof Array) {
@@ -55,24 +70,38 @@ export class Rule extends Lint.Rules.AbstractRule {
 
         ruleOptions.forEach((opt: unknown) => {
             if (isObject(opt)) {
-                value = opt['allow-type-parameters'] === true;
+                allowSingleArgument = opt['allow-single-argument'] === true;
+                allowTypeParameters = opt['allow-type-parameters'] === true;
             }
         });
 
         return {
-            allowTypeParameters: value
+            allowSingleArgument,
+            allowTypeParameters
         };
     }
 }
 
-function walk(ctx: Lint.WalkContext<Options>) {
-    const { allowTypeParameters } = ctx.options;
-
-    function checkExpression(failureStart: string, node: ts.CallExpression | ts.NewExpression): void {
+function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefined) {
+    const { allowTypeParameters, allowSingleArgument } = ctx.options;
+    function checkExpression(type: InvocationType, node: ts.CallExpression | ts.NewExpression): void {
         const functionName = AstUtils.getFunctionName(node);
         if (functionName === 'Array' && inRestrictedNamespace(node)) {
-            const failureString = failureStart + node.getText();
-            ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            const callArguments = node.arguments;
+            if (!allowSingleArgument || !callArguments || callArguments.length !== 1) {
+                const failureString = Rule.getReplaceFailureString(type, node.getText());
+                ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+            } else {
+                // When typechecker is not available - allow any call with single expression
+                if (checker) {
+                    const argument = callArguments[0];
+                    const argumentType = checker.getTypeAtLocation(argument);
+                    if (!tsutils.isTypeAssignableToNumber(checker, argumentType)) {
+                        const failureString = Rule.getSingleParamFailureString(type, node.getText());
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                    }
+                }
+            }
         }
     }
 
@@ -87,11 +116,11 @@ function walk(ctx: Lint.WalkContext<Options>) {
         }
 
         if (tsutils.isNewExpression(node)) {
-            checkExpression(Rule.CONSTRUCTOR_FAILURE_STRING, node);
+            checkExpression('constructor', node);
         }
 
         if (tsutils.isCallExpression(node)) {
-            checkExpression(Rule.FUNCTION_FAILURE_STRING, node);
+            checkExpression('function', node);
         }
 
         return ts.forEachChild(node, cb);

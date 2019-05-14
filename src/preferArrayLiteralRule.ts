@@ -26,8 +26,24 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         ruleName: 'prefer-array-literal',
         type: 'maintainability',
         description: 'Use array literal syntax when declaring or instantiating array types.',
-        options: null, // tslint:disable-line:no-null-keyword
-        optionsDescription: '',
+        options: {
+            type: 'object',
+            properties: {
+                'allow-single-argument': {
+                    type: 'boolean'
+                },
+                'allow-type-parameters': {
+                    type: 'boolean'
+                }
+            },
+            additionalProperties: false
+        },
+        optionsDescription: Lint.Utils.dedent`
+            Rule accepts object with next boolean options:
+
+            - "allow-single-argument" - allows calls to Array constructor with a single element (to create empty array of a given length).
+            - "allow-type-parameters" - allow Array type parameters.
+        `,
         typescriptOnly: true,
         issueClass: 'Non-SDL',
         issueType: 'Warning',

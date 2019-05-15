@@ -828,9 +828,9 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         Use array literal syntax when declaring or instantiating array types.
         For example, prefer the Javascript form of <code>string[]</code> to the TypeScript form <code>Array&lt;string&gt;</code>.
-        Prefer <code>[]</code> to <code>new Array()</code>.
-        Prefer <code>[4, 5]</code> to <code>new Array(4, 5)</code>.
-        Prefer <code>[undefined, undefined]</code> to <code>new Array(2)</code>.
+        Prefer <code>[]</code> over <code>new Array()</code>.
+        Prefer <code>[4, 5]</code> over <code>new Array(4, 5)</code>.
+        Prefer <code>[undefined, undefined]</code> over <code>new Array(2)</code>.
         <br />
         Since 2.0.10, this rule can be configured to allow <code>Array</code> type parameters.
         To ignore type parameters, configure the rule with the values: <code>[true, {"allow-type-parameters": true}]</code>.

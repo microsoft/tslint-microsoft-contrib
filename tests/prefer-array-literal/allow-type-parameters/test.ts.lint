@@ -72,5 +72,13 @@ const t9 = Array(-1);
 const t10 = Array(-num);
             ~~~~~~~~~~~  [function % ("Array(-num)")]
 
+declare var arrS: number[];
+declare var arrN: number[];
+
+const t11 = Array(...arrS);
+            ~~~~~~~~~~~~~~  [function % ("Array(...arrS)")]
+const t12 = Array(...arrN);
+            ~~~~~~~~~~~~~~  [function % ("Array(...arrN)")]
+
 [constructor]: Replace Array constructor with an array literal: %s
 [function]: Replace Array function with an array literal: %s

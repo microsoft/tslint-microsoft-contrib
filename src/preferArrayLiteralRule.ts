@@ -112,7 +112,7 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
                 if (checker) {
                     const argument = callArguments[0];
                     const argumentType = checker.getTypeAtLocation(argument);
-                    if (!tsutils.isTypeAssignableToNumber(checker, argumentType)) {
+                    if (!tsutils.isTypeAssignableToNumber(checker, argumentType) || argument.kind === ts.SyntaxKind.SpreadElement) {
                         const failureString = Rule.getSizeParamFailureString(type);
                         ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
                     }

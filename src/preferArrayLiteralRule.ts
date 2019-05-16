@@ -7,11 +7,11 @@ import { ExtendedMetadata } from './utils/ExtendedMetadata';
 import { isObject } from './utils/TypeGuard';
 
 // undefined for case when function/constructor is called directly without namespace
-const RESTRICTED_NAMESPACES = [undefined, 'window', 'global', 'globalThis'];
+const RESTRICTED_NAMESPACES: Set<string | undefined> = new Set([undefined, 'window', 'self', 'global', 'globalThis']);
 
 function inRestrictedNamespace(node: ts.NewExpression | ts.CallExpression): boolean {
     const functionTarget = AstUtils.getFunctionTarget(node);
-    return RESTRICTED_NAMESPACES.indexOf(functionTarget) > -1;
+    return RESTRICTED_NAMESPACES.has(functionTarget);
 }
 
 type InvocationType = 'constructor' | 'function';

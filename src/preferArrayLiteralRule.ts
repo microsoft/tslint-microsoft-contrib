@@ -56,8 +56,8 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
     public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal: ';
     public static getReplaceFailureString = (type: InvocationType, nodeText: string) =>
         `Replace Array ${type} with an array literal: ${nodeText}`;
-    public static getSizeParamFailureString = (type: InvocationType, nodeText: string) =>
-        `To create an array of given length you should use non-negative integer. Otherwise replace Array ${type} with an array literal: ${nodeText}`;
+    public static getSizeParamFailureString = (type: InvocationType) =>
+        `To create an array of a given length you should use non-negative integer. Otherwise replace Array ${type} with an array literal.`;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithProgram(sourceFile, /* program */ undefined);
@@ -113,7 +113,7 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
                     const argument = callArguments[0];
                     const argumentType = checker.getTypeAtLocation(argument);
                     if (!tsutils.isTypeAssignableToNumber(checker, argumentType)) {
-                        const failureString = Rule.getSizeParamFailureString(type, node.getText());
+                        const failureString = Rule.getSizeParamFailureString(type);
                         ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
                     }
                 }

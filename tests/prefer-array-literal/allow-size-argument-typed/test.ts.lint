@@ -32,13 +32,13 @@ var nc1 = window.Array(1);
 var nc2 = global.Array(1, 2);
           ~~~~~~~~~~~~~~~~~~  [function % ("global.Array(1, 2)")]
 var nc3 = globalThis.Array('3');
-          ~~~~~~~~~~~~~~~~~~~~~  [single-argument % ("function","globalThis.Array('3')")]
+          ~~~~~~~~~~~~~~~~~~~~~  [size-argument % ("function","globalThis.Array('3')")]
 
 var nn1 = new window.Array(1);
 var nn2 = new global.Array(1, 2);
           ~~~~~~~~~~~~~~~~~~~~~~  [constructor % ("new global.Array(1, 2)")]
 var nn3 = new globalThis.Array('3');
-          ~~~~~~~~~~~~~~~~~~~~~~~~~  [single-argument % ("constructor", "new globalThis.Array('3')")]
+          ~~~~~~~~~~~~~~~~~~~~~~~~~  [size-argument % ("constructor", "new globalThis.Array('3')")]
 
 // calls to Array function/constructor from namespaces are valid
 import { Types } from 'mongoose';
@@ -52,17 +52,17 @@ declare var unionF: number | (() => number);
 
 const t1 = Array(num);
 const t2 = Array(str);
-           ~~~~~~~~~~  [single-argument % ("function", "Array(str)")]
+           ~~~~~~~~~~  [size-argument % ("function", "Array(str)")]
 const t3 = Array(unionA);
-           ~~~~~~~~~~~~~  [single-argument % ("function", "Array(unionA)")]
+           ~~~~~~~~~~~~~  [size-argument % ("function", "Array(unionA)")]
 const t3 = Array(unionF);
-           ~~~~~~~~~~~~~  [single-argument % ("function", "Array(unionF)")]
+           ~~~~~~~~~~~~~  [size-argument % ("function", "Array(unionF)")]
 const t4 = Array(num + 1);
 const t5 = Array(str + 1);
-           ~~~~~~~~~~~~~~  [single-argument % ("function", "Array(str + 1)")]
+           ~~~~~~~~~~~~~~  [size-argument % ("function", "Array(str + 1)")]
 const t6 = Array(10 + 1);
 const t7 = Array(10 + '1');
-           ~~~~~~~~~~~~~~~  [single-argument % ("function", "Array(10 + '1')")]
+           ~~~~~~~~~~~~~~~  [size-argument % ("function", "Array(10 + '1')")]
 const t8 = Array(1.5); // no error - limitation of typed rule
 const t9 = Array(-1); // no error - limitation of typed rule
 const t10 = Array(-num); // no error - limitation of typed rule
@@ -70,4 +70,4 @@ const t10 = Array(-num); // no error - limitation of typed rule
 [type]: Replace generic-typed Array with array literal: %s
 [constructor]: Replace Array constructor with an array literal: %s
 [function]: Replace Array function with an array literal: %s
-[single-argument]: To create an array of given length you should use non-negative integer. Otherwise replace Array %s with an array literal: %s
+[size-argument]: To create an array of given length you should use non-negative integer. Otherwise replace Array %s with an array literal: %s

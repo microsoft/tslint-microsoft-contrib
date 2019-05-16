@@ -836,7 +836,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         To ignore type parameters, configure the rule with the values: <code>[true, {"allow-type-parameters": true}]</code>.
         <br />
         Since @next, you can lift restriction on <code>Array</code> constructor calls with a single argument (to create empty array of a given length). If type information is available - rule will allow only a single argument of <code>number</code> type.
-        To allow empty array creation, configure the rule with the values: <code>[true, {"allow-single-argument": true}]</code>.
+        To allow empty array creation, configure the rule with the values: <code>[true, {"allow-size-argument": true}]</code>.
         <br />
         This rule has some overlap with the <a href="https://palantir.github.io/tslint/rules/array-type">TSLint array-type rule</a>; however, the version here catches more instances.
       </td>

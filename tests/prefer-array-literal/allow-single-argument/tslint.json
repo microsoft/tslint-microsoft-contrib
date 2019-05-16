@@ -1,5 +1,0 @@
-{
-    "rules": {
-        "prefer-array-literal": [true, {"allow-single-argument": true}]
-    }
-}

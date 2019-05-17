@@ -53,9 +53,8 @@ export class Rule extends Lint.Rules.OptionallyTypedRule {
         commonWeaknessEnumeration: '398, 710'
     };
 
-    public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal: ';
-    public static getReplaceFailureString = (type: InvocationType, nodeText: string) =>
-        `Replace Array ${type} with an array literal: ${nodeText}`;
+    public static GENERICS_FAILURE_STRING: string = 'Replace generic-typed Array with array literal.';
+    public static getReplaceFailureString = (type: InvocationType) => `Replace Array ${type} with an array literal.`;
     public static getSizeParamFailureString = (type: InvocationType) =>
         `To create an array of a given length you should use non-negative integer. Otherwise replace Array ${type} with an array literal.`;
 
@@ -105,7 +104,7 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
         if (functionName === 'Array' && inRestrictedNamespace(node)) {
             const callArguments = node.arguments;
             if (!allowSizeArgument || !callArguments || callArguments.length !== 1) {
-                const failureString = Rule.getReplaceFailureString(type, node.getText());
+                const failureString = Rule.getReplaceFailureString(type);
                 ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
             } else {
                 // When typechecker is not available - allow any call with single expression
@@ -125,7 +124,7 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
         if (tsutils.isTypeReferenceNode(node)) {
             if (!allowTypeParameters) {
                 if ((<ts.Identifier>node.typeName).text === 'Array') {
-                    const failureString = Rule.GENERICS_FAILURE_STRING + node.getText();
+                    const failureString = Rule.GENERICS_FAILURE_STRING;
                     ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
                 }
             }

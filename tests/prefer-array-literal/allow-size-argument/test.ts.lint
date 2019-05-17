@@ -1,41 +1,41 @@
 let a: string[];
 
 let b: Array<string> = [];
-       ~~~~~~~~~~~~~       [type % ("Array<string>")]
+       ~~~~~~~~~~~~~       [type]
 
 interface C {
     myArray: Array<string>;
-             ~~~~~~~~~~~~~  [type % ("Array<string>")]
+             ~~~~~~~~~~~~~  [type]
 }
 
 var d: Array<string>;
-       ~~~~~~~~~~~~~  [type % ("Array<string>")]
+       ~~~~~~~~~~~~~  [type]
 
 function e(param: Array<number>) { }
-                  ~~~~~~~~~~~~~      [type % ("Array<number>")]
+                  ~~~~~~~~~~~~~      [type]
 
 var f = new Array();
-        ~~~~~~~~~~~  [constructor % ("new Array()")]
+        ~~~~~~~~~~~  [constructor]
 
 var g = new Array(4, 5);
-        ~~~~~~~~~~~~~~~  [constructor % ("new Array(4, 5)")]
+        ~~~~~~~~~~~~~~~  [constructor]
 
 var h = new Array(4);
 
 var i = Array(2);
 
 var j = new Array;
-        ~~~~~~~~~  [constructor % ("new Array")]
+        ~~~~~~~~~  [constructor]
 
 // calls to Array function/constructor on global objects is forbidden
 var nc1 = window.Array(1);
 var nc2 = global.Array(1, 2);
-          ~~~~~~~~~~~~~~~~~~  [function % ("global.Array(1, 2)")]
+          ~~~~~~~~~~~~~~~~~~  [function]
 var nc3 = globalThis.Array('3'); // no error - limitation of untyped rule
 
 var nn1 = new window.Array(1);
 var nn2 = new global.Array(1, 2);
-          ~~~~~~~~~~~~~~~~~~~~~~  [constructor % ("new global.Array(1, 2)")]
+          ~~~~~~~~~~~~~~~~~~~~~~  [constructor]
 var nn3 = new globalThis.Array('3'); // no error - limitation of untyped rule
 
 // calls to Array function/constructor from namespaces are valid
@@ -45,7 +45,7 @@ export const foo: Types.Array<number> = new Types.Array();
 declare var num: number;
 declare var str: string;
 declare var unionA: number | Array<number>;
-                             ~~~~~~~~~~~~~  [type % ("Array<number>")]
+                             ~~~~~~~~~~~~~  [type]
 declare var unionF: number | (() => number);
 
 // no errors below - limitation of untyped rule
@@ -68,6 +68,6 @@ declare var arrN: number[];
 const t11 = Array(...arrS);
 const t12 = Array(...arrN);
 
-[type]: Replace generic-typed Array with array literal: %s
-[constructor]: Replace Array constructor with an array literal: %s
-[function]: Replace Array function with an array literal: %s
+[type]: Replace generic-typed Array with array literal.
+[constructor]: Replace Array constructor with an array literal.
+[function]: Replace Array function with an array literal.

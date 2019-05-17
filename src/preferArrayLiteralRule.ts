@@ -115,6 +115,9 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
                         // See https://github.com/microsoft/tslint-microsoft-contrib/issues/859
                         const argument = callArguments[0];
                         const argumentType = checker.getTypeAtLocation(argument);
+                        // Looks like TS returns type or array elements when SpreadElement is passed to getTypeAtLocation.
+                        // Additional check for SpreadElement is required to catch case when array has type number[] and its element will pass assignability check.
+                        // SpreadElement shouldn't be allowed because result of `Array(...arr)` call will dependepend on array lenght and might produce unexpected results.
                         if (!tsutils.isTypeAssignableToNumber(checker, argumentType) || argument.kind === ts.SyntaxKind.SpreadElement) {
                             const failureString = Rule.getSizeParamFailureString(type);
                             ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);

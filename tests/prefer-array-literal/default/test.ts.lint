@@ -1,24 +1,90 @@
 let a: string[];
 
 let b: Array<string> = [];
-       ~~~~~~~~~~~~~       [Replace generic-typed Array with array literal: Array<string>]
+       ~~~~~~~~~~~~~       [type]
 
 interface C {
     myArray: Array<string>;
-             ~~~~~~~~~~~~~  [Replace generic-typed Array with array literal: Array<string>]
+             ~~~~~~~~~~~~~  [type]
 }
 
 var d: Array<string>;
-       ~~~~~~~~~~~~~  [Replace generic-typed Array with array literal: Array<string>]
+       ~~~~~~~~~~~~~  [type]
 
 function e(param: Array<number>) { }
-                  ~~~~~~~~~~~~~      [Replace generic-typed Array with array literal: Array<number>]
+                  ~~~~~~~~~~~~~      [type]
 
 var f = new Array();
-        ~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array()]
+        ~~~~~~~~~~~  [constructor]
 
 var g = new Array(4, 5);
-        ~~~~~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array(4, 5)]
+        ~~~~~~~~~~~~~~~  [constructor]
 
 var h = new Array(4);
-        ~~~~~~~~~~~~  [Replace Array constructor with an array literal: new Array(4)]
+        ~~~~~~~~~~~~  [constructor]
+
+var i = Array(2);
+        ~~~~~~~~  [function]
+
+var j = new Array;
+        ~~~~~~~~~  [constructor]
+
+// calls to Array function/constructor on global objects is forbidden
+var nc1 = window.Array(1);
+          ~~~~~~~~~~~~~~~  [function]
+var nc2 = global.Array(1, 2);
+          ~~~~~~~~~~~~~~~~~~  [function]
+var nc3 = globalThis.Array('3');
+          ~~~~~~~~~~~~~~~~~~~~~  [function]
+
+var nn1 = new window.Array(1);
+          ~~~~~~~~~~~~~~~~~~~  [constructor]
+var nn2 = new global.Array(1, 2);
+          ~~~~~~~~~~~~~~~~~~~~~~  [constructor]
+var nn3 = new globalThis.Array('3');
+          ~~~~~~~~~~~~~~~~~~~~~~~~~  [constructor]
+
+// calls to Array function/constructor from namespaces are valid
+import { Types } from 'mongoose';
+export const foo: Types.Array<number> = new Types.Array();
+
+declare var num: number;
+declare var str: string;
+declare var unionA: number | Array<number>;
+                             ~~~~~~~~~~~~~  [type]
+declare var unionF: number | (() => number);
+
+const t1 = Array(num);
+           ~~~~~~~~~~  [function]
+const t2 = Array(str);
+           ~~~~~~~~~~  [function]
+const t3 = Array(unionA);
+           ~~~~~~~~~~~~~  [function]
+const t3 = Array(unionF);
+           ~~~~~~~~~~~~~  [function]
+const t4 = Array(num + 1);
+           ~~~~~~~~~~~~~~  [function]
+const t5 = Array(str + 1);
+           ~~~~~~~~~~~~~~  [function]
+const t6 = Array(10 + 1);
+           ~~~~~~~~~~~~~  [function]
+const t7 = Array(10 + '1');
+           ~~~~~~~~~~~~~~~  [function]
+const t8 = Array(1.5);
+           ~~~~~~~~~~  [function]
+const t9 = Array(-1);
+           ~~~~~~~~~  [function]
+const t10 = Array(-num);
+            ~~~~~~~~~~~  [function]
+
+declare var arrS: number[];
+declare var arrN: number[];
+
+const t11 = Array(...arrS);
+            ~~~~~~~~~~~~~~  [function]
+const t12 = Array(...arrN);
+            ~~~~~~~~~~~~~~  [function]
+
+[type]: Replace generic-typed Array with array literal.
+[constructor]: Replace Array constructor with an array literal.
+[function]: Replace Array function with an array literal.

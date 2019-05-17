@@ -109,11 +109,18 @@ function walk(ctx: Lint.WalkContext<Options>, checker: ts.TypeChecker | undefine
             } else {
                 // When typechecker is not available - allow any call with single expression
                 if (checker) {
-                    const argument = callArguments[0];
-                    const argumentType = checker.getTypeAtLocation(argument);
-                    if (!tsutils.isTypeAssignableToNumber(checker, argumentType) || argument.kind === ts.SyntaxKind.SpreadElement) {
-                        const failureString = Rule.getSizeParamFailureString(type);
-                        ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                    try {
+                        // TS might throw exceptions in non-standard conditions (like .vue files)
+                        // Use try...catch blocks to fallback to the same behavior as when checker is not available
+                        // See https://github.com/microsoft/tslint-microsoft-contrib/issues/859
+                        const argument = callArguments[0];
+                        const argumentType = checker.getTypeAtLocation(argument);
+                        if (!tsutils.isTypeAssignableToNumber(checker, argumentType) || argument.kind === ts.SyntaxKind.SpreadElement) {
+                            const failureString = Rule.getSizeParamFailureString(type);
+                            ctx.addFailureAt(node.getStart(), node.getWidth(), failureString);
+                        }
+                    } catch {
+                        // No error to use same behavior as when typeChecker is not available
                     }
                 }
             }

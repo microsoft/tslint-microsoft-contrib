@@ -141,7 +141,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <code>child_process.exec(cmd)</code> runs <code>cmd</code> as a shell command which could allow an attacker to execute malicious code injected into <code>cmd</code>.
         Instead of <code>child_process.exec(cmd)</code> you should use <code>child_process.spawn(cmd)</code> or specify the command as a literal, e.g. <code>child_process.exec('ls')</code>.
       </td>
-      <td>@next</td>
+      <td>6.2.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -835,12 +835,12 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         Since 2.0.10, this rule can be configured to allow <code>Array</code> type parameters.
         To ignore type parameters, configure the rule with the values: <code>[true, {"allow-type-parameters": true}]</code>.
         <br />
-        Since @next, you can lift restriction on <code>Array</code> constructor calls with a single argument (to create empty array of a given length). If type information is available - rule will allow only a single argument of <code>number</code> type.
+        Since 6.2.0-beta, you can lift restriction on <code>Array</code> constructor calls with a single argument (to create empty array of a given length). If type information is available - rule will allow only a single argument of <code>number</code> type.
         To allow empty array creation, configure the rule with the values: <code>[true, {"allow-size-argument": true}]</code>.
         <br />
         This rule has some overlap with the <a href="https://palantir.github.io/tslint/rules/array-type">TSLint array-type rule</a>; however, the version here catches more instances.
       </td>
-      <td>1.0, 2.0.10, @next</td>
+      <td>1.0, 2.0.10, 6.2.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -1008,7 +1008,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.
       </td>
-      <td>@next</td>
+      <td>6.2.0-beta</td>
     </tr>
     <tr>
       <td>

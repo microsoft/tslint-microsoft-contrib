@@ -1,5 +1,22 @@
 # Changelog
 
+## [6.2.0-beta](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/6.2.0-beta)
+
+[All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.2.0-beta)
+
+-   [#859](https://github.com/microsoft/tslint-microsoft-contrib/issues/859) no-string-based-x rules throw errors in Vue SFC
+-   [#856](https://github.com/microsoft/tslint-microsoft-contrib/issues/856) False positive for prefer-array-literal when using `Array` from other namespace
+-   [#844](https://github.com/microsoft/tslint-microsoft-contrib/issues/844) Update w3 reference in the react-a11y-role rule
+-   [#841](https://github.com/microsoft/tslint-microsoft-contrib/issues/841) Rule react-a11y-input-elements incorrectly requiring value for file input
+-   [#839](https://github.com/microsoft/tslint-microsoft-contrib/issues/839) prefer-array-literal: catch new Array(10) but not Array(10)
+-   [#836](https://github.com/microsoft/tslint-microsoft-contrib/issues/836) react-a11y-no-onchange should allow onChange when onBlur is present
+-   [#830](https://github.com/microsoft/tslint-microsoft-contrib/issues/830) Add case sensitivity to 'import-name' rule
+-   [#822](https://github.com/microsoft/tslint-microsoft-contrib/issues/822) prefer-array-literal: how can one specify the size of the array?
+-   [#814](https://github.com/microsoft/tslint-microsoft-contrib/issues/814) export-name does not work with kebab/snake case
+-   [#813](https://github.com/microsoft/tslint-microsoft-contrib/issues/813) react-bind-this-issue doesn't detect bind decorators defined after usage
+-   [#279](https://github.com/microsoft/tslint-microsoft-contrib/issues/279) new a11y rule: mouse-events-have-key-events
+-   [#252](https://github.com/microsoft/tslint-microsoft-contrib/issues/252) new security rule: detect-child-process
+
 ## [6.1.0](https://github.com/Microsoft/tslint-microsoft-contrib/releases/tag/6.1.0)
 
 [All Issues](https://github.com/Microsoft/tslint-microsoft-contrib/issues?q=milestone%3A6.1.0)

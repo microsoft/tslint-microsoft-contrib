@@ -19,7 +19,7 @@ var tsutils = require("tsutils");
 var JsxAttribute_1 = require("./utils/JsxAttribute");
 exports.MISSING_PLACEHOLDER_INPUT_FAILURE_STRING = 'Input elements must include default, place-holding characters if empty';
 exports.MISSING_PLACEHOLDER_TEXTAREA_FAILURE_STRING = 'Textarea elements must include default, place-holding characters if empty';
-var EXCLUDED_INPUT_TYPES = ['checkbox', 'radio', 'file'];
+var EXCLUDED_INPUT_TYPES = ['checkbox', 'radio'];
 var Rule = (function (_super) {
     __extends(Rule, _super);
     function Rule() {
@@ -29,9 +29,7 @@ var Rule = (function (_super) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk);
         }
-        else {
-            return [];
-        }
+        return [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-input-elements',
@@ -50,20 +48,28 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-function isExcludedInputType(node, attributes) {
+function isTypeMatchedTo(node, attributes, condition) {
+    if (attributes.type === undefined) {
+        return false;
+    }
     for (var _i = 0, _a = node.attributes.properties; _i < _a.length; _i++) {
         var attribute = _a[_i];
         if (tsutils.isJsxAttribute(attribute)) {
-            var isInputAttributeType = attributes.type;
             if (attribute.initializer !== undefined && tsutils.isStringLiteral(attribute.initializer)) {
                 var attributeText = attribute.initializer.text;
-                if (isInputAttributeType !== undefined && EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1) {
+                if (condition(attributeText)) {
                     return true;
                 }
             }
         }
     }
     return false;
+}
+function isExcludedInputType(node, attributes) {
+    return isTypeMatchedTo(node, attributes, function (attributeText) { return EXCLUDED_INPUT_TYPES.indexOf(attributeText) !== -1; });
+}
+function isInputTypeFile(node, attributes) {
+    return isTypeMatchedTo(node, attributes, function (attributeText) { return attributeText === 'file'; });
 }
 function walk(ctx) {
     function cb(node) {
@@ -74,6 +80,9 @@ function walk(ctx) {
                 var isExcludedInput = isExcludedInputType(node, attributes);
                 var isExcludedInputTypeValueEmpty = JsxAttribute_1.isEmpty(attributes.value) && isExcludedInput;
                 var isPlaceholderEmpty = JsxAttribute_1.isEmpty(attributes.placeholder) && !isExcludedInput;
+                if (isInputTypeFile(node, attributes)) {
+                    return;
+                }
                 if ((JsxAttribute_1.isEmpty(attributes.value) && isPlaceholderEmpty) || isExcludedInputTypeValueEmpty) {
                     ctx.addFailureAt(node.getStart(), node.getWidth(), exports.MISSING_PLACEHOLDER_INPUT_FAILURE_STRING);
                 }

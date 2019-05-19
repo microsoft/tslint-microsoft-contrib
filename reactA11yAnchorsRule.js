@@ -186,7 +186,7 @@ function walk(ctx) {
         if (root === undefined) {
             return title;
         }
-        else if (root.kind === ts.SyntaxKind.JsxElement) {
+        if (root.kind === ts.SyntaxKind.JsxElement) {
             var jsxElement = root;
             jsxElement.children.forEach(function (child) {
                 title += anchorText(child, true);

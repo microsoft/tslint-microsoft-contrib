@@ -17,18 +17,16 @@ function getStringLiteral(node) {
     if (!initializer) {
         return '';
     }
-    else if (TypeGuard_1.isStringLiteral(initializer)) {
+    if (TypeGuard_1.isStringLiteral(initializer)) {
         return initializer.text.trim();
     }
-    else if (TypeGuard_1.isJsxExpression(initializer) && initializer.expression !== undefined && TypeGuard_1.isStringLiteral(initializer.expression)) {
+    if (TypeGuard_1.isJsxExpression(initializer) && initializer.expression !== undefined && TypeGuard_1.isStringLiteral(initializer.expression)) {
         return initializer.expression.text;
     }
-    else if (TypeGuard_1.isJsxExpression(initializer) && !initializer.expression) {
+    if (TypeGuard_1.isJsxExpression(initializer) && !initializer.expression) {
         return '';
     }
-    else {
-        return undefined;
-    }
+    return undefined;
 }
 exports.getStringLiteral = getStringLiteral;
 function getBooleanLiteral(node) {
@@ -43,35 +41,29 @@ function getBooleanLiteral(node) {
         if (value.toLowerCase() === 'true') {
             return true;
         }
-        else if (value.toLowerCase() === 'false') {
+        if (value.toLowerCase() === 'false') {
             return false;
         }
-        else {
-            return undefined;
-        }
+        return undefined;
     };
     if (TypeGuard_1.isStringLiteral(initializer)) {
         return getBooleanFromString(initializer.text);
     }
-    else if (TypeGuard_1.isJsxExpression(initializer)) {
+    if (TypeGuard_1.isJsxExpression(initializer)) {
         var expression = initializer.expression;
         if (expression === undefined) {
             return undefined;
         }
-        else if (TypeGuard_1.isStringLiteral(expression)) {
+        if (TypeGuard_1.isStringLiteral(expression)) {
             return getBooleanFromString(expression.text);
         }
-        else {
-            if (TypeGuard_1.isTrueKeyword(expression)) {
-                return true;
-            }
-            else if (TypeGuard_1.isFalseKeyword(expression)) {
-                return false;
-            }
-            else {
-                return undefined;
-            }
+        if (TypeGuard_1.isTrueKeyword(expression)) {
+            return true;
         }
+        if (TypeGuard_1.isFalseKeyword(expression)) {
+            return false;
+        }
+        return undefined;
     }
     return false;
 }
@@ -81,15 +73,15 @@ function isEmpty(node) {
     if (initializer === undefined) {
         return true;
     }
-    else if (TypeGuard_1.isStringLiteral(initializer)) {
+    if (TypeGuard_1.isStringLiteral(initializer)) {
         return initializer.text.trim() === '';
     }
-    else if (initializer.expression !== undefined) {
+    if (initializer.expression !== undefined) {
         var expression = initializer.expression;
         if (expression.kind === ts.SyntaxKind.Identifier) {
             return expression.getText() === 'undefined';
         }
-        else if (expression.kind === ts.SyntaxKind.NullKeyword) {
+        if (expression.kind === ts.SyntaxKind.NullKeyword) {
             return true;
         }
     }
@@ -114,7 +106,7 @@ function getAllAttributesFromJsxElement(node) {
     if (node === undefined) {
         return attributes;
     }
-    else if (TypeGuard_1.isJsxElement(node)) {
+    if (TypeGuard_1.isJsxElement(node)) {
         attributes = node.openingElement.attributes.properties;
     }
     else if (TypeGuard_1.isJsxSelfClosingElement(node)) {
@@ -155,10 +147,10 @@ function delintNode(node, tagName) {
     if (TypeGuard_1.isJsxElement(node) && node.openingElement.tagName.getText() === tagName) {
         return node;
     }
-    else if (TypeGuard_1.isJsxSelfClosingElement(node) && node.tagName.getText() === tagName) {
+    if (TypeGuard_1.isJsxSelfClosingElement(node) && node.tagName.getText() === tagName) {
         return node;
     }
-    else if (!node || node.getChildCount() === 0) {
+    if (!node || node.getChildCount() === 0) {
         return undefined;
     }
     return ts.forEachChild(node, function (childNode) { return delintNode(childNode, tagName); });
@@ -171,9 +163,7 @@ function getAncestorNode(node, ancestorTagName) {
     if (TypeGuard_1.isJsxElement(ancestorNode) && ancestorNode.openingElement.tagName.getText() === ancestorTagName) {
         return ancestorNode;
     }
-    else {
-        return getAncestorNode(ancestorNode, ancestorTagName);
-    }
+    return getAncestorNode(ancestorNode, ancestorTagName);
 }
 exports.getAncestorNode = getAncestorNode;
 //# sourceMappingURL=JsxAttribute.js.map

@@ -82,7 +82,7 @@ function walk(ctx) {
                 }
                 return;
             }
-            else if (isComplexType(node.initializer)) {
+            if (isComplexType(node.initializer)) {
                 return;
             }
             if (!validityCheck(node.initializer, propValue, expectedType, permittedValues)) {
@@ -123,15 +123,15 @@ function isUndefined(node) {
     if (!node) {
         return true;
     }
-    else if (TypeGuard_1.isJsxExpression(node)) {
+    if (TypeGuard_1.isJsxExpression(node)) {
         var expression = node.expression;
         if (!expression) {
             return true;
         }
-        else if (AstUtils_1.AstUtils.isUndefined(expression)) {
+        if (AstUtils_1.AstUtils.isUndefined(expression)) {
             return true;
         }
-        else if (TypeGuard_1.isNullKeyword(expression)) {
+        if (TypeGuard_1.isNullKeyword(expression)) {
             return true;
         }
     }
@@ -145,7 +145,7 @@ function isBoolean(node) {
         var propValue = node.text.toLowerCase();
         return propValue === 'true' || propValue === 'false';
     }
-    else if (TypeGuard_1.isJsxExpression(node)) {
+    if (TypeGuard_1.isJsxExpression(node)) {
         var expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -154,9 +154,7 @@ function isBoolean(node) {
             var propValue = expression.text.toLowerCase();
             return propValue === 'true' || propValue === 'false';
         }
-        else {
-            return TypeGuard_1.isFalseKeyword(expression) || TypeGuard_1.isTrueKeyword(expression);
-        }
+        return TypeGuard_1.isFalseKeyword(expression) || TypeGuard_1.isTrueKeyword(expression);
     }
     return false;
 }
@@ -164,7 +162,7 @@ function isMixed(node) {
     if (TypeGuard_1.isStringLiteral(node)) {
         return node.text.toLowerCase() === 'mixed';
     }
-    else if (TypeGuard_1.isJsxExpression(node)) {
+    if (TypeGuard_1.isJsxExpression(node)) {
         var expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -177,7 +175,7 @@ function isNumber(node) {
     if (TypeGuard_1.isStringLiteral(node)) {
         return !isNaN(Number(node.text));
     }
-    else if (TypeGuard_1.isJsxExpression(node)) {
+    if (TypeGuard_1.isJsxExpression(node)) {
         var expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -185,9 +183,7 @@ function isNumber(node) {
         if (TypeGuard_1.isStringLiteral(expression)) {
             return !isNaN(Number(expression.text));
         }
-        else {
-            return TypeGuard_1.isNumericLiteral(expression);
-        }
+        return TypeGuard_1.isNumericLiteral(expression);
     }
     return false;
 }
@@ -196,7 +192,7 @@ function isInteger(node) {
         var value = Number(node.text);
         return !isNaN(value) && Math.round(value) === value;
     }
-    else if (TypeGuard_1.isJsxExpression(node)) {
+    if (TypeGuard_1.isJsxExpression(node)) {
         var expression = node.expression;
         if (expression === undefined) {
             return false;
@@ -205,7 +201,7 @@ function isInteger(node) {
             var value = Number(expression.text);
             return !isNaN(value) && Math.round(value) === value;
         }
-        else if (TypeGuard_1.isNumericLiteral(expression)) {
+        if (TypeGuard_1.isNumericLiteral(expression)) {
             var value = Number(expression.text);
             return Math.round(value) === value;
         }

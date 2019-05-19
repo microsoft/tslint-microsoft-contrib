@@ -9,9 +9,7 @@ var AstUtils;
         if (fileName.endsWith('.tsx') || fileName.endsWith('.jsx')) {
             return ts.LanguageVariant.JSX;
         }
-        else {
-            return ts.LanguageVariant.Standard;
-        }
+        return ts.LanguageVariant.Standard;
     }
     AstUtils.getLanguageVariant = getLanguageVariant;
     function getFunctionName(node) {
@@ -216,7 +214,7 @@ var AstUtils;
             }
             return node.type.kind === ts.SyntaxKind.FunctionType;
         }
-        else if (node.initializer !== undefined) {
+        if (node.initializer !== undefined) {
             return node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression;
         }
         return false;

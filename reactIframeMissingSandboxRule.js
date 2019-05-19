@@ -40,9 +40,7 @@ var Rule = (function (_super) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk);
         }
-        else {
-            return [];
-        }
+        return [];
     };
     Rule.metadata = {
         ruleName: 'react-iframe-missing-sandbox',

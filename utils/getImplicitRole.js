@@ -7,7 +7,7 @@ function getImplicitRole(node) {
     if (node === undefined) {
         return undefined;
     }
-    else if (TypeGuard_1.isJsxElement(node)) {
+    if (TypeGuard_1.isJsxElement(node)) {
         tagName = node.openingElement.tagName.getText();
     }
     else if (TypeGuard_1.isJsxSelfClosingElement(node)) {

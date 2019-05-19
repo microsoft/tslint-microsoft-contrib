@@ -28,9 +28,7 @@ var Rule = (function (_super) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
-        else {
-            return [];
-        }
+        return [];
     };
     Rule.prototype.parseOptions = function (options) {
         var parsed = {

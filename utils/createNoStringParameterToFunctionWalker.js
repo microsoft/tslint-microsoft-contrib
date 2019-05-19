@@ -72,10 +72,10 @@ function createNoStringParameterToFunctionWalker(targetFunctionName, options, pr
     function validateExpression(node, ctx) {
         var functionName = AstUtils_1.AstUtils.getFunctionName(node);
         var functionTarget = AstUtils_1.AstUtils.getFunctionTarget(node);
-        var functionTargetType = getFunctionTargetType(node);
         var firstArg = node.arguments[0];
         if (functionName === targetFunctionName && firstArg !== undefined) {
             if (functionTarget) {
+                var functionTargetType = getFunctionTargetType(node);
                 if (functionTargetType) {
                     if (!functionTargetType.match(/^(any|Window|Worker)$/)) {
                         return;
@@ -100,8 +100,13 @@ function createNoStringParameterToFunctionWalker(targetFunctionName, options, pr
     function getFunctionTargetType(expression) {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && typeChecker) {
             var propExp = expression.expression;
-            var targetType = typeChecker.getTypeAtLocation(propExp.expression);
-            return typeChecker.typeToString(targetType);
+            try {
+                var targetType = typeChecker.getTypeAtLocation(propExp.expression);
+                return typeChecker.typeToString(targetType);
+            }
+            catch (_a) {
+                return undefined;
+            }
         }
         return undefined;
     }
@@ -120,11 +125,15 @@ function createNoStringParameterToFunctionWalker(targetFunctionName, options, pr
             return true;
         }
         if (expression.kind === ts.SyntaxKind.Identifier && typeChecker) {
-            var tsSymbol = typeChecker.getSymbolAtLocation(expression);
-            if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
-                return true;
+            try {
+                var tsSymbol = typeChecker.getSymbolAtLocation(expression);
+                if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (_a) {
+            }
         }
         if (ts.isCallExpression(expression)) {
             if (TypeGuard_1.isNamed(expression.expression) && expression.expression.name.getText() === 'bind') {
@@ -140,14 +149,19 @@ function createNoStringParameterToFunctionWalker(targetFunctionName, options, pr
                     return isFunctionType(expressionType, typeChecker);
                 }
             }
-            catch (e) {
+            catch (_b) {
                 return false;
             }
         }
         if (!typeChecker) {
             return true;
         }
-        return isFunctionType(typeChecker.getTypeAtLocation(expression), typeChecker);
+        try {
+            return isFunctionType(typeChecker.getTypeAtLocation(expression), typeChecker);
+        }
+        catch (_c) {
+            return true;
+        }
     }
 }
 exports.createNoStringParameterToFunctionWalker = createNoStringParameterToFunctionWalker;

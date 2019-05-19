@@ -100,16 +100,14 @@ function getExportsFromStatement(node) {
     if (ts.isExportAssignment(node)) {
         return [[node.expression.getText(), node.expression]];
     }
-    else if (node.exportClause) {
+    if (node.exportClause) {
         var symbolAndNodes_1 = [];
         node.exportClause.elements.forEach(function (e) {
             symbolAndNodes_1.push([e.name.getText(), node]);
         });
         return symbolAndNodes_1;
     }
-    else {
-        return [];
-    }
+    return [];
 }
 function walk(ctx) {
     var _a = ctx.options, allExceptions = _a.allExceptions, ignoreCase = _a.ignoreCase;
@@ -120,7 +118,7 @@ function walk(ctx) {
         if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleDeclaration) {
             return getExportStatementsWithinModules(moduleDeclaration.body);
         }
-        else if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
+        if (moduleDeclaration.body.kind === ts.SyntaxKind.ModuleBlock) {
             var moduleBlock = moduleDeclaration.body;
             return moduleBlock.statements.filter(isExportedDeclaration);
         }
@@ -147,12 +145,17 @@ function walk(ctx) {
         var flags = ignoreCase ? 'i' : '';
         var regex = new RegExp("^" + exportedName + "\\..+", flags);
         var fileName = Utils_1.Utils.fileBasename(ctx.sourceFile.fileName);
-        if (!regex.test(fileName)) {
+        var fileNameAsCamelCase = convertSnakeOrKebabCaseName(fileName);
+        if (!regex.test(fileNameAsCamelCase)) {
             if (!isSuppressed(exportedName)) {
                 var failureString = Rule.FAILURE_STRING + fileName + ' and ' + exportedName;
                 ctx.addFailureAt(tsNode.getStart(), tsNode.getWidth(), failureString);
             }
         }
+    }
+    function convertSnakeOrKebabCaseName(rawName) {
+        var snakeOrKebabRegex = /((\-|\_)\w)/g;
+        return rawName.replace(snakeOrKebabRegex, function (match) { return match[1].toUpperCase(); });
     }
     function isSuppressed(exportedName) {
         return Utils_1.Utils.exists(allExceptions, function (exception) {

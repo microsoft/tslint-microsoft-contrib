@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var Lint = require("tslint");
+var tsutils = require("tsutils");
 var AstUtils_1 = require("./utils/AstUtils");
 var FAILURE_STRING_MANIPULATION = 'Replace HTML string manipulation with jQuery API: ';
 var FAILURE_STRING_COMPLEX = 'Replace complex HTML strings with jQuery API: ';
@@ -24,7 +25,7 @@ var Rule = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Rule.prototype.apply = function (sourceFile) {
-        return this.applyWithWalker(new NoJqueryRawElementsRuleWalker(sourceFile, this.getOptions()));
+        return this.applyWithFunction(sourceFile, walk);
     };
     Rule.metadata = {
         ruleName: 'no-jquery-raw-elements',
@@ -43,31 +44,8 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
-var NoJqueryRawElementsRuleWalker = (function (_super) {
-    __extends(NoJqueryRawElementsRuleWalker, _super);
-    function NoJqueryRawElementsRuleWalker() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    NoJqueryRawElementsRuleWalker.prototype.visitCallExpression = function (node) {
-        var functionName = AstUtils_1.AstUtils.getFunctionName(node);
-        if (AstUtils_1.AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
-            var firstArg = node.arguments[0];
-            if (firstArg.kind === ts.SyntaxKind.StringLiteral) {
-                if (this.isComplexHtmlElement(firstArg)) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText());
-                }
-            }
-            else {
-                var finder = new HtmlLikeStringLiteralFinder(this.getSourceFile(), this.getOptions());
-                finder.walk(node.arguments[0]);
-                if (finder.isFound()) {
-                    this.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_MANIPULATION + node.getText());
-                }
-            }
-        }
-        _super.prototype.visitCallExpression.call(this, node);
-    };
-    NoJqueryRawElementsRuleWalker.prototype.isComplexHtmlElement = function (literal) {
+function walk(ctx) {
+    function isComplexHtmlElement(literal) {
         var text = literal.text.trim();
         if (/^<.*>$/.test(text) === false) {
             return false;
@@ -86,27 +64,31 @@ var NoJqueryRawElementsRuleWalker = (function (_super) {
             }
         }
         return true;
-    };
-    return NoJqueryRawElementsRuleWalker;
-}(Lint.RuleWalker));
-var HtmlLikeStringLiteralFinder = (function (_super) {
-    __extends(HtmlLikeStringLiteralFinder, _super);
-    function HtmlLikeStringLiteralFinder() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.found = false;
-        return _this;
     }
-    HtmlLikeStringLiteralFinder.prototype.isFound = function () {
-        return this.found;
-    };
-    HtmlLikeStringLiteralFinder.prototype.visitStringLiteral = function (node) {
-        if (node.text.indexOf('<') > -1 || node.text.indexOf('>') > -1) {
-            this.found = true;
+    function cb(node) {
+        if (tsutils.isCallExpression(node)) {
+            var functionName = AstUtils_1.AstUtils.getFunctionName(node);
+            if (AstUtils_1.AstUtils.isJQuery(functionName) && node.arguments.length > 0) {
+                var firstArg = node.arguments[0];
+                if (tsutils.isStringLiteral(firstArg)) {
+                    if (isComplexHtmlElement(firstArg)) {
+                        ctx.addFailureAt(node.getStart(), node.getWidth(), FAILURE_STRING_COMPLEX + node.getText());
+                    }
+                }
+                else {
+                    htmlLikeStringLiteralFinder(ctx, node);
+                }
+            }
         }
-        else {
-            _super.prototype.visitStringLiteral.call(this, node);
-        }
-    };
-    return HtmlLikeStringLiteralFinder;
-}(Lint.RuleWalker));
+        return ts.forEachChild(node, cb);
+    }
+    return ts.forEachChild(ctx.sourceFile, cb);
+}
+function htmlLikeStringLiteralFinder(ctx, expr) {
+    var node = expr.arguments[0];
+    var textExpr = node.getText();
+    if (textExpr.indexOf('<') > -1 || textExpr.indexOf('>') > -1) {
+        ctx.addFailureAt(expr.getStart(), expr.getWidth(), FAILURE_STRING_MANIPULATION + expr.getText());
+    }
+}
 //# sourceMappingURL=noJqueryRawElementsRule.js.map

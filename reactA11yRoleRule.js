@@ -21,12 +21,12 @@ var ROLE_SCHEMA = require('./utils/attributes/roleSchema.json');
 var ROLES = ROLE_SCHEMA.roles;
 var VALID_ROLES = Object.keys(ROLES).filter(function (role) { return ROLES[role].isAbstract === false; });
 function getFailureStringUndefinedRole() {
-    return ("'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria/roles#role_definitions, " +
+    return ("'role' attribute empty. Either select a role from https://www.w3.org/TR/wai-aria-1.1/#role_definitions, " +
         'or simply remove this attribute');
 }
 exports.getFailureStringUndefinedRole = getFailureStringUndefinedRole;
 function getFailureStringInvalidRole(invalidRoleName) {
-    return "Invalid role attribute value '" + invalidRoleName + "', elements with ARIA roles must use a valid, non-abstract ARIA role. A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.";
+    return "Invalid role attribute value '" + invalidRoleName + "', elements with ARIA roles must use a valid, non-abstract ARIA role. A reference to role definitions can be found at https://www.w3.org/TR/wai-aria-1.1/#role_definitions.";
 }
 exports.getFailureStringInvalidRole = getFailureStringInvalidRole;
 var Rule = (function (_super) {
@@ -41,7 +41,7 @@ var Rule = (function (_super) {
         ruleName: 'react-a11y-role',
         type: 'maintainability',
         description: 'Elements with aria roles must use a **valid**, **non-abstract** aria role. ' +
-            'A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).',
+            'A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria-1.1/#role_definitions).',
         rationale: "References:\n        <ul>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/92\">WCAG Rule 92: Role value must be valid</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',

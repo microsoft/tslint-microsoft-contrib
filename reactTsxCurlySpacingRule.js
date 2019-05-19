@@ -85,26 +85,18 @@ function walk(ctx) {
             if (first === violationRoot) {
                 return "A space is required after '" + violationRoot.getText() + "'";
             }
-            else {
-                return "A space is required before '" + violationRoot.getText() + "'";
-            }
+            return "A space is required before '" + violationRoot.getText() + "'";
         }
-        else {
-            if (first === violationRoot) {
-                return "There should be no space after '" + violationRoot.getText() + "'";
-            }
-            else {
-                return "There should be no space before '" + violationRoot.getText() + "'";
-            }
+        if (first === violationRoot) {
+            return "There should be no space after '" + violationRoot.getText() + "'";
         }
+        return "There should be no space before '" + violationRoot.getText() + "'";
     }
     function getFailureForNewLine(first, violationRoot) {
         if (first === violationRoot) {
             return "There should be no newline after '" + violationRoot.getText() + "'";
         }
-        else {
-            return "There should be no newline before '" + violationRoot.getText() + "'";
-        }
+        return "There should be no newline before '" + violationRoot.getText() + "'";
     }
     function reportFailure(start, endNode, failure) {
         ctx.addFailureAt(start.getStart(), endNode.getStart() - start.getStart(), failure);

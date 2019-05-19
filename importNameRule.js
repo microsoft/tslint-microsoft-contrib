@@ -32,7 +32,8 @@ var Rule = (function (_super) {
             replacements: {},
             ignoredList: [],
             config: {
-                ignoreExternalModule: true
+                ignoreExternalModule: true,
+                case: StringCase.camel
             }
         };
         if (options.ruleArguments instanceof Array) {
@@ -66,16 +67,16 @@ var Rule = (function (_super) {
         return opt.filter(function (moduleName) { return typeof moduleName === 'string'; });
     };
     Rule.prototype.extractConfig = function (opt) {
-        var result = { ignoreExternalModule: true };
-        var configKeyLlist = ['ignoreExternalModule'];
+        var result = { ignoreExternalModule: true, case: StringCase.camel };
+        var configKeyList = ['ignoreExternalModule', 'case'];
         if (TypeGuard_1.isObject(opt)) {
             return Object.keys(opt).reduce(function (accum, key) {
-                if (configKeyLlist.filter(function (configKey) { return configKey === key; }).length >= 1) {
+                if (configKeyList.filter(function (configKey) { return configKey === key; }).length >= 1) {
                     accum[key] = opt[key];
                     return accum;
                 }
                 return accum;
-            }, { ignoreExternalModule: true });
+            }, { ignoreExternalModule: true, case: StringCase.camel });
         }
         return result;
     };
@@ -103,6 +104,12 @@ var Rule = (function (_super) {
     return Rule;
 }(Lint.Rules.AbstractRule));
 exports.Rule = Rule;
+var StringCase;
+(function (StringCase) {
+    StringCase["any"] = "any-case";
+    StringCase["pascal"] = "PascalCase";
+    StringCase["camel"] = "camelCase";
+})(StringCase || (StringCase = {}));
 function walk(ctx) {
     var option = ctx.options;
     function getNameNodeFromImportNode(node) {
@@ -129,7 +136,12 @@ function walk(ctx) {
         return ignoredList.filter(function (ignoredModule) { return ignoredModule === moduleName; }).length >= 1;
     }
     function checkReplacementsExist(importedName, expectedImportedName, moduleName, replacements) {
-        var allowedReplacementKeys = [expectedImportedName, moduleName, moduleName.replace(/.*\//, '')];
+        var allowedReplacementKeys = [
+            makeCamelCase(expectedImportedName),
+            makePascalCase(expectedImportedName),
+            moduleName,
+            moduleName.replace(/.*\//, '')
+        ];
         return Utils_1.Utils.exists(Object.keys(replacements), function (replacementKey) {
             for (var index = 0; allowedReplacementKeys.length > index; index = index + 1) {
                 if (replacementKey === allowedReplacementKeys[index]) {
@@ -140,7 +152,7 @@ function walk(ctx) {
         });
     }
     function isImportNameValid(importedName, expectedImportedName, moduleName, node) {
-        if (expectedImportedName === importedName) {
+        if (transformName(expectedImportedName).indexOf(importedName) > -1) {
             return true;
         }
         var isReplacementsExist = checkReplacementsExist(importedName, expectedImportedName, moduleName, option.replacements);
@@ -157,27 +169,43 @@ function walk(ctx) {
         }
         return false;
     }
+    function transformName(input) {
+        switch (option.config.case) {
+            case StringCase.camel:
+                return [makeCamelCase(input)];
+            case StringCase.pascal:
+                return [makePascalCase(input)];
+            case StringCase.any:
+                return [makeCamelCase(input), makePascalCase(input)];
+            default:
+                throw new Error("Unknown case for import-name rule: \"" + option.config.case + "\"");
+        }
+    }
     function makeCamelCase(input) {
         return input.replace(/[-|\.|_](.)/g, function (_match, group1) {
             return group1.toUpperCase();
         });
+    }
+    function makePascalCase(input) {
+        return input.replace(/(?:^|[-|\.|_|])([a-z])/g, function (_, group1) { return group1.toUpperCase(); });
     }
     function validateImport(node, importedName, moduleName) {
         var expectedImportedName = moduleName.replace(/.*\//, '');
         if (expectedImportedName === '' || expectedImportedName === '.' || expectedImportedName === '..') {
             return;
         }
-        expectedImportedName = makeCamelCase(expectedImportedName);
         if (isImportNameValid(importedName, expectedImportedName, moduleName, node)) {
             return;
         }
-        var message = "Misnamed import. Import should be named '" + expectedImportedName + "' but found '" + importedName + "'";
+        var expectedImportedNames = transformName(expectedImportedName);
+        var expectedNames = expectedImportedNames.map(function (name) { return "'" + name + "'"; }).join(' or ');
+        var message = "Misnamed import. Import should be named " + expectedNames + " but found '" + importedName + "'";
         var nameNode = getNameNodeFromImportNode(node);
         if (nameNode === undefined) {
             return;
         }
         var nameNodeStartPos = nameNode.getStart();
-        var fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedName);
+        var fix = new Lint.Replacement(nameNodeStartPos, nameNode.end - nameNodeStartPos, expectedImportedNames[0]);
         ctx.addFailureAt(node.getStart(), node.getWidth(), message, fix);
     }
     function cb(node) {

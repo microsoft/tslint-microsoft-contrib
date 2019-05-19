@@ -19,9 +19,7 @@ var ChaiUtils;
         if (/.*\.?expect/.test(callExpression.expression.getText())) {
             return callExpression;
         }
-        else {
-            return undefined;
-        }
+        return undefined;
     }
     ChaiUtils.getExpectInvocation = getExpectInvocation;
     function getLeftMostCallExpression(node, checkParent) {
@@ -31,15 +29,14 @@ var ChaiUtils;
             if (leftSide.kind === ts.SyntaxKind.CallExpression) {
                 return leftSide;
             }
-            else if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            if (leftSide.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 leftSide = leftSide.expression;
+                continue;
             }
-            else if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
+            if (checkParent && leftSide.parent.kind === ts.SyntaxKind.CallExpression) {
                 return leftSide.parent;
             }
-            else {
-                return undefined;
-            }
+            return undefined;
         }
         return undefined;
     }

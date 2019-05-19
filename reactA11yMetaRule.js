@@ -26,9 +26,7 @@ var Rule = (function (_super) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk);
         }
-        else {
-            return [];
-        }
+        return [];
     };
     Rule.metadata = {
         ruleName: 'react-a11y-meta',
@@ -80,7 +78,7 @@ function isStringLiteral(expression, literal) {
             var value = expression.text;
             return value === literal;
         }
-        else if (expression.kind === ts.SyntaxKind.JsxExpression) {
+        if (expression.kind === ts.SyntaxKind.JsxExpression) {
             var exp = expression;
             if (exp.expression !== undefined && exp.expression.kind === ts.SyntaxKind.StringLiteral) {
                 var value = exp.expression.text;

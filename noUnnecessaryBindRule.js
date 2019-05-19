@@ -141,13 +141,13 @@ var UnderscoreStaticAnalyzer = (function () {
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
         }
-        else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[3];
         }
-        else if (functionName === 'sortedIndex') {
+        if (functionName === 'sortedIndex') {
             return node.arguments[3];
         }
-        else if (functionName === 'bind') {
+        if (functionName === 'bind') {
             return node.arguments[1];
         }
         return undefined;
@@ -157,13 +157,13 @@ var UnderscoreStaticAnalyzer = (function () {
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         }
-        else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         }
-        else if (functionName === 'sortedIndex') {
+        if (functionName === 'sortedIndex') {
             return node.arguments[2];
         }
-        else if (functionName === 'bind') {
+        if (functionName === 'bind') {
             return node.arguments[0];
         }
         return undefined;
@@ -188,10 +188,10 @@ var UnderscoreInstanceAnalyzer = (function () {
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[1];
         }
-        else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[2];
         }
-        else if (functionName === 'sortedIndex') {
+        if (functionName === 'sortedIndex') {
             return node.arguments[2];
         }
         return undefined;
@@ -201,10 +201,10 @@ var UnderscoreInstanceAnalyzer = (function () {
         if (Rule.UNDERSCORE_BINARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
         }
-        else if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
+        if (Rule.UNDERSCORE_TERNARY_FUNCTION_NAMES.indexOf(functionName) !== -1) {
             return node.arguments[0];
         }
-        else if (functionName === 'sortedIndex') {
+        if (functionName === 'sortedIndex') {
             return node.arguments[1];
         }
         return undefined;

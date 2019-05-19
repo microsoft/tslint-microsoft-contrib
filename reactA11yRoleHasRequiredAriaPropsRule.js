@@ -24,11 +24,11 @@ var ARIA_ATTRIBUTES = require('./utils/attributes/ariaSchema.json');
 var ROLE_STRING = 'role';
 var TAGS_WITH_ARIA_LEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 function getFailureStringForNotImplicitRole(roleNamesInElement, missingProps) {
-    return "Element with ARIA role(s) '" + roleNamesInElement.join(', ') + "' are missing required attribute(s): " + missingProps.join(', ') + ". A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.";
+    return "Element with ARIA role(s) '" + roleNamesInElement.join(', ') + "' are missing required attribute(s): " + missingProps.join(', ') + ". A reference to role definitions can be found at https://www.w3.org/TR/wai-aria-1.1/#role_definitions.";
 }
 exports.getFailureStringForNotImplicitRole = getFailureStringForNotImplicitRole;
 function getFailureStringForImplicitRole(tagName, roleNamesInElement, missingProps) {
-    return "Tag '" + tagName + "' has implicit role '" + roleNamesInElement + "'. It requires aria-* attributes: " + missingProps.join(', ') + " that are missing in the element. A reference to role definitions can be found at https://www.w3.org/TR/wai-aria/roles#role_definitions.";
+    return "Tag '" + tagName + "' has implicit role '" + roleNamesInElement + "'. It requires aria-* attributes: " + missingProps.join(', ') + " that are missing in the element. A reference to role definitions can be found at https://www.w3.org/TR/wai-aria-1.1/#role_definitions.";
 }
 exports.getFailureStringForImplicitRole = getFailureStringForImplicitRole;
 var Rule = (function (_super) {
@@ -43,7 +43,7 @@ var Rule = (function (_super) {
         ruleName: 'react-a11y-role-has-required-aria-props',
         type: 'maintainability',
         description: 'Elements with aria roles must have all required attributes according to the role.',
-        rationale: "References:\n        <ul>\n          <li><a href=\"https://www.w3.org/TR/wai-aria/roles#role_definitions\">ARIA Definition of Roles</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/90\">WCAG Rule 90: Required properties and states should be defined</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/91\">WCAG Rule 91: Required properties and states must not be empty</a></li>\n        </ul>",
+        rationale: "References:\n        <ul>\n          <li><a href=\"https://www.w3.org/TR/wai-aria-1.1/#role_definitions\">ARIA Definition of Roles</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/90\">WCAG Rule 90: Required properties and states should be defined</a></li>\n          <li><a href=\"http://oaa-accessibility.org/wcag20/rule/91\">WCAG Rule 91: Required properties and states must not be empty</a></li>\n        </ul>",
         options: null,
         optionsDescription: '',
         typescriptOnly: true,

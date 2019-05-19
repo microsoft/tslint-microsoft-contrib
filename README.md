@@ -2,8 +2,10 @@
 
 [![npm version](https://badge.fury.io/js/tslint-microsoft-contrib.svg)](https://badge.fury.io/js/tslint-microsoft-contrib)
 [![Downloads](https://img.shields.io/npm/dm/tslint-microsoft-contrib.svg)](https://npmjs.org/package/tslint-microsoft-contrib)
-[![Build Status](https://travis-ci.org/Microsoft/tslint-microsoft-contrib.svg?branch=master)](https://travis-ci.org/Microsoft/tslint-microsoft-contrib)
+[![TravisCI Build Status](https://travis-ci.org/Microsoft/tslint-microsoft-contrib.svg?branch=master)](https://travis-ci.org/Microsoft/tslint-microsoft-contrib)
+[![Azure Pipelines Build Status](https://dev.azure.com/ms/tslint-microsoft-contrib/_apis/build/status/tslint-microsoft-contrib?branchName=master)](https://dev.azure.com/ms/tslint-microsoft-contrib/_build/latest?definitionId=68&branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/tslint-microsoft-contrib](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/tslint-microsoft-contrib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
@@ -128,6 +130,18 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         The previous code sample could be better written as <code>expect(something).to.equal(true, 'expected something to have occurred');</code>
       </td>
       <td>1.0</td>
+    </tr>
+    <tr>
+      <td>
+        <code>detect-child-process</code>
+      </td>
+      <td>
+        Detects usages of child_process and especially child_process.exec() with a non-literal first argument.
+        It is dangerous to pass a string constructed at runtime as the first argument to the <code>child_process.exec()</code>.
+        <code>child_process.exec(cmd)</code> runs <code>cmd</code> as a shell command which could allow an attacker to execute malicious code injected into <code>cmd</code>.
+        Instead of <code>child_process.exec(cmd)</code> you should use <code>child_process.spawn(cmd)</code> or specify the command as a literal, e.g. <code>child_process.exec('ls')</code>.
+      </td>
+      <td>6.2.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -814,15 +828,19 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         Use array literal syntax when declaring or instantiating array types.
         For example, prefer the Javascript form of <code>string[]</code> to the TypeScript form <code>Array&lt;string&gt;</code>.
-        Prefer <code>[]' to <code>new Array()</code>.
-        Prefer <code>[4, 5]' to <code>new Array(4, 5)</code>.
-        Prefer <code>[undefined, undefined]' to <code>new Array(2)</code>.
-        Since 2.0.10, this rule can be configured to allow Array type parameters.
-        To ignore type parameters, configure the rule with the values: <code>[ true, { 'allow-type-parameters': true } ]</code>.
+        Prefer <code>[]</code> over <code>new Array()</code>.
+        Prefer <code>[4, 5]</code> over <code>new Array(4, 5)</code>.
+        Prefer <code>[undefined, undefined]</code> over <code>new Array(2)</code>.
+        <br />
+        Since 2.0.10, this rule can be configured to allow <code>Array</code> type parameters.
+        To ignore type parameters, configure the rule with the values: <code>[true, {"allow-type-parameters": true}]</code>.
+        <br />
+        Since 6.2.0-beta, you can lift restriction on <code>Array</code> constructor calls with a single argument (to create empty array of a given length). If type information is available - rule will allow only a single argument of <code>number</code> type.
+        To allow empty array creation, configure the rule with the values: <code>[true, {"allow-size-argument": true}]</code>.
         <br />
         This rule has some overlap with the <a href="https://palantir.github.io/tslint/rules/array-type">TSLint array-type rule</a>; however, the version here catches more instances.
       </td>
-      <td>1.0, 2.0.10</td>
+      <td>1.0, 2.0.10, 6.2.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -985,6 +1003,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-mouse-event-has-key-event</code>
+      </td>
+      <td>
+        For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.
+      </td>
+      <td>6.2.0-beta</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-no-onchange</code>
       </td>
       <td>
@@ -1037,7 +1064,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         For accessibility of your website, elements with aria roles must use a **valid**, **non-abstract** aria role.
-        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions).
+        A reference to role definitions can be found at [WAI-ARIA roles](https://www.w3.org/TR/wai-aria-1.1/#role_definitions).
         <br />
         References:
         <ul>
@@ -1055,7 +1082,7 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         <br />
         References:
         <ul>
-          <li><a href="https://www.w3.org/TR/wai-aria/roles#role_definitions">ARIA Definition of Roles</a></li>
+          <li><a href="https://www.w3.org/TR/wai-aria-1.1/#role_definitions">ARIA Definition of Roles</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/90">WCAG Rule 90: Required properties and states should be defined</a></li>
           <li><a href="http://oaa-accessibility.org/wcag20/rule/91">WCAG Rule 91: Required properties and states must not be empty</a></li>
         </ul>

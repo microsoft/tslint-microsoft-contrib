@@ -32,9 +32,7 @@ var Rule = (function (_super) {
         if (sourceFile.languageVariant === ts.LanguageVariant.JSX) {
             return this.applyWithFunction(sourceFile, walk, this.parseOptions(this.getOptions()));
         }
-        else {
-            return [];
-        }
+        return [];
     };
     Rule.prototype.parseOptions = function (options) {
         var parsed = {
@@ -228,11 +226,18 @@ function walk(ctx) {
             }
         });
     }
-    function cb(node) {
-        if (tsutils.isMethodDeclaration(node)) {
+    function visitClassMember(node) {
+        if (tsutils.isConstructorDeclaration(node)) {
+            boundListeners = getSelfBoundListeners(node);
+        }
+        else if (tsutils.isMethodDeclaration(node)) {
             if (isMethodBoundWithDecorators(node, ctx.options.allowedDecorators)) {
                 boundListeners = boundListeners.add('this.' + node.name.getText());
             }
+        }
+    }
+    function cb(node) {
+        if (tsutils.isMethodDeclaration(node)) {
             scope = new Scope_1.Scope(undefined);
             ts.forEachChild(node, cb);
             scope = undefined;
@@ -264,9 +269,7 @@ function walk(ctx) {
             AstUtils_1.AstUtils.getDeclaredMethodNames(node).forEach(function (methodName) {
                 declaredMethods.add('this.' + methodName);
             });
-        }
-        else if (tsutils.isConstructorDeclaration(node)) {
-            boundListeners = getSelfBoundListeners(node);
+            node.members.forEach(visitClassMember);
         }
         else if (tsutils.isJsxElement(node)) {
             visitJsxOpeningElement(node.openingElement);

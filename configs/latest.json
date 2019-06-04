@@ -5,6 +5,7 @@
         "detect-child-process": true,
         "react-a11y-iframes": true,
         "react-a11y-mouse-event-has-key-event": true,
+        "tsx-without-jsx": true,
         "void-zero": true
     }
 }

@@ -1,0 +1,4 @@
+const foo = "test";
+~~~~~~~~~~~~~~~~~~~
+
+~nil [Files with .tsx/.jsx extension should contain JSX Elements. Rename to .ts/.js instead.]

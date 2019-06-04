@@ -1256,6 +1256,13 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>tsx-without-jsx</code>
+      </td>
+      <td>Enforces .tsx/.jsx files should contain JSX elements to clarify the file's purpose.</td>
+      <td>@next</td>
+    </tr>
+    <tr>
+      <td>
       <code>underscore-consistent-invocation</code>
       </td>
       <td>

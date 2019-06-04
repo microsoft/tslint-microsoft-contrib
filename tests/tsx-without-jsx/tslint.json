@@ -1,0 +1,8 @@
+{
+    "rules": {
+        "tsx-without-jsx": true
+    },
+    "jsRules": {
+        "tsx-without-jsx": true
+    }
+}

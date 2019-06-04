@@ -40,5 +40,6 @@
     "705": "Incorrect Control Flow Scoping",
     "710": "Coding Standards Violation",
     "749": "Exposed Dangerous Method or Function",
-    "915": "Improperly Controlled Modification of Dynamically-Determined Object Attributes"
+    "915": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+    "1164": "Irrelevant Code"
 }

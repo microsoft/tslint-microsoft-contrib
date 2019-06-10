@@ -128,25 +128,50 @@ function walk(ctx: Lint.WalkContext<Options>) {
     function cb(node: ts.Node): void {
         if (tsutils.isMethodDeclaration(node)) {
             const name: string = node.name.getText();
-            if (AstUtils.hasComputedName(node)) {
+
+            const isComputed = AstUtils.hasComputedName(node);
+            const isPrivate = AstUtils.isPrivate(node);
+            const isProtected = AstUtils.isProtected(node);
+            const isStatic = AstUtils.isStatic(node);
+
+            const staticOnly = isStatic && validateStatics === VALIDATE_PRIVATE_STATICS_AS_STATIC;
+            const privateOnly = (isPrivate || isProtected) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE;
+
+            if (isComputed) {
                 // allow computed names
-            } else if (AstUtils.isPrivate(node)) {
-                if (!privateMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+            } else if (isPrivate && isStatic && validateStatics === VALIDATE_PRIVATE_STATICS_AS_EITHER) {
+                if (!privateMethodRegex.test(name) && !staticMethodRegex.test(name)) {
+                    ctx.addFailureAt(
+                        node.name.getStart(),
+                        node.name.getWidth(),
+                        `Private static method name does not match ${privateMethodRegex} or ${staticMethodRegex}: ${name}`
+                    );
+                }
+            } else if (isProtected && isStatic && validateStatics === VALIDATE_PRIVATE_STATICS_AS_EITHER) {
+                if (!protectedMethodRegex.test(name) && !staticMethodRegex.test(name)) {
+                    ctx.addFailureAt(
+                        node.name.getStart(),
+                        node.name.getWidth(),
+                        `Protected static method name does not match ${protectedMethodRegex} or ${staticMethodRegex}: ${name}`
+                    );
+                }
+            } else if (isPrivate && !staticOnly) {
+                if (!privateMethodRegex.test(name)) {
                     ctx.addFailureAt(
                         node.name.getStart(),
                         node.name.getWidth(),
                         `Private method name does not match ${privateMethodRegex}: ${name}`
                     );
                 }
-            } else if (AstUtils.isProtected(node)) {
-                if (!protectedMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
+            } else if (isProtected && !staticOnly) {
+                if (!protectedMethodRegex.test(name)) {
                     ctx.addFailureAt(
                         node.name.getStart(),
                         node.name.getWidth(),
                         `Protected method name does not match ${protectedMethodRegex}: ${name}`
                     );
                 }
-            } else if (AstUtils.isStatic(node)) {
+            } else if (isStatic && !privateOnly) {
                 if (!staticMethodRegex.test(name)) {
                     ctx.addFailureAt(
                         node.name.getStart(),

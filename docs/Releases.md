@@ -29,31 +29,12 @@ git push --tags
 -   Create [release](https://github.com/Microsoft/tslint-microsoft-contrib/releases) for newly pushed tag
 -   Increase the version number in package.json and README.md to the next minor version and push
 
-## Prepare the tslint-microsoft-contrib releases branch
+## Publish the npm package
 
--   Clone the repo again to a new folder:
+Package should be published only from `dist/build` folder.
 
-```shell
-git clone https://github.com/Microsoft/tslint-microsoft-contrib tslint-microsoft-contrib-releases
-```
+-   For beta release run `npm publish --tag beta`
 
--   Checkout branch `releases`
+-   For stable release run `npm publish`
 
-```shell
-git checkout releases
-```
-
--   Replace all files with the contents of `/dist/build` directory created from `master`
--   Commit and push to remote
--   tag the releases branch with the format `npm-[version]`
-
-```shell
-git tag npm-2.0.10
-git push --tags
-```
-
-## Publish the Package with the Microsoft npmjs Account
-
--   Follow the steps at https://docs.opensource.microsoft.com/releasing/build-your-project.html#npm
-    -   Basically just send the email they want and wait a little while
-    -   Include the npmjs.org user ids of all contributors: brndkfr, hamletdrc, dmanesku, joshuakgoldberg
+If you need to promote package from beta to stable use `npm dist-tag add tslint-microsoft-contrib@<version> latest`

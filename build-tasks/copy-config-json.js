@@ -19,3 +19,5 @@ mkdirp.sync('./dist/build');
 for (const configFileName of readDirectory('./configs')) {
     copyConfigFile(`./configs/${configFileName}`, `./dist/build/${configFileName}`);
 }
+
+copyConfigFile('./configs/legacy.json', './dist/build/tslint.json');

@@ -9,3 +9,6 @@ dist/
 
 # Test files
 test-data/NoUnnecessarySemicolonsTestInput.ts
+
+# Files from package for backward compatibility
+build-tasks/back-compat

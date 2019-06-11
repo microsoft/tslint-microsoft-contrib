@@ -49,6 +49,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
+    "copy:back-compat": "cpy \"**/*.js\" ../../dist/build --cwd=\"build-tasks/back-compat\" --parents",
     "copy:config-json": "node build-tasks/copy-config-json.js",
     "copy:json": "cpy \"src/**/*.json\" dist --parents",
     "copy:meta": "cpy README.md dist/build --parents",
@@ -64,7 +65,7 @@
     "start": "npm-run-all clean copy:json watch:src",
     "test:mocha": "mocha \"dist/src/tests/**/*.js\" --timeout 5000",
     "test:rules": "tslint -r dist/src --test \"tests/**\"",
-    "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package generate:* copy:meta copy:config-json",
+    "test": "npm-run-all clean copy:json tsc:src test:* tslint:check lint:* validate:* copy:package generate:* copy:meta copy:config-json copy:back-compat",
     "tsc:src": "tsc",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "validate:documentation": "node build-tasks/validate-documentation.js",

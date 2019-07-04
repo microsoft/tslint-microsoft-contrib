@@ -125,46 +125,108 @@ export class Rule extends Lint.Rules.AbstractRule {
 function walk(ctx: Lint.WalkContext<Options>) {
     const { validateStatics, methodRegex, privateMethodRegex, protectedMethodRegex, staticMethodRegex, functionRegex } = ctx.options;
 
+    function validateAnyPattern(name: ts.PropertyName | ts.Identifier, patterns: RegExp[], messagePrefix: string): void {
+        const nameText: string = name.getText();
+        if (!patterns.some(pattern => pattern.test(nameText))) {
+            ctx.addFailureAt(name.getStart(), name.getWidth(), `${messagePrefix}: ${nameText}`);
+        }
+    }
+
+    function handleStaticMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(method.name, [staticMethodRegex], `Static method name does not match ${staticMethodRegex}`);
+    }
+
+    function handlePrivateMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(method.name, [privateMethodRegex], `Private method name does not match ${privateMethodRegex}`);
+    }
+
+    function handlePrivateOrStaticMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(
+            method.name,
+            [privateMethodRegex, staticMethodRegex],
+            `Private static method name does not match ${privateMethodRegex} or ${staticMethodRegex}`
+        );
+    }
+
+    function handleProtectedMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(method.name, [protectedMethodRegex], `Protected method name does not match ${protectedMethodRegex}`);
+    }
+
+    function handleProtectedOrStaticMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(
+            method.name,
+            [protectedMethodRegex, staticMethodRegex],
+            `Protected static method name does not match ${protectedMethodRegex} or ${staticMethodRegex}`
+        );
+    }
+
+    function handleOtherMethod(method: ts.MethodDeclaration) {
+        validateAnyPattern(method.name, [methodRegex], `Method name does not match ${methodRegex}`);
+    }
+
+    // routes to different handler logic depending on validate statics configuration
+    const methodRouter: { [key: string]: (method: ts.MethodDeclaration) => void } = {
+        [VALIDATE_PRIVATE_STATICS_AS_PRIVATE]: (method: ts.MethodDeclaration) => {
+            // private/protected first priority
+            if (AstUtils.isPrivate(method)) {
+                handlePrivateMethod(method);
+            } else if (AstUtils.isProtected(method)) {
+                handleProtectedMethod(method);
+            } else if (AstUtils.isStatic(method)) {
+                handleStaticMethod(method);
+            } else {
+                handleOtherMethod(method);
+            }
+        },
+        [VALIDATE_PRIVATE_STATICS_AS_STATIC]: (method: ts.MethodDeclaration) => {
+            // static first priority
+            if (AstUtils.isStatic(method)) {
+                handleStaticMethod(method);
+            } else if (AstUtils.isPrivate(method)) {
+                handlePrivateMethod(method);
+            } else if (AstUtils.isProtected(method)) {
+                handleProtectedMethod(method);
+            } else {
+                handleOtherMethod(method);
+            }
+        },
+        [VALIDATE_PRIVATE_STATICS_AS_EITHER]: (method: ts.MethodDeclaration) => {
+            // either private/protected or static
+            if (AstUtils.isStatic(method)) {
+                if (AstUtils.isPrivate(method)) {
+                    // private AND static methods pass if it matches either private regex OR static regex
+                    handlePrivateOrStaticMethod(method);
+                } else if (AstUtils.isProtected(method)) {
+                    // protected AND static methods pass if it matches either protected regex OR static regex
+                    handleProtectedOrStaticMethod(method);
+                } else {
+                    handleStaticMethod(method);
+                }
+            } else if (AstUtils.isPrivate(method)) {
+                handlePrivateMethod(method);
+            } else if (AstUtils.isProtected(method)) {
+                handleProtectedMethod(method);
+            } else {
+                handleOtherMethod(method);
+            }
+        }
+    };
+
     function cb(node: ts.Node): void {
         if (tsutils.isMethodDeclaration(node)) {
-            const name: string = node.name.getText();
             if (AstUtils.hasComputedName(node)) {
                 // allow computed names
-            } else if (AstUtils.isPrivate(node)) {
-                if (!privateMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                    ctx.addFailureAt(
-                        node.name.getStart(),
-                        node.name.getWidth(),
-                        `Private method name does not match ${privateMethodRegex}: ${name}`
-                    );
-                }
-            } else if (AstUtils.isProtected(node)) {
-                if (!protectedMethodRegex.test(name) && validateStatics === VALIDATE_PRIVATE_STATICS_AS_PRIVATE) {
-                    ctx.addFailureAt(
-                        node.name.getStart(),
-                        node.name.getWidth(),
-                        `Protected method name does not match ${protectedMethodRegex}: ${name}`
-                    );
-                }
-            } else if (AstUtils.isStatic(node)) {
-                if (!staticMethodRegex.test(name)) {
-                    ctx.addFailureAt(
-                        node.name.getStart(),
-                        node.name.getWidth(),
-                        `Static method name does not match ${staticMethodRegex}: ${name}`
-                    );
-                }
-            } else if (!methodRegex.test(name)) {
-                ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), `Method name does not match ${methodRegex}: ${name}`);
+            } else {
+                // find handler based on validate statics configuration
+                // fallback on private statics as private
+                const handler = methodRouter[validateStatics] || methodRouter[VALIDATE_PRIVATE_STATICS_AS_PRIVATE];
+                handler(node);
             }
         }
 
         if (tsutils.isFunctionDeclaration(node)) {
             if (node.name !== undefined) {
-                const name: string = node.name.text;
-                if (!functionRegex.test(name)) {
-                    ctx.addFailureAt(node.name.getStart(), node.name.getWidth(), `Function name does not match ${functionRegex}: ${name}`);
-                }
+                validateAnyPattern(node.name, [functionRegex], `Function name does not match ${functionRegex}`);
             }
         }
 

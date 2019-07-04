@@ -152,6 +152,59 @@ describe('functionNameRule', (): void => {
         TestHelper.assertNoViolationWithOptions(ruleName, ['true', 'validate-private-statics-as-either'], script);
     });
 
+    it('should fail on incorrectly private or protected static methods as either with option', (): void => {
+        const script: string = `
+        class MyClass {
+            private static Bar() {}
+            protected static Bar1() {}
+        }`;
+
+        TestHelper.assertViolationsWithOptions(ruleName, [true, 'validate-private-statics-as-either'], script, [
+            {
+                failure: 'Private static method name does not match /^[a-z][\\w\\d]+$/ or /^[A-Z_\\d]+$/: Bar',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
+                startPosition: { character: 28, line: 3 }
+            },
+            {
+                failure: 'Protected static method name does not match /^[a-z][\\w\\d]+$/ or /^[A-Z_\\d]+$/: Bar1',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
+                startPosition: { character: 30, line: 4 }
+            }
+        ]);
+    });
+
+    it('should fail on incorrect static with validate-private-statics-as-static option', (): void => {
+        const script: string = `
+        class MyClass {
+            private static somePrivateStaticMethod() {}
+            protected static someProtectedStaticMethod() {}
+            public static somePublicStaticMethod() {}
+        }`;
+
+        TestHelper.assertViolationsWithOptions(ruleName, [true, 'validate-private-statics-as-static'], script, [
+            {
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: somePrivateStaticMethod',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
+                startPosition: { character: 28, line: 3 }
+            },
+            {
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: someProtectedStaticMethod',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
+                startPosition: { character: 30, line: 4 }
+            },
+            {
+                failure: 'Static method name does not match /^[A-Z_\\d]+$/: somePublicStaticMethod',
+                name: Utils.absolutePath('file.ts'),
+                ruleName: 'function-name',
+                startPosition: { character: 27, line: 5 }
+            }
+        ]);
+    });
+
     it('should fail on incorrect public methods', (): void => {
         const script: string = `
             class MyClass {

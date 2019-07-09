@@ -20,6 +20,15 @@ describe('reactA11yInputElementsRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
+    it('should pass on input elements of file without value and placeholder', (): void => {
+        const script: string = `
+            import React = require('react');
+            const a = <input type="file" />;
+        `;
+
+        TestHelper.assertViolations(ruleName, script, []);
+    });
+
     it('should pass on input elements without placeholder of type radio, checkbox, file', (): void => {
         const script: string = `
             import React = require('react');
@@ -31,12 +40,11 @@ describe('reactA11yInputElementsRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should fail on input elements without value of type radio, checkbox, file', (): void => {
+    it('should fail on input elements without value of type radio, checkbox', (): void => {
         const script: string = `
             import React = require('react');
             const a = <input type="radio" />;
             const b = <input type="checkbox" />;
-            const c = <input type="file" />;
         `;
 
         TestHelper.assertViolations(ruleName, script, [
@@ -51,12 +59,6 @@ describe('reactA11yInputElementsRule', (): void => {
                 name: Utils.absolutePath('file.tsx'),
                 ruleName: 'react-a11y-input-elements',
                 startPosition: { character: 23, line: 4 }
-            },
-            {
-                failure: MISSING_PLACEHOLDER_INPUT_FAILURE_STRING,
-                name: Utils.absolutePath('file.tsx'),
-                ruleName: 'react-a11y-input-elements',
-                startPosition: { character: 23, line: 5 }
             }
         ]);
     });

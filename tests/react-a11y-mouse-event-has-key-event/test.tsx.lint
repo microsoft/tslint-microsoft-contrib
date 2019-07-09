@@ -1,0 +1,15 @@
+import * as React from 'react'
+
+const element = (<div onMouseOver={() => {}}>click</div>)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~             [onMouseOver must be accompanied by onFocus.]
+const elementTwo = (<div onMouseOut={() => {}}>click</div>)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~             [onMouseOut must be accompanied by onBlur.]
+const elementSelfClosing = (<div onMouseOut={() => {}}/>)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [onMouseOut must be accompanied by onBlur.]
+
+const Foo = (<div onMouseOver={() => {}} {...props} />)
+const Bar = (<div onMouseOut={() => {}} {...props} />)
+const Baz = <div />
+const Foobar = <div {...props} />
+const elementWithFocus = <div onMouseOut={() => {}} onBlur={() => {}}>click</div>
+const elementWithFocusTwo = <div onMouseOver={() => {}} onFocus={() => {}}>click</div>

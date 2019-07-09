@@ -1,0 +1,122 @@
+import * as child_process from "child_process";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+import * as child_process_1 from 'child_process';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+import child_process_2 = require('child_process');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+const child_process_3 = require("child_process");
+                        ~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+
+
+import {exec} from 'child_process';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+import {spawn} from 'child_process';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+
+const {exec} = require("child_process");
+               ~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+const {spawn} = require("child_process");
+                ~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+
+import {exec as someAnotherExec} from 'child_process';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+import {spawn as someAnotherSpawn} from 'child_process';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+
+const {exec: someAnotherExec2} = require("child_process");
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+const {spawn: someAnotherSpawn2} = require("child_process");
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process import]
+
+import * as anotherModule from 'anotherModule';
+
+
+child_process.exec('ls')
+child_process.exec('ls', options)
+child_process.exec('ls', options, callback)
+
+child_process.exec(cmd)
+~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process.exec(cmd, options)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process.exec(cmd, options, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+child_process.spawn('ls')
+child_process.spawn(cmd)
+
+child_process_1.exec('ls')
+child_process_1.exec('ls', options)
+child_process_1.exec('ls', options, callback)
+
+child_process_1.exec(cmd)
+~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process_1.exec(cmd, options)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process_1.exec(cmd, options, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+child_process_1.spawn('ls')
+child_process_1.spawn(cmd)
+
+child_process_2.exec('ls')
+child_process_2.exec('ls', options)
+child_process_2.exec('ls', options, callback)
+
+child_process_2.exec(cmd)
+~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process_2.exec(cmd, options)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+child_process_2.exec(cmd, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+
+child_process_2.spawn('ls')
+child_process_2.spawn(cmd)
+
+exec('ls')
+exec('ls', options)
+exec('ls', options, callback)
+
+exec(cmd)
+~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+exec(cmd, options)
+~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+exec(cmd, options, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+spawn('ls')
+spawn(cmd)
+
+someAnotherExec('ls')
+someAnotherExec('ls', options)
+someAnotherExec('ls', options, callback)
+
+someAnotherExec(cmd)
+~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+someAnotherExec(cmd, options)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+someAnotherExec(cmd, options, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+someAnotherSpawn('ls')
+someAnotherSpawn(cmd)
+
+someAnotherExec2('ls')
+someAnotherExec2('ls', options)
+someAnotherExec2('ls', options, callback)
+
+someAnotherExec2(cmd)
+~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+someAnotherExec2(cmd, options)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+someAnotherExec2(cmd, options, callback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Found child_process.exec() with non-literal first argument]
+
+someAnotherSpawn2('ls')
+someAnotherSpawn2(cmd)
+
+anotherModule.exec(cmd)
+anotherModule.exec(cmd, param2)
+anotherModule.exec(cmd, param2, param3)
+

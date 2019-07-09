@@ -85,10 +85,10 @@ export function createNoStringParameterToFunctionWalker(
     function validateExpression(node: ts.CallExpression, ctx: Lint.WalkContext<void>): void {
         const functionName = AstUtils.getFunctionName(node);
         const functionTarget = AstUtils.getFunctionTarget(node);
-        const functionTargetType = getFunctionTargetType(node);
         const firstArg: ts.Expression = node.arguments[0];
         if (functionName === targetFunctionName && firstArg !== undefined) {
             if (functionTarget) {
+                const functionTargetType = getFunctionTargetType(node);
                 if (functionTargetType) {
                     if (!functionTargetType.match(/^(any|Window|Worker)$/)) {
                         return;
@@ -114,8 +114,16 @@ export function createNoStringParameterToFunctionWalker(
     function getFunctionTargetType(expression: ts.CallExpression): string | undefined {
         if (expression.expression.kind === ts.SyntaxKind.PropertyAccessExpression && typeChecker) {
             const propExp: ts.PropertyAccessExpression = <ts.PropertyAccessExpression>expression.expression;
-            const targetType: ts.Type = typeChecker.getTypeAtLocation(propExp.expression);
-            return typeChecker.typeToString(targetType);
+            try {
+                // TS might throw exceptions in non-standard conditions (like .vue files)
+                // Use try...catch blocks to fallback to the same behavior as when checker is not available
+                // See https://github.com/microsoft/tslint-microsoft-contrib/issues/859
+                const targetType: ts.Type = typeChecker.getTypeAtLocation(propExp.expression);
+                return typeChecker.typeToString(targetType);
+            } catch {
+                // same return value as when typeChecker is not available
+                return undefined;
+            }
         }
         return undefined;
     }
@@ -141,11 +149,18 @@ export function createNoStringParameterToFunctionWalker(
         }
 
         if (expression.kind === ts.SyntaxKind.Identifier && typeChecker) {
-            const tsSymbol = typeChecker.getSymbolAtLocation(expression);
-            if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
-                return true; // variables with type function are OK to pass
+            try {
+                // TS might throw exceptions in non-standard conditions (like .vue files)
+                // Use try...catch blocks to fallback to the same behavior as when checker is not available
+                // See https://github.com/microsoft/tslint-microsoft-contrib/issues/859
+                const tsSymbol = typeChecker.getSymbolAtLocation(expression);
+                if (tsSymbol && tsSymbol.flags === ts.SymbolFlags.Function) {
+                    return true; // variables with type function are OK to pass
+                }
+                return false;
+            } catch {
+                // No return statement to use same behavior as when typeChecker is not available
             }
-            return false;
         }
 
         if (ts.isCallExpression(expression)) {
@@ -166,7 +181,7 @@ export function createNoStringParameterToFunctionWalker(
                     const expressionType = typeChecker.getReturnTypeOfSignature(signature);
                     return isFunctionType(expressionType, typeChecker);
                 }
-            } catch (e) {
+            } catch {
                 // this exception is only thrown in unit tests, not the node debugger :(
                 return false;
             }
@@ -175,8 +190,15 @@ export function createNoStringParameterToFunctionWalker(
         if (!typeChecker) {
             return true;
         }
-
-        return isFunctionType(typeChecker.getTypeAtLocation(expression), typeChecker);
+        try {
+            // TS might throw exceptions in non-standard conditions (like .vue files)
+            // Use try...catch blocks to fallback to the same behavior as when checker is not available
+            // See https://github.com/microsoft/tslint-microsoft-contrib/issues/859
+            return isFunctionType(typeChecker.getTypeAtLocation(expression), typeChecker);
+        } catch {
+            // same return value as when typeChecker is not available
+            return true;
+        }
     }
 }
 

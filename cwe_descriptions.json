@@ -3,6 +3,7 @@
     "75": "Failure to Sanitize Special Elements into a Different Plane (Special Element Injection)",
     "79": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "85": "Doubled Character XSS Manipulations",
+    "88": "Argument Injection or Modification",
     "95": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
     "116": "Improper Encoding or Escaping of Output",
     "157": "Failure to Sanitize Paired Delimiters",

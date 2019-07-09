@@ -133,6 +133,18 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>detect-child-process</code>
+      </td>
+      <td>
+        Detects usages of child_process and especially child_process.exec() with a non-literal first argument.
+        It is dangerous to pass a string constructed at runtime as the first argument to the <code>child_process.exec()</code>.
+        <code>child_process.exec(cmd)</code> runs <code>cmd</code> as a shell command which could allow an attacker to execute malicious code injected into <code>cmd</code>.
+        Instead of <code>child_process.exec(cmd)</code> you should use <code>child_process.spawn(cmd)</code> or specify the command as a literal, e.g. <code>child_process.exec('ls')</code>.
+      </td>
+      <td>6.2.0-beta</td>
+    </tr>
+    <tr>
+      <td>
         <code>export-name</code>
       </td>
       <td>
@@ -816,15 +828,19 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       <td>
         Use array literal syntax when declaring or instantiating array types.
         For example, prefer the Javascript form of <code>string[]</code> to the TypeScript form <code>Array&lt;string&gt;</code>.
-        Prefer <code>[]' to <code>new Array()</code>.
-        Prefer <code>[4, 5]' to <code>new Array(4, 5)</code>.
-        Prefer <code>[undefined, undefined]' to <code>new Array(2)</code>.
-        Since 2.0.10, this rule can be configured to allow Array type parameters.
-        To ignore type parameters, configure the rule with the values: <code>[ true, { 'allow-type-parameters': true } ]</code>.
+        Prefer <code>[]</code> over <code>new Array()</code>.
+        Prefer <code>[4, 5]</code> over <code>new Array(4, 5)</code>.
+        Prefer <code>[undefined, undefined]</code> over <code>new Array(2)</code>.
+        <br />
+        Since 2.0.10, this rule can be configured to allow <code>Array</code> type parameters.
+        To ignore type parameters, configure the rule with the values: <code>[true, {"allow-type-parameters": true}]</code>.
+        <br />
+        Since 6.2.0-beta, you can lift restriction on <code>Array</code> constructor calls with a single argument (to create empty array of a given length). If type information is available - rule will allow only a single argument of <code>number</code> type.
+        To allow empty array creation, configure the rule with the values: <code>[true, {"allow-size-argument": true}]</code>.
         <br />
         This rule has some overlap with the <a href="https://palantir.github.io/tslint/rules/array-type">TSLint array-type rule</a>; however, the version here catches more instances.
       </td>
-      <td>1.0, 2.0.10</td>
+      <td>1.0, 2.0.10, 6.2.0-beta</td>
     </tr>
     <tr>
       <td>
@@ -993,6 +1009,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
         For accessibility of your website, HTML meta elements must not have <code>http-equiv="refresh"</code>.
       </td>
       <td>2.0.11</td>
+    </tr>
+    <tr>
+      <td>
+        <code>react-a11y-mouse-event-has-key-event</code>
+      </td>
+      <td>
+        For accessibility of your website, elements with mouseOver/mouseOut should be accompanied by onFocus/onBlur keyboard events.
+      </td>
+      <td>6.2.0-beta</td>
     </tr>
     <tr>
       <td>

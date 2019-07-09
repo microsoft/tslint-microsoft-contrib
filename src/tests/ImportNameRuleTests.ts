@@ -13,16 +13,6 @@ describe('importNameRule', (): void => {
         TestHelper.assertViolations(ruleName, script, []);
     });
 
-    it('should pass on matching names of ES6 import', (): void => {
-        const script: string = `
-            import App from 'App';
-            import App from 'x/y/z/App';
-            import graphqlTag from 'graphql-tag'
-        `;
-
-        TestHelper.assertViolations(ruleName, script, []);
-    });
-
     it('should pass on matching names of simple import', (): void => {
         const script: string = `
             import DependencyManager = DM.DependencyManager;
@@ -110,26 +100,6 @@ describe('importNameRule', (): void => {
                     innerStart: 20,
                     innerLength: 7,
                     innerText: 'DependencyManager'
-                }
-            }
-        ]);
-    });
-
-    it('should fail import with punctuation and underscore', (): void => {
-        const script: string = `
-            import UserSettings from "./user-settings.detail_view";
-        `;
-
-        TestHelper.assertViolations(ruleName, script, [
-            {
-                failure: "Misnamed import. Import should be named 'userSettingsDetailView' but found 'UserSettings'",
-                name: Utils.absolutePath('file.ts'),
-                ruleName: 'import-name',
-                startPosition: { character: 13, line: 2 },
-                fix: {
-                    innerStart: 20,
-                    innerLength: 12,
-                    innerText: 'userSettingsDetailView'
                 }
             }
         ]);
@@ -270,5 +240,144 @@ describe('importNameRule', (): void => {
         `;
 
         TestHelper.assertViolations(ruleName, script, []);
+    });
+    describe('caseSensetive', (): void => {
+        describe('camelCase', (): void => {
+            it('should pass on matching names of ES6 import', (): void => {
+                const script: string = `
+                    import App from 'App';
+                    import App from 'x/y/z/App';
+                    import graphqlTag from 'graphql-tag'
+                `;
+
+                const options = [
+                    true,
+                    {},
+                    {},
+                    {
+                        case: 'camelCase'
+                    }
+                ];
+
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+            });
+
+            it('should fail import with punctuation and underscore', (): void => {
+                const script: string = `
+                    import UserSettings from "./user-settings.detail_view";
+                `;
+
+                const options = [
+                    true,
+                    {},
+                    {},
+                    {
+                        case: 'camelCase'
+                    }
+                ];
+
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+                    {
+                        failure: "Misnamed import. Import should be named 'userSettingsDetailView' but found 'UserSettings'",
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'import-name',
+                        startPosition: { character: 21, line: 2 },
+                        fix: {
+                            innerStart: 28,
+                            innerLength: 12,
+                            innerText: 'userSettingsDetailView'
+                        }
+                    }
+                ]);
+            });
+        });
+
+        describe('pascalCase', (): void => {
+            it('should pass on matching names of ES6 import', (): void => {
+                const script: string = `
+                    import App from 'App';
+                    import App from 'x/y/z/App';
+                    import GraphqlTag from 'graphql-tag'
+                `;
+
+                const options = [
+                    true,
+                    {},
+                    {},
+                    {
+                        case: 'PascalCase'
+                    }
+                ];
+
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+            });
+
+            it('should fail import with punctuation and underscore', (): void => {
+                const script: string = `
+                    import UserSettings from "./user-settings.detail_view";
+                `;
+
+                const options = [
+                    true,
+                    {},
+                    {},
+                    {
+                        case: 'PascalCase'
+                    }
+                ];
+
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+                    {
+                        failure: "Misnamed import. Import should be named 'UserSettingsDetailView' but found 'UserSettings'",
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'import-name',
+                        startPosition: { character: 21, line: 2 },
+                        fix: {
+                            innerStart: 28,
+                            innerLength: 12,
+                            innerText: 'UserSettingsDetailView'
+                        }
+                    }
+                ]);
+            });
+        });
+
+        describe('any-case', () => {
+            it('should pass on PascalCase and camelCase', () => {
+                const script: string = `
+                    import App from 'app';
+                    import app from 'app';
+                    import App from 'x/y/z/App';
+                    import GraphqlTag from 'x/y/z/graphql-tag';
+                    import graphqlTag from 'x/y/z/graphql-tag';
+                `;
+                const options = [true, {}, {}, { case: 'any-case' }];
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
+            });
+
+            it('should fail', () => {
+                const script: string = `
+                    import gTag from 'x/y/z/graphql-tag';
+                `;
+                const options = [true, {}, {}, { case: 'any-case' }];
+                TestHelper.assertViolationsWithOptions(ruleName, options, script, [
+                    {
+                        failure: "Misnamed import. Import should be named 'graphqlTag' or 'GraphqlTag' but found 'gTag'",
+                        fix: {
+                            innerStart: 28,
+                            innerLength: 4,
+                            innerText: 'graphqlTag'
+                        },
+                        name: Utils.absolutePath('file.ts'),
+                        ruleName: 'import-name',
+                        ruleSeverity: 'ERROR',
+                        startPosition: {
+                            character: 21,
+                            line: 2
+                        }
+                    }
+                ]);
+            });
+        });
     });
 });

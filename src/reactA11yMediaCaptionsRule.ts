@@ -3,7 +3,7 @@ import * as Lint from 'tslint';
 import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getJsxAttributesFromJsxElement } from './utils/JsxAttribute';
+import { getAllAttributesFromJsxElement } from './utils/JsxAttribute';
 
 const VIDEO_ELEMENT_NAME: string = 'video';
 const AUDIO_ELEMENT_NAME: string = 'audio';
@@ -40,8 +40,10 @@ function walk(ctx: Lint.WalkContext<void>) {
             ctx.addFailureAtNode(node, NO_CAPTIONS_ERROR_MESSAGE);
         }
         if (tsutils.isJsxElement(node) && (isVideoElement(node.openingElement.tagName) || isAudioElement(node.openingElement.tagName))) {
-            validateMediaType(node.openingElement, ctx);
-            return;
+            if (!containsTrackElementWithSpreadAttributes(node.openingElement)) {
+                validateMediaType(node.openingElement, ctx);
+                return;
+            }
         }
         return ts.forEachChild(node, cb);
     }
@@ -72,21 +74,45 @@ function getAttributeText(attribute: ts.JsxAttribute): string | undefined {
     return undefined;
 }
 
+function hasSpreadAttributes(nodeArray: ts.NodeArray<ts.JsxAttributeLike> | undefined): boolean {
+    return !!(nodeArray && nodeArray.find(node => tsutils.isJsxSpreadAttribute(node)));
+}
+
+function isTrackElementNode(node: ts.Node): boolean {
+    return (
+        (tsutils.isJsxElement(node) && node.openingElement.tagName.getText() === TRACK_ELEMENT_NAME) ||
+        (tsutils.isJsxSelfClosingElement(node) && node.tagName.getText() === TRACK_ELEMENT_NAME)
+    );
+}
+
+function containsTrackElementWithSpreadAttributes(node: ts.JsxOpeningElement): boolean {
+    function cb(childNode: ts.Node): boolean {
+        if (isTrackElementNode(childNode)) {
+            const attributes = getAllAttributesFromJsxElement(childNode);
+            return hasSpreadAttributes(attributes);
+        }
+        return false;
+    }
+    return !!ts.forEachChild(node.parent, cb);
+}
+
 function validateMediaType(node: ts.JsxOpeningElement, ctx: Lint.WalkContext<void>): void {
     const validateDescription = isVideoElement(node.tagName);
     let foundCaptions = false;
     let foundDescription = false;
     function cb(childNode: ts.Node): void {
-        if (
-            (tsutils.isJsxElement(childNode) && childNode.openingElement.tagName.getText() === TRACK_ELEMENT_NAME) ||
-            (tsutils.isJsxSelfClosingElement(childNode) && childNode.tagName.getText() === TRACK_ELEMENT_NAME)
-        ) {
-            const kindAttribute = getJsxAttributesFromJsxElement(childNode)[KIND_ATTRIBUTE_NAME];
-            if (!foundCaptions) {
-                foundCaptions = !!(kindAttribute && getAttributeText(kindAttribute) === CAPTIONS_KIND_NAME);
-            }
-            if (!foundDescription && validateDescription) {
-                foundDescription = !!(kindAttribute && getAttributeText(kindAttribute) === DESCRIPTION_KIND_NAME);
+        if (isTrackElementNode(childNode)) {
+            const attributes = getAllAttributesFromJsxElement(childNode);
+            if (attributes) {
+                const kindAttribute = <ts.JsxAttribute>(
+                    attributes.find(att => tsutils.isJsxAttribute(att) && att.name.getText() === KIND_ATTRIBUTE_NAME)
+                );
+                if (!foundCaptions) {
+                    foundCaptions = !!(kindAttribute && getAttributeText(kindAttribute) === CAPTIONS_KIND_NAME);
+                }
+                if (!foundDescription && validateDescription) {
+                    foundDescription = !!(kindAttribute && getAttributeText(kindAttribute) === DESCRIPTION_KIND_NAME);
+                }
             }
         }
         return ts.forEachChild(childNode, cb);

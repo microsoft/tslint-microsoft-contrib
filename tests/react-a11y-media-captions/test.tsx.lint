@@ -23,6 +23,14 @@ const SomeComponent = () =>
 
 const SomeComponent = () =>
     <video width="320" height="240">
+        <source src="sitting_and_smiling_260.mp4" type="video/mp4"/>
+        <track {...props} />
+        <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>
+    </video>;
+
+const SomeComponent = () =>
+
+    <video width="320" height="240">
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [Video elements must have an audio description track]
         <source src="sitting_and_smiling_230.mp4" type="video/mp4"/>
         <track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"/>

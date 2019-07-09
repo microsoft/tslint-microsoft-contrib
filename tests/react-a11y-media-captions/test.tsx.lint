@@ -10,9 +10,9 @@ const SomeComponent = () =>
 const SomeComponent = () =>
 <video width="320" height="240">
     <source src="sitting_and_smiling_232.mp4" type="video/mp4"/>
-    <track src="subtitles_en.vtt" kind={subtitles} srclang="en" label="English"/>
-    <track src="sitting_and_smiling_232.vtt" kind={captions} srclang="en" label="English"/>
-    <track src="myvideo_en.vtt" kind={description} srclang="en" label="English"/>
+    <track src="subtitles_en.vtt" kind={'subtitles'} srclang="en" label="English"/>
+    <track src="sitting_and_smiling_232.vtt" kind={'captions'} srclang="en" label="English"/>
+    <track src="myvideo_en.vtt" kind={'description'} srclang="en" label="English"/>
 </video>;
 
 const SomeComponent = () =>
@@ -49,7 +49,7 @@ const SomeComponent = () =>
     <audio>
     ~~~~~~~ [Video and audio elements must have a captions track]
         <source src="beck_loser.mp3" type="video/mp4"/>
-    </audio>;
+    </audio>;s
 
 const SomeComponent = () =>
 <audio source src="rami-fortis-april-fools.mp3" type="mp3" />

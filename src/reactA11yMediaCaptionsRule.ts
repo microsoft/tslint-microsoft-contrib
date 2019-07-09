@@ -61,7 +61,9 @@ function isAudioElement(tagName: ts.JsxTagNameExpression): boolean {
 function getAttributeText(attribute: ts.JsxAttribute): string | undefined {
     if (attribute && attribute.initializer) {
         if (tsutils.isJsxExpression(attribute.initializer)) {
-            return attribute.initializer.expression ? attribute.initializer.expression.getText() : undefined;
+            if (attribute.initializer.expression) {
+                return tsutils.isStringLiteral(attribute.initializer.expression) ? attribute.initializer.expression.text : undefined;
+            }
         }
         if (tsutils.isStringLiteral(attribute.initializer)) {
             return attribute.initializer.text;

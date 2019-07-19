@@ -233,12 +233,14 @@ function walk(ctx: Lint.WalkContext<Option>) {
     }
 
     function makeCamelCase(input: string): string {
-        return input.replace(
+        let result = `${input.charAt(0)}${input.slice(1)}`;
+        result = result.replace(
             /[-|\.|_](.)/g, // tslint:disable-next-line:variable-name
             (_match: string, group1: string): string => {
                 return group1.toUpperCase();
             }
         );
+        return result;
     }
 
     function makePascalCase(input: string): string {

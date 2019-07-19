@@ -3,7 +3,7 @@ import * as Lint from 'tslint';
 import * as tsutils from 'tsutils';
 
 import { ExtendedMetadata } from './utils/ExtendedMetadata';
-import { getAllAttributesFromJsxElement } from './utils/JsxAttribute';
+import { getAllAttributesFromJsxElement, getStringLiteral } from './utils/JsxAttribute';
 
 const VIDEO_ELEMENT_NAME: string = 'video';
 const AUDIO_ELEMENT_NAME: string = 'audio';
@@ -60,20 +60,6 @@ function isAudioElement(tagName: ts.JsxTagNameExpression): boolean {
     return elementName === AUDIO_ELEMENT_NAME;
 }
 
-function getAttributeText(attribute: ts.JsxAttribute): string | undefined {
-    if (attribute && attribute.initializer) {
-        if (tsutils.isJsxExpression(attribute.initializer)) {
-            if (attribute.initializer.expression) {
-                return tsutils.isStringLiteral(attribute.initializer.expression) ? attribute.initializer.expression.text : undefined;
-            }
-        }
-        if (tsutils.isStringLiteral(attribute.initializer)) {
-            return attribute.initializer.text;
-        }
-    }
-    return undefined;
-}
-
 function hasSpreadAttributes(nodeArray: ts.NodeArray<ts.JsxAttributeLike> | undefined): boolean {
     return !!(nodeArray && nodeArray.find(node => tsutils.isJsxSpreadAttribute(node)));
 }
@@ -108,10 +94,10 @@ function validateMediaType(node: ts.JsxOpeningElement, ctx: Lint.WalkContext<voi
                     attributes.find(att => tsutils.isJsxAttribute(att) && att.name.getText() === KIND_ATTRIBUTE_NAME)
                 );
                 if (!foundCaptions) {
-                    foundCaptions = !!(kindAttribute && getAttributeText(kindAttribute) === CAPTIONS_KIND_NAME);
+                    foundCaptions = !!(kindAttribute && getStringLiteral(kindAttribute) === CAPTIONS_KIND_NAME);
                 }
                 if (!foundDescription && validateDescription) {
-                    foundDescription = !!(kindAttribute && getAttributeText(kindAttribute) === DESCRIPTION_KIND_NAME);
+                    foundDescription = !!(kindAttribute && getStringLiteral(kindAttribute) === DESCRIPTION_KIND_NAME);
                 }
             }
         }

@@ -184,11 +184,16 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
       </td>
       <td>
         The name of the imported module must match the name of the thing being imported. For special characters (<code>-</code>, <code>.</code>, <code>_</code>) remove them and make the following character uppercase.
-        For example, it is valid to name imported modules the same as the module name: <code>import Service = require('x/y/z/Service')</code> and <code>import Service from 'x/y/z/Service'</code>.
+        For example, it is valid to name imported modules the same as the module name: <code>import Service = require('./x/y/z/Service')</code> and <code>import Service from './x/y/z/Service'</code>.
         But it is invalid to change the name being imported, such as: <code>import MyCoolService = require('x/y/z/Service')</code> and <code>import MyCoolService from 'x/y/z/Service'</code>.
         When containing special characters such as <code>import $$ from 'my-awesome_library';</code> the corresponding configuration would look like <code>'import-name': [true, { 'myAwesomeLibrary': '$$' }]</code>.
         Since version 2.0.9 it is possible to configure this rule with a list of exceptions.
-        For example, to allow <code>underscore</code> to be imported as <code>_</code>, add this configuration: <code>'import-name': [ true, { 'underscore': '_' }]</code>
+        The default is to ignore this rule for external modules <code>ignoreExternalModule: true</code> and to use camelCase <code>case: 'camelCase'</code>.
+        To not ignore this rule for external modules, add this configuration: <code>'import-name': [true, null, null, { ignoreExternalModule: false }]</code>.
+        To allow <code>underscore</code> to be imported as <code>_</code>, add this configuration: <code>'import-name': [true, { 'underscore': '_' }, null, { ignoreExternalModule: false }]</code>.
+        To ignore this rule for <code>react</code> and <code>express</code>, add this configuration: <code>'import-name': [true, null, ['react', 'express'], { ignoreExternalModule: false }]</code>.
+        To use PascalCase: <code>'import-name': [true, null, null, { case: 'PascalCase' }]</code>.
+        To use camelCase or PascalCase: <code>'import-name': [true, null, null, { case: 'any-case' }]</code>.
       </td>
       <td>2.0.5</td>
     </tr>

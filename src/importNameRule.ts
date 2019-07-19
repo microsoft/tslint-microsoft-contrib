@@ -45,15 +45,15 @@ export class Rule extends Lint.Rules.AbstractRule {
 
         if (options.ruleArguments instanceof Array) {
             options.ruleArguments.forEach((opt: unknown, index: number) => {
-                if (index === 1 && isObject(opt)) {
+                if (index === 0 && isObject(opt)) {
                     result.replacements = this.extractReplacements(opt);
                 }
 
-                if (index === 2 && Array.isArray(opt)) {
+                if (index === 1 && Array.isArray(opt)) {
                     result.ignoredList = this.extractIgnoredList(opt);
                 }
 
-                if (index === 3 && isObject(opt)) {
+                if (index === 2 && isObject(opt)) {
                     result.config = this.extractConfig(opt);
                 }
             });

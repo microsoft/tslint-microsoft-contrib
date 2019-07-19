@@ -114,7 +114,6 @@ describe('importNameRule', (): void => {
         `;
 
         const options = [
-            true,
             {
                 backbone: 'Backbone',
                 react: 'React',
@@ -132,7 +131,6 @@ describe('importNameRule', (): void => {
         import pqr from 'my-module'
         `;
         const options = [
-            true,
             {
                 'fs/package-name': 'pkg',
                 'abc-tag': 'abc',
@@ -151,7 +149,6 @@ describe('importNameRule', (): void => {
         import Up from 'up-module'
         `;
         const options = [
-            true,
             {
                 'fs/package-name': 'pkg',
                 'abc-tag': 'abc',
@@ -171,7 +168,6 @@ describe('importNameRule', (): void => {
         import Up from 'up-module'
         `;
         const options = [
-            true,
             {
                 'fs/package-name': 'pkg',
                 'abc-tag': 'abc',
@@ -251,7 +247,6 @@ describe('importNameRule', (): void => {
                 `;
 
                 const options = [
-                    true,
                     {},
                     {},
                     {
@@ -268,7 +263,6 @@ describe('importNameRule', (): void => {
                 `;
 
                 const options = [
-                    true,
                     {},
                     {},
                     {
@@ -301,7 +295,6 @@ describe('importNameRule', (): void => {
                 `;
 
                 const options = [
-                    true,
                     {},
                     {},
                     {
@@ -318,7 +311,6 @@ describe('importNameRule', (): void => {
                 `;
 
                 const options = [
-                    true,
                     {},
                     {},
                     {
@@ -351,7 +343,7 @@ describe('importNameRule', (): void => {
                     import GraphqlTag from 'x/y/z/graphql-tag';
                     import graphqlTag from 'x/y/z/graphql-tag';
                 `;
-                const options = [true, {}, {}, { case: 'any-case' }];
+                const options = [{}, {}, { case: 'any-case' }];
                 TestHelper.assertViolationsWithOptions(ruleName, options, script, []);
             });
 
@@ -359,7 +351,7 @@ describe('importNameRule', (): void => {
                 const script: string = `
                     import gTag from 'x/y/z/graphql-tag';
                 `;
-                const options = [true, {}, {}, { case: 'any-case' }];
+                const options = [{}, {}, { case: 'any-case' }];
                 TestHelper.assertViolationsWithOptions(ruleName, options, script, [
                     {
                         failure: "Misnamed import. Import should be named 'graphqlTag' or 'GraphqlTag' but found 'gTag'",

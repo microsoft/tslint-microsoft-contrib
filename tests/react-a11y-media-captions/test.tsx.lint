@@ -15,6 +15,14 @@ const SomeComponent = () =>
     <track src="myvideo_en.vtt" kind={'description'} srclang="en" label="English"/>
 </video>;
 
+const captionsKind = 'captions';
+const SomeComponent = () =>
+    <audio>
+    ~~~~~~~[Video and audio elements must have a captions track]
+        <source src="beck_loser.mp3" type="video/mp4"/>
+        <track src="beck_loser.vtt" kind={ captionsKind } srclang="en" label="English"/>
+    </audio>;
+
 const SomeComponent = () =>
     <audio>
         <source src="beck_loser.mp3" type="video/mp4"/>

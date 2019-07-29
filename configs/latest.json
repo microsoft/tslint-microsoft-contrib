@@ -4,6 +4,7 @@
     "rules": {
         "detect-child-process": true,
         "react-a11y-iframes": true,
+        "react-a11y-media-captions": true,
         "react-a11y-mouse-event-has-key-event": true,
         "void-zero": true
     }

@@ -994,6 +994,15 @@ We recommend you specify exact versions of lint libraries, including `tslint-mic
     </tr>
     <tr>
       <td>
+        <code>react-a11y-media-captions</code>
+      </td>
+      <td>
+        Enforce that video and audio elements have captions and descriptions.
+      </td>
+      <td>@next</td>
+    </tr>
+    <tr>
+      <td>
         <code>react-a11y-meta</code>
       </td>
       <td>

@@ -48,7 +48,7 @@ module.exports = {
         'no-backbone-get-set-outside-model': true,
         'no-bitwise': true,
         'no-conditional-assignment': true,
-        'no-console': [true, 'debug', 'info', 'error', 'log', 'time', 'timeEnd', 'trace'],
+        'no-console': true,
         'no-constant-condition': true,
         'no-control-regex': true,
         'no-debugger': true,

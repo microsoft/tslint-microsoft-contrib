@@ -11,7 +11,7 @@ A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microso
 
 ## Notice
 
-This project is read-only and [archive](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-archiving-repositories) mode. 
+This project is in read-only and [archive](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-archiving-repositories) mode. 
 
 ## Installation
 

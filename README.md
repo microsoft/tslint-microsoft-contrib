@@ -9,6 +9,10 @@
 
 A set of [TSLint](https://github.com/palantir/tslint) rules used on some Microsoft projects.
 
+## Notice
+
+This project is read-only and [archive](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-archiving-repositories) mode. 
+
 ## Installation
 
 ```shell
